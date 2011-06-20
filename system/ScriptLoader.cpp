@@ -32,6 +32,7 @@ extern void AddSC_spell_scripts();
 extern void AddSC_pet_scripts();
 
 extern void AddSC_world_map_scripts();
+extern void AddSC_world_map_ebon_hold();
 
 // eastern kingdoms
 extern void AddSC_ascendant_council();                      // bastion_of_twilight
@@ -597,6 +598,7 @@ void AddScripts()
     AddSC_spell_scripts();
     AddSC_pet_scripts();
     AddSC_world_map_scripts();
+    AddSC_world_map_ebon_hold();
 
     // eastern kingdoms
     AddSC_ascendant_council();                              // bastion_of_twilight
