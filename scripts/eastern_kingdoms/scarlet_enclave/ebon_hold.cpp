@@ -32,18 +32,19 @@ go_acherus_soul_prison
 npc_koltira_deathweaver
 Mob scarlet miner
 npc_scarlet_miner
-mob_scarlet_ghoul
 Gothik
 npc_eye_of_acherus
 npc_mine_cart
 scourge_gryphon
 npc_valkyr_battle_maiden
 npc_crusade_persuaded
+npc_scarlet_ghoul
 EndContentData */
 
 #include "precompiled.h"
 #include "escort_ai.h"
 #include "world_map_ebon_hold.h"
+#include "pet_ai.h"
 #include "ObjectMgr.h"
 #include "TemporarySummon.h"
 #include "WorldPacket.h"
@@ -1310,134 +1311,128 @@ CreatureAI* GetAI_mob_scarlet_miner(Creature* pCreature)
     return new mob_scarlet_minerAI (pCreature);
 };
 
+
 /*######
-## mob_scarlet_ghoul
+## npc_scarlet_ghoul
 ######*/
 
 enum
 {
-    SPELL_HARVESTER_PING_DUMMY  = 52514,
-    ENTRY_GOTHIK                = 28658,
+    SAY_GHUL_SPAWN_1            = -1609091,
+    SAY_GHUL_SPAWN_2            = -1609092,
+    SAY_GHUL_SPAWN_3            = -1609093,
+    SAY_GHUL_SPAWN_4            = -1609094,
+    SAY_GHUL_SPAWN_5            = -1609095,
+    SAY_GOTHIK_THROW_IN_PIT     = -1609096,                 // TODO: Unclear if there exist more texts
 
-    SAY_SCARLET_GHOUL_SPAWN1    = -1609300,
-    SAY_SCARLET_GHOUL_SPAWN2    = -1609301,
-    SAY_SCARLET_GHOUL_SPAWN3    = -1609302,
-    SAY_SCARLET_GHOUL_SPAWN4    = -1609303,
-    SAY_SCARLET_GHOUL_SPAWN5    = -1609304,
-    SAY_SCARLET_GHOUL_SPAWN6    = -1609305,
+    SPELL_GHOUL_SUMMONED        = 52500,
+    SPELL_GOTHIK_GHOUL_PING     = 52514,
+    SPELL_QUEST_CREDIT          = 52517,
+    SPELL_GHOUL_UNSUMMON        = 52555,
 
-    SAY_SCARLET_GOTHIK1         = -1609306,
-    SAY_SCARLET_GOTHIK2         = -1609307,
-    SAY_SCARLET_GOTHIK3         = -1609308,
-    SAY_SCARLET_GOTHIK4         = -1609309,
-    SAY_SCARLET_GOTHIK5         = -1609310,
+    NPC_GOTHIK                  = 28658,
 };
 
-struct MANGOS_DLL_DECL mob_scarlet_ghoulAI : public ScriptedAI
-{
-    mob_scarlet_ghoulAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        m_bIsSpawned = false;
-        fDist = (float)urand(1, 5);
-        m_creatorGuid = m_creature->GetCreatorGuid();
-        if (Player* pOwner = m_creature->GetMap()->GetPlayer(m_creatorGuid) )
-            fAngle = m_creature->GetAngle(pOwner);
+static const float aPitPosition[3] = {2380.13f, -5783.06f, 151.367f};
 
+struct MANGOS_DLL_DECL npc_scarlet_ghoulAI : public ScriptedPetAI
+{
+    npc_scarlet_ghoulAI(Creature* pCreature) : ScriptedPetAI(pCreature)
+    {
+        m_bGotHit = false;
+        m_bIsJumping = false;
+        m_bDidInitText = false;
+        m_uiUnsummonTimer = 0;
+        DoCastSpellIfCan(m_creature, SPELL_GHOUL_SUMMONED);
         Reset();
     }
 
+    bool m_bGotHit;
+    bool m_bIsJumping;
+    bool m_bDidInitText;
+    uint32 m_uiUnsummonTimer;
 
-    Unit* pTarget;
+    void Reset() override {}
 
-    ObjectGuid m_creatorGuid;
-    ObjectGuid m_targetGUID;
-    ObjectGuid m_harvesterGUID;
-
-    uint32 m_uiWaitForThrowTimer;
-
-    bool m_bWaitForThrow;
-    bool m_bIsSpawned;
-
-    float fAngle;
-    float fDist;
-
-    void Reset()
+    void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
     {
-        m_uiWaitForThrowTimer   = 3000;
-        m_bWaitForThrow         = false;
-        pTarget                 = NULL;
-        //m_creatorGuid.Clear();
-        m_targetGUID.Clear();
-        m_harvesterGUID.Clear();
-    }
-
-    void MoveInLineOfSight(Unit *pWho)
-    {
-        if (!m_bWaitForThrow && pWho->GetEntry() == ENTRY_GOTHIK && m_creature->GetDistance(pWho) < 15.0f)
+        if (uiMotionType == EFFECT_MOTION_TYPE && uiPointId == 1)
         {
-            m_harvesterGUID = pWho->GetObjectGuid();
-
-            if (Player* pOwner = m_creature->GetMap()->GetPlayer(m_creatorGuid) )
-            {
-                pOwner->KilledMonsterCredit(m_creature->GetEntry(), m_creature->GetObjectGuid() );
-                // this will execute if m_creature survived Harvester's wrath
-                float x, y, z, o;
-                o = float(urand(53, 57))/10.0f;
-                pWho->GetNearPoint(pWho, x, y, z, pWho->GetObjectBoundingRadius(), 5.0f, o);
-                m_creature->GetMotionMaster()->MovePoint(0, x, y, z);
-                m_bWaitForThrow = true;
-            }
+            m_uiUnsummonTimer = 1000;
+            DoCastSpellIfCan(m_creature, SPELL_GHOUL_UNSUMMON);
+            m_creature->GetMotionMaster()->MoveIdle();
         }
     }
 
-    void AttackStart(Unit *pWho) { return; }
-
-    void UpdateAI(uint32 const uiDiff)
+    void JustDied(Unit* pKiller) override
     {
-        if (!m_bIsSpawned)
+        DoCastSpellIfCan(m_creature, SPELL_GHOUL_UNSUMMON, CAST_TRIGGERED);
+    }
+
+    void UpdateAI(const uint32 uiDiff) override
+    {
+        if (!m_bDidInitText)
         {
-            DoScriptText(SAY_SCARLET_GHOUL_SPAWN1 - urand(0, 5), m_creature);
-            m_bIsSpawned = true;
+            Unit* pOwner = m_creature->GetCharmerOrOwner();
+            DoScriptText(SAY_GHUL_SPAWN_1 - urand(0, 4), m_creature, pOwner);
+
+            m_bDidInitText = true;
         }
 
-        if (m_bWaitForThrow)
+        if (m_uiUnsummonTimer)
         {
-            if (m_uiWaitForThrowTimer <= uiDiff)
+            if (m_uiUnsummonTimer <= uiDiff)
             {
-                if (Creature* pGothik = m_creature->GetMap()->GetCreature(m_harvesterGUID) )
-                {
-                    if (pGothik->AI()->DoCastSpellIfCan(m_creature, roll_chance_i(50) ? 52519 : 52521) == CAST_OK)
-                        DoScriptText(SAY_SCARLET_GOTHIK1 - urand(0, 4), pGothik);
-
-                    m_uiWaitForThrowTimer = 5000;
-                    m_creature->KnockBackFrom(pGothik, 15.0, 5.0);
-                    m_creature->DealDamage(m_creature, m_creature->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
-                }
-                else m_bWaitForThrow = false;
+                m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                if (m_creature->IsPet())
+                    ((Pet*)m_creature)->Unsummon(PET_SAVE_AS_DELETED);
+                return;
             }
-            else m_uiWaitForThrowTimer -= uiDiff;
-            return;
+            else
+                m_uiUnsummonTimer -= uiDiff;
         }
 
-        Player* pOwner = m_creature->GetMap()->GetPlayer(m_creatorGuid);
-        if (!pOwner || !pOwner->IsInWorld())
-        {
-            m_creature->DealDamage(m_creature, m_creature->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+        if (m_bIsJumping)
             return;
-        }
 
-        if (m_creature->GetMotionMaster()->GetCurrentMovementGeneratorType() != FOLLOW_MOTION_TYPE)
-        {
-            m_creature->GetMotionMaster()->Clear();
-            m_creature->GetMotionMaster()->MoveFollow(pOwner, fDist, fAngle);
-        }
+        ScriptedPetAI::UpdateAI(uiDiff);
     }
 };
 
-CreatureAI* GetAI_mob_scarlet_ghoul(Creature* pCreature)
+bool EffectDummyCreature_npc_scarlet_ghoul(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
 {
-    return new mob_scarlet_ghoulAI(pCreature);
-};
+    if (uiSpellId == SPELL_GOTHIK_GHOUL_PING && uiEffIndex == EFFECT_INDEX_0)
+    {
+        if (npc_scarlet_ghoulAI* pGhoulAi = dynamic_cast<npc_scarlet_ghoulAI*>(pCreatureTarget->AI()))
+        {
+            if (!pGhoulAi->m_bGotHit)                       // First hit
+            {
+                pCreatureTarget->CastSpell(pCreatureTarget, 52517, false);
+                pGhoulAi->m_bGotHit = true;
+            }
+            else                                            // Second hit
+            {
+                world_map_ebon_hold* pInstance = static_cast<world_map_ebon_hold*>(pCreatureTarget->GetInstanceData());
+                if (pCaster && pInstance && pInstance->CanAndToggleGothikYell())
+                    DoScriptText(SAY_GOTHIK_THROW_IN_PIT, pCaster);
+
+                float fX, fY, fZ;
+                pCreatureTarget->GetRandomPoint(aPitPosition[0], aPitPosition[1], aPitPosition[2], 10.0f, fX, fY, fZ);
+                pGhoulAi->m_bIsJumping = true;
+                pCreatureTarget->GetMotionMaster()->MoveJump(fX, fY, fZ, 24.21229f, 6.0f, 1);
+            }
+        }
+        return true;
+    }
+
+    return false;
+}
+
+CreatureAI* GetAI_npc_scarlet_ghoul(Creature* pCreature)
+{
+    return new npc_scarlet_ghoulAI(pCreature);
+}
+
 
 // quest 12801 from Ckegg
 /*######
@@ -4076,11 +4071,6 @@ void AddSC_ebon_hold()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name = "mob_scarlet_ghoul";
-    pNewScript->GetAI = &GetAI_mob_scarlet_ghoul;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
     pNewScript->Name = "npc_highlord_darion_mograine";
     pNewScript->GetAI = &GetAI_npc_highlord_darion_mograine;
     pNewScript->pGossipHello = &GossipHello_npc_highlord_darion_mograine;
@@ -4140,5 +4130,11 @@ void AddSC_ebon_hold()
     pNewScript = new Script;
     pNewScript->Name= "mob_scarlet_courier";
     pNewScript->GetAI = &GetAI_mob_scarlet_courier;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_scarlet_ghoul";
+    pNewScript->GetAI = &GetAI_npc_scarlet_ghoul;
+    pNewScript->pEffectDummyNPC = &EffectDummyCreature_npc_scarlet_ghoul;
     pNewScript->RegisterSelf();
 }

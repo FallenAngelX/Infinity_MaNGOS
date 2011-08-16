@@ -245,7 +245,6 @@ INSERT INTO spell_script_target VALUES
 (52479, 1, 28891);
 
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 28846;
-UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'mob_scarlet_ghoul' WHERE `entry` = 28845;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 28822;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 28819;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 28891;
