@@ -72,6 +72,7 @@ UPDATE creature_template SET InhabitType = 4, ScriptName = 'npc_shade_of_horsema
 
 -- Headless Horseman fire bunny
 UPDATE creature_template SET unit_flags = 0, AIName = 'EventAI' WHERE entry = 23686;
+DELETE FROM creature_ai_scripts WHERE id IN (2368601, 2368602);
 INSERT INTO creature_ai_scripts (id,creature_id,event_type,event_chance,action1_type,action1_param1) VALUES
 -- visual fire aura on initial spawn
 (2368601,23686,11,100,11,42075),
