@@ -40,6 +40,8 @@ go_andorhal_tower
 go_scourge_enclosure
 go_lab_work_reagents
 go_hand_of_iruxos_crystal
+go_org_portal
+go_sw_portal
 EndContentData */
 
 #include "precompiled.h"
@@ -546,6 +548,34 @@ bool GOUse_go_hand_of_iruxos_crystal(Player* pPlayer, GameObject* pGo)
     return false;
 }
 
+/*######
+## go_org_portal
+######*/
+
+bool GOUse_go_org_portal(Player* pPlayer, GameObject* pGo)
+{
+    if (pPlayer->GetQuestStatus(13189) == QUEST_STATUS_COMPLETE || pPlayer->GetQuestStatus(13189) == QUEST_STATUS_INCOMPLETE)
+    {
+         pPlayer->CastSpell(pPlayer, 17609, true);
+         return true;
+    }
+    return false;
+}
+
+/*######
+## go_sw_portal
+######*/
+
+bool GOUse_go_sw_portal(Player* pPlayer, GameObject* pGo)
+{
+    if (pPlayer->GetQuestStatus(13188) == QUEST_STATUS_COMPLETE || pPlayer->GetQuestStatus(13188) == QUEST_STATUS_INCOMPLETE)
+    {
+         pPlayer->CastSpell(pPlayer, 17334, true);
+         return true;
+    }
+    return false;
+}
+
 void AddSC_go_scripts()
 {
     Script* pNewScript;
@@ -653,5 +683,15 @@ void AddSC_go_scripts()
     pNewScript = new Script;
     pNewScript->Name = "go_hand_of_iruxos_crystal";
     pNewScript->pGOUse =          &GOUse_go_hand_of_iruxos_crystal;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_org_portal";
+    pNewScript->pGOUse =          &GOUse_go_org_portal;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_sw_portal";
+    pNewScript->pGOUse =          &GOUse_go_sw_portal;
     pNewScript->RegisterSelf();
 }
