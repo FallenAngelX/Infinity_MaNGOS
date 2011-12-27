@@ -25,3 +25,6 @@ UPDATE gossip_menu_option SET action_menu_id= -1, action_script_id=1286 WHERE me
 DELETE FROM gossip_scripts WHERE id=1286;
 INSERT INTO gossip_scripts (id, delay, command, datalong, datalong2, comments) VALUES
 (1286, 0, 7, 3377, 5, 'Zamael Lunthistle - Questcredit (3377');
+
+-- one fix
+UPDATE quest_template SET SpecialFlags = 2 WHERE entry = 3377;
