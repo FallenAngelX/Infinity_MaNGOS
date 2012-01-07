@@ -517,11 +517,9 @@ bool GOUse_go_hand_of_iruxos_crystal(Player* pPlayer, GameObject* pGo)
 bool GOUse_go_org_portal(Player* pPlayer, GameObject* pGo)
 {
     if (pPlayer->GetQuestStatus(13189) == QUEST_STATUS_COMPLETE || pPlayer->GetQuestStatus(13189) == QUEST_STATUS_INCOMPLETE)
-    {
          pPlayer->CastSpell(pPlayer, 17609, true);
-         return true;
-    }
-    return false;
+
+    return true;
 }
 
 /*######
@@ -531,11 +529,9 @@ bool GOUse_go_org_portal(Player* pPlayer, GameObject* pGo)
 bool GOUse_go_sw_portal(Player* pPlayer, GameObject* pGo)
 {
     if (pPlayer->GetQuestStatus(13188) == QUEST_STATUS_COMPLETE || pPlayer->GetQuestStatus(13188) == QUEST_STATUS_INCOMPLETE)
-    {
          pPlayer->CastSpell(pPlayer, 17334, true);
-         return true;
-    }
-    return false;
+
+    return true;
 }
 
 void AddSC_go_scripts()
