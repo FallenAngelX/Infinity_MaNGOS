@@ -103,7 +103,7 @@ bool GOGossipHello_go_ulduar_teleporter(Player *pPlayer, GameObject* pGo)
         || pPlayer->isGameMaster())
              pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_TAXI, PortalLoc[i].textNum, GOSSIP_SENDER_MAIN, i);
     };
-    pPlayer->SEND_GOSSIP_MENU(TELEPORT_GOSSIP_MESSAGE, pGo->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(TELEPORT_GOSSIP_MESSAGE, pGo->GetObjectGuid());
     return true;
 }
 
