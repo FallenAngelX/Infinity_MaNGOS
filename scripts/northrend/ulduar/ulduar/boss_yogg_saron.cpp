@@ -896,14 +896,14 @@ struct MANGOS_DLL_DECL boss_brain_of_yogg_saronAI : public ScriptedAI
         m_bIsPhaseFinished  = false;
         m_bIsVisionFinished = false;
         m_bHasShattered     = false;
-        m_uiLichKingGUID    = 0;
-        m_uiChampionGUID    = 0;
-        m_uiGaronaGUID      = 0;
-        m_uiKingLlaneGUID   = 0;
-        m_uiNeltharionGUID  = 0;
-        m_uiMalygosGUID     = 0;
-        m_uiYseraGUID       = 0;
-        m_uiVoiceOfYoggGUID = 0;
+        m_uiLichKingGUID.Clear();
+        m_uiChampionGUID.Clear();
+        m_uiGaronaGUID.Clear();
+        m_uiKingLlaneGUID.Clear();
+        m_uiNeltharionGUID.Clear();
+        m_uiMalygosGUID.Clear();
+        m_uiYseraGUID.Clear();
+        m_uiVoiceOfYoggGUID.Clear();
 
         m_uiVisionPhase     = 0;
         m_uiSpeechTimer     = 1000;

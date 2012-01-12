@@ -205,7 +205,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
             case 5:
                 if(Creature* pTarget = m_creature->SummonCreature(NPC_ALTAR_TARGET,5309.374f,2006.788f,711.615f,1.37f,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,360000))
                 {
-                    m_creature->SetUInt64Value(UNIT_FIELD_TARGET, pTarget->GetGUID());
+                    m_creature->SetGuidValue(UNIT_FIELD_TARGET, pTarget->GetObjectGuid());
                     pTarget->SetCreatorGuid(ObjectGuid());
                 }
                 m_pInstance->SetNextEvent(6,m_creature->GetEntry(),1000);
@@ -245,8 +245,8 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                     pUther = Uther;
                     Uther->SetCreatorGuid(ObjectGuid());
                     Uther->SetRespawnDelay(DAY);
-                    Uther->SetUInt64Value(UNIT_FIELD_TARGET, m_creature->GetGUID());
-                    m_creature->SetUInt64Value(UNIT_FIELD_TARGET, Uther->GetGUID());
+                    Uther->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
+                    m_creature->SetGuidValue(UNIT_FIELD_TARGET, Uther->GetObjectGuid());
                     if (m_creature->GetEntry() == NPC_JAINA)
                     {
                         DoScriptText(SAY_UTHER_A_01, Uther);

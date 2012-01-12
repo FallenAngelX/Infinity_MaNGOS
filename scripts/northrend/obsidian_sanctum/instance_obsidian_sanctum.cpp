@@ -37,8 +37,8 @@ void instance_obsidian_sanctum::Initialize()
 {
     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
-    m_uiAcolyteShadronGUID  = 0;
-    m_uiAcolyteVesperonGUID = 0;
+    m_uiAcolyteShadronGUID.Clear();
+    m_uiAcolyteVesperonGUID.Clear();
 
     m_lTrashMobsGUIDlist.clear();
     m_lTrashMobsGUIDlist.clear();

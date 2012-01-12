@@ -537,7 +537,7 @@ struct MANGOS_DLL_DECL npc_fizzlebang_tocAI : public ScriptedAI
     {
         m_creature->SetRespawnDelay(DAY);
         m_creature->GetMotionMaster()->MovePoint(1, SpawnLoc[27].x, SpawnLoc[27].y, SpawnLoc[27].z);
-        m_uiPortalGuid = 0;
+        m_uiPortalGuid.Clear();
     }
 
     void UpdateAI(const uint32 diff)

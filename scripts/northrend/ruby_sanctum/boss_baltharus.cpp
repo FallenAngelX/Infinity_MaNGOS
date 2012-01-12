@@ -195,7 +195,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public BSWScriptedAI
         if (!m_creature || !m_creature->isAlive())
             return;
 
-        if(pDoneBy->GetGUID() == m_creature->GetGUID())
+        if(pDoneBy->GetObjectGuid() == m_creature->GetObjectGuid())
           return;
 
         if (pClone && pClone->isAlive())
