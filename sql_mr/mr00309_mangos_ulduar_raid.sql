@@ -1,34 +1,82 @@
 /* ULDUAR from Xfurry*/
 
 -- Flame Leviathan
-UPDATE creature_template SET ScriptName = 'boss_flame_leviathan' WHERE entry = 33113;
-UPDATE creature_template SET ScriptName = 'mob_defense_turret' WHERE entry = 33142;
+    UPDATE creature_template SET ScriptName = 'boss_flame_leviathan' WHERE entry = 33113;
+    UPDATE creature_template SET ScriptName = 'mob_defense_turret' WHERE entry = 33142;
+    UPDATE creature_template SET ScriptName = 'mob_pool_of_tar' WHERE entry = 33090;
+    UPDATE creature_template SET ScriptName = 'mob_mechanolift' WHERE entry = 33214;
+    UPDATE creature_template SET ScriptName = 'mob_freyas_ward' WHERE entry = 33367;
+    UPDATE creature_template SET ScriptName = 'mob_hodirs_fury' WHERE entry = 33212;  
+    UPDATE creature_template SET ScriptName = 'mob_mimiron_inferno' WHERE entry = 33370;
+    UPDATE creature_template SET ScriptName = 'mob_thorims_hammer' WHERE entry = 33365;
+    UPDATE creature_template SET ScriptName = 'mob_lorekeeper' WHERE entry=33686;
+
+    -- grünes leuchten
+    DELETE FROM spell_script_target WHERE spell_script_target.entry = 63295;
+    INSERT INTO spell_script_target (entry, type, targetEntry) VALUES (63295,1,33367);
+    -- blaues  leuchten
+    DELETE FROM spell_script_target WHERE spell_script_target.entry = 63294;
+    INSERT INTO spell_script_target (entry, type, targetEntry) VALUES (63294,1,33212),(63294,1,33365);
+    -- gelbes(rotes) leuchten
+    DELETE FROM spell_script_target WHERE spell_script_target.entry = 63292;
+    INSERT INTO spell_script_target (entry, type, targetEntry) VALUES (63292,1,33370);
+
+
+    -- Freya Wall (Pflanzen)
+    DELETE FROM spell_script_target WHERE spell_script_target.entry = 62906;
+    INSERT INTO spell_script_target (entry, type, targetEntry) VALUES (62906,1,33060),(62906,1,33109) ;
+
+    -- Hodir Fury (Eis)
+    DELETE FROM spell_script_target WHERE spell_script_target.entry = 62533;
+    INSERT INTO spell_script_target (entry, type, targetEntry) VALUES (62533,1,33060),(62533,1,33109);
+
+    -- mimiron inferno (Feuer)
+    DELETE FROM spell_script_target WHERE spell_script_target.entry = 62909;
+    INSERT INTO spell_script_target (entry, type, targetEntry) VALUES (62909,1,33369);
+
+    -- Thorim Hammer
+    DELETE FROM spell_script_target WHERE spell_script_target.entry = 62911 ;
+    INSERT INTO spell_script_target (entry, type, targetEntry) VALUES (62911 ,1,33060),(62911 ,1,33109);
 
 -- Ignis
-UPDATE creature_template SET mechanic_immune_mask=617299803, scriptname='boss_ignis' WHERE entry=33118;
-UPDATE creature_template SET ScriptName = 'mob_iron_construct' WHERE entry = 33121;
-REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('64474', '1', '33118');
-REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('64475', '1', '33118');
--- this may not be correct
-UPDATE creature_template SET minlevel=80, maxlevel=80, faction_h=1925, faction_a=1925, scale=0.5, scriptname='mob_scorch_target' WHERE entry=33221;
+    UPDATE creature_template SET mechanic_immune_mask=617299803, scriptname='boss_ignis' WHERE entry=33118;
+    UPDATE creature_template SET ScriptName = 'mob_iron_construct' WHERE entry = 33121;
+    REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('64474', '1', '33118');
+    REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('64475', '1', '33118');
+    -- this may not be correct
+    UPDATE creature_template SET minlevel=80, maxlevel=80, faction_h=1925, faction_a=1925, scale=0.5, scriptname='mob_scorch_target' WHERE entry=33221;
 
 -- Razorscale
-UPDATE creature_template SET mechanic_immune_mask=617299803, scriptname='boss_razorscale' WHERE entry=33186;
+    UPDATE creature_template SET mechanic_immune_mask=617299803, scriptname='boss_razorscale' WHERE entry=33186;
 -- original x=587.547, y= -174.927, z = 391.517; make the boss fly before encounter starts
-UPDATE creature SET position_x = 590.346741, position_y = -226.947647, position_z = 442.897583 WHERE id = 33186;
-UPDATE gameobject_template SET flags= 6553648, ScriptName='go_broken_harpoon' WHERE entry = 194565;
--- only 2 harpoons for 10 man
-UPDATE gameobject SET spawnMask = 2 WHERE guid IN (73595, 73592);
--- mole machines & adds
-UPDATE creature_template SET ScriptName = 'mob_mole_machine' WHERE entry = 33245;
-UPDATE creature_template SET ScriptName = 'mob_dark_rune_watcher' WHERE entry = 33453;
-UPDATE creature_template SET ScriptName = 'mob_dark_rune_sentinel' WHERE entry = 33846;
-UPDATE creature_template SET ScriptName = 'mob_dark_rune_guardian' WHERE entry = 33388;
-UPDATE creature_template SET ScriptName = 'npc_expedition_commander' WHERE entry = 33210;
-UPDATE creature_template SET ScriptName = 'mob_devouring_flame_target' WHERE entry = 34188;
+    UPDATE creature SET position_x = 590.346741, position_y = -226.947647, position_z = 442.897583 WHERE id = 33186;
+
+    DELETE FROM spell_script_target WHERE spell_script_target.entry = 63524;
+    INSERT INTO spell_script_target VALUES (63524 ,1,33282);
+    DELETE FROM spell_script_target WHERE spell_script_target.entry = 63657;
+    INSERT INTO spell_script_target VALUES (63657 ,1,33282);
+    DELETE FROM spell_script_target WHERE spell_script_target.entry = 63658;
+    INSERT INTO spell_script_target VALUES (63658 ,1,33282);
+    DELETE FROM spell_script_target WHERE spell_script_target.entry = 63659;
+    INSERT INTO spell_script_target VALUES (63659 ,1,33282);
+
+    DELETE FROM spell_script_target WHERE spell_script_target.entry = 62505;
+    INSERT INTO spell_script_target VALUES (62505 ,1,33186);
+
+
+    UPDATE gameobject_template SET data3 = 180000, ScriptName='go_repair_harpoon' WHERE entry IN (194543,194542,194541,194519);
+    -- only 2 harpoons for 10 man
+    UPDATE gameobject SET spawnMask = 2 WHERE guid IN (73595, 73592);
+    -- mole machines & adds
+    UPDATE creature_template SET ScriptName = 'mob_mole_machine' WHERE entry = 33245;
+    UPDATE creature_template SET ScriptName = 'mob_dark_rune_watcher' WHERE entry = 33453;
+    UPDATE creature_template SET ScriptName = 'mob_dark_rune_sentinel' WHERE entry = 33846;
+    UPDATE creature_template SET ScriptName = 'mob_dark_rune_guardian' WHERE entry = 33388;
+    UPDATE creature_template SET ScriptName = 'npc_expedition_commander' WHERE entry = 33210;
+    UPDATE creature_template SET ScriptName = 'mob_devouring_flame_target' WHERE entry IN (34189, 34188);
 
 -- XT002
-UPDATE creature_template SET mechanic_immune_mask=617299803, scriptname='boss_xt002' WHERE entry=33293;
+UPDATE creature_template SET mechanic_immune_mask=617299803, scriptname='boss_xt_002' WHERE entry=33293;
 UPDATE creature_template SET ScriptName = 'mob_pummeler' WHERE entry = 33344;
 UPDATE creature_template SET speed_run=0.5, faction_a=1925, faction_h=1925, scriptname='mob_boombot' WHERE entry=33346;
 UPDATE creature_template SET speed_run=0.5 WHERE entry=33343;
@@ -123,13 +171,13 @@ INSERT INTO `creature_loot_template` VALUES
 -- Kologarn
 DELETE FROM creature WHERE id IN (32933, 32934);
 -- fix arms position because of the missing vehicles
-INSERT INTO creature (guid, id, map, spawnMask, phaseMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES (600123, 32933, 603, 3, 1, 0, 0, 1799.68, -24.3599, 452.227, 3.14747, 604800, 0, 0, 543855, 0, 0, 0);
-INSERT INTO creature (guid, id, map, spawnMask, phaseMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES (600124, 32934, 603, 3, 1, 0, 0, 1799.68, -24.3599, 452.227, 3.14747, 604800, 0, 0, 543855, 0, 0, 0);
+INSERT INTO creature (id, map, spawnMask, phaseMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES (32933, 603, 3, 65535, 0, 0, 1799.68, -24.3599, 452.227, 3.14747, 604800, 0, 0, 543855, 0, 0, 0);
+INSERT INTO creature (id, map, spawnMask, phaseMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES (32934, 603, 3, 65535, 0, 0, 1799.68, -24.3599, 452.227, 3.14747, 604800, 0, 0, 543855, 0, 0, 0);
 UPDATE creature_model_info SET bounding_radius=15, combat_reach=15 WHERE modelid IN (28638, 28822, 28821);
 UPDATE creature_template SET mechanic_immune_mask=617299803, unit_flags = 0, scriptname='boss_kologarn' WHERE entry=32930;
 UPDATE creature_template SET mechanic_immune_mask=652951551, scriptname='boss_right_arm' WHERE entry=32934;
 UPDATE creature_template SET mechanic_immune_mask=652951551, scriptname='boss_left_arm' WHERE entry=32933;
-UPDATE creature_template SET ScriptName = 'mob_ulduar_rubble' WHERE entry IN (33768, 33809);
+UPDATE creature_template SET ScriptName = 'mob_ulduar_rubble' WHERE entry IN (33768, 33809, 33908, 33942);
 UPDATE `gameobject` SET `position_y` = -35.6824, `position_x` = 1837.59 WHERE `id` IN (195047);
 UPDATE `creature_template` SET `RegenHealth` = 1 WHERE `entry` = 33910;
 UPDATE `creature_template` SET `RegenHealth` = 1 WHERE `entry` = 33911;
@@ -219,12 +267,9 @@ UPDATE creature_template SET ScriptName = 'mob_flashFreeze' WHERE entry IN (3292
 UPDATE `creature_template` SET `modelid_1` = 15880 WHERE `entry` = 33174;
 UPDATE `creature_template` SET `modelid_2` = 28470, ScriptName = 'mob_icicle' WHERE `entry` = 33169;
 -- flash freeze that will lock the npcs IN iceblock
-UPDATE creature_template SET `modelid_1` = 25865 WHERE entry IN (32938, 33353);
-UPDATE creature_template SET ScriptName = 'mob_npc_flashFreeze' WHERE entry IN (32938);
+UPDATE creature_template SET `modelid_1` = 25865, ScriptName = 'mob_npc_flashFreeze' WHERE entry IN (32938, 33353);
 UPDATE creature SET spawnMask = 3 WHERE id IN (32938);
 UPDATE creature SET spawnMask = 2 WHERE id IN (32901, 32900, 32950, 32946,33333, 33330, 33326);
-UPDATE `creature_template` SET `minhealth` = 5647 WHERE `entry` = 32938;
-
 UPDATE creature_template SET ScriptName = 'npc_hodir_priest' WHERE entry IN (32897, 33326, 32948, 33330);
 UPDATE creature_template SET ScriptName = 'npc_hodir_druid' WHERE entry IN (33325, 32901, 32941, 33333);
 UPDATE creature_template SET ScriptName = 'npc_hodir_shaman' WHERE entry IN (33328, 32900, 33332, 32950);
@@ -238,8 +283,8 @@ UPDATE creature SET position_x = 2000.9, position_y = -231.232 WHERE guid = 1319
 -- priest
 UPDATE creature SET position_x = 2009.06, position_y = -244.058 WHERE guid = 131933;
 DELETE FROM creature WHERE guid IN (800005);
-INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
-(800005, 32897, 603, 3, 128,0,0, 2009.06, -244.058, 432.687, 1.68485, 7200,0,0, 5647, 0, 0, 0);		-- ally priest 
+INSERT INTO creature VALUES
+(800005, 32897, 603, 3, 128,0,0, 2009.06, -244.058, 432.687, 1.68485, 7200,0,0, 5647, 0, 0, 0);		-- aly priest 
 -- shaman
 UPDATE creature SET position_x = 1983.75, position_y = -243.358 WHERE id = 33328;
 UPDATE creature SET position_x = 1983.75, position_y = -243.358 WHERE id = 33332;
@@ -250,23 +295,23 @@ UPDATE creature SET position_x = 2021.12, position_y = -236.648 WHERE id = 33325
 -- druid
 UPDATE creature SET position_x = 2013.5, position_y = -240.338 WHERE id = 32901;
 DELETE FROM creature WHERE guid IN (800006);
-INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
+INSERT INTO creature VALUES
 (800006, 32938, 603, 2, 1,0,0, 2013.5, -240.338, 432.687, 1.68485, 7200,0,0, 5647, 0, 0, 0);
 -- shaman:
 UPDATE creature SET position_x = 2011.48, position_y = -232.79 WHERE id = 32900;
 UPDATE creature SET position_x = 2011.48, position_y = -232.79 WHERE id = 32950;
 DELETE FROM creature WHERE guid IN (800007);
-INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
+INSERT INTO creature VALUES
 (800007, 32938, 603, 2, 1,0,0, 2011.48, -232.79, 432.687, 1.68485, 7200,0,0, 5647, 0, 0, 0);
 -- mage:
 DELETE FROM creature WHERE guid IN (800008, 800010);
-INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
+INSERT INTO creature VALUES
 (800008, 33327, 603, 2, 128,0,0, 1978.49, -241.476, 432.687, 1.68485, 7200,0,0, 5647, 0, 0, 0), -- aly mage
 (800010, 32938, 603, 2, 1,0,0, 1978.49, -241.476, 432.687, 1.68485, 7200,0,0, 5647, 0, 0, 0);
 -- priest
 UPDATE creature SET position_x = 1997.88, position_y = -239.394 WHERE id = 33330;
 DELETE FROM creature WHERE guid IN (800009);
-INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
+INSERT INTO creature VALUES
 (800009, 32938, 603, 2, 1,0,0, 1997.88, -239.394, 432.687, 1.68485, 7200,0,0, 5647, 0, 0, 0);
 
 -- Mimiron
@@ -351,7 +396,7 @@ UPDATE creature_template SET ScriptName = 'mob_thorim_preadds' WHERE entry IN (3
 UPDATE creature SET spawnMask = 3 WHERE id = 32873;
 UPDATE creature_template SET ScriptName = 'npc_sif' WHERE entry = 33196;
 UPDATE `gameobject` SET `position_y` = -286.67, `position_z` = 419.50 WHERE `id` IN (194312, 194313, 194314, 194315);
--- UPDATE gameobject_template SET flags = 6553632, ScriptName='go_thorim_lever' WHERE entry = 194264; -- script doesnt existance
+UPDATE gameobject_template SET flags = 6553632, ScriptName='go_thorim_lever' WHERE entry = 194264;
 -- adds
 UPDATE creature_template SET ScriptName = 'mob_dark_rune_acolyte' WHERE entry = 33110;
 UPDATE creature_template SET ScriptName = 'mob_dark_rune_champion' WHERE entry = 32876;
@@ -359,7 +404,6 @@ UPDATE creature_template SET ScriptName = 'mob_dark_rune_commoner' WHERE entry =
 UPDATE creature_template SET ScriptName = 'mob_dark_rune_warbringer' WHERE entry = 32877;
 UPDATE creature_template SET ScriptName = 'mob_dark_rune_ring_guard' WHERE entry = 32874;
 UPDATE creature_template SET ScriptName = 'mob_dark_rune_honor_guard' WHERE entry = 33125;
-UPDATE creature_template SET ScriptName = 'mob_dark_rune_evoker' WHERE entry = 32878;
 
 #DELETE FROM gameobject WHERE id = 194264; 
 #INSERT INTO gameobject VALUES (110010,194264,603,3,65535,2173.276, -252.805, 420.146, 3.027,0,0,0,0,604800,0,1);
@@ -384,13 +428,10 @@ REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('625
 
 -- Vezax
 UPDATE creature_template SET unit_flags = 0, ScriptName = 'boss_vezax' WHERE entry = 33271;
-UPDATE creature_template SET MinHealth = 23009250, MaxHealth = 23009250 WHERE entry = 33449;
+UPDATE creature_template SET MinHealth = 23009250, MaxHealth = 23009250, ScriptName = 'boss_vezax' WHERE entry = 33449;
 UPDATE `creature_template` SET `mechanic_immune_mask` = 619397115 WHERE `entry` IN (33271, 33449);
 UPDATE creature_template SET ScriptName = 'mob_saronite_animus' WHERE entry = 33524;
 UPDATE creature_template SET ScriptName = 'mob_saronite_vapor', movementType = 1  WHERE entry = 33488;
-
--- official sd2 sql clean up for ulduar
-DELETE FROM scripted_event_id WHERE id=9735;
 
 -- Yogg
 UPDATE creature_template SET ScriptName = 'boss_yogg_saron' WHERE entry = 33288;
@@ -423,7 +464,7 @@ INSERT INTO gameobject VALUES (110000,194635,603,3,65535,2022.490,-25.389,261.96
 DELETE FROM gameobject WHERE guid = 110001;
 INSERT INTO gameobject VALUES (110001,194462,603,3,65535,2104.555, -25.635,242.646,0,0,0,0,0,604800,100,1);
 DELETE FROM creature WHERE id IN (33890);
-INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES (800000,33890,603,3,65535,0,0,1981.422,-22.442,255.011,0,604800,0,0,1371428,0,0,0);
+INSERT INTO creature VALUES (800000,33890,603,3,65535,0,0,1981.422,-22.442,255.011,0,604800,0,0,1371428,0,0,0);
 
 -- Algalon
 UPDATE creature_template SET ScriptName = 'boss_algalon' WHERE entry = 32871;
@@ -445,13 +486,11 @@ UPDATE creature_template SET `npcflag` = 1, `unit_flags` = 2, ScriptName = 'thor
 UPDATE creature_template SET `npcflag` = 1, `unit_flags` = 2, ScriptName = 'mimiron_image' WHERE entry = 33412;
 -- INSERT keepers imagees INTO the db
 DELETE FROM creature WHERE guid IN (800001, 800002, 800003, 800004);
-INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
+INSERT INTO creature VALUES
 (800001, 33410, 603, 3, 65535,0,0, 2036.892, 25.621, 411.358, 3.83, 604800,0,0, 5647, 0, 0, 0),		-- Freya 
 (800002, 33412, 603, 3, 65535,0,0, 1939.215, 42.677, 411.355, 5.31, 604800,0,0, 5647, 0, 0, 0),		-- Mimiron
 (800003, 33411, 603, 3, 65535,0,0, 1939.195, -90.662, 411.357, 1.06, 604800,0,0, 5647, 0, 0, 0), 	-- Hodir
 (800004, 33413, 603, 3, 65535,0,0, 2036.674, -73.814, 411.355, 2.51, 604800,0,0, 5647, 0, 0, 0); 	-- Thorim
-
-UPDATE `creature_template` SET `minhealth` = 5647 WHERE `entry` = 33410;
 
 -- Doors 
 UPDATE gameobject_template SET faction = 114 WHERE entry IN (194553, 194554, 194556, 194148, 194634, 194635, 194905, 194441,
@@ -469,12 +508,6 @@ UPDATE gameobject SET spawntimesecs = -604800 WHERE id IN (195046, 195047, 19430
 -- NOT SURE IF THE TRASH MOBS ARE SCRIPTED BY EVENTAI
 -- Mobs
 UPDATE creature_template SET ScriptName = 'generic_creature' WHERE entry IN (34086, 34085, 34069, 33237, 34234, 33236, 33264, 34164, 34196, 34199, 34198, 
-34190, 34197, 33699, 34134, 34135, 34133, 33430, 33528, 33431, 33527, 33526, 33525, 33355, 33354, 34193, 34183, 
-33822, 33818, 33824, 33823, 33772, 33838, 33819, 33820, 32875);
+34190, 34197, 33699, 34134, 34135, 34133, 33430, 33528, 33431, 33527, 33526, 33525, 33355, 33354, 34193, 34183, 33110, 
+32878, 33822, 33818, 33824, 33823, 33772, 33838, 33819, 33820, 32875, 33346, 34057);
 
-UPDATE `creature_template` SET `minhealth` = 50400 WHERE `entry` = 34004;
-UPDATE `creature_template` SET `minhealth` = 5647 WHERE `entry` = 33413;
-UPDATE `creature_template` SET `minhealth` = 5647 WHERE `entry` = 33411;
-UPDATE `creature_template` SET `minhealth` = 5647 WHERE `entry` = 33412;
-UPDATE `creature_template` SET `minhealth` = 5647, `minmana` = 0 WHERE `entry` = 33327;
-UPDATE `creature_template` SET `minhealth` = 5647, `minmana` = 0 WHERE `entry` = 32897;

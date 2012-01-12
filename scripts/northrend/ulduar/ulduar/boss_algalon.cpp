@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2012 ScriptDev2 <http://www.scriptdev2.com/>
+/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -122,13 +122,13 @@ struct MANGOS_DLL_DECL mob_black_holeAI : public ScriptedAI
 {
     mob_black_holeAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
 
         SetCombatMovement(false);
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ulduar* m_pInstance;
 
     bool m_bHasAura;
     uint32 m_uiRaidCheckTimer;
@@ -187,7 +187,7 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
 {
     boss_algalonAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         m_bHasStarted       = false;    // flag used to check if the encounter has been started from the console
@@ -200,7 +200,7 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ulduar* m_pInstance;
     bool m_bIsRegularMode;   
 
     uint32 m_uiBerserk_Timer;
@@ -499,7 +499,7 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
                 // berserk
                 if(m_uiBerserk_Timer < uiDiff)
                 {
-                    DoScriptText(SAY_BERSERK, m_creature);    
+                    DoScriptText(SAY_BERSERK, m_creature);
                     DoCast(m_creature, SPELL_BERSERK);
                     m_uiBerserk_Timer = 360000;
                 }else m_uiBerserk_Timer -= uiDiff;
@@ -574,8 +574,6 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
                 m_uiOutroTimer = 5000;
                 break;
             case 3:
-                // make boss kneel
-//                m_creature->SetSplineFlags(SPLINEFLAG_UNKNOWN12);
                 if(m_bIsDespawned)
                 {
                     DoScriptText(SAY_DESPAWN1, m_creature);
@@ -671,12 +669,12 @@ struct MANGOS_DLL_DECL mob_collapsing_starAI : public ScriptedAI
 {
     mob_collapsing_starAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ulduar* m_pInstance;
     bool m_bIsRegularMode;
 
     uint32 m_uiHealthTimer;
@@ -731,7 +729,7 @@ struct MANGOS_DLL_DECL mob_collapsing_starAI : public ScriptedAI
             m_creature->DealDamage(m_creature, (m_creature->GetMaxHealth() * 0.01), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
             m_uiHealthTimer = 1000;
         }else m_uiHealthTimer -= uiDiff;
-    }    
+    }
 };
 
 //Living constellation
@@ -739,12 +737,12 @@ struct MANGOS_DLL_DECL mob_living_constellationAI : public ScriptedAI
 {
     mob_living_constellationAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ulduar* m_pInstance;
     bool m_bIsRegularMode;
 
     uint32 m_uiArcaneBarrageTimer;
@@ -777,7 +775,7 @@ struct MANGOS_DLL_DECL mob_cosmic_smash_targetAI : public ScriptedAI
 {
     mob_cosmic_smash_targetAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
         pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
@@ -785,7 +783,7 @@ struct MANGOS_DLL_DECL mob_cosmic_smash_targetAI : public ScriptedAI
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ulduar* m_pInstance;
     bool m_bIsRegularMode;
 
     uint32 m_uiSpellTimer;
@@ -809,13 +807,13 @@ struct MANGOS_DLL_DECL mob_cosmic_smash_targetAI : public ScriptedAI
             DoCast(m_creature, SPELL_COSMIC_SMASH_MISSILE);
             m_uiSpellTimer = 60000;
         }else m_uiSpellTimer -= uiDiff;
-    }    
+    }
 };
 
 
 bool GOHello_go_celestial_acces(Player* pPlayer, GameObject* pGo)
 {
-    ScriptedInstance* m_pInstance = (ScriptedInstance*)pGo->GetInstanceData();
+    instance_ulduar* m_pInstance = (instance_ulduar*)pGo->GetInstanceData();
     bool m_bIsRegularMode = pGo->GetMap()->IsRegularDifficulty();
     bool m_bHasItem = false;
 
@@ -845,7 +843,7 @@ bool GOHello_go_celestial_acces(Player* pPlayer, GameObject* pGo)
     }
 
     // start encounter
-    if (Creature* pAlgalon = pGo->GetMap()->GetCreature(m_pInstance->GetData64(NPC_ALGALON)))
+    if (Creature* pAlgalon = m_pInstance->GetSingleCreatureFromStorage(NPC_ALGALON))
     {
         if(pAlgalon->isAlive())
         {
@@ -853,8 +851,8 @@ bool GOHello_go_celestial_acces(Player* pPlayer, GameObject* pGo)
             pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
 
             // open celestial door
-            if(GameObject* pDoor = m_pInstance->instance->GetGameObject(m_pInstance->GetData64(GO_CELESTIAL_DOOR)))
-                m_pInstance->DoUseDoorOrButton(pDoor->GetGUID());
+            if(GameObject* pDoor = m_pInstance->GetSingleGameObjectFromStorage(GO_CELESTIAL_DOOR))
+                m_pInstance->DoUseDoorOrButton(pDoor->GetObjectGuid());
         }
     }
 
