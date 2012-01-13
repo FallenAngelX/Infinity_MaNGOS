@@ -1,8 +1,8 @@
-﻿DELETE FROM spell_script_target WHERE spell_script_target.entry = 48331;
+DELETE FROM spell_script_target WHERE entry = 48331;
 INSERT INTO spell_script_target VALUES
 (48331, 1, 27327);
 
-DELETE FROM spell_script_target WHERE spell_script_target.entry = 59930;
+DELETE FROM spell_script_target WHERE entry = 59930;
 INSERT INTO spell_script_target VALUES
 (59930, 1,26555);
 
