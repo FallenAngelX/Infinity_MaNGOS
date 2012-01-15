@@ -244,7 +244,7 @@ struct boss_skadi_graufAI : public ScriptedAI
     uint8 m_uiHarpoonHitCounter;
     uint8 m_uiHarpoonHitCounterAchiev;
     uint32 m_uiSummon;
-      
+
     void Reset()
     {
         isInFlight = false;
@@ -277,7 +277,7 @@ struct boss_skadi_graufAI : public ScriptedAI
             case 2: // rotating position
                 ++uiWaypointId;
                 uiMovementTimer = 1000;
-                break;             
+                break;
             case 3: // shoot position
             {
                 ++uiWaypointId;
@@ -355,7 +355,7 @@ struct boss_skadi_graufAI : public ScriptedAI
             m_creature->DealDamage(m_creature, m_creature->GetHealth(),  NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
         }
     }
-      
+
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -370,11 +370,12 @@ struct boss_skadi_graufAI : public ScriptedAI
             uiWaypointId = 1;
             uiMovementTimer = 1000;
         }
-        if (isInFlight)
+
+        if (isInFlight && m_creature->isAlive())
         {
             if (uiMovementTimer < uiDiff)
             {
-                m_creature->GetMotionMaster()->Clear();
+                m_creature->GetMotionMaster()->Clear(true,true);
                 m_creature->GetMotionMaster()->MovePoint(uiWaypointId, FlightPosition[uiWaypointId].x, FlightPosition[uiWaypointId].y, FlightPosition[uiWaypointId].z);
                 uiMovementTimer = 20000;
             }
