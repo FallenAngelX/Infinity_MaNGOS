@@ -54,6 +54,16 @@ enum
     BELGAR_TEXT_1          = 13268,
     BELGAR_TEXT_2          = 13269,
 
+    // Yells after Drakos dies
+    SAY_VAROS_INTRO                 = -1578020,
+    SAY_BELGARISTRASZ_GREET         = -1578021,
+
+    // world states to show how many constructs are still alive
+    WORLD_STATE_CONSTRUCTS          = 3524,
+    WORLD_STATE_CONSTRUCTS_COUNT    = 3486,
+
+    ACHIEV_START_EREGOS_ID          = 18153,            // eregos timed kill achiev
+
 };
 
 #endif

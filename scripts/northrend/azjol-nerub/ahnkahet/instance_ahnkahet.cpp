@@ -26,6 +26,7 @@ EndScriptData */
 #include "ahnkahet.h"
 
 instance_ahnkahet::instance_ahnkahet(Map* pMap) : ScriptedInstance(pMap),
+    m_bRespectElders(false),
     m_uiDevicesActivated(0)
 {
     Initialize();
@@ -42,6 +43,12 @@ void instance_ahnkahet::OnCreatureCreate(Creature* pCreature)
         case NPC_ELDER_NADOX:
         case NPC_JEDOGA_SHADOWSEEKER:
         case NPC_TALDARAM:
+            break;
+        case NPC_AHNKAHAR_GUARDIAN_EGG:
+            m_GuardianEggList.push_back(pCreature->GetObjectGuid());
+            break;
+        case NPC_AHNKAHAR_SWARM_EGG:
+            m_SwarmerEggList.push_back(pCreature->GetObjectGuid());
             break;
     }
     m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
@@ -75,6 +82,10 @@ void instance_ahnkahet::SetData(uint32 uiType, uint32 uiData)
     {
         case TYPE_NADOX:
             m_auiEncounter[uiType] = uiData;
+            if (uiData == IN_PROGRESS)
+                m_bRespectElders = true;
+            if (uiData == SPECIAL)
+                m_bRespectElders = false;
             break;
         case TYPE_TALDARAM:
             if (uiData == SPECIAL)
@@ -128,6 +139,40 @@ void instance_ahnkahet::SetData(uint32 uiType, uint32 uiData)
     }
 }
 
+ObjectGuid instance_ahnkahet::SelectRandomGuardianEggGuid()
+{
+    if (m_GuardianEggList.empty())
+        return ObjectGuid();
+
+    std::list<ObjectGuid>::iterator iter = m_GuardianEggList.begin();
+    advance(iter, urand(0, m_GuardianEggList.size()-1));
+
+    return *iter;
+}
+
+ObjectGuid instance_ahnkahet::SelectRandomSwarmerEggGuid()
+{
+    if (m_SwarmerEggList.empty())
+        return ObjectGuid();
+
+    std::list<ObjectGuid>::iterator iter = m_SwarmerEggList.begin();
+    advance(iter, urand(0, m_SwarmerEggList.size()-1));
+
+    return *iter;
+}
+
+bool instance_ahnkahet::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/)
+{
+    switch (uiCriteriaId)
+    {
+        case ACHIEV_CRIT_RESPECT_ELDERS:
+            return m_bRespectElders;
+
+        default:
+            return false;
+    }
+}
+
 void instance_ahnkahet::Load(const char* chrIn)
 {
     if (!chrIn)
@@ -149,6 +194,7 @@ void instance_ahnkahet::Load(const char* chrIn)
 
     OUT_LOAD_INST_DATA_COMPLETE;
 }
+
 uint32 instance_ahnkahet::GetData(uint32 uiType)
 {
     switch(uiType)

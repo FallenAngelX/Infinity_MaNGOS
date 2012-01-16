@@ -28,9 +28,6 @@ enum AhnkahetInstance
     GO_ANCIENT_DEVICE_R     = 193094,
     GO_VORTEX               = 193564,
 
-    NPC_ELDER_NADOX               = 29309,
-    NPC_AHNKAHAR_GUARDIAN_EGG     = 30173,
-    NPC_AHNKAHAR_SWARM_EGG        = 30172,
     NPC_AHNKAHAR_GUARDIAN         = 30176,
     NPC_AHNKAHAR_SWARMER          = 30178,
 
@@ -39,8 +36,16 @@ enum AhnkahetInstance
     NPC_TWILIGHT_INITIATE   = 30114,
 
 
+
+    NPC_ELDER_NADOX             = 29309,
+    NPC_AHNKAHAR_GUARDIAN_EGG   = 30173,
+    NPC_AHNKAHAR_SWARM_EGG      = 30172,
+    //NPC_JEDOGA_SHADOWSEEKER   = 29310,
+
+    ACHIEV_START_VOLAZJ_ID      = 20382,
+
     ACHIEV_CRITERIA_VOLUNTEER_WORK      = 7359,
-    ACHIEV_CRITERIA_RESPECT_YOUR_ELDERS = 7317,
+    ACHIEV_CRIT_RESPECT_ELDERS  = 7317,             // Nadox, achiev 2038
 };
 
 class MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
@@ -58,6 +63,11 @@ class MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
 
         uint32 GetData(uint32 uiType);
 
+        ObjectGuid SelectRandomGuardianEggGuid();
+        ObjectGuid SelectRandomSwarmerEggGuid();
+
+        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/);
+
         const char* Save() { return strInstData.c_str(); }
         void Load(const char* chrIn);
 
@@ -65,7 +75,12 @@ class MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string strInstData;
 
-        uint8  m_uiDevicesActivated;
+        bool m_bRespectElders;
+
+        uint8 m_uiDevicesActivated;
+
+        GUIDList m_GuardianEggList;
+        GUIDList m_SwarmerEggList;
 };
 
 #endif

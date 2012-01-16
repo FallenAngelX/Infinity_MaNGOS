@@ -8,11 +8,16 @@
 enum
 {
     MAX_ENCOUNTER                  = 4,
+    MAX_SPECIAL_ACHIEV_CRITS       = 2,
 
     TYPE_TELESTRA                  = 0,
     TYPE_ANOMALUS                  = 1,
     TYPE_ORMOROK                   = 2,
     TYPE_KERISTRASZA               = 3,
+    TYPE_INTENSE_COLD_FAILED       = 4,
+
+    TYPE_ACHIEV_CHAOS_THEORY       = 0,
+    TYPE_ACHIEV_SPLIT_PERSONALITY  = 1,
 
     NPC_TELESTRA                   = 26731,
     NPC_ANOMALUS                   = 26763,
@@ -29,6 +34,10 @@ enum
     GO_CONTAINMENT_SPHERE_ORMOROK  = 188528,
 
     SPELL_FROZEN_PRISON             = 47854,
+
+    ACHIEV_CRIT_CHAOS_THEORY        = 7316,                 // Anomalus, achiev 2037
+    ACHIEV_CRIT_INTENSE_COLD        = 7315,                 // Keristrasza, achiev 2036
+    ACHIEV_CRIT_SPLIT_PERSONALITY   = 7577,                 // Telestra, achiev 2150
 };
 
 class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
@@ -44,6 +53,9 @@ class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
         uint32 GetData(uint32 uiType);
         void SetData(uint32 uiType, uint32 uiData);
 
+        void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
+        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/);
+
         const char* Save() { return m_strInstData.c_str(); }
 
         void Load(const char* chrIn);
@@ -51,6 +63,10 @@ class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
     private:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
+
+        bool m_abAchievCriteria[MAX_SPECIAL_ACHIEV_CRITS];
+
+        std::set<uint32> m_sIntenseColdFailPlayers;
 };
 
 #endif
