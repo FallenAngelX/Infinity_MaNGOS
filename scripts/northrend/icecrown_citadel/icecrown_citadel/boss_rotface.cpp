@@ -16,7 +16,7 @@
 
 /* ScriptData
 SDName: boss_rotface
-SD%Complete: 
+SD%Complete: 99%
 SDComment: 
 SDCategory: Icecrown Citadel
 EndScriptData */
@@ -321,7 +321,7 @@ struct MANGOS_DLL_DECL mob_little_oozeAI : public ScriptedAI
     {
         if (m_pInstance)
         {
-            if (m_pInstance->GetData(TYPE_PUTRICIDE) != IN_PROGRESS)
+            if (m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
             {
                 m_creature->ForcedDespawn();
                 return;
@@ -386,7 +386,7 @@ struct MANGOS_DLL_DECL mob_big_oozeAI : public ScriptedAI
     {
         if (m_pInstance)
         {
-            if (m_pInstance->GetData(TYPE_PUTRICIDE) != IN_PROGRESS)
+            if (m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
             {
                 m_creature->ForcedDespawn();
                 return;
@@ -475,7 +475,7 @@ struct MANGOS_DLL_DECL mob_sticky_oozeAI : public ScriptedAI
     {
         if (m_pInstance)
         {
-            if (m_pInstance->GetData(TYPE_PUTRICIDE) != IN_PROGRESS)
+            if (m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
             {
                 m_creature->ForcedDespawn();
                 return;
