@@ -387,11 +387,11 @@ struct MANGOS_DLL_DECL mob_bone_spikeAI : public ScriptedAI
     void Reset(){}
     void AttackStart(Unit *pWho){}
 
-    void PassengerBoarded(Unit *pPassenger, int8 seat, bool bBoarded)
+    void JustDied(Unit *Killer)
     {
-        if (!bBoarded)
+        if (Unit *pCreator = m_creature->GetCreator())
         {
-            pPassenger->RemoveAurasDueToSpell(SPELL_IMPALED);
+            pCreator->RemoveAurasDueToSpell(SPELL_IMPALED);
             m_creature->ForcedDespawn();
         }
     }
