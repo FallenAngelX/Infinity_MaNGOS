@@ -182,7 +182,7 @@ UPDATE `gameobject_template` SET `faction` = '114' WHERE `gameobject_template`.`
 UPDATE `gameobject` SET `state` = '0' WHERE `id` IN (201371);
 UPDATE `creature_template` SET `ScriptName`='mob_vile_gas_malleable_goo', unit_flags = 0, `AIName`='', `flags_extra` = `flags_extra` | 2 | 128  WHERE `entry` IN (38548, 38556);
 -- orange gas stalker
-UPDATE `creature_template` SET `faction_A` = 2212, `faction_H` = 2212,  `ScriptName`='', `AIName`='' WHERE `entry`= 36659;
+UPDATE `creature_template` SET `unit_flags` = `unit_flags` & ~33554432 & ~2, `faction_A` = 2212, `faction_H` = 2212,  `ScriptName`='', `AIName`='' WHERE `entry`= 36659;
 DELETE FROM `spell_script_target` WHERE `entry` IN (69157, 69162, 69164);
 INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
 (69157, 1, 36659),
