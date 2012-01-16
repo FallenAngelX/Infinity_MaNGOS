@@ -198,7 +198,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
             DoMark(max);
 
             // set timers
-            m_uiIceTombTimer    = 6000;
+            m_uiIceTombTimer    = 5500;
             m_uiFrostBombTimer  = 12000;
             m_uiPhaseTimer      = 35000;
         }
