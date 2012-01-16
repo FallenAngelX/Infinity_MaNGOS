@@ -23,8 +23,9 @@ enum
     TYPE_SINDRAGOSA             = 11,
     TYPE_KINGS_OF_ICC           = 12,
     TYPE_LICH_KING              = 13,
-    TYPE_ICECROWN_QUESTS        = 14,
-    TYPE_COUNT                  = 15,
+    TYPE_FROSTMOURNE_ROOM       = 14,
+    TYPE_ICECROWN_QUESTS        = 15,
+    TYPE_COUNT                  = 16,
     MAX_ENCOUNTERS,
 
     TYPE_STINKY,
@@ -52,7 +53,6 @@ enum
 
     NPC_TIRION                  = 38995,
     NPC_MENETHIL                = 38579,
-    NPC_SPIRIT_WARDEN           = 38579,
 
     NPC_FROSTMOURNE_TRIGGER     = 38584,
     NPC_FROSTMOURNE_HOLDER      = 27880,
