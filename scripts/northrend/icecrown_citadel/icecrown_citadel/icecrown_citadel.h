@@ -9,7 +9,6 @@
 
 enum
 {
-
     TYPE_TELEPORT               = 0,
     TYPE_MARROWGAR              = 1,
     TYPE_DEATHWHISPER           = 2,
@@ -24,8 +23,9 @@ enum
     TYPE_SINDRAGOSA             = 11,
     TYPE_KINGS_OF_ICC           = 12,
     TYPE_LICH_KING              = 13,
-    TYPE_ICECROWN_QUESTS        = 14,
-    TYPE_COUNT                  = 15,
+    TYPE_FROSTMOURNE_ROOM       = 14,
+    TYPE_ICECROWN_QUESTS        = 15,
+    TYPE_COUNT                  = 16,
     MAX_ENCOUNTERS,
 
     TYPE_STINKY,
@@ -53,7 +53,6 @@ enum
 
     NPC_TIRION                  = 38995,
     NPC_MENETHIL                = 38579,
-    NPC_SPIRIT_WARDEN           = 38579,
 
     NPC_FROSTMOURNE_TRIGGER     = 38584,
     NPC_FROSTMOURNE_HOLDER      = 27880,
@@ -100,10 +99,10 @@ enum
     GO_FROSTWING_DOOR           = 201919,
     GO_GREEN_DRAGON_DOOR_1      = 201375, //1202
     GO_GREEN_DRAGON_DOOR_2      = 201374, //1200
-    GO_VALITHRIA_DOOR_1         = 201380, //1618
+    GO_VALITHRIA_DOOR_1         = 201381, //1618
     GO_VALITHRIA_DOOR_2         = 201382, //1482
     GO_VALITHRIA_DOOR_3         = 201383, //1335
-    GO_VALITHRIA_DOOR_4         = 201381, //1558
+    GO_VALITHRIA_DOOR_4         = 201380, //1558
 
     GO_SINDRAGOSA_DOOR_1        = 201369, //1619
     GO_SINDRAGOSA_DOOR_2        = 201379,
@@ -201,6 +200,59 @@ private:
     uint32 m_uiGunshipArmoryH_ID;
     uint32 m_uiValithriaCache;
     uint32 m_uiSaurfangCache;
+};
+
+struct MANGOS_DLL_DECL base_icc_bossAI : public ScriptedAI
+{
+    base_icc_bossAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_uiMapDifficulty = pCreature->GetMap()->GetDifficulty();
+        m_bIsHeroic = m_uiMapDifficulty > RAID_DIFFICULTY_25MAN_NORMAL;
+        m_bIs25Man = (m_uiMapDifficulty == RAID_DIFFICULTY_25MAN_NORMAL || m_uiMapDifficulty == RAID_DIFFICULTY_25MAN_HEROIC);
+        Reset();
+    }
+
+    ScriptedInstance* m_pInstance;
+    Difficulty m_uiMapDifficulty;
+    bool m_bIsHeroic;
+    bool m_bIs25Man;
+
+    void Reset(){}
+    void UpdateAI(const uint32 uiDiff){}
+
+    Unit* SelectRandomRangedTarget(Unit *pSource)
+    {
+        Unit *pResult = NULL;
+        std::list<Unit*> lTargets;
+        ThreatList const& tList = m_creature->getThreatManager().getThreatList();
+
+        for (ThreatList::const_iterator i = tList.begin();i != tList.end(); ++i)
+        {
+            if (!(*i)->getUnitGuid().IsPlayer())
+                continue;
+
+            if (Unit* pTmp = m_creature->GetMap()->GetUnit((*i)->getUnitGuid()))
+                lTargets.push_back(pTmp);
+        }
+
+        if (!lTargets.empty())
+        {
+            uint8 max = m_bIs25Man ? 8 : 3;
+            std::list<Unit*>::iterator iter;
+
+            lTargets.sort(ObjectDistanceOrderReversed(pSource));
+            iter = lTargets.begin();
+
+            if (max >= lTargets.size())
+                max = lTargets.size() - 1;
+
+            std::advance(iter, urand(0, max));
+            pResult = (*iter);
+        }
+
+        return pResult;
+    }
 };
 
 enum AchievementCriteriaIds
