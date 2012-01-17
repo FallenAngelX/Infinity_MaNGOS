@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2012 ScriptDev2 <http://www.scriptdev2.com/>
+/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -183,6 +183,7 @@ static Locations SpawnLoc[]=
             case NPC_VALITHRIA_QUEST:
             case NPC_SINDRAGOSA:
             case NPC_LICH_KING:
+            case NPC_TIRION:
             case NPC_RIMEFANG:
             case NPC_SPINESTALKER:
             case NPC_STINKY:
@@ -472,6 +473,9 @@ static Locations SpawnLoc[]=
              case TYPE_LICH_KING:
                 m_auiEncounter[TYPE_LICH_KING] = uiData;
                 break;
+             case TYPE_FROSTMOURNE_ROOM:
+                 m_auiEncounter[TYPE_FROSTMOURNE_ROOM] = uiData;
+                 break;
              case TYPE_ICECROWN_QUESTS:
                 m_auiEncounter[TYPE_ICECROWN_QUESTS] = uiData;
                 break;
@@ -525,6 +529,7 @@ static Locations SpawnLoc[]=
              case TYPE_SINDRAGOSA:
              case TYPE_KINGS_OF_ICC:
              case TYPE_LICH_KING:
+             case TYPE_FROSTMOURNE_ROOM:
              case TYPE_ICECROWN_QUESTS:
              case TYPE_COUNT:
                           return m_auiEncounter[uiType];
