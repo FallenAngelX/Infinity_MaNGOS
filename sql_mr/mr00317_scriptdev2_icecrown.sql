@@ -1,19 +1,20 @@
 DELETE FROM `script_texts` WHERE `entry` BETWEEN -1631594 AND -1631000;
-INSERT INTO `script_texts` (`entry`,`content_loc8`, `content_default`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
+INSERT INTO `script_texts` (`entry`,`content_loc6`, `content_loc7`, `content_loc8`, `content_default`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
 
 -- Lord Marrowgar
-('-1631001','Это начало и конец, смертные. Никто не может войти в Храм!','This is the beginning AND the end, mortals. None may enter the master\'s sanctum!','16950','1','0','0','marrowgar SAY_INTRO'),
-('-1631002','Проклятые несут миру смерть и разрушение!','The Scourge will wash over this world as a swarm of death and destruction!','16941','1','0','0','marrowgar SAY_AGGRO'),
-('-1631003','Шторм костей!','BONE STORM!','16946','1','0','0','marrowgar SAY_BONESTORM'),
-('-1631004','Проткнут костью!','Bound by bone!','16947','1','0','0','marrowgar SAY_BONESPIKE1'),
-('-1631005','Кости вокруг!','Stick Around!','16948','1','0','0','marrowgar SAY_BONESPIKE2'),
-('-1631006','Выход - только смерть!','The only escape is death!','16949','1','0','0','marrowgar SAY_BONESPIKE3'),
-('-1631007','Больше костей!','More bones for the offering!','16942','1','0','0','marrowgar SAY_KILL1'),
-('-1631008','Будьте прокляты!','Languish in damnation!','16943','1','0','0','marrowgar SAY_KILL2'),
-('-1631009','Я вижу... Только тьму...','I see... only darkness...','16944','1','0','0','marrowgar SAY_DEATH'),
-('-1631010','ЯРОСТЬ МАСТЕРА ТЕЧЕТ ЧЕРЕЗ МЕНЯ!','THE MASTER\'S RAGE COURSES THROUGH ME!','16945','3','0','0','marrowgar SAY_ENRAGE'),
+('-1631001','Este es el principio y el final, mortales. Nadie puede entrar en el sagrario del maestro.','Este es el principio y el final, mortales. Nadie puede entrar en el sagrario del maestro.','Это начало и конец, смертные. Никто не может войти в Храм!','This is the beginning AND the end, mortals. None may enter the master\'s sanctum!','16950','1','0','0','marrowgar SAY_INTRO'),
+('-1631002','La plaga arrasará este mundo como un enjambre de muerte y destrucción.','La plaga arrasará este mundo como un enjambre de muerte y destrucción.','Проклятые несут миру смерть и разрушение!','The Scourge will wash over this world as a swarm of death and destruction!','16941','1','0','0','marrowgar SAY_AGGRO'),
+('-1631003','¡TORMENTA DE HUESOS!','¡TORMENTA DE HUESOS!','Шторм костей!','BONE STORM!','16946','1','0','0','marrowgar SAY_BONESTORM'),
+('-1631004','¡Unidos por los huesos!','¡Unidos por los huesos!','Проткнут костью!','Bound by bone!','16947','1','0','0','marrowgar SAY_BONESPIKE1'),
+('-1631005','¡Quedaos cerca!','¡Quedaos cerca!','Кости вокруг!','Stick Around!','16948','1','0','0','marrowgar SAY_BONESPIKE2'),
+('-1631006','¡La única salida es la muerte!','¡La única salida es la muerte!','Выход - только смерть!','The only escape is death!','16949','1','0','0','marrowgar SAY_BONESPIKE3'),
+('-1631007','¡Más huesos para la ofrenda!','¡Más huesos para la ofrenda!','Больше костей!','More bones for the offering!','16942','1','0','0','marrowgar SAY_KILL1'),
+('-1631008','¡Púdrete en tu condena!','¡Púdrete en tu condena!','Будьте прокляты!','Languish in damnation!','16943','1','0','0','marrowgar SAY_KILL2'),
+('-1631009','¡LA RABIA DEL MAESTRO FLUYE DENTRO DE MI!','¡LA RABIA DEL MAESTRO FLUYE DENTRO DE MI!','Я вижу... Только тьму...','I see... only darkness...','16944','1','0','0','marrowgar SAY_DEATH'),
+('-1631010','Solo veo oscuridad...','Solo veo oscuridad...','ЯРОСТЬ МАСТЕРА ТЕЧЕТ ЧЕРЕЗ МЕНЯ!','THE MASTER\'S RAGE COURSES THROUGH ME!','16945','3','0','0','marrowgar SAY_ENRAGE');
 
 -- Lady Deathwhisper
+INSERT INTO `script_texts` (`entry`,`content_loc8`, `content_default`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
 ('-1631011','Вы нашли свой путь здесь, потому что вы принадлежите к числу немногих одаренных истинным видением мира, проклятого слепотой! Вы можете видеть сквозь туман, что висит над этим миром, как саван, и понять, где истинная сила лжи!','You have found your way here, because you are among the few gifted with true vision in a world cursed with blindness! You can see through the fog that hangs over this world like a shroud and grasp where true power lies!','16880','1','0','0','deathwhisper SAY_INTRO3'),
 ('-1631013','Взгляните на ваши мягкие руки! Сухожилия, мясо, кровь! Это слабость! Серьезная ошибка! Шутка создателя со своими творениями! Чем раньше вы поймете что жизнь - это дефект, тем раньше вы сможете преодолеть вашу слабость!','Fix your eyes upon your crude hands! The sinew, the soft meat, the dark blood coursing within! It is a weakness! A crippling flaw! A joke played by the creators upon their own creations! The sooner you come to accept your condition as a defect, the sooner you will find yourselves in a position to transcend it!','16878','1','0','0','deathwhisper SAY_INTRO1'),
 
@@ -261,15 +262,15 @@ INSERT INTO `script_texts` (`entry`,`content_loc8`, `content_default`, `sound`, 
 -- Gossips
 DELETE FROM `gossip_texts` WHERE `entry` BETWEEN -3631608 AND -3631600;
 INSERT INTO `gossip_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `comment`) VALUES
-('-3631600', "Light\'s Hammer", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Молот света", "IceCrown citadel teleporter text 1"),
-('-3631601', "Oratory of the Damned", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Молельня проклятых", "IceCrown citadel teleporter text 2"),
-('-3631602', "Rampart of Skulls", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Черепной вал", "IceCrown citadel teleporter text 3"),
-('-3631603', "Deathbringer\'s Rise", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Подъем Смертоносного", "IceCrown citadel teleporter text 4"),
-('-3631604', "Icecrown Citadel", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Цитадель Ледяной Короны", "IceCrown citadel teleporter text 5"),
-('-3631605', "The Sanctum of Blood", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Святилище крови", "IceCrown citadel teleporter text 6"),
-('-3631606', "Frost Queen\'s Lair", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Логово Королевы льда", "IceCrown citadel teleporter text 7"),
-('-3631607', "Frozen Throne", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Ледяной трон", "IceCrown citadel teleporter text 8"),
-('-3631608', "We are ready, Tirion!", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Всегда готовы, дедуля!", "IceCrown citadel Tirion gossip");
+('-3631600', "Light\'s Hammer", NULL, NULL, NULL, NULL, NULL, "Martillo de la Luz", "Martillo de la Luz", "Молот света", "IceCrown citadel teleporter text 1"),
+('-3631601', "Oratory of the Damned", NULL, NULL, NULL, NULL, NULL, "Oratorio de los Malditos", "Oratorio de los Malditos", "Молельня проклятых", "IceCrown citadel teleporter text 2"),
+('-3631602', "Rampart of Skulls", NULL, NULL, NULL, NULL, NULL, "La Muralla de las Calaveras", "La Muralla de las Calaveras", "Черепной вал", "IceCrown citadel teleporter text 3"),
+('-3631603', "Deathbringer\'s Rise", NULL, NULL, NULL, NULL, NULL, "Alto del Libramorte", "Alto del Libramorte", "Подъем Смертоносного", "IceCrown citadel teleporter text 4"),
+('-3631604', "Icecrown Citadel", NULL, NULL, NULL, NULL, NULL, "Ciudadela de la Corona de Hielo", "Ciudadela de la Corona de Hielo", "Цитадель Ледяной Короны", "IceCrown citadel teleporter text 5"),
+('-3631605', "The Sanctum of Blood", NULL, NULL, NULL, NULL, NULL, "El Sagrario de Sangre", "El Sagrario de Sangre", "Святилище крови", "IceCrown citadel teleporter text 6"),
+('-3631606', "Frost Queen\'s Lair", NULL, NULL, NULL, NULL, NULL, "La Guarida de la Reina de Escarcha", "La Guarida de la Reina de Escarcha", "Логово Королевы льда", "IceCrown citadel teleporter text 7"),
+('-3631607', "Frozen Throne", NULL, NULL, NULL, NULL, NULL, "El Trono Helado", "El Trono Helado", "Ледяной трон", "IceCrown citadel teleporter text 8"),
+('-3631608', "We are ready, Tirion!", NULL, NULL, NULL, NULL, NULL, "¡Estamos preparados, Tirion!", "¡Estamos preparados, Tirion!", "Всегда готовы, дедуля!", "IceCrown citadel Tirion gossip");
 
 -- Icecrown citadel spelltable
 
