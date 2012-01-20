@@ -459,6 +459,7 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\blackwing_lair\instance_blackwing_lair.cpp">
       <Filter>scripts\eastern_kingdoms\blackwing_lair</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\scripts\eastern_kingdoms\blasted_lands.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
     </ClCompile>
@@ -467,6 +468,10 @@
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\burning_steppes.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
+=======
+    <ClCompile Include="..\scripts\eastern_kingdoms\deadmines\boss_mr_smite.cpp">
+      <Filter>scripts\eastern_kingdoms\deadmines</Filter>
+>>>>>>> ffcf70dd7e44e8566120c51dcf32915a37396e99
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\deadmines\deadmines.cpp">
       <Filter>scripts\eastern_kingdoms\deadmines</Filter>

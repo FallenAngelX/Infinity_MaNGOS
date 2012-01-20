@@ -513,6 +513,7 @@ enum
     NPC_SARTHARION              = 28860,
     NPC_TALON_KING_IKISS        = 18473,
     NPC_KARGATH_BLADEFIST       = 16808,
+    NPC_ANUBARAK                = 29120,
 };
 
 bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
@@ -560,6 +561,10 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
         }
         case NPC_KARGATH_BLADEFIST:
             if (fX < 255.0f && fX > 205.0f)
+                return false;
+            break;
+        case NPC_ANUBARAK:
+            if (fY < 281.0f && fY > 228.0f)
                 return false;
             break;
         default:
