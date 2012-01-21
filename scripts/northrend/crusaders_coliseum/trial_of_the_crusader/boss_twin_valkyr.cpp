@@ -270,7 +270,7 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
 
         if (m_uiOrbsTimer <= uiDiff)
         {
-            for (uint i = 33; i < 37; i++)
+            for (uint32 i = 33; i < 37; i++)
             {
                 m_creature->SummonCreature(NPC_UNLEASHED_LIGHT, SpawnLoc[i].x + urand(2.0f, 10.0f), SpawnLoc[i].y + urand(2.0f, 10.0f), SpawnLoc[i].z, 0, TEMPSUMMON_TIMED_DESPAWN, 20000);
                 if (m_bIs25Man)
