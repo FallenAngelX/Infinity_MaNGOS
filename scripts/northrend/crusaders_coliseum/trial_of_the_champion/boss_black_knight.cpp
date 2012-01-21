@@ -1,5 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-* This program is free software; you can redistribute it and/or modify
+ * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -26,33 +26,33 @@ EndScriptData */
 
 enum
 {
-        SPELL_BERSERK                           = 47008,
-    //yells
+    SPELL_BERSERK                           = 47008,
+    // Yells
 
-    //undead
-    SPELL_PLAGUE_STRIKE            = 67724,
-    SPELL_PLAGUE_STRIKE_H        = 67884,
-    SPELL_ICY_TOUCH                = 67718,
-    SPELL_ICY_TOUCH_H            = 67881,
-    SPELL_OBLITERATE            = 67725,
-    SPELL_OBLITERATE_H            = 67883,
-    SPELL_CHOKE                = 68306,
-    //skeleton
-    SPELL_ARMY                = 42650, //replacing original one, since that one spawns millions of ghouls!!
-    //ghost
-    SPELL_DEATH                 = 67808,
-    SPELL_DEATH_H                = 67875,
-    SPELL_MARK                = 67823,
+    // Undead
+    SPELL_PLAGUE_STRIKE                     = 67724,
+    SPELL_PLAGUE_STRIKE_H                   = 67884,
+    SPELL_ICY_TOUCH                         = 67718,
+    SPELL_ICY_TOUCH_H                       = 67881,
+    SPELL_OBLITERATE                        = 67725,
+    SPELL_OBLITERATE_H                      = 67883,
+    SPELL_CHOKE                             = 68306,
+    // Skeleton
+    SPELL_ARMY                              = 42650, //replacing original one, since that one spawns millions of ghouls!!
+    // Ghost
+    SPELL_DEATH                             = 67808,
+    SPELL_DEATH_H                           = 67875,
+    SPELL_MARK                              = 67823,
 
-    //risen ghoul
-    SPELL_CLAW                    = 67879,
-    SPELL_EXPLODE                = 67729,
-    SPELL_EXPLODE_H                = 67886,
-    SPELL_LEAP                    = 67749,
-    SPELL_LEAP_H                = 67880,
+    // Risen ghoul
+    SPELL_CLAW                              = 67879,
+    SPELL_EXPLODE                           = 67729,
+    SPELL_EXPLODE_H                         = 67886,
+    SPELL_LEAP                              = 67749,
+    SPELL_LEAP_H                            = 67880,
 
-    //sword ID
-    EQUIP_SWORD                    = 40343
+    // Sword ID
+    EQUIP_SWORD                             = 40343
 };
 
 // Risen Ghoul
@@ -86,23 +86,27 @@ struct MANGOS_DLL_DECL mob_toc5_risen_ghoulAI : public ScriptedAI
                 if (pTemp->isAlive())
                     if ((pTemp->GetHealth()*100 / pTemp->GetMaxHealth()) < 25)
                         DoCast(m_creature, m_bIsRegularMode ? SPELL_EXPLODE : SPELL_EXPLODE_H);
+
             if (m_creature->IsWithinDistInMap(m_creature->getVictim(), 4))
             {
                 DoCast(m_creature->getVictim(), SPELL_CLAW);
                 if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
                     m_creature->AI()->AttackStart(target);
+
                 Attack = 2500;
-            }else
-            if (m_creature->IsWithinDistInMap(m_creature->getVictim(), 30))
+            }
+            else if (m_creature->IsWithinDistInMap(m_creature->getVictim(), 30))
             {
                 DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_LEAP : SPELL_LEAP_H);
                 Attack = 2500;
             }
-        }else Attack -= diff;
+        }
+        else
+            Attack -= diff;
 
         if ((m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 25)
-        DoCast(m_creature, m_bIsRegularMode ? SPELL_EXPLODE : SPELL_EXPLODE_H);
-        
+            DoCast(m_creature, m_bIsRegularMode ? SPELL_EXPLODE : SPELL_EXPLODE_H);
+
         DoMeleeAttackIfReady();
     }
 };
@@ -133,7 +137,7 @@ struct MANGOS_DLL_DECL boss_black_knightAI : public ScriptedAI
     uint32 Mark_Timer;
     uint32 Phase_Delay;
     uint32 Summon_Ghoul;
-        uint32 m_uiBerserk_Timer;
+    uint32 m_uiBerserk_Timer;
     bool phase1;
     bool phase2;
     bool phase3;
@@ -141,7 +145,7 @@ struct MANGOS_DLL_DECL boss_black_knightAI : public ScriptedAI
 
     void Reset()
     {
-    m_creature->SetRespawnDelay(DAY);
+        m_creature->SetRespawnDelay(DAY);
         m_creature->SetDisplayId(29837);
         SetEquipmentSlots(false, EQUIP_SWORD, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
         Plague_Strike_Timer = m_bIsRegularMode ? 5000 : 4000;
@@ -155,40 +159,41 @@ struct MANGOS_DLL_DECL boss_black_knightAI : public ScriptedAI
         phase3 = false;
         ghoul = false;
         m_creature->GetMotionMaster()->MovePoint(0, 746, 614, m_creature->GetPositionZ());
-                m_creature->SetWalk(true);
+        m_creature->SetWalk(true);
     }
-
 
     void Aggro(Unit* pWho)
     {
         if (!m_pInstance)
             return;
+
         if (m_pInstance->GetData(TYPE_BLACK_KNIGHT) != DONE)
             m_pInstance->SetData(TYPE_BLACK_KNIGHT, IN_PROGRESS);
     }
 
     void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
     {
-        if ((uiDamage > m_creature->GetHealth() || 
-        m_creature->GetHealth()/m_creature->GetHealth() <= 0.1 )  && !phase3){
+        if ((uiDamage > m_creature->GetHealth() || m_creature->GetHealth()/m_creature->GetHealth() <= 0.1 )  && !phase3)
+        {
             uiDamage = 0;
             if (phase2)
                 StartPhase3();
+
             if (phase1)
                 StartPhase2();
         }
     }
 
-
     void JustDied(Unit* pKiller)
     {
         if (!m_pInstance)
             return;
+
         if (phase3 && !phase1 && !phase2)
         {
             m_pInstance->SetData(TYPE_BLACK_KNIGHT, DONE);
         }
-/*        if (phase2 && !phase1 && !phase3)
+/*      if (phase2 && !phase1 && !phase3)
             if (!m_creature->isAlive())
             {
                 m_creature->Respawn();
@@ -236,55 +241,72 @@ struct MANGOS_DLL_DECL boss_black_knightAI : public ScriptedAI
         {
             DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_PLAGUE_STRIKE : SPELL_PLAGUE_STRIKE_H);
             Plague_Strike_Timer = m_bIsRegularMode ? 10500 : 7000;
-        }else Plague_Strike_Timer -= diff;  
+        }
+        else
+            Plague_Strike_Timer -= diff;  
 
         if (Icy_Touch_Timer < diff && !phase3)
         {
             DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_ICY_TOUCH : SPELL_ICY_TOUCH_H);
             Icy_Touch_Timer = m_bIsRegularMode ? 10000 : 8000;
-        }else Icy_Touch_Timer -= diff;
+        }
+        else
+            Icy_Touch_Timer -= diff;
 
         if (Obliterate_Timer < diff && !phase3)
         {
             DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_OBLITERATE : SPELL_OBLITERATE_H);
             Obliterate_Timer = m_bIsRegularMode ? 11000 : 8000;
-        }else Obliterate_Timer -= diff;
+        }
+        else
+            Obliterate_Timer -= diff;
 
         if (Choke_Timer < diff && phase1)
         {
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
                 DoCast(m_creature->getVictim(), SPELL_CHOKE);
+
             Choke_Timer = m_bIsRegularMode ? 15000 : 10000;
-        }else Choke_Timer -= diff;
+        }
+        else
+            Choke_Timer -= diff;
 
         if (Summon_Ghoul < diff && phase1 && !ghoul)
         {
             if (m_pInstance->GetData(DATA_TOC5_ANNOUNCER) == m_pInstance->GetData(DATA_JAEREN))
-             m_creature->SummonCreature(NPC_RISEN_JAEREN, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                m_creature->SummonCreature(NPC_RISEN_JAEREN, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
             else
-            m_creature->SummonCreature(NPC_RISEN_ARELAS, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                m_creature->SummonCreature(NPC_RISEN_ARELAS, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
             ghoul = true;
-        }else Summon_Ghoul -= diff;
+        }
+        else
+            Summon_Ghoul -= diff;
 
         if (Mark_Timer < diff && phase3)
         {
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
                 DoCast(target, SPELL_MARK);
+
             Mark_Timer = m_bIsRegularMode ? 15000 : 10000;
-        }else Mark_Timer -= diff;
+        }
+        else
+            Mark_Timer -= diff;
 
         if (Death_Timer < diff && phase3)
         {
             DoCast(m_creature, m_bIsRegularMode ? SPELL_DEATH : SPELL_DEATH_H);
             Death_Timer = 3500;
-        }else Death_Timer -= diff;
+        }
+        else
+            Death_Timer -= diff;
 
         if (m_uiBerserk_Timer < diff)
         {
             DoCast(m_creature, SPELL_BERSERK);
             m_uiBerserk_Timer = m_bIsRegularMode ? 300000 : 180000;
         }
-        else  m_uiBerserk_Timer -= diff;
+        else
+            m_uiBerserk_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

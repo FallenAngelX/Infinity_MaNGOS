@@ -26,32 +26,32 @@ EndScriptData */
 
 enum
 {
-        SPELL_BERSERK                           = 47008,
-    //yells
+    SPELL_BERSERK                           = 47008,
+    // Yells
 
-    //eadric
-    SPELL_VENGEANCE                = 66889,
-    SPELL_RADIANCE                = 66862,
-    SPELL_RADIANCE_H            = 67681,
-    SPELL_HAMMER_OF_JUSTICE        = 66940,
-    SPELL_HAMMER                = 67680,
-    //paletress
-    SPELL_SMITE                    = 66536,
-    SPELL_SMITE_H                = 67674,
-    SPELL_HOLY_FIRE                = 66538,
-    SPELL_HOLY_FIRE_H            = 67676,
-    SPELL_RENEW                    = 66537,
-    SPELL_RENEW_H                = 67675,
-    SPELL_HOLY_NOVA                = 66546,
-    SPELL_SHIELD                = 66515,
-    SPELL_CONFESS                = 66547,
-    //memory
-    SPELL_FEAR                    = 66552,
-    SPELL_FEAR_H                = 67677,
-    SPELL_SHADOWS                = 66619,
-    SPELL_SHADOWS_H                = 67678,
-    SPELL_OLD_WOUNDS            = 66620,
-    SPELL_OLD_WOUNDS_H            = 67679,
+    // Eadric
+    SPELL_VENGEANCE                         = 66889,
+    SPELL_RADIANCE                          = 66862,
+    SPELL_RADIANCE_H                        = 67681,
+    SPELL_HAMMER_OF_JUSTICE                 = 66940,
+    SPELL_HAMMER                            = 67680,
+    // Paletress
+    SPELL_SMITE                             = 66536,
+    SPELL_SMITE_H                           = 67674,
+    SPELL_HOLY_FIRE                         = 66538,
+    SPELL_HOLY_FIRE_H                       = 67676,
+    SPELL_RENEW                             = 66537,
+    SPELL_RENEW_H                           = 67675,
+    SPELL_HOLY_NOVA                         = 66546,
+    SPELL_SHIELD                            = 66515,
+    SPELL_CONFESS                           = 66547,
+    // Memory
+    SPELL_FEAR                              = 66552,
+    SPELL_FEAR_H                            = 67677,
+    SPELL_SHADOWS                           = 66619,
+    SPELL_SHADOWS_H                         = 67678,
+    SPELL_OLD_WOUNDS                        = 66620,
+    SPELL_OLD_WOUNDS_H                      = 67679,
 };
 
 // Eadric The Pure
@@ -76,7 +76,7 @@ struct MANGOS_DLL_DECL boss_eadricAI : public ScriptedAI
 
     void Reset()
     {
-    m_creature->SetRespawnDelay(DAY);
+        m_creature->SetRespawnDelay(DAY);
         Vengeance_Timer = 1000;
         Radiance_Timer = m_bIsRegularMode ? 15000 : 8000;
         Hammer_Timer = m_bIsRegularMode ? 40000 : 10000;
@@ -84,13 +84,14 @@ struct MANGOS_DLL_DECL boss_eadricAI : public ScriptedAI
         m_uiBerserk_Timer = m_bIsRegularMode ? 300000 : 180000;
         HammerTarget.Clear();
         m_creature->GetMotionMaster()->MovePoint(0, 746, 614, m_creature->GetPositionZ());
-                m_creature->SetWalk(true);
+        m_creature->SetWalk(true);
     }
 
     void Aggro(Unit* pWho)
     {
         if (!m_pInstance)
             return;
+
         if (m_pInstance->GetData(TYPE_ARGENT_CHALLENGE) != DONE)
             m_pInstance->SetData(TYPE_ARGENT_CHALLENGE, IN_PROGRESS);
     }
@@ -99,6 +100,7 @@ struct MANGOS_DLL_DECL boss_eadricAI : public ScriptedAI
     {
         if (!m_pInstance)
             return;
+
         m_pInstance->SetData(TYPE_ARGENT_CHALLENGE, DONE);
     }
 
@@ -111,13 +113,17 @@ struct MANGOS_DLL_DECL boss_eadricAI : public ScriptedAI
         {
             DoCast(m_creature, SPELL_VENGEANCE);
             Vengeance_Timer = m_bIsRegularMode ? 12000 : 8000;
-        }else Vengeance_Timer -= diff;  
+        }
+        else
+            Vengeance_Timer -= diff;  
 
         if (Radiance_Timer < diff)
         {
             DoCast(m_creature, m_bIsRegularMode ? SPELL_RADIANCE : SPELL_RADIANCE_H);
             Radiance_Timer = m_bIsRegularMode ? 20000 : 12000;
-        }else Radiance_Timer -= diff;
+        }
+        else
+            Radiance_Timer -= diff;
 
         if (Hammer_Timer < diff)
         {
@@ -127,22 +133,27 @@ struct MANGOS_DLL_DECL boss_eadricAI : public ScriptedAI
                 HammerTarget = target->GetObjectGuid();
             }
             Hammer_Timer = m_bIsRegularMode ? 40000 : 15000;
-        }else Hammer_Timer -= diff;
+        }
+        else
+            Hammer_Timer -= diff;
 
         if (Hammer_Dmg_Timer < diff)
         {
             if (Unit* pHammerTarget = m_creature->GetMap()->GetUnit(HammerTarget))
                 DoCast(pHammerTarget, SPELL_HAMMER);
+
             Hammer_Dmg_Timer = m_bIsRegularMode ? 50000 : 15000;
         }
-        else Hammer_Dmg_Timer -= diff;
+        else
+            Hammer_Dmg_Timer -= diff;
 
         if (m_uiBerserk_Timer < diff)
         {
             DoCast(m_creature, SPELL_BERSERK);
             m_uiBerserk_Timer = m_bIsRegularMode ? 300000 : 180000;
         }
-        else  m_uiBerserk_Timer -= diff;
+        else
+            m_uiBerserk_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }
@@ -195,13 +206,15 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
     {
         if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
             _summoned->AddThreat(target);
-            summoned = true;
+
+        summoned = true;
     }
 
     void Aggro(Unit* pWho)
     {
         if (!m_pInstance)
             return;
+
         if (m_pInstance->GetData(TYPE_ARGENT_CHALLENGE) != DONE)
             m_pInstance->SetData(TYPE_ARGENT_CHALLENGE, IN_PROGRESS);
     }
@@ -210,6 +223,7 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
     {
         if (!m_pInstance)
             return;
+
         m_pInstance->SetData(TYPE_ARGENT_CHALLENGE, DONE);
     }
 
@@ -223,7 +237,9 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
                 DoCast(target, m_bIsRegularMode ? SPELL_SMITE : SPELL_SMITE_H);
             Smite_Timer = 2000;
-        }else Smite_Timer -= diff;  
+        }
+        else
+            Smite_Timer -= diff;  
 
         if (Holy_Fire_Timer < diff)
         {
@@ -231,14 +247,16 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
                 DoCast(target, m_bIsRegularMode ? SPELL_HOLY_FIRE : SPELL_HOLY_FIRE_H);
             Holy_Fire_Timer = m_bIsRegularMode ? 10000 : 7000;
-        }else Holy_Fire_Timer -= diff;
+        }
+        else
+            Holy_Fire_Timer -= diff;
 
         if (Renew_Timer < diff)
         {
             m_creature->CastStop(m_bIsRegularMode ? SPELL_SMITE : SPELL_SMITE_H);
             m_creature->CastStop(m_bIsRegularMode ? SPELL_HOLY_FIRE : SPELL_HOLY_FIRE_H);
             switch(urand(0, 1))
-                {
+            {
                 case 0:
                     if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_MEMORY))
                         if (pTemp->isAlive())
@@ -246,73 +264,100 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
                         else
                             DoCast(m_creature, m_bIsRegularMode ? SPELL_RENEW : SPELL_RENEW_H);
                 break;
-        case 1:
+                case 1:
                     DoCast(m_creature, m_bIsRegularMode ? SPELL_RENEW : SPELL_RENEW_H);
                 break;
             }
             Renew_Timer = 25000;
-        }else Renew_Timer -= diff;
+        }
+        else
+            Renew_Timer -= diff;
 
-    if (((m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 35 ) && !summoned )
-    {
+        if (((m_creature->GetHealth()*100 / m_creature->GetMaxHealth()) < 35 ) && !summoned)
+        {
             m_creature->CastStop(m_bIsRegularMode ? SPELL_SMITE : SPELL_SMITE_H);
             m_creature->CastStop(m_bIsRegularMode ? SPELL_HOLY_FIRE : SPELL_HOLY_FIRE_H);
             DoCast(m_creature, SPELL_HOLY_NOVA);
             switch(urand(0, 24))
-        {
-        case 0: m_creature->SummonCreature(MEMORY_ALGALON, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
-            break;
-        case 1: m_creature->SummonCreature(MEMORY_CHROMAGGUS, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+            {
+                case 0:
+                    m_creature->SummonCreature(MEMORY_ALGALON, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 2: m_creature->SummonCreature(MEMORY_CYANIGOSA, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 1:
+                    m_creature->SummonCreature(MEMORY_CHROMAGGUS, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 3: m_creature->SummonCreature(MEMORY_DELRISSA, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 2:
+                    m_creature->SummonCreature(MEMORY_CYANIGOSA, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 4: m_creature->SummonCreature(MEMORY_ECK, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 3:
+                    m_creature->SummonCreature(MEMORY_DELRISSA, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 5: m_creature->SummonCreature(MEMORY_ENTROPIUS, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 4:
+                    m_creature->SummonCreature(MEMORY_ECK, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 6: m_creature->SummonCreature(MEMORY_GRUUL, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 5:
+                    m_creature->SummonCreature(MEMORY_ENTROPIUS, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 7: m_creature->SummonCreature(MEMORY_HAKKAR, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 6:
+                    m_creature->SummonCreature(MEMORY_GRUUL, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 8: m_creature->SummonCreature(MEMORY_HEIGAN, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 7:
+                    m_creature->SummonCreature(MEMORY_HAKKAR, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 9: m_creature->SummonCreature(MEMORY_HEROD, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 8:
+                    m_creature->SummonCreature(MEMORY_HEIGAN, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 10: m_creature->SummonCreature(MEMORY_HOGGER, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 9:
+                    m_creature->SummonCreature(MEMORY_HEROD, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 11: m_creature->SummonCreature(MEMORY_IGNIS, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 10:
+                    m_creature->SummonCreature(MEMORY_HOGGER, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 12: m_creature->SummonCreature(MEMORY_ILLIDAN, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 11:
+                    m_creature->SummonCreature(MEMORY_IGNIS, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 13: m_creature->SummonCreature(MEMORY_INGVAR, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 12:
+                    m_creature->SummonCreature(MEMORY_ILLIDAN, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 14: m_creature->SummonCreature(MEMORY_KALITHRESH, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 13:
+                    m_creature->SummonCreature(MEMORY_INGVAR, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 15: m_creature->SummonCreature(MEMORY_LUCIFRON, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 14:
+                    m_creature->SummonCreature(MEMORY_KALITHRESH, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 16: m_creature->SummonCreature(MEMORY_MALCHEZAAR, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 15:
+                    m_creature->SummonCreature(MEMORY_LUCIFRON, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 17: m_creature->SummonCreature(MEMORY_MUTANUS, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 16:
+                    m_creature->SummonCreature(MEMORY_MALCHEZAAR, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 18: m_creature->SummonCreature(MEMORY_ONYXIA, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 17:
+                    m_creature->SummonCreature(MEMORY_MUTANUS, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 19: m_creature->SummonCreature(MEMORY_THUNDERAAN, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 18:
+                    m_creature->SummonCreature(MEMORY_ONYXIA, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 20: m_creature->SummonCreature(MEMORY_VANCLEEF, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 19:
+                    m_creature->SummonCreature(MEMORY_THUNDERAAN, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 21: m_creature->SummonCreature(MEMORY_VASHJ, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 20:
+                    m_creature->SummonCreature(MEMORY_VANCLEEF, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 22: m_creature->SummonCreature(MEMORY_VEKNILASH, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 21:
+                    m_creature->SummonCreature(MEMORY_VASHJ, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 23: m_creature->SummonCreature(MEMORY_VEZAX, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 22:
+                    m_creature->SummonCreature(MEMORY_VEKNILASH, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-        case 24: m_creature->SummonCreature(MEMORY_ARCHIMONDE, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                case 23:
+                    m_creature->SummonCreature(MEMORY_VEZAX, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
                     break;
-    }
-    Shield_Delay = 1000;
-    };
+                case 24:
+                    m_creature->SummonCreature(MEMORY_ARCHIMONDE, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+                    break;
+            }
+            Shield_Delay = 1000;
+        };
         if (Shield_Delay < diff && !shielded && summoned)
         {
             m_creature->CastStop(m_bIsRegularMode ? SPELL_SMITE : SPELL_SMITE_H);
@@ -320,17 +365,23 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
             DoCast(m_creature, SPELL_SHIELD);
             shielded = true;
             Shield_Check = m_bIsRegularMode ? 3000 : 5000;
-        }else Shield_Delay -= diff;
+        }
+        else
+            Shield_Delay -= diff;
 
         if (Shield_Check < diff && shielded)
         {
-        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_MEMORY))
+            if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_MEMORY))
                 if (!pTemp->isAlive())
                 {
                     m_creature->RemoveAurasDueToSpell(SPELL_SHIELD);
                     shielded = false;
-                } else Shield_Check = 1000;
-        }else Shield_Check -= diff;
+                }
+                else
+                    Shield_Check = 1000;
+        }
+        else
+            Shield_Check -= diff;
 
         if (m_uiBerserk_Timer < diff)
         {
@@ -387,22 +438,30 @@ struct MANGOS_DLL_DECL mob_toc5_memoryAI : public ScriptedAI
         {
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
                 DoCast(target, m_bIsRegularMode ? SPELL_OLD_WOUNDS : SPELL_OLD_WOUNDS_H);
+
             Old_Wounds_Timer = 10000;
-        }else Old_Wounds_Timer -= diff;  
+        }
+        else
+            Old_Wounds_Timer -= diff;  
 
         if (Fear_Timer < diff)
         {
             DoCast(m_creature, m_bIsRegularMode ? SPELL_FEAR : SPELL_FEAR_H);
             Fear_Timer = 40000;
-        }else Fear_Timer -= diff; 
+        }
+        else
+            Fear_Timer -= diff; 
 
         if (Shadows_Timer < diff)
         {
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
                 DoCast(target, m_bIsRegularMode ? SPELL_SHADOWS : SPELL_SHADOWS_H);
+
             Shadows_Timer = 10000;
-        }else Shadows_Timer -= diff; 
-        
+        }
+        else
+            Shadows_Timer -= diff; 
+
         DoMeleeAttackIfReady();
     }
 };

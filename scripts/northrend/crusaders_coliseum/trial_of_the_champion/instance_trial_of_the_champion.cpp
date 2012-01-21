@@ -76,16 +76,16 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
         switch (pPlayer->GetTeam())
         {
             case ALLIANCE:
-                  if (pPlayer && pPlayer->IsInWorld() && pPlayer->HasAura(HORDE_CONTROL_PHASE_SHIFT_1))
-                      pPlayer->RemoveAurasDueToSpell(HORDE_CONTROL_PHASE_SHIFT_1);
-                  pPlayer->CastSpell(pPlayer, HORDE_CONTROL_PHASE_SHIFT_2, false);
-                  break;
+                if (pPlayer && pPlayer->IsInWorld() && pPlayer->HasAura(HORDE_CONTROL_PHASE_SHIFT_1))
+                    pPlayer->RemoveAurasDueToSpell(HORDE_CONTROL_PHASE_SHIFT_1);
+                pPlayer->CastSpell(pPlayer, HORDE_CONTROL_PHASE_SHIFT_2, false);
+                break;
             case HORDE:
-                  if (pPlayer && pPlayer->IsInWorld() && pPlayer->HasAura(ALLIANCE_CONTROL_PHASE_SHIFT_1)) 
-                      pPlayer->RemoveAurasDueToSpell(ALLIANCE_CONTROL_PHASE_SHIFT_1);
-                  pPlayer->CastSpell(pPlayer, ALLIANCE_CONTROL_PHASE_SHIFT_2, false);
-                  break;
-        };
+                if (pPlayer && pPlayer->IsInWorld() && pPlayer->HasAura(ALLIANCE_CONTROL_PHASE_SHIFT_1)) 
+                    pPlayer->RemoveAurasDueToSpell(ALLIANCE_CONTROL_PHASE_SHIFT_1);
+                pPlayer->CastSpell(pPlayer, ALLIANCE_CONTROL_PHASE_SHIFT_2, false);
+                break;
+        }
     };
 
     void OnCreatureCreate(Creature* pCreature)
@@ -113,22 +113,18 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
                     m_uiChampionId3 = pCreature->GetEntry();
                 else
                     return;
-
                 break;
             }
-
             // Argent Challenge
             case NPC_EADRIC:
             case NPC_PALETRESS:
                 m_uiArgentChallengerID = pCreature->GetEntry();
                 break;
-
             // Coliseum Announcers
             case NPC_JAEREN:
             case NPC_ARELAS:
                 m_uiAnnouncerID = pCreature->GetEntry();
                 break;
-
             // Black Knight
             case NPC_BLACK_KNIGHT:
             case NPC_RISEN_JAEREN:
@@ -189,25 +185,25 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
         {
             case DATA_TOC5_ANNOUNCER:
                 m_uiAnnouncerID = uiData;
-            break;
+                break;
             case DATA_CHAMPIONID_1:
                 m_uiChampionId1 = uiData;
-            break;
+                break;
             case DATA_CHAMPIONID_2:
                 m_uiChampionId2 = uiData;
-            break;
+                break;
             case DATA_CHAMPIONID_3:
                 m_uiChampionId3 = uiData;
-            break;
+                break;
             case DATA_CHAMPIONS_COUNT:
                 m_uiChampionsCount = uiData;
-            break;
+                break;
             case DATA_ARGENT_CHALLENGER:
                 m_uiArgentChallengerID = uiData;
-            break;
+                break;
             case DATA_BLACK_KNIGHT_MINION:
                 m_uiBlackKnightMinionID = uiData;
-            break;
+                break;
             case TYPE_GRAND_CHAMPIONS:
                 m_auiEncounter[0] = uiData;
                 if (uiData == DONE)
@@ -223,7 +219,7 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
                 break;
             case TYPE_ARGENT_CHALLENGE:
                 m_auiEncounter[1] = uiData;
-                  if (uiData == DONE)
+                if (uiData == DONE)
                 {
                     if (m_uiArgentChallengerID == NPC_EADRIC)
                         if (GameObject* pChest = GetSingleGameObjectFromStorage(m_bIsRegularMode ? GO_EADRIC_LOOT : GO_EADRIC_LOOT_H))
@@ -282,9 +278,12 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
                 return m_uiBlackKnightMinionID;
             case DATA_TOC5_ANNOUNCER:
                 return m_uiAnnouncerID;
-            case TYPE_GRAND_CHAMPIONS: return m_auiEncounter[0];
-            case TYPE_ARGENT_CHALLENGE: return m_auiEncounter[1];
-            case TYPE_BLACK_KNIGHT: return m_auiEncounter[2];
+            case TYPE_GRAND_CHAMPIONS:
+                return m_auiEncounter[0];
+            case TYPE_ARGENT_CHALLENGE:
+                return m_auiEncounter[1];
+            case TYPE_BLACK_KNIGHT:
+                return m_auiEncounter[2];
         }
 
         return 0;
