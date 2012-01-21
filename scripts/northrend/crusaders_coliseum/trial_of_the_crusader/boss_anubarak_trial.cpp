@@ -253,7 +253,7 @@ struct MANGOS_DLL_DECL boss_anubarak_trialAI : public BSWScriptedAI
                             m_uiFrostSphereOneTimer = 40000;
                         }
                         else
-                           m_uiFrostSphereOneTimer -= uiDiff;
+                            m_uiFrostSphereOneTimer -= uiDiff;
 
                         if (m_uiPoundTimer <= uiDiff)
                         {   
@@ -261,7 +261,7 @@ struct MANGOS_DLL_DECL boss_anubarak_trialAI : public BSWScriptedAI
                                 m_uiPoundTimer = 20000;
                         }
                         else
-                           m_uiPoundTimer -= uiDiff;
+                            m_uiPoundTimer -= uiDiff;
 
                         if (m_uiColdTimer <= uiDiff)
                         {
@@ -300,7 +300,6 @@ struct MANGOS_DLL_DECL boss_anubarak_trialAI : public BSWScriptedAI
                             m_uiSubmergeAnubTimer -= uiDiff;
 
                         break;
-
                     case 1: 
                         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -321,7 +320,6 @@ struct MANGOS_DLL_DECL boss_anubarak_trialAI : public BSWScriptedAI
 
                         NextStep(2000);
                         break;
-
                     case 2:
                         if (m_uiPursuingTimer <= uiDiff)
                         {
@@ -363,7 +361,7 @@ struct MANGOS_DLL_DECL boss_anubarak_trialAI : public BSWScriptedAI
                             m_uiFrostSphereTwoTimer = 30000;
                         }
                         else
-                           m_uiFrostSphereTwoTimer -= uiDiff;
+                            m_uiFrostSphereTwoTimer -= uiDiff;
 
                         if (m_uiSummonScarabTimer <= uiDiff)
                         {
@@ -393,7 +391,6 @@ struct MANGOS_DLL_DECL boss_anubarak_trialAI : public BSWScriptedAI
                             m_uiSubmergePhaseTimer -= uiDiff;
 
                         break;
-
                     case 3:
                         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -418,7 +415,6 @@ struct MANGOS_DLL_DECL boss_anubarak_trialAI : public BSWScriptedAI
 
                         m_uiEventStep = 0;
                         break;
-
                     case 4: 
                         m_creature->CastSpell(m_creature, SPELL_LEECHING_SWARM, false);
                         DoScriptText(SAY_LOW_HEALTH, m_creature);
@@ -426,7 +422,6 @@ struct MANGOS_DLL_DECL boss_anubarak_trialAI : public BSWScriptedAI
                         m_uiEventStep = 5;
                         NextStep(3000);
                         break;
-
                     case 5: 
                         if (m_uiPoundTimer <= uiDiff)
                         {
