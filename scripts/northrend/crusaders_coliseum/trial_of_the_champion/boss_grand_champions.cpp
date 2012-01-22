@@ -103,13 +103,16 @@ struct MANGOS_DLL_DECL mob_toc5_warriorAI : public ScriptedAI
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_1))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_2))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_3))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
-//       m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, IN_PROGRESS);
+
+//      m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, IN_PROGRESS);
     }
 
     void JustDied(Unit* pKiller)
@@ -125,8 +128,10 @@ struct MANGOS_DLL_DECL mob_toc5_warriorAI : public ScriptedAI
             m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, DONE);
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_1))
                 pTemp->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_2))
                 pTemp->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_3))
                 pTemp->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
         }
@@ -231,12 +236,15 @@ struct MANGOS_DLL_DECL mob_toc5_mageAI : public ScriptedAI
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_1))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_2))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_3))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
 //      m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, IN_PROGRESS);
     }
 
@@ -253,8 +261,10 @@ struct MANGOS_DLL_DECL mob_toc5_mageAI : public ScriptedAI
             m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, DONE);
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_1))
                 pTemp->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_2))
                 pTemp->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_3))
                 pTemp->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
         }
@@ -293,6 +303,7 @@ struct MANGOS_DLL_DECL mob_toc5_mageAI : public ScriptedAI
         {
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
                 DoCast(target, m_bIsRegularMode ? SPELL_POLYMORPH : SPELL_POLYMORPH_H);
+
             Polymorph_Timer = m_bIsRegularMode ? 20000 : 15000;
         }
         else
@@ -358,12 +369,15 @@ struct MANGOS_DLL_DECL mob_toc5_shamanAI : public ScriptedAI
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_1))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_2))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_3))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
 //      m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, IN_PROGRESS);
     }
 
@@ -380,8 +394,10 @@ struct MANGOS_DLL_DECL mob_toc5_shamanAI : public ScriptedAI
             m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, DONE);
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_1))
                 pTemp->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_2))
                 pTemp->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_3))
                 pTemp->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
         }
@@ -432,18 +448,17 @@ struct MANGOS_DLL_DECL mob_toc5_shamanAI : public ScriptedAI
                     mob3_health = 100;
             }
             if (mob1_health < mob2_health && mob1_health < mob3_health && mob1_health < 70)
-            {
                 if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_1))
                     DoCast(pTemp, m_bIsRegularMode ? SPELL_HEALING_WAVE : SPELL_HEALING_WAVE_H);
 
-                if (mob1_health > mob2_health && mob2_health < mob3_health && mob2_health < 70)
-                    if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_2))
-                        DoCast(pTemp, m_bIsRegularMode ? SPELL_HEALING_WAVE : SPELL_HEALING_WAVE_H);
+            if (mob1_health > mob2_health && mob2_health < mob3_health && mob2_health < 70)
+                if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_2))
+                    DoCast(pTemp, m_bIsRegularMode ? SPELL_HEALING_WAVE : SPELL_HEALING_WAVE_H);
 
-                if (mob3_health < mob2_health && mob1_health > mob3_health && mob3_health < 70)
-                    if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_3))
-                        DoCast(pTemp, m_bIsRegularMode ? SPELL_HEALING_WAVE : SPELL_HEALING_WAVE_H);
-            }
+            if (mob3_health < mob2_health && mob1_health > mob3_health && mob3_health < 70)
+                if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_3))
+                    DoCast(pTemp, m_bIsRegularMode ? SPELL_HEALING_WAVE : SPELL_HEALING_WAVE_H);
+
             Healing_Wave_Timer = m_bIsRegularMode ? 8000 : 6000;
         }
         else
@@ -455,25 +470,31 @@ struct MANGOS_DLL_DECL mob_toc5_shamanAI : public ScriptedAI
             {
                 case 0:
                     if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_1))
+                    {
                         if (pTemp->isAlive())
                             DoCast(pTemp, SPELL_EARTH_SHIELD);
                         else
                             DoCast(m_creature, SPELL_EARTH_SHIELD);
-                break;
-            case 1:
-                if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_2))
-                    if (pTemp->isAlive())
-                        DoCast(pTemp, SPELL_EARTH_SHIELD);
-                    else
-                        DoCast(m_creature, SPELL_EARTH_SHIELD);
-                break;
-            case 2:
-                if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_3))
-                    if (pTemp->isAlive())
-                        DoCast(pTemp, SPELL_EARTH_SHIELD);
-                    else
-                        DoCast(m_creature, SPELL_EARTH_SHIELD);
-                break;
+                    }
+                    break;
+                case 1:
+                    if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_2))
+                    {
+                        if (pTemp->isAlive())
+                            DoCast(pTemp, SPELL_EARTH_SHIELD);
+                        else
+                            DoCast(m_creature, SPELL_EARTH_SHIELD);
+                    }
+                    break;
+                case 2:
+                    if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_3))
+                    {
+                        if (pTemp->isAlive())
+                            DoCast(pTemp, SPELL_EARTH_SHIELD);
+                        else
+                            DoCast(m_creature, SPELL_EARTH_SHIELD);
+                    }
+                    break;
             }
             Earth_Shield_Timer = m_bIsRegularMode ? 35000 : 25000;
         }
@@ -540,19 +561,22 @@ struct MANGOS_DLL_DECL mob_toc5_hunterAI : public ScriptedAI
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_1))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_2))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_3))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
 //      m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, IN_PROGRESS);
     }
 
     void JustDied(Unit* pKiller)
     {
         if (!m_pInstance)
-         return;
+            return;
 
         m_pInstance->SetData(DATA_CHAMPIONS_COUNT, m_pInstance->GetData(DATA_CHAMPIONS_COUNT) - 1);
         m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
@@ -686,12 +710,15 @@ struct MANGOS_DLL_DECL mob_toc5_rogueAI : public ScriptedAI
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_1))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_2))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
         if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_3))
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
+
 //      m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, IN_PROGRESS);
     }
 
@@ -708,8 +735,10 @@ struct MANGOS_DLL_DECL mob_toc5_rogueAI : public ScriptedAI
             m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, DONE);
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_1))
                 pTemp->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_2))
                 pTemp->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_CHAMPION_3))
                 pTemp->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
         }
@@ -740,6 +769,7 @@ struct MANGOS_DLL_DECL mob_toc5_rogueAI : public ScriptedAI
         {
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
                 DoCast(m_creature, SPELL_POISON_BOTTLE);
+
             Poison_Timer = m_bIsRegularMode ? 10000 : 5000;
         }
         else

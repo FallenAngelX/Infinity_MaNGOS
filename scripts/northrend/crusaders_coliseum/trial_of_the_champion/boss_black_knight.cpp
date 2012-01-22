@@ -83,9 +83,11 @@ struct MANGOS_DLL_DECL mob_toc5_risen_ghoulAI : public ScriptedAI
         if (Attack < diff)
         {
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_BLACK_KNIGHT))
+            {
                 if (pTemp->isAlive())
                     if ((pTemp->GetHealth()*100 / pTemp->GetMaxHealth()) < 25)
                         DoCast(m_creature, m_bIsRegularMode ? SPELL_EXPLODE : SPELL_EXPLODE_H);
+            }
 
             if (m_creature->IsWithinDistInMap(m_creature->getVictim(), 4))
             {
@@ -176,6 +178,7 @@ struct MANGOS_DLL_DECL boss_black_knightAI : public ScriptedAI
         if ((uiDamage > m_creature->GetHealth() || m_creature->GetHealth()/m_creature->GetHealth() <= 0.1 )  && !phase3)
         {
             uiDamage = 0;
+
             if (phase2)
                 StartPhase3();
 
@@ -265,7 +268,6 @@ struct MANGOS_DLL_DECL boss_black_knightAI : public ScriptedAI
         {
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
                 DoCast(m_creature->getVictim(), SPELL_CHOKE);
-
             Choke_Timer = m_bIsRegularMode ? 15000 : 10000;
         }
         else
@@ -277,6 +279,7 @@ struct MANGOS_DLL_DECL boss_black_knightAI : public ScriptedAI
                 m_creature->SummonCreature(NPC_RISEN_JAEREN, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
             else
                 m_creature->SummonCreature(NPC_RISEN_ARELAS, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+
             ghoul = true;
         }
         else
@@ -286,7 +289,6 @@ struct MANGOS_DLL_DECL boss_black_knightAI : public ScriptedAI
         {
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
                 DoCast(target, SPELL_MARK);
-
             Mark_Timer = m_bIsRegularMode ? 15000 : 10000;
         }
         else

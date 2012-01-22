@@ -1,5 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
-* This program is free software; you can redistribute it and/or modify
+ * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
@@ -236,6 +236,7 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
         {
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
                 DoCast(target, m_bIsRegularMode ? SPELL_SMITE : SPELL_SMITE_H);
+
             Smite_Timer = 2000;
         }
         else
@@ -246,6 +247,7 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
             m_creature->CastStop(m_bIsRegularMode ? SPELL_SMITE : SPELL_SMITE_H);
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
                 DoCast(target, m_bIsRegularMode ? SPELL_HOLY_FIRE : SPELL_HOLY_FIRE_H);
+
             Holy_Fire_Timer = m_bIsRegularMode ? 10000 : 7000;
         }
         else
@@ -259,10 +261,12 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
             {
                 case 0:
                     if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_MEMORY))
+                    {
                         if (pTemp->isAlive())
                             DoCast(pTemp, m_bIsRegularMode ? SPELL_RENEW : SPELL_RENEW_H);
                         else
                             DoCast(m_creature, m_bIsRegularMode ? SPELL_RENEW : SPELL_RENEW_H);
+                    }
                 break;
                 case 1:
                     DoCast(m_creature, m_bIsRegularMode ? SPELL_RENEW : SPELL_RENEW_H);
@@ -357,7 +361,7 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
                     break;
             }
             Shield_Delay = 1000;
-        };
+        }
         if (Shield_Delay < diff && !shielded && summoned)
         {
             m_creature->CastStop(m_bIsRegularMode ? SPELL_SMITE : SPELL_SMITE_H);
@@ -372,6 +376,7 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
         if (Shield_Check < diff && shielded)
         {
             if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(DATA_MEMORY))
+            {
                 if (!pTemp->isAlive())
                 {
                     m_creature->RemoveAurasDueToSpell(SPELL_SHIELD);
@@ -379,6 +384,7 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
                 }
                 else
                     Shield_Check = 1000;
+            }
         }
         else
             Shield_Check -= diff;
@@ -388,7 +394,8 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
             DoCast(m_creature, SPELL_BERSERK);
             m_uiBerserk_Timer = m_bIsRegularMode ? 300000 : 180000;
         }
-        else  m_uiBerserk_Timer -= diff;
+        else
+            m_uiBerserk_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

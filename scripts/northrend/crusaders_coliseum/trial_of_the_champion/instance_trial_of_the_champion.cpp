@@ -78,15 +78,17 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
             case ALLIANCE:
                 if (pPlayer && pPlayer->IsInWorld() && pPlayer->HasAura(HORDE_CONTROL_PHASE_SHIFT_1))
                     pPlayer->RemoveAurasDueToSpell(HORDE_CONTROL_PHASE_SHIFT_1);
+
                 pPlayer->CastSpell(pPlayer, HORDE_CONTROL_PHASE_SHIFT_2, false);
                 break;
             case HORDE:
                 if (pPlayer && pPlayer->IsInWorld() && pPlayer->HasAura(ALLIANCE_CONTROL_PHASE_SHIFT_1)) 
                     pPlayer->RemoveAurasDueToSpell(ALLIANCE_CONTROL_PHASE_SHIFT_1);
+
                 pPlayer->CastSpell(pPlayer, ALLIANCE_CONTROL_PHASE_SHIFT_2, false);
                 break;
         }
-    };
+    }
 
     void OnCreatureCreate(Creature* pCreature)
     {
@@ -214,7 +216,7 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
                 }
                 if (uiData == FAIL)
                 {
-                      m_auiEncounter[0] = NOT_STARTED;
+                    m_auiEncounter[0] = NOT_STARTED;
                 }
                 break;
             case TYPE_ARGENT_CHALLENGE:
@@ -225,6 +227,7 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
                         if (GameObject* pChest = GetSingleGameObjectFromStorage(m_bIsRegularMode ? GO_EADRIC_LOOT : GO_EADRIC_LOOT_H))
                             if (pChest && !pChest->isSpawned())
                                 pChest->SetRespawnTime(DAY);
+
                     if (m_uiArgentChallengerID == NPC_PALETRESS)
                         if (GameObject* pChest = GetSingleGameObjectFromStorage(m_bIsRegularMode ? GO_PALETRESS_LOOT : GO_PALETRESS_LOOT_H))
                             if (pChest && !pChest->isSpawned())
@@ -232,14 +235,14 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
                 }
                 if (uiData == FAIL)
                 {
-                      m_auiEncounter[1] = NOT_STARTED;
+                    m_auiEncounter[1] = NOT_STARTED;
                 }
                 break;
             case TYPE_BLACK_KNIGHT:
                 m_auiEncounter[2] = uiData;
                 if (uiData == FAIL)
                 {
-                      m_auiEncounter[2] = NOT_STARTED;
+                    m_auiEncounter[2] = NOT_STARTED;
                 }
                 break;
         }
