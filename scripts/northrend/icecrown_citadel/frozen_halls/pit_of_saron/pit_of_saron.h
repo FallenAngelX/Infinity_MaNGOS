@@ -7,13 +7,12 @@
 
 enum
 {
-    MAX_ENCOUNTER                   = 5,
-
     TYPE_GARFROST                   = 0,
     TYPE_KRICK                      = 1,
     TYPE_TYRANNUS                   = 2,
     TYPE_GAUNTLET                   = 3,
     TYPE_INTRO                      = 4,
+    MAX_ENCOUNTER                   = 5,
 
     NPC_TYRANNUS_INTRO              = 36794,
     NPC_GARFROST                    = 36494,
@@ -70,7 +69,6 @@ class MANGOS_DLL_DECL instance_pit_of_saron : public ScriptedInstance
 
         void SetData(uint32 uiType, uint32 uiData);
         uint32 GetData(uint32 uiType);
-        uint64 GetData64(uint32 uiData);
 
         const char* Save() { return strInstData.c_str(); }
         void Load(const char* chrIn);
@@ -79,19 +77,6 @@ class MANGOS_DLL_DECL instance_pit_of_saron : public ScriptedInstance
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string strInstData;
 
-        // Creature GUIDs
-        uint64 m_uiTyrannusIntroGUID;
-        uint64 m_uiGarfrostGUID;
-        uint64 m_uiSlaveOneGUID;
-        uint64 m_uiKrickGUID;
-        uint64 m_uiKrickEventGUID;
-        uint64 m_uiIckGUID;
-        uint64 m_uiTyrannusGUID;
-        uint64 m_uiRimefangGUID;
-
-        // GameObject GUIDs
-        uint64 m_uiIcewallGUID;
-        uint64 m_uiHallsPortGUID;
 };
  
 

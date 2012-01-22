@@ -208,7 +208,7 @@ struct MANGOS_DLL_DECL npc_martin_gorkunAI: public ScriptedAI
                 case 2:
                     if(Creature* pTyrannus = m_creature->SummonCreature(NPC_TYRANNUS_INTRO, 695.46f, -156.31f, 546.061f, 4.7f, TEMPSUMMON_TIMED_DESPAWN, 10000))
                     {
-                        //pTyrannus->SetUInt64Value(UNIT_FIELD_TARGET, m_creature->GetGUID());
+                        //pTyrannus->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
                         pTyrannus->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                         m_uiTyrannusGuid = pTyrannus->GetObjectGuid();
                     }
