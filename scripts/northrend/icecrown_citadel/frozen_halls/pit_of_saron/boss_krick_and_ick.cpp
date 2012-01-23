@@ -42,31 +42,32 @@ enum
     SPELL_EXPLOSIVE_BARRAGE_ORB   = 69019,
     SPELL_EXPLOSIVE_BARRAGE_ORB_H = 70433,
 
-    SAY_KRICK_CHASE_1             = -1610064,
-    SAY_KRICK_CHASE_2             = -1610065,
-    SAY_KRICK_CHASE_3             = -1610066,
-    SAY_ICK_CHASE                 = -1609334, // invalid
-    SAY_KRICK_POISON              = -1610061,
-    SAY_ICK_POISON                = -1609336, // invalid
-    SAY_KRICK_BARRAGE             = -1610062,
-    SAY_KRICK_BARRAGE_EMOTE       = -1610063,
-    SAY_AGGRO                     = -1610060,
-    SAY_SLAY1                     = -1610067,
-    SAY_SLAY2                     = -1610068,
-    SAY_STOP                      = -1610069,
+    SAY_KRICK_CHASE_1             = -1658029,
+    SAY_KRICK_CHASE_2             = -1658030,
+    SAY_KRICK_CHASE_3             = -1658031,
+    SAY_ICK_CHASE                 = -1658034,
+    SAY_KRICK_POISON              = -1658028,
+    SAY_ICK_POISON                = -1658033,
 
-    SAY_OUTRO1              = -1610069,
-    SAY_OUTRO2_ALY          = -1610070,
-    SAY_OUTRO2_HORDE        = -1610071,
-    SAY_OUTRO3              = -1610072,
-    SAY_OUTRO4_ALY          = -1610073,
-    SAY_OUTRO4_HORDE        = -1610074,
-    SAY_OUTRO5              = -1610075,
-    SAY_OUTRO6_TYRANNUS     = -1610076,
-    SAY_OUTRO7              = -1610077,
-    SAY_OUTRO8_TYRANNUS     = -1610078,
-    SAY_OUTRO9_ALY          = -1610079,
-    SAY_OUTRO9_HORDE        = -1610080,
+    SAY_KRICK_BARRAGE             = -1658027,
+    SAY_KRICK_BARRAGE_EMOTE       = -1658032,
+    SAY_AGGRO                     = -1658024,
+    SAY_SLAY1                     = -1658025,
+    SAY_SLAY2                     = -1658026,
+    SAY_STOP                      = -1658035,
+
+    SAY_OUTRO1              = -1658035,
+    SAY_OUTRO2_ALY          = -1658036,
+    SAY_OUTRO2_HORDE        = -1658037,
+    SAY_OUTRO3              = -1658038,
+    SAY_OUTRO4_ALY          = -1658039,
+    SAY_OUTRO4_HORDE        = -1658040,
+    SAY_OUTRO5              = -1658041,
+    SAY_OUTRO6_TYRANNUS     = -1658042,
+    SAY_OUTRO7              = -1658043,
+    SAY_OUTRO8_TYRANNUS     = -1658044,
+    SAY_OUTRO9_ALY          = -1658045,
+    SAY_OUTRO9_HORDE        = -1658046,
 };
 
 const float KrickPos[4] = {856.237f, 120.484f, 510.01f, 3.48f};
@@ -712,7 +713,7 @@ struct MANGOS_DLL_DECL mob_explosive_orbAI : public ScriptedAI
             m_uiExplosiveBarrageTimer = 10000;
         }
         else
-            m_uiExplosiveBarrageTimer -= uiDiff;      
+            m_uiExplosiveBarrageTimer -= uiDiff;
     }
 };
 
@@ -740,12 +741,12 @@ void AddSC_boss_krick_and_ick()
 {
     Script *newscript;
     newscript = new Script;
-    newscript->Name = "boss_Ick";
+    newscript->Name = "boss_ick";
     newscript->GetAI = &GetAI_boss_Ick;
     newscript->RegisterSelf();
 
     newscript = new Script;
-    newscript->Name = "boss_Krick";
+    newscript->Name = "boss_krick";
     newscript->GetAI = &GetAI_boss_Krick;
     newscript->RegisterSelf();
 

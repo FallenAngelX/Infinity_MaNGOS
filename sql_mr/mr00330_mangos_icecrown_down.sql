@@ -20,15 +20,42 @@ UPDATE `creature_template` SET `equipment_id`='1290' where `entry` IN (36990, 37
 
 -- Pit of saron
 UPDATE `instance_template` SET `ScriptName`='instance_pit_of_saron' WHERE `map`=658;
-UPDATE `creature_template` SET `ScriptName`='boss_ick', `AIName` ='' WHERE `entry`=36476;
-UPDATE `creature_template` SET `ScriptName`='boss_krick', `AIName` ='' WHERE `entry`=36477;
-UPDATE `creature_template` SET `ScriptName`='mob_exploding_orb', `AIName` ='' WHERE `entry`=36610;
-UPDATE `creature_template` SET `ScriptName`='boss_forgemaster_garfrost', `AIName` ='' WHERE `entry`=36494;
-UPDATE `creature_template` SET `ScriptName`='boss_scourgelord_tyrannus', `AIName` ='' WHERE `entry`=36658;
-UPDATE `creature_template` SET `ScriptName`='boss_rimefang', `AIName` ='' WHERE `entry`=36661;
-UPDATE `creature_template` SET `ScriptName`='npc_jaina_or_sylvanas_POSintro', `AIName` ='' WHERE `entry` IN (36990,36993);
-UPDATE `creature_template` SET `ScriptName`='npc_jaina_or_sylvanas_POSoutro', `AIName` ='' WHERE `entry` IN (38189,38188);
 UPDATE `scripted_areatrigger` SET `ScriptName`='at_tyrannus' WHERE `entry`='5578';
+
+-- Boss
+DELETE FROM `gameobject` WHERE `id` = 201885;
+UPDATE `creature_template` SET `ScriptName`='boss_ick' WHERE `entry`=36476;
+UPDATE `creature_template` SET `ScriptName`='boss_krick' WHERE `entry`=36477;
+UPDATE `creature_template` SET `ScriptName`='mob_explosive_orb' WHERE `entry`=36610;
+UPDATE `creature_template` SET `ScriptName`='boss_rimefang' WHERE `entry`=36661;
+UPDATE `creature_template` SET `ScriptName`='npc_colapsing_icicle' WHERE `entry`=36847;
+
+UPDATE `creature_template` SET `equipment_id` = '2011', `unit_flags` = '0' WHERE `entry` = 36658;
+UPDATE `creature_template` SET `faction_A` = '14', `faction_H` = '14' WHERE `entry` = 36661;
+
+-- npc
+UPDATE `creature_template` SET `ScriptName`='npc_slyvanas_jaina_pos_start' WHERE `entry` in (36993, 36990);
+UPDATE `creature_template` SET `ScriptName`='npc_slyvanas_jaina_pos_end' WHERE `entry` in (38188, 38189);
+UPDATE `creature_template` SET `ScriptName`='npc_martin_gorkun' WHERE `entry` in (37591, 37592);
+update `creature` set spawnMask = 0 where `id` in (37591, 37592, 38188, 38189, 36731);
+update `creature` set spawnMask = 0 where `guid` in (123745, 123584, 123548, 123585);
+
+UPDATE `gameobject_template` SET faction = 114, data10 = 1 WHERE entry = 196485;
+
+DELETE FROM `creature` WHERE `id`=36658;
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(null, 36658, 658, 3, 1, 0, 0, 1018.38, 167.25, 651.871, 5.2709, 14400, 0, 0, 653828, 0, 0, 0);
+
+-- spells
+REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('69347', '1', '36794');
+REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('70521', '1', '37581');
+REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('70521', '1', '37580');
+
+DELETE FROM `spell_target_position` WHERE id IN (70860, 72546, 73655);
+INSERT INTO `spell_target_position` VALUES
+    (70860, 631, 529.302, -2124.49, 840.857, 3.1765),
+    (72546, 631, 514.000, -2523.00, 1050.990, 3.1765),
+    (73655, 631, 495.708, -2523.76, 1050.990, 3.1765);
 
 -- Halls of reflection
 UPDATE `instance_template` SET `ScriptName` = 'instance_halls_of_reflection' WHERE map=668;

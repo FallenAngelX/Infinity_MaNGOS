@@ -51,14 +51,14 @@ enum
     SPELL_ICY_BLAST_SLOW                = 69238,
     SPELL_ICY_BLAST_SLOW_H              = 69628,
 
-    SAY_OUTRO1_SLAVE_HORDE              = -1610094,
-    SAY_OUTRO1_SLAVE_ALLY               = -1610101,
-    SAY_OUTRO2_SLAVE                    = -1610095,
-    SAY_OUTRO3_HORDE                    = -1610096,
-    SAY_OUTRO3_ALY                      = -1610097,
-    SAY_OUTRO4_HORDE                    = -1610098,
-    SAY_OUTRO4_ALY                      = -1610099,
-    SAY_OUTRO5_ALY                      = -1610100,
+    SAY_OUTRO1_SLAVE_HORDE              = -1658061,
+    SAY_OUTRO1_SLAVE_ALLY               = -1658061,
+    SAY_OUTRO2_SLAVE                    = -1658062,
+    SAY_OUTRO3_HORDE                    = -1658064,
+    SAY_OUTRO3_ALY                      = -1658063,
+    SAY_OUTRO4_HORDE                    = -1658067,
+    SAY_OUTRO4_ALY                      = -1658065,
+    SAY_OUTRO5_ALY                      = -1658066,
 
     SPELL_FROST_BOMB                    = 70521,
 

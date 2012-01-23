@@ -1,100 +1,127 @@
 -- Pit of saron
-DELETE FROM `script_texts` WHERE `entry` BETWEEN -1658069 AND -1658001;
-INSERT INTO `script_texts` (`entry`,`content_default`,`content_loc1`,`content_loc2`,`content_loc3`,`content_loc4`,`content_loc5`,`content_loc6`,`content_loc7`,`content_loc8`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1658099 AND -1658000;
+
+INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
+(-1658001,'Intruders have entered the masters domain. Signal the alarms!',16747,1,0,0,'tyrannus SAY_TYRANNUS_INTRO_1'),
+(-1658004,'Hrmph, fodder. Not even fit to labor in the quarry. Relish these final moments for soon you will be nothing more than mindless undead.',16748,1,0,0,'tyrannus SAY_TYRANNUS_INTRO_2'),
+(-1658005,'Your last waking memory will be of agonizing pain.',16749,1,0,0,'tyrannus SAY_TYRANNUS_INTRO_3'),
+(-1658008,'Minions, destroy these interlopers!',16751,1,0,0,'tyrannus SAY_TYRANNUS_INTRO_4'),
 -- Garfrost
-(-1658001,'Tiny creatures under feet, you bring Garfrost something good to eat!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16912,1,0,0,'garfrost SAY_AGGRO'),
-(-1658002,'Will save for snack. For later.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16913,1,0,0,'garfrost SAY_SLAY_1'),
-(-1658003,'That one maybe not so good to eat now. Stupid Garfrost! BAD! BAD!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16914,1,0,0,'garfrost SAY_SLAY_2'),
-(-1658004,'Garfrost hope giant underpants clean. Save boss great shame. For later.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16915,1,0,0,'garfrost SAY_DEATH'),
-(-1658005,'Axe too weak. Garfrost make better and CRUSH YOU!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16916,1,0,0,'garfrost SAY_PHASE2'),
-(-1658006,'Garfrost tired of puny mortals. Now your bones will freeze!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16917,1,0,0,'garfrost SAY_PHASE3'),
-(-1658007,'Another shall take his place. You waste your time.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16752,1,0,0,'Tyrannus SAY_TYRANNUS_DEATH'),
+(-1658022,'%s hurls a massive saronite boulder at you!',0,5,0,0,'garfrost EMOTE_THROW_SARONITE'), -- TODO emote only displayed to target
+(-1658023,'%s casts Deep Freeze at $N.',0,3,0,0,'garfrost EMOTE_DEEP_FREEZE'),
+-- Krick
+(-1658032,'%s begins rapidly conjuring explosive mines!',0,3,0,0,'krick EMOTE_KRICK_MINES'),
+(-1658033,'%s begins to unleash a toxic poison cloud!',0,3,0,0,'ick EMOTE_ICK_POISON'),
+(-1658034,'%s is chasing you!',0,5,0,0,'ick EMOTE_ICK_CHASING'), -- TODO emote type?
+-- Tyrannus
+(-1658057,'Rimefang, destroy this fool!',16764,1,0,0,'tyrannus SAY_MARK'),
+(-1658058,'Power... overwhelming!',16765,1,0,0,'tyrannus SAY_SMASH'),
+(-1658059,'The frostwyrm %s gazes at $N and readies an icy attack!',0,3,0,0,'rimefang EMOTE_RIMEFANG_ICEBOLT'),
+(-1658060,'%s roars and swells with dark might!',0,3,0,0,'tyrannus EMOTE_SMASH');
+
+
+INSERT INTO `script_texts` (`entry`,`content_default`,`content_loc1`,`content_loc2`,`content_loc3`,`content_loc4`,`content_loc5`,`content_loc6`,`content_loc7`,`content_loc8`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
+
+-- Intro
+(-1658002, 'Heroes of the Alliance, attack!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 16626, 1, 0, 0, 'jaina_intro1'),
+(-1658006, 'No! You monster!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 16627, 1, 0, 0, 'jaina_intro2'),
+(-1658009, 'I do what I must. Please forgive me noble soldiers!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 16628, 1, 0, 0, 'jaina_intro3'),
+(-1658010, 'You will have to make your way across this quary on your own!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 16629, 1, 0, 0, 'jaina_intro4'),
+(-1658012, 'Free any alliance slaves that you come across! We will certianly need their assistance in battling Tyrannus. I will gather reinforcements and join you on the other side of the quary.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 16630, 1, 0, 0, 'jaina_intro5'),
+(-1658003, 'Soldiers of the Horde, attack!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 17045, 1, 0, 0, 'sylvanas_intro1'),
+(-1658007, 'Pathetic weaklings!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 17046, 1, 0, 0, 'sylvanas_intro2'),
+(-1658011, 'You will have to battle you way through this seespate on your own.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 17047, 1, 0, 0, 'sylvanas_intro3'),
+(-1658013, 'Free any horde slaves that you come across. We will certianly need their assistance in battling Tyrannus. I will gather reinforcements and join you on the other side of the quary.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 17048, 1, 0, 0, 'sylvanas_intro4'),
+
+-- Garfrost
+(-1658014, 'Tiny creatures under feet, you bring Garfrost something good to eat!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Маленьких букашек тыща принести Гархладу пища... Ха-ха-ха-ха', 16912, 1, 0, 0, 'aggro'),
+(-1658015, 'Will save for snack. For later.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Оставить на потом. Сейчас не хочу...', 16913, 1, 0, 0, 'slay'),
+(-1658019, 'That one maybe not so good to eat now. Stupid Garfrost! BAD! BAD!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Этот кусок сейчас лучше не есть, глупый Гархлад. Плохой! Плохой!', 16914, 1, 0, 0, 'slay2'),
+(-1658018, 'Axe too weak. Garfrost make better and CRUSH YOU!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Топор слабый. Гархлад, сделает другую штуку и раздавит вас', 16916, 1, 0, 0, '66%'),
+(-1658017, 'Garfrost hope giant underpants clean. Save boss great shame. For later.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Гархлад надеется, большие штаны чистые. Спасет от большого позора. Пока.', 16915, 1, 0, 0, 'death'),
+(-1658020, 'Another shall take his place. You waste your time.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Его место займет другой. Вы попусту тратите время', 16752, 1, 0, 0, 'tyranus_outro'),
+(-1658021, 'The forgemaster is dead! Get geared up men, we have a Scourgelord to kill.', NULL, NULL, NULL, NULL, NULL, '¡Héroes! ¡Retendremos a los no-muertos cuanto podamos, hasta nuestro aliento final! ¡Ocupaos del Señor de la Plaga!', NULL, NULL, 17148, 1, 0, 0, 'outro2'),
 
 -- Krick
-(-1658010,'Our work must not be interrupted! Ick! Take care of them!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16926,1,0,0,'Krick SAY_AGGRO'),
-(-1658011,'Ooh...We could probably use these parts!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16927,1,0,0,'Krick SAY_SLAY_1'),
-(-1658012,'Arms and legs are in short supply...Thanks for your contribution!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16928,1,0,0,'Krick SAY_SLAY_2'),
-(-1658013,'Enough moving around! Hold still while I blow them all up!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16929,1,0,0,'Krick SAY_BARRAGE_1'),
-(-1658014,'Krick begins rapidly conjuring explosive mines!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'Krick SAY_BARRAGE_2'),
-(-1658015,'Quickly! Poison them all while they''re still close!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16930,1,0,0,'Krick SAY_POISON_NOVA'),
-(-1658016,'No! That one! That one! Get that one!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16931,1,0,0,'Krick SAY_CHASE_1'),
-(-1658017,'I''ve changed my mind...go get that one instead!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16932,1,0,0,'Krick SAY_CHASE_2'),
-(-1658018,'What are you attacking him for? The dangerous one is over there,fool!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16933,1,0,0,'Krick SAY_CHASE_3'),
-
--- Ick
-(-1658020,'Ick begins to unleash a toxic poison cloud!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'Ick SAY_ICK_POISON_NOVA'),
-(-1658021,'Ick is chasing you!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'Ick SAY_ICK_CHASE_1'),
-
--- Krick OUTRO
-(-1658030,'Wait! Stop! Don''t kill me, please! I''ll tell you everything!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16934,1,0,0,'Krick SAY_KRICK_OUTRO_1'),
-(-1658031,'I''m not so naive as to believe your appeal for clemency, but I will listen.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16611,1,0,0,'Jaina SAY_JAINA_OUTRO_2'),
-(-1658032,'Why should the Banshee Queen spare your miserable life?',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,17033,1,0,0,'Sylvanas SAY_SYLVANAS_OUTRO_2'),
-(-1658033,'What you seek is in the master''s lair, but you must destroy Tyrannus to gain entry. Within the Halls of Reflection you will find Frostmourne. It... it holds the truth.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16935,1,0,0,'Krick SAY_KRICK_OUTRO_3'),
-(-1658034,'Frostmourne lies unguarded? Impossible!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16612,1,0,0,'Jaina SAY_JAINA_OUTRO_4'),
-(-1658035,'Frostmourne? The Lich King is never without his blade! If you are lying to me...',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,17034,1,0,0,'Sylvanas SAY_SYLVANAS_OUTRO_4'),
-(-1658036,'I swear it is true! Please, don''t kill me!!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16936,1,0,0,'Krick SAY_KRICK_OUTRO_5'),
-(-1658037,'Worthless gnat! Death is all that awaits you!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16753,1,0,0,'Tyrannus SAY_TYRANNUS_OUTRO_7'),
-(-1658038,'Urg... no!!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16937,1,0,0,'Krick SAY_KRICK_OUTRO_8'),
-(-1658039,'Do not think that I shall permit you entry into my master''s sanctum so easily. Pursue me if you dare.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16754,1,0,0,'Tyrannus SAY_TYRANNUS_OUTRO_9'),
-(-1658040,'What a cruel end. Come, heroes. We must see if the gnome''s story is true. If we can separate Arthas from Frostmourne, we might have a chance at stopping him.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16613,1,0,0,'Jaina SAY_JAINA_OUTRO_10'),
-(-1658041,'A fitting end for a traitor. Come, we must free the slaves and see what is within the Lich King''s chamber for ourselves.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,17035,1,0,0,'Sylvanas SAY_SYLVANAS_OUTRO_10'),
+(-1658024, 'Our work must not be interrupted! Ick! Take care of them!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Нельзя мешать нашей работе! Ик! Займемся ими!', 16926, 1, 0, 0, 'aggro'),
+(-1658028, 'Quickly! Poison them all while they\'re still close!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Скорей! Отрави их, пока они близко!', 16930, 1, 0, 0, 'poison_nova'),
+(-1658027, 'Enough moving around! Hold still while I blow them all up!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Хватит суетиться! Замри, пока я буду их взрывать!', 16929, 1, 0, 0, 'explosive_barrage'),
+(-1658029, 'No! That one! That one! Get that one!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Нет же! Целься в этого! Да вот в этого!', 16932, 1, 0, 0, 'pursue2'),
+(-1658030, 'I\'ve changed my mind...go get that one instead!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Я... передумал... лучше в этого!', 16931, 1, 0, 0, 'pursue1'),
+(-1658031, 'What are you attacking him for? The dangerous one is over there,fool!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Да что ты к тому привязался? Этот опаснее, тупица!', 16933, 1, 0, 0, 'pursue3'),
+(-1658025, 'Ooh...We could probably use these parts!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'О-хо-хо... Твои культяпки нам пригодятся!', 16927, 1, 0, 0, 'slay1'),
+(-1658026, 'Arms and legs are in short supply...Thanks for your contribution!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'У нас как раз кончались руки и ноги... Благодарю за вклад!', 16928, 1, 0, 0, 'slay2'),
+(-1658035, 'Wait! Stop! Don\'t kill me, please! I\'ll tell you everything!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Подождите! Не убивайте меня, умоляю! Я вам все расскажу!', 16934, 1, 0, 0, 'krick_stop'),
+(-1658036, 'I\'m not so naive as to believe your appeal for clemency, but I will listen.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Я не так наивна, чтобы верить твоим причитаниям. Но я выслушаю тебя.', 16611, 1, 0, 0, 'outro1_aly'),
+(-1658037, 'Why should the Banshee Queen spare your miserable life?', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Почему королева Банши должна выслушивать твое нытьё?', 17033, 1, 0, 0, 'outro1_horde'),
+(-1658038, 'What you seek is in the master\'s lair, but you must destroy Tyrannus to gain entry. Within the Halls of Reflection you will find Frostmourne. It... it holds the truth.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'То, что вы ищете, находится в покоях господина, но чтобы попасть туда, вам надо убить Тирания. В Залах Отражений хранится Ледяная Скорбь. В клинке... сокрыта Истина!', 16935, 1, 0, 0, 'outro2_krick'),
+(-1658039, 'Frostmourne lies unguarded? Impossible!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Меч никто не охраняет? Не может быть.', 16612, 1, 0, 0, 'outro3_aly'),
+(-1658040, 'Frostmourne? The Lich King is never without his blade! If you are lying to me...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Король Лич никогда не расстается со своим мечом, если ты мне лжешь...', 17034, 1, 0, 0, 'outro3_horde'),
+(-1658041, 'I swear it is true! Please, don\'t kill me!!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Клянусь это правда! Прошу, не убивайте меня!!', 16936, 1, 0, 0, 'outro4_krick'),
+(-1658042, 'Worthless gnat! Death is all that awaits you!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Жалкая букашка! Тебя ждет лишь смерть!', 16753, 1, 0, 0, 'outro5_tyrannus'),
+(-1658043, 'Urg... no!!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Неет!...', 16937, 1, 0, 0, 'outro6_krick'),
+(-1658044, 'Do not think that I shall permit you entry into my master\'s sanctum so easily. Pursue me if you dare.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Не думайте, что я так легко позволю вам пройти в покои господина. Сразитесь со мной, если посмеете.', 16754, 1, 0, 0, 'outro7_tyrannus'),
+(-1658045, 'What a cruel end. Come, heroes. We must see if the gnome\'s story is true. If we can separate Arthas from Frostmourne, we might have a chance at stopping him', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 16613, 1, 0, 0, 'outro8_aly'),
+(-1658046, 'A fitting end for a traitor. Come, we must free the slaves and see what is within the Lich King\'s chamber for ourselves.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Смерть, достойная предателя. Идемте, освободим рабов и увидим своими глазами, что хранится в покоях Короля Лича', 17035, 1, 0, 0, 'outro8_horde'),
 
 -- Tyrannus
-(-1658050,'Your pursuit shall be in vain, adventurers, for the Lich King has placed an army of undead at my command! Behold!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16755,1,0,0,'Tyrannus SAY_AMBUSH_1'),
-(-1658051,'Persistent whelps! You will not reach the entrance of my lord''s lair! Soldiers, destroy them!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16756,1,0,0,'Tyrannus SAY_AMBUSH_2'),
-(-1658052,'Rimefang! Trap them within the tunnel! Bury them alive!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16757,1,0,0,'Tyrannus SAY_GAUNTLET_START'),
-(-1658053,'Alas, brave, brave adventurers, your meddling has reached its end. Do you hear the clatter of bone and steel coming up the tunnel behind you? That is the sound of your impending demise.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16758,1,0,0,'Tyrannus SAY_INTRO_1'),
-(-1658054,'Ha, such an amusing gesture from the rabble. When I have finished with you, my master''s blade will feast upon your souls. Die!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16759,1,0,0,'Tyrannus SAY_INTRO_2'),
-
-(-1658055,'I shall not fail The Lich King! Come and meet your end!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16760,1,0,0,'Tyrannus SAY_AGGRO'),
-(-1658056,'Such a shameful display... You are better off dead!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16761,1,0,0,'Tyrannus SAY_SLAY_1'),
-(-1658057,'Perhaps you should have stayed in the mountains!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16762,1,0,0,'Tyrannus SAY_SLAY_2'),
-(-1658058,'Impossible! Rimefang... Warn...',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16763,1,0,0,'Tyrannus SAY_DEATH'),
-(-1658059,'Rimefang, destroy this fool!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16764,1,0,0,'Tyrannus SAY_MARK_RIMEFANG_1'),
-(-1658060,'The frostwyrm Rimefang gazes at $N and readies an icy attack!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'Tyrannus SAY_MARK_RIMEFANG_2'),
-(-1658061,'Power... overwhelming!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16765,1,0,0,'Tyrannus SAY_DARK_MIGHT_1'),
-(-1658062,'Scourgelord Tyrannus roars and swells with dark might!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'Tyrannus SAY_DARK_MIGHT_2'),
-
-(-1658063,'Brave champions, we owe you our lives, our freedom... Though it be a tiny gesture in the face of this enormous debt, I pledge that from this day forth, all will know of your deeds, and the blazing path of light you cut through the shadow of this dark citadel.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Gorkun  SAY_GORKUN_OUTRO_1'),
-(-1658064,'This day will stand as a testament not only to your valor, but to the fact that no foe, not even the Lich King himself, can stand when Alliance and Horde set aside their differences and ---',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Gorkun  SAY_GORKUN_OUTRO_2'),
-(-1658065,'Heroes, to me!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16614,1,0,0,'Jaina SAY_JAYNA_OUTRO_3'),
-(-1658066,'Take cover behind me! Quickly!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,17037,1,0,0,'Sylvanas SAY_SYLVANAS_OUTRO_3'),
-(-1658067,'The Frost Queen is gone. We must keep moving - our objective is near.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16615,0,0,0,'Jaina SAY_JAYNA_OUTRO_4'),
-(-1658068,'I thought he''d never shut up. At last, Sindragosa silenced that long-winded fool. To the Halls of Reflection, champions! Our objective  is near... I can sense it.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,17036,0,0,0,'Sylvanas SAY_SYLVANAS_OUTRO_4'),
-(-1658069,'I... I could not save them... Damn you, Arthas! DAMN YOU!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16616,0,0,0,'Jaina SAY_JAYNA_OUTRO_5');
+(-1658047, 'Your pursuit shall be in vain, adventurers, for the Lich King has placed an army of undead at my command! Behold!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Все ваши усилия напрасны, чужаки, ибо Король Лич поставил меня во главе целой армии нежити! Берегитесь!', 16755, 1, 0, 0, 'ambush1_tyrannus'),
+(-1658048, 'Persistent whelps! You will not reach the entrance of my lord\'s lair! Soldiers, destroy them!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Настырные щенки! Вам не пройти в покои моего господина. Солдаты, уничтожить их!', 16756, 1, 0, 0, 'ambush2_tyrannus'),
+(-1658049, 'Rimefang! Trap them within the tunnel! Bury them alive!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Иней, останови их! Похорони их заживо!', 16757, 1, 0, 0, 'gauntlet'),
+(-1658050, 'Alas, brave, brave adventurers, your meddling has reached its end. Do you hear the clatter of bone and steel coming up the tunnel behind you? That is the sound of your impending demise.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Увы, бесстрашные герои, ваша навязчивость ускорила развязку. Вы слышите громыхание костей и скрежет стали за вашими спинами? Это предвестники скорой погибели!', 16758, 1, 0, 0, 'intro1'),
+(-1658051, 'Heroes! We will hold off the undead as long as we can, even to our dying breath. Deal with the Scourgelord!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'intro2'),
+(-1658052, 'Ha, such an amusing gesture from the rabble. When I have finished with you, my master\'s blade will feast upon your souls. Die!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ха-ха-ха-ха.. кто бы мог ожидать такого от черни. Когда я с вами покончу, клинок господина насытится вашими душами. Умрите!', 16759, 1, 0, 0, 'intro3'),
+(-1658053, 'I shall not fail The Lich King! Come and meet your end!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Я не подведу Короля Лича! Идите ко мне, и встретьте свою смерть!', 16760, 1, 0, 0, 'aggro'),
+(-1658054, 'Such a shameful display... You are better off dead!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Какое жалкое кривляние... Умри и не позорься!', 16761, 1, 0, 0, 'slay1'),
+(-1658055, 'Perhaps you should have stayed in the mountains!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Тебе надо было остаться в горах!', 16762, 1, 0, 0, 'slay2'),
+(-1658056, 'Impossible! Rimefang...Warn...-', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 16763, 1, 0, 0, 'death'),
+(-1658061, 'Brave champions, we owe you our lives, our freedom... Though it be a tiny gesture in the face of this enormous debt, I pledge that from this day forth, all will know of your deeds, and the blazing path of light you cut through the shadow of this dark citadel.', NULL, NULL, NULL, NULL, NULL, 'Valientes campeones. Os debemos la vida, nuestra libertad... aunque sea un pequeño gesto, ante nuestra gran deuda. Prometo que, de hoy en adelante, todos conocerán vuestras hazañas, y el llameante camino de luz que lográsteis que atravesara esta oscura ciudadela.', NULL, NULL, 17149, 1, 0, 0, 'outro1'),
+(-1658062, 'This day will stand as a testament not only to your valor, but to the fact that no foe, not even the Lich King himself, can stand when Alliance and Horde set aside their differences and ---', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, 0, 0, 'outro2'),
+(-1658064, 'Take cover behind me! Quickly!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Укройтесь за мной! Скорее!', 17037, 1, 0, 0, 'outro4_horde'),
+(-1658063, 'Heroes, to me!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ко мне, герои!', 16614, 1, 0, 0, 'outro4_aly'),
+(-1658067, 'I thought he\'d never shut up. At last, Sindragosa silenced that long-winded fool. To the Halls of Reflection, champions! Our objective is near... I can sense it.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Я думала, он никогда не заткнется. Но Синдрагоса заставила этого болтливого дурня умолкнуть. В Залы Отражений, герои!', 17036, 1, 0, 0, 'outro5_horde'),
+(-1658065, 'The Frost Queen is gone. We must keep moving - our objective is near.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Королева льда улетела. Надо продолжать путь - цель уже близка.', 16615, 1, 0, 0, 'outro5_aly'),
+(-1658066, 'I... I could not save them... Damn you, Arthas! DAMN YOU!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Я... Я не смогла их спасти... Будь ты Проклят, Артас! Будь ты Проклят!', 16616, 1, 0, 0, 'outro6_aly'),
+--
+(-1658071, 'Garfrost tired of puny mortals. Now your bones will freeze!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Гархлад устал от жалких смертных. Сейчас ваши кости - леденец.', 16917, 1, 0, 0, '33%'),
+(-1658072, 'Tyrannus transforms the champions into undead.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 16750, 2, 0, 0, 'tyrannus_intro4');
+--
 
 -- Forge of souls
-DELETE FROM `script_texts` WHERE `entry` BETWEEN -1632055 AND -1632001;
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1632055 AND -1632000;
 INSERT INTO `script_texts` (`entry`,`content_default`,`content_loc1`,`content_loc2`,`content_loc3`,`content_loc4`,`content_loc5`,`content_loc6`,`content_loc7`,`content_loc8`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
 -- Bronjham
-(-1632001,'Finally...a captive audience!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Наконец то! Гости пожаловали!',16595,6,0,0,'Bronjham SAY_AGGRO'),
-(-1632002,'Fodder for the engine!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Скормлю тебя машине!',16596,6,0,0,'Bronjham SAY_SLAY_1'),
-(-1632003,'Another soul to strengthen the host!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Еще одна душа обогатит вместилище!',16597,6,0,0,'Bronjham SAY_SLAY_2'),
-(-1632004,'Oooooo...',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Аааааааааааа...',16598,6,0,0,'Bronjham SAY_DEATH'),
-(-1632005,'The vortex of the harvested calls to you!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Вихрь погубленных душ, взываю к вам!',16599,3,0,0,'Bronjham SAY_SOUL_STORM'),
-(-1632006,'I will sever the soul from your body!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Я вырву душу из твоего тела!',16600,6,0,0,'Bronjham SAY_CORRUPT_SOUL'),
+
+(-1632000,'More souls to power the engine!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'boss_bronjahm SAY_AGGRO_1'),
+(-1632001,'Finally...a captive audience!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Наконец то! Гости пожаловали!',16595,1,0,0,'Bronjham SAY_AGGRO'),
+(-1632002,'Fodder for the engine!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Скормлю тебя машине!',16596,1,0,0,'Bronjham SAY_SLAY_1'),
+(-1632003,'Another soul to strengthen the host!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Еще одна душа обогатит вместилище!',16597,1,0,0,'Bronjham SAY_SLAY_2'),
+(-1632004,'My soul for you, master.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Аааааааааааа...',16598,1,0,0,'boss_bronjahm SAY_DEATH'),
+(-1632005,'The vortex of the harvested calls to you!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Вихрь погубленных душ, взываю к вам!',16599,1,0,0,'Bronjham SAY_SOUL_STORM'),
+(-1632006,'I will sever the soul from your body!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Я вырву душу из твоего тела!',16600,1,0,0,'Bronjham SAY_CORRUPT_SOUL'),
 
 -- Devourer of Souls
-(-1632010,'You dare look upon the host of souls? I SHALL DEVOUR YOU WHOLE!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Вы осмелились взглянуть на вместилище душ! Я сожру вас заживо!',16884,1,0,0,'Devoureur SAY_FACE_ANGER_AGGRO'),
-(-1632011,'You dare look upon the host of souls? I SHALL DEVOUR YOU WHOLE!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16890,1,0,0,'Devoureur SAY_FACE_DESIRE_AGGRO'),
-(-1632012,'Damnation!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Проклинаю тебя!',16885,1,0,0,'Devoureur SAY_FACE_ANGER_SLAY_1'),
-(-1632013,'Damnation!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16896,1,0,0,'Devoureur SAY_FACE_SORROW_SLAY_1'),
-(-1632014,'Damnation!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16891,1,0,0,'Devoureur SAY_FACE_DESIRE_SLAY_1'),
-(-1632015,'Doomed for eternity!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Обрекаю тебя на вечные муки!',16886,1,0,0,'Devoureur SAY_FACE_ANGER_SLAY_2'),
-(-1632016,'Doomed for eternity!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16897,1,0,0,'Devoureur SAY_FACE_SORROW_SLAY_2'),
-(-1632017,'Doomed for eternity!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16892,1,0,0,'Devoureur SAY_FACE_DESIRE_SLAY_2'),
-(-1632018,'The swell of souls will not be abated! You only delay the inevitable!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Вместилише душ не ослабнет! Вы лишь пытаетесь отсрочить неизбежное.',16887,1,0,0,'Devoureur SAY_FACE_ANGER_DEATH'),
-(-1632019,'The swell of souls will not be abated! You only delay the inevitable!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16898,1,0,0,'Devoureur SAY_FACE_SORROW_DEATH'),
-(-1632020,'The swell of souls will not be abated! You only delay the inevitable!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16893,1,0,0,'Devoureur SAY_FACE_DESIRE_DEATH'),
-(-1632021,'Devourer of Souls begins to cast Mirrored Soul!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'Devoureur EMOTE_MIRRORED_SOUL'),
-(-1632022,'Devourer of Souls begins to Unleash Souls!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'Devoureur EMOTE_UNLEASH_SOUL'),
-(-1632023,'SUFFERING! ANGUISH! CHAOS! RISE AND FEED!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Страдание, мучение, хаос! Восстаньте и пируйте!',16888,1,0,0,'Devoureur SAY_FACE_ANGER_UNLEASH_SOUL'),
-(-1632024,'SUFFERING! ANGUISH! CHAOS! RISE AND FEED!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16899,1,0,0,'Devoureur SAY_FACE_SORROW_UNLEASH_SOUL'),
-(-1632025,'SUFFERING! ANGUISH! CHAOS! RISE AND FEED!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16894,1,0,0,'Devoureur SAY_FACE_DESIRE_UNLEASH_SOUL'),
-(-1632026,'Devourer of Souls begins to cast Wailing Souls!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'Devoureur EMOTE_WAILING_SOUL'),
-(-1632027,'Stare into the abyss, and see your end!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Вглядитесь в бездну, и узрите свою смерть!',16889,1,0,0,'Devoureur SAY_FACE_ANGER_WAILING_SOUL'),
-(-1632028,'Stare into the abyss, and see your end!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16895,1,0,0,'Devoureur SAY_FACE_DESIRE_WAILING_SOUL'),
-(-1632029,'Excellent work, champions! We shall set up our base camp in these chambers. My mages will get the Scourge transport device working shortly. Step inside it when you''re ready for your next mission. I will meet you on the other side.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Вы справились. Мы разобьем лагерь в этих покоях. Вскоре мои маги заставят портал плети работать! Войдите в него, когда будете готовы к следующему заданию. Я присоеденусь к вам чуть позже.',16625,1,0,0,'Jaina SAY_JAINA_OUTRO'),
+(-1632007,'You dare look upon the host of souls? I SHALL DEVOUR YOU WHOLE!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Вы осмелились взглянуть на вместилище душ! Я сожру вас заживо!',16884,1,0,0,'Devoureur SAY_FACE_ANGER_AGGRO'),
+(-1632008,'You dare look upon the host of souls? I SHALL DEVOUR YOU WHOLE!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16890,1,0,0,'Devoureur SAY_FACE_DESIRE_AGGRO'),
+(-1632009,'Damnation!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Проклинаю тебя!',16885,1,0,0,'Devoureur SAY_FACE_ANGER_SLAY_1'),
+(-1632010,'Damnation!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16896,1,0,0,'Devoureur SAY_FACE_SORROW_SLAY_1'),
+(-1632011,'Damnation!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16891,1,0,0,'Devoureur SAY_FACE_DESIRE_SLAY_1'),
+(-1632012,'Doomed for eternity!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Обрекаю тебя на вечные муки!',16886,1,0,0,'Devoureur SAY_FACE_ANGER_SLAY_2'),
+(-1632014,'Doomed for eternity!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16897,1,0,0,'Devoureur SAY_FACE_SORROW_SLAY_2'),
+(-1632013,'Doomed for eternity!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16892,1,0,0,'Devoureur SAY_FACE_DESIRE_SLAY_2'),
+(-1632015,'The swell of souls will not be abated! You only delay the inevitable!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Вместилише душ не ослабнет! Вы лишь пытаетесь отсрочить неизбежное.',16887,1,0,0,'Devoureur SAY_FACE_ANGER_DEATH'),
+(-1632017,'The swell of souls will not be abated! You only delay the inevitable!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16898,1,0,0,'Devoureur SAY_FACE_SORROW_DEATH'),
+(-1632016,'The swell of souls will not be abated! You only delay the inevitable!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16893,1,0,0,'Devoureur SAY_FACE_DESIRE_DEATH'),
+(-1632018,'SUFFERING! ANGUISH! CHAOS! RISE AND FEED!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Страдание, мучение, хаос! Восстаньте и пируйте!',16888,1,0,0,'Devoureur SAY_FACE_ANGER_UNLEASH_SOUL'),
+(-1632020,'SUFFERING! ANGUISH! CHAOS! RISE AND FEED!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16899,1,0,0,'Devoureur SAY_FACE_SORROW_UNLEASH_SOUL'),
+(-1632019,'SUFFERING! ANGUISH! CHAOS! RISE AND FEED!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16894,1,0,0,'Devoureur SAY_FACE_DESIRE_UNLEASH_SOUL'),
+(-1632021,'Stare into the abyss, and see your end!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Вглядитесь в бездну, и узрите свою смерть!',16889,1,0,0,'Devoureur SAY_FACE_ANGER_WAILING_SOUL'),
+(-1632022,'Stare into the abyss, and see your end!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16895,1,0,0,'Devoureur SAY_FACE_DESIRE_WAILING_SOUL'),
+(-1632023,'%s begins to cast Mirrored Soul!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'boss_devourer EMOTE_MIRRORED_SOUL'),
+(-1632024,'%s begins to Unleash Souls!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'boss_devourer EMOTE_UNLEASH_SOULS'),
+(-1632025,'%s begins to cast Wailing Souls!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'boss_devourer EMOTE_WAILING_SOULS'),
+
+(-1632029,'Excellent work, champions! We shall set up our base camp in these chambers. My mages will get the Scourge transport device working shortly. Step inside it when you''re ready for your next mission. I will meet you on the other side.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Вы справились. Мы разобьем лагерь в этих покоях. Вскоре мои маги заставят портал плети работать! Войдите в него, когда будете готовы к следующему заданию. Я присоединюсь к вам чуть позже.',16625,1,0,0,'Jaina SAY_JAINA_OUTRO'),
 (-1632030,'Excellent work, champions! We shall set up our base camp in these chambers. My mages will get the Scourge transport device working shortly. Step inside when you are ready for your next mission. I will meet you on the other side.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Превосходно! Мы разобьем лагерь в этих покоях! Вскоре мои маги заставят портал плети работать, войдите в него когда будете готовы к следующему заданию! Я присоединюсь к вам позже.',17044,1,0,0,'Sylvanas SAY_SYLVANAS_OUTRO'),
 
 -- Jaina
