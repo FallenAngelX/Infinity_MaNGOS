@@ -134,6 +134,8 @@ struct MANGOS_DLL_DECL boss_gormokAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
     Difficulty m_uiMapDifficulty;
+    Unit* pFocus;
+
     bool m_bIsHeroic;
     bool m_bIs25Man;
 
@@ -156,6 +158,8 @@ struct MANGOS_DLL_DECL boss_gormokAI : public ScriptedAI
 
         SnoboldsCount = m_bIs25Man? 5 : 4;
 
+        pFocus = NULL;
+
         m_uiImpaleTimer           = urand(15000, 30000);
         m_uiStaggeringStompTimer  = urand(20000, 25000);
         m_uiSummonSnoboldTimer    = urand(20000, 30000);
@@ -168,7 +172,7 @@ struct MANGOS_DLL_DECL boss_gormokAI : public ScriptedAI
         if (!m_pInstance)
             return;
 
-        for (uint32 i = 0; i < SnoboldsCount; i++)
+        for (uint i = 0; i < SnoboldsCount; i++)
         {
             Unit *pTemp = m_creature->SummonCreature(NPC_SNOBOLD_VASSAL, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 0.0f, TEMPSUMMON_MANUAL_DESPAWN, 0);
             pTemp->EnterVehicle(m_creature->GetVehicleKit(), i);
@@ -246,12 +250,13 @@ struct MANGOS_DLL_DECL boss_gormokAI : public ScriptedAI
         else
             m_uiStaggeringStompTimer -= uiDiff;
 
-        if (m_uiSummonSnoboldTimer <= uiDiff)
+        if (m_uiSummonSnoboldTimer <= uiDiff && SnoboldsCount > 0)
         {
             DoScriptText(EMOTE_SUMMON_SNOBOLD, m_creature);
-            ThrowAdd(m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0));
-            //DoCastSpellIfCan(m_creature, SPELL_RISING_ANGER, CAST_TRIGGERED);   //target bugged, need core support
+            ThrowAdd(pFocus = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0));
+            pFocus->_AddAura(SPELL_SNOBOLLED);
             m_creature->_AddAura(SPELL_RISING_ANGER);
+            --SnoboldsCount;
             m_uiSummonSnoboldTimer = 20000;
         }
         else
@@ -297,6 +302,8 @@ struct MANGOS_DLL_DECL mob_snobold_vassalAI : public ScriptedAI
     {
         if (!m_pInstance) 
             return;
+
+        pFocus = pWho;
     }
 
     void JustReachedHome()
@@ -309,8 +316,8 @@ struct MANGOS_DLL_DECL mob_snobold_vassalAI : public ScriptedAI
 
     void JustDied(Unit* pKiller)
     {
-        /*if (pFocus && pFocus->isAlive())
-            pFocus->RemoveAurasDueToSpell(SPELL_SNOBOLLED);*/
+        if (pFocus && pFocus->isAlive())
+            pFocus->RemoveAurasDueToSpell(SPELL_SNOBOLLED);
 
         m_creature->ForcedDespawn(5000);
     }

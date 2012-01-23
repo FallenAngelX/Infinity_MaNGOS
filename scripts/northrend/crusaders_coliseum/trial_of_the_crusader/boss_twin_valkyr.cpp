@@ -33,7 +33,6 @@ enum BossSpells
     SPELL_TWIN_PACT_L             = 65876,
     SPELL_LIGHT_VORTEX            = 66046,
     SPELL_LIGHT_TOUCH             = 67296,
-    SPELL_TWIN_EMPATHY_LIGHT      = 66133, // Invalid target
 
     // Eydis
     SPELL_TWIN_SPIKE_D            = 66069,
@@ -42,7 +41,6 @@ enum BossSpells
     SPELL_TWIN_PACT_D             = 65875,
     SPELL_DARK_VORTEX             = 66058,
     SPELL_DARK_TOUCH              = 67281,
-    SPELL_TWIN_EMPATHY_DARK       = 66132, // Invalid target
 
     SPELL_TWIN_POWER              = 65916,
 
@@ -54,6 +52,7 @@ enum BossSpells
 
     SPELL_BERSERK                 = 64238,
     SPELL_REMOVE_TOUCH            = 68084,
+    SPELL_NONE                    = 0,
 
     SPELL_UNLEASHED_DARK          = 65808,
     SPELL_UNLEASHED_LIGHT         = 65795,
@@ -136,6 +135,7 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
     uint32 m_uiTwinSpikeLTimer;
     uint32 m_uiSpecialAbilityTimer;
     uint32 m_uiLightTouchTimer;
+    uint32 m_uiCheckTouchBuff;
     uint32 m_uiOrbsTimer;
     uint32 m_uiNextSpell;
 
@@ -154,6 +154,7 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
         m_uiTwinSpikeLTimer        = 10000;
         m_uiSpecialAbilityTimer    = 45000;
         m_uiLightTouchTimer        = 15000;
+        m_uiCheckTouchBuff         = 1000;
         m_uiOrbsTimer              = 2500;
 
         m_bAchievFailed            = false;
@@ -161,8 +162,8 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
         SetEquipmentSlots(false, EQUIP_MAIN_1, EQUIP_OFFHAND_1, EQUIP_RANGED_1);
 
         m_creature->SetRespawnDelay(7*DAY);
+        m_pInstance->SetData(DATA_CASTING_VALKYRS, SPELL_NONE);
         m_creature->SetHealth(m_creature->GetMaxHealth());
-        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
     }
 
     void JustReachedHome()
@@ -171,6 +172,7 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
             return;
 
         m_pInstance->SetData(TYPE_VALKIRIES, FAIL);
+        m_pInstance->SetData(DATA_CASTING_VALKYRS, SPELL_NONE);
         m_pInstance->SetData(DATA_HEALTH_FJOLA, m_creature->GetMaxHealth());
         m_creature->ForcedDespawn();
     }
@@ -209,9 +211,8 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
 
         m_creature->SetInCombatWithZone();
         DoCastSpellIfCan(m_creature, SPELL_LIGHT_SURGE, CAST_TRIGGERED);
-        if (pSister)
-            DoCastSpellIfCan(pSister, SPELL_TWIN_EMPATHY_LIGHT, CAST_TRIGGERED);
 
+        m_pInstance->SetData(DATA_HEALTH_FJOLA, m_creature->GetMaxHealth());
         m_pInstance->SetData(TYPE_VALKIRIES, IN_PROGRESS);
 
         m_creature->SummonCreature(NPC_LIGHT_ESSENCE, SpawnLoc[24].x, SpawnLoc[24].y, SpawnLoc[24].z, 0, TEMPSUMMON_MANUAL_DESPAWN, 5000);
@@ -268,9 +269,31 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
                 m_uiAchievTimer -= uiDiff;
         }
 
+        if (m_bIsHeroic)
+        {
+            if (m_uiCheckTouchBuff <= uiDiff)
+            {
+                Map* pMap = m_creature->GetMap();
+                Map::PlayerList const &lPlayers = pMap->GetPlayers();
+                for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
+                {
+                     Unit* pPlayer = itr->getSource();
+
+                     if (!pPlayer) 	
+                         continue;	
+                 	
+                     if (pPlayer->HasAura(SPELL_LIGHT_ESSENCE))  	
+                         pPlayer->RemoveAurasDueToSpell(SPELL_LIGHT_TOUCH); 	
+                }  	
+                m_uiCheckTouchBuff = 1000;
+            }
+            else 	
+                m_uiCheckTouchBuff -= uiDiff;
+        }
+
         if (m_uiOrbsTimer <= uiDiff)
         {
-            for (uint32 i = 33; i < 37; i++)
+            for (uint i = 33; i < 37; i++)
             {
                 m_creature->SummonCreature(NPC_UNLEASHED_LIGHT, SpawnLoc[i].x + urand(2.0f, 10.0f), SpawnLoc[i].y + urand(2.0f, 10.0f), SpawnLoc[i].z, 0, TEMPSUMMON_TIMED_DESPAWN, 20000);
                 if (m_bIs25Man)
@@ -323,6 +346,7 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
                         break;
                     case LIGHT_PACT: // Pact
                         pSister->CastSpell(pSister, SPELL_TWIN_POWER, true);
+                        m_creature->_AddAura(SPELL_LIGHT_SHIELD, 14000);
                         if (DoCastSpellIfCan(m_creature, SPELL_TWIN_PACT_L) == CAST_OK)
                         {
                             m_creature->SetLevitate(true);
@@ -390,6 +414,7 @@ struct MANGOS_DLL_DECL boss_eydisAI : public ScriptedAI
     uint32 m_uiTwinSpikeDTimer;
     uint32 m_uiSpecialAbilityTimer;
     uint32 m_uiDarkTouchTimer;
+    uint32 m_uiCheckTouchBuff;
     uint32 m_uiOrbsTimer;
     uint32 m_uiNextSpell;
 
@@ -410,13 +435,14 @@ struct MANGOS_DLL_DECL boss_eydisAI : public ScriptedAI
         m_uiTwinSpikeDTimer        = 10000;
         m_uiSpecialAbilityTimer    = 90000;
         m_uiDarkTouchTimer         = 5000;
+        m_uiCheckTouchBuff         = 1000;
         m_uiOrbsTimer              = 2500;
 
         SetEquipmentSlots(false, EQUIP_MAIN_2, EQUIP_OFFHAND_2, EQUIP_RANGED_2);
 
         m_creature->SetRespawnDelay(7*DAY);
+        m_pInstance->SetData(DATA_CASTING_VALKYRS, SPELL_NONE);
         m_creature->SetHealth(m_creature->GetMaxHealth());
-        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
     }
 
     void JustReachedHome()
@@ -425,6 +451,7 @@ struct MANGOS_DLL_DECL boss_eydisAI : public ScriptedAI
             return;
 
         m_pInstance->SetData(TYPE_VALKIRIES, FAIL);
+        m_pInstance->SetData(DATA_CASTING_VALKYRS, SPELL_NONE);
         m_pInstance->SetData(DATA_HEALTH_EYDIS, m_creature->GetMaxHealth());
         m_creature->ForcedDespawn();
     }
@@ -463,8 +490,6 @@ struct MANGOS_DLL_DECL boss_eydisAI : public ScriptedAI
 
         m_creature->SetInCombatWithZone();
         DoCastSpellIfCan(m_creature, SPELL_DARK_SURGE, CAST_TRIGGERED);
-        if (pSister)
-            DoCastSpellIfCan(pSister, SPELL_TWIN_EMPATHY_DARK, CAST_TRIGGERED);
 
         m_pInstance->SetData(DATA_HEALTH_EYDIS, m_creature->GetMaxHealth());
         m_pInstance->SetData(TYPE_VALKIRIES, IN_PROGRESS);
@@ -524,6 +549,28 @@ struct MANGOS_DLL_DECL boss_eydisAI : public ScriptedAI
                 m_uiAchievTimer -= uiDiff;
         }
 
+        if (m_bIsHeroic)
+        {
+            if (m_uiCheckTouchBuff <= uiDiff)
+            {
+                Map* pMap = m_creature->GetMap();
+                Map::PlayerList const &lPlayers = pMap->GetPlayers();
+                for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
+                {
+                     Unit* pPlayer = itr->getSource();
+
+                     if (!pPlayer) 	
+                         continue;	
+                 	
+                     if (pPlayer->HasAura(SPELL_DARK_ESSENCE))  	
+                         pPlayer->RemoveAurasDueToSpell(SPELL_DARK_TOUCH); 	
+                }  	
+                m_uiCheckTouchBuff = 1000;
+            }
+            else 	
+                m_uiCheckTouchBuff -= uiDiff;
+        }
+
         if (m_uiOrbsTimer <= uiDiff)
         {
             for (uint32 i = 37; i < 41; i++)
@@ -568,7 +615,7 @@ struct MANGOS_DLL_DECL boss_eydisAI : public ScriptedAI
                     case DARK_VORTEX:
                         if (DoCastSpellIfCan(m_creature, SPELL_DARK_VORTEX) == CAST_OK)
                         {
-                            //m_creature->SetLevitate(true);
+                            m_creature->SetLevitate(true);
                             m_creature->GetPosition(x, y, z);
                             m_creature->GetMotionMaster()->MovePoint(0, x, y, z + 5.0f);
                             DoScriptText(EMOTE_DARK_VORTEX, m_creature);
@@ -579,9 +626,10 @@ struct MANGOS_DLL_DECL boss_eydisAI : public ScriptedAI
                         break;
                     case DARK_PACT:
                         pSister->CastSpell(pSister, SPELL_TWIN_POWER, true);
+                        m_creature->_AddAura(SPELL_DARK_SHIELD, 14000);
                         if (DoCastSpellIfCan(m_creature, SPELL_TWIN_PACT_D) == CAST_OK)
                         {
-                            //m_creature->SetLevitate(true);
+                            m_creature->SetLevitate(true);
                             m_creature->GetPosition(x, y, z);
                             m_creature->GetMotionMaster()->MovePoint(0, x, y, z + 5.0f);
                             DoScriptText(EMOTE_PACT, m_creature);
@@ -676,7 +724,7 @@ bool GossipHello_mob_light_essence(Player *player, Creature* pCreature)
     player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetObjectGuid());
     player->RemoveAurasDueToSpell(SPELL_DARK_ESSENCE);
     player->CastSpell(player,SPELL_LIGHT_ESSENCE, true);
-    player->CastSpell(player,SPELL_REMOVE_TOUCH, true);
+    player->RemoveAurasDueToSpell(SPELL_LIGHT_TOUCH);
     player->CLOSE_GOSSIP_MENU();
     return true;
 };
@@ -734,8 +782,8 @@ bool GossipHello_mob_dark_essence(Player *player, Creature* pCreature)
 
     player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetObjectGuid());
     player->RemoveAurasDueToSpell(SPELL_LIGHT_ESSENCE);
-    player->CastSpell(player,SPELL_DARK_ESSENCE, true);
-    player->CastSpell(player,SPELL_REMOVE_TOUCH, true);
+    player->CastSpell(player,SPELL_DARK_ESSENCE, false);
+    player->RemoveAurasDueToSpell(SPELL_DARK_TOUCH);
     player->CLOSE_GOSSIP_MENU();
     return true;
 }
@@ -780,19 +828,25 @@ struct MANGOS_DLL_DECL mob_unleashed_darkAI : public ScriptedAI
             for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
             {
                  Unit* pPlayer = itr->getSource();
-                 if (!pPlayer) continue;
+
+                 if (!pPlayer) 
+                     continue;
+
                  if (pPlayer->isAlive() && pPlayer->IsWithinDistInMap(m_creature, 4.0f))
                  {
-                     /*if (pPlayer->HasAura(SPELL_DARK_ESSENCE))
+                     if (pPlayer->HasAura(SPELL_DARK_ESSENCE))
                      {
-                         DoCastSpellIfCan(pPlayer, SPELL_POWERING_UP, CAST_TRIGGERED);
+                         if (pPlayer->HasAura(SPELL_EMPOWERED_LIGHT))
+                             pPlayer->RemoveAurasDueToSpell(SPELL_EMPOWERED_LIGHT);
+
+                         pPlayer->_AddAura(SPELL_EMPOWERED_DARK, 20000);
                          m_creature->ForcedDespawn(300);
-                     }*/
-                     /*if (!pPlayer->HasAura(SPELL_DARK_ESSENCE))
-                     {*/
+                     }
+                     else
+                     {
                          DoCastSpellIfCan(m_creature, SPELL_UNLEASHED_DARK, CAST_TRIGGERED);
                          m_creature->ForcedDespawn(700);
-                     //}
+                     }
                  }
             }
             m_uiCheckTimer = 500;
@@ -847,19 +901,25 @@ struct MANGOS_DLL_DECL mob_unleashed_lightAI : public ScriptedAI
             for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
             {
                  Unit* pPlayer = itr->getSource();
-                 if (!pPlayer) continue;
+
+                 if (!pPlayer) 
+                     continue;
+
                  if (pPlayer->isAlive() && pPlayer->IsWithinDistInMap(m_creature, 4.0f))
                  {
-                     /*if (pPlayer->HasAura(SPELL_LIGHT_ESSENCE))
+                     if (pPlayer->HasAura(SPELL_LIGHT_ESSENCE))
                      {
-                         DoCastSpellIfCan(pPlayer, SPELL_EMPOWERED_LIGHT, CAST_TRIGGERED);
+                         if (pPlayer->HasAura(SPELL_EMPOWERED_DARK))
+                             pPlayer->RemoveAurasDueToSpell(SPELL_EMPOWERED_DARK);
+
+                         pPlayer->_AddAura(SPELL_EMPOWERED_LIGHT, 20000);
                          m_creature->ForcedDespawn(300);
-                     }*/
-                     /*if (!pPlayer->HasAura(SPELL_LIGHT_ESSENCE))
-                     {*/
+                     }
+                     else
+                     {
                          DoCastSpellIfCan(m_creature, SPELL_UNLEASHED_LIGHT, CAST_TRIGGERED);
                          m_creature->ForcedDespawn(700);
-                     //}
+                     }
                  }
             }
             m_uiCheckTimer = 500;
