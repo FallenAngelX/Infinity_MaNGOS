@@ -172,7 +172,7 @@ struct MANGOS_DLL_DECL boss_gormokAI : public ScriptedAI
         if (!m_pInstance)
             return;
 
-        for (uint i = 0; i < SnoboldsCount; i++)
+        for (uint32 i = 0; i < SnoboldsCount; i++)
         {
             Unit *pTemp = m_creature->SummonCreature(NPC_SNOBOLD_VASSAL, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 0.0f, TEMPSUMMON_MANUAL_DESPAWN, 0);
             pTemp->EnterVehicle(m_creature->GetVehicleKit(), i);
