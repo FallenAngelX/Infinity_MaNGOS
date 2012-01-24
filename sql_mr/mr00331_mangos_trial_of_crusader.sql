@@ -135,6 +135,7 @@ INSERT INTO `creature_template` (`entry`, `difficulty_entry_1`, `difficulty_entr
 (34865, 0, 0, 0, 0, 0, 19725, 28549, 0, 0, 'Nerubian Burrow Four', '', '', 0, 1, 1, 1, 1, 0, 0, 0, 17, 35, 35, 0, 1, 1.14286, 1, 0, 1, 2, 0, 0, 1, 2000, 2000, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 2, '');
 
 DELETE FROM `creature_template_addon` WHERE `entry` IN (34863, 34864, 34865);
+INSERT INTO `creature_template_addon` VALUES
 (34863, 0, 0, 1, 0, 0, 0, '66324'),
 (34864, 0, 0, 1, 0, 0, 0, '66324'),
 (34865, 0, 0, 1, 0, 0, 0, '66324');
