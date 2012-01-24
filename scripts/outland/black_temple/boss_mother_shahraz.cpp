@@ -47,7 +47,7 @@ EndScriptData */
 #define SPELL_ENRAGE            23537
 #define SPELL_SABER_LASH        43267
 #define SPELL_SABER_LASH_IMM    43690
-#define SPELL_TELEPORT_VISUAL   40869
+#define SPELL_TELEPORT_VISUAL   41001
 #define SPELL_BERSERK           45078
 
 uint32 PrismaticAuras[]=
