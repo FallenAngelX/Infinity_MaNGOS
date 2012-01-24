@@ -191,9 +191,11 @@ struct MANGOS_DLL_DECL boss_moira_bronzebeardAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
+        //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
+        //MindBlast_Timer
         if (m_uiMindBlast_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_MINDBLAST);
@@ -202,6 +204,7 @@ struct MANGOS_DLL_DECL boss_moira_bronzebeardAI : public ScriptedAI
         else
             m_uiMindBlast_Timer -= uiDiff;
 
+        //ShadowWordPain_Timer
         if (m_uiShadowWordPain_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHADOWWORDPAIN);
@@ -210,6 +213,7 @@ struct MANGOS_DLL_DECL boss_moira_bronzebeardAI : public ScriptedAI
         else
             m_uiShadowWordPain_Timer -= uiDiff;
 
+        //Smite_Timer
         if (m_uiSmite_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_SMITE);
@@ -218,6 +222,7 @@ struct MANGOS_DLL_DECL boss_moira_bronzebeardAI : public ScriptedAI
         else
             m_uiSmite_Timer -= uiDiff;
 
+        //Heal_Timer
         if (m_uiHeal_Timer < uiDiff)
         {
             if (Creature* pEmperor = m_pInstance->GetSingleCreatureFromStorage(NPC_EMPEROR))

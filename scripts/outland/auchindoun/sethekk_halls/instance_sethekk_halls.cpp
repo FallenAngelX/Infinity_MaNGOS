@@ -45,6 +45,7 @@ void instance_sethekk_halls::OnObjectCreate(GameObject* pGo)
             if (m_auiEncounter[TYPE_IKISS] == DONE)
                 pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT | GO_FLAG_INTERACT_COND);
             break;
+
         default:
             return;
     }

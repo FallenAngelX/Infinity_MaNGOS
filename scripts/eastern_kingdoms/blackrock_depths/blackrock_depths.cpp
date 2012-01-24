@@ -669,7 +669,9 @@ bool GossipSelect_npc_lokhtos_darkbargainer(Player* pPlayer, Creature* pCreature
 enum
 {
     SAY_GOT_BEER       = -1230000,
+
     SPELL_DRUNKEN_RAGE = 14872,
+
     QUEST_ALE          = 4295
 };
 

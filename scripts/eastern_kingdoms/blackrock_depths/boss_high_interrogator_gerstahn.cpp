@@ -51,9 +51,11 @@ struct MANGOS_DLL_DECL boss_high_interrogator_gerstahnAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
+        //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
+        //ShadowWordPain_Timer
         if (m_uiShadowWordPain_Timer < uiDiff)
         {
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
@@ -64,6 +66,7 @@ struct MANGOS_DLL_DECL boss_high_interrogator_gerstahnAI : public ScriptedAI
         else
             m_uiShadowWordPain_Timer -= uiDiff;
 
+        //ManaBurn_Timer
         if (m_uiManaBurn_Timer < uiDiff)
         {
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
@@ -74,6 +77,7 @@ struct MANGOS_DLL_DECL boss_high_interrogator_gerstahnAI : public ScriptedAI
         else
             m_uiManaBurn_Timer -= uiDiff;
 
+        //PsychicScream_Timer
         if (m_uiPsychicScream_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_PSYCHICSCREAM);
@@ -82,6 +86,7 @@ struct MANGOS_DLL_DECL boss_high_interrogator_gerstahnAI : public ScriptedAI
         else
             m_uiPsychicScream_Timer -= uiDiff;
 
+        //ShadowShield_Timer
         if (m_uiShadowShield_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature, SPELL_SHADOWSHIELD);
