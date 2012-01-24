@@ -71,8 +71,8 @@ enum Phasezs
 enum SpellsUsed
 {
     //Mics
-    SPELL_NOXIOUSFUMES			= 47002,
-	SPELL_ENRAGE                = 26662, // ?? SPELL_BERSERK = 45078,
+    SPELL_NOXIOUSFUMES            = 47002,
+    SPELL_ENRAGE                = 26662, // ?? SPELL_BERSERK = 45078,
 
     //Land Phase
     SPELL_CLEAVE                = 19983,
@@ -309,7 +309,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
 
             if (m_uiMovemetnTimer < uiDiff && m_bHasChecked)
             {
-				m_creature->SetLevitate(true);
+                m_creature->SetLevitate(true);
                 m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 50331648);
                 m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 50331648);
                 // movement
@@ -416,7 +416,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
                     if (m_uiLastPointId < 2)
                         m_uiLastPointId = urand(2, 4);
                     else if (m_uiLastPointId > 2)
-						m_uiLastPointId = urand(0, 2);
+                        m_uiLastPointId = urand(0, 2);
                     else while (m_uiLastPointId == 2)
                         m_uiLastPointId = urand(0, 4);
                     m_creature->GetMotionMaster()->MovePoint(1, MoveLoc[m_uiLastPointId].x, MoveLoc[m_uiLastPointId].y, MoveLoc[m_uiLastPointId].z);
@@ -634,13 +634,13 @@ struct MANGOS_DLL_DECL npc_fog_of_corruptionAI : public Scripted_NoMovementAI
         DoCast(m_creature, SPELL_FOG_OF_CORRUPTION);
     }
 
-	void AttackStart(Unit* pWho)
-	{
+    void AttackStart(Unit* pWho)
+    {
         return;
-	}
+    }
 
-	void MoveInLineOfSight(Unit* pWho)
-	{
+    void MoveInLineOfSight(Unit* pWho)
+    {
         if(pWho->GetTypeId() == TYPEID_PLAYER && !pWho->HasAura(SPELL_FOG_CHARM, EFFECT_INDEX_0) && pWho->IsWithinDist2d(m_creature->GetPositionX(), m_creature->GetPositionY(), 20.0f))
         {
             //pWho->CastSpell(pWho, SPELL_FOG_CHARM, false);

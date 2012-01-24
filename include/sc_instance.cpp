@@ -336,7 +336,7 @@ void ScriptedInstance::DestroyItemFromAllPlayers(uint32 uiItemId)
                 if (pPlayer->GetItemCount(uiItemId,true) > 0)
                     pPlayer->DestroyItemCount(uiItemId,pPlayer->GetItemCount(uiItemId),true);
         }
-	}
+    }
     else
         error_log("SD2: DestroyItemFromAllPlayers attempt to remove item: %u but no players in map.", uiItemId);
 }

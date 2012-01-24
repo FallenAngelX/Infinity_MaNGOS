@@ -93,7 +93,7 @@ struct MANGOS_DLL_DECL boss_dredAI : public ScriptedAI
             FearsomeRoar_Timer = 15000;
         }
         else
-        	FearsomeRoar_Timer -= uiDiff;
+            FearsomeRoar_Timer -= uiDiff;
 
         //Piercing Slash
         if (PiercingSlash_Timer < uiDiff)
@@ -102,7 +102,7 @@ struct MANGOS_DLL_DECL boss_dredAI : public ScriptedAI
             PiercingSlash_Timer = urand(20000, 25000);
         }
         else
-        	PiercingSlash_Timer -= uiDiff;
+            PiercingSlash_Timer -= uiDiff;
 
         //Mangling Slash
         if (ManglingSlash_Timer < uiDiff)
@@ -111,7 +111,7 @@ struct MANGOS_DLL_DECL boss_dredAI : public ScriptedAI
             ManglingSlash_Timer = urand(20000, 25000);
         }
         else
-        	ManglingSlash_Timer -= uiDiff;
+            ManglingSlash_Timer -= uiDiff;
 
         //Mangling Slash
         if (GrievousBite_Timer < uiDiff)
@@ -120,7 +120,7 @@ struct MANGOS_DLL_DECL boss_dredAI : public ScriptedAI
             GrievousBite_Timer = urand(20000, 25000);
         }
         else
-        	GrievousBite_Timer -= uiDiff;
+            GrievousBite_Timer -= uiDiff;
         
         //Bellowing Roar
         if (BellowingRoar_Timer < uiDiff)
@@ -129,7 +129,7 @@ struct MANGOS_DLL_DECL boss_dredAI : public ScriptedAI
             BellowingRoar_Timer = 60000;
         }
         else
-        	BellowingRoar_Timer -= uiDiff;
+            BellowingRoar_Timer -= uiDiff;
 
         //Call For Raptor - spell
         if (CallForRaptor_Timer < uiDiff)
@@ -140,7 +140,7 @@ struct MANGOS_DLL_DECL boss_dredAI : public ScriptedAI
             CallForRaptorSpawnCheck();
         }
         else
-        	CallForRaptor_Timer -= uiDiff;
+            CallForRaptor_Timer -= uiDiff;
 
         //Call For Raptor - spawn
         if (CallForRaptorSpawn_Timer < uiDiff && CallForRaptorSpawn_Check == 1)
@@ -161,7 +161,7 @@ struct MANGOS_DLL_DECL boss_dredAI : public ScriptedAI
             CallForRaptorSpawn_Check = 0;
         }
         else
-        	CallForRaptorSpawn_Timer -= uiDiff;
+            CallForRaptorSpawn_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

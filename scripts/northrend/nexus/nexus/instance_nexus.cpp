@@ -249,7 +249,7 @@ struct MANGOS_DLL_DECL boss_commander_kolurgAI : public ScriptedAI // triggers s
     }
 
     //ScriptedInstance* m_pInstance;
-	//bool m_bIsRegularMode;
+    //bool m_bIsRegularMode;
 
     uint32 SPELL_BATTLE_SHOUT_Timer;
     uint32 SPELL_CHARGE_Timer;
@@ -347,7 +347,7 @@ struct MANGOS_DLL_DECL boss_commander_stoutbeardAI : public ScriptedAI
     }
 
     //ScriptedInstance* m_pInstance;
-	//bool m_bIsRegularMode;
+    //bool m_bIsRegularMode;
 
     uint32 SPELL_BATTLE_SHOUT_Timer;
     uint32 SPELL_CHARGE_Timer;

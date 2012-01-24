@@ -37,7 +37,7 @@ guardAI::guardAI(Creature* pCreature) : ScriptedAI(pCreature),
 void guardAI::Reset()
 {
     m_uiGlobalCooldown = 0;
-    m_uiBuffTimer = 0; 	//Rebuff as soon as we can
+    m_uiBuffTimer = 0;     //Rebuff as soon as we can
     m_uiZoneAttackMsgTimer = 0;
     m_uiHelp = 5000;
 }

@@ -374,7 +374,7 @@ CreatureAI* GetAI_npc_champions(Creature* pCreature)
 void AddSC_icecrown()
 {
     Script* pNewScript;
-	
+
     pNewScript = new Script;
     pNewScript->Name = "npc_black_knights_gryphon";
     pNewScript->GetAI = &GetAI_npc_black_knights_gryphon;

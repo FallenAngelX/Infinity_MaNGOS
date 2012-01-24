@@ -1114,7 +1114,7 @@ struct MANGOS_DLL_DECL boss_aerial_command_unitAI : public ScriptedAI
                     {
                     case 0:
                     case 1:
-                    	m_uiCreatureEntry = MOB_JUNK_BOT;
+                        m_uiCreatureEntry = MOB_JUNK_BOT;
                         break;
                     case 2:
                     case 3:
@@ -1124,8 +1124,8 @@ struct MANGOS_DLL_DECL boss_aerial_command_unitAI : public ScriptedAI
                         m_uiCreatureEntry = MOB_ASSALT_BOT;
                         break;
                     default:
-                    	m_uiCreatureEntry = MOB_JUNK_BOT;
-                    	break;
+                        m_uiCreatureEntry = MOB_JUNK_BOT;
+                        break;
                     }
                 }
                 else
@@ -1140,8 +1140,8 @@ struct MANGOS_DLL_DECL boss_aerial_command_unitAI : public ScriptedAI
                         m_uiCreatureEntry = MOB_ASSALT_BOT;
                         break;
                     default:
-                    	m_uiCreatureEntry = MOB_JUNK_BOT;
-                    	break;
+                        m_uiCreatureEntry = MOB_JUNK_BOT;
+                        break;
                     }
                 }
                 uint8 m_uiSummonLoc = urand(0, 8);

@@ -277,15 +277,15 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
                 {
                      Unit* pPlayer = itr->getSource();
 
-                     if (!pPlayer) 	
-                         continue;	
-                 	
-                     if (pPlayer->HasAura(SPELL_LIGHT_ESSENCE))  	
-                         pPlayer->RemoveAurasDueToSpell(SPELL_LIGHT_TOUCH); 	
-                }  	
+                     if (!pPlayer)
+                         continue;
+
+                     if (pPlayer->HasAura(SPELL_LIGHT_ESSENCE))
+                         pPlayer->RemoveAurasDueToSpell(SPELL_LIGHT_TOUCH);
+                }
                 m_uiCheckTouchBuff = 1000;
             }
-            else 	
+            else
                 m_uiCheckTouchBuff -= uiDiff;
         }
 
@@ -555,15 +555,15 @@ struct MANGOS_DLL_DECL boss_eydisAI : public ScriptedAI
                 {
                      Unit* pPlayer = itr->getSource();
 
-                     if (!pPlayer) 	
-                         continue;	
-                 	
-                     if (pPlayer->HasAura(SPELL_DARK_ESSENCE))  	
-                         pPlayer->RemoveAurasDueToSpell(SPELL_DARK_TOUCH); 	
-                }  	
+                     if (!pPlayer)
+                         continue;
+
+                     if (pPlayer->HasAura(SPELL_DARK_ESSENCE))
+                         pPlayer->RemoveAurasDueToSpell(SPELL_DARK_TOUCH);
+                }
                 m_uiCheckTouchBuff = 1000;
             }
-            else 	
+            else
                 m_uiCheckTouchBuff -= uiDiff;
         }
 

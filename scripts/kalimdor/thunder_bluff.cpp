@@ -48,7 +48,7 @@ struct MANGOS_DLL_DECL npc_cairne_bloodhoofAI : public ScriptedAI
     uint32 m_uiMortalStrike_Timer;
     uint32 m_uiThunderclap_Timer;
     uint32 m_uiUppercut_Timer;
-	uint32 m_uiWarStompTimer;
+    uint32 m_uiWarStompTimer;
 
     void Reset()
     {

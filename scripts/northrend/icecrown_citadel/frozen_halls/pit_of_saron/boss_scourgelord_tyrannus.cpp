@@ -81,24 +81,24 @@ struct LocationsXY
 
 enum gauntlet
 {
-    SAY_GAUNTLET1		    = -1610081,
-    SAY_GAUNTLET2		    = -1610082,
-    SAY_TUNNEL			    = -1610083,
+    SAY_GAUNTLET1            = -1610081,
+    SAY_GAUNTLET2            = -1610082,
+    SAY_TUNNEL               = -1610083,
     // icicle event
-    NPC_COLLAPSING_ICICLE	= 36847,
-    SPELL_ICICLE			= 69428,
-    SPELL_ICICLE_DMG		= 69426,
-    SPELL_ICICLE_SUMMON		= 69424,
+    NPC_COLLAPSING_ICICLE    = 36847,
+    SPELL_ICICLE             = 69428,
+    SPELL_ICICLE_DMG         = 69426,
+    SPELL_ICICLE_SUMMON      = 69424,
     // mobs
     // first 2 waves
-    NPC_WRATHBRINGER		= 36840,
-    NPC_FLAMEBEARER			= 36893,
-    NPC_DEATHBRINGER		= 36892,
+    NPC_WRATHBRINGER         = 36840,
+    NPC_FLAMEBEARER          = 36893,
+    NPC_DEATHBRINGER         = 36892,
     // another 2 waves
-    NPC_FALLEN_WARRIOR		= 36841,
-    NPC_WRATHBONE_COLDWRAITH= 36842,
-    NPC_WRATHBONE_SORCERER	= 37728,	// this is for the end event, not used
-    NPC_GLACIAL_REVENANT	= 36874,
+    NPC_FALLEN_WARRIOR       = 36841,
+    NPC_WRATHBONE_COLDWRAITH = 36842,
+    NPC_WRATHBONE_SORCERER   = 37728,    // this is for the end event, not used
+    NPC_GLACIAL_REVENANT     = 36874,
 };
 
 static LocationsXY SummonLoc[]=

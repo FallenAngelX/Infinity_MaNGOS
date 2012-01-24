@@ -111,7 +111,7 @@ struct MANGOS_DLL_DECL npc_toc_announcerAI : public ScriptedAI
                     if (m_bIsHeroic)
                     {
                         if (m_pInstance->GetData(TYPE_NORTHREND_BEASTS) == GORMOK_IN_PROGRESS)
-                        {		 
+                        {
                             if (WormsTimer <= diff)
                             {
                                             m_pInstance->SetData(TYPE_STAGE,2);
@@ -143,7 +143,7 @@ struct MANGOS_DLL_DECL npc_toc_announcerAI : public ScriptedAI
                     if (m_bIsHeroic)
                     {
                         if (m_pInstance->GetData(TYPE_NORTHREND_BEASTS) != ICEHOWL_IN_PROGRESS)
-                        {		 
+                        {
                             if (IcehowlTimer <= diff)
                             {
                                 m_pInstance->SetData(TYPE_STAGE,3);
