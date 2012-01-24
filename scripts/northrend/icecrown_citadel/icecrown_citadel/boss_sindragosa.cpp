@@ -125,7 +125,6 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
     uint32 m_uiFrostBreathTimer;
     uint32 m_uiTailSmashTimer;
     uint32 m_uiIcyGripTimer;
-    uint32 m_uiBlisteringColdTimer;
     uint32 m_uiUnchainedMagicTimer;
     uint32 m_uiFlyingTimer;
     uint32 m_uiFrostBeaconTimer;
@@ -141,7 +140,6 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
         m_uiTailSmashTimer          = 20000;
         m_uiFrostBreathTimer        = 5000;
         m_uiIcyGripTimer            = 35000;
-        m_uiBlisteringColdTimer     = 36000;
         m_uiUnchainedMagicTimer     = urand(15000, 30000);
 
         m_uiFlyingTimer             = 60000; // debug code
@@ -340,7 +338,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
                 else
                     m_uiUnchainedMagicTimer -= uiDiff;
 
-                // Icy Grip
+                // Icy Grip and Blistering Cold
                 if (m_uiIcyGripTimer <= uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_ICY_GRIP) == CAST_OK)
@@ -351,15 +349,6 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
                 }
                 else
                     m_uiIcyGripTimer -= uiDiff;
-
-                // Blistering Cold
-                if (m_uiBlisteringColdTimer <= uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_BLISTERING_COLD) == CAST_OK)
-                        m_uiBlisteringColdTimer = 35000;
-                }
-                else
-                    m_uiBlisteringColdTimer -= uiDiff;
 
                 // Phase 2 (air)
                 if (m_uiPhaseTimer <= uiDiff)
@@ -484,7 +473,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
                 else
                     m_uiUnchainedMagicTimer -= uiDiff;
 
-                // Icy Grip
+                // Icy Grip and Blistering Cold
                 if (m_uiIcyGripTimer <= uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_ICY_GRIP) == CAST_OK)
@@ -492,15 +481,6 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
                 }
                 else
                     m_uiIcyGripTimer -= uiDiff;
-
-                // Blistering Cold
-                if (m_uiBlisteringColdTimer <= uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_BLISTERING_COLD) == CAST_OK)
-                        m_uiBlisteringColdTimer = 35000;
-                }
-                else
-                    m_uiBlisteringColdTimer -= uiDiff;
 
                 break;
             }
