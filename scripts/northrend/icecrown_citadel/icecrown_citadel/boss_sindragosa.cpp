@@ -361,7 +361,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
                     SetCombatMovement(false);
                     m_creature->SetLevitate(true);
                     m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
-                    m_creature->GetMotionMaster()->MovePoint(POINT_AIR, SindragosaLoc[1].x, SindragosaLoc[1].y, SindragosaLoc[1].z);
+                    m_creature->GetMotionMaster()->MovePoint(POINT_AIR, SindragosaLoc[1].x, SindragosaLoc[1].y, SindragosaLoc[1].z, false);
                 }
                 else
                     m_uiPhaseTimer -= uiDiff;
@@ -407,7 +407,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
                     m_uiPhaseTimer = 42000;
 
                     // fly to the ground point
-                    m_creature->GetMotionMaster()->MovePoint(POINT_LAND, SindragosaLoc[0].x, SindragosaLoc[0].y, SindragosaLoc[0].z);
+                    m_creature->GetMotionMaster()->MovePoint(POINT_LAND, SindragosaLoc[0].x, SindragosaLoc[0].y, SindragosaLoc[0].z, false);
                 }
                 else
                     m_uiPhaseTimer -= uiDiff;
@@ -477,7 +477,10 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
                 if (m_uiIcyGripTimer <= uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature, SPELL_ICY_GRIP) == CAST_OK)
+                    {
+                        DoScriptText(SAY_BLISTERING_COLD, m_creature);
                         m_uiIcyGripTimer = 35000;
+                    }
                 }
                 else
                     m_uiIcyGripTimer -= uiDiff;
@@ -594,16 +597,17 @@ struct MANGOS_DLL_DECL mob_rimefangAI : public BSWScriptedAI
 
     void Reset()
     {
-        if(!pInstance) return;
-        if (pInstance->GetData(TYPE_SINDRAGOSA) != DONE)
-            pInstance->SetData(TYPE_SINDRAGOSA, NOT_STARTED);
+        if(!pInstance)
+            return;
+
         resetTimers();
         m_creature->SetRespawnDelay(30*MINUTE);
     }
 
     void MoveInLineOfSight(Unit* pWho)
     {
-        if (!pInstance || !pWho) return;
+        if (!pInstance || !pWho)
+            return;
 
         if (pWho->GetTypeId() != TYPEID_PLAYER)
             return;
@@ -619,32 +623,28 @@ struct MANGOS_DLL_DECL mob_rimefangAI : public BSWScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void JustReachedHome()
-    {
-        if (pInstance)
-            if (pInstance->GetData(TYPE_SINDRAGOSA) != DONE)
-                pInstance->SetData(TYPE_SINDRAGOSA, FAIL);
-    }
-
     void Aggro(Unit *who)
     {
-        if(!pInstance) return;
-        if (pInstance->GetData(TYPE_SINDRAGOSA) != DONE) pInstance->SetData(TYPE_SINDRAGOSA, IN_PROGRESS);
+        if(!pInstance)
+            return;
+
         pBrother = pInstance->GetSingleCreatureFromStorage(NPC_SPINESTALKER);
-        if (pBrother && !pBrother->isAlive()) pBrother->Respawn();
-        if (pBrother) pBrother->SetInCombatWithZone();
+
+        if (pBrother && !pBrother->isAlive())
+            pBrother->Respawn();
+
+        if (pBrother)
+            pBrother->SetInCombatWithZone();
     }
 
     void JustDied(Unit *killer)
     {
-        if(!pInstance) return;
-        if (pInstance->GetData(TYPE_SINDRAGOSA) == DONE)
+        if(!pInstance)
             return;
-        if (pBrother && !pBrother->isAlive())
-        if (pBrother && !pBrother->isAlive())
+
+        if (pBrother && !pBrother->isAlive() && pInstance->GetData(TYPE_SINDRAGOSA) != DONE)
         {
-            Creature* pSindr = m_creature->SummonCreature(NPC_SINDRAGOSA, SindragosaLoc[0].x, SindragosaLoc[0].y, SindragosaLoc[0].z, 3.17f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, HOUR*IN_MILLISECONDS, true);
-            if (pSindr)
+            if (Creature* pSindr = m_creature->SummonCreature(NPC_SINDRAGOSA, SindragosaLoc[0].x, SindragosaLoc[0].y, SindragosaLoc[0].z, 3.17f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, HOUR*IN_MILLISECONDS, true))
                 pSindr->SetCreatorGuid(ObjectGuid());
         }
     }
@@ -685,9 +685,9 @@ struct MANGOS_DLL_DECL mob_spinestalkerAI : public BSWScriptedAI
 
     void Reset()
     {
-        if(!pInstance) return;
-        if (pInstance->GetData(TYPE_SINDRAGOSA) != DONE)
-            pInstance->SetData(TYPE_SINDRAGOSA, NOT_STARTED);
+        if(!pInstance)
+            return;
+
         resetTimers();
         m_creature->SetRespawnDelay(30*MINUTE);
     }
@@ -710,32 +710,28 @@ struct MANGOS_DLL_DECL mob_spinestalkerAI : public BSWScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void JustReachedHome()
-    {
-        if (pInstance)
-            if (pInstance->GetData(TYPE_SINDRAGOSA) != DONE)
-                pInstance->SetData(TYPE_SINDRAGOSA, FAIL);
-    }
-
     void Aggro(Unit *who)
     {
-        if(!pInstance) return;
-        if (pInstance->GetData(TYPE_SINDRAGOSA) != DONE) pInstance->SetData(TYPE_SINDRAGOSA, IN_PROGRESS);
+        if(!pInstance)
+            return;
+
         pBrother = pInstance->GetSingleCreatureFromStorage(NPC_RIMEFANG);
-        if (pBrother && !pBrother->isAlive()) pBrother->Respawn();
-        if (pBrother) pBrother->SetInCombatWithZone();
+
+        if (pBrother && !pBrother->isAlive())
+            pBrother->Respawn();
+
+        if (pBrother)
+            pBrother->SetInCombatWithZone();
     }
 
     void JustDied(Unit *killer)
     {
         if (!pInstance)
             return;
-        if (pInstance->GetData(TYPE_SINDRAGOSA) == DONE)
-            return;
-        if (pBrother && !pBrother->isAlive())
+
+        if (pBrother && !pBrother->isAlive() && pInstance->GetData(TYPE_SINDRAGOSA) != DONE)
         {
-            Creature* pSindr = m_creature->SummonCreature(NPC_SINDRAGOSA, SindragosaLoc[0].x, SindragosaLoc[0].y, SindragosaLoc[0].z, 3.17f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, HOUR*IN_MILLISECONDS, true);
-            if (pSindr)
+            if (Creature* pSindr = m_creature->SummonCreature(NPC_SINDRAGOSA, SindragosaLoc[0].x, SindragosaLoc[0].y, SindragosaLoc[0].z, 3.17f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, HOUR*IN_MILLISECONDS, true))
                 pSindr->SetCreatorGuid(ObjectGuid());
         }
     }

@@ -16,7 +16,7 @@
 
 /* ScriptData
 SDName: blood_prince_council
-SD%Complete:
+SD%Complete: 99%
 SDComment:
 SDCategory: Icecrown Citadel
 EndScriptData */
@@ -811,7 +811,7 @@ struct MANGOS_DLL_DECL mob_ball_of_flamesAI : public ScriptedAI
     mob_ball_of_flamesAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_creature->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 7.0f);
+        m_creature->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 7.0f, false);
         Reset();
     }
 
@@ -912,7 +912,7 @@ struct MANGOS_DLL_DECL mob_kinetic_bombAI : public ScriptedAI
         m_creature->GetPosition(x, y, z);
         m_creature->NearTeleportTo(x, y, z + (m_bIsHeroic ? 10.0f : 15.0f), 0.0f);
 
-        m_creature->GetMotionMaster()->MovePoint(0, x, y, z);
+        m_creature->GetMotionMaster()->MovePoint(0, x, y, z, false);
     }
 
     void DamageTaken(Unit *pDealer, uint32 &uiDamage)

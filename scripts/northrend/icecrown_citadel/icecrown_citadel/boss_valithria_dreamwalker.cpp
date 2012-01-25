@@ -264,7 +264,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
     void DoSummonAdd(uint32 uiEntry)
     {
         uint32 loc = urand(1, 2 + (m_bIs25Man ? 2 : 0));
-        m_creature->SummonCreature(uiEntry, SpawnLoc[loc].x, SpawnLoc[loc].y, SpawnLoc[loc].z, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);
+        m_creature->SummonCreature(uiEntry, SpawnLoc[loc].x, SpawnLoc[loc].y, SpawnLoc[loc].z, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
 
         // some additional control of summoning adds (anti flood system)
         if (!m_bIsEnrage)
@@ -605,7 +605,13 @@ CreatureAI* GetAI_mob_gluttonous_abomination(Creature *pCreature)
 struct MANGOS_DLL_DECL mob_blistering_zombieAI : public ScriptedAI
 {
     mob_blistering_zombieAI(Creature *pCreature) : ScriptedAI(pCreature){}
-    void Reset(){}
+
+    bool m_bHasDied;
+
+    void Reset()
+    {
+        m_bHasDied = true;
+    }
 
     void Aggro(Unit *pWho)
     {
@@ -618,13 +624,22 @@ struct MANGOS_DLL_DECL mob_blistering_zombieAI : public ScriptedAI
         {
             uiDamage = 0;
             SetCombatMovement(false);
-            if (DoCastSpellIfCan(m_creature, SPELL_ACID_BURST) == CAST_OK)
-                m_creature->ForcedDespawn(2000);
+            if (!m_bHasDied)
+            {
+                if (DoCastSpellIfCan(m_creature, SPELL_ACID_BURST) == CAST_OK)
+                {
+                    m_bHasDied = true;
+                    m_creature->ForcedDespawn(2000);
+                }
+            }
         }
     }
 
     void UpdateAI(const uint32 uiDiff)
     {
+        if (m_bHasDied)
+            return;
+
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 

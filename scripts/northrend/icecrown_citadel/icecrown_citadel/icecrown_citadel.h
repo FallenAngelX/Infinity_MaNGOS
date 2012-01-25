@@ -1,4 +1,4 @@
-/* Copyright (C) 2010 -2011 by /dev/rsa for ScriptDev2 <http://www.scriptdev2.com/>
+/* Copyright (C) 2010 -2012 by /dev/rsa for ScriptDev2 <http://www.scriptdev2.com/>
  * This program is free software licensed under GPL version 2
  * Please see the included DOCS/LICENSE.TXT for more information */
 
@@ -21,13 +21,12 @@ enum
     TYPE_LANATHEL               = 9,
     TYPE_VALITHRIA              = 10,
     TYPE_SINDRAGOSA             = 11,
-    TYPE_KINGS_OF_ICC           = 12,
     TYPE_LICH_KING              = 13,
-    TYPE_FROSTMOURNE_ROOM       = 14,
-    TYPE_ICECROWN_QUESTS        = 15,
-    TYPE_COUNT                  = 16,
     MAX_ENCOUNTERS,
 
+    TYPE_FROSTMOURNE_ROOM,
+    TYPE_KINGS_OF_ICC,
+    TYPE_ICECROWN_QUESTS,
     TYPE_STINKY,
     TYPE_PRECIOUS,
 
@@ -157,7 +156,7 @@ enum
 
 };
 
-class MANGOS_DLL_DECL instance_icecrown_spire : public BSWScriptedInstance
+class MANGOS_DLL_DECL instance_icecrown_spire : public ScriptedInstance
 {
 public:
     instance_icecrown_spire(Map* pMap);
@@ -168,8 +167,6 @@ public:
     void OnObjectCreate(GameObject* pGo);
     void OnCreatureCreate(Creature* pCreature);
 
-    void OpenAllDoors();
-    void OnPlayerEnter(Player* pPlayer);
     bool IsEncounterInProgress();
 
     void SetData(uint32 uiType, uint32 uiData);
@@ -177,7 +174,6 @@ public:
 
     const char* Save() { return strSaveData.c_str(); }
     void Load(const char* chrIn);
-    bool CheckAchievementCriteriaMeet(uint32 criteria_id, Player const* /*source*/, Unit const* /*target*/, uint32 /*miscvalue1*/);
 
 private:
 

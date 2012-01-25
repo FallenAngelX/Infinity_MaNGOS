@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2011 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2012 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -89,25 +89,29 @@ bool GOGossipHello_go_icecrown_teleporter(Player *pPlayer, GameObject* pGo)
 bool GOHello_go_plague_sigil(Player *player, GameObject* pGo)
 {
     instance_icecrown_spire* pInstance = (instance_icecrown_spire*)pGo->GetInstanceData();
-    if(!pInstance) return false;
 
-    if (pInstance->GetData(TYPE_FESTERGUT) == DONE
-        && pInstance->GetData(TYPE_ROTFACE) == DONE)
-        {
-            pInstance->DoOpenDoor(GO_SCIENTIST_DOOR_ORANGE);
-            pInstance->DoOpenDoor(GO_SCIENTIST_DOOR_GREEN);
-            pInstance->DoOpenDoor(GO_SCIENTIST_DOOR_COLLISION);
-        };
+    if(!pInstance)
+        return false;
+
+    if (pInstance->GetData(TYPE_FESTERGUT) == DONE &&
+        pInstance->GetData(TYPE_ROTFACE) == DONE)
+    {
+        pInstance->DoUseDoorOrButton(GO_SCIENTIST_DOOR_ORANGE);
+        pInstance->DoUseDoorOrButton(GO_SCIENTIST_DOOR_GREEN);
+        pInstance->DoUseDoorOrButton(GO_SCIENTIST_DOOR_COLLISION);
+    }
     return true;
 }
 
 bool GOHello_go_bloodwing_sigil(Player *player, GameObject* pGo)
 {
     instance_icecrown_spire* pInstance = (instance_icecrown_spire*)pGo->GetInstanceData();
-    if(!pInstance) return false;
+
+    if(!pInstance)
+        return false;
 
     if (pInstance->GetData(TYPE_SAURFANG) == DONE)
-            pInstance->DoOpenDoor(GO_BLOODWING_DOOR);
+        pInstance->DoUseDoorOrButton(GO_BLOODWING_DOOR);
 
     return true;
 }
@@ -118,7 +122,7 @@ bool GOHello_go_frostwing_sigil(Player *player, GameObject* pGo)
     if(!pInstance) return false;
 
     if (pInstance->GetData(TYPE_SAURFANG) == DONE)
-        pInstance->DoOpenDoor(GO_FROSTWING_DOOR);
+        pInstance->DoUseDoorOrButton(GO_FROSTWING_DOOR);
 
     return true;
 }

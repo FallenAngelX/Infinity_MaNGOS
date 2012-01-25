@@ -63,6 +63,7 @@ DELETE FROM `spell_area` WHERE `spell` IN
 -- --------
 
 UPDATE `creature_template` SET `vehicle_id` = 639, `AIName`='', `PowerType` = 3, `ScriptName`='boss_deathbringer_saurfang' WHERE `entry`=37813;
+UPDATE `creature_template` SET `AIName`='', `ScriptName`='npc_highlord_saurfang_icc' WHERE `entry`=37187;
 UPDATE `creature_template` SET `vehicle_id` = 639, `AIName`='', `PowerType` = 3 WHERE `entry` IN (38402,38582,38583);
 UPDATE `creature` SET `position_x` = -476.621,`position_y` = 2211.11,`position_z` = 541.197, `spawntimesecs` = 604800 WHERE `id` = 37813;
 UPDATE `creature_template` SET `ScriptName`='mob_blood_beast', `AIName`='' WHERE `entry`= 38508;
@@ -382,6 +383,11 @@ INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
 (72031, 1, 37950),
 (72032, 1, 37950),
 (72033, 1, 37950);
+
+-- spawn Valithria in dream state
+DELETE FROM `creature` WHERE `id` = 37950;
+INSERT INTO `creature` (`id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `curhealth`, `MovementType`) VALUES
+(37950, 631, 15, 16, 4203.1416, 2484.8616, 386.4849, 6.276, 604800, 0, 1, 0);
 
 DELETE FROM `creature` WHERE `guid` = 47738 AND `id` = 38589;
 DELETE FROM `pool_creature` WHERE `guid`=47738;
