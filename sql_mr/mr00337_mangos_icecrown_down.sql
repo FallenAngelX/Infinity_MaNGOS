@@ -30,6 +30,9 @@ UPDATE `creature_template` SET `ScriptName`='mob_explosive_orb' WHERE `entry`=36
 UPDATE `creature_template` SET `ScriptName`='boss_rimefang' WHERE `entry`=36661;
 UPDATE `creature_template` SET `ScriptName`='npc_colapsing_icicle' WHERE `entry`=36847;
 
+UPDATE `creature_template` SET `ScriptName`='boss_forgemaster_garfrost', `AIName` ='' WHERE `entry`=36494;
+UPDATE `creature_template` SET `ScriptName`='boss_scourgelord_tyrannus', `AIName` ='' WHERE `entry`=36658;
+
 UPDATE `creature_template` SET `equipment_id` = '2011', `unit_flags` = '0' WHERE `entry` = 36658;
 UPDATE `creature_template` SET `faction_A` = '14', `faction_H` = '14' WHERE `entry` = 36661;
 
