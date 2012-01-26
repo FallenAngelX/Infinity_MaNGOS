@@ -316,7 +316,11 @@ struct boss_skadi_graufAI : public ScriptedAI
             default:
                 uiWaypointId = 0;
                 uiMovementTimer = 1000;
+                break;
         }
+
+        if ( uiWaypointId > 6 )
+            error_log("SD2: Instance Pinnacle: Skadi Grauf try move to point %u!", uiWaypointId);
     }
 
     void JustDied(Unit* pTarget)
@@ -376,7 +380,8 @@ struct boss_skadi_graufAI : public ScriptedAI
             if (uiMovementTimer < uiDiff)
             {
                 m_creature->GetMotionMaster()->Clear(true,true);
-                m_creature->GetMotionMaster()->MovePoint(uiWaypointId, FlightPosition[uiWaypointId].x, FlightPosition[uiWaypointId].y, FlightPosition[uiWaypointId].z);
+                if ( uiWaypointId < 7)
+                    m_creature->GetMotionMaster()->MovePoint(uiWaypointId, FlightPosition[uiWaypointId].x, FlightPosition[uiWaypointId].y, FlightPosition[uiWaypointId].z);
                 uiMovementTimer = 20000;
             }
             else
