@@ -610,7 +610,7 @@ struct MANGOS_DLL_DECL mob_blistering_zombieAI : public ScriptedAI
 
     void Reset()
     {
-        m_bHasDied = true;
+        m_bHasDied = false;
     }
 
     void Aggro(Unit *pWho)
