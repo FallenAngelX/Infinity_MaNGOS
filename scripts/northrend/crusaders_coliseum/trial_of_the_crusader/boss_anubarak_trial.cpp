@@ -544,7 +544,7 @@ struct MANGOS_DLL_DECL mob_swarm_scarabAI : public BSWScriptedAI
 
         if (m_uiDeterminationTimer <= uiDiff)
         {
-            if (DoCastSpellIfCan(m_creature, SPELL_DETERMINATION) == CAST_OK);
+            if (DoCastSpellIfCan(m_creature, SPELL_DETERMINATION) == CAST_OK)
                 m_uiDeterminationTimer = 30000;
         }
         else
