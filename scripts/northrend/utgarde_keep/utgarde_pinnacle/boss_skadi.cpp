@@ -271,6 +271,9 @@ struct boss_skadi_graufAI : public ScriptedAI
 
     void MovementInform(uint32 uiMovementType, uint32 uiData)
     {
+        if (uiMovementType != POINT_MOTION_TYPE)
+            return;
+
         switch(uiData)
         {
             case 1: // short after start
@@ -362,7 +365,7 @@ struct boss_skadi_graufAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        if (!m_creature->getVictim() || (!uiWaypointId && !m_creature->SelectHostileTarget()))
             return;
 
         if (vehicle->GetPassenger(0) && !isInFlight)
