@@ -164,7 +164,7 @@ struct MANGOS_DLL_DECL boss_lorthemar_theronAI : public ScriptedAI
 
 CreatureAI* GetAI_boss_lorthemar_theron(Creature* pCreature)
 {
-   return new boss_lorthemar_theronAI(pCreature);
+    return new boss_lorthemar_theronAI(pCreature);
 }
 
 void AddSC_silvermoon_city()

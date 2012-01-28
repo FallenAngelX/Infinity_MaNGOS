@@ -43,7 +43,7 @@ enum spells // Boss spells
 
 // entropius spells
     SPELL_NEGATIVE_ENERGY_DMG   = 46285,
-    SPELL_SUMMON_DARKNESS        = 46269,
+    SPELL_SUMMON_DARKNESS       = 46269,
 
 //Portals
     SPELL_OPEN_ALL_PORTALS      = 46177,

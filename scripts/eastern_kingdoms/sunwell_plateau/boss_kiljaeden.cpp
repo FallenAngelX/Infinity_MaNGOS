@@ -181,9 +181,9 @@ enum Texts
     SAY_DARKNESS1                           = -1580074,
     SAY_DARKNESS2                           = -1580075,
     SAY_DARKNESS3                           = -1580076,
-    SAY_PHASE_FOUR                            = -1580077,
+    SAY_PHASE_FOUR                          = -1580077,
     SAY_PHASE_THREE                         = -1580078,
-    SAY_PHASE_FIVE                            = -1580079,
+    SAY_PHASE_FIVE                          = -1580079,
 
     // Kalecgos - Anveena speech
     SAY_KALECGOS_INTRO                      = -1580080,
