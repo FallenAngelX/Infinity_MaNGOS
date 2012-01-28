@@ -137,12 +137,11 @@ struct MANGOS_DLL_DECL mob_vh_dragonsAI : public ScriptedAI
         m_uiBackstab_Timer = 7100;
         m_uiBlink_Timer = 7000;
 
-        if (creatureEntry == NPC_KEEPER
-            || creatureEntry == NPC_GUARDIAN)
+        if (creatureEntry == NPC_KEEPER || creatureEntry == NPC_GUARDIAN)
         {
             SetCombatMovement(false);
             m_creature->GetMotionMaster()->MoveRandom();
-        };
+        }
 
     }
 
