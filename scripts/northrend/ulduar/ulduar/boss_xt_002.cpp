@@ -146,7 +146,9 @@ struct MANGOS_DLL_DECL mob_voidzoneAI : public ScriptedAI
                 m_creature->CastCustomSpell(m_creature, SPELL_VOIDZONE_EFFECT, &damage, 0, 0, true);
             }
             Spell_Timer = 1000;
-        }else Spell_Timer -= diff;  
+        }
+        else
+            Spell_Timer -= diff;
     }
 };
 
@@ -182,7 +184,10 @@ struct MANGOS_DLL_DECL mob_lifesparkAI : public ScriptedAI
         {
             DoCast(m_creature->getVictim(), SPELL_SHOCK);
             m_uiSpell_Timer = urand(4000, 7000);
-        } else m_uiSpell_Timer -= uidiff;
+        }
+        else
+            m_uiSpell_Timer -= uidiff;
+
         DoMeleeAttackIfReady();
     }
 };
@@ -229,7 +234,9 @@ struct MANGOS_DLL_DECL mob_pummelerAI : public ScriptedAI
                     break;
             }
             Spell_Timer = urand(5000, 10000);
-        }else Spell_Timer -= diff;        
+        }
+        else
+            Spell_Timer -= diff;
 
         DoMeleeAttackIfReady();
     }

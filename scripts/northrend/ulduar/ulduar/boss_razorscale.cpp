@@ -769,7 +769,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
                     m_uiDevouring_Flame_Timer -= uiDiff;
 
                 // repair harpoons
-                if (m_uiRepairHarpoonTimer < uiDiff && m_uiHarpoonsRepaired <= m_uiMaxHarpoons)
+                if (m_uiRepairHarpoonTimer < uiDiff && m_uiHarpoonsRepaired < m_uiMaxHarpoons && m_uiHarpoonsRepaired < m_pInstance->m_lBreakHarpoonGUID.size()) // i know the double check
                 {
                     RepairHarpoons();
                     ++m_uiHarpoonsRepaired;
