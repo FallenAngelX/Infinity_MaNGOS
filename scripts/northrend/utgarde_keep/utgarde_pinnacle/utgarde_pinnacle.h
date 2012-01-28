@@ -85,7 +85,8 @@ class MANGOS_DLL_DECL instance_pinnacle : public ScriptedInstance
 
         GUIDList m_lFlameBraziersList;
 
-        GUIDList m_lFlameBreathTrigger;
+        GUIDList m_lFlameBreathTriggerRight;
+        GUIDList m_lFlameBreathTriggerLeft;
 };
 
 #endif

@@ -70,7 +70,10 @@ void instance_pinnacle::OnCreatureCreate(Creature* pCreature)
             break;
         case NPC_FLAME_BREATH_TRIGGER:
         {
-            m_lFlameBreathTrigger.push_back(pCreature->GetObjectGuid());
+            if (pCreature->GetPositionY() < -512.0f)
+                m_lFlameBreathTriggerLeft.push_back(pCreature->GetObjectGuid());
+            else
+                m_lFlameBreathTriggerRight.push_back(pCreature->GetObjectGuid());
             break;
         }
     }
@@ -224,10 +227,21 @@ void instance_pinnacle::DoProcessCallFlamesEvent()
 
 void instance_pinnacle::DoMakeFreezingCloud()
 {
-    for (GUIDList::const_iterator itr = m_lFlameBreathTrigger.begin(); itr != m_lFlameBreathTrigger.end(); ++itr)
+    if (urand(0, 1))
     {
-        if (Creature* pFlame = instance->GetCreature(*itr))
-            pFlame->CastSpell(pFlame, SPELL_FREEZING_CLOUD, true);
+        for (GUIDList::const_iterator itr = m_lFlameBreathTriggerLeft.begin(); itr != m_lFlameBreathTriggerLeft.end(); ++itr)
+        {
+            if (Creature* pFlame = instance->GetCreature(*itr))
+                pFlame->CastSpell(pFlame, SPELL_FREEZING_CLOUD, true);
+        }
+    }
+    else
+    {
+        for (GUIDList::const_iterator itr = m_lFlameBreathTriggerRight.begin(); itr != m_lFlameBreathTriggerRight.end(); ++itr)
+        {
+            if (Creature* pFlame = instance->GetCreature(*itr))
+                pFlame->CastSpell(pFlame, SPELL_FREEZING_CLOUD, true);
+        }
     }
 }
 
