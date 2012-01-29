@@ -1589,14 +1589,14 @@ struct MANGOS_DLL_DECL boss_illidan_stormrageAI : public ScriptedAI
         }
 
         /** Signal to summon Maiev **/
-        if (m_creature->GetHealthPercent() < 30.0f && !m_maievGuid && (m_uiPhase != PHASE_DEMON || m_uiPhase != PHASE_DEMON_SEQUENCE))
+        if (m_creature->GetHealthPercent() < 30.0f && !m_maievGuid && m_uiPhase != PHASE_DEMON && m_uiPhase != PHASE_DEMON_SEQUENCE)
         {
             SummonMaiev();
             return;
         }
 
         /** Time for the death speech **/
-        if (m_creature->GetHealthPercent() < 1.0f && (m_uiPhase != PHASE_DEMON || m_uiPhase != PHASE_DEMON_SEQUENCE))
+        if (m_creature->GetHealthPercent() < 1.0f && m_uiPhase != PHASE_DEMON && m_uiPhase != PHASE_DEMON_SEQUENCE)
         {
             InitializeDeath();
             return;
