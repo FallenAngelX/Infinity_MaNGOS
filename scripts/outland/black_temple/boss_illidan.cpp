@@ -913,6 +913,14 @@ struct MANGOS_DLL_DECL boss_illidan_stormrageAI : public ScriptedAI
     {
         m_uiPhase = PHASE_NORMAL;
 
+        // Check if Maiev are alive/existing. Despawn and clear GUID
+        if (m_maievGuid)
+        {
+            if (Creature* Maiev = m_creature->GetMap()->GetCreature(m_maievGuid))
+                Maiev->ForcedDespawn();
+            m_maievGuid.Clear();
+        }
+
         // Check if any flames/glaives are alive/existing. Kill if alive and set GUIDs to 0
         for(uint8 i = 0; i < 2; ++i)
         {
