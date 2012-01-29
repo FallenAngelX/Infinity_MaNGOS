@@ -106,10 +106,8 @@ bool GossipHello_npc_toc5_announcer(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_toc5_announcer(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    if (!pPlayer || !pCreature)
-        return true;
-
-    ScriptedInstance* m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+    ScriptedInstance* m_pInstance;
+    m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
 
     pPlayer->CLOSE_GOSSIP_MENU();
 
@@ -117,10 +115,10 @@ bool GossipSelect_npc_toc5_announcer(Player* pPlayer, Creature* pCreature, uint3
     {
         case GOSSIP_ACTION_INFO_DEF+1:
         {
-            if (m_pInstance->GetData(DATA_TOC5_ANNOUNCER) != 0)
+            if (m_pInstance->GetData(DATA_TOC5_ANNOUNCER) == 0)
             {
                 m_pInstance->SetData(DATA_TOC5_ANNOUNCER, pCreature->GetEntry());
-                if (m_pInstance->GetData(DATA_TOC5_ANNOUNCER) == DATA_ARELAS)
+                if (m_pInstance->GetData(DATA_TOC5_ANNOUNCER) == NPC_ARELAS)
                 {
                     m_pInstance->SetData(DATA_BLACK_KNIGHT_MINION, 35564);
                     switch(urand(0, 4))
@@ -153,9 +151,9 @@ bool GossipSelect_npc_toc5_announcer(Player* pPlayer, Creature* pCreature, uint3
                     } while(m_pInstance->GetData(DATA_CHAMPIONID_1) == m_pInstance->GetData(DATA_CHAMPIONID_3) || m_pInstance->GetData(DATA_CHAMPIONID_2) == m_pInstance->GetData(DATA_CHAMPIONID_3));
                 }
 
-                if (m_pInstance->GetData(DATA_TOC5_ANNOUNCER) == DATA_JAEREN)
+                if (m_pInstance->GetData(DATA_TOC5_ANNOUNCER) == NPC_JAEREN)
                 {
-                    m_pInstance->SetData(DATA_BLACK_KNIGHT_MINION, 123);
+                    m_pInstance->SetData(DATA_BLACK_KNIGHT_MINION, 35545);
 
                     switch(urand(0, 4))
                     {

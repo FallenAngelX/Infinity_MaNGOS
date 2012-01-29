@@ -54,6 +54,7 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
         m_uiChampionId3            = 0;
         m_uiChampionsCount         = 3;
         m_uiArgentChallengerID     = 0;
+        m_uiAnnouncerID            = 0;
 
         for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             m_auiEncounter[i] = NOT_STARTED;
@@ -121,11 +122,6 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
             case NPC_EADRIC:
             case NPC_PALETRESS:
                 m_uiArgentChallengerID = pCreature->GetEntry();
-                break;
-            // Coliseum Announcers
-            case NPC_JAEREN:
-            case NPC_ARELAS:
-                m_uiAnnouncerID = pCreature->GetEntry();
                 break;
             // Black Knight
             case NPC_BLACK_KNIGHT:
