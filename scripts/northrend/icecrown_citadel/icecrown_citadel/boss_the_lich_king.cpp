@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2012 ScriptDev2 <http://www.scriptdev2.com/>
+/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -831,7 +831,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public base_icc_bossAI
                 pSummoned->AddThreat(pTarget, 100000.0f);
                 pSummoned->AI()->AttackStart(pTarget);
                 pSummoned->CastSpell(pSummoned, SPELL_ICE_BURST_AURA, true);
-                pSummoned->CastSpell(pTarget, SPELL_ICE_PULSE, true);
+                pSummoned->CastSpell(pTarget, SPELL_ICE_PULSE, false);
             }
         }
     }
@@ -1172,6 +1172,17 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public base_icc_bossAI
                         DoScriptText(SAY_SHATTER_ARENA, m_creature);
                         m_uiPhase = (m_uiPhase == PHASE_TRANSITION_ONE ? PHASE_QUAKE_ONE : PHASE_QUAKE_TWO);
                         m_uiPhaseTimer = 6500;
+
+                        // despawn Ice Spheres
+                        std::list<Creature*> lIceSpheres;
+                        GetCreatureListWithEntryInGrid(lIceSpheres, m_creature, NPC_ICE_SPHERE, 150.0f);
+                        for(std::list<Creature*>::iterator i = lIceSpheres.begin(); i != lIceSpheres.end();)
+                        {
+                            std::list<Creature*>::iterator next = i;
+                            ++next;
+                            (*i)->ForcedDespawn();
+                            i = next;
+                        }
                     }
                 }
                 else
@@ -2012,20 +2023,23 @@ struct MANGOS_DLL_DECL  mob_vile_spiritAI : public base_icc_bossAI
         m_creature->GetMotionMaster()->MovePoint(1, m_creature->GetPositionX() + frand(-3.0f, 3.0f), m_creature->GetPositionY() + frand(-3.0f, 3.0f), m_creature->GetPositionZ(), false);
         DoCastSpellIfCan(m_creature, SPELL_SPIRIT_BURST_AURA, CAST_TRIGGERED);
 
-        if (m_creature->GetEntry() == NPC_WICKED_SPIRIT)
+        m_bIsWickedSpirit = m_creature->GetEntry() == NPC_WICKED_SPIRIT;
+
+        if (m_bIsWickedSpirit)
             m_creature->ForcedDespawn(41000);
 
         Reset();
     }
 
     bool m_bIsReady;
+    bool m_bIsWickedSpirit;
     uint32 m_uiReadyTimer;
     uint32 m_uiSummonSpiritBombTimer;
 
     void Reset()
     {
         m_bIsReady = false;
-        m_uiReadyTimer = m_bIsHeroic ? urand(7000, 15000) : 15000;
+        m_uiReadyTimer = m_bIsWickedSpirit ? urand(7000, 15000) : 15000;
         m_uiSummonSpiritBombTimer = urand(1000, 10000);
     }
 
@@ -2084,19 +2098,19 @@ struct MANGOS_DLL_DECL  mob_vile_spiritAI : public base_icc_bossAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!m_pInstance || m_pInstance->GetData(TYPE_FROSTMOURNE_ROOM) != IN_PROGRESS)
+        if (!m_pInstance || m_pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS)
         {
             m_creature->ForcedDespawn();
             return;
         }
 
-        if (m_bIsHeroic)
+        if (m_bIsWickedSpirit)
         {
             // Summon Spirit Bomb
             if (m_uiSummonSpiritBombTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_SPIRIT_BOMB, CAST_TRIGGERED) == CAST_OK)
-                    m_uiSummonSpiritBombTimer = 2000;
+                    m_uiSummonSpiritBombTimer = 3000;
             }
             else
                 m_uiSummonSpiritBombTimer -= uiDiff;
@@ -2111,7 +2125,7 @@ struct MANGOS_DLL_DECL  mob_vile_spiritAI : public base_icc_bossAI
 
                 m_creature->SetInCombatWithZone();
 
-                if (m_creature->GetEntry() == NPC_WICKED_SPIRIT)
+                if (m_bIsWickedSpirit)
                     pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_SPIRIT_BURST_AURA, SELECT_FLAG_PLAYER);
                 else
                     pTarget = SelectTarget();
@@ -2125,7 +2139,7 @@ struct MANGOS_DLL_DECL  mob_vile_spiritAI : public base_icc_bossAI
                     SetCombatMovement(true);
                     m_creature->GetMotionMaster()->Clear();
 
-                    if (m_creature->GetEntry() == NPC_WICKED_SPIRIT)
+                    if (m_bIsWickedSpirit)
                         m_creature->SetWalk(true);
 
                     AttackStart(pTarget);

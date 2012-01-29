@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2012 ScriptDev2 <http://www.scriptdev2.com/>
+/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -300,26 +300,29 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
                     m_uiBloodMirrorTimer -= uiDiff;
 
                 // Delirious Slash
-                if (m_uiDeliriousSlashTimer <= uiDiff)
+                if (m_bIsHeroic)
                 {
-                    /**
-                     * Spell that handles targeting - we can do this here.
-                     * if (DoCastSpellIfCan(m_creature, SPELL_DELIRIOUS_SLASH) == CAST_OK)
-                     */
-                    if (Unit *pTarget = SelectClosestFriendlyTarget(m_creature->getVictim()))
+                    if (m_uiDeliriousSlashTimer <= uiDiff)
                     {
-                        uint32 spell = SPELL_DELIRIOUS_SLASH_1;
+                        /**
+                         * Spell that handles targeting - we can do this here.
+                         * if (DoCastSpellIfCan(m_creature, SPELL_DELIRIOUS_SLASH) == CAST_OK)
+                         */
+                        if (Unit *pTarget = SelectClosestFriendlyTarget(m_creature->getVictim()))
+                        {
+                            uint32 spell = SPELL_DELIRIOUS_SLASH_1;
 
-                        // if target is not in 5yd range then cast spell with charge effect
-                        if (!m_creature->IsWithinDist(pTarget, 5.0f))
-                            spell = SPELL_DELIRIOUS_SLASH_2;
+                            // if target is not in 5yd range then cast spell with charge effect
+                            if (!m_creature->IsWithinDist(pTarget, 5.0f))
+                                spell = SPELL_DELIRIOUS_SLASH_2;
 
-                        if (DoCastSpellIfCan(pTarget, spell) == CAST_OK)
-                            m_uiDeliriousSlashTimer = 15000;
+                            if (DoCastSpellIfCan(pTarget, spell) == CAST_OK)
+                                m_uiDeliriousSlashTimer = 15000;
+                        }
                     }
+                    else
+                        m_uiDeliriousSlashTimer -= uiDiff;
                 }
-                else
-                    m_uiDeliriousSlashTimer -= uiDiff;
 
                 // Vampiric Bite
                 if (!m_bHasBitten)

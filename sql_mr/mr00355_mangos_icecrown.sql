@@ -64,6 +64,7 @@ DELETE FROM `spell_area` WHERE `spell` IN
 
 UPDATE `creature_template` SET `vehicle_id` = 639, `AIName`='', `PowerType` = 3, `ScriptName`='boss_deathbringer_saurfang' WHERE `entry`=37813;
 UPDATE `creature_template` SET `AIName`='', `ScriptName`='npc_highlord_saurfang_icc' WHERE `entry`=37187;
+UPDATE `creature_template` SET `AIName`='', `ScriptName`='npc_deathbringer_event_guards_iccAI' WHERE `entry` IN (37920, 37902);
 UPDATE `creature_template` SET `vehicle_id` = 639, `AIName`='', `PowerType` = 3 WHERE `entry` IN (38402,38582,38583);
 UPDATE `creature` SET `position_x` = -476.621,`position_y` = 2211.11,`position_z` = 541.197, `spawntimesecs` = 604800 WHERE `id` = 37813;
 UPDATE `creature_template` SET `ScriptName`='mob_blood_beast', `AIName`='' WHERE `entry`= 38508;
@@ -222,7 +223,7 @@ UPDATE `creature_template` SET `unit_flags` = `unit_flags` | 33554432 | 2 WHERE 
 -- -------------------
 
 UPDATE `creature_template` SET `ScriptName`='boss_professor_putricide', `AIName`='' WHERE `entry`= 36678;
-UPDATE `creature_template` SET `vehicle_id`=587 WHERE `entry` in (36678,38431,38585,38586);
+UPDATE `creature_template` SET `PowerType` = 0, `vehicle_id` = 587 WHERE `entry` IN (36678, 38431, 38585, 38586);
 UPDATE `gameobject_template` SET `faction` = '114',`data0` = '0' WHERE `gameobject_template`.`entry` IN (201372,201614,201613, 201612);
 UPDATE `gameobject` SET `state` = '1' WHERE `id` IN (201612,201614,201613);
 UPDATE `gameobject` SET `state` = '0' WHERE `id` IN (201372);
@@ -238,10 +239,8 @@ INSERT INTO `spell_script_target` VALUES
 (71415, 1, 37824), -- Orange Ooze
 (71617, 1, 38317); -- Tear Gas
 
--- delete some weird Grow Stacker - grows too fast
+-- delete Grow Stacker - handle in script
 DELETE FROM `creature_template_addon` WHERE `entry` = 37690;
--- delete dot aura from abomination
-DELETE FROM creature_template_addon WHERE entry IN (37672, 38605, 38786, 38787, 38285, 38788, 38789, 38790);
 
 -- remove proc from Mutated Strength - currently cooldown for creatures not handled in core
 DELETE FROM `spell_proc_event` WHERE `entry` IN (71604, 72673, 72674, 72675);
@@ -255,9 +254,13 @@ INSERT INTO `spell_proc_event` (`entry`, `procFlags`) VALUES
 -- Abomination
 -- -----------
 
-DELETE FROM `creature_template_addon` WHERE (`entry`=37672);
-INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES (37672, '70385 70405');
-UPDATE `creature_template` SET `PowerType` = 3, `vehicle_id`=591 WHERE `entry` in (37672,38605,38786,38787);
+DELETE FROM `creature_template_addon` WHERE `entry` IN (37672, 38285);
+INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES
+(37672, '70385'),
+(38285, '70385');
+
+UPDATE `creature_template` SET `PowerType` = 3, `vehicle_id`=591 WHERE `entry` IN (37672, 38605, 38786, 38787, 38285, 38788, 38789, 38790);
+
 DELETE FROM `spell_script_target` WHERE `entry` IN (70360);
 INSERT INTO `spell_script_target` VALUES (70360,1,37690);
 
@@ -337,16 +340,16 @@ DELETE FROM `spell_proc_event` WHERE entry IN (70871);
 INSERT INTO `spell_proc_event` VALUES
 (70871, 0x7F,  0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0.000000, 0.000000, 0);
 
--- Mirror Soul proc on melee hits
-DELETE FROM `spell_proc_event` WHERE entry IN (70445);
-INSERT INTO `spell_proc_event` VALUES
-(70445, 0x7F,  0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000008, 0x00000000, 0, 100, 0);
-
 -- Presence of the Darkfallen
 DELETE FROM spell_script_target WHERE entry IN (70995, 71952);
 INSERT INTO spell_script_target VALUES
 (71952, 1, 37955),
 (70995, 1, 37955);
+
+-- by default Pact of the Darkfallen is getting spell power coeff, so set it to 0
+DELETE FROM `spell_bonus_data` WHERE `entry` = 71341;
+INSERT INTO `spell_bonus_data` VALUES
+(71341, 0, 0, 0, 0, 'Pact of the Darkfallen (Lanathel)');
 
 DELETE FROM `creature_model_info` WHERE (`modelid`=31165);
 INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (31165, 3, 5, 2, 0, 0);
