@@ -1006,7 +1006,7 @@ struct MANGOS_DLL_DECL boss_illidan_stormrageAI : public ScriptedAI
 
     void AttackStart(Unit* pWho)
     {
-        if (!pWho || m_bIsTalking || m_uiPhase == PHASE_FLIGHT || m_uiPhase == PHASE_DEMON || m_uiPhase == PHASE_DEMON_SEQUENCE || m_creature->HasAura(SPELL_KNEEL, EFFECT_INDEX_0))
+        if (!pWho || m_bIsTalking)
             return;
 
         if (pWho == m_creature)
@@ -1017,6 +1017,9 @@ struct MANGOS_DLL_DECL boss_illidan_stormrageAI : public ScriptedAI
             m_creature->AddThreat(pWho);
             m_creature->SetInCombatWith(pWho);
             pWho->SetInCombatWith(m_creature);
+
+        if (m_uiPhase == PHASE_FLIGHT || m_uiPhase == PHASE_DEMON || m_uiPhase == PHASE_DEMON_SEQUENCE || m_creature->HasAura(SPELL_KNEEL, EFFECT_INDEX_0))
+            return;
 
             DoStartMovement(pWho);
         }
