@@ -1172,17 +1172,6 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public base_icc_bossAI
                         DoScriptText(SAY_SHATTER_ARENA, m_creature);
                         m_uiPhase = (m_uiPhase == PHASE_TRANSITION_ONE ? PHASE_QUAKE_ONE : PHASE_QUAKE_TWO);
                         m_uiPhaseTimer = 6500;
-
-                        // despawn Ice Spheres
-                        std::list<Creature*> lIceSpheres;
-                        GetCreatureListWithEntryInGrid(lIceSpheres, m_creature, NPC_ICE_SPHERE, 150.0f);
-                        for(std::list<Creature*>::iterator i = lIceSpheres.begin(); i != lIceSpheres.end();)
-                        {
-                            std::list<Creature*>::iterator next = i;
-                            ++next;
-                            (*i)->ForcedDespawn();
-                            i = next;
-                        }
                     }
                 }
                 else
