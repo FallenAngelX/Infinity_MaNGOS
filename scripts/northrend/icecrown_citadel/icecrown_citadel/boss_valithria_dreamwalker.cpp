@@ -16,8 +16,12 @@
 
 /* ScriptData
 SDName: boss_valithria
-SD%Complete: 90%
-SDComment:  evading/wiping not clear. timers for adds not clear.
+SD%Complete: 99%
+SDComment:  by michalpolko with special thanks to:
+            mangosR2 team and all who are supporting us with feedback, testing and fixes
+            TrinityCore for some info about spells IDs
+            everybody whom I forgot to mention here ;)
+
 SDCategory: Icecrown Citadel
 EndScriptData */
 

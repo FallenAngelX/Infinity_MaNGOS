@@ -15,12 +15,16 @@
  */
 
 /**
- * ScriptData
- * SDName: boss_the_lich_king
- * SD%Complete:
- * SDComment: 
- * SDCategory: Icecrown Citadel
- */
+ScriptData
+SDName: boss_the_lich_king
+SD%Complete: 99%
+SDComment:  by michalpolko with special thanks to:
+            mangosR2 team and all who are supporting us with feedback, testing and fixes
+            TrinityCore for some info about spells IDs
+            everybody whom I forgot to mention here ;)
+
+SDCategory: Icecrown Citadel
+*/
 
 #include "precompiled.h"
 #include "icecrown_citadel.h"

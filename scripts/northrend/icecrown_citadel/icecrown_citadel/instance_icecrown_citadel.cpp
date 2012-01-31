@@ -17,7 +17,11 @@
 /* ScriptData
 SDName: instance_icecrown_spire
 SD%Complete: 90%
-SDComment: by /dev/rsa
+SDComment:  by michalpolko with special thanks to:
+            mangosR2 team and all who are supporting us with feedback, testing and fixes
+            TrinityCore for some info about spells IDs
+            everybody whom I forgot to mention here ;)
+
 SDCategory: Icecrown Citadel
 EndScriptData */
 

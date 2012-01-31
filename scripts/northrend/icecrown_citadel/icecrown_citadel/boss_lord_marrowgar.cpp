@@ -17,8 +17,11 @@
 /* ScriptData
 SDName: boss_lord_marrowgar
 SD%Complete: 99%
-SDComment:  hack in script included for not correctly working Cold Flame spell.
-            also not sure if spell for marking impaled targets is for this boss, so not implemented.
+SDComment:  by michalpolko with special thanks to:
+            mangosR2 team and all who are supporting us with feedback, testing and fixes
+            TrinityCore for some info about spells IDs
+            everybody whom I forgot to mention here ;)
+
 SDCategory: Icecrown Citadel
 EndScriptData */
 
