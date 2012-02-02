@@ -26,23 +26,23 @@ EndScriptData */
 
 enum
 {
-    EMOTE_GENERIC_FRENZY_KILL  = -1000001,
+    EMOTE_GENERIC_FRENZY_KILL   = -1000001,
 
-    SPELL_GROUNDTREMOR         = 6524,
-    SPELL_FRENZY               = 28371,
+    SPELL_GROUNDTREMOR          = 6524,
+    SPELL_FRENZY                = 28371,
 };
 
 struct MANGOS_DLL_DECL boss_grizzleAI : public ScriptedAI
 {
-    boss_grizzleAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    boss_grizzleAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    uint32 m_uiGroundTremor_Timer;
-    uint32 m_uiFrenzy_Timer;
+    uint32 m_uiGroundTremorTimer;
+    uint32 m_uiFrenzyTimer;
 
     void Reset()
     {
-        m_uiGroundTremor_Timer = 12000;
-        m_uiFrenzy_Timer =0;
+        m_uiGroundTremorTimer = 12000;
+        m_uiFrenzyTimer = 0;
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -50,27 +50,33 @@ struct MANGOS_DLL_DECL boss_grizzleAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (m_uiGroundTremor_Timer < uiDiff)
+        //GroundTremor_Timer
+        if (m_uiGroundTremorTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_GROUNDTREMOR);
-            m_uiGroundTremor_Timer = 8000;
-        }else m_uiGroundTremor_Timer -= uiDiff;
+            DoCastSpellIfCan(m_creature, SPELL_GROUNDTREMOR);
+            m_uiGroundTremorTimer = 8000;
+        }
+        else
+            m_uiGroundTremorTimer -= uiDiff;
 
         if (m_creature->GetHealthPercent() < 51.0f)
         {
-            if (m_uiFrenzy_Timer < uiDiff)
+            if (m_uiFrenzyTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_FRENZY) == CAST_OK)
                 {
                     DoScriptText(EMOTE_GENERIC_FRENZY_KILL, m_creature);
-                    m_uiFrenzy_Timer = 15000;
+                    m_uiFrenzyTimer = 15000;
                 }
-            }else m_uiFrenzy_Timer -= uiDiff;
+            }
+            else
+                m_uiFrenzyTimer -= uiDiff;
         }
 
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_grizzle(Creature* pCreature)
 {
     return new boss_grizzleAI(pCreature);
