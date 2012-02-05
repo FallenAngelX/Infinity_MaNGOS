@@ -62,7 +62,9 @@ struct MANGOS_DLL_DECL mob_xerestraszaAI : public ScriptedAI
 
     void Reset()
     {
-        if(!pInstance) return;
+        if (!pInstance)
+            return;
+
         nextEvent = 0;
         nextPoint = 0;
         movementstarted = false;
@@ -77,11 +79,13 @@ struct MANGOS_DLL_DECL mob_xerestraszaAI : public ScriptedAI
 
     void MovementInform(uint32 type, uint32 id)
     {
-        if (type != POINT_MOTION_TYPE || !movementstarted) return;
+        if (type != POINT_MOTION_TYPE || !movementstarted)
+            return;
+
         if (id == nextPoint)
         {
             movementstarted = false;
-            pInstance->SetData(TYPE_EVENT,nextEvent);
+            pInstance->SetData(TYPE_EVENT, nextEvent);
             m_creature->GetMotionMaster()->MovementExpired();
         }
     }
@@ -104,13 +108,14 @@ struct MANGOS_DLL_DECL mob_xerestraszaAI : public ScriptedAI
 
     void MoveInLineOfSight(Unit *who)
     {
-        if(!pInstance || !who || who->GetTypeId() != TYPEID_PLAYER)
+        if (!pInstance || !who || who->GetTypeId() != TYPEID_PLAYER)
             return;
 
-        if (pInstance->GetData(TYPE_BALTHARUS) != DONE
-            || pInstance->GetData(TYPE_XERESTRASZA) != NOT_STARTED) return;
+        if (pInstance->GetData(TYPE_BALTHARUS) != DONE || pInstance->GetData(TYPE_XERESTRASZA) != NOT_STARTED)
+            return;
 
-        if(!who->IsWithinDistInMap(m_creature, 60.0f)) return;
+        if (!who->IsWithinDistInMap(m_creature, 60.0f))
+            return;
 
         pInstance->SetData(TYPE_XERESTRASZA, IN_PROGRESS);
         pInstance->SetData(TYPE_EVENT, 30);
@@ -119,108 +124,114 @@ struct MANGOS_DLL_DECL mob_xerestraszaAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        if(!pInstance) return;
+        if (!pInstance)
+            return;
 
         if (pInstance->GetData(TYPE_EVENT_NPC) == NPC_XERESTRASZA)
         {
             UpdateTimer = pInstance->GetData(TYPE_EVENT_TIMER);
             if (UpdateTimer <= diff)
             {
-            debug_log("EventMGR: creature %u received signal %u ",m_creature->GetEntry(),pInstance->GetData(TYPE_EVENT));
-            switch (pInstance->GetData(TYPE_EVENT))
+                debug_log("EventMGR: creature %u received signal %u ",m_creature->GetEntry(),pInstance->GetData(TYPE_EVENT));
+                switch (pInstance->GetData(TYPE_EVENT))
                 {
-// Xerestrasza intro
+                    case 0:
+                        break;
+                    // Xerestrasza intro
                     case 10:
-                          UpdateTimer = 7000;
-                          pInstance->SetData(TYPE_EVENT, 20);
-                          break;
+                        UpdateTimer = 7000;
+                        pInstance->SetData(TYPE_EVENT, 20);
+                        break;
                     case 20:
-                          DoScriptText(SAY_XERESTRASZA_YELL_1,m_creature);
-                          pInstance->SetData(TYPE_EVENT,0);
-                          break;
-// Xerestrasza event
+                        DoScriptText(SAY_XERESTRASZA_YELL_1,m_creature);
+                        pInstance->SetData(TYPE_EVENT,0);
+                        break;
+                    // Xerestrasza event
                     case 30:
-                          m_creature->SetActiveObjectState(true);
-                          DoScriptText(SAY_XERESTRASZA_YELL_2,m_creature);
-                          StartMovement(1,40);
-                          break;
+                        m_creature->SetActiveObjectState(true);
+                        DoScriptText(SAY_XERESTRASZA_YELL_2,m_creature);
+                        StartMovement(1,40);
+                        break;
                     case 40:
-                          DoScriptText(SAY_XERESTRASZA_SAY_1,m_creature);
-                          StartMovement(2,50);
-                          break;
+                        DoScriptText(SAY_XERESTRASZA_SAY_1,m_creature);
+                        StartMovement(2,50);
+                        break;
                     case 50:
-                          DoScriptText(SAY_XERESTRASZA_SAY_2,m_creature);
-                          UpdateTimer = 12000;
-                          pInstance->SetData(TYPE_EVENT,60);
-                          break;
+                        DoScriptText(SAY_XERESTRASZA_SAY_2,m_creature);
+                        UpdateTimer = 12000;
+                        pInstance->SetData(TYPE_EVENT,60);
+                        break;
                     case 60:
-                          DoScriptText(SAY_XERESTRASZA_SAY_3,m_creature);
-                          UpdateTimer = 12000;
-                          pInstance->SetData(TYPE_EVENT,70);
-                          break;
+                        DoScriptText(SAY_XERESTRASZA_SAY_3,m_creature);
+                        UpdateTimer = 12000;
+                        pInstance->SetData(TYPE_EVENT,70);
+                        break;
                     case 70:
-                          DoScriptText(SAY_XERESTRASZA_SAY_4,m_creature);
-                          UpdateTimer = 10000;
-                          pInstance->SetData(TYPE_EVENT,80);
-                          break;
+                        DoScriptText(SAY_XERESTRASZA_SAY_4,m_creature);
+                        UpdateTimer = 10000;
+                        pInstance->SetData(TYPE_EVENT,80);
+                        break;
                     case 80:
-                          DoScriptText(SAY_XERESTRASZA_SAY_5,m_creature);
-                          UpdateTimer = 10000;
-                          pInstance->SetData(TYPE_EVENT,90);
-                          break;
+                        DoScriptText(SAY_XERESTRASZA_SAY_5,m_creature);
+                        UpdateTimer = 10000;
+                        pInstance->SetData(TYPE_EVENT,90);
+                        break;
                     case 90:
-                          DoScriptText(SAY_XERESTRASZA_SAY_6,m_creature);
-                          UpdateTimer = 10000;
-                          pInstance->SetData(TYPE_EVENT,100);
-                          break;
+                        DoScriptText(SAY_XERESTRASZA_SAY_6,m_creature);
+                        UpdateTimer = 10000;
+                        pInstance->SetData(TYPE_EVENT,100);
+                        break;
                     case 100:
-                          DoScriptText(SAY_XERESTRASZA_SAY_7,m_creature);
-                          UpdateTimer = 4000;
-                          pInstance->SetData(TYPE_EVENT,110);
-                          break;
+                        DoScriptText(SAY_XERESTRASZA_SAY_7,m_creature);
+                        UpdateTimer = 4000;
+                        pInstance->SetData(TYPE_EVENT,110);
+                        break;
                     case 110:
-                          UpdateTimer = 2000;
-                          pInstance->SetData(TYPE_EVENT,0);
-                          pInstance->SetData(TYPE_XERESTRASZA, DONE);
-                          m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-                          m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                          m_creature->SetActiveObjectState(false);
-                          break;
-// Halion spawn
+                        UpdateTimer = 2000;
+                        pInstance->SetData(TYPE_EVENT,0);
+                        pInstance->SetData(TYPE_XERESTRASZA, DONE);
+                        m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                        m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                        m_creature->SetActiveObjectState(false);
+                        break;
+                    // Halion spawn
                     case 200:
                         m_creature->SetActiveObjectState(true);
-                          {
-                          Creature* pHalion = pInstance->GetSingleCreatureFromStorage(NPC_HALION_REAL);
-                          if (pInstance->GetData(TYPE_BALTHARUS) == DONE &&
-                              pInstance->GetData(TYPE_RAGEFIRE) == DONE &&
-                              pInstance->GetData(TYPE_XERESTRASZA) == DONE &&
-                              pInstance->GetData(TYPE_ZARITHRIAN) == DONE &&
-                              pInstance->GetData(TYPE_HALION) != DONE)
-                              {
-                              if (!pHalion)
-                                  pHalion = m_creature->SummonCreature(NPC_HALION_REAL, SpawnLoc[3].x, SpawnLoc[3].y, SpawnLoc[3].z, 6.23f, TEMPSUMMON_MANUAL_DESPAWN, HOUR*IN_MILLISECONDS);
-                              if (pHalion && !pHalion->isAlive())
-                                  pHalion->Respawn();
-                              if (pHalion)
-                                  pHalion->SetCreatorGuid(ObjectGuid());
-                              }
-                          }
-                          UpdateTimer = 4000;
-                          pInstance->SetData(TYPE_EVENT,210);
-                          break;
+                        {
+                            Creature* pHalion = pInstance->GetSingleCreatureFromStorage(NPC_HALION_REAL);
+                            if (pInstance->GetData(TYPE_BALTHARUS) == DONE &&
+                                pInstance->GetData(TYPE_RAGEFIRE) == DONE &&
+                                pInstance->GetData(TYPE_XERESTRASZA) == DONE &&
+                                pInstance->GetData(TYPE_ZARITHRIAN) == DONE &&
+                                pInstance->GetData(TYPE_HALION) != DONE)
+                            {
+                                if (!pHalion)
+                                    pHalion = m_creature->SummonCreature(NPC_HALION_REAL, SpawnLoc[3].x, SpawnLoc[3].y, SpawnLoc[3].z, 6.23f, TEMPSUMMON_MANUAL_DESPAWN, HOUR*IN_MILLISECONDS);
+
+                                if (pHalion && !pHalion->isAlive())
+                                    pHalion->Respawn();
+
+                                if (pHalion)
+                                    pHalion->SetCreatorGuid(ObjectGuid());
+                            }
+                        }
+                        UpdateTimer = 4000;
+                        pInstance->SetData(TYPE_EVENT,210);
+                        break;
                     case 210:
-                          m_creature->SetActiveObjectState(false);
-                          UpdateTimer = 2000;
-                          pInstance->SetData(TYPE_EVENT,0);
-                          break;
-
+                        m_creature->SetActiveObjectState(false);
+                        UpdateTimer = 2000;
+                        pInstance->SetData(TYPE_EVENT,0);
+                        break;
                     default:
-                          break;
+                        break;
                 }
-             } else UpdateTimer -= diff;
-             pInstance->SetData(TYPE_EVENT_TIMER, UpdateTimer);
-        }
+            }
+            else
+                UpdateTimer -= diff;
 
+            pInstance->SetData(TYPE_EVENT_TIMER, UpdateTimer);
+        }
     }
 };
 
