@@ -102,12 +102,18 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
 
     void Aggro(Unit* pWho)
     {
+        m_creature->SetInCombatWithZone();
         DoScriptText(SAY_AGGRO, m_creature);
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_GALDARAH , IN_PROGRESS);
     }
 
+     void JustReachedHome()
+    {
+        if(m_pInstance)
+            m_pInstance->SetData(TYPE_GALDARAH, NOT_STARTED);
+    }
     void KilledUnit(Unit* pVictim)
     {
         switch(urand(0, 2))
@@ -118,18 +124,15 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
-    {
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_GALDARAH, NOT_STARTED);
-    }
-
     void JustDied(Unit* pKiller)
     {
         DoScriptText(SAY_DEATH, m_creature);
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_GALDARAH, DONE);
+
+        if (pKiller->HasAura(55817))
+            m_pInstance->DoCompleteAchievement(ACHIEVEMENT_WHAT_THE_ECK);
     }
 
     void JustSummoned(Creature* pSummoned)
@@ -140,6 +143,7 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
         {
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
                 pSummoned->CastSpell(pTarget, m_bIsRegularMode ? SPELL_STAMPEDE_RHINO : SPELL_STAMPEDE_RHINO_H, false, NULL, NULL, m_creature->GetObjectGuid());
+            pSummoned->ForcedDespawn(1000);
         }
     }
 
@@ -151,11 +155,11 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
         m_bIsTrollPhase = !m_bIsTrollPhase;
 
         if (m_bIsTrollPhase)
-            DoCastSpellIfCan(m_creature, SPELL_TROLL_TRANSFORM);
+            DoCast(m_creature, SPELL_TROLL_TRANSFORM);
         else
         {
             DoScriptText(urand(0, 1) ? SAY_TRANSFORM_1 : SAY_TRANSFORM_2, m_creature);
-            DoCastSpellIfCan(m_creature, SPELL_RHINO_TRANSFORM);
+            DoCast(m_creature, SPELL_RHINO_TRANSFORM);
 
             m_uiEnrageTimer = 4000;
             m_uiStompTimer  = 1000;
@@ -171,7 +175,7 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (m_uiAbilityCount == 2)
+        if (m_uiAbilityCount >= 2)
         {
             if (m_uiPhaseChangeTimer < uiDiff)
                 DoPhaseSwitch();
@@ -244,8 +248,9 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
                     DoScriptText(EMOTE_IMPALED, m_creature, pTarget);
                     m_uiSpecialAbilityTimer = 12000;
 
-                    ++m_uiAbilityCount;
+                    
                 }
+                ++m_uiAbilityCount;
             }
             else
                 m_uiSpecialAbilityTimer -= uiDiff;

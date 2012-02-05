@@ -59,30 +59,48 @@ void instance_gundrak::OnCreatureCreate(Creature* pCreature)
 {
     switch(pCreature->GetEntry())
     {
+        case NPC_ECK:
         case NPC_SLADRAN:
         case NPC_ELEMENTAL:
         case NPC_COLOSSUS:
+        case NPC_MOORABI:
             m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
             break;
-
         case NPC_INVISIBLE_STALKER:
             m_luiStalkerGUIDs.push_back(pCreature->GetObjectGuid());
+            break;
+        case NPC_RUIN_DWELLER:
+            if (pCreature->GetDistance(1636.49f, 931.74f, 107.75f) < 15.0f)
+                m_lEckDwellerGuids.push_back(pCreature->GetObjectGuid());
+            break;
+        case NPC_LIVING_MOJO:
+            if (pCreature->GetDistance(1672.96f, 743.488f, 143.338f) < 15.0f)
+                m_lLivingMojoGuids.push_back(pCreature->GetObjectGuid());
             break;
     }
 }
 
-/* TODO: Reload case need some love!
-*  Problem is to get the bridge/ collision work correct in relaod case.
-*  To provide correct functionality(expecting testers to activate all altars in reload case), the Keys aren't loaded, too
-*  TODO: When fixed, also remove the SPECIAL->DONE data translation in Load().
-*
-*  For the Keys should be used something like this, and for bridge and collision similar
-*
-*   if (m_auiEncounter[0] == SPECIAL && m_auiEncounter[1] == SPECIAL && m_auiEncounter[2] == SPECIAL)
-*       pGo->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
-*   else
-*       pGo->SetGoState(GO_STATE_READY);
-*/
+void instance_gundrak::OnPlayerEnter(Player* pPlayer)
+{
+    if (Creature* pEck = GetSingleCreatureFromStorage(NPC_ECK))
+        for (GUIDList::const_iterator itr = m_lEckDwellerGuids.begin(); itr != m_lEckDwellerGuids.end(); ++itr)
+            if (Creature* pDweller = instance->GetCreature(*itr))
+                if (pDweller->isAlive())
+                {
+                    pEck->SetVisibility(VISIBILITY_OFF);
+                    break;
+                }
+
+    if (Creature* pColossus = GetSingleCreatureFromStorage(NPC_COLOSSUS))
+        for (GUIDList::const_iterator itr = m_lLivingMojoGuids.begin(); itr != m_lLivingMojoGuids.end(); ++itr)
+            if (Creature* pMojo = instance->GetCreature(*itr))
+                if (pMojo->isAlive())
+                {
+                    pColossus->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                    pColossus->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    break;
+                }
+}    
 
 void instance_gundrak::OnObjectCreate(GameObject* pGo)
 {
@@ -211,6 +229,18 @@ void instance_gundrak::SetData(uint32 uiType, uint32 uiData)
             error_log("SD2: Instance Gundrak: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
             return;
     }
+/*    if (m_auiEncounter[0] == SPECIAL && m_auiEncounter[1] == SPECIAL && m_auiEncounter[2] == SPECIAL)
+    {
+        //DoUseDoorOrButton(m_uiBridgeGUID);
+       // DoUseDoorOrButton(m_uiColisionGUID);
+        if (GameObject* pCollision = instance->GetGameObject(uiCollision))
+                     pCollision->SummonGameObject(192743, pCollision->GetPositionX(), pCollision->GetPositionY(), pCollision->GetPositionZ(), pCollision->GetOrientation(), 0, 0, 0, 0, 0);
+
+        if(GameObject* pGo = instance->GetGameObject(m_uiBridgeGUID))
+        {
+            pGo->SetGoState(GO_STATE_ACTIVE);}
+        DoUseDoorOrButton(m_uiColisionGUID);
+    } */ 
 
     if (uiData == DONE || uiData == SPECIAL)                // Save activated altars, too
     {
@@ -225,6 +255,64 @@ void instance_gundrak::SetData(uint32 uiType, uint32 uiData)
         SaveToDB();
         OUT_SAVE_INST_DATA_COMPLETE;
     }
+}
+
+void instance_gundrak::OnCreatureDeath(Creature* pCreature)
+{
+    switch(pCreature->GetEntry())
+    {
+        case NPC_RUIN_DWELLER:
+            for (GUIDList::const_iterator itr = m_lEckDwellerGuids.begin(); itr != m_lEckDwellerGuids.end(); ++itr)
+                if (Creature* pDweller = instance->GetCreature(*itr))
+                    if (pDweller->isAlive())
+                        return;
+
+            if (Creature* pEck = GetSingleCreatureFromStorage(NPC_ECK))
+            {
+                pEck->SetVisibility(VISIBILITY_ON);
+                pEck->GetMotionMaster()->MovePoint(0, 1642.53f, 934.33f, 107.23f);
+            }
+            break;
+
+        case NPC_LIVING_MOJO:
+            if (!IsValidLivingMojo(pCreature->GetObjectGuid()))
+                return;
+
+            for (GUIDList::const_iterator itr = m_lLivingMojoGuids.begin(); itr != m_lLivingMojoGuids.end(); ++itr)
+                if (Creature* pMojo = instance->GetCreature(*itr))
+                    if (pMojo->isAlive())
+                        return;
+
+            if (Creature* pColossus = GetSingleCreatureFromStorage(NPC_COLOSSUS))
+            {
+                pColossus->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                pColossus->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                pColossus->RemoveAllAuras();
+            }
+            break;
+    }
+}
+
+void instance_gundrak::OnCreatureEnterCombat(Creature* pCreature)
+{
+    if (pCreature->GetEntry() == NPC_LIVING_MOJO)
+    {
+        if (IsValidLivingMojo(pCreature->GetObjectGuid()))
+            // if mojo is in list move all members to merge with colossus
+            for (GUIDList::const_iterator iter = m_lLivingMojoGuids.begin(); iter != m_lLivingMojoGuids.end(); ++iter)
+                if (Creature* pMojo = instance->GetCreature(*iter))
+                    pMojo->AI()->EnterEvadeMode();
+
+        return;
+    }
+}
+
+bool instance_gundrak::IsValidLivingMojo(ObjectGuid callerGuid)
+{
+    for (GUIDList::iterator itr = m_lLivingMojoGuids.begin(); itr != m_lLivingMojoGuids.end(); ++itr)
+        if (*itr == callerGuid)
+            return true;
+    return false;
 }
 
 uint32 instance_gundrak::GetData(uint32 uiType)
@@ -245,7 +333,7 @@ void instance_gundrak::DoAltarVisualEffect(uint8 uiType)
     // Sort the lists if not yet done
     if (!m_luiStalkerGUIDs.empty())
     {
-        float fHeight = 10.0f;                              // A bit higher than the altar is needed
+        float fHeight = 10.0f; // A bit higher than the altar is needed
         if (GameObject* pCollusAltar = GetSingleGameObjectFromStorage(GO_ALTAR_OF_COLOSSUS))
             fHeight += pCollusAltar->GetPositionZ();
 
@@ -265,9 +353,9 @@ void instance_gundrak::DoAltarVisualEffect(uint8 uiType)
         lStalkerTargets.sort(sortFromEastToWest);
         lStalkerCasters.sort(sortFromEastToWest);
 
-        for (std::list<Creature*>::const_iterator itr = lStalkerTargets.begin(); itr != lStalkerTargets.end(); ++itr)
+        for (std::list<Creature*>::const_iterator itr = lStalkerTargets.begin(); itr != lStalkerTargets.end(); itr++)
             m_vStalkerTargetGuids.push_back((*itr)->GetObjectGuid());
-        for (std::list<Creature*>::const_iterator itr = lStalkerCasters.begin(); itr != lStalkerCasters.end(); ++itr)
+        for (std::list<Creature*>::const_iterator itr = lStalkerCasters.begin(); itr != lStalkerCasters.end(); itr++)
             m_vStalkerCasterGuids.push_back((*itr)->GetObjectGuid());
     }
 
@@ -279,11 +367,10 @@ void instance_gundrak::DoAltarVisualEffect(uint8 uiType)
     uint8 uiIndex = 0;
     switch (uiType)
     {
-        case TYPE_SLADRAN:  uiIndex = 0; break;
+        case TYPE_SLADRAN: uiIndex = 0; break;
         case TYPE_COLOSSUS: uiIndex = 1; break;
-        case TYPE_MOORABI:  uiIndex = 2; break;
-        default:
-            return;
+        case TYPE_MOORABI: uiIndex = 2; break;
+        default: return;
     }
 
     Creature* pTarget = instance->GetCreature(m_vStalkerTargetGuids[uiIndex]);
@@ -294,7 +381,7 @@ void instance_gundrak::DoAltarVisualEffect(uint8 uiType)
 
     uint32 auiFireBeamSpells[3] = {SPELL_BEAM_SNAKE, SPELL_BEAM_ELEMENTAL, SPELL_BEAM_MAMMOTH};
 
-    // Cast from Caster to Target
+    // Cast from Caster to Target, triggered to avoid LoS-Check
     pCaster->CastSpell(pTarget, auiFireBeamSpells[uiIndex], true);
 }
 

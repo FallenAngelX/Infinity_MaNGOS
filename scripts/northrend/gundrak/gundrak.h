@@ -25,10 +25,11 @@ enum
     NPC_MOORABI            = 29305,
     NPC_COLOSSUS           = 29307,
     NPC_ELEMENTAL          = 29573,
-    NPC_LIVIN_MOJO         = 29830,
+    NPC_LIVING_MOJO        = 29830,
     NPC_GALDARAH           = 29306,
     NPC_ECK                = 29932,
     NPC_INVISIBLE_STALKER  = 30298,                         // Caster and Target for visual spells on altar use
+    NPC_RUIN_DWELLER       = 29920,
 
     GO_ECK_DOOR            = 192632,
     GO_ECK_UNDERWATER_DOOR = 192569,
@@ -54,10 +55,10 @@ enum
 
     TIMER_VISUAL_ALTAR     = 3000,
     TIMER_VISUAL_BEAM      = 2500,
-    TIMER_VISUAL_KEY       = 2000,
+    TIMER_VISUAL_KEY       = 2000
 };
 
-typedef std::map<uint8, uint32>  TypeTimerMap;
+typedef std::map<uint8, uint32> TypeTimerMap;
 typedef std::pair<uint8, uint32> TypeTimerPair;
 
 class MANGOS_DLL_DECL instance_gundrak : public ScriptedInstance
@@ -70,19 +71,23 @@ class MANGOS_DLL_DECL instance_gundrak : public ScriptedInstance
 
         void OnCreatureCreate(Creature* pCreature);
         void OnObjectCreate(GameObject* pGo);
+        void OnCreatureDeath(Creature* pCreature);
+        void OnCreatureEnterCombat(Creature* pCreature);
+        void OnPlayerEnter(Player* pPlayer);
 
         void SetData(uint32 uiType, uint32 uiData);
         uint32 GetData(uint32 uiType);
 
         const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
-
         void Update(uint32 uiDiff);
 
+        bool IsValidLivingMojo(ObjectGuid callerGuid);
     protected:
         void DoAltarVisualEffect(uint8 uiType);
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
+
 
         TypeTimerMap m_mAltarInProgress;
         TypeTimerMap m_mBeamInProgress;
@@ -91,6 +96,8 @@ class MANGOS_DLL_DECL instance_gundrak : public ScriptedInstance
         GUIDList m_luiStalkerGUIDs;
         GUIDVector m_vStalkerCasterGuids;
         GUIDVector m_vStalkerTargetGuids;
+        GUIDList m_lEckDwellerGuids;
+        GUIDList m_lLivingMojoGuids;
 };
 
 #endif
