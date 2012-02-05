@@ -78,7 +78,7 @@
 -- XT002
 UPDATE creature_template SET mechanic_immune_mask=617299803, scriptname='boss_xt_002' WHERE entry=33293;
 UPDATE creature_template SET ScriptName = 'mob_pummeler' WHERE entry = 33344;
-UPDATE creature_template SET speed_run=0.5, faction_a=1925, faction_h=1925, scriptname='mob_boombot' WHERE entry=33346;
+UPDATE creature_template SET speed_run=0.5, faction_a=1925, faction_h=1925, scriptname='mob_boombot' WHERE entry=33346; -- Script or EventAI?
 UPDATE creature_template SET speed_run=0.5 WHERE entry=33343;
 UPDATE creature_template SET mechanic_immune_mask=652951551, scriptname='mob_xtheart' WHERE entry=33329;
 UPDATE creature_template SET ScriptName = 'mob_voidzone' WHERE entry = 34001;
@@ -270,10 +270,10 @@ UPDATE `creature_template` SET `modelid_2` = 28470, ScriptName = 'mob_icicle' WH
 UPDATE creature_template SET `modelid_1` = 25865, ScriptName = 'mob_npc_flashFreeze' WHERE entry IN (32938, 33353);
 UPDATE creature SET spawnMask = 3 WHERE id IN (32938);
 UPDATE creature SET spawnMask = 2 WHERE id IN (32901, 32900, 32950, 32946,33333, 33330, 33326);
-UPDATE creature_template SET ScriptName = 'npc_hodir_priest' WHERE entry IN (32897, 33326, 32948, 33330);
-UPDATE creature_template SET ScriptName = 'npc_hodir_druid' WHERE entry IN (33325, 32901, 32941, 33333);
-UPDATE creature_template SET ScriptName = 'npc_hodir_shaman' WHERE entry IN (33328, 32900, 33332, 32950);
-UPDATE creature_template SET ScriptName = 'npc_hodir_mage' WHERE entry IN (32893, 33327, 33331, 32946);
+UPDATE creature_template SET ScriptName = 'npc_hodir_helper' WHERE entry IN (32897, 33326, 32948, 33330);
+UPDATE creature_template SET ScriptName = 'npc_hodir_helper' WHERE entry IN (33325, 32901, 32941, 33333);
+UPDATE creature_template SET ScriptName = 'npc_hodir_helper' WHERE entry IN (33328, 32900, 33332, 32950);
+UPDATE creature_template SET ScriptName = 'npc_hodir_helper' WHERE entry IN (32893, 33327, 33331, 32946);
 
 -- FIXED SOME POSITIONING FOR THE FRIENDLY NPCS, Besides this the freeze aura should also be fixed.
 -- fixed npc positioning and added 4 extra flashfreeze for them.
@@ -330,7 +330,7 @@ UPDATE creature_template SET ScriptName = 'mob_bomb_bot' WHERE entry IN (33836, 
 UPDATE creature_template SET `faction_A` = 14, `faction_H` = 14, `minlevel` = 80, `maxlevel` = 80, ScriptName = 'mob_emergency_bot' WHERE entry = 34147;
 UPDATE creature_template SET ScriptName = 'mob_frost_bomb_ulduar' WHERE entry = 34149;
 UPDATE creature_template SET ScriptName = 'mob_mimiron_inferno' WHERE entry = 33370;
-UPDATE creature_template SET ScriptName = 'mob_assault_bot' WHERE entry = 34057;
+UPDATE creature_template SET ScriptName = 'mob_assault_bot' WHERE entry = 34057; -- Script or EventAI ??
 UPDATE creature_template SET ScriptName = 'mob_magnetic_core' WHERE entry = 34068;
 UPDATE `gameobject` SET `position_x` = 2734.73 WHERE `id` IN (194789, 194956);
 -- spells, may not be correct
@@ -427,11 +427,11 @@ UPDATE `creature` SET `position_y` = -434.64 WHERE `guid` = 129391;
 REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('62565', '1', '32865');
 
 -- Vezax
-UPDATE creature_template SET unit_flags = 0, ScriptName = 'boss_vezax' WHERE entry = 33271;
-UPDATE creature_template SET MinHealth = 23009250, MaxHealth = 23009250, ScriptName = 'boss_vezax' WHERE entry = 33449;
+UPDATE creature_template SET unit_flags = 0, ScriptName = 'boss_general_vezax' WHERE entry = 33271;
+UPDATE creature_template SET MinHealth = 23009250, MaxHealth = 23009250, ScriptName = 'boss_general_vezax' WHERE entry = 33449;
 UPDATE `creature_template` SET `mechanic_immune_mask` = 619397115 WHERE `entry` IN (33271, 33449);
 UPDATE creature_template SET ScriptName = 'mob_saronite_animus' WHERE entry = 33524;
-UPDATE creature_template SET ScriptName = 'mob_saronite_vapor', movementType = 1  WHERE entry = 33488;
+UPDATE creature_template SET ScriptName = 'event_spell_saronite_barrier', movementType = 1  WHERE entry = 33488;
 
 -- Yogg
 UPDATE creature_template SET ScriptName = 'boss_yogg_saron' WHERE entry = 33288;
