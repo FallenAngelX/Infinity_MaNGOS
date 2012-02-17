@@ -185,18 +185,6 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public base_icc_bossAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        // Berserk
-        if (m_uiBerserkTimer <= uiDiff)
-        {
-            if (DoCastSpellIfCan(m_creature, SPELL_BERSERK) == CAST_OK)
-            {
-                DoScriptText(SAY_BERSERK, m_creature);
-                m_uiBerserkTimer = 5 * MINUTE * IN_MILLISECONDS;
-            }
-        }
-        else
-            m_uiBerserkTimer -= uiDiff;
-
         // Slime Spray
         if (m_uiSlimeSprayTimer <= uiDiff)
         {
