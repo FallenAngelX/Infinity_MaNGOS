@@ -244,22 +244,6 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
                 else
                     m_uiColdflameTimer -= uiDiff;
 
-                // Bone Spike Graveyard
-                // don't count timer twice on heroic!
-                if (!m_bIsHeroic)
-                {
-                    if (m_uiBoneSpikeTimer <= uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_BONE_SPIKE_10) == CAST_OK)
-                        {
-                            m_uiBoneSpikeTimer = urand(20000, 30000);
-                            DoScriptText(SAY_BONE_SPIKE_1 - urand(0, 2), m_creature);
-                        }
-                    }
-                    else
-                        m_uiBoneSpikeTimer -= uiDiff;
-                }
-
                 // Bone Storm
                 if (m_uiBoneStormTimer <= uiDiff)
                 {
@@ -343,7 +327,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
         }
 
         // Bone Spike - on heroic in every phase
-        if (m_bIsHeroic && m_uiPhase != PHASE_NORMAL)
+        if (m_bIsHeroic || m_uiPhase == PHASE_NORMAL)
         {
             if (m_uiBoneSpikeTimer <= uiDiff)
             {
