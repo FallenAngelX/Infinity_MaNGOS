@@ -128,7 +128,8 @@ UPDATE `creature` SET spawndist = 0, `MovementType` = 0 WHERE `id` = 25770;
 
 -- Replace Kil'jaeden with Kil'jaeden controller
 DELETE FROM creature WHERE id IN(25608, 25315);
-INSERT INTO creature VALUES (800110, 25608, 580, 1, 1, 0, 0, 1698.61, 628.414, 27.5395, 3.99799, 604800, 0, 0, 9347800, 1693500, 0, 0);
+INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`)
+VALUES (800110, 25608, 580, 1, 1, 0, 0, 1698.61, 628.414, 27.5395, 3.99799, 604800, 0, 0, 9347800, 1693500, 0, 0);
 -- Kalecgos summoning by script
 DELETE FROM creature WHERE id = 25319;
 -- Kalecgos speed
