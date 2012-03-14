@@ -2325,6 +2325,77 @@ CreatureAI* GetAI_npc_shade_of_horseman(Creature* pCreature)
     return new npc_shade_of_horsemanAI (pCreature);
 };
 
+/*########
+npc_wild_turkey
+#########*/
+enum
+{
+    EMOTE_TURKEY_HUNTER              = -1730001,
+    EMOTE_TURKEY_DOMINATION          = -1730002,
+    EMOTE_TURKEY_SLAUGHTER           = -1730003,
+    EMOTE_TURKEY_TRIUMPH             = -1730004,
+
+    SPELL_TURKEY_TRACKER             = 62014,
+    SPELL_PH_KILL_COUNTER_VISUAL_MAX = 62021
+};
+struct MANGOS_DLL_DECL npc_wild_turkeyAI : public ScriptedAI
+{
+    npc_wild_turkeyAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_creature->RemoveAllAuras();
+    }
+
+    void Reset(){}
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        DoMeleeAttackIfReady();
+    }
+    
+    void JustDied(Unit* pKiller)
+    {
+        if (pKiller && pKiller->GetTypeId() == TYPEID_PLAYER)
+        {
+            pKiller->CastSpell(pKiller, SPELL_TURKEY_TRACKER, true);
+            Aura * pAura = pKiller->GetAura(SPELL_TURKEY_TRACKER, EFFECT_INDEX_0);
+            if (pAura)
+            {
+                uint32 stacks = pAura->GetStackAmount();
+                switch (stacks)
+                {
+                    case 10:
+                    {
+                        DoScriptText(EMOTE_TURKEY_HUNTER, m_creature, pKiller);
+                        break;
+                    }
+                    case 20:
+                    {
+                        DoScriptText(EMOTE_TURKEY_DOMINATION, m_creature, pKiller);
+                        break;
+                    }
+                    case 30:
+                    {
+                        DoScriptText(EMOTE_TURKEY_SLAUGHTER, m_creature, pKiller);
+                        break;
+                    }
+                    case 40:
+                    {
+                        DoScriptText(EMOTE_TURKEY_TRIUMPH, m_creature, pKiller);
+                        pKiller->CastSpell(pKiller, SPELL_PH_KILL_COUNTER_VISUAL_MAX, true);
+                        break;
+                    }
+                    default: break;
+                }
+            }
+        }
+    }
+};
+
+CreatureAI* GetAI_npc_wild_turkey(Creature* pCreature)
+{
+    return new npc_wild_turkeyAI (pCreature);
+};
+
 
 void AddSC_npcs_special()
 {
@@ -2435,5 +2506,10 @@ void AddSC_npcs_special()
     pNewScript = new Script;
     pNewScript->Name = "npc_shade_of_horseman";
     pNewScript->GetAI = &GetAI_npc_shade_of_horseman;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_wild_turkey";
+    pNewScript->GetAI = &GetAI_npc_wild_turkey;
     pNewScript->RegisterSelf();
 }
