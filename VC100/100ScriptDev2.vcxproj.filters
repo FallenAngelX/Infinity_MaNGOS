@@ -876,8 +876,55 @@
     <ClCompile Include="..\scripts\kalimdor\boss_azuregos.cpp">
       <Filter>scripts\kalimdor</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\scripts\kalimdor\caverns_of_time\culling_of_stratholme\boss_infinite_corruptor.cpp">
       <Filter>scripts\kalimdor\caverns_of_time\culling_of_stratholme</Filter>
+=======
+    <ClCompile Include="..\scripts\kalimdor\darkshore.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\desolace.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\durotar.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\dustwallow_marsh.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\felwood.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\feralas.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\moonglade.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\mulgore.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\orgrimmar.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\silithus.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\stonetalon_mountains.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\tanaris.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\teldrassil.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\the_barrens.cpp">
+      <Filter>scripts\kalimdor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\thousand_needles.cpp">
+      <Filter>scripts\kalimdor</Filter>
+>>>>>>> 1518687c14c6bf054cd7c9d3f248dd6ca48e8584
     </ClCompile>
     <ClCompile Include="..\scripts\kalimdor\caverns_of_time\culling_of_stratholme\boss_lord_epoch.cpp">
       <Filter>scripts\kalimdor\caverns_of_time\culling_of_stratholme</Filter>
