@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -401,33 +401,11 @@
     <ClCompile Include="..\scripts\kalimdor\blackfathom_deeps\instance_blackfathom_deeps.cpp" />
     <ClCompile Include="..\scripts\kalimdor\bloodmyst_isle.cpp" />
     <ClCompile Include="..\scripts\kalimdor\boss_azuregos.cpp" />
-<<<<<<< HEAD
     <ClCompile Include="..\scripts\kalimdor\caverns_of_time\culling_of_stratholme\boss_infinite_corruptor.cpp" />
     <ClCompile Include="..\scripts\kalimdor\caverns_of_time\culling_of_stratholme\boss_lord_epoch.cpp" />
     <ClCompile Include="..\scripts\kalimdor\caverns_of_time\culling_of_stratholme\boss_malganis.cpp" />
     <ClCompile Include="..\scripts\kalimdor\caverns_of_time\culling_of_stratholme\boss_meathook.cpp" />
     <ClCompile Include="..\scripts\kalimdor\caverns_of_time\culling_of_stratholme\boss_salramm.cpp" />
-=======
-    <ClCompile Include="..\scripts\kalimdor\darkshore.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\desolace.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\durotar.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\dustwallow_marsh.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\felwood.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\feralas.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\moonglade.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\mulgore.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\orgrimmar.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\silithus.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\stonetalon_mountains.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\tanaris.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\teldrassil.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\the_barrens.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\thousand_needles.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\thunder_bluff.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\ungoro_crater.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\winterspring.cpp" />
-    <ClCompile Include="..\scripts\kalimdor\blackfathom_deeps\instance_blackfathom_deeps.cpp" />
->>>>>>> 1518687c14c6bf054cd7c9d3f248dd6ca48e8584
     <ClCompile Include="..\scripts\kalimdor\caverns_of_time\culling_of_stratholme\culling_of_stratholme.cpp" />
     <ClCompile Include="..\scripts\kalimdor\caverns_of_time\culling_of_stratholme\culling_of_stratholmeai.cpp" />
     <ClCompile Include="..\scripts\kalimdor\caverns_of_time\culling_of_stratholme\instance_culling_of_stratholme.cpp" />
@@ -448,6 +426,7 @@
     <ClCompile Include="..\scripts\kalimdor\caverns_of_time\old_hillsbrad\old_hillsbrad.cpp" />
     <ClCompile Include="..\scripts\kalimdor\darkshore.cpp" />
     <ClCompile Include="..\scripts\kalimdor\desolace.cpp" />
+    <ClCompile Include="..\scripts\kalimdor\durotar.cpp" />
     <ClCompile Include="..\scripts\kalimdor\dire_maul\dire_maul.cpp" />
     <ClCompile Include="..\scripts\kalimdor\dire_maul\instance_dire_maul.cpp" />
     <ClCompile Include="..\scripts\kalimdor\dustwallow_marsh.cpp" />
