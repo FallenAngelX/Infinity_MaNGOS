@@ -248,6 +248,7 @@ void instance_icecrown_spire::OnObjectCreate(GameObject* pGo)
         case GO_GREEN_DRAGON_DOOR_1:
         case GO_BLOODWING_DOOR:
         case GO_ORATORY_DOOR:
+	case GO_SINDRAGOSA_ICE_WALL:
             m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
     }
@@ -433,6 +434,7 @@ void instance_icecrown_spire::SetData(uint32 uiType, uint32 uiData)
             m_auiEncounter[TYPE_SINDRAGOSA] = uiData;
 
             DoUseDoorOrButton(GO_SINDRAGOSA_ENTRANCE);
+	    DoUseDoorOrButton(GO_SINDRAGOSA_ICE_WALL);
 
             if (uiData == DONE)
             {
