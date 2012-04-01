@@ -357,6 +357,8 @@ INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`,
 DELETE FROM `creature_model_info` WHERE (`modelid`=31093);
 INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (31093, 1.24, 2, 1, 0, 0);
 
+UPDATE `gameobject_template` SET `type`='0' WHERE `entry`=201755;
+
 -- ---------------------
 -- Valithria dreamwalker
 -- ---------------------
