@@ -80,7 +80,6 @@ UPDATE gameobject_template SET ScriptName='go_mysterious_snow_mound' WHERE entry
 UPDATE gameobject_template SET ScriptName='go_resonite_cask' WHERE entry=178145;
 UPDATE gameobject_template SET ScriptName='go_sacred_fire_of_life' WHERE entry=175944;
 UPDATE gameobject_template SET ScriptName='go_shrine_of_the_birds' WHERE entry IN (185547,185553,185551);
-UPDATE gameobject_template SET ScriptName='go_tablet_of_madness' WHERE entry=180368;
 UPDATE gameobject_template SET ScriptName='go_tele_to_dalaran_crystal' WHERE entry=191230;
 UPDATE gameobject_template SET ScriptName='go_tele_to_violet_stand' WHERE entry=191229;
 UPDATE gameobject_template SET ScriptName='go_blood_filled_orb' WHERE entry=182024;
@@ -359,7 +358,6 @@ UPDATE creature_template SET ScriptName='mobs_nether_drake' WHERE entry IN (2002
 UPDATE creature_template SET ScriptName='npc_daranelle' WHERE entry=21469;
 
 /* BLASTED LANDS */
-UPDATE creature_template SET ScriptName='npc_deathly_usher' WHERE entry=8816;
 UPDATE creature_template SET ScriptName='npc_fallen_hero_of_horde' WHERE entry=7572;
 
 /* BLOODMYST ISLE */
@@ -534,10 +532,8 @@ UPDATE creature_template SET ScriptName='npc_lazy_peon' WHERE entry=10556;
 /* DUSTWALLOW MARSH */
 UPDATE creature_template SET ScriptName='mobs_risen_husk_spirit' WHERE entry IN (23554,23555);
 UPDATE creature_template SET ScriptName='npc_deserter_agitator' WHERE entry=23602;
--- UPDATE creature_template SET ScriptName='npc_lady_jaina_proudmoore' WHERE entry=4968;
 UPDATE creature_template SET ScriptName='npc_ogron' WHERE entry=4983;
 UPDATE creature_template SET ScriptName='npc_morokk' WHERE entry=4500;
-UPDATE creature_template SET ScriptName='npc_nat_pagle' WHERE entry=12919;
 UPDATE creature_template SET ScriptName='npc_restless_apparition' WHERE entry=23861;
 UPDATE creature_template SET ScriptName='npc_private_hendel' WHERE entry=4966;
 DELETE FROM scripted_areatrigger WHERE entry=4752;
@@ -546,7 +542,6 @@ INSERT INTO scripted_areatrigger VALUES
 
 /* EASTERN PLAGUELANDS */
 UPDATE creature_template SET ScriptName='mobs_ghoul_flayer' WHERE entry IN (8530,8531,8532);
-UPDATE creature_template SET ScriptName='npc_augustus_the_touched' WHERE entry=12384;
 UPDATE creature_template SET ScriptName='npc_darrowshire_spirit' WHERE entry=11064;
 UPDATE creature_template SET ScriptName='npc_tirion_fordring' WHERE entry=1855;
 
@@ -584,8 +579,6 @@ UPDATE creature_template SET ScriptName='npc_oox22fe' WHERE entry=7807;
 UPDATE creature_template SET ScriptName='npc_screecher_spirit' WHERE entry=8612;
 
 /* GHOSTLANDS */
-UPDATE creature_template SET ScriptName='npc_blood_knight_dawnstar' WHERE entry=17832;
-UPDATE creature_template SET ScriptName='npc_budd_nedreck' WHERE entry=23559;
 UPDATE creature_template SET ScriptName='npc_ranger_lilatha' WHERE entry=16295;
 
 /* GNOMEREGAN */
@@ -890,7 +883,6 @@ UPDATE creature_template SET ScriptName='npc_thrall_warchief' WHERE entry=4949;
 
 /* RAZORFEN DOWNS */
 UPDATE creature_template SET ScriptName='boss_amnennar_the_coldbringer' WHERE entry=7358;
-UPDATE creature_template SET ScriptName='npc_henry_stern' WHERE entry=8696;
 UPDATE creature_template SET ScriptName='npc_belnistrasz' WHERE entry=8516;
 
 /* RAZORFEN KRAUL */
@@ -974,6 +966,7 @@ INSERT INTO scripted_event_id VALUES
 (13516,'event_spell_soul_captured_credit');
 UPDATE creature_template SET ScriptName='npc_lord_illidan_stormrage' WHERE entry=22083;
 UPDATE gameobject_template SET ScriptName='go_crystal_prison' WHERE entry=185126;
+UPDATE creature_template SET ScriptName='npc_spawned_oronok_tornheart' WHERE entry=21685;
 
 /* SHATTRATH */
 UPDATE creature_template SET ScriptName='npc_dirty_larry' WHERE entry=19720;
@@ -1296,7 +1289,6 @@ UPDATE creature_template SET ScriptName='npc_mikhail' WHERE entry=4963;
 
 /* WINTERSPRING */
 UPDATE creature_template SET ScriptName='npc_lorax' WHERE entry=10918;
-UPDATE creature_template SET ScriptName='npc_rivern_frostwind' WHERE entry=10618;
 UPDATE creature_template SET ScriptName='npc_ranshalla' WHERE entry=10300;
 UPDATE gameobject_template SET ScriptName='go_elune_fire' WHERE entry IN (177417, 177404);
 
