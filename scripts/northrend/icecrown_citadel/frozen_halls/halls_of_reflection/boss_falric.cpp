@@ -57,7 +57,7 @@ struct MANGOS_DLL_DECL boss_falricAI : public BSWScriptedAI
 
     uint32 m_uiSummonTimer;
     uint32 m_uiLocNo;
-    std::vector<ObjectGuid> m_uiSummonGUID;
+    GUIDVector m_uiSummonGUID;
     uint8 SummonCount;
     uint32 pSummon;
 
