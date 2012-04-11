@@ -121,7 +121,7 @@ INSERT INTO `gossip_menu_option`(`menu_id`,`id`,`option_icon`,`option_text`,`opt
 (10461,0,0,'I am ready to fight!',1,1,-1,0,10461,0,0,NULL,1,62853,0,6,67,0,0,0,0),
 (10462,0,0,'I am ready to fight!',1,1,-1,0,10462,0,0,NULL,1,62853,0,6,67,0,0,0,0);
  
-INSERT INTO `gossip_scripts`(`id`,`delay`,`command`,`datalong`,`datalong2`,`datalong3`,`datalong4`,
+INSERT INTO `gossip_scripts`(`id`,`delay`,`command`,`datalong`,`datalong2`,`buddy_entry`,`search_radius`,
 `data_flags`,`dataint`,`dataint2`,`dataint3`,`dataint4`,`x`,`y`,`z`,`o`,`comments`) VALUES
 (10453,1,22,14,0,0,0,2,0,0,0,0,0,0,0,0,''),
 (10453,0,0,0,0,0,0,4,2000000449,2000000450,2000000451,0,0,0,0,0,''),
