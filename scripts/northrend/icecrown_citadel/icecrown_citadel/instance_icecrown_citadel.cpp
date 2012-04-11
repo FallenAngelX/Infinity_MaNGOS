@@ -162,12 +162,12 @@ void instance_icecrown_spire::OnObjectCreate(GameObject* pGo)
             break;
         case GO_SCIENTIST_DOOR_GREEN:
             if (m_auiEncounter[TYPE_ROTFACE] == DONE)
-                pGo->SetGoState(GO_STATE_ACTIVE);
+                pGo->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
             m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_SCIENTIST_DOOR_ORANGE:
             if (m_auiEncounter[TYPE_FESTERGUT] == DONE)
-                pGo->SetGoState(GO_STATE_ACTIVE);
+                pGo->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
             m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_SCIENTIST_DOOR_COLLISION:
@@ -177,6 +177,16 @@ void instance_icecrown_spire::OnObjectCreate(GameObject* pGo)
             break;
         case GO_SCIENTIST_DOOR:
             if (m_auiEncounter[TYPE_FESTERGUT] == DONE && m_auiEncounter[TYPE_ROTFACE] == DONE)
+                pGo->SetGoState(GO_STATE_ACTIVE);
+            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+            break;
+        case GO_ORANGE_TUBES:
+            if (m_auiEncounter[TYPE_FESTERGUT] == DONE)
+                pGo->SetGoState(GO_STATE_ACTIVE);
+            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+            break;
+        case GO_GREEN_TUBES:
+            if (m_auiEncounter[TYPE_ROTFACE] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
@@ -311,10 +321,12 @@ void instance_icecrown_spire::SetData(uint32 uiType, uint32 uiData)
 
             if (uiData == DONE)
             {
+                DoUseDoorOrButton(GO_ORANGE_TUBES);
                 if (m_auiEncounter[TYPE_ROTFACE] == DONE)
-                {
+                {                    
+                    DoUseDoorOrButton(GO_SCIENTIST_DOOR_ORANGE, 0, true);
+                    DoUseDoorOrButton(GO_SCIENTIST_DOOR_GREEN, 0, true);
                     DoUseDoorOrButton(GO_SCIENTIST_DOOR_COLLISION);
-                    DoUseDoorOrButton(GO_SCIENTIST_DOOR_ORANGE);
                 }
             }
             break;
@@ -325,9 +337,11 @@ void instance_icecrown_spire::SetData(uint32 uiType, uint32 uiData)
 
             if (uiData == DONE)
             {
+                DoUseDoorOrButton(GO_GREEN_TUBES);
                 if (m_auiEncounter[TYPE_FESTERGUT] == DONE)
                 {
-                    DoUseDoorOrButton(GO_SCIENTIST_DOOR_GREEN);
+                    DoUseDoorOrButton(GO_SCIENTIST_DOOR_GREEN, 0, true);
+                    DoUseDoorOrButton(GO_SCIENTIST_DOOR_ORANGE, 0, true);
                     DoUseDoorOrButton(GO_SCIENTIST_DOOR_COLLISION);
                 }
             }

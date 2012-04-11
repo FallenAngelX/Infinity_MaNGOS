@@ -87,6 +87,9 @@ enum
     GO_SCIENTIST_DOOR_COLLISION = 201612,
     GO_SCIENTIST_DOOR           = 201372, //72541
 
+    GO_ORANGE_TUBES             = 201617,
+    GO_GREEN_TUBES              = 201618,
+
     GO_BLOODWING_DOOR           = 201920, //72532
     GO_CRIMSON_HALL_DOOR        = 201376, //72532
     GO_COUNCIL_DOOR_1           = 201377, //72533
