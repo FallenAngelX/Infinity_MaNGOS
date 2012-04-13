@@ -356,6 +356,9 @@ UPDATE creature_template SET ScriptName='boss_drakkisath' WHERE entry=10363;
 UPDATE creature_template SET ScriptName='boss_gyth' WHERE entry=10339;
 UPDATE creature_template SET ScriptName='boss_rend_blackhand' WHERE entry=10429;
 UPDATE creature_template SET ScriptName='boss_pyroguard_emberseer' WHERE entry=9816;
+DELETE FROM scripted_event_id WHERE id=4884;
+INSERT INTO scripted_event_id VALUES
+(4884,'event_spell_altar_emberseer');
 
 /* BLACKWING LAIR */
 UPDATE instance_template SET ScriptName='instance_blackwing_lair' WHERE map=469;
@@ -427,7 +430,6 @@ UPDATE creature_template SET ScriptName='boss_temporus' WHERE entry=17880;
 UPDATE instance_template SET ScriptName='instance_dark_portal' WHERE map=269;
 UPDATE creature_template SET ScriptName='npc_medivh_bm' WHERE entry=15608;
 UPDATE creature_template SET ScriptName='npc_time_rift' WHERE entry=17838;
-UPDATE creature_template SET ScriptName='npc_saat' WHERE entry=20201;
 
 /*  */
 /* COILFANG RESERVOIR */
@@ -1018,7 +1020,6 @@ UPDATE creature_template SET ScriptName='npc_kaya' WHERE entry=11856;
 /* STORM PEAKS */
 
 /* STORMWIND CITY */
-UPDATE creature_template SET ScriptName='npc_archmage_malin' WHERE entry=2708;
 UPDATE creature_template SET ScriptName='npc_bartleby' WHERE entry=6090;
 UPDATE creature_template SET ScriptName='npc_dashel_stonefist' WHERE entry=4961;
 UPDATE creature_template SET ScriptName='npc_lady_katrana_prestor' WHERE entry=1749;
@@ -1248,7 +1249,6 @@ UPDATE creature_template SET ScriptName='npc_ringo' WHERE entry=9999;
 /* UNDERCITY */
 UPDATE creature_template SET ScriptName='npc_lady_sylvanas_windrunner' WHERE entry=10181;
 UPDATE creature_template SET ScriptName='npc_highborne_lamenter' WHERE entry=21628;
-UPDATE creature_template SET ScriptName='npc_parqual_fintallas' WHERE entry=4488;
 
 /*  */
 /* UTGARDE KEEP */
@@ -1292,7 +1292,6 @@ UPDATE instance_template SET ScriptName='instance_wailing_caverns' WHERE map=43;
 UPDATE creature_template SET ScriptName='npc_disciple_of_naralex' WHERE entry=3678;
 
 /* WESTERN PLAGUELANDS */
-UPDATE creature_template SET ScriptName='npcs_dithers_and_arbington' WHERE entry IN (11056,11057);
 UPDATE creature_template SET ScriptName='npc_myranda_the_hag' WHERE entry=11872;
 UPDATE creature_template SET ScriptName='npc_the_scourge_cauldron' WHERE entry=11152;
 
