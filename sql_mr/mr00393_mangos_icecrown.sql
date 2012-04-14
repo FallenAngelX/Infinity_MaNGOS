@@ -540,3 +540,25 @@ INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`
 -- DELETE FROM `creature` WHERE `id`=37950;
 
 -- ------
+
+-- ICC Achievements criterias --
+REPLACE INTO `achievement_criteria_requirement` VALUES(12777,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(13079,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(13080,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(13081,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(12776,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(12995,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(12997,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(12998,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(12778,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(13035,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(13036,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(13037,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(12971,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(12978,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(12979,18,0,0);
+REPLACE INTO `achievement_criteria_requirement` VALUES(12980,18,0,0);
+DELETE FROM `achievement_criteria_requirement` WHERE criteria_id IN (12780, 13011, 13012, 13013);
+INSERT INTO `achievement_criteria_requirement` VALUES(12780,0,0,0),(13011,0,0,0),(13012,0,0,0),(13013,0,0,0);
+
+-- ------

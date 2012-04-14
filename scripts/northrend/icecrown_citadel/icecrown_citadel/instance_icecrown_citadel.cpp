@@ -46,6 +46,9 @@ void instance_icecrown_spire::Initialize()
     for (uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
         m_auiEncounter[i] = NOT_STARTED;
 
+    for (uint8 i = 0; i < ACHIEVE_MAX_COUNT; ++i)
+        m_bAchievCriteria[i] = false;
+
     m_auiEncounter[0] = 0;
 
     m_auiEvent = 0;
@@ -510,6 +513,75 @@ uint32 instance_icecrown_spire::GetData(uint32 uiType)
          default:
              return 0;
     }
+}
+bool instance_icecrown_spire::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/)
+{
+    switch(uiCriteriaId)
+    {
+        case CRITERIA_BONED_10N:
+        case CRITERIA_BONED_25N:
+        case CRITERIA_BONED_10H:
+        case CRITERIA_BONED_25H:
+             return m_bAchievCriteria[ACHIEVE_BONED];
+        case CRITERIA_FULL_HOUSE_10N:
+        case CRITERIA_FULL_HOUSE_25N:
+        case CRITERIA_FULL_HOUSE_10H:
+        case CRITERIA_FULL_HOUSE_25H:
+             return m_bAchievCriteria[ACHIEVE_FULL_HOUSE];
+        case CRITERIA_IM_ON_A_BOAT_10N:
+        case CRITERIA_IM_ON_A_BOAT_25N:
+        case CRITERIA_IM_ON_A_BOAT_10H:
+        case CRITERIA_IM_ON_A_BOAT_25H:
+             return m_bAchievCriteria[ACHIEVE_IM_ON_A_BOAT];
+        case CRITERIA_IVE_GONE_AND_MADE_A_MESS_10N:
+        case CRITERIA_IVE_GONE_AND_MADE_A_MESS_25N:
+        case CRITERIA_IVE_GONE_AND_MADE_A_MESS_10H:
+        case CRITERIA_IVE_GONE_AND_MADE_A_MESS_25H:
+             return m_bAchievCriteria[ACHIEVE_IVE_GONE_AND_MADE_A_MESS];
+        case CRITERIA_FLU_SHOT_SHORTAGE_10N:
+        case CRITERIA_FLU_SHOT_SHORTAGE_25N:
+        case CRITERIA_FLU_SHOT_SHORTAGE_10H:
+        case CRITERIA_FLU_SHOT_SHORTAGE_25H:
+             return m_bAchievCriteria[ACHIEVE_FLU_SHOT_SHORTAGE];
+        case CRITERIA_DANCES_WITH_OOZES_10N:
+        case CRITERIA_DANCES_WITH_OOZES_25N:
+        case CRITERIA_DANCES_WITH_OOZES_10H:
+        case CRITERIA_DANCES_WITH_OOZES_25H:
+             return m_bAchievCriteria[ACHIEVE_DANCES_WITH_OOZES];
+        case CRITERIA_NAUSEA_10N:
+        case CRITERIA_NAUSEA_25N:
+        case CRITERIA_NAUSEA_10H:
+        case CRITERIA_NAUSEA_25H:
+             return m_bAchievCriteria[ACHIEVE_NAUSEA];
+        case CRITERIA_ORB_WHISPERER_10N:
+        case CRITERIA_ORB_WHISPERER_25N:
+        case CRITERIA_ORB_WHISPERER_10H:
+        case CRITERIA_ORB_WHISPERER_25H:
+             return m_bAchievCriteria[ACHIEVE_ORB_WHISPERER];
+        case CRITERIA_PORTAL_JOCKEY_10N:
+        case CRITERIA_PORTAL_JOCKEY_25N:
+        case CRITERIA_PORTAL_JOCKEY_10H:
+        case CRITERIA_PORTAL_JOCKEY_25H:
+             return m_bAchievCriteria[ACHIEVE_PORTAL_JOCKEY];
+        case CRITERIA_ALL_YOU_CAN_EAT_10N:
+        case CRITERIA_ALL_YOU_CAN_EAT_25N:
+        case CRITERIA_ALL_YOU_CAN_EAT_10V:
+        case CRITERIA_ALL_YOU_CAN_EAT_25V:
+             return m_bAchievCriteria[ACHIEVE_ALL_YOU_CAN_EAT];
+        case CRITERIA_BEEN_WAITING_A_LONG_TIME_10N:
+        case CRITERIA_BEEN_WAITING_A_LONG_TIME_25N:
+        case CRITERIA_BEEN_WAITING_A_LONG_TIME_10H:
+        case CRITERIA_BEEN_WAITING_A_LONG_TIME_25H:
+             return m_bAchievCriteria[ACHIEVE_BEEN_WAITING_A_LONG_TIME];
+        default:
+            return false;
+    }
+}
+
+void instance_icecrown_spire::SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet)
+{
+    if (uiType < ACHIEVE_MAX_COUNT)
+        m_bAchievCriteria[uiType] = bIsMet;
 }
 
 void instance_icecrown_spire::Load(const char* chrIn)
