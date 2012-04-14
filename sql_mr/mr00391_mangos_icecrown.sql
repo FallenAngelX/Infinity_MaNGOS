@@ -357,7 +357,7 @@ INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`,
 DELETE FROM `creature_model_info` WHERE (`modelid`=31093);
 INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (31093, 1.24, 2, 1, 0, 0);
 
-UPDATE `gameobject_template` SET `type`='0' WHERE `entry`=201755;
+UPDATE `gameobject_template` SET `type`='0', `flags`='32', `faction`='114' WHERE `entry`=201755;
 
 -- ---------------------
 -- Valithria dreamwalker
@@ -403,6 +403,12 @@ UPDATE `gameobject` SET `state` = '1' WHERE `id` IN (201374);
 UPDATE `gameobject_template` SET `faction` = '114',`data0` = '0' WHERE `gameobject_template`.`entry` IN (201380,201381,201382,201383);
 UPDATE `gameobject_template` SET `faction` = '0' WHERE `entry` IN (201380,201381,201382,201383);
 UPDATE `gameobject` SET `state` = '1' WHERE `id` IN (201380,201381,201382,201383);
+
+UPDATE `gameobject_template` SET `type`='0', `flags`='32', `faction`='114' WHERE `entry` IN (201919, 201380, 201381, 201382, 201383);
+UPDATE `gameobject` SET `spawnMask` = '15', `phaseMask` = '1' WHERE `id` =201919;
+
+UPDATE `creature_template_addon` SET `auras` = '' WHERE `entry` IN ('38131', '38132', '37134', '37132');
+UPDATE `creature_template_addon` SET `auras` = '71244' WHERE `entry`='38133';
 
 -- ----------
 -- Sindragosa
