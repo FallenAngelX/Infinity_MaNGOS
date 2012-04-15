@@ -96,8 +96,7 @@ struct MANGOS_DLL_DECL boss_midnightAI : public ScriptedAI
         fNewX = m_creature->GetPositionX() + cos(fAngle)*(fDistance/2);
         fNewY = m_creature->GetPositionY() + sin(fAngle)*(fDistance/2);
 
-        pAttumen->GetMotionMaster()->Clear();
-        pAttumen->GetMotionMaster()->MovePoint(0, fNewX, fNewY, fNewZ);
+        pAttumen->NearTeleportTo(fNewX, fNewY, fNewZ + 1.0f, 0.0f);
 
         m_uiMount_Timer = 1000;
     }
@@ -116,7 +115,7 @@ struct MANGOS_DLL_DECL boss_midnightAI : public ScriptedAI
                 {
                     m_uiPhase = 2;
 
-                    if (Creature* pAttumen = m_creature->SummonCreature(SUMMON_ATTUMEN, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 30000))
+                    if (Creature* pAttumen = m_creature->SummonCreature(SUMMON_ATTUMEN, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0))
                     {
                         m_attumenGuid = pAttumen->GetObjectGuid();
                         pAttumen->AI()->AttackStart(m_creature->getVictim());
