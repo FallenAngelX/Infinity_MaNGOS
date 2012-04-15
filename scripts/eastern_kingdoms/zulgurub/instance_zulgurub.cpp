@@ -65,7 +65,7 @@ void instance_zulgurub::OnCreatureCreate(Creature* pCreature)
             if (pCreature->GetPositionY() < -1626)
                 m_lLeftPantherTriggerGUIDList.push_back(pCreature->GetObjectGuid());
             else
-                m_lRightPantherTirggerGUIDList.push_back(pCreature->GetObjectGuid());
+                m_lRightPantherTriggerGUIDList.push_back(pCreature->GetObjectGuid());
             break;
     }
 }
@@ -170,7 +170,7 @@ uint32 instance_zulgurub::GetData(uint32 uiType)
 
 Creature* instance_zulgurub::SelectRandomPantherTrigger(bool bIsLeft)
 {
-    GUIDList* plTempList = bIsLeft ? &m_lLeftPantherTriggerGUIDList : &m_lRightPantherTirggerGUIDList;
+    GUIDList* plTempList = bIsLeft ? &m_lLeftPantherTriggerGUIDList : &m_lRightPantherTriggerGUIDList;
     std::vector<Creature*> vTriggers;
     vTriggers.reserve(plTempList->size());
 
