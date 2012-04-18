@@ -93,7 +93,7 @@ UPDATE creature_template SET lootid = 33995 WHERE entry = 33995;
 -- 10 man:
 -- hard mode loot for the heart
 DELETE FROM `creature_loot_template` WHERE (`entry`=33329);
-INSERT INTO `creature_loot_template` VALUES 
+INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES 
 (33329, 45867, 0, 1, 1, 1, 0, 0, 0),
 (33329, 45868, 0, 1, 1, 1, 0, 0, 0),
 (33329, 45869, 0, 1, 1, 1, 0, 0, 0),
@@ -102,7 +102,7 @@ INSERT INTO `creature_loot_template` VALUES
 -- 25 man:
 -- no hard loot on xt so moving to the heart
 DELETE FROM `creature_loot_template` WHERE (`entry`=33995);
-INSERT INTO `creature_loot_template` VALUES 
+INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES 
 (33995, 45445, 0, 1, 1, 1, 0, 0, 0),
 (33995, 45443, 0, 1, 1, 1, 0, 0, 0),
 (33995, 45444, 0, 1, 1, 1, 0, 0, 0),
@@ -130,7 +130,7 @@ UPDATE `creature_template` SET `lootid` = 33693 WHERE `entry` = 33692;
 -- 10 man version
 -- Brundir:
 DELETE FROM `creature_loot_template` WHERE (`entry`=32857);
-INSERT INTO `creature_loot_template` VALUES 
+INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES 
 (32857, 45322, 0, 2, 1, 1, 0, 0, 0),
 (32857, 45324, 0, 1, 1, 1, 0, 0, 0),
 (32857, 45329, 0, 2, 1, 1, 0, 0, 0),
@@ -146,7 +146,7 @@ INSERT INTO `creature_loot_template` VALUES
 -- 25 man version
 -- Brundir:
 DELETE FROM `creature_loot_template` WHERE (`entry`=33694);
-INSERT INTO `creature_loot_template` VALUES 
+INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES 
 (33694, 45224, 0, 3, 1, 1, 0, 0, 0),
 (33694, 45228, 0, 3, 1, 1, 0, 0, 0),
 (33694, 45233, 0, 3, 1, 1, 0, 0, 0),
@@ -349,7 +349,7 @@ INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`
 (110005, 194958, 603, 2, 65535, 2734.73, 2568.98, 364.314, 0.0139475, 0, 0, 0.00697369, 0.999976, -604800, 100, 1);
 -- 10 man hard:
 DELETE FROM `gameobject_loot_template` WHERE (`entry`=194957);
-INSERT INTO `gameobject_loot_template` VALUES 
+INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES 
 (194957, 45089, 5, 0, -45089, 1, 0, 0, 0),
 (194957, 45095, 2.0408, 0, 1, 1, 0, 0, 0),
 (194957, 45649, 100, 0, -45649, 1, 0, 0, 0),
@@ -368,7 +368,7 @@ INSERT INTO `gameobject_loot_template` VALUES
 (194957, 45993, 0, 2, 1, 1, 0, 0, 0);
 -- 25 man hard:
 DELETE FROM `gameobject_loot_template` WHERE (`entry`=194958);
-INSERT INTO `gameobject_loot_template` VALUES 
+INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES 
 (194958, 45038, 10, 0, 1, 1, 0, 0, 0),
 (194958, 45087, 33, 0, 1, 1, 0, 0, 0),
 (194958, 45089, 5, 0, -45089, 1, 0, 0, 0),
@@ -510,4 +510,3 @@ UPDATE gameobject SET spawntimesecs = -604800 WHERE id IN (195046, 195047, 19430
 UPDATE creature_template SET ScriptName = 'generic_creature' WHERE entry IN (34086, 34085, 34069, 33237, 34234, 33236, 33264, 34164, 34196, 34199, 34198, 
 34190, 34197, 33699, 34134, 34135, 34133, 33430, 33528, 33431, 33527, 33526, 33525, 33355, 33354, 34193, 34183, 33110, 
 32878, 33822, 33818, 33824, 33823, 33772, 33838, 33819, 33820, 32875, 33346, 34057);
-
