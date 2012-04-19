@@ -387,20 +387,23 @@ void instance_dire_maul::SortPylonGuards()
             // Sort all remaining (alive) NPCs to unfinished generators
             for (GUIDList::iterator itr = m_lGeneratorGuardGUIDs.begin(); itr != m_lGeneratorGuardGUIDs.end();)
             {
-                Creature* pGuard = instance->GetCreature(*itr);
+
+                ObjectGuid target = *itr;
+                ++itr;
+
+                Creature* pGuard = instance->GetCreature(target);
+
                 if (!pGuard || pGuard->isDead())    // Remove invalid guids and dead guards
                 {
-                    m_lGeneratorGuardGUIDs.erase(itr++);
+                    m_lGeneratorGuardGUIDs.erase(target);
                     continue;
                 }
 
                 if (pGuard->IsWithinDistInMap(pGenerator, 20.0f))
                 {
                     m_sSortedGeneratorGuards[i].insert(pGuard->GetGUIDLow());
-                    m_lGeneratorGuardGUIDs.erase(itr++);
+                    m_lGeneratorGuardGUIDs.erase(target);
                 }
-                else
-                    ++itr;
             }
         }
     }
