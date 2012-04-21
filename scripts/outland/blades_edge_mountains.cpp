@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Blades_Edge_Mountains
 SD%Complete: 90
-SDComment: Quest support: 10503, 10504, 10556, 10609. (npc_daranelle needs bit more work before consider complete)
+SDComment: Quest support: 10512/10545, 10503, 10504, 10556, 10609. (npc_daranelle needs bit more work before consider complete)
 SDCategory: Blade's Edge Mountains
 EndScriptData */
 
@@ -33,19 +33,77 @@ EndContentData */
 ## mobs_bladespire_ogre
 ######*/
 
-//TODO: add support for quest 10512 + creature abilities
+#define NPC_BLOODMAUL_BRUTEBANE_STOUT_TRIGGER 21241
+
+//TODO: improve quest script + add creature abilities
 struct MANGOS_DLL_DECL mobs_bladespire_ogreAI : public ScriptedAI
 {
     mobs_bladespire_ogreAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    void Reset() { }
+    bool m_bIsQuest;
+    uint8 m_uiQuestStep;
+    uint32 m_uiStep2Timer;
+    Player* pQuestPlayer;
+    Creature* pScoutTrigger;
+    std::list<Creature*> StoutTriggerEntryList;
+
+    void Reset()
+    {
+        m_bIsQuest = false;
+        m_uiQuestStep = 0;
+        m_uiStep2Timer = 1000;
+    }
+
+    void Aggro(Unit* pVictim)
+    {
+        if (pVictim && pVictim->GetTypeId() == TYPEID_PLAYER)
+        {
+            pQuestPlayer = (Player*)pVictim;
+            if (pQuestPlayer->GetQuestStatus(10512) || pQuestPlayer->GetQuestStatus(10545))
+                m_bIsQuest = true;
+            m_uiQuestStep = 1;
+        }
+    }
 
     void UpdateAI(const uint32 uiDiff)
     {
+        if (m_bIsQuest)
+        {
+            switch(m_uiQuestStep)
+            {
+                case 0:
+                    break;
+                case 1:
+                    if (m_uiStep2Timer <uiDiff)
+                    {
+                        StoutTriggerEntryList.clear();
+                        GetCreatureListWithEntryInGrid(StoutTriggerEntryList, m_creature, NPC_BLOODMAUL_BRUTEBANE_STOUT_TRIGGER, 10.0f);
+                        if (!StoutTriggerEntryList.empty())
+                        {
+                            std::list<Creature*>::iterator iter = StoutTriggerEntryList.begin();
+                            pScoutTrigger = (*iter);
+                            m_uiQuestStep = 2;
+                            m_uiStep2Timer = 1000;
+                        }
+                    }else
+                        m_uiStep2Timer -= uiDiff;
+                    break;
+                case 2:
+                    m_creature->GetMotionMaster()->MoveChase(pScoutTrigger);
+                    pQuestPlayer->KilledMonsterCredit(NPC_BLOODMAUL_BRUTEBANE_STOUT_TRIGGER);
+                    SetCombatMovement(false);
+                    m_creature->ForcedDespawn(2000);
+                    pScoutTrigger->ForcedDespawn(2000);
+                    m_uiQuestStep = 3;
+                    break;
+            }
+        }
+
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        DoMeleeAttackIfReady();
+        if (m_uiQuestStep < 2)
+            DoMeleeAttackIfReady();
     }
 };
 
