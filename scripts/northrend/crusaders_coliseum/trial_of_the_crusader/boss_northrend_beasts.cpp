@@ -82,7 +82,6 @@ enum BossSpells
     SPELL_SLIME_POOL            = 66883,
     SPELL_SLIME_POOL_AURA       = 66882,
     SPELL_SLIME_POOL_VISUAL     = 63084,
-    SPELL_CHECK_ACHIEV          = 68523,
 
     // Icehowl
     SPELL_FEROCIOUS_BUTT        = 66770,
@@ -453,30 +452,15 @@ struct MANGOS_DLL_DECL boss_acidmawAI : public ScriptedAI
         if (!m_pInstance) 
             return;
 
+        if (m_pInstance->GetData(TYPE_NORTHREND_BEASTS) == SNAKES_SPECIAL && !m_bAchievFailed)
+            m_pInstance->DoUpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET, SPELL_ACHIEV_NOT_ONE_BUT_TWO_JORMUNGARS);
+
         if (Creature* pDreadscale = m_pInstance->GetSingleCreatureFromStorage(NPC_DREADSCALE))
         {
             if (!pDreadscale->isAlive())
                 m_pInstance->SetData(TYPE_NORTHREND_BEASTS, SNAKES_DONE);
             else
                 m_pInstance->SetData(TYPE_NORTHREND_BEASTS, SNAKES_SPECIAL);
-        }
-
-        if (m_pInstance->GetData(TYPE_NORTHREND_BEASTS) == SNAKES_SPECIAL && !m_bAchievFailed)
-            CheckAchiev();
-    }
-
-    void CheckAchiev()
-    {
-        Map* pMap = m_creature->GetMap();
-        Map::PlayerList const& pPlayers = pMap->GetPlayers();
-        if (!pPlayers.isEmpty())
-        {
-            for (Map::PlayerList::const_iterator itr = pPlayers.begin(); itr != pPlayers.end(); ++itr)
-            {
-                Unit *pTarget = itr->getSource();
-                if (pTarget)
-                    m_creature->CastSpell(pTarget, SPELL_CHECK_ACHIEV, true);
-            }
         }
     }
 
@@ -604,8 +588,8 @@ struct MANGOS_DLL_DECL boss_acidmawAI : public ScriptedAI
 
         if (m_pInstance->GetData(TYPE_NORTHREND_BEASTS) == SNAKES_SPECIAL)
         {
-            ++m_uiAchievTimer;
-            if (m_uiAchievTimer < uiDiff)
+            m_uiAchievTimer -= uiDiff;
+            if (m_uiAchievTimer <= uiDiff)
                 m_bAchievFailed = true;
         }
 
@@ -668,6 +652,9 @@ struct MANGOS_DLL_DECL boss_dreadscaleAI : public ScriptedAI
     {
         if (!m_pInstance) 
             return;
+
+        if (m_pInstance->GetData(TYPE_NORTHREND_BEASTS) == SNAKES_SPECIAL && !m_bAchievFailed)
+            m_pInstance->DoUpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET, SPELL_ACHIEV_NOT_ONE_BUT_TWO_JORMUNGARS);
             
         if (Creature *pSister = m_pInstance->GetSingleCreatureFromStorage(NPC_ACIDMAW))
         {
@@ -675,24 +662,6 @@ struct MANGOS_DLL_DECL boss_dreadscaleAI : public ScriptedAI
                 m_pInstance->SetData(TYPE_NORTHREND_BEASTS, SNAKES_DONE);
             else 
                 m_pInstance->SetData(TYPE_NORTHREND_BEASTS, SNAKES_SPECIAL);
-        }
-
-        if (m_pInstance->GetData(TYPE_NORTHREND_BEASTS) == SNAKES_SPECIAL && !m_bAchievFailed)
-            CheckAchiev();
-    }
-
-    void CheckAchiev()
-    {
-        Map* pMap = m_creature->GetMap();
-        Map::PlayerList const& pPlayers = pMap->GetPlayers();
-        if (!pPlayers.isEmpty())
-        {
-            for (Map::PlayerList::const_iterator itr = pPlayers.begin(); itr != pPlayers.end(); ++itr)
-            {
-                Unit *pTarget = itr->getSource();
-                if (pTarget)
-                    m_creature->CastSpell(pTarget, SPELL_CHECK_ACHIEV, true);
-            }
         }
     }
 
@@ -819,8 +788,8 @@ struct MANGOS_DLL_DECL boss_dreadscaleAI : public ScriptedAI
 
         if (m_pInstance->GetData(TYPE_NORTHREND_BEASTS) == SNAKES_SPECIAL)
         {
-            ++m_uiAchievTimer;
-            if (m_uiAchievTimer < uiDiff)
+            m_uiAchievTimer -= uiDiff;
+            if (m_uiAchievTimer <= uiDiff)
                 m_bAchievFailed = true;
         }
 
