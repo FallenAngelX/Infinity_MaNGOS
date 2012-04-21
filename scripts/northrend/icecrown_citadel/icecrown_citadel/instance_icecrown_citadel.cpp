@@ -223,6 +223,10 @@ void instance_icecrown_spire::OnObjectCreate(GameObject* pGo)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
+        case GO_DRINK_ME_TABLE:
+            pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+            break;
         case GO_SAURFANG_CACHE_10:
         case GO_SAURFANG_CACHE_25:
         case GO_SAURFANG_CACHE_10_H:
