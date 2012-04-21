@@ -198,6 +198,7 @@ struct MANGOS_DLL_DECL boss_anubarak_trialAI : public BSWScriptedAI
         if (!m_pInstance) 
             return;
 
+        m_pInstance->SetData(TYPE_COUNTER, m_pInstance->GetData(TYPE_COUNTER));
         DoScriptText(SAY_DEATH, m_creature);
         m_pInstance->SetData(TYPE_ANUBARAK, DONE);
         m_pInstance->SetData(TYPE_EVENT, 6000);

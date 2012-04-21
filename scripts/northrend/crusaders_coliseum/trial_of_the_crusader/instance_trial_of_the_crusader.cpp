@@ -38,10 +38,14 @@ void instance_trial_of_the_crusader::Initialize()
     for (uint8 i = 0; i < MAX_SPECIAL_ACHIEV_CRITS - 1; ++i)
         m_bAchievCriteria[i] = false;
 
+    SetSpecialAchievementCriteria(TYPE_SKILL, true);
+    SetSpecialAchievementCriteria(TYPE_MAD_SKILL, true);
+    SetSpecialAchievementCriteria(TYPE_INSANITY, true);
     SetSpecialAchievementCriteria(TYPE_IMMORTALITY, true);
 
     m_auiEncounter[TYPE_STAGE] = 0;
     m_auiEncounter[TYPE_COUNTER] = 50;
+    m_auiEncounter[TYPE_DEATHS] = 0;
     m_auiEncounter[TYPE_EVENT] = 0;
 
     m_auiNorthrendBeasts = NOT_STARTED;
@@ -77,7 +81,7 @@ void instance_trial_of_the_crusader::OnPlayerEnter(Player *m_player)
 void instance_trial_of_the_crusader::OnPlayerDeath(Player* pPlayer)
 {
     if (IsEncounterInProgress())
-        SetSpecialAchievementCriteria(TYPE_IMMORTALITY, false);
+        SetData(TYPE_DEATHS, 1);
 }
 
 bool instance_trial_of_the_crusader::IsRaidWiped()
@@ -143,18 +147,27 @@ bool instance_trial_of_the_crusader::CheckAchievementCriteriaMeet(uint32 uiCrite
         case CRITERIA_ACHIEV_THREE_SIXTY_PAIN_SPIKE_25N:
         case CRITERIA_ACHIEV_THREE_SIXTY_PAIN_SPIKE_25H:
             return m_bAchievCriteria[TYPE_THREE_SIXTY_PAIN_SPIKE];
-        case CRITERIA_ACHIEV_TRIBUTE_TO_SKILL_10:
-        case CRITERIA_ACHIEV_TRIBUTE_TO_SKILL_25:
-            return m_bAchievCriteria[TYPE_SKILL];
-        case CRITERIA_ACHIEV_TRIBUTE_TO_MAD_SKILL_10:
-        case CRITERIA_ACHIEV_TRIBUTE_TO_MAD_SKILL_25:
-            return m_bAchievCriteria[TYPE_MAD_SKILL];
+        case CRITERIA_ACHIEV_TRIBUTE_TO_SKILL_10_1:
+        case CRITERIA_ACHIEV_TRIBUTE_TO_SKILL_10_2:
+        //case CRITERIA_ACHIEV_TRIBUTE_TO_SKILL_10_3:
+            return Difficulty == RAID_DIFFICULTY_10MAN_HEROIC ? m_bAchievCriteria[TYPE_SKILL] : false;
+        case CRITERIA_ACHIEV_TRIBUTE_TO_SKILL_25_1:
+        case CRITERIA_ACHIEV_TRIBUTE_TO_SKILL_25_2:
+        //case CRITERIA_ACHIEV_TRIBUTE_TO_SKILL_25_3:
+            return Difficulty == RAID_DIFFICULTY_25MAN_HEROIC ? m_bAchievCriteria[TYPE_SKILL] : false;
+        case CRITERIA_ACHIEV_TRIBUTE_TO_MAD_SKILL_10_1:
+        case CRITERIA_ACHIEV_TRIBUTE_TO_MAD_SKILL_10_2:
+            return Difficulty == RAID_DIFFICULTY_10MAN_HEROIC ? m_bAchievCriteria[TYPE_MAD_SKILL] : false;
+        case CRITERIA_ACHIEV_TRIBUTE_TO_MAD_SKILL_25_1:
+        case CRITERIA_ACHIEV_TRIBUTE_TO_MAD_SKILL_25_2:
+            return Difficulty == RAID_DIFFICULTY_25MAN_HEROIC ? m_bAchievCriteria[TYPE_MAD_SKILL] : false;
         case CRITERIA_ACHIEV_TRIBUTE_TO_INSANITY_10:
+            return Difficulty == RAID_DIFFICULTY_10MAN_HEROIC ? m_bAchievCriteria[TYPE_INSANITY] : false;
         case CRITERIA_ACHIEV_TRIBUTE_TO_INSANITY_25:
-            return m_bAchievCriteria[TYPE_INSANITY];
+            return Difficulty == RAID_DIFFICULTY_25MAN_HEROIC ? m_bAchievCriteria[TYPE_INSANITY] : false;
         case CRITERIA_ACHIEV_TRIBUTE_TO_IMMORTALITY_HORDE:
         case CRITERIA_ACHIEV_TRIBUTE_TO_IMMORTALITY_ALLY:
-            return m_bAchievCriteria[TYPE_IMMORTALITY];
+            return Difficulty == RAID_DIFFICULTY_25MAN_HEROIC ? m_bAchievCriteria[TYPE_IMMORTALITY] : false;
         default:
             return false;
     }
@@ -304,9 +317,17 @@ void instance_trial_of_the_crusader::SetData(uint32 uiType, uint32 uiData)
         if (uiData < 45)
             SetSpecialAchievementCriteria(TYPE_MAD_SKILL, false);
         if (uiData < 50)
+        {
             SetSpecialAchievementCriteria(TYPE_INSANITY, false);
+            SetSpecialAchievementCriteria(TYPE_IMMORTALITY, false);
+        }
 
         //uiData = DONE;
+        break;
+    case TYPE_DEATHS:
+        m_auiEncounter[TYPE_DEATHS] += uiData;
+        if (GetData(TYPE_DEATHS))
+            SetSpecialAchievementCriteria(TYPE_IMMORTALITY, false);
         break;
     case TYPE_EVENT:
         m_auiEncounter[TYPE_EVENT] = uiData;
@@ -350,7 +371,8 @@ void instance_trial_of_the_crusader::SetData(uint32 uiType, uint32 uiData)
     {
         if (IsRaidWiped())
         {
-            --m_auiEncounter[TYPE_COUNTER];
+            //--m_auiEncounter[TYPE_COUNTER];
+            SetData(TYPE_COUNTER, GetData(TYPE_COUNTER) - 1);
             needsave = true;
             UpdateWorldState();
         }
@@ -386,7 +408,8 @@ uint32 instance_trial_of_the_crusader::GetData(uint32 uiType)
         case TYPE_LICH_KING:            return m_auiEncounter[5];
         case TYPE_ANUBARAK:             return m_auiEncounter[6];
         case TYPE_COUNTER:              return m_auiEncounter[7];
-        case TYPE_EVENT:                return m_auiEncounter[8];
+        case TYPE_DEATHS:               return m_auiEncounter[8];
+        case TYPE_EVENT:                return m_auiEncounter[9];
         case TYPE_DIFFICULTY:           return Difficulty;
         case TYPE_NORTHREND_BEASTS:     return m_auiNorthrendBeasts;
         case TYPE_EVENT_TIMER:          return m_auiEventTimer;
@@ -395,7 +418,7 @@ uint32 instance_trial_of_the_crusader::GetData(uint32 uiType)
         case TYPE_CRUSADERS_ACHIEV_TIMER:return m_auiCrusadersAchievTimer;
         case TYPE_CRUSADERS_ACHIEV_FAIL :return m_auiCrusadersAchievFail;
         case TYPE_EVENT_NPC:
-            switch (m_auiEncounter[8]) 
+            switch (m_auiEncounter[TYPE_EVENT])
             {
                 case 110:
                 case 115:
@@ -508,6 +531,7 @@ void instance_trial_of_the_crusader::Load(const char* strIn)
     }
     m_auiEncounter[TYPE_EVENT] = 0;
     m_auiEncounter[TYPE_STAGE] = 0;
+    SetData(TYPE_DEATHS, m_auiEncounter[TYPE_DEATHS]);  // Refresh achievement criteria
 
     OUT_LOAD_INST_DATA_COMPLETE;
 
