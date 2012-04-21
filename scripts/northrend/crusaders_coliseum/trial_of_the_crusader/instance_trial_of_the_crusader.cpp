@@ -135,9 +135,11 @@ bool instance_trial_of_the_crusader::CheckAchievementCriteriaMeet(uint32 uiCrite
         case CRITERIA_ACHIEV_UPPER_BACK_PAIN_25N:
         case CRITERIA_ACHIEV_UPPER_BACK_PAIN_25H:
             return m_bAchievCriteria[TYPE_UPPER_BACK_PAIN];
-        case CRITERIA_ACHIEV_SIXTY_PAIN_SPIKE_10N:
-        case CRITERIA_ACHIEV_SIXTY_PAIN_SPIKE_25N:
-            return m_bAchievCriteria[TYPE_SIXTY_PAIN_SPIKE];
+        case CRITERIA_ACHIEV_THREE_SIXTY_PAIN_SPIKE_10N:
+        case CRITERIA_ACHIEV_THREE_SIXTY_PAIN_SPIKE_10H:
+        case CRITERIA_ACHIEV_THREE_SIXTY_PAIN_SPIKE_25N:
+        case CRITERIA_ACHIEV_THREE_SIXTY_PAIN_SPIKE_25H:
+            return m_bAchievCriteria[TYPE_THREE_SIXTY_PAIN_SPIKE];
         case CRITERIA_ACHIEV_TRIBUTE_TO_SKILL_10:
         case CRITERIA_ACHIEV_TRIBUTE_TO_SKILL_25:
             return m_bAchievCriteria[TYPE_SKILL];
@@ -176,7 +178,7 @@ void instance_trial_of_the_crusader::SetData(uint32 uiType, uint32 uiData)
     case TYPE_JARAXXUS:
         m_auiEncounter[TYPE_JARAXXUS] = uiData;
         if (uiData == IN_PROGRESS)
-            SetSpecialAchievementCriteria(TYPE_SIXTY_PAIN_SPIKE, false);
+            SetSpecialAchievementCriteria(TYPE_THREE_SIXTY_PAIN_SPIKE, false);
         break;
     case TYPE_CRUSADERS:
         if (uiData == FAIL && (m_auiEncounter[TYPE_CRUSADERS] == FAIL || m_auiEncounter[TYPE_CRUSADERS] == NOT_STARTED))
