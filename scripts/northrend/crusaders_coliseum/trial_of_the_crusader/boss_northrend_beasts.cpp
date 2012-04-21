@@ -868,10 +868,12 @@ struct MANGOS_DLL_DECL boss_icehowlAI : public ScriptedAI
     boss_icehowlAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = ((instance_trial_of_the_crusader*)pCreature->GetInstanceData());
+        m_uiMapDifficulty = pCreature->GetMap()->GetDifficulty();
         Reset();
     }
 
     instance_trial_of_the_crusader* m_pInstance;
+    Difficulty m_uiMapDifficulty;
 
     uint32 m_uiFerociousButtTimer;
     uint32 m_uiArcticBreathTimer;
@@ -880,11 +882,9 @@ struct MANGOS_DLL_DECL boss_icehowlAI : public ScriptedAI
     uint32 m_uiWaitTimer;
     uint32 m_uiPhaseTimer;
     uint32 m_uiPhase;
-    uint32 m_uiCheckTimer;
 
     float fPosX, fPosY, fPosZ;
     Unit *pFocus;
-    bool m_bAchievFailed;
 
     std::list<Creature*> vassalsEntryList;
 
@@ -898,14 +898,11 @@ struct MANGOS_DLL_DECL boss_icehowlAI : public ScriptedAI
         m_uiWhirlTimer                 = 20000;
         m_uiMassiveCrashTimer          = 30000;
         m_uiPhase                      = PHASE_NORMAL;
-        m_uiCheckTimer                 = 0; // if not vassals at encounter start only check once.
 
         m_creature->SetRespawnDelay(7*DAY);
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         m_creature->SetSpeedRate(MOVE_WALK, 3.0f);
         m_creature->SetSpeedRate(MOVE_RUN, 3.0f);
-
-        m_bAchievFailed                = false;
 
         pFocus = NULL;
 
@@ -960,31 +957,24 @@ struct MANGOS_DLL_DECL boss_icehowlAI : public ScriptedAI
         }
     }
 
-    void CheckAchiev()
+    void JustDied(Unit* pKiller)
     {
+        if (!m_pInstance)
+            return;
+
+        // Find required NPC as achievement criteria
         vassalsEntryList.clear();
         GetCreatureListWithEntryInGrid(vassalsEntryList, m_creature, NPC_SNOBOLD_VASSAL, 250.0f);
 
         if (vassalsEntryList.empty())
-        {
             m_pInstance->SetSpecialAchievementCriteria(TYPE_UPPER_BACK_PAIN, false);
-            m_bAchievFailed = true;
-            return;
-        }
-
-        if (vassalsEntryList.size()-1 >= 2)
-            m_pInstance->SetSpecialAchievementCriteria(TYPE_UPPER_BACK_PAIN, true);
         else
         {
-            m_pInstance->SetSpecialAchievementCriteria(TYPE_UPPER_BACK_PAIN, false);
-            m_bAchievFailed = true;
+            if(m_uiMapDifficulty == RAID_DIFFICULTY_10MAN_HEROIC || m_uiMapDifficulty == RAID_DIFFICULTY_10MAN_NORMAL)
+                m_pInstance->SetSpecialAchievementCriteria(TYPE_UPPER_BACK_PAIN, vassalsEntryList.size() >= 2);
+            else
+                m_pInstance->SetSpecialAchievementCriteria(TYPE_UPPER_BACK_PAIN, vassalsEntryList.size() >= 4);
         }
-    }
-
-    void JustDied(Unit* pKiller)
-    {
-        if (!m_pInstance) 
-            return;
 
         m_pInstance->SetData(TYPE_NORTHREND_BEASTS, ICEHOWL_DONE);
     }
@@ -1009,17 +999,6 @@ struct MANGOS_DLL_DECL boss_icehowlAI : public ScriptedAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
-
-        if (!m_bAchievFailed)
-        {
-            if (m_uiCheckTimer < uiDiff)
-            {
-                CheckAchiev();
-                m_uiCheckTimer = 500;
-            }
-            else
-                m_uiCheckTimer -= uiDiff;
-        }
 
         switch (m_uiPhase)
         {

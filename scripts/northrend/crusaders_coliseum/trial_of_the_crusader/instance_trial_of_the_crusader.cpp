@@ -131,7 +131,9 @@ bool instance_trial_of_the_crusader::CheckAchievementCriteriaMeet(uint32 uiCrite
     switch (uiCriteriaId)
     {
         case CRITERIA_ACHIEV_UPPER_BACK_PAIN_10N:
+        case CRITERIA_ACHIEV_UPPER_BACK_PAIN_10H:
         case CRITERIA_ACHIEV_UPPER_BACK_PAIN_25N:
+        case CRITERIA_ACHIEV_UPPER_BACK_PAIN_25H:
             return m_bAchievCriteria[TYPE_UPPER_BACK_PAIN];
         case CRITERIA_ACHIEV_SIXTY_PAIN_SPIKE_10N:
         case CRITERIA_ACHIEV_SIXTY_PAIN_SPIKE_25N:
