@@ -124,7 +124,7 @@ void instance_icecrown_spire::OnCreatureCreate(Creature* pCreature)
         case NPC_SPINESTALKER:
         case NPC_STINKY:
         case NPC_PRECIOUS:
-        case NPC_COMBAT_TRIGGER:
+        case NPC_GREEN_DRAGON_COMBAT_TRIGGER:
         case NPC_FROSTMOURNE_TRIGGER:
         case NPC_FROSTMOURNE_HOLDER:
         case NPC_BLOOD_ORB_CONTROL:

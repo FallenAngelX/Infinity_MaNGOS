@@ -116,6 +116,9 @@ enum BossSpells
     NPC_DREAM_PORTAL_PRE            = 38186,
     NPC_DREAM_PORTAL                = 37945,
     NPC_DREAM_CLOUD                 = 37985,
+
+    // Achievements
+    SPELL_ACHIEVEMENT_CREDIT        = 72706,
 };
 
 enum
@@ -229,7 +232,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
             {
                 m_pInstance->SetData(TYPE_VALITHRIA, IN_PROGRESS);
 
-                if (Creature *pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_COMBAT_TRIGGER))
+                if (Creature *pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_GREEN_DRAGON_COMBAT_TRIGGER))
                 {
                     pTmp->SetInCombatWithZone();
                     m_bCombatStarted = true;
@@ -258,7 +261,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
         {
             m_pInstance->SetData(TYPE_VALITHRIA, FAIL);
 
-            if (Creature *pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_COMBAT_TRIGGER))
+            if (Creature *pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_GREEN_DRAGON_COMBAT_TRIGGER))
                 pTrigger->AI()->EnterEvadeMode();
         }
 
@@ -346,8 +349,12 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
                 {
                     m_pInstance->SetData(TYPE_VALITHRIA, DONE);
 
-                    if (Creature *pDummy = m_pInstance->GetSingleCreatureFromStorage(NPC_COMBAT_TRIGGER))
-                        m_creature->DealDamage(pDummy, pDummy->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                    if (Creature *pDummy = m_pInstance->GetSingleCreatureFromStorage(NPC_GREEN_DRAGON_COMBAT_TRIGGER))
+                    {
+                        // Set Valithria credit
+                        pDummy->CastSpell(pDummy, SPELL_ACHIEVEMENT_CREDIT, true);
+                        pDummy->ForcedDespawn(1000);
+                    }
                 }
 
                 m_uiOutroTimer = 30000;
