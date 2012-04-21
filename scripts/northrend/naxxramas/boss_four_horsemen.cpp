@@ -97,14 +97,24 @@ enum
     NPC_SPIRIT_OF_BLAUMEUX    = 16776,
     NPC_SPIRIT_OF_RIVENDARE   = 0,                          //creature entry not known yet
     NPC_SPIRIT_OF_KORTHAZZ    = 16778,
-    NPC_SPIRIT_OF_ZELIREK     = 16777
+    NPC_SPIRIT_OF_ZELIREK     = 16777,
+
+    // Achievement
+    ACHIEVEMENT_TIME          = 15000,                      // Achie "And They Would All Go Down Together"
 };
 
 struct MANGOS_DLL_DECL boss_lady_blaumeuxAI : public ScriptedAI
 {
-    boss_lady_blaumeuxAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    boss_lady_blaumeuxAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
+        Reset();
+    }
+
+    instance_naxxramas* m_pInstance;
 
     uint32 Mark_Timer;
+    uint32 uiAchievTimer;
     uint32 VoidZone_Timer;
     bool ShieldWall1;
     bool ShieldWall2;
@@ -113,12 +123,16 @@ struct MANGOS_DLL_DECL boss_lady_blaumeuxAI : public ScriptedAI
     {
         Mark_Timer = 20000;                                 // First Horsemen Mark is applied at 20 sec.
         VoidZone_Timer = 12000;                             // right
+        uiAchievTimer = 0;
         ShieldWall1 = true;
         ShieldWall2 = true;
     }
 
     void Aggro(Unit *who)
     {
+        if (m_pInstance && m_pInstance->GetData(TYPE_FOUR_HORSEMEN) != IN_PROGRESS)
+            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, IN_PROGRESS);
+
         DoScriptText(SAY_BLAU_AGGRO, m_creature);
     }
 
@@ -129,6 +143,13 @@ struct MANGOS_DLL_DECL boss_lady_blaumeuxAI : public ScriptedAI
 
     void JustDied(Unit* Killer)
     {
+        if (m_pInstance)
+        {
+            if (uiAchievTimer > ACHIEVEMENT_TIME)
+                m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_AND_THEY, false);
+            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, SPECIAL);
+        }
+
         DoScriptText(SAY_BLAU_DEATH, m_creature);
     }
 
@@ -136,6 +157,10 @@ struct MANGOS_DLL_DECL boss_lady_blaumeuxAI : public ScriptedAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        // Achieve Timer
+        if (m_pInstance && m_pInstance->GetData(TYPE_FOUR_HORSEMEN) == SPECIAL)
+            uiAchievTimer += uiDiff;
 
         // Mark of Blaumeux
         if (Mark_Timer < uiDiff)
@@ -180,14 +205,25 @@ CreatureAI* GetAI_boss_lady_blaumeux(Creature* pCreature)
 
 struct MANGOS_DLL_DECL boss_rivendare_naxxAI : public ScriptedAI
 {
-    boss_rivendare_naxxAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    boss_rivendare_naxxAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
+        Reset();
+    }
+
+    instance_naxxramas* m_pInstance;
+    uint32 uiAchievTimer;
 
     void Reset()
     {
+        uiAchievTimer = 0;
     }
 
     void Aggro(Unit *who)
     {
+        if (m_pInstance && m_pInstance->GetData(TYPE_FOUR_HORSEMEN) != IN_PROGRESS)
+            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, IN_PROGRESS);
+
         switch(urand(0, 2))
         {
             case 0: DoScriptText(SAY_RIVE_AGGRO1, m_creature); break;
@@ -203,6 +239,13 @@ struct MANGOS_DLL_DECL boss_rivendare_naxxAI : public ScriptedAI
 
     void JustDied(Unit* Killer)
     {
+        if (m_pInstance)
+        {
+            if (uiAchievTimer > ACHIEVEMENT_TIME)
+                m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_AND_THEY, false);
+            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, SPECIAL);
+        }
+
         DoScriptText(SAY_RIVE_DEATH, m_creature);
     }
 
@@ -210,6 +253,10 @@ struct MANGOS_DLL_DECL boss_rivendare_naxxAI : public ScriptedAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        // Achieve Timer
+        if (m_pInstance && m_pInstance->GetData(TYPE_FOUR_HORSEMEN) == SPECIAL)
+            uiAchievTimer += uiDiff;
 
         DoMeleeAttackIfReady();
     }
@@ -222,10 +269,17 @@ CreatureAI* GetAI_boss_rivendare_naxx(Creature* pCreature)
 
 struct MANGOS_DLL_DECL boss_thane_korthazzAI : public ScriptedAI
 {
-    boss_thane_korthazzAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    boss_thane_korthazzAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
+        Reset();
+    }
+
+    instance_naxxramas* m_pInstance;
 
     uint32 Mark_Timer;
     uint32 Meteor_Timer;
+    uint32 uiAchievTimer;
     bool ShieldWall1;
     bool ShieldWall2;
 
@@ -233,12 +287,16 @@ struct MANGOS_DLL_DECL boss_thane_korthazzAI : public ScriptedAI
     {
         Mark_Timer = 20000;                                 // First Horsemen Mark is applied at 20 sec.
         Meteor_Timer = 30000;                               // wrong
+        uiAchievTimer = 0;
         ShieldWall1 = true;
         ShieldWall2 = true;
     }
 
     void Aggro(Unit *who)
     {
+        if (m_pInstance && m_pInstance->GetData(TYPE_FOUR_HORSEMEN) != IN_PROGRESS)
+            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, IN_PROGRESS);
+
         DoScriptText(SAY_KORT_AGGRO, m_creature);
     }
 
@@ -249,6 +307,13 @@ struct MANGOS_DLL_DECL boss_thane_korthazzAI : public ScriptedAI
 
     void JustDied(Unit* Killer)
     {
+        if (m_pInstance)
+        {
+            if (uiAchievTimer > ACHIEVEMENT_TIME)
+                m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_AND_THEY, false);
+            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, SPECIAL);
+        }
+
         DoScriptText(SAY_KORT_DEATH, m_creature);
     }
 
@@ -256,6 +321,10 @@ struct MANGOS_DLL_DECL boss_thane_korthazzAI : public ScriptedAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        // Achieve Timer
+        if (m_pInstance && m_pInstance->GetData(TYPE_FOUR_HORSEMEN) == SPECIAL)
+            uiAchievTimer += uiDiff;
 
         // Mark of Korthazz
         if (Mark_Timer < uiDiff)
@@ -300,10 +369,17 @@ CreatureAI* GetAI_boss_thane_korthazz(Creature* pCreature)
 
 struct MANGOS_DLL_DECL boss_sir_zeliekAI : public ScriptedAI
 {
-    boss_sir_zeliekAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    boss_sir_zeliekAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (instance_naxxramas*)pCreature->GetInstanceData();
+        Reset();
+    }
+
+    instance_naxxramas* m_pInstance;
 
     uint32 Mark_Timer;
     uint32 HolyWrath_Timer;
+    uint32 uiAchievTimer;
     bool ShieldWall1;
     bool ShieldWall2;
 
@@ -311,12 +387,16 @@ struct MANGOS_DLL_DECL boss_sir_zeliekAI : public ScriptedAI
     {
         Mark_Timer = 20000;                                 // First Horsemen Mark is applied at 20 sec.
         HolyWrath_Timer = 12000;                            // right
+        uiAchievTimer = 0;
         ShieldWall1 = true;
         ShieldWall2 = true;
     }
 
     void Aggro(Unit *who)
     {
+        if (m_pInstance && m_pInstance->GetData(TYPE_FOUR_HORSEMEN) != IN_PROGRESS)
+            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, IN_PROGRESS);
+
         DoScriptText(SAY_ZELI_AGGRO, m_creature);
     }
 
@@ -327,6 +407,13 @@ struct MANGOS_DLL_DECL boss_sir_zeliekAI : public ScriptedAI
 
     void JustDied(Unit* Killer)
     {
+        if (m_pInstance)
+        {
+            if (uiAchievTimer > ACHIEVEMENT_TIME)
+                m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_AND_THEY, false);
+            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, SPECIAL);
+        }
+
         DoScriptText(SAY_ZELI_DEATH, m_creature);
     }
 
@@ -335,6 +422,10 @@ struct MANGOS_DLL_DECL boss_sir_zeliekAI : public ScriptedAI
         //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        // Achieve Timer
+        if (m_pInstance && m_pInstance->GetData(TYPE_FOUR_HORSEMEN) == SPECIAL)
+            uiAchievTimer += uiDiff;
 
         // Mark of Zeliek
         if (Mark_Timer < uiDiff)

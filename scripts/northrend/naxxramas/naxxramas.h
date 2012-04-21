@@ -53,14 +53,15 @@ enum
     TYPE_MAX_HEIGAN_TRAPS_3     = 20,
     TYPE_MAX_HEIGAN_TRAPS_4     = 21,
 
-    MAX_SPECIAL_ACHIEV_CRITS    = 6,
+    MAX_SPECIAL_ACHIEV_CRITS    = 7,
 
     TYPE_ACHIEV_SAFETY_DANCE    = 0,
     TYPE_ACHIEV_KNOCK_YOU_OUT   = 1,
     TYPE_ACHIEV_HUNDRED_CLUB    = 2,
-    TYPE_ACHIEV_SHOCKING        = 3,
-    TYPE_ACHIEV_SPORE_LOSER     = 4,
-    TYPE_ACHIEV_GET_ENOUGH      = 5,
+    TYPE_ACHIEV_AND_THEY        = 3,
+    TYPE_ACHIEV_SHOCKING        = 4,
+    TYPE_ACHIEV_SPORE_LOSER     = 5,
+    TYPE_ACHIEV_GET_ENOUGH      = 6,
 
     MAX_HEIGAN_TRAP_AREAS       = 4,
 
@@ -159,6 +160,8 @@ enum
     ACHIEV_CRIT_KNOCK_YOU_OUT_H = 7549,
     ACHIEV_CRIT_HUNDRED_CLUB_N  = 7567,                     // Sapphiron, achievs 2146, 2147
     ACHIEV_CRIT_HUNDRED_CLUB_H  = 7568,
+    ACHIEV_CRIT_AND_THEY_N      = 7600,                     // Horsemen, achieves 2176, 2177
+    ACHIEV_CRIT_AND_THEY_H      = 7601,
     ACHIEV_CRIT_SHOCKING_N      = 7604,                     // Thaddius, achievs 2178, 2179
     ACHIEV_CRIT_SHOCKING_H      = 7605,
     ACHIEV_CRIT_SPORE_LOSER_N   = 7612,                     // Loatheb, achievs 2182, 2183
@@ -181,6 +184,9 @@ enum
     // Timed achievement criterias
     ACHIEV_START_PATCHWERK_ID   = 10286,
     ACHIEV_START_MAEXXNA_ID     = 9891,
+
+    // Achievement Spells
+    ACHIEV_SPELL_FOUR_HORSEMEN  = 59450,
 };
 
 struct GothTrigger
@@ -254,6 +260,7 @@ class MANGOS_DLL_DECL instance_naxxramas : public ScriptedInstance
         float m_fChamberCenterZ;
 
         uint32 m_uiTauntTimer;
+        uint32 m_uiHorsemenDead;
 
         DialogueHelper m_dialogueHelper;
 };

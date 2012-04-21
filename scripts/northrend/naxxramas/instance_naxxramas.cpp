@@ -51,6 +51,8 @@ void instance_naxxramas::Initialize()
     for (uint8 i = 0; i < MAX_SPECIAL_ACHIEV_CRITS; ++i)
         m_abAchievCriteria[i] = false;
 
+    m_uiHorsemenDead = 0;
+
     m_dialogueHelper.InitializeDialogueHelper(this, true);
 }
 
@@ -334,15 +336,31 @@ void instance_naxxramas::SetData(uint32 uiType, uint32 uiData)
             m_auiEncounter[uiType] = uiData;
             break;
         case TYPE_FOUR_HORSEMEN:
-            m_auiEncounter[uiType] = uiData;
-            DoUseDoorOrButton(GO_MILI_HORSEMEN_DOOR);
+            if (uiData == SPECIAL)
+            {
+                m_auiEncounter[uiType] = uiData;
+                ++m_uiHorsemenDead;
+                if (m_uiHorsemenDead >= 4)
+                    uiData = DONE;
+                else
+                    break;
+            }
+            if (uiData == IN_PROGRESS)
+            {
+                SetSpecialAchievementCriteria(TYPE_ACHIEV_AND_THEY, true);
+                m_uiHorsemenDead = 0;
+            }
             if (uiData == DONE)
             {
                 DoUseDoorOrButton(GO_MILI_EYE_RAMP);
                 DoRespawnGameObject(GO_MILI_PORTAL, 30*MINUTE);
                 DoRespawnGameObject(instance->IsRegularDifficulty() ? GO_CHEST_HORSEMEN_NORM : GO_CHEST_HORSEMEN_HERO, 30*MINUTE);
                 m_uiTauntTimer = 5000;
+                // Set achiev credit
+                DoUpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET, ACHIEV_SPELL_FOUR_HORSEMEN);
             }
+            m_auiEncounter[uiType] = uiData;
+            DoUseDoorOrButton(GO_MILI_HORSEMEN_DOOR);
             break;
         case TYPE_PATCHWERK:
             m_auiEncounter[uiType] = uiData;
@@ -480,6 +498,9 @@ bool instance_naxxramas::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Playe
         case ACHIEV_CRIT_HUNDRED_CLUB_N:
         case ACHIEV_CRIT_HUNDRED_CLUB_H:
             return m_abAchievCriteria[TYPE_ACHIEV_HUNDRED_CLUB];
+        case ACHIEV_CRIT_AND_THEY_N:
+        case ACHIEV_CRIT_AND_THEY_H:
+            return m_abAchievCriteria[TYPE_ACHIEV_AND_THEY];
         case ACHIEV_CRIT_SHOCKING_N:
         case ACHIEV_CRIT_SHOCKING_H:
             return m_abAchievCriteria[TYPE_ACHIEV_SHOCKING];
