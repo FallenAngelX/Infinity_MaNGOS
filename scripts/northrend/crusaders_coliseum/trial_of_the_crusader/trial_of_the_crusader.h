@@ -127,6 +127,9 @@ enum
     TYPE_EVENT_NPC              = 103,
     TYPE_NORTHREND_BEASTS       = 104,
     TYPE_CRUSADERS_COUNT        = 105,
+    TYPE_CRUSADERS_DEAD         = 106,
+    TYPE_CRUSADERS_ACHIEV_TIMER = 107,
+    TYPE_CRUSADERS_ACHIEV_FAIL  = 108,
 
     DATA_HEALTH_EYDIS           = 201,
     DATA_HEALTH_FJOLA           = 202,
@@ -153,7 +156,9 @@ enum
     CRITERIA_ACHIEV_TRIBUTE_TO_IMMORTALITY_ALLY     = 12359,
     CRITERIA_ACHIEV_TRIBUTE_TO_DEDICATED_INSANITY   = 12360,
 
+    SPELL_ACHIEV_FACTION_CHAMPIONS_DEFEAT           = 68184,
     SPELL_ACHIEV_NOT_ONE_BUT_TWO_JORMUNGARS         = 68523,
+    SPELL_ACHIEV_RESILIENCE_WILL_FIX_IT             = 68620,
 
     TIMER_ACHIEV_SALT_AND_PEPPER                    = 21853,
 };
@@ -293,6 +298,9 @@ private:
     uint32 m_uiTributeChest4;
 
     uint32 m_auiCrusadersCount;
+    uint32 m_auiCrusadersDead;
+    uint32 m_auiCrusadersAchievTimer;
+    uint32 m_auiCrusadersAchievFail;
 };
 
 #endif

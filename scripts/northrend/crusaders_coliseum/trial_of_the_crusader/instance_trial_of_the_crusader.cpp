@@ -47,6 +47,9 @@ void instance_trial_of_the_crusader::Initialize()
     m_auiNorthrendBeasts = NOT_STARTED;
     m_auiEventTimer = 1000;
     m_auiCrusadersCount = 6;
+    m_auiCrusadersDead = 0;
+    m_auiCrusadersAchievFail = 0;
+    m_auiCrusadersAchievTimer = 60000;
     needsave = false;
 }
 
@@ -188,19 +191,7 @@ void instance_trial_of_the_crusader::SetData(uint32 uiType, uint32 uiData)
         if (uiData == DONE)
         {
             if (Creature* pTirion = GetSingleCreatureFromStorage(NPC_TIRION))
-            {
-                Map* pMap = pTirion->GetMap();
-                Map::PlayerList const& pPlayers = pMap->GetPlayers();
-                if (!pPlayers.isEmpty())
-                {
-                    for (Map::PlayerList::const_iterator itr = pPlayers.begin(); itr != pPlayers.end(); ++itr)
-                    {
-                        Unit *pTarget = itr->getSource();
-                        if (pTarget)
-                            pTirion->CastSpell(pTarget, 68184, true);
-                    }
-                }
-            }
+                DoUpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET, SPELL_ACHIEV_FACTION_CHAMPIONS_DEFEAT);
 
             uint32 uiCacheEntry = GO_CRUSADERS_CACHE_10;
 
@@ -226,6 +217,20 @@ void instance_trial_of_the_crusader::SetData(uint32 uiType, uint32 uiData)
             --m_auiCrusadersCount;
         else
             m_auiCrusadersCount = uiData;
+        break;
+    case TYPE_CRUSADERS_DEAD:
+        m_auiCrusadersDead = uiData;
+        break;
+    case TYPE_CRUSADERS_ACHIEV_TIMER:
+        if(m_auiCrusadersAchievFail)
+            break;
+        if (m_auiCrusadersAchievTimer <= uiData)
+            m_auiCrusadersAchievFail = 1;
+        else
+            m_auiCrusadersAchievTimer -= uiData;
+        break;
+    case TYPE_CRUSADERS_ACHIEV_FAIL:
+        m_auiCrusadersAchievFail = uiData;
         break;
     case TYPE_VALKIRIES:
         /*if (m_auiEncounter[4] == SPECIAL && uiData == SPECIAL)
@@ -386,6 +391,9 @@ uint32 instance_trial_of_the_crusader::GetData(uint32 uiType)
         case TYPE_NORTHREND_BEASTS:     return m_auiNorthrendBeasts;
         case TYPE_EVENT_TIMER:          return m_auiEventTimer;
         case TYPE_CRUSADERS_COUNT:      return m_auiCrusadersCount;
+        case TYPE_CRUSADERS_DEAD:       return m_auiCrusadersDead;
+        case TYPE_CRUSADERS_ACHIEV_TIMER:return m_auiCrusadersAchievTimer;
+        case TYPE_CRUSADERS_ACHIEV_FAIL :return m_auiCrusadersAchievFail;
         case TYPE_EVENT_NPC:
             switch (m_auiEncounter[8]) 
             {
