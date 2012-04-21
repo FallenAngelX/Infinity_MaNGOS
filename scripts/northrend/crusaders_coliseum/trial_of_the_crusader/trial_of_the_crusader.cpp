@@ -1358,6 +1358,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                     pTemp->SetWalk(true);
                     pTemp->SetInCombatWithZone();
                 }
+                m_pInstance->DoStartTimedAchievement(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, TIMER_ACHIEV_SALT_AND_PEPPER);
                 UpdateTimer = 10000;
                 m_pInstance->SetData(TYPE_EVENT,4016);
                 m_pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);

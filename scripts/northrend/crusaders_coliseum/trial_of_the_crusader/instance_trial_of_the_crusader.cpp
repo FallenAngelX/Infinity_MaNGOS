@@ -136,11 +136,6 @@ bool instance_trial_of_the_crusader::CheckAchievementCriteriaMeet(uint32 uiCrite
         case CRITERIA_ACHIEV_SIXTY_PAIN_SPIKE_10N:
         case CRITERIA_ACHIEV_SIXTY_PAIN_SPIKE_25N:
             return m_bAchievCriteria[TYPE_SIXTY_PAIN_SPIKE];
-        case CRITERIA_ACHIEV_SALT_AND_PEPPER_10N:
-        case CRITERIA_ACHIEV_SALT_AND_PEPPER_10H:
-        case CRITERIA_ACHIEV_SALT_AND_PEPPER_25N:
-        case CRITERIA_ACHIEV_SALT_AND_PEPPER_25H:
-            return m_bAchievCriteria[TYPE_SALT_AND_PEPPER];
         case CRITERIA_ACHIEV_TRIBUTE_TO_SKILL_10:
         case CRITERIA_ACHIEV_TRIBUTE_TO_SKILL_25:
             return m_bAchievCriteria[TYPE_SKILL];
@@ -232,8 +227,6 @@ void instance_trial_of_the_crusader::SetData(uint32 uiType, uint32 uiData)
         /*if (m_auiEncounter[4] == SPECIAL && uiData == SPECIAL)
             uiData = DONE;*/
         m_auiEncounter[TYPE_VALKIRIES] = uiData;
-        if (uiData == IN_PROGRESS)
-            SetSpecialAchievementCriteria(TYPE_SALT_AND_PEPPER, true);
         break;
     case TYPE_LICH_KING:
         m_auiEncounter[TYPE_LICH_KING] = uiData;
