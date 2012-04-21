@@ -261,8 +261,8 @@ INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES
 
 UPDATE `creature_template` SET `PowerType` = 3, `vehicle_id`=591 WHERE `entry` IN (37672, 38605, 38786, 38787, 38285, 38788, 38789, 38790);
 
-DELETE FROM `spell_script_target` WHERE `entry` IN (72527,70360);
-INSERT INTO `spell_script_target` VALUES (70360,1,37690), (70360,1,37690);
+DELETE FROM `spell_script_target` WHERE `entry` IN (70360,72527);
+INSERT INTO `spell_script_target` VALUES (70360,1,37690), (72527,1,37690);
 
 UPDATE `creature_template` SET `ScriptName`='mob_mutated_amobination' WHERE `entry`=38285;
 UPDATE `creature_template` SET `ScriptName`='mob_mutated_amobination' WHERE `entry`=37672;
