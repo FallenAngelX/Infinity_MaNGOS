@@ -512,6 +512,7 @@ struct MANGOS_DLL_DECL boss_deathbringer_saurfangAI : public base_icc_bossAI
 {
     boss_deathbringer_saurfangAI(Creature* pCreature) : base_icc_bossAI(pCreature)
     {
+        m_pInstance = ((instance_icecrown_spire*)pCreature->GetInstanceData());
         m_powerBloodPower = m_creature->getPowerType(); // don't call this function multiple times in script
         m_bTeleported = false;
         m_bIsIntroStarted = false;
@@ -519,12 +520,14 @@ struct MANGOS_DLL_DECL boss_deathbringer_saurfangAI : public base_icc_bossAI
         Reset();
     }
 
+    instance_icecrown_spire* m_pInstance;
     uint32 m_uiRuneOfBloodTimer;
     uint32 m_uiBoilingBloodTimer;
     uint32 m_uiBloodNovaTimer;
     uint32 m_uiBloodBeastsTimer;
     uint32 m_uiScentOfBloodTimer;
     uint32 m_uiBerserkTimer;
+    uint32 m_uiMarkOfFallenCount;
 
     bool m_bIsFrenzied;
 
@@ -548,6 +551,7 @@ struct MANGOS_DLL_DECL boss_deathbringer_saurfangAI : public base_icc_bossAI
         m_bIsFrenzied = false;
 
         m_creature->SetPower(m_powerBloodPower, 0);
+        m_uiMarkOfFallenCount = 0;
     }
 
     void MoveInLineOfSight(Unit *pWho)
@@ -581,7 +585,11 @@ struct MANGOS_DLL_DECL boss_deathbringer_saurfangAI : public base_icc_bossAI
     void Aggro(Unit *pWho)
     {
         if (m_pInstance)
+        {
             m_pInstance->SetData(TYPE_SAURFANG, IN_PROGRESS);
+            m_pInstance->SetSpecialAchievementCriteria(ACHIEVE_IVE_GONE_AND_MADE_A_MESS, true);
+            m_uiMarkOfFallenCount = 0;
+        }
 
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -595,7 +603,10 @@ struct MANGOS_DLL_DECL boss_deathbringer_saurfangAI : public base_icc_bossAI
     void JustReachedHome()
     {
         if (m_pInstance)
+        {
             m_pInstance->SetData(TYPE_SAURFANG, FAIL);
+            m_pInstance->SetSpecialAchievementCriteria(ACHIEVE_IVE_GONE_AND_MADE_A_MESS, false);
+        }
 
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -607,7 +618,11 @@ struct MANGOS_DLL_DECL boss_deathbringer_saurfangAI : public base_icc_bossAI
     void JustDied(Unit *pKiller)
     {
         if (m_pInstance)
+        {
             m_pInstance->SetData(TYPE_SAURFANG, DONE);
+            if (m_uiMarkOfFallenCount > (m_bIs25Man ? 5: 3))
+                m_pInstance->SetSpecialAchievementCriteria(ACHIEVE_IVE_GONE_AND_MADE_A_MESS, false);
+        }
 
         DoScriptText(SAY_DEATH, m_creature);
         DoCastSpellIfCan(m_creature, SPELL_REMOVE_MARKS, CAST_TRIGGERED);
@@ -694,10 +709,12 @@ struct MANGOS_DLL_DECL boss_deathbringer_saurfangAI : public base_icc_bossAI
                 {
                     m_creature->SetPower(m_powerBloodPower, 0); // reset Blood Power
                     // decrease the buff
-                    m_creature->RemoveAurasDueToSpell(72371);
+                    m_creature->RemoveAurasDueToSpell(SPELL_BLOOD_POWER);
                     int32 power = m_creature->GetPower(m_powerBloodPower);
-                    m_creature->CastCustomSpell(m_creature, 72371, &power, &power, NULL, true);
+                    m_creature->CastCustomSpell(m_creature, SPELL_BLOOD_POWER, &power, &power, NULL, true);
                     DoScriptText(SAY_FALLENCHAMPION, m_creature);
+                    // count mark for achievement
+                    m_uiMarkOfFallenCount;
                 }
             }
         }
