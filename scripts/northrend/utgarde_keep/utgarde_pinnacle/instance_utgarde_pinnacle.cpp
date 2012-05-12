@@ -354,17 +354,13 @@ bool ProcessEventId_event_start_gortok(uint32 uiEventId, Object* pSource, Object
     if (pSource->isType(TYPEMASK_WORLDOBJECT))
     {
         WorldObject* pObject = (WorldObject*)pSource;
-        pObject->MonsterSay("Hier 1", 0);
         if (instance_pinnacle* m_pInstance = (instance_pinnacle*)pObject->GetInstanceData())
         {
-            pObject->MonsterSay("Hier 2", 0);
             if (m_pInstance->GetData(TYPE_GORTOK) == NOT_STARTED || m_pInstance->GetData(TYPE_GORTOK) == FAIL)
             {
-                pObject->MonsterSay("Hier 3", 0);
                 m_pInstance->SetData(TYPE_GORTOK, IN_PROGRESS);
                 if (Creature* pGortokOrb = pObject->SummonCreature(NPC_STASIS_CONTROLLER, 238.61f, -460.71f, 109.57f, 0, TEMPSUMMON_DEAD_DESPAWN, 0))
                 {
-                    pObject->MonsterSay("Hier 4", 0);
                     m_pInstance->InitializeOrb(pGortokOrb);
                     return true;
                 }

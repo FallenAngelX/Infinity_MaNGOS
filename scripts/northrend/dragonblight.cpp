@@ -250,7 +250,7 @@ CreatureAI* GetAI_npc_hourglass(Creature* pCreature)
 
 void AddSC_dragonblight()
 {
-   Script* pNewScript;
+    Script* pNewScript;
 
     pNewScript = new Script;
     pNewScript->Name = "npc_destructive_ward";
