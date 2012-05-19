@@ -73,6 +73,10 @@ DELETE FROM scripted_areatrigger WHERE entry IN (5709,5732);
 INSERT INTO scripted_areatrigger VALUES
 (5709,'at_icecrown_citadel'),
 (5732,'at_icecrown_citadel');
+DELETE FROM scripted_areatrigger WHERE entry in (4288,4485);
+INSERT INTO scripted_areatrigger VALUES
+(4288,'at_dark_portal'),
+(4485,'at_dark_portal');
 
 
 /* BATTLEGROUNDS */
@@ -434,8 +438,9 @@ UPDATE creature_template SET ScriptName='boss_chrono_lord_deja' WHERE entry=1787
 UPDATE creature_template SET ScriptName='boss_aeonus' WHERE entry=17881;
 UPDATE creature_template SET ScriptName='boss_temporus' WHERE entry=17880;
 UPDATE instance_template SET ScriptName='instance_dark_portal' WHERE map=269;
-UPDATE creature_template SET ScriptName='npc_medivh_bm' WHERE entry=15608;
+UPDATE creature_template SET ScriptName='npc_medivh_black_morass' WHERE entry=15608;
 UPDATE creature_template SET ScriptName='npc_time_rift' WHERE entry=17838;
+UPDATE creature_template SET ScriptName='npc_time_rift_channeler' WHERE entry IN (21104,17839,21697,21698);
 
 /*  */
 /* COILFANG RESERVOIR */
@@ -689,9 +694,6 @@ DELETE FROM scripted_areatrigger WHERE entry=4778;
 INSERT INTO scripted_areatrigger VALUES (4778,'at_ancient_male_vrykul');
 UPDATE creature_template SET ScriptName='npc_ancient_male_vrykul' WHERE entry=24314;
 UPDATE creature_template SET ScriptName='npc_daegarn' WHERE entry=24151;
-UPDATE creature_template SET ScriptName='npc_deathstalker_razael' WHERE entry=23998;
-UPDATE creature_template SET ScriptName='npc_dark_ranger_lyana' WHERE entry=23778;
-UPDATE creature_template SET ScriptName='npc_greer_orehammer' WHERE entry=23859;
 UPDATE creature_template SET ScriptName='npc_silvermoon_harry' WHERE entry=24539;
 
 /*  */
@@ -920,6 +922,12 @@ UPDATE creature_template SET ScriptName='npc_willix_the_importer' WHERE entry=45
 
 /* REDRIDGE MOUNTAINS */
 UPDATE creature_template SET ScriptName='npc_corporal_keeshan' WHERE entry=349;
+
+/* RUBY SANCTUM */
+UPDATE instance_template SET ScriptName='instance_ruby_sanctum' WHERE map=724;
+UPDATE creature_template SET ScriptName='boss_baltharus' WHERE entry=39751;
+UPDATE creature_template SET ScriptName='boss_saviana' WHERE entry=39747;
+UPDATE creature_template SET ScriptName='boss_zarithrian' WHERE entry=39746;
 
 /* RUINS OF AHN'QIRAJ */
 UPDATE instance_template SET ScriptName='instance_ruins_of_ahnqiraj' WHERE map=509;
@@ -1163,7 +1171,7 @@ UPDATE creature_template SET ScriptName='boss_yauj' WHERE entry=15543;
 UPDATE creature_template SET ScriptName='boss_kri' WHERE entry=15511;
 UPDATE creature_template SET ScriptName='boss_sartura' WHERE entry=15516;
 UPDATE creature_template SET ScriptName='boss_fankriss' WHERE entry=15510;
--- UPDATE creature_template SET ScriptName='boss_viscidus' WHERE entry=15299;
+UPDATE creature_template SET ScriptName='boss_viscidus' WHERE entry=15299;
 -- UPDATE creature_template SET ScriptName='boss_glob_of_viscidus' WHERE entry=15667;
 UPDATE creature_template SET ScriptName='boss_huhuran' WHERE entry=15509;
 UPDATE creature_template SET ScriptName='boss_veklor' WHERE entry=15276;
