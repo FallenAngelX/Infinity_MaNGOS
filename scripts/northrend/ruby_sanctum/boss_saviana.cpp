@@ -17,8 +17,8 @@
 /* ScriptData
 SDName: boss_ragefire
 SD%Complete: 99%
-SDComment: by carlos93
-SDCategory: ruby_sanctum
+SDComment: by notagain && /dev/rsa && carlos93
+SDCategory: Ruby Sanctum
 EndScriptData */
 
 #include "precompiled.h"
@@ -26,22 +26,22 @@ EndScriptData */
 
 enum BossSpells
 {
-    SPELL_ENRAGE                     = 78722, //soft enrage + fire nova
-    SPELL_FLAME_BREATH               = 74404,
-    SPELL_BEACON                     = 74453, //mark for conflag, in enter to fly phase, 2 in 10, 5 in 25
-    SPELL_CONFLAGATION               = 74452, // after fly up
-    SPELL_CONFLAGATION_1             = 74455, // Triggered?
-    SPELL_CONFLAGATION_2             = 74456, // Aura
+    SPELL_ENRAGE                    = 78722, //soft enrage + fire nova
+    SPELL_FLAME_BREATH              = 74404,
+    SPELL_BEACON                    = 74453, //mark for conflag, in enter to fly phase, 2 in 10, 5 in 25
+    SPELL_CONFLAGATION              = 74452, // after fly up
+    SPELL_CONFLAGATION_1            = 74455, // Triggered?
+    SPELL_CONFLAGATION_2            = 74456, // Aura
 };
 
 enum Yells
 {
-    SAY_AGGRO                        = -1666400,
-    SAY_SLAY_1                       = -1666401,
-    SAY_SLAY_2                       = -1666402,
-    SAY_DEATH                        = -1666403,
-    SAY_SPECIAL                      = -1666404,
-    SAY_ENRAGE                       = -1666405,
+    SAY_AGGRO                       = -1666400,
+    SAY_SLAY_1                      = -1666401,
+    SAY_SLAY_2                      = -1666402,
+    SAY_DEATH                       = -1666403,
+    SAY_SPECIAL                     = -1666404,
+    SAY_ENRAGE                      = -1666405,
 };
 
 enum
@@ -84,9 +84,11 @@ struct MANGOS_DLL_DECL boss_ragefireAI : public ScriptedAI
 
     void Reset()
     {
-        if(!m_pInstance)
+        if (!m_pInstance)
             return;
+
         m_creature->SetRespawnDelay(7*DAY);
+
         if (m_creature->isAlive())
             m_pInstance->SetData(TYPE_RAGEFIRE, NOT_STARTED);
 
@@ -143,7 +145,7 @@ struct MANGOS_DLL_DECL boss_ragefireAI : public ScriptedAI
 
     void Aggro(Unit *who) 
     {
-        if(!m_pInstance)
+        if (!m_pInstance)
             return;
 
         m_pInstance->SetData(TYPE_RAGEFIRE, IN_PROGRESS);
@@ -153,7 +155,7 @@ struct MANGOS_DLL_DECL boss_ragefireAI : public ScriptedAI
 
     void JustDied(Unit *killer)
     {
-        if(!m_pInstance)
+        if (!m_pInstance)
             return;
 
         m_pInstance->SetData(TYPE_RAGEFIRE, DONE);
@@ -165,19 +167,18 @@ struct MANGOS_DLL_DECL boss_ragefireAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if(m_bIsHeroic && !m_creature->HasAura(47008)) DoCastSpellIfCan(m_creature, 47008);  // heroic mode disabled
-
         switch (m_uiPhase)
         {
         case PHASE_GROUND:
-            if(m_uiFlameBreathTimer < uiDiff)
+            if (m_uiFlameBreathTimer < uiDiff)
             {
-                if(DoCastSpellIfCan(m_creature, SPELL_FLAME_BREATH) == CAST_OK)
+                if (DoCastSpellIfCan(m_creature, SPELL_FLAME_BREATH) == CAST_OK)
                     m_uiFlameBreathTimer = urand(10000,15000);
                 if (m_uiPhaseTimer <= 5000)
                     m_uiPhaseTimer = 5000;
             }
-            else m_uiFlameBreathTimer -= uiDiff;
+            else
+                m_uiFlameBreathTimer -= uiDiff;
 
             if (m_uiEnrageTimer < uiDiff)
             {
@@ -189,7 +190,8 @@ struct MANGOS_DLL_DECL boss_ragefireAI : public ScriptedAI
                         m_uiPhaseTimer = 10000;
                 }
             }
-            else m_uiEnrageTimer -= uiDiff;
+            else
+                m_uiEnrageTimer -= uiDiff;
 
             if (m_uiPhaseTimer < uiDiff)
             {
@@ -201,7 +203,8 @@ struct MANGOS_DLL_DECL boss_ragefireAI : public ScriptedAI
                 m_creature->GetMotionMaster()->Clear();
                 m_creature->GetMotionMaster()->MovePoint(POINT_AIR, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
             }
-            else m_uiPhaseTimer -= uiDiff;
+            else
+                m_uiPhaseTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
             break;
@@ -227,7 +230,8 @@ struct MANGOS_DLL_DECL boss_ragefireAI : public ScriptedAI
                 m_creature->GetMotionMaster()->Clear();
                 m_creature->GetMotionMaster()->MovePoint(POINT_LAND, SpawnLoc[0].x, SpawnLoc[0].y, SpawnLoc[0].z);
             }
-            else m_uiPhaseTimer -= uiDiff;
+            else
+                m_uiPhaseTimer -= uiDiff;
 
             return;
         default:

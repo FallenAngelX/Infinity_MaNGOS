@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: boss_baltharus
 SD%Complete: 90%
-SDComment: by carlos93
+SDComment: by notagain && /dev/rsa && carlos93
 SDCategory: Ruby Sanctum
 EndScriptData */
 
@@ -32,22 +32,22 @@ static Locations SpawnLoc[]=
 
 enum Says
 {
-    SAY_BALTHARUS_AGGRO        = -1666300,
-    SAY_BALTHARUS_SLAY_1       = -1666301,
-    SAY_BALTHARUS_SLAY_2       = -1666302,
-    SAY_BALTHARUS_DEATH        = -1666303,
-    SAY_BALTHARUS_SPECIAL_1    = -1666304,
-    SAY_BALTHARUS_YELL         = -1666305,
+    SAY_BALTHARUS_AGGRO             = -1666300,
+    SAY_BALTHARUS_SLAY_1            = -1666301,
+    SAY_BALTHARUS_SLAY_2            = -1666302,
+    SAY_BALTHARUS_DEATH             = -1666303,
+    SAY_BALTHARUS_SPECIAL_1         = -1666304,
+    SAY_BALTHARUS_YELL              = -1666305,
 };
 
 enum BossSpells
 {
-    SPELL_BLADE_TEMPEST              = 75125, // every 22 secs
-    SPELL_ENERVATING_BRAND           = 74502, // friendlys in 12yards = 74505
-    SPELL_REPELLING_WAVE             = 74509, // once if call clone
-    SPELL_SABER_LASH                 = 40504, // every 10-15 secs
-    SPELL_SUMMON_CLONE               = 74511, // summons npc 39899 (Clone)
-    SPELL_CHANNEL_SPELL              = 76221, // Channeling dummy spell
+    SPELL_BLADE_TEMPEST             = 75125, // every 22 secs
+    SPELL_ENERVATING_BRAND          = 74502, // friendlys in 12yards = 74505
+    SPELL_REPELLING_WAVE            = 74509, // once if call clone
+    SPELL_SABER_LASH                = 40504, // every 10-15 secs
+    SPELL_SUMMON_CLONE              = 74511, // summons npc 39899 (Clone)
+    SPELL_CHANNEL_SPELL             = 76221, // Channeling dummy spell
 };
 
 /*######
@@ -80,7 +80,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
 
     void Reset()
     {
-        if(!m_pInstance)
+        if (!m_pInstance)
             return;
 
         if (m_creature->isAlive())
@@ -114,7 +114,8 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
 
     void JustReachedHome()
     {
-        if (!m_pInstance) return;
+        if (!m_pInstance)
+            return;
 
         m_pInstance->SetData(TYPE_BALTHARUS, FAIL);
     }
@@ -122,7 +123,8 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
     void MoveInLineOfSight(Unit* pWho)
     {
         ScriptedAI::MoveInLineOfSight(pWho);
-        if(!m_pInstance || m_bIntro || pWho->GetTypeId() != TYPEID_PLAYER || !pWho->IsWithinDistInMap(m_creature, 60.0f))
+
+        if (!m_pInstance || m_bIntro || pWho->GetTypeId() != TYPEID_PLAYER || !pWho->IsWithinDistInMap(m_creature, 60.0f))
             return;
 
         m_pInstance->SetData(TYPE_EVENT, 10);
@@ -173,6 +175,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
     {
         if (!m_pInstance)
             return;
+
         if (pWho->GetTypeId() != TYPEID_PLAYER)
             return;
 
@@ -203,8 +206,6 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
         if (!m_pInstance)
             return;
 
-        if(m_bIsHeroic && !m_creature->HasAura(47008)) DoCastSpellIfCan(m_creature, 47008);  // heroic mode disabled
-
         if (!m_bInCombat && !m_creature->IsNonMeleeSpellCasted(false))
             m_creature->CastSpell(pDummyTarget, SPELL_CHANNEL_SPELL, false);
 
@@ -216,6 +217,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
         case 0:
             if (m_creature->GetHealthPercent() <= 66.0f)
                 m_uiStage = 1;
+
             break;
         case 1:
             m_creature->InterruptNonMeleeSpells(true);
@@ -229,13 +231,16 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
         case 2:
             if (m_creature->IsNonMeleeSpellCasted(false))
                 return;
+
             if (m_bIs25Man)
                 m_creature->CastSpell(m_creature, SPELL_REPELLING_WAVE, false);
+
             m_uiStage = 3;
             break;
         case 3:
             if (m_creature->GetHealthPercent() <= 50.0f)
                 m_uiStage = 4;
+
             break;
         case 4:
             m_creature->InterruptNonMeleeSpells(true);
@@ -249,12 +254,14 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
         case 5:
             if (m_creature->IsNonMeleeSpellCasted(true))
                 return;
+
             m_creature->CastSpell(m_creature, SPELL_REPELLING_WAVE, false);
             m_uiStage = 6;
             break;
         case 6:
             if (m_creature->GetHealthPercent() <= 33.0f)
                 m_uiStage = 7;
+
             break;
         case 7:
             m_creature->InterruptNonMeleeSpells(true);
@@ -268,8 +275,10 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
         case 8:
             if (m_creature->IsNonMeleeSpellCasted(true))
                 return;
+
             if (m_bIs25Man)
                 m_creature->CastSpell(m_creature, SPELL_REPELLING_WAVE, false);
+
             m_uiStage = 9;
             break;
         case 9:
@@ -283,7 +292,8 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
             if (DoCastSpellIfCan(m_creature, SPELL_BLADE_TEMPEST) == CAST_OK)
                 m_uiBladeTempestTimer = urand(20000, 25000);
         }
-        else m_uiBladeTempestTimer -= uiDiff;
+        else
+            m_uiBladeTempestTimer -= uiDiff;
 
         if (m_uiEnervatingBrandTimer < uiDiff)
         {
@@ -293,14 +303,16 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
                     m_uiEnervatingBrandTimer = urand(10000, 13000);
             }
         }
-        else m_uiEnervatingBrandTimer -= uiDiff;
+        else
+            m_uiEnervatingBrandTimer -= uiDiff;
 
         if (m_uiSaberLashTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_SABER_LASH) == CAST_OK)
                 m_uiSaberLashTimer = urand(8000, 12000);
         }
-        else m_uiSaberLashTimer -= uiDiff;
+        else
+            m_uiSaberLashTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
@@ -330,8 +342,9 @@ struct MANGOS_DLL_DECL mob_baltharus_cloneAI : public ScriptedAI
 
     void Reset()
     {
-        if(!m_pInstance)
+        if (!m_pInstance)
             return;
+
         m_creature->SetRespawnDelay(7*DAY);
         m_uiBladeTempestTimer = 22000;
         m_uiEnervatingBrandTimer = 10000;
@@ -375,7 +388,8 @@ struct MANGOS_DLL_DECL mob_baltharus_cloneAI : public ScriptedAI
             if (DoCastSpellIfCan(m_creature, SPELL_BLADE_TEMPEST) == CAST_OK)
                 m_uiBladeTempestTimer = urand(20000, 25000);
         }
-        else m_uiBladeTempestTimer -= uiDiff;
+        else
+            m_uiBladeTempestTimer -= uiDiff;
 
         if (m_uiEnervatingBrandTimer < uiDiff)
         {
@@ -385,14 +399,16 @@ struct MANGOS_DLL_DECL mob_baltharus_cloneAI : public ScriptedAI
                     m_uiEnervatingBrandTimer = urand(10000, 13000);
             }
         }
-        else m_uiEnervatingBrandTimer -= uiDiff;
+        else
+            m_uiEnervatingBrandTimer -= uiDiff;
 
         if (m_uiSaberLashTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_SABER_LASH) == CAST_OK)
                 m_uiSaberLashTimer = urand(8000, 12000);
         }
-        else m_uiSaberLashTimer -= uiDiff;
+        else
+            m_uiSaberLashTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

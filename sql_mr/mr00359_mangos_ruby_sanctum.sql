@@ -40,7 +40,3 @@ UPDATE `creature_template` SET `ScriptName`='mob_xerestrasza', `AIName` ='' WHER
 -- Mobs
 UPDATE `creature_template` SET `ScriptName` = 'mob_living_ember' WHERE `entry` IN ('40683');
 UPDATE `creature_template` SET `ScriptName` = 'mob_living_inferno' WHERE `entry` IN ('40681');
-
--- mr0425 rewrite ruby sanctum
-UPDATE `creature_model_info` SET `bounding_radius` = '5', `combat_reach` = '30' WHERE `modelid` = 31952;
-UPDATE `creature_model_info` SET `bounding_radius` = '5', `combat_reach` = '30' WHERE `modelid` = 31119;
