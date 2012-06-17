@@ -131,9 +131,6 @@ struct MANGOS_DLL_DECL boss_lady_blaumeuxAI : public ScriptedAI
 
     void Aggro(Unit* pWho)
     {
-        if (m_pInstance && m_pInstance->GetData(TYPE_FOUR_HORSEMEN) != IN_PROGRESS)
-            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, IN_PROGRESS);
-
         DoScriptText(SAY_BLAU_AGGRO, m_creature);
 
         SetCombatMovement(false);
@@ -151,13 +148,6 @@ struct MANGOS_DLL_DECL boss_lady_blaumeuxAI : public ScriptedAI
 
     void JustDied(Unit* pKiller)
     {
-        if (m_pInstance)
-        {
-            if (uiAchievTimer > ACHIEVEMENT_TIME)
-                m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_AND_THEY, false);
-            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, SPECIAL);
-        }
-
         DoScriptText(SAY_BLAU_DEATH, m_creature);
 
         if (m_pInstance)
@@ -255,9 +245,6 @@ struct MANGOS_DLL_DECL boss_rivendare_naxxAI : public ScriptedAI
 
     void Aggro(Unit* pWho)
     {
-        if (m_pInstance && m_pInstance->GetData(TYPE_FOUR_HORSEMEN) != IN_PROGRESS)
-            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, IN_PROGRESS);
-
         switch(urand(0, 2))
         {
             case 0: DoScriptText(SAY_RIVE_AGGRO1, m_creature); break;
@@ -280,13 +267,6 @@ struct MANGOS_DLL_DECL boss_rivendare_naxxAI : public ScriptedAI
 
     void JustDied(Unit* pKiller)
     {
-        if (m_pInstance)
-        {
-            if (uiAchievTimer > ACHIEVEMENT_TIME)
-                m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_AND_THEY, false);
-            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, SPECIAL);
-        }
-
         DoScriptText(SAY_RIVE_DEATH, m_creature);
 
         if (m_pInstance)
@@ -371,9 +351,6 @@ struct MANGOS_DLL_DECL boss_thane_korthazzAI : public ScriptedAI
 
     void Aggro(Unit* pWho)
     {
-        if (m_pInstance && m_pInstance->GetData(TYPE_FOUR_HORSEMEN) != IN_PROGRESS)
-            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, IN_PROGRESS);
-
         DoScriptText(SAY_KORT_AGGRO, m_creature);
 
         SetCombatMovement(false);
@@ -391,13 +368,6 @@ struct MANGOS_DLL_DECL boss_thane_korthazzAI : public ScriptedAI
 
     void JustDied(Unit* pKiller)
     {
-        if (m_pInstance)
-        {
-            if (uiAchievTimer > ACHIEVEMENT_TIME)
-                m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_AND_THEY, false);
-            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, SPECIAL);
-        }
-
         DoScriptText(SAY_KORT_DEATH, m_creature);
 
         if (m_pInstance)
@@ -484,9 +454,6 @@ struct MANGOS_DLL_DECL boss_sir_zeliekAI : public ScriptedAI
 
     void Aggro(Unit* pWho)
     {
-        if (m_pInstance && m_pInstance->GetData(TYPE_FOUR_HORSEMEN) != IN_PROGRESS)
-            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, IN_PROGRESS);
-
         DoScriptText(SAY_ZELI_AGGRO, m_creature);
 
         SetCombatMovement(false);
@@ -504,13 +471,6 @@ struct MANGOS_DLL_DECL boss_sir_zeliekAI : public ScriptedAI
 
     void JustDied(Unit* pKiller)
     {
-        if (m_pInstance)
-        {
-            if (uiAchievTimer > ACHIEVEMENT_TIME)
-                m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_AND_THEY, false);
-            m_pInstance->SetData(TYPE_FOUR_HORSEMEN, SPECIAL);
-        }
-
         DoScriptText(SAY_ZELI_DEATH, m_creature);
 
         if (m_pInstance)
@@ -539,20 +499,11 @@ struct MANGOS_DLL_DECL boss_sir_zeliekAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-<<<<<<< HEAD
-        // Achieve Timer
-        if (m_pInstance && m_pInstance->GetData(TYPE_FOUR_HORSEMEN) == SPECIAL)
-            uiAchievTimer += uiDiff;
-
-        // Mark of Zeliek
-        if (Mark_Timer < uiDiff)
-=======
         // Don't attack while moving
         if (m_bIsCornerMovement)
             return;
 
         if (m_uiMarkTimer < uiDiff)
->>>>>>> 63b6f39... [2590] Improve script for the Four Horsemen - Naxxramas
         {
             if (DoCastSpellIfCan(m_creature, SPELL_MARK_OF_ZELIEK) == CAST_OK)
                 m_uiMarkTimer = 12000;
