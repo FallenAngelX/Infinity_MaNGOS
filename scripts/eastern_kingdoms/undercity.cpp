@@ -40,6 +40,11 @@ enum
     SPELL_HIGHBORNE_AURA        = 37090,
     SPELL_SYLVANAS_CAST         = 36568,
     SPELL_RIBBON_OF_SOULS       = 37099,
+    SPELL_BLACK_ARROW           = 59712,
+    SPELL_FADE                  = 20672,
+    SPELL_MULTI_SHOT            = 59713,
+    SPELL_SHOOT_SYLVANAS        = 59710,
+    SPELL_SUMMON_SKELETON       = 59711,
 
     NPC_HIGHBORNE_LAMENTER      = 21628,
     NPC_HIGHBORNE_BUNNY         = 21641,
