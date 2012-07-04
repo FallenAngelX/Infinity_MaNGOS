@@ -368,8 +368,8 @@ UPDATE `gameobject_template` SET `type`='0', `flags`='32', `faction`='114' WHERE
 -- ---------------------
 -- Valithria dreamwalker
 -- ---------------------
-UPDATE `creature_template` SET `faction_A` = 35, `faction_H` = 35, `AIName` = '', `ScriptName` = 'boss_valithria_dreamwalker' WHERE `entry` = 36789;
-UPDATE `creature_template` SET `faction_A` = 35, `faction_H` = 35 WHERE `entry` = 38174; -- 25man difficulty
+UPDATE `creature_template` SET `faction_A` = 1665, `faction_H` = 1665, `AIName` = '', `ScriptName` = 'boss_valithria_dreamwalker' WHERE `entry` = 36789;
+UPDATE `creature_template` SET `faction_A` = 1665, `faction_H` = 1665 WHERE `entry` = 38174; -- 25man difficulty
 UPDATE `creature_template` SET `faction_A` = 14, `faction_H` = 14, `ScriptName`='mob_valithria_combat_trigger', `AIName`='', `flags_extra` = `flags_extra` &~2 WHERE `entry`= 38752;
 UPDATE `creature` SET `phaseMask` = `phaseMask` | 16 WHERE `id` = 38752; -- phaseMask for Combat Trigger
 UPDATE `creature_template` SET `unit_flags` = `unit_flags` &~ 33554432, `AIName` = '', `ScriptName` = 'mob_valithria_dream_phase' WHERE `entry` = 37950; -- Valithria in dream phase
