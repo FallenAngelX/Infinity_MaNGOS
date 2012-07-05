@@ -196,7 +196,7 @@ struct MANGOS_DLL_DECL boss_felblood_kaelthasAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_TELEPORT_CENTER, CAST_TRIGGERED);
 
         GUIDVector vGuids;
-        m_creature->FillGuidsListFromThreatList(vGuids.getSource());
+        m_creature->FillGuidsListFromThreatList(vGuids);
         for (GUIDVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
         {
             Unit* pUnit = m_creature->GetMap()->GetUnit(*i);
@@ -223,7 +223,7 @@ struct MANGOS_DLL_DECL boss_felblood_kaelthasAI : public ScriptedAI
     void CastGravityLapseFly()
     {
         GUIDVector vGuids;
-        m_creature->FillGuidsListFromThreatList(vGuids.getSource());
+        m_creature->FillGuidsListFromThreatList(vGuids);
         for (GUIDVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
         {
             Unit* pUnit = m_creature->GetMap()->GetUnit(*i);
@@ -237,7 +237,7 @@ struct MANGOS_DLL_DECL boss_felblood_kaelthasAI : public ScriptedAI
     void RemoveGravityLapse()
     {
         GUIDVector vGuids;
-        m_creature->FillGuidsListFromThreatList(vGuids.getSource());
+        m_creature->FillGuidsListFromThreatList(vGuids);
         for (GUIDVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
         {
             Unit* pUnit = m_creature->GetMap()->GetUnit(*i);

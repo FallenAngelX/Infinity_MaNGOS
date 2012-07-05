@@ -546,7 +546,7 @@ struct MANGOS_DLL_DECL boss_krosh_firehandAI : public Council_Base_AI
         if (m_uiBlastWave_Timer < uiDiff)
         {
             GUIDVector vGuids;
-            m_creature->FillGuidsListFromThreatList(vGuids.getSource());
+            m_creature->FillGuidsListFromThreatList(vGuids);
             for (GUIDVector::const_iterator i = vGuids.begin(); i != vGuids.end(); ++i)
             {
                 Unit* pUnit = m_creature->GetMap()->GetUnit(*i);

@@ -315,7 +315,7 @@ struct MANGOS_DLL_DECL boss_janalaiAI : public ScriptedAI
     void TeleportPlayersOutOfRange()
     {
         GUIDVector vGuids;
-        m_creature->FillGuidsListFromThreatList(vGuids.getSource());
+        m_creature->FillGuidsListFromThreatList(vGuids);
         for (GUIDVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
         {
             Unit* pTemp = m_creature->GetMap()->GetUnit(*i);
