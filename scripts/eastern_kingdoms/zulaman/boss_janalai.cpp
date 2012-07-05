@@ -316,7 +316,7 @@ struct MANGOS_DLL_DECL boss_janalaiAI : public ScriptedAI
     {
         GuidVector vGuids;
         m_creature->FillGuidsListFromThreatList(vGuids);
-        for (GuidVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
+        for (GuidVector::const_iterator i = vGuids.begin(); i != vGuids.end(); ++i)
         {
             Unit* pTemp = m_creature->GetMap()->GetUnit(*i);
 

@@ -934,7 +934,7 @@ struct MANGOS_DLL_DECL boss_kaelthasAI : public ScriptedAI
                                 // 1) Kael'thas will portal the whole raid right into his body
                                 GuidVector vGuids;
                                 m_creature->FillGuidsListFromThreatList(vGuids);
-                                for (GuidVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
+                                for (GuidVector::const_iterator i = vGuids.begin(); i != vGuids.end(); ++i)
                                 {
                                     Unit* pUnit = m_creature->GetMap()->GetUnit(*i);
 
@@ -959,7 +959,7 @@ struct MANGOS_DLL_DECL boss_kaelthasAI : public ScriptedAI
                                 // 2) At that point he will put a Gravity Lapse debuff on everyone
                                 GuidVector vGuids;
                                 m_creature->FillGuidsListFromThreatList(vGuids);
-                                for (GuidVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
+                                for (GuidVector::const_iterator i = vGuids.begin(); i != vGuids.end(); ++i)
                                 {
                                     if (Unit* pUnit = m_creature->GetMap()->GetUnit(*i))
                                     {

@@ -478,7 +478,7 @@ struct MANGOS_DLL_DECL npc_akama_illidanAI : public ScriptedAI
     {
         GuidVector vGuids;
         m_creature->FillGuidsListFromThreatList(vGuids);
-        for (GuidVector::const_iterator itr = vGuids.begin();itr != vGuids.end(); ++itr)
+        for (GuidVector::const_iterator itr = vGuids.begin(); itr != vGuids.end(); ++itr)
         {
             Unit* pUnit = m_creature->GetMap()->GetUnit(*itr);
 

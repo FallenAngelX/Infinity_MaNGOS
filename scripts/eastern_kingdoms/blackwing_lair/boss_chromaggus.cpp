@@ -184,7 +184,7 @@ struct MANGOS_DLL_DECL boss_chromaggusAI : public ScriptedAI
 
             GuidVector vGuids;
             m_creature->FillGuidsListFromThreatList(vGuids);
-            for (GuidVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
+            for (GuidVector::const_iterator i = vGuids.begin(); i != vGuids.end(); ++i)
             {
                 Unit* pUnit = m_creature->GetMap()->GetUnit(*i);
 

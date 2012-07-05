@@ -145,7 +145,7 @@ ObjectGuid instance_ahnkahet::SelectRandomGuardianEggGuid()
         return ObjectGuid();
 
     GuidList::iterator iter = m_GuardianEggList.begin();
-    advance(iter, urand(0, m_GuardianEggList.size()-1));
+    advance(iter, urand(0, m_GuardianEggList.size() - 1));
 
     return *iter;
 }
@@ -156,7 +156,7 @@ ObjectGuid instance_ahnkahet::SelectRandomSwarmerEggGuid()
         return ObjectGuid();
 
     GuidList::iterator iter = m_SwarmerEggList.begin();
-    advance(iter, urand(0, m_SwarmerEggList.size()-1));
+    advance(iter, urand(0, m_SwarmerEggList.size() - 1));
 
     return *iter;
 }
