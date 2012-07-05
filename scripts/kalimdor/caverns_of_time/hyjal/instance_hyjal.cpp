@@ -60,7 +60,7 @@ void instance_mount_hyjal::OnCreatureCreate(Creature* pCreature)
 void instance_mount_hyjal::OnObjectCreate(GameObject* pGo)
 {
     if (pGo->GetEntry() == GO_ANCIENT_GEM)
-        lAncientGemGUIDList.push_back(pGo->GetObjectGuid());
+        lAncientGemGuidList.push_back(pGo->GetObjectGuid());
 }
 
 void instance_mount_hyjal::OnCreatureEnterCombat(Creature* pCreature)
@@ -141,9 +141,9 @@ void instance_mount_hyjal::SetData(uint32 uiType, uint32 uiData)
         case TYPE_RETREAT:
             if (uiData == SPECIAL)
             {
-                if (!lAncientGemGUIDList.empty())
+                if (!lAncientGemGuidList.empty())
                 {
-                    for(GUIDList::const_iterator itr = lAncientGemGUIDList.begin(); itr != lAncientGemGUIDList.end(); ++itr)
+                    for(GuidList::const_iterator itr = lAncientGemGuidList.begin(); itr != lAncientGemGuidList.end(); ++itr)
                     {
                         //don't know how long it expected
                         DoRespawnGameObject(*itr, DAY);

@@ -195,9 +195,9 @@ struct MANGOS_DLL_DECL boss_felblood_kaelthasAI : public ScriptedAI
     {
         DoCastSpellIfCan(m_creature, SPELL_TELEPORT_CENTER, CAST_TRIGGERED);
 
-        GUIDVector vGuids;
+        GuidVector vGuids;
         m_creature->FillGuidsListFromThreatList(vGuids);
-        for (GUIDVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
+        for (GuidVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
         {
             Unit* pUnit = m_creature->GetMap()->GetUnit(*i);
 
@@ -222,9 +222,9 @@ struct MANGOS_DLL_DECL boss_felblood_kaelthasAI : public ScriptedAI
     // players can't cast "fly" spells unless in map 530. Has to be done a while after they get knocked into the air...
     void CastGravityLapseFly()
     {
-        GUIDVector vGuids;
+        GuidVector vGuids;
         m_creature->FillGuidsListFromThreatList(vGuids);
-        for (GUIDVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
+        for (GuidVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
         {
             Unit* pUnit = m_creature->GetMap()->GetUnit(*i);
 
@@ -236,9 +236,9 @@ struct MANGOS_DLL_DECL boss_felblood_kaelthasAI : public ScriptedAI
 
     void RemoveGravityLapse()
     {
-        GUIDVector vGuids;
+        GuidVector vGuids;
         m_creature->FillGuidsListFromThreatList(vGuids);
-        for (GUIDVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
+        for (GuidVector::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
         {
             Unit* pUnit = m_creature->GetMap()->GetUnit(*i);
 
