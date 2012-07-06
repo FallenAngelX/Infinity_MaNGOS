@@ -502,6 +502,9 @@ UPDATE `creature_template` SET `minhealth` = 15200, `maxhealth` = 15200 WHERE `e
 UPDATE `creature_template` SET `minhealth` = 15200, `maxhealth` = 15200 WHERE `entry` = 39306; -- 10hero
 UPDATE `creature_template` SET `minhealth` = 53200, `maxhealth` = 53200 WHERE `entry` = 39307; -- 25hero
 
+-- correct target position for teleporting spells ( Harvest Soul(s) )
+UPDATE `spell_target_position` SET `target_position_z` = 1249.99 WHERE `entry` IN (72546, 73655);
+
 -- -----------------
 -- EAI YTDB CLEAN UP
 -- -----------------

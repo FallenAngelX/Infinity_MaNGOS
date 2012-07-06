@@ -939,6 +939,8 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public base_icc_bossAI
 
         if (GameObject* pGo = m_pInstance->GetSingleGameObjectFromStorage(GO_FROSTY_WIND))
             pGo->SetGoState(GO_STATE_ACTIVE);
+        if (GameObject *pGo = m_pInstance->GetSingleGameObjectFromStorage(GO_SNOW_EDGE))
+            pGo->SetGoState(GO_STATE_ACTIVE);
 
         m_bPlatformDestroyed = false;
     }
@@ -1361,7 +1363,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public base_icc_bossAI
                 // Defile
                 if (m_uiDefileTimer < uiDiff)
                 {
-                    if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, SPELL_DEFILE, SELECT_FLAG_PLAYER))
+                    if (Unit *pTarget = SelectTargetForDefile())
                     {
                         if (DoCastSpellIfCan(pTarget, SPELL_DEFILE) == CAST_OK)
                             m_uiDefileTimer = 30000;
@@ -2194,7 +2196,7 @@ struct MANGOS_DLL_DECL mob_strangulate_vehicleAI : public base_icc_bossAI
                     // remove Harvest Soul aura
                     pCreator->RemoveAurasDueToSpell(72546);
                     pCreator->RemoveAurasDueToSpell(73655);
-
+                    m_creature->SetWalk(false);
                     m_creature->ForcedDespawn();
                     return;
                 }
@@ -2235,8 +2237,17 @@ struct MANGOS_DLL_DECL mob_strangulate_vehicleAI : public base_icc_bossAI
         {
             if (m_uiTeleportTimer < uiDiff)
             {
+                if (m_pInstance)
+                {
+                    if (Creature *pLichKing = m_pInstance->GetSingleCreatureFromStorage(NPC_LICH_KING))
+                        pLichKing->InterruptSpell(CURRENT_CHANNELED_SPELL);
+                }
+
                 if (Unit *pCreator = m_creature->GetCreator())
                 {
+                    // because it causes player to walk afterwards...
+                    m_creature->SetWalk(false);
+
                     if (pCreator->isAlive())
                     {
                         pCreator->CastSpell(m_creature, SPELL_HARVEST_SOUL_CLONE, true);
@@ -2249,11 +2260,7 @@ struct MANGOS_DLL_DECL mob_strangulate_vehicleAI : public base_icc_bossAI
                         return;
                     }
                 }
-                if (m_pInstance)
-                {
-                    if (Creature *pLichKing = m_pInstance->GetSingleCreatureFromStorage(NPC_LICH_KING))
-                        pLichKing->InterruptSpell(CURRENT_CHANNELED_SPELL);
-                }
+
                 m_bHasTeleported = true;
             }
             else
