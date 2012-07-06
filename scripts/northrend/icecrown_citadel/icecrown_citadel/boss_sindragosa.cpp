@@ -53,7 +53,7 @@ enum BossSpells
     SPELL_ICE_TOMB_DUMMY        = 69675, // orb flows to the target, dummy effect (triggering the summoning of GO?)
     SPELL_ICE_TOMB_TRIGGERED    = 70157, // this is the effect of stun etc.
     SPELL_ICE_TOMB_TRIGGERED2   = 69700, // additional effects of immunity to frost and being unattackable/unhealable
-    SPELL_ASPHYXATION           = 71665,
+    SPELL_ASPHYXIATION          = 71665,
 
     // Frost Bomb related
     SPELL_FROST_BOMB            = 69846,
@@ -613,10 +613,12 @@ struct MANGOS_DLL_DECL mob_ice_tombAI : public ScriptedAI
     {
         SetCombatMovement(false);
         m_uiCheckTimer = 30000;
+        m_uiAsphyxiationTimer = 20000;
         m_creature->SetRespawnDelay(7 * DAY * IN_MILLISECONDS);
     }
 
     uint32 m_uiCheckTimer;
+    uint32 m_uiAsphyxiationTimer;
 
     void Reset(){}
     void AttackStart(Unit *pWho){}
@@ -626,7 +628,7 @@ struct MANGOS_DLL_DECL mob_ice_tombAI : public ScriptedAI
         if (Unit *pCreator = m_creature->GetCreator())
         {
             pCreator->RemoveAurasDueToSpell(SPELL_ICE_TOMB_TRIGGERED);
-            pCreator->RemoveAurasDueToSpell(SPELL_ASPHYXATION);
+            pCreator->RemoveAurasDueToSpell(SPELL_ASPHYXIATION);
         }
     }
 
@@ -639,13 +641,28 @@ struct MANGOS_DLL_DECL mob_ice_tombAI : public ScriptedAI
                 if (!pCreator->isAlive())
                 {
                     pCreator->RemoveAurasDueToSpell(SPELL_ICE_TOMB_TRIGGERED);
-                    pCreator->RemoveAurasDueToSpell(SPELL_ASPHYXATION);
+                    pCreator->RemoveAurasDueToSpell(SPELL_ASPHYXIATION);
                 }
             }
             m_uiCheckTimer = 1000;
         }
         else
             m_uiCheckTimer -= uiDiff;
+
+        // Asphyxiation
+        if (m_uiAsphyxiationTimer)
+        {
+            if (m_uiAsphyxiationTimer <= uiDiff)
+            {
+                if (Unit *pCreator = m_creature->GetCreator())
+                {
+                    pCreator->CastSpell(pCreator, SPELL_ASPHYXIATION, true);
+                    m_uiAsphyxiationTimer = 0;
+                }
+            }
+            else
+                m_uiAsphyxiationTimer -= uiDiff;
+        }
     }
 };
 

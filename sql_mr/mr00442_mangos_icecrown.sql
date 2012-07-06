@@ -416,6 +416,9 @@ UPDATE `gameobject` SET `spawnMask` = '15', `phaseMask` = '1' WHERE `id` =201919
 UPDATE `creature_template_addon` SET `auras` = '' WHERE `entry` IN ('38131', '38132', '37134', '37132');
 UPDATE `creature_template_addon` SET `auras` = '71244' WHERE `entry`='38133';
 
+-- remove unwanted right now dummy The Lich King spawn
+DELETE FROM `creature` WHERE `guid` = 111453 AND `id` = 16980;
+
 -- ----------
 -- Sindragosa
 -- ----------
