@@ -2194,8 +2194,8 @@ struct MANGOS_DLL_DECL mob_strangulate_vehicleAI : public base_icc_bossAI
                     m_creature->GetPosition(x, y, z);
                     pCreator->NearTeleportTo(x, y, z, m_creature->GetOrientation(), true);
                     // remove Harvest Soul aura
-                    pCreator->RemoveAurasDueToSpell(72546);
-                    pCreator->RemoveAurasDueToSpell(73655);
+                    pCreator->RemoveAurasDueToSpell(SPELL_HARVEST_SOUL_TP_FM_N);
+                    pCreator->RemoveAurasDueToSpell(SPELL_HARVEST_SOUL_TP_FM_H);
                     m_creature->SetWalk(false);
                     m_creature->ForcedDespawn();
                     return;
@@ -2252,7 +2252,14 @@ struct MANGOS_DLL_DECL mob_strangulate_vehicleAI : public base_icc_bossAI
                     {
                         pCreator->CastSpell(m_creature, SPELL_HARVEST_SOUL_CLONE, true);
                         pCreator->CastSpell(pCreator, SPELL_FROSTMOURNE_TP_VISUAL, true);
-                        pCreator->CastSpell(pCreator, m_bIsHeroic ? SPELL_HARVEST_SOUL_TP_FM_H : SPELL_HARVEST_SOUL_TP_FM_N, true);
+                        pCreator->CastSpell(pCreator, (m_bIsHeroic ? SPELL_HARVEST_SOUL_TP_FM_H : SPELL_HARVEST_SOUL_TP_FM_N), false);
+
+                        // teleporting with spell cast via script makes player teleport back
+                        // temporary solution
+                        if (m_bIsHeroic)
+                            pCreator->NearTeleportTo(514.0f, -2523.0f, 1249.99f, 3.1765f, true);
+                        else
+                            pCreator->NearTeleportTo(495.708f, -2523.76f, 1249.99f, 3.1765f, true);
                     }
                     else
                     {
