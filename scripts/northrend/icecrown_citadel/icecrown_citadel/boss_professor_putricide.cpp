@@ -308,7 +308,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
 
         // some weird bug with not regenerating health after wipe ;/
         m_creature->SetHealth(m_creature->GetMaxHealth());
-        DoRemoveBossEffects(true);
+        DoRemoveBossEffects();
     }
 
     void MovementInform(uint32 uiMovementType, uint32 uiData)
