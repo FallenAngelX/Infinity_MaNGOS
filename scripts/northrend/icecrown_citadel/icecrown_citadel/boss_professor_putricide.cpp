@@ -569,7 +569,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
 
                         m_creature->GetMotionMaster()->MovePoint(POINT_PUTRICIDE_SPAWN, SpawnLoc[0].x, SpawnLoc[0].y, SpawnLoc[0].z);
                         m_uiPhase = PHASE_RUNNING_TWO;
-                        DoRemoveMutatedAmobination();
+                        DoRemoveMutatedAmobination(false);
                         if (m_pInstance)
                             if (GameObject* pGOTable = m_pInstance->GetSingleGameObjectFromStorage(GO_DRINK_ME_TABLE))
                                 pGOTable->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
