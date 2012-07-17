@@ -158,7 +158,6 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
     uint32 m_uiFrostBeaconTimer;
     uint32 m_uiIceTombTimer;
     uint32 m_uiFrostBombTimer;
-    bool   b_changeDest;
 
     void Reset()
     {
@@ -172,8 +171,6 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
         m_uiUnchainedMagicTimer     = urand(15000, 30000);
 
         m_uiFlyingTimer             = 60000; // debug code
-
-        b_changeDest                = false;
     }
 
     void SetLevitate(bool bLevitate)
@@ -282,8 +279,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
 
         if (uiData == POINT_OOC)
         {
-            b_changeDest = true;
-            //DoFlyAround();
+            DoFlyAround();
         }
         else if (uiData == POINT_AGGRO)
         {
@@ -395,12 +391,6 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
         }
         else
             m_uiBerserkTimer -= uiDiff;
-
-        if (b_changeDest)
-        {
-            b_changeDest = false;
-            DoFlyAround();
-        }
 
         switch(m_uiPhase)
         {
