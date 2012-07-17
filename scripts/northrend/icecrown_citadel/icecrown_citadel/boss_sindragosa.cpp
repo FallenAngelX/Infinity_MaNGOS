@@ -126,12 +126,6 @@ enum Point
     POINT_RIMEFANG_LAND     = 5
 };
 
-#define SINDRAGOSA_FLYING_MIN_X 4480.0f
-#define SINDRAGOSA_FLYING_MAX_X 4530.0f
-#define SINDRAGOSA_FLYING_MIN_Y 2460.0f
-#define SINDRAGOSA_FLYING_MAX_Y 2530.0f
-#define SINDRAGOSA_FLYING_Z     231.0f
-
 #define FROST_BOMB_MIN_X 4367.0f
 #define FROST_BOMB_MAX_X 4424.0f
 #define FROST_BOMB_MIN_Y 2437.0f
@@ -183,16 +177,6 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
         m_creature->SetLevitate(bLevitate);
     }
 
-    void DoFlyAround()
-    {
-        float x, y, z;
-        x = frand(SINDRAGOSA_FLYING_MIN_X, SINDRAGOSA_FLYING_MAX_X);
-        y = frand(SINDRAGOSA_FLYING_MIN_Y, SINDRAGOSA_FLYING_MAX_Y);
-        z = SINDRAGOSA_FLYING_Z;
-        m_creature->GetMotionMaster()->Clear();
-        m_creature->GetMotionMaster()->MovePoint(POINT_OOC, x, y, z, false);
-    }
-
     void EnterEvadeMode()
     {
         SetLevitate(true);
@@ -208,8 +192,6 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
         }
 
         SetCombatMovement(true);
-
-        DoFlyAround();
     }
 
     void MoveInLineOfSight(Unit* pWho)
@@ -277,11 +259,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
         if (uiMovementType != POINT_MOTION_TYPE)
             return;
 
-        if (uiData == POINT_OOC)
-        {
-            DoFlyAround();
-        }
-        else if (uiData == POINT_AGGRO)
+        if (uiData == POINT_AGGRO)
         {
             if (m_creature->getVictim())
             {
