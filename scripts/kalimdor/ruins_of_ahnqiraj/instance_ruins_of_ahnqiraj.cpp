@@ -310,9 +310,15 @@ void instance_ruins_of_ahnqiraj::DoSendNextArmyWave()
             ++m_uiCurrentArmyWave;
 
         float fX, fY, fZ;
-        for (GuidSet::const_iterator itr = m_sArmyWavesGuids[m_uiCurrentArmyWave].begin(); itr != m_sArmyWavesGuids[m_uiCurrentArmyWave].end(); ++itr)
+        for (GuidSet::const_iterator itr = m_sArmyWavesGuids[m_uiCurrentArmyWave].begin(); itr != m_sArmyWavesGuids[m_uiCurrentArmyWave].end();)
         {
-            if (Creature* pTemp = instance->GetCreature(*itr))
+            ObjectGuid guid = *itr;
+            ++itr;
+
+            if (guid.IsEmpty())
+                continue;
+
+            if (Creature* pTemp = instance->GetCreature(guid))
             {
                 if (!pTemp->isAlive())
                     continue;
