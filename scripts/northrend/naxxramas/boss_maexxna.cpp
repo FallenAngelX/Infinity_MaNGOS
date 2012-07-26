@@ -161,12 +161,12 @@ struct MANGOS_DLL_DECL boss_maexxnaAI : public ScriptedAI
 
     void Reset()
     {
-        m_uiWebWrapTimer = 20000;                           // 20 sec init, 40 sec normal
-        m_uiWebSprayTimer = 40000;                          // 40 seconds
-        m_uiPoisonShockTimer = 10000;                       // 10 seconds
-        m_uiNecroticPoisonTimer = 30000;                    // 30 seconds
-        m_uiSummonSpiderlingTimer = 30000;                  // 30 sec init, 40 sec normal
-        m_bEnraged = false;
+        m_uiWebWrapTimer            = 15000;
+        m_uiWebSprayTimer           = 40000;
+        m_uiPoisonShockTimer        = 10000;
+        m_uiNecroticPoisonTimer     = urand(20000, 30000);
+        m_uiSummonSpiderlingTimer   = 30000;
+        m_bEnraged                  = false;
     }
 
     void Aggro(Unit* pWho)
@@ -262,7 +262,7 @@ struct MANGOS_DLL_DECL boss_maexxnaAI : public ScriptedAI
         if (m_uiPoisonShockTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_POISONSHOCK : SPELL_POISONSHOCK_H) == CAST_OK)
-                m_uiPoisonShockTimer = urand(10000, 20000);
+                m_uiPoisonShockTimer = 10000;
         }
         else
             m_uiPoisonShockTimer -= uiDiff;
