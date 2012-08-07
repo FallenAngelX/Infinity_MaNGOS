@@ -487,11 +487,19 @@ struct MANGOS_DLL_DECL boss_aranAI : public ScriptedAI
 
     void SpellHit(Unit* pAttacker, const SpellEntry* Spell)
     {
-        //We only care about inturrupt effects and only if they are durring a spell currently being casted
-        if ((Spell->Effect[0]!=SPELL_EFFECT_INTERRUPT_CAST &&
-            Spell->Effect[1]!=SPELL_EFFECT_INTERRUPT_CAST &&
-            Spell->Effect[2]!=SPELL_EFFECT_INTERRUPT_CAST) || !m_creature->IsNonMeleeSpellCasted(false))
+        if (!m_creature->IsNonMeleeSpellCasted(false))
             return;
+
+        for (uint8 i = 0; i < 3; ++i)
+        {
+            SpellEffectEntry const* pSpellEffect = Spell->GetSpellEffect(SpellEffectIndex(i));
+            if (!pSpellEffect)
+                continue;
+
+            //We only care about inturrupt effects and only if they are durring a spell currently being casted
+            if (pSpellEffect->Effect != SPELL_EFFECT_INTERRUPT_CAST)
+                return;
+        }
 
         //Inturrupt effect
         m_creature->InterruptNonMeleeSpells(false);
