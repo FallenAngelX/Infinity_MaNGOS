@@ -45,6 +45,8 @@ void instance_temple_of_ahnqiraj::OnCreatureCreate (Creature* pCreature)
                 break;
         case NPC_VEKLOR:
         case NPC_VEKNILASH:
+        case NPC_MASTERS_EYE:
+        case NPC_OURO_SPAWNER:
         case NPC_CTHUN:
             m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
             break;
@@ -112,6 +114,15 @@ void instance_temple_of_ahnqiraj::SetData(uint32 uiType, uint32 uiData)
             if (uiData == DONE)
                 DoUseDoorOrButton(GO_TWINS_EXIT_DOOR);
             break;
+        case TYPE_OURO:
+            // Respawn the Ouro spawner on fail
+            if (uiData == FAIL)
+            {
+                if (Creature* pSpawner = GetSingleCreatureFromStorage(NPC_OURO_SPAWNER))
+                    pSpawner->Respawn();
+            }
+            m_auiEncounter[uiType] = uiData;
+            break;
         case TYPE_CTHUN_PHASE:
             m_auiEncounter[uiType] = uiData;
             break;
@@ -122,7 +133,8 @@ void instance_temple_of_ahnqiraj::SetData(uint32 uiType, uint32 uiData)
         OUT_SAVE_INST_DATA;
 
         std::ostringstream saveStream;
-        saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3];
+        saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3] << " "
+            << m_auiEncounter[4];
 
         m_strInstData = saveStream.str();
 
@@ -142,7 +154,8 @@ void instance_temple_of_ahnqiraj::Load(const char* chrIn)
     OUT_LOAD_INST_DATA(chrIn);
 
     std::istringstream loadStream(chrIn);
-    loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3];
+    loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
+        >> m_auiEncounter[4];
 
     for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
