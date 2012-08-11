@@ -81,11 +81,6 @@ UPDATE `gameobject_template` SET `data0` = 49665 WHERE `entry` = 189985;
 UPDATE `spell_target_position` SET `id` = 49665 WHERE `id` = 49305;
 
 UPDATE `creature_template` SET `InhabitType` = 3 WHERE `entry` IN (27692, 27755, 27756);
-DELETE FROM `creature_spell` WHERE `guid` IN (27692, 27755, 27756);
-INSERT INTO `creature_spell` (`guid`, `spell`, `index`, `active`, `disabled`, `flags`) VALUES
-(27692, 57403, 5, 0, 0, 0),
-(27755, 57403, 5, 0, 0, 0),
-(27756, 57403, 5, 0, 0, 0);
 
 DELETE FROM gameobject_scripts WHERE id IN 
 (40557,42275);
