@@ -71,7 +71,7 @@ UPDATE `creature` SET `spawnMask` = 3 WHERE `map` = 578 AND `spawnMask` = 1;
 UPDATE `gameobject` SET `spawnMask` = 2 WHERE `map` = 578 AND `id` = 193603;
 UPDATE `gameobject` SET `spawnMask` = 1 WHERE `map` = 578 AND `id` = 191349;
 
-UPDATE `creature_template` SET `InhabitType` = 3, spell6 = 0 WHERE `entry` IN (27755,27756,27692);
+UPDATE `creature_template` SET `InhabitType` = 3 WHERE `entry` IN (27755,27756,27692);
 REPLACE INTO `creature_template_addon` VALUES (27755,0,0,0,0,0,0,'57403');
 REPLACE INTO `creature_template_addon` VALUES (27756,0,0,0,0,0,0,'57403');
 REPLACE INTO `creature_template_addon` VALUES (27692,0,0,0,0,0,0,'57403');
@@ -80,7 +80,9 @@ REPLACE INTO `creature_template_addon` VALUES (27692,0,0,0,0,0,0,'57403');
 UPDATE `gameobject_template` SET `data0` = 49665 WHERE `entry` = 189985;
 UPDATE `spell_target_position` SET `id` = 49665 WHERE `id` = 49305;
 
-UPDATE `creature_template` SET `spell6` = 57403, `InhabitType` = 3 WHERE `entry` IN (27692,27755,27756);
+-- need fix? spell6 removed in [mr2141]
+-- UPDATE `creature_template` SET `spell6` = 57403, `InhabitType` = 3 WHERE `entry` IN (27692,27755,27756);
+UPDATE `creature_template` SET `InhabitType` = 3 WHERE `entry` IN (27692,27755,27756);
 
 DELETE FROM gameobject_scripts WHERE id IN 
 (40557,42275);
