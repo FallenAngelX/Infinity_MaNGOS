@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Instance_Temple_of_Ahnqiraj
 SD%Complete: 80
-SDComment:
+SDComment: C'thun whisperings spells NYI.
 SDCategory: Temple of Ahn'Qiraj
 EndScriptData */
 
@@ -25,6 +25,9 @@ EndScriptData */
 #include "temple_of_ahnqiraj.h"
 
 instance_temple_of_ahnqiraj::instance_temple_of_ahnqiraj(Map* pMap) : ScriptedInstance(pMap),
+    m_dialogueHelper(aIntroDialogue),
+    m_bIsEmperorsIntroDone(false),
+    m_uiCthunWhisperTimer(90000),
     m_uiBugTrioDeathCount(0)
 {
     Initialize();
@@ -91,6 +94,8 @@ void instance_temple_of_ahnqiraj::OnObjectCreate(GameObject* pGo)
             if (m_auiEncounter[TYPE_TWINS] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
+        case GO_SANDWORM_BASE:
+            break;
 
         default:
             return;
@@ -139,15 +144,22 @@ void instance_temple_of_ahnqiraj::SetData(uint32 uiType, uint32 uiData)
                 DoUseDoorOrButton(GO_TWINS_EXIT_DOOR);
             break;
         case TYPE_OURO:
-            // Respawn the Ouro spawner on fail
-            if (uiData == FAIL)
+            switch (uiData)
             {
-                if (Creature* pSpawner = GetSingleCreatureFromStorage(NPC_OURO_SPAWNER))
-                    pSpawner->Respawn();
+                case FAIL:
+                    // Respawn the Ouro spawner on fail
+                    if (Creature* pSpawner = GetSingleCreatureFromStorage(NPC_OURO_SPAWNER))
+                        pSpawner->Respawn();
+                    // no break;
+                case DONE:
+                    // Despawn the sandworm base on Done or Fail
+                    if (GameObject* pBase = GetSingleGameObjectFromStorage(GO_SANDWORM_BASE))
+                        pBase->SetLootState(GO_JUST_DEACTIVATED);
+                    break;
             }
             m_auiEncounter[uiType] = uiData;
             break;
-        case TYPE_CTHUN_PHASE:
+        case TYPE_CTHUN:
             m_auiEncounter[uiType] = uiData;
             break;
     }
@@ -200,9 +212,56 @@ uint32 instance_temple_of_ahnqiraj::GetData(uint32 uiType)
     return 0;
 }
 
+void instance_temple_of_ahnqiraj::Update(uint32 uiDiff)
+{
+    m_dialogueHelper.DialogueUpdate(uiDiff);
+
+    if (GetData(TYPE_CTHUN) == IN_PROGRESS || GetData(TYPE_CTHUN) == DONE)
+        return;
+
+    if (m_uiCthunWhisperTimer < uiDiff)
+    {
+        if (Player* pPlayer = GetPlayerInMap())
+        {
+            if (Creature* pCthun = GetSingleCreatureFromStorage(NPC_CTHUN))
+            {
+                // ToDo: also cast the C'thun Whispering charm spell - requires additional research
+                switch (urand(0, 7))
+                {
+                    case 0: DoScriptText(SAY_CTHUN_WHISPER_1, pCthun, pPlayer); break;
+                    case 1: DoScriptText(SAY_CTHUN_WHISPER_2, pCthun, pPlayer); break;
+                    case 2: DoScriptText(SAY_CTHUN_WHISPER_3, pCthun, pPlayer); break;
+                    case 3: DoScriptText(SAY_CTHUN_WHISPER_4, pCthun, pPlayer); break;
+                    case 4: DoScriptText(SAY_CTHUN_WHISPER_5, pCthun, pPlayer); break;
+                    case 5: DoScriptText(SAY_CTHUN_WHISPER_6, pCthun, pPlayer); break;
+                    case 6: DoScriptText(SAY_CTHUN_WHISPER_7, pCthun, pPlayer); break;
+                    case 7: DoScriptText(SAY_CTHUN_WHISPER_8, pCthun, pPlayer); break;
+                }
+            }
+        }
+        m_uiCthunWhisperTimer = urand(1.5*MINUTE*IN_MILLISECONDS, 5*MINUTE*IN_MILLISECONDS);
+    }
+    else
+        m_uiCthunWhisperTimer -= uiDiff;
+}
+
 InstanceData* GetInstanceData_instance_temple_of_ahnqiraj(Map* pMap)
 {
     return new instance_temple_of_ahnqiraj(pMap);
+}
+
+bool AreaTrigger_at_temple_ahnqiraj(Player* pPlayer, AreaTriggerEntry const* pAt)
+{
+    if (pAt->id == AREATRIGGER_TWIN_EMPERORS)
+    {
+        if (pPlayer->isGameMaster() || !pPlayer->isAlive())
+            return false;
+
+        if (instance_temple_of_ahnqiraj* pInstance = (instance_temple_of_ahnqiraj*)pPlayer->GetInstanceData())
+            pInstance->DoHandleTempleAreaTrigger(pAt->id);
+    }
+
+    return false;
 }
 
 void AddSC_instance_temple_of_ahnqiraj()
