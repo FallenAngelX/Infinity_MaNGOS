@@ -1523,7 +1523,6 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1531038,'You will die.',8585,4,0,0,'cthun SAY_WHISPER_6'),
 (-1531039,'You are weak.',8586,4,0,0,'cthun SAY_WHISPER_7'),
 (-1531040,'Your heart will explode.',8587,4,0,0,'cthun SAY_WHISPER_8');
->>>>>>> c85fe66... [2657] Major cleanup and rewrite of C'thun script - AQ 40
 
 -- -1 532 000 KARAZHAN
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES

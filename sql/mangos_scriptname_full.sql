@@ -561,7 +561,7 @@ UPDATE creature_template SET ScriptName='npc_deserter_agitator' WHERE entry=2360
 UPDATE creature_template SET ScriptName='npc_ogron' WHERE entry=4983;
 UPDATE creature_template SET ScriptName='npc_morokk' WHERE entry=4500;
 UPDATE creature_template SET ScriptName='npc_restless_apparition' WHERE entry=23861;
-8UPDATE creature_template SET ScriptName='npc_private_hendel' WHERE entry=4966;
+UPDATE creature_template SET ScriptName='npc_private_hendel' WHERE entry=4966;
 DELETE FROM scripted_areatrigger WHERE entry=4752;
 INSERT INTO scripted_areatrigger VALUES
 (4752,'at_nats_landing');
