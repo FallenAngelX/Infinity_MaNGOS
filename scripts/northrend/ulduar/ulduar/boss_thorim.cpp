@@ -90,7 +90,7 @@ enum
     SPELL_LIGHTNING_CHARGE_STRIKE   = 62466,
     SPELL_UNBALANCING_STRIKE        = 62130,
     SPELL_BERSERK                   = 26662,    // 5 min phase 2
-    
+
     // TODO: more lighting stuff
     // LIGHTING
     SPELL_LIGHTNING_CHARGE          = 62186,    // 33378 cast on self -> triggerd 62278 after 8 seconds, but aura only presetn 5 seconds
@@ -145,6 +145,40 @@ enum
     SPELL_SHOOT                     = 16496,
     SPELL_BARBED_SHOT               = 62318,
     SPELL_WING_CLIP                 = 40652,
+    // mobs spells
+    // acolyte
+    SPELL_GREATER_HEAL              = 62334,
+    SPELL_GREATER_HEAL_H            = 62442,
+    SPELL_RENEW                     = 62333,
+    SPELL_RENEW_H                   = 62441,
+    SPELL_HOLY_SMITE                = 62335,
+    SPELL_HOLY_SMITE_H              = 62443,
+    // champion
+    SPELL_MORTAL_STRIKE             = 35054,
+    SPELL_CHARGE_CHAMPION           = 32323,
+    SPELL_WHIRLWIND                 = 15578,
+    // commoner
+    SPELL_LOW_BLOW                  = 62326,
+    SPELL_PUMMEL                    = 38313,
+    // evoker
+    SPELL_RUNIC_LIGHTNING           = 62327,
+    SPELL_RUNIC_LIGHTNING_H         = 62445,
+    SPELL_RUNIC_MENDING             = 62328,
+    SPELL_RUNIC_MENDING_H           = 62446,
+    SPELL_RUNIC_SHIELD              = 62321,
+    SPELL_RUNIC_SHIELD_H            = 62529,
+    // warbringer
+    SPELL_RUNIC_STRIKE              = 62322,
+    SPELL_AURA_CELERITY             = 62320,
+    // ring guard
+    SPELL_WHIRLING_TRIP             = 64151,
+    SPELL_IMPALE                    = 62331,
+    SPELL_IMPALE_H                  = 62418,
+    // honor guard
+    SPELL_CLEAVE                    = 42724, 
+    SPELL_HAMSTRING                 = 48639,
+    SPELL_SHIELD_SMASH              = 62332,
+    SPELL_SHIELD_SMASH_H            = 62420,
 
     ACHIEV_LOSE_ILLUSION            = 3176,
     ACHIEV_LOSE_ILLUSION_H          = 3183,
