@@ -1489,9 +1489,6 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1531009,'I sentence you to death!',8647,1,0,0,'sartura SAY_SLAY'),
 (-1531010,'I serve to the last!',8648,1,0,0,'sartura SAY_DEATH'),
 
-<<<<<<< HEAD
-(-1531011,'%s is weakened!',0,2,0,0,'cthun EMOTE_WEAKENED');
-=======
 (-1531011,'%s is weakened!',0,2,0,0,'cthun EMOTE_WEAKENED'),
 
 (-1531012,'The massive floating eyeball in the center of the chamber turns its gaze upon you. You stand before a god.',0,2,0,0,'eye cthun EMOTE_INTRO'),
