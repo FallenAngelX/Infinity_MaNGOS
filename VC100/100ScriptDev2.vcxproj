@@ -908,7 +908,9 @@
     <ClCompile Include="..\scripts\outland\shadowmoon_valley.cpp" />
     <ClCompile Include="..\scripts\outland\shattrath_city.cpp" />
     <ClCompile Include="..\scripts\outland\tempest_keep\arcatraz\arcatraz.cpp" />
+    <ClCompile Include="..\scripts\outland\tempest_keep\arcatraz\boss_dalliah.cpp" />
     <ClCompile Include="..\scripts\outland\tempest_keep\arcatraz\boss_harbinger_skyriss.cpp" />
+    <ClCompile Include="..\scripts\outland\tempest_keep\arcatraz\boss_soccothrates.cpp" />
     <ClCompile Include="..\scripts\outland\tempest_keep\arcatraz\instance_arcatraz.cpp" />
     <ClCompile Include="..\scripts\outland\tempest_keep\botanica\boss_high_botanist_freywinn.cpp" />
     <ClCompile Include="..\scripts\outland\tempest_keep\botanica\boss_laj.cpp" />
