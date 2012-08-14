@@ -80,6 +80,8 @@ class MANGOS_DLL_DECL instance_temple_of_ahnqiraj : public ScriptedInstance
         void SetData(uint32 uiType, uint32 uiData);
         uint32 GetData(uint32 uiType);
 
+        void DoHandleTempleAreaTrigger(uint32 uiTriggerId);
+
         const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 

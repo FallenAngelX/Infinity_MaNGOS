@@ -24,6 +24,18 @@ EndScriptData */
 #include "precompiled.h"
 #include "temple_of_ahnqiraj.h"
 
+static const DialogueEntry aIntroDialogue[] =
+{
+    {EMOTE_EYE_INTRO,       NPC_MASTERS_EYE, 7000},
+    {SAY_EMPERORS_INTRO_1,  NPC_VEKLOR,      6000},
+    {SAY_EMPERORS_INTRO_2,  NPC_VEKNILASH,   8000},
+    {SAY_EMPERORS_INTRO_3,  NPC_VEKLOR,      3000},
+    {SAY_EMPERORS_INTRO_4,  NPC_VEKNILASH,   3000},
+    {SAY_EMPERORS_INTRO_5,  NPC_VEKLOR,      3000},
+    {SAY_EMPERORS_INTRO_6,  NPC_VEKNILASH,   0},
+    {0,0,0}
+};
+
 instance_temple_of_ahnqiraj::instance_temple_of_ahnqiraj(Map* pMap) : ScriptedInstance(pMap),
     m_dialogueHelper(aIntroDialogue),
     m_bIsEmperorsIntroDone(false),
@@ -36,6 +48,7 @@ instance_temple_of_ahnqiraj::instance_temple_of_ahnqiraj(Map* pMap) : ScriptedIn
 void instance_temple_of_ahnqiraj::Initialize()
 {
     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+
     m_dialogueHelper.InitializeDialogueHelper(this);
 }
 
@@ -271,5 +284,10 @@ void AddSC_instance_temple_of_ahnqiraj()
     pNewScript = new Script;
     pNewScript->Name = "instance_temple_of_ahnqiraj";
     pNewScript->GetInstanceData = &GetInstanceData_instance_temple_of_ahnqiraj;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "at_temple_ahnqiraj";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_temple_ahnqiraj;
     pNewScript->RegisterSelf();
 }
