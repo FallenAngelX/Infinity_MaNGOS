@@ -2067,7 +2067,10 @@
     </ClCompile>
     <ClCompile Include="..\scripts\northrend\violet_hold\violet_hold.cpp">
       <Filter>scripts\northrend\violet_hold</Filter>
-    </ClCompile>
+    </ClCompile>	
+    <ClCompile Include="..\scripts\northrend\wintergrasp.cpp">	
+      <Filter>scripts\northrend</Filter>	  	
+    </ClCompile>	
     <ClCompile Include="..\scripts\northrend\zuldrak.cpp">
       <Filter>scripts\northrend</Filter>
     </ClCompile>
