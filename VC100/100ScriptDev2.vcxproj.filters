@@ -378,9 +378,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\blasted_lands.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\boss_kruul.cpp">
-      <Filter>scripts\eastern_kingdoms</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\burning_steppes.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
     </ClCompile>
@@ -471,11 +468,16 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\bastion_of_twilight\boss_chogall.cpp">
       <Filter>scripts\eastern_kingdoms\bastion_of_twilight</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\scripts\eastern_kingdoms\bastion_of_twilight\boss_halfus_wyrmbreaker.cpp">
       <Filter>scripts\eastern_kingdoms\bastion_of_twilight</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\bastion_of_twilight\boss_sinestra.cpp">
       <Filter>scripts\eastern_kingdoms\bastion_of_twilight</Filter>
+=======
+    <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_depths\boss_coren_direbrew.cpp">
+      <Filter>scripts\eastern_kingdoms\blackrock_depths</Filter>
+>>>>>>> 91cd923... [2677] EventAI cleanup Part IV - Drop all the useless placeholders. Cleanup is finished!
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\bastion_of_twilight\boss_valiona_and_theralion.cpp">
       <Filter>scripts\eastern_kingdoms\bastion_of_twilight</Filter>
@@ -483,6 +485,7 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\bastion_of_twilight\instance_bastion_of_twilight.cpp">
       <Filter>scripts\eastern_kingdoms\bastion_of_twilight</Filter>
     </ClCompile>
+<<<<<<< HEAD
     
     <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_caverns\boss_beauty.cpp">
       <Filter>scripts\eastern_kingdoms\blackrock_mountain\blackrock_caverns</Filter>
@@ -561,10 +564,24 @@
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\boss_quartermaster_zigris.cpp">
       <Filter>scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire</Filter>
+=======
+    <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_depths\boss_high_interrogator_gerstahn.cpp">
+      <Filter>scripts\eastern_kingdoms\blackrock_depths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_depths\instance_blackrock_depths.cpp">
+      <Filter>scripts\eastern_kingdoms\blackrock_depths</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_spire\boss_gyth.cpp">
+      <Filter>scripts\eastern_kingdoms\blackrock_spire</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_spire\boss_overlord_wyrmthalak.cpp">
+      <Filter>scripts\eastern_kingdoms\blackrock_spire</Filter>
+>>>>>>> 91cd923... [2677] EventAI cleanup Part IV - Drop all the useless placeholders. Cleanup is finished!
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\boss_rend_blackhand.cpp">
       <Filter>scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\boss_shadow_hunter_voshgajin.cpp">
       <Filter>scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire</Filter>
     </ClCompile>
@@ -582,6 +599,10 @@
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_mountain\blackwing_descent\boss_chimaeron.cpp">
       <Filter>scripts\eastern_kingdoms\blackrock_mountain\blackwing_descent</Filter>
+=======
+    <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_spire\instance_blackrock_spire.cpp">
+      <Filter>scripts\eastern_kingdoms\blackrock_spire</Filter>
+>>>>>>> 91cd923... [2677] EventAI cleanup Part IV - Drop all the useless placeholders. Cleanup is finished!
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\blackrock_mountain\blackwing_descent\boss_magmaw.cpp">
       <Filter>scripts\eastern_kingdoms\blackrock_mountain\blackwing_descent</Filter>
@@ -840,31 +861,13 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_arcanist_doan.cpp">
       <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_azshir_the_sleepless.cpp">
-      <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_bloodmage_thalnos.cpp">
-      <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_headless_horseman.cpp">
       <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_herod.cpp">
       <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_high_inquisitor_fairbanks.cpp">
-      <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_houndmaster_loksey.cpp">
-      <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_interrogator_vishas.cpp">
-      <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_mograine_and_whitemane.cpp">
-      <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\boss_scorn.cpp">
       <Filter>scripts\eastern_kingdoms\scarlet_monastery</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\scarlet_monastery\instance_scarlet_monastery.cpp">
@@ -873,13 +876,7 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\scholomance\boss_darkmaster_gandling.cpp">
       <Filter>scripts\eastern_kingdoms\scholomance</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\scholomance\boss_death_knight_darkreaver.cpp">
-      <Filter>scripts\eastern_kingdoms\scholomance</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\scholomance\boss_jandice_barov.cpp">
-      <Filter>scripts\eastern_kingdoms\scholomance</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\scholomance\boss_kormok.cpp">
       <Filter>scripts\eastern_kingdoms\scholomance</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\scholomance\boss_vectus.cpp">
@@ -900,6 +897,7 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\shadowfang_keep\shadowfang_keep.cpp">
       <Filter>scripts\eastern_kingdoms\shadowfang_keep</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\scripts\eastern_kingdoms\silvermoon_city.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
     </ClCompile>
@@ -912,6 +910,8 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\stranglethorn_vale.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
     </ClCompile>
+=======
+>>>>>>> 91cd923... [2677] EventAI cleanup Part IV - Drop all the useless placeholders. Cleanup is finished!
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_baroness_anastari.cpp">
       <Filter>scripts\eastern_kingdoms\stratholme</Filter>
     </ClCompile>
@@ -924,25 +924,10 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_dathrohan_balnazzar.cpp">
       <Filter>scripts\eastern_kingdoms\stratholme</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_magistrate_barthilas.cpp">
-      <Filter>scripts\eastern_kingdoms\stratholme</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_maleki_the_pallid.cpp">
       <Filter>scripts\eastern_kingdoms\stratholme</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_nerubenkan.cpp">
-      <Filter>scripts\eastern_kingdoms\stratholme</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_order_of_silver_hand.cpp">
-      <Filter>scripts\eastern_kingdoms\stratholme</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_postmaster_malown.cpp">
-      <Filter>scripts\eastern_kingdoms\stratholme</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_ramstein_the_gorger.cpp">
-      <Filter>scripts\eastern_kingdoms\stratholme</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\boss_timmy_the_cruel.cpp">
       <Filter>scripts\eastern_kingdoms\stratholme</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\stratholme\instance_stratholme.cpp">
@@ -1049,12 +1034,6 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_arlokk.cpp">
       <Filter>scripts\eastern_kingdoms\zulgurub</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_gahzranka.cpp">
-      <Filter>scripts\eastern_kingdoms\zulgurub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_grilek.cpp">
-      <Filter>scripts\eastern_kingdoms\zulgurub</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_hakkar.cpp">
       <Filter>scripts\eastern_kingdoms\zulgurub</Filter>
     </ClCompile>
@@ -1080,9 +1059,6 @@
       <Filter>scripts\eastern_kingdoms\zulgurub</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_venoxis.cpp">
-      <Filter>scripts\eastern_kingdoms\zulgurub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\boss_wushoolay.cpp">
       <Filter>scripts\eastern_kingdoms\zulgurub</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\zulgurub\instance_zulgurub.cpp">
@@ -1278,15 +1254,6 @@
     <ClCompile Include="..\scripts\kalimdor\caverns_of_time\hyjal_summit\instance_hyjal.cpp">
       <Filter>scripts\kalimdor\caverns_of_time\hyjal_summit</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\kalimdor\caverns_of_time\old_hillsbrad\boss_captain_skarloc.cpp">
-      <Filter>scripts\kalimdor\caverns_of_time\old_hillsbrad</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\kalimdor\caverns_of_time\old_hillsbrad\boss_epoch_hunter.cpp">
-      <Filter>scripts\kalimdor\caverns_of_time\old_hillsbrad</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\kalimdor\caverns_of_time\old_hillsbrad\boss_leutenant_drake.cpp">
-      <Filter>scripts\kalimdor\caverns_of_time\old_hillsbrad</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\kalimdor\caverns_of_time\old_hillsbrad\instance_old_hillsbrad.cpp">
       <Filter>scripts\kalimdor\caverns_of_time\old_hillsbrad</Filter>
     </ClCompile>
@@ -1322,6 +1289,7 @@
     <ClCompile Include="..\scripts\kalimdor\dire_maul\instance_dire_maul.cpp">
       <Filter>scripts\kalimdor\dire_maul</Filter>
     </ClCompile>
+<<<<<<< HEAD
 <<<<<<< HEAD
     <ClCompile Include="..\scripts\kalimdor\dustwallow_marsh.cpp">
       <Filter>scripts\kalimdor</Filter>
@@ -1390,12 +1358,18 @@
     <ClCompile Include="..\scripts\kalimdor\mulgore.cpp">
       <Filter>scripts\kalimdor</Filter>
     </ClCompile>
+=======
+    <ClCompile Include="..\scripts\kalimdor\maraudon\boss_noxxion.cpp">
+      <Filter>scripts\kalimdor\maraudon</Filter>
+    </ClCompile>
+>>>>>>> 91cd923... [2677] EventAI cleanup Part IV - Drop all the useless placeholders. Cleanup is finished!
     <ClCompile Include="..\scripts\kalimdor\onyxias_lair\boss_onyxia.cpp">
       <Filter>scripts\kalimdor\onyxias_lair</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\kalimdor\onyxias_lair\instance_onyxias_lair.cpp">
       <Filter>scripts\kalimdor\onyxias_lair</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="..\scripts\kalimdor\orgrimmar.cpp">
       <Filter>scripts\kalimdor</Filter>
     </ClCompile>
@@ -1405,6 +1379,8 @@
     <ClCompile Include="..\scripts\kalimdor\razorfen_downs\boss_tuten_kash.cpp">
       <Filter>scripts\kalimdor\razorfen_downs</Filter>
     </ClCompile>
+=======
+>>>>>>> 91cd923... [2677] EventAI cleanup Part IV - Drop all the useless placeholders. Cleanup is finished!
     <ClCompile Include="..\scripts\kalimdor\razorfen_downs\razorfen_downs.cpp">
       <Filter>scripts\kalimdor\razorfen_downs</Filter>
     </ClCompile>
@@ -2291,12 +2267,6 @@
     </ClCompile>
     <ClCompile Include="..\scripts\outland\tempest_keep\the_eye\instance_the_eye.cpp">
       <Filter>scripts\outland\tempest_keep\the_eye</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\outland\tempest_keep\the_eye\the_eye.cpp">
-      <Filter>scripts\outland\tempest_keep\the_eye</Filter>
-    </ClCompile>
-    <ClCompile Include="..\scripts\outland\tempest_keep\the_mechanar\boss_gatewatcher_ironhand.cpp">
-      <Filter>scripts\outland\tempest_keep\the_mechanar</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\outland\tempest_keep\the_mechanar\boss_nethermancer_sepethrea.cpp">
       <Filter>scripts\outland\tempest_keep\the_mechanar</Filter>

@@ -421,10 +421,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\scripts\eastern_kingdoms\boss_kruul.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\scripts\eastern_kingdoms\burning_steppes.cpp"
 					>
 				</File>
@@ -532,7 +528,23 @@
 					Name="bastion_of_twilight"
 					>
 					<File
+<<<<<<< HEAD
 						RelativePath="..\scripts\eastern_kingdoms\bastion_of_twilight\ascendant_council.cpp"
+=======
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\blackrock_depths.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\blackrock_depths.h"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_ambassador_flamelash.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_coren_direbrew.cpp"
+>>>>>>> 91cd923... [2677] EventAI cleanup Part IV - Drop all the useless placeholders. Cleanup is finished!
 						>
 					</File>
 					<File
@@ -544,6 +556,7 @@
 						>
 					</File>
 					<File
+<<<<<<< HEAD
 						RelativePath="..\scripts\eastern_kingdoms\bastion_of_twilight\boss_halfus_wyrmbreaker.cpp"
 						>
 					</File>
@@ -557,14 +570,70 @@
 					</File>
 					<File
 						RelativePath="..\scripts\eastern_kingdoms\bastion_of_twilight\instance_bastion_of_twilight.cpp"
+=======
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_high_interrogator_gerstahn.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\instance_blackrock_depths.cpp"
+>>>>>>> 91cd923... [2677] EventAI cleanup Part IV - Drop all the useless placeholders. Cleanup is finished!
 						>
 					</File>
 				</Filter>
 				<Filter
 					Name="blackrock_mountain"
 					>
+<<<<<<< HEAD
 					<Filter
 						Name="blackrock_caverns"
+=======
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\boss_gyth.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\boss_overlord_wyrmthalak.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\boss_pyroguard_emberseer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\instance_blackrock_spire.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\blackrock_spire.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="blackwing_lair"
+					>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackwing_lair\blackwing_lair.h"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackwing_lair\boss_broodlord_lashlayer.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackwing_lair\boss_chromaggus.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackwing_lair\boss_ebonroc.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackwing_lair\boss_firemaw.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\scripts\eastern_kingdoms\blackwing_lair\boss_flamegor.cpp"
+>>>>>>> 91cd923... [2677] EventAI cleanup Part IV - Drop all the useless placeholders. Cleanup is finished!
 						>
 						<File
 							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_caverns\blackrock_caverns.h"
@@ -1028,35 +1097,11 @@
 						>
 					</File>
 					<File
-						RelativePath="..\scripts\eastern_kingdoms\scarlet_monastery\boss_azshir_the_sleepless.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\scarlet_monastery\boss_bloodmage_thalnos.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\scripts\eastern_kingdoms\scarlet_monastery\boss_herod.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\scripts\eastern_kingdoms\scarlet_monastery\boss_high_inquisitor_fairbanks.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\scarlet_monastery\boss_houndmaster_loksey.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\scarlet_monastery\boss_interrogator_vishas.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\scripts\eastern_kingdoms\scarlet_monastery\boss_mograine_and_whitemane.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\scarlet_monastery\boss_scorn.cpp"
 						>
 					</File>
 					<File
@@ -1080,15 +1125,7 @@
 						>
 					</File>
 					<File
-						RelativePath="..\scripts\eastern_kingdoms\scholomance\boss_death_knight_darkreaver.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\scripts\eastern_kingdoms\scholomance\boss_jandice_barov.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\scholomance\boss_kormok.cpp"
 						>
 					</File>
 					<File
@@ -1132,10 +1169,6 @@
 					Name="stratholme"
 					>
 					<File
-						RelativePath="..\scripts\eastern_kingdoms\stratholme\boss_baron_rivendare.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\scripts\eastern_kingdoms\stratholme\boss_baroness_anastari.cpp"
 						>
 					</File>
@@ -1148,31 +1181,11 @@
 						>
 					</File>
 					<File
-						RelativePath="..\scripts\eastern_kingdoms\stratholme\boss_magistrate_barthilas.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\scripts\eastern_kingdoms\stratholme\boss_maleki_the_pallid.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\scripts\eastern_kingdoms\stratholme\boss_nerubenkan.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\scripts\eastern_kingdoms\stratholme\boss_order_of_silver_hand.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\stratholme\boss_postmaster_malown.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\stratholme\boss_ramstein_the_gorger.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\stratholme\boss_timmy_the_cruel.cpp"
 						>
 					</File>
 					<File
@@ -1336,14 +1349,6 @@
 						>
 					</File>
 					<File
-						RelativePath="..\scripts\eastern_kingdoms\zulgurub\boss_gahzranka.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\zulgurub\boss_grilek.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\scripts\eastern_kingdoms\zulgurub\boss_hakkar.cpp"
 						>
 					</File>
@@ -1377,10 +1382,6 @@
 					</File>
 					<File
 						RelativePath="..\scripts\eastern_kingdoms\zulgurub\boss_venoxis.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\zulgurub\boss_wushoolay.cpp"
 						>
 					</File>
 					<File
@@ -1695,18 +1696,6 @@
 						Name="old_hillsbrad"
 						>
 						<File
-							RelativePath="..\scripts\kalimdor\caverns_of_time\old_hillsbrad\boss_captain_skarloc.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\kalimdor\caverns_of_time\old_hillsbrad\boss_epoch_hunter.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\kalimdor\caverns_of_time\old_hillsbrad\boss_leutenant_drake.cpp"
-							>
-						</File>
-						<File
 							RelativePath="..\scripts\kalimdor\caverns_of_time\old_hillsbrad\instance_old_hillsbrad.cpp"
 							>
 						</File>
@@ -1832,19 +1821,7 @@
 					Name="maraudon"
 					>
 					<File
-						RelativePath="..\scripts\kalimdor\maraudon\boss_celebras_the_cursed.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\kalimdor\maraudon\boss_landslide.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\scripts\kalimdor\maraudon\boss_noxxion.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\kalimdor\maraudon\boss_princess_theradras.cpp"
 						>
 					</File>
 				</Filter>
@@ -1871,10 +1848,6 @@
 				<Filter
 					Name="razorfen_downs"
 					>
-					<File
-						RelativePath="..\scripts\kalimdor\razorfen_downs\boss_amnennar_the_coldbringer.cpp"
-						>
-					</File>
 					<File
 						RelativePath="..\scripts\kalimdor\razorfen_downs\razorfen_downs.cpp"
 						>
@@ -3328,10 +3301,6 @@
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\outland\tempest_keep\the_eye\the_eye.cpp"
-							>
-						</File>
-						<File
 							RelativePath="..\scripts\outland\tempest_keep\the_eye\the_eye.h"
 							>
 						</File>
@@ -3339,10 +3308,6 @@
 					<Filter
 						Name="the_mechanar"
 						>
-						<File
-							RelativePath="..\scripts\outland\tempest_keep\the_mechanar\boss_gatewatcher_ironhand.cpp"
-							>
-						</File>
 						<File
 							RelativePath="..\scripts\outland\tempest_keep\the_mechanar\boss_nethermancer_sepethrea.cpp"
 							>
