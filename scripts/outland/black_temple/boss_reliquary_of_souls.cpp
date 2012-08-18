@@ -215,7 +215,7 @@ struct MANGOS_DLL_DECL boss_reliquary_of_soulsAI : public ScriptedAI
 
     void SummonedCreatureJustDied(Creature* pSummoned)
     {
-        if (pSummoned->GetEntry() == CREATURE_ENSLAVED_SOUL)
+        if (pSummoned->GetEntry() == NPC_ENSLAVED_SOUL)
             ++SoulDeathCount;
     }
 
