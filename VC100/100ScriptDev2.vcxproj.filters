@@ -366,10 +366,6 @@
     <ClCompile Include="..\base\pet_ai.cpp">
       <Filter>base</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="..\include\precompiled.cpp">
-      <Filter>include</Filter>
-=======
     <ClCompile Include="..\scripts\battlegrounds\battleground.cpp">
       <Filter>scripts\battlegrounds</Filter>
     </ClCompile>
@@ -446,13 +442,11 @@
     <ClCompile Include="..\scripts\battlegrounds\battlegroundIC.cpp">
       <Filter>scripts\battlegrounds</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="..\scripts\custom\npc_arena_honor.cpp">
       <Filter>scripts\custom</Filter>
     </ClCompile>
     <ClCompile Include="..\scripts\custom\teleguy.cpp">
       <Filter>scripts\custom</Filter>
-=======
     <ClCompile Include="..\scripts\eastern_kingdoms\twilight_highlands.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
     </ClCompile>
@@ -464,7 +458,6 @@
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\western_plaguelands.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
->>>>>>> 948fedb... [2653] Add placeholders for the new Cataclysm content
     </ClCompile>
     <ClCompile Include="..\scripts\eastern_kingdoms\alterac_mountains.cpp">
       <Filter>scripts\eastern_kingdoms</Filter>
