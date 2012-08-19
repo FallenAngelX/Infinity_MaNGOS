@@ -364,7 +364,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                 {
                     pDisk->SetLevitate(true);
                     pDisk->CastSpell(pDisk, SPELL_FLIGHT, true);
-                    if (VehicleKit* pDiskVehicle = pDisk->GetVehicleKit())
+                    if (VehicleKitPtr pDiskVehicle = pDisk->GetVehicleKit())
                         pSummoned->EnterVehicle(pDiskVehicle, 0);
                 }
                 pSummoned->SetInCombatWithZone();
@@ -376,7 +376,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                 {
                     pDisk->SetLevitate(true);
                     pDisk->CastSpell(pDisk, SPELL_FLIGHT, true);
-                    if (VehicleKit* pDiskVehicle = pDisk->GetVehicleKit())
+                    if (VehicleKitPtr pDiskVehicle = pDisk->GetVehicleKit())
                         pSummoned->EnterVehicle(pDiskVehicle, 0);
                 }
                 pSummoned->SetInCombatWithZone();
@@ -1042,7 +1042,7 @@ struct MANGOS_DLL_DECL npc_nexus_lordAI : public ScriptedAI
         {
             if (m_uiMoveTimer <=uiDiff)
             {
-                if (VehicleKit* pVehicleBase = m_creature->GetVehicle())
+                if (VehicleKitPtr pVehicleBase = m_creature->GetVehicle())
                 {
                     if (Unit* pDisk = pVehicleBase->GetBase())
                     {
@@ -1122,7 +1122,7 @@ struct MANGOS_DLL_DECL npc_scion_of_eternityAI : public ScriptedAI
 
         if (m_uiMoveTimer < uiDiff)
         {
-            if (VehicleKit* pVehicle = m_creature->GetVehicle())
+            if (VehicleKitPtr pVehicle = m_creature->GetVehicle())
             {
                 if (Unit* pDisk = pVehicle->GetBase())
                 {

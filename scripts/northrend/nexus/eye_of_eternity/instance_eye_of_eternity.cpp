@@ -299,7 +299,7 @@ void instance_eye_of_eternity::HandleRiderOfVortex(Unit* pTarget)
     {
         if (Creature* pVortex = instance->GetCreature(*iter))
         {
-            if (VehicleKit* pVehicle = pVortex->GetVehicleKit())
+            if (VehicleKitPtr pVehicle = pVortex->GetVehicleKit())
             {
                 if (pVehicle->GetNextEmptySeatWithFlag(0) != -1)
                 {
