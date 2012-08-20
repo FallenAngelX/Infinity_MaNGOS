@@ -13,8 +13,8 @@
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+
 #include "precompiled.h"
-#include "OutdoorPvP/OutdoorPvPWG.h"
 
 /*######
 ## go_wg_def_portal
@@ -68,20 +68,22 @@ bool GOHello_go_wg_teleport(Player* pPlayer, GameObject* pGo)
 #define GOSSIP_HELLO_DEMO3  "Build siege engine."
 #define GOSSIP_HELLO_DEMO4  "I cannot build more!"
 
-#define SPELL_CORPORAL     33280
-#define SPELL_LIEUTENANT   55629
-
-#define NPC_CATAPULT        27881
-#define NPC_DEMOLISHER      28094
-#define NPC_SIEGE_ENGINE_A  28312
-#define NPC_SIEGE_ENGINE_H  32627
-
-/*
+enum
+{
+    //WG World States
     WS_VEHICLE_COUNT_H                  = 3490,
     WS_VEHICLE_COUNT_MAX_H              = 3491,
     WS_VEHICLE_COUNT_A                  = 3680,
     WS_VEHICLE_COUNT_MAX_A              = 3681,
-*/
+    //Spells
+    SPELL_CORPORAL                      = 33280,
+    SPELL_LIEUTENANT                    = 55629,
+    //BuildSpellsWG
+    SPELL_BUILD_CATAPULT                = 56664,
+    SPELL_BUILD_DEMOLISHER              = 56659,
+    SPELL_BUILD_SIEGE_A                 = 56662,
+    SPELL_BUILD_SIEGE_H                 = 61409,
+};
 
 bool GossipHello_npc_wg_demolisher_engineer(Player* pPlayer, Creature* pCreature)
 {
@@ -118,14 +120,6 @@ bool GossipHello_npc_wg_demolisher_engineer(Player* pPlayer, Creature* pCreature
 
     return true;
 }
-
-enum BuildSpellsWG
-{
-    SPELL_BUILD_CATAPULT   = 56664,
-    SPELL_BUILD_DEMOLISHER = 56659,
-    SPELL_BUILD_SIEGE_A    = 56662,
-    SPELL_BUILD_SIEGE_H    = 61409,
-};
 
 // FIXME - Need make over DB
 bool GossipSelect_npc_wg_demolisher_engineer(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
