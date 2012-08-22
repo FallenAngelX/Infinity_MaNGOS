@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1250"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="ScriptDev2"
 	ProjectGUID="{4295C8A9-79B7-4354-8064-F05FB9CA0C96}"
 	RootNamespace="ScriptDev2"
@@ -417,12 +417,12 @@
 					RelativePath="..\scripts\battlegrounds\battleground.cpp"
 					>
 				</File>
-                                <File
-					RelativePath="..\scripts\battlegrounds\battlegroundSA.cpp"
+				<File
+					RelativePath="..\scripts\battlegrounds\battlegroundIC.cpp"
 					>
 				</File>
-                                <File
-					RelativePath="..\scripts\battlegrounds\battlegroundIC.cpp"
+				<File
+					RelativePath="..\scripts\battlegrounds\battlegroundSA.cpp"
 					>
 				</File>
 			</Filter>
@@ -433,7 +433,7 @@
 					RelativePath="..\scripts\custom\npc_arena_honor.cpp"
 					>
 				</File>
- 				<File
+				<File
 					RelativePath="..\scripts\custom\teleguy.cpp"
 					>
 				</File>
@@ -573,15 +573,11 @@
 						>
 					</File>
 					<File
-<<<<<<< HEAD
 						RelativePath="..\scripts\eastern_kingdoms\bastion_of_twilight\boss_halfus_wyrmbreaker.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\scripts\eastern_kingdoms\bastion_of_twilight\boss_sinestra.cpp"
-=======
-						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_coren_direbrew.cpp"
->>>>>>> 91cd923... [2677] EventAI cleanup Part IV - Drop all the useless placeholders. Cleanup is finished!
 						>
 					</File>
 					<File
@@ -592,7 +588,6 @@
 						RelativePath="..\scripts\eastern_kingdoms\bastion_of_twilight\instance_bastion_of_twilight.cpp"
 						>
 					</File>
-<<<<<<< HEAD
 				</Filter>
 				<Filter
 					Name="blackrock_mountain"
@@ -645,10 +640,6 @@
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_depths\boss_anubshiah.cpp"
-							>
-						</File>
-						<File
 							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_depths\boss_coren_direbrew.cpp"
 							>
 						</File>
@@ -661,23 +652,7 @@
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_depths\boss_gorosh_the_dervish.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_depths\boss_grizzle.cpp"
-							>
-						</File>
-						<File
 							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_depths\boss_high_interrogator_gerstahn.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_depths\boss_magmus.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_depths\boss_tomb_of_seven.cpp"
 							>
 						</File>
 						<File
@@ -689,23 +664,11 @@
 						Name="blackrock_spire"
 						>
 						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\boss_drakkisath.cpp"
+							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\blackrock_spire.h"
 							>
 						</File>
 						<File
 							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\boss_gyth.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\boss_halycon.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\boss_highlord_omokk.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\boss_mother_smolderweb.cpp"
 							>
 						</File>
 						<File
@@ -717,31 +680,7 @@
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\boss_quartermaster_zigris.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\boss_rend_blackhand.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\boss_shadow_hunter_voshgajin.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\boss_the_beast.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\boss_warmaster_voone.cpp"
-							>
-						</File>
-						<File
 							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\instance_blackrock_spire.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\blackrock_spire\blackrock_spire.h"
 							>
 						</File>
 					</Filter>
@@ -831,14 +770,6 @@
 					</Filter>
 					<Filter
 						Name="molten_core"
-=======
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\boss_high_interrogator_gerstahn.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\blackrock_depths\instance_blackrock_depths.cpp"
->>>>>>> 91cd923... [2677] EventAI cleanup Part IV - Drop all the useless placeholders. Cleanup is finished!
 						>
 						<File
 							RelativePath="..\scripts\eastern_kingdoms\blackrock_mountain\molten_core\boss_baron_geddon.cpp"
@@ -898,11 +829,10 @@
 					Name="deadmines"
 					>
 					<File
-<<<<<<< HEAD
-                      RelativePath="..\scripts\eastern_kingdoms\deadmines\boss_mr_smite.cpp"
-                      >
-                    </File>
-                    <File
+						RelativePath="..\scripts\eastern_kingdoms\deadmines\boss_mr_smite.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\scripts\eastern_kingdoms\deadmines\deadmines.cpp"
 						>
 					</File>
@@ -912,25 +842,6 @@
 					</File>
 					<File
 						RelativePath="..\scripts\eastern_kingdoms\deadmines\instance_deadmines.cpp"
-=======
-						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\blackrock_spire.h"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\boss_gyth.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\boss_overlord_wyrmthalak.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\boss_pyroguard_emberseer.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\scripts\eastern_kingdoms\blackrock_spire\instance_blackrock_spire.cpp"
->>>>>>> 91cd923... [2677] EventAI cleanup Part IV - Drop all the useless placeholders. Cleanup is finished!
 						>
 					</File>
 				</Filter>
@@ -1870,17 +1781,10 @@
 					Name="razorfen_downs"
 					>
 					<File
-<<<<<<< HEAD
-						RelativePath="..\scripts\kalimdor\razorfen_downs\boss_amnennar_the_coldbringer.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\scripts\kalimdor\razorfen_downs\boss_tuten_kash.cpp"
 						>
 					</File>
 					<File
-=======
->>>>>>> 91cd923... [2677] EventAI cleanup Part IV - Drop all the useless placeholders. Cleanup is finished!
 						RelativePath="..\scripts\kalimdor\razorfen_downs\razorfen_downs.cpp"
 						>
 					</File>
@@ -2153,10 +2057,10 @@
 					RelativePath="..\scripts\northrend\storm_peaks.cpp"
 					>
 				</File>
-	 			<File	
-					RelativePath="..\scripts\northrend\wintergrasp.cpp"	
-					>	
-				</File>					
+				<File
+					RelativePath="..\scripts\northrend\wintergrasp.cpp"
+					>
+				</File>
 				<File
 					RelativePath="..\scripts\northrend\zuldrak.cpp"
 					>
@@ -3539,14 +3443,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\include\sc_utility.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\include\sc_utility.h"
-				>
-			</File>
-			<File
 				RelativePath="..\include\sc_gossip.h"
 				>
 			</File>
@@ -3564,6 +3460,14 @@
 			</File>
 			<File
 				RelativePath="..\include\sc_instance.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\sc_utility.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\include\sc_utility.h"
 				>
 			</File>
 		</Filter>
