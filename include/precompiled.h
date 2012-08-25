@@ -7,6 +7,7 @@
 
 #include "../ScriptMgr.h"
 #include "Object.h"
+#include "Vehicle.h"
 #include "Unit.h"
 #include "Creature.h"
 #include "CreatureAI.h"
