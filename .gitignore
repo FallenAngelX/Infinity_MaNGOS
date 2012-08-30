@@ -73,6 +73,8 @@ revision.h
 # VS binaries output
 #
 bin/*
+VC100/*
+VC90/*
 
 #
 # VS temporary files
