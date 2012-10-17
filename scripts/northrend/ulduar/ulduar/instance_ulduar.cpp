@@ -168,6 +168,12 @@ void instance_ulduar::OnObjectCreate(GameObject *pGo)
 {
     switch(pGo->GetEntry())
     {
+        //Towers
+        case GO_TOWER_OF_FROST:
+        case GO_TOWER_OF_FLAME:
+        case GO_TOWER_OF_LIFE:
+        case GO_TOWER_OF_STORMS:
+            break;
         // doors & other
         // The siege
         case GO_SHIELD_WALL:
@@ -1187,10 +1193,10 @@ InstanceData* GetInstanceData_instance_ulduar(Map* pMap)
 
 void AddSC_instance_ulduar()
 {
-    Script *newscript;
+    Script *pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "instance_ulduar";
-    newscript->GetInstanceData = &GetInstanceData_instance_ulduar;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "instance_ulduar";
+    pNewScript->GetInstanceData = &GetInstanceData_instance_ulduar;
+    pNewScript->RegisterSelf();
 }
