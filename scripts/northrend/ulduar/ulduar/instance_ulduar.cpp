@@ -168,7 +168,12 @@ void instance_ulduar::OnObjectCreate(GameObject *pGo)
 {
     switch(pGo->GetEntry())
     {
-        //Towers
+        // Repair
+        case RX_214_REPAIR:
+            // TODO: Need implement spell 62705 in core
+            //pGo->SummonGameobject(RX_214_REPAIR_TRAP, pGo->GetPositionX(), pGo->GetPositionY(), pGo->GetPositionZ(), 0, 0);
+            return;
+        // Towers
         case GO_TOWER_OF_FROST:
         case GO_TOWER_OF_FLAME:
         case GO_TOWER_OF_LIFE:
