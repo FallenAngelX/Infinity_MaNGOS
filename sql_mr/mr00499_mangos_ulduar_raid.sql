@@ -2,6 +2,9 @@
 
 -- Flame Leviathan
     UPDATE creature_template SET ScriptName = 'boss_flame_leviathan' WHERE entry = 33113;
+    UPDATE `creature` SET `position_x` = 432.09, `position_y` =-13.3 , `position_z` = 409.9 WHERE `id` = 33113;
+    UPDATE `creature_template` SET `ScriptName` = 'npc_brann_bronzebeard' WHERE `entry` = 33579;
+    UPDATE `creature_template` SET `npcflag` = `npcflag` | 1 WHERE `entry` = 33579;
     UPDATE creature_template SET ScriptName = 'mob_defense_turret' WHERE entry = 33142;
     UPDATE creature_template SET ScriptName = 'mob_pool_of_tar' WHERE entry = 33090;
     UPDATE creature_template SET ScriptName = 'mob_mechanolift' WHERE entry = 33214;

@@ -197,9 +197,9 @@ const float WayMimironBeacon[4][3] =
 };
 
 
-struct MANGOS_DLL_DECL boss_flame_leviathan : public ScriptedAI
+struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
 {
-    boss_flame_leviathan(Creature* pCreature) : ScriptedAI(pCreature)
+    boss_flame_leviathanAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
@@ -230,9 +230,6 @@ struct MANGOS_DLL_DECL boss_flame_leviathan : public ScriptedAI
 
     void Reset()
     {
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_LEVIATHAN, NOT_STARTED); 
-
         m_creature->ApplySpellImmune(0, IMMUNITY_EFFECT, SPELL_EFFECT_KNOCK_BACK, true);
         m_creature->ApplySpellImmune(49560, 0, 0, true);
         
@@ -277,9 +274,10 @@ struct MANGOS_DLL_DECL boss_flame_leviathan : public ScriptedAI
 
     void Aggro(Unit* who)
     {
-        CheckForTowers();
         if (m_pInstance)
         {
+            if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == IN_PROGRESS)
+                CheckForTowers();
             m_pInstance->SetData(TYPE_LEVIATHAN, IN_PROGRESS);
             if (m_pInstance->GetData(TYPE_LEVIATHAN_TP) != DONE)
                 m_pInstance->SetData(TYPE_LEVIATHAN_TP, DONE);
@@ -351,13 +349,15 @@ struct MANGOS_DLL_DECL boss_flame_leviathan : public ScriptedAI
 
     bool CollossusDead()
     {
-        std::list<Creature* > lCreatureList;
+        std::list<Creature*> lCreatureList;
         GetCreatureListWithEntryInGrid(lCreatureList, m_creature, 33237, 100.0f);
-        if (!lCreatureList.empty())
-            for(std::list<Creature*>::iterator itr = lCreatureList.begin(); itr != lCreatureList.end(); ++itr)
-                if ((*itr)->isAlive())
-                    return false;
-
+        if (lCreatureList.empty())
+            return false; // not loaded yet
+        for (std::list<Creature*>::iterator itr = lCreatureList.begin(); itr != lCreatureList.end(); ++itr)
+        {
+            if ((*itr)->isAlive())
+                return false;
+        }
         return true;
     }
 
@@ -652,7 +652,7 @@ struct MANGOS_DLL_DECL mob_freyas_wardAI : public ScriptedAI
             summonTimer -= uiDiff ;
 
         if (!m_creature->HasAura(AURA_DUMMY_GREEN, EFFECT_INDEX_1))
-            DoCast(m_creature, AURA_DUMMY_GREEN,true);
+            DoCast(m_creature, AURA_DUMMY_GREEN, true);
 
         if (m_pInstance->GetData(TYPE_LEVIATHAN) != IN_PROGRESS)
         {
@@ -686,7 +686,7 @@ struct MANGOS_DLL_DECL mob_hodirs_furyAI : public ScriptedAI
 
     void MoveInLineOfSight(Unit* who)
     {
-        if (who->GetTypeId() == TYPEID_PLAYER && m_creature->IsInRange(who,0,5,false) && m_bHodirFuryReady)
+        if (who->GetTypeId() == TYPEID_PLAYER && m_creature->IsInRange(who, 0, 5, false) && m_bHodirFuryReady)
         {
             if (Creature* pTrigger = DoSpawnCreature(NPC_HODIR_TARGET_BEACON, 0, 0, 0, 0, TEMPSUMMON_TIMED_DESPAWN, 1000))
                 pTrigger->CastSpell(who, SPELL_HODIR_FURY, true);
@@ -698,7 +698,7 @@ struct MANGOS_DLL_DECL mob_hodirs_furyAI : public ScriptedAI
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->HasAura(AURA_DUMMY_BLUE, EFFECT_INDEX_1))
-            DoCast(m_creature, AURA_DUMMY_BLUE,true);
+            DoCast(m_creature, AURA_DUMMY_BLUE, true);
         if (m_pInstance->GetData(TYPE_LEVIATHAN) != IN_PROGRESS)
         {
             m_creature->ForcedDespawn();
@@ -873,7 +873,7 @@ CreatureAI* GetAI_mob_defense_turret(Creature* pCreature)
 
 CreatureAI* GetAI_boss_flame_leviathan(Creature* pCreature)
 {
-    return new boss_flame_leviathan(pCreature);
+    return new boss_flame_leviathanAI(pCreature);
 }
 
 CreatureAI* GetAI_mob_pool_of_tar(Creature* pCreature)
@@ -908,6 +908,12 @@ CreatureAI* GetAI_mob_thorims_hammer(Creature* pCreature)
 
 bool GossipHello_mob_lorekeeper(Player* player, Creature* pCreature)
 {
+    instance_ulduar* m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
+    if (!m_pInstance)
+        return true;
+    if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == NOT_STARTED)
+        player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Activate secondary defencive systems.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
+
     player->ADD_GOSSIP_ITEM( GOSSIP_ICON_CHAT, "Gib mir Macht mit einen Zerstörer."            , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
     player->ADD_GOSSIP_ITEM( GOSSIP_ICON_CHAT, "Gib mir Stärke mit einer Belagerungsmaschine." , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
     player->ADD_GOSSIP_ITEM( GOSSIP_ICON_CHAT, "Gib mir Geschwindigkeit mit einen Moped."      , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
@@ -917,6 +923,18 @@ bool GossipHello_mob_lorekeeper(Player* player, Creature* pCreature)
 
 bool GossipSelect_mob_lorekeeper(Player* pPlayer, Creature* pCreature, uint32 sender, uint32 uiAction)
 {
+    if (uiAction == GOSSIP_ACTION_INFO_DEF)
+    {
+        pPlayer->CLOSE_GOSSIP_MENU();
+        instance_ulduar* m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
+        if (!m_pInstance)
+            return true;
+        if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == NOT_STARTED)
+        {
+            m_pInstance->SetData(TYPE_LEVIATHAN_HARD, IN_PROGRESS);
+            pCreature->ForcedDespawn(20000);
+        }
+    }
     uint32 i = urand(0,4);
     if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
@@ -936,9 +954,41 @@ bool GossipSelect_mob_lorekeeper(Player* pPlayer, Creature* pCreature, uint32 se
     return true;
 }
 
+bool GossipHello_npc_brann_bronzebeard(Player* pPlayer, Creature* pCreature)
+{
+    instance_ulduar* m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
+    if (!m_pInstance)
+        return true;
+
+    if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == IN_PROGRESS)
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "We're ready. Begin the assault!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
+
+    pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetObjectGuid());
+    return true;
+}
+
+bool GossipSelect_npc_brann_bronzebeard(Player* pPlayer, Creature* pCreature, uint32 sender, uint32 uiAction)
+{
+    if (uiAction == GOSSIP_ACTION_INFO_DEF)
+    {
+        instance_ulduar* m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
+        if (!m_pInstance)
+            return true;
+        pPlayer->CLOSE_GOSSIP_MENU();
+
+        if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == IN_PROGRESS)
+        {
+            m_pInstance->SetData(TYPE_LEVIATHAN_HARD, NOT_STARTED);
+            pCreature->ForcedDespawn(20000);
+        }
+    }
+    return true;
+}
+
 void AddSC_boss_leviathan()
 {
     Script* pNewScript;
+
     pNewScript = new Script;
     pNewScript->Name = "boss_flame_leviathan";
     pNewScript->GetAI = &GetAI_boss_flame_leviathan;
@@ -983,5 +1033,11 @@ void AddSC_boss_leviathan()
     pNewScript->Name = "mob_lorekeeper";
     pNewScript->pGossipHello = &GossipHello_mob_lorekeeper;
     pNewScript->pGossipSelect = &GossipSelect_mob_lorekeeper;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_brann_bronzebeard";
+    pNewScript->pGossipHello = &GossipHello_npc_brann_bronzebeard;
+    pNewScript->pGossipSelect = &GossipSelect_npc_brann_bronzebeard;
     pNewScript->RegisterSelf();
 }
