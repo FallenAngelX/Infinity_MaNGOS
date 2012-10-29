@@ -95,8 +95,7 @@ enum spells
 
     AURA_DUMMY_BLUE         = 63294,
     AURA_DUMMY_GREEN        = 63295,
-    AURA_DUMMY_YELLOW       = 63292,
-
+    AURA_DUMMY_YELLOW       = 63292
 };
 
 enum Mobs
@@ -114,8 +113,7 @@ enum Mobs
     NPC_HODIR_TARGET_BEACON     = 33108,
     NPC_FREYA_TARGET_BEACON     = 33366,
 
-    DEFENSE_TURRET              = 33142,
-    KEEPER_OF_NORGANNON         = 33686
+    DEFENSE_TURRET              = 33142
 };
 
 enum Seats
@@ -123,7 +121,7 @@ enum Seats
     SEAT_PLAYER = 0,
     SEAT_TURRET = 1,
     SEAT_DEVICE = 2,
-    SEAT_CANNON = 7,
+    SEAT_CANNON = 7
 };
 
 enum Vehicles
@@ -131,6 +129,9 @@ enum Vehicles
     VEHICLE_SIEGE      = 33060,
     VEHICLE_CHOPPER    = 33062,
     VEHICLE_DEMOLISHER = 33109,
+
+    MAX_VEHICLE        = 4,
+    MIN_VEHICLE        = 2
 };
 
 enum eAchievementData
@@ -276,7 +277,7 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
     {
         if (m_pInstance)
         {
-            if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == IN_PROGRESS)
+            if (m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) == HARD_DIFFICULTY)
                 CheckForTowers();
             m_pInstance->SetData(TYPE_LEVIATHAN, IN_PROGRESS);
             if (m_pInstance->GetData(TYPE_LEVIATHAN_TP) != DONE)
@@ -291,8 +292,6 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
         if (m_pInstance)
         {
             m_pInstance->SetData(TYPE_LEVIATHAN, DONE);
-            if (m_uiActiveTowers)
-                m_pInstance->SetData(TYPE_LEVIATHAN_HARD, DONE);
             
             if (m_uiActiveTowers)
             {
@@ -409,12 +408,13 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (m_pInstance && (m_pInstance->GetData(TYPE_LEVIATHAN) == NOT_STARTED || m_pInstance->GetData(TYPE_LEVIATHAN) == FAIL))
+        if (m_pInstance && (m_pInstance->GetData(TYPE_LEVIATHAN) == NOT_STARTED || m_pInstance->GetData(TYPE_LEVIATHAN) == FAIL) && m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) != NONE_DIFFICULTY)
         {
             if (CollossusDead())
             {
                 m_creature->GetMotionMaster()->MovePoint(1, 342.896f, -14.113f, 409.804f);
                 m_pInstance->SetData(TYPE_LEVIATHAN, SPECIAL);
+                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             }
         }
 
@@ -598,9 +598,9 @@ struct MANGOS_DLL_DECL mob_pool_of_tarAI : public ScriptedAI
     void SpellHit(Unit* caster, const SpellEntry* spell)
     {
         if (spell->SchoolMask & SPELL_SCHOOL_MASK_FIRE && !m_creature->HasAura(SPELL_BLAZE))
-            DoCast(m_creature,SPELL_BLAZE,true);
+            DoCast(m_creature, SPELL_BLAZE, true);
     }
-    void DamageTaken(Unit*  killer, uint32 &uidamage)
+    void DamageTaken(Unit* killer, uint32 &uidamage)
     {
         uidamage = 0;
     }
@@ -616,7 +616,7 @@ struct MANGOS_DLL_DECL mob_mechanoliftAI : public ScriptedAI
 
     void JustDied(Unit* pKiller)
     {
-        if (Creature* pLiquid = DoSpawnCreature(MOB_LIQUID,0,0,0,0,TEMPSUMMON_TIMED_DESPAWN, 30000))
+        if (Creature* pLiquid = DoSpawnCreature(MOB_LIQUID, 0, 0, 0, 0, TEMPSUMMON_TIMED_DESPAWN, 30000))
         {
             pLiquid->CastSpell(pLiquid, SPELL_LIQUID_PYRITE, true);
         }
@@ -645,7 +645,7 @@ struct MANGOS_DLL_DECL mob_freyas_wardAI : public ScriptedAI
     {
         if (summonTimer <= uiDiff)
         {
-            DoCast(m_creature,SPELL_FREYA_WARD, true);
+            DoCast(m_creature, SPELL_FREYA_WARD, true);
             summonTimer = 20000;
         }
         else
@@ -787,7 +787,7 @@ struct MANGOS_DLL_DECL mob_mimirons_infernoAI : public ScriptedAI
             infernoTimer -= uiDiff;
 
         if (!m_creature->HasAura(AURA_DUMMY_YELLOW, EFFECT_INDEX_1))
-            DoCast(m_creature, AURA_DUMMY_YELLOW,true);
+            DoCast(m_creature, AURA_DUMMY_YELLOW, true);
         if (m_pInstance->GetData(TYPE_LEVIATHAN) != IN_PROGRESS)
         {
             m_creature->ForcedDespawn();
@@ -822,7 +822,7 @@ struct MANGOS_DLL_DECL mob_thorims_hammerAI : public ScriptedAI
         if (who->GetTypeId() == TYPEID_PLAYER && m_creature->IsInRange(who,0,10,false) && m_bHammerReady)
         {
             if (Creature* pTrigger = DoSpawnCreature(NPC_THORIM_TARGET_BEACON, 0, 0, 0, 0, TEMPSUMMON_TIMED_DESPAWN, 1000))
-                    pTrigger->CastSpell(who, SPELL_THORIMS_HAMMER, true);
+                pTrigger->CastSpell(who, SPELL_THORIMS_HAMMER, true);
             m_bHammerReady = false;
             m_uiHammerTimer = 4000;
         }
@@ -849,7 +849,7 @@ struct MANGOS_DLL_DECL mob_thorims_hammerAI : public ScriptedAI
 
 
         if (!m_creature->HasAura(AURA_DUMMY_BLUE, EFFECT_INDEX_1))
-            DoCast(m_creature, AURA_DUMMY_BLUE,true);
+            DoCast(m_creature, AURA_DUMMY_BLUE, true);
         if (m_pInstance->GetData(TYPE_LEVIATHAN) != IN_PROGRESS)
         {
             m_creature->ForcedDespawn();
@@ -906,17 +906,99 @@ CreatureAI* GetAI_mob_thorims_hammer(Creature* pCreature)
     return new mob_thorims_hammerAI(pCreature);
 }
 
+struct MANGOS_DLL_DECL mob_lorekeeperAI : public ScriptedAI
+{
+    mob_lorekeeperAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+        Reset();
+    }
+
+    instance_ulduar* m_pInstance;
+
+    bool m_bIsRegularMode;
+
+    uint32 m_uiSummonTimer;
+
+    ObjectGuid m_SiegeGuids[MAX_VEHICLE];
+    ObjectGuid m_DemolisherGuids[MAX_VEHICLE];
+    ObjectGuid m_ChopperGuids[MAX_VEHICLE];
+
+    void Reset()
+    {
+        m_uiSummonTimer = 5000;
+    }
+
+    void UpdateVehicleFlag(Creature* pVehicle)
+    {
+        if (!pVehicle)
+            return;
+        switch (pVehicle->GetEntry())
+        {
+            case VEHICLE_SIEGE:
+            case VEHICLE_DEMOLISHER:
+            case VEHICLE_CHOPPER:
+                if (m_pInstance->GetData(TYPE_LEVIATHAN) == DONE || m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) == NONE_DIFFICULTY)
+                    pVehicle->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                else
+                    pVehicle->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                break;
+        }
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (!m_pInstance || m_pInstance->GetData(TYPE_LEVIATHAN) == IN_PROGRESS)
+            return;
+
+        if (m_uiSummonTimer <= uiDiff)
+        {
+            Creature* pVehicle = NULL;
+            for (uint8 i = 0; i < (m_bIsRegularMode ? MIN_VEHICLE : MAX_VEHICLE); ++i)
+            {
+                if (m_SiegeGuids[i].IsEmpty() || !(pVehicle = m_creature->GetMap()->GetCreature(m_SiegeGuids[i])))
+                {
+                    if (pVehicle = m_creature->SummonCreature(VEHICLE_SIEGE, PosSiege[i].x, PosSiege[i].y, PosSiege[i].z, PosSiege[i].o, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000))
+                        m_SiegeGuids[i] = pVehicle->GetObjectGuid();
+                }
+                UpdateVehicleFlag(pVehicle);
+
+                if (m_DemolisherGuids[i].IsEmpty() || !(pVehicle = m_creature->GetMap()->GetCreature(m_DemolisherGuids[i])))
+                {
+                    if (pVehicle = m_creature->SummonCreature(VEHICLE_DEMOLISHER, PosDemolisher[i].x, PosDemolisher[i].y, PosDemolisher[i].z, PosDemolisher[i].o, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000))
+                        m_DemolisherGuids[i] = pVehicle->GetObjectGuid();
+                }
+                UpdateVehicleFlag(pVehicle);
+
+                if (m_ChopperGuids[i].IsEmpty() || !(pVehicle = m_creature->GetMap()->GetCreature(m_ChopperGuids[i])))
+                {
+                    if (pVehicle = m_creature->SummonCreature(VEHICLE_CHOPPER, PosChopper[i].x, PosChopper[i].y, PosChopper[i].z, PosChopper[i].o, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000))
+                        m_ChopperGuids[i] = pVehicle->GetObjectGuid();
+                }
+                UpdateVehicleFlag(pVehicle);
+
+            }
+            m_uiSummonTimer = 5000;
+        }
+        else
+            m_uiSummonTimer -= uiDiff;
+    }
+};
+
+CreatureAI* GetAI_mob_lorekeeper(Creature* pCreature)
+{
+    return new mob_lorekeeperAI(pCreature);
+}
+
 bool GossipHello_mob_lorekeeper(Player* player, Creature* pCreature)
 {
     instance_ulduar* m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
     if (!m_pInstance)
         return true;
-    if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == NOT_STARTED)
+    if (m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) == NONE_DIFFICULTY)
         player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Activate secondary defencive systems.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
 
-    player->ADD_GOSSIP_ITEM( GOSSIP_ICON_CHAT, "Gib mir Macht mit einen Zerstörer."            , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-    player->ADD_GOSSIP_ITEM( GOSSIP_ICON_CHAT, "Gib mir Stärke mit einer Belagerungsmaschine." , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-    player->ADD_GOSSIP_ITEM( GOSSIP_ICON_CHAT, "Gib mir Geschwindigkeit mit einen Moped."      , GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
     player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetObjectGuid());
     return true;
 }
@@ -929,27 +1011,13 @@ bool GossipSelect_mob_lorekeeper(Player* pPlayer, Creature* pCreature, uint32 se
         instance_ulduar* m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
         if (!m_pInstance)
             return true;
-        if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == NOT_STARTED)
+        if (m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) == NONE_DIFFICULTY && m_pInstance->GetData(TYPE_LEVIATHAN) == NOT_STARTED)
         {
-            m_pInstance->SetData(TYPE_LEVIATHAN_HARD, IN_PROGRESS);
-            pCreature->ForcedDespawn(20000);
+            m_pInstance->SetData(TYPE_LEVIATHAN_DIFFICULTY, HARD_DIFFICULTY);
+            pCreature->SetVisibility(VISIBILITY_OFF);
+            if (Creature* pBrannBronzebeard = m_pInstance->GetSingleCreatureFromStorage(NPC_BRANN_BRONZEBEARD))
+                pBrannBronzebeard->SetVisibility(VISIBILITY_OFF);
         }
-    }
-    uint32 i = urand(0,4);
-    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
-    {
-        pPlayer->CLOSE_GOSSIP_MENU();
-        pCreature->SummonCreature(VEHICLE_DEMOLISHER, PosSiege[i].x, PosSiege[i].y, PosSiege[i].z, PosSiege[i].o, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 3000);
-    }
-    if (uiAction == GOSSIP_ACTION_INFO_DEF + 2)
-    {
-        pPlayer->CLOSE_GOSSIP_MENU();
-        pCreature->SummonCreature(VEHICLE_SIEGE, PosDemolisher[i].x, PosDemolisher[i].y, PosDemolisher[i].z, PosDemolisher[i].o, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 3000);
-    }
-    if (uiAction == GOSSIP_ACTION_INFO_DEF + 3)
-    {
-        pPlayer->CLOSE_GOSSIP_MENU();
-        pCreature->SummonCreature(VEHICLE_CHOPPER, PosChopper[i].x, PosChopper[i].y, PosChopper[i].z, PosChopper[i].o, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 3000);
     }
     return true;
 }
@@ -960,7 +1028,7 @@ bool GossipHello_npc_brann_bronzebeard(Player* pPlayer, Creature* pCreature)
     if (!m_pInstance)
         return true;
 
-    if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == IN_PROGRESS)
+    if (m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) == NONE_DIFFICULTY)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "We're ready. Begin the assault!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
 
     pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetObjectGuid());
@@ -976,10 +1044,12 @@ bool GossipSelect_npc_brann_bronzebeard(Player* pPlayer, Creature* pCreature, ui
             return true;
         pPlayer->CLOSE_GOSSIP_MENU();
 
-        if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == IN_PROGRESS)
+        if (m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) == NONE_DIFFICULTY && m_pInstance->GetData(TYPE_LEVIATHAN) == NOT_STARTED)
         {
-            m_pInstance->SetData(TYPE_LEVIATHAN_HARD, NOT_STARTED);
-            pCreature->ForcedDespawn(20000);
+            m_pInstance->SetData(TYPE_LEVIATHAN_DIFFICULTY, EASY_DIFFICULTY);
+            pCreature->SetVisibility(VISIBILITY_OFF);
+            if (Creature* pKeeperOfNorgannon = m_pInstance->GetSingleCreatureFromStorage(NPC_KEEPER_OF_NORGANNON))
+                pKeeperOfNorgannon->SetVisibility(VISIBILITY_OFF);
         }
     }
     return true;
@@ -1031,6 +1101,7 @@ void AddSC_boss_leviathan()
 
     pNewScript = new Script;
     pNewScript->Name = "mob_lorekeeper";
+    pNewScript->GetAI = &GetAI_mob_lorekeeper;
     pNewScript->pGossipHello = &GossipHello_mob_lorekeeper;
     pNewScript->pGossipSelect = &GossipSelect_mob_lorekeeper;
     pNewScript->RegisterSelf();

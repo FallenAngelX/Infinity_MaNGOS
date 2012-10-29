@@ -1,6 +1,7 @@
 /* ULDUAR from Xfurry*/
 
 -- Flame Leviathan
+    DELETE FROM `creature` WHERE `id` IN(33060, 33062, 33109); -- Loading vehicles by script
     UPDATE creature_template SET ScriptName = 'boss_flame_leviathan' WHERE entry = 33113;
     UPDATE `creature` SET `position_x` = 432.09, `position_y` =-13.3 , `position_z` = 409.9 WHERE `id` = 33113;
     UPDATE `creature_template` SET `ScriptName` = 'npc_brann_bronzebeard' WHERE `entry` = 33579;

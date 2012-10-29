@@ -26,7 +26,7 @@ enum
     MAX_BOSS_ENCOUNTER          = 14,
 
     // hard mode bosses
-    TYPE_LEVIATHAN_HARD         = 20,
+    TYPE_LEVIATHAN_DIFFICULTY   = 20,
     TYPE_XT002_HARD             = 21,
     TYPE_ASSEMBLY_HARD          = 22,
     TYPE_MIMIRON_HARD           = 23,
@@ -60,6 +60,9 @@ enum
     TYPE_VISION_PHASE           = 58,
 
     MAX_ENCOUNTER               = 59,
+
+    NPC_KEEPER_OF_NORGANNON     = 33686,
+    NPC_BRANN_BRONZEBEARD       = 33579,
 
     // siege
     NPC_LEVIATHAN               = 33113,
@@ -352,7 +355,10 @@ enum
     SPELL_IRON_BOOT_AURA        = 58501,
     SPELL_RUNIC_SMASH_DMG       = 62465,
 
-
+    // Difficulty
+    NONE_DIFFICULTY = 0,
+    HARD_DIFFICULTY = 1,
+    EASY_DIFFICULTY = 2
 };
 
 enum ExplosionSide

@@ -35,8 +35,6 @@ void instance_ulduar::Initialize()
 
     for (uint8 i = 0; i < MAX_SPECIAL_ACHIEV_CRITS; ++i)
         m_abAchievCriteria[i] = false;
-
-    SetData(TYPE_LEVIATHAN_HARD, IN_PROGRESS); //TODO: Currently Leviathan is hard mode by default
 }
 
 bool instance_ulduar::IsEncounterInProgress() const
@@ -54,7 +52,14 @@ void instance_ulduar::OnCreatureCreate(Creature* pCreature)
 {
     switch(pCreature->GetEntry())
     {
+        case NPC_KEEPER_OF_NORGANNON:
+        case NPC_BRANN_BRONZEBEARD:
+            if (GetData(TYPE_LEVIATHAN_DIFFICULTY) != NONE_DIFFICULTY)
+                pCreature->SetVisibility(VISIBILITY_OFF);
+            break;
         case NPC_LEVIATHAN:
+            pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+            break;
         case NPC_IGNIS:
             break;
         case NPC_IRON_CONSTRUCT:
@@ -664,7 +669,7 @@ void instance_ulduar::SetData(uint32 uiType, uint32 uiData)
             break;
 
             // Hard modes
-        case TYPE_LEVIATHAN_HARD:
+        case TYPE_LEVIATHAN_DIFFICULTY:
         case TYPE_XT002_HARD:
             break;
         case TYPE_ASSEMBLY_HARD:
@@ -785,7 +790,7 @@ void instance_ulduar::SetData(uint32 uiType, uint32 uiData)
             << m_auiEncounter[TYPE_XT002] << " " << m_auiEncounter[TYPE_ASSEMBLY] << " " << m_auiEncounter[TYPE_KOLOGARN] << " "
             << m_auiEncounter[TYPE_AURIAYA] << " " << m_auiEncounter[TYPE_MIMIRON] << " " << m_auiEncounter[TYPE_HODIR] << " "
             << m_auiEncounter[TYPE_THORIM] << " " << m_auiEncounter[TYPE_FREYA] << " " << m_auiEncounter[TYPE_VEZAX] << " "
-            << m_auiEncounter[TYPE_YOGGSARON] << " " << m_auiEncounter[TYPE_ALGALON] << " " << m_auiEncounter[TYPE_LEVIATHAN_HARD] << " "
+            << m_auiEncounter[TYPE_YOGGSARON] << " " << m_auiEncounter[TYPE_ALGALON] << " " << m_auiEncounter[TYPE_LEVIATHAN_DIFFICULTY] << " "
             << m_auiEncounter[TYPE_XT002_HARD] << " " << m_auiEncounter[TYPE_ASSEMBLY_HARD] << " " << m_auiEncounter[TYPE_ASSEMBLY_HARD] << " "
             << m_auiEncounter[TYPE_HODIR_HARD] << " " << m_auiEncounter[TYPE_THORIM_HARD] << " " << m_auiEncounter[TYPE_FREYA_HARD] << " "
             << m_auiEncounter[TYPE_VEZAX_HARD] << " " << m_auiEncounter[TYPE_YOGGSARON_HARD] << " " << m_auiEncounter[TYPE_KEEPER_HODIR] << " "
@@ -1037,7 +1042,7 @@ void instance_ulduar::Load(const char* strIn)
     loadStream >> m_auiEncounter[TYPE_LEVIATHAN] >> m_auiEncounter[TYPE_IGNIS] >> m_auiEncounter[TYPE_RAZORSCALE] >> m_auiEncounter[TYPE_XT002]
     >> m_auiEncounter[TYPE_ASSEMBLY] >> m_auiEncounter[TYPE_KOLOGARN] >> m_auiEncounter[TYPE_AURIAYA] >> m_auiEncounter[TYPE_MIMIRON]
     >> m_auiEncounter[TYPE_HODIR] >> m_auiEncounter[TYPE_THORIM] >> m_auiEncounter[TYPE_FREYA] >> m_auiEncounter[TYPE_VEZAX]
-    >> m_auiEncounter[TYPE_YOGGSARON] >> m_auiEncounter[TYPE_ALGALON] >> m_auiEncounter[TYPE_LEVIATHAN_HARD] >> m_auiEncounter[TYPE_XT002_HARD]
+    >> m_auiEncounter[TYPE_YOGGSARON] >> m_auiEncounter[TYPE_ALGALON] >> m_auiEncounter[TYPE_LEVIATHAN_DIFFICULTY] >> m_auiEncounter[TYPE_XT002_HARD]
     >> m_auiEncounter[TYPE_ASSEMBLY_HARD] >> m_auiEncounter[TYPE_MIMIRON_HARD] >> m_auiEncounter[TYPE_HODIR_HARD] >> m_auiEncounter[TYPE_THORIM_HARD]
     >> m_auiEncounter[TYPE_FREYA_HARD] >> m_auiEncounter[TYPE_VEZAX_HARD] >> m_auiEncounter[TYPE_YOGGSARON_HARD] >> m_auiEncounter[TYPE_KEEPER_HODIR]
     >> m_auiEncounter[TYPE_KEEPER_THORIM] >> m_auiEncounter[TYPE_KEEPER_FREYA] >> m_auiEncounter[TYPE_KEEPER_MIMIRON] >> m_auiEncounter[TYPE_LEVIATHAN_TP]
