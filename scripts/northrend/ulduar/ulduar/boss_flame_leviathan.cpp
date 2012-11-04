@@ -44,7 +44,7 @@ enum say
     SAY_ENERGY_TOWER    = -1603215,
     SAY_NATURE_TOWER    = -1603216,
 
-    EMOTE_PURSUE        = -1603352,
+    EMOTE_PURSUE        = -1603217,
 };
 
 enum spells
@@ -130,7 +130,7 @@ enum Vehicles
     VEHICLE_CHOPPER    = 33062,
     VEHICLE_DEMOLISHER = 33109,
 
-    MAX_VEHICLE        = 4,
+    MAX_VEHICLE        = 5,
     MIN_VEHICLE        = 2
 };
 
@@ -155,11 +155,16 @@ enum eAchievementData
 
 struct Positions
 {
-    float x,y,z,o;
+    float x, y, z, o;
 };
 static Positions Center[]=
 {
     {354.8771f, -12.90240f, 409.803650f, 0.0f},
+};
+
+static Positions IntroPoint[]=
+{
+    {342.896f, -14.113f, 409.804f, -3.132478f},
 };
 
 const Positions PosSiege[5] =
@@ -312,8 +317,18 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void JustReachedHome()
+    void EnterEvadeMode()
     {
+        m_creature->RemoveAllAuras();
+        m_creature->DeleteThreatList();
+        m_creature->CombatStop(true);
+
+        if (m_creature->isAlive())
+            m_creature->NearTeleportTo(IntroPoint[0].x, IntroPoint[0].y, IntroPoint[0].z, IntroPoint[0].o);
+
+        m_creature->SetLootRecipient(NULL);
+
+        Reset();
         if (m_pInstance)
             m_pInstance->SetData(TYPE_LEVIATHAN, FAIL);
     }
@@ -321,13 +336,25 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
     void KilledUnit(Unit* who)
     {
         DoScriptText(SAY_SLAY, m_creature);
+
+        if (who->HasAura(SPELL_PURSUED)) // current target is destroyed
+        {
+            if (m_uiPursueTimer < 25000)
+                m_uiPursueTimer = 0;
+            else
+                m_uiPursueTimer = m_uiPursueTimer - 25000; // cooldown
+        }
     }
 
-    // TODO: effect 0 and effect 1 may be on different target
     void SpellHitTarget(Unit* pTarget, const SpellEntry* spell)
     {
         if (spell->Id == SPELL_PURSUED)
+        {
+            DoResetThreat();
+            m_creature->AddThreat(pTarget, 100000000.0f);
+            m_creature->SetInCombatWithZone();
             AttackStart(pTarget);
+        }
     }
 
     void SpellHit(Unit* caster, const SpellEntry* spell)
@@ -412,7 +439,7 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
         {
             if (CollossusDead())
             {
-                m_creature->GetMotionMaster()->MovePoint(1, 342.896f, -14.113f, 409.804f);
+                m_creature->GetMotionMaster()->MovePoint(1, IntroPoint[0].x, IntroPoint[0].y, IntroPoint[0].z);
                 m_pInstance->SetData(TYPE_LEVIATHAN, SPECIAL);
                 m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             }
@@ -431,13 +458,13 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
                 case 2: DoScriptText(SAY_CHANGE3, m_creature); break;
             }
             DoScriptText(EMOTE_PURSUE, m_creature);
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-            {
-                m_creature->AddThreat(pTarget, 100.0f);
-                DoCast(pTarget, SPELL_PURSUED);
-            }
+            m_creature->CastSpell(m_creature, SPELL_PURSUED, true);
 
             m_uiPursueTimer = 30000;
+
+            // Prevent exploit
+            if (m_creature->GetPositionX() > 400.0f || m_creature->GetPositionX() < 148.0f)
+                EnterEvadeMode();
         }
         else
             m_uiPursueTimer -= uiDiff;
