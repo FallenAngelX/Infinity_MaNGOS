@@ -52,6 +52,13 @@ void instance_ulduar::OnCreatureCreate(Creature* pCreature)
 {
     switch(pCreature->GetEntry())
     {
+        case NPC_WARD_OF_LIFE:
+            for (uint8 i = urand(3, 5); i > 0; --i)
+                pCreature->SummonCreature(NPC_WRITHING_LASHER, pCreature->GetPositionX(), pCreature->GetPositionY(), pCreature->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 3000);
+            // not break
+        case NPC_WRITHING_LASHER:
+            pCreature->SetInCombatWithZone();
+            return;
         case NPC_KEEPER_OF_NORGANNON:
         case NPC_BRANN_BRONZEBEARD:
             if (GetData(TYPE_LEVIATHAN_DIFFICULTY) != NONE_DIFFICULTY)
