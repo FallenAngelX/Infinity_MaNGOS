@@ -925,18 +925,6 @@ struct MANGOS_DLL_DECL mob_lorekeeperAI : public ScriptedAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
-    {
-        switch (pSummoned->GetEntry())
-        {
-            case VEHICLE_SIEGE:
-            case VEHICLE_DEMOLISHER:
-            case VEHICLE_CHOPPER:
-                pSummoned->CastSpell(pSummoned, 52455, true); // Prevent auto regen health
-                break;
-        }
-    }
-
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_LEVIATHAN) == IN_PROGRESS)

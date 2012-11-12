@@ -71,8 +71,10 @@ enum
 
     NPC_IGNIS                   = 33118,
     NPC_IRON_CONSTRUCT          = 33121,
+
     NPC_RAZORSCALE              = 33186,
     NPC_COMMANDER               = 33210,
+
     NPC_XT002                   = 33293,
 
     /* the antechamber of ulduar */
@@ -422,7 +424,7 @@ class MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
         GuidList m_lCloudGuids;
         GuidList m_lSanctumSentryGuids;
 
-        GuidVector m_lBreakHarpoonGUID;
+        GuidVector m_lBrokenHarpoonGUID;
 
 
     protected:

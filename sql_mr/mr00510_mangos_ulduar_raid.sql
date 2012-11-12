@@ -4,8 +4,10 @@
 -- Flame Leviathan --
 -- --------------- --
 DELETE FROM `creature` WHERE `id` IN(33060, 33062, 33109); -- Loading vehicles by script
+UPDATE `creature_template_addon` SET `auras` = '52455' WHERE `entry` IN(33060, 33109, 33062, 34045); -- Prevent vehicles auto regen health
+
 UPDATE `creature_template` SET `ScriptName` = 'boss_flame_leviathan' WHERE `entry` = 33113;
-UPDATE `creature` SET `position_x` = 432.09, `position_y` =-13.3 , `position_z` = 409.9 WHERE `id` = 33113;
+UPDATE `creature` SET `position_x` = 432.09, `position_y` = -13.3, `position_z` = 409.9 WHERE `id` = 33113;
 UPDATE `creature_template` SET `ScriptName` = 'npc_brann_bronzebeard' WHERE `entry` = 33579;
 UPDATE `creature_template` SET `npcflag` = `npcflag` | 1 WHERE `entry` = 33579;
 UPDATE `creature_template` SET `ScriptName` = 'mob_defense_turret' WHERE `entry` = 33142;
@@ -17,6 +19,7 @@ UPDATE `creature_template` SET `ScriptName` = 'mob_mimiron_inferno' WHERE `entry
 UPDATE `creature_template` SET `ScriptName` = 'mob_thorims_hammer' WHERE `entry` = 33365;
 UPDATE `creature_template` SET `ScriptName` = 'mob_lorekeeper' WHERE `entry` = 33686;
 UPDATE `creature_template` SET `InhabitType` = 4 WHERE `entry` IN (33366, 33369, 33364, 33108);
+
 DELETE FROM `spell_script_target` WHERE `entry` IN(62906, 62909, 62911, 62533);
 INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
 (62906, 1, 33367), -- Freya's Ward
@@ -39,34 +42,32 @@ INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
     -- this may not be correct
     UPDATE creature_template SET minlevel=80, maxlevel=80, faction_h=1925, faction_a=1925, scale=0.5, scriptname='mob_scorch_target' WHERE entry=33221;
 
--- Razorscale
-    UPDATE creature_template SET mechanic_immune_mask=617299803, scriptname='boss_razorscale' WHERE entry=33186;
--- original x=587.547, y= -174.927, z = 391.517; make the boss fly before encounter starts
-    UPDATE creature SET position_x = 590.346741, position_y = -226.947647, position_z = 442.897583 WHERE id = 33186;
+-- ---------- --
+-- Razorscale --
+-- ---------- --
+UPDATE `creature_template` SET `mechanic_immune_mask` = 617299803, `scriptname` = 'boss_razorscale' WHERE `entry` = 33186;
+UPDATE `creature` SET `position_x` = 590.346741, `position_y` = -226.947647, `position_z` = 442.897583 WHERE `id` = 33186;
 
-    DELETE FROM spell_script_target WHERE spell_script_target.entry = 63524;
-    INSERT INTO spell_script_target VALUES (63524 ,1,33282);
-    DELETE FROM spell_script_target WHERE spell_script_target.entry = 63657;
-    INSERT INTO spell_script_target VALUES (63657 ,1,33282);
-    DELETE FROM spell_script_target WHERE spell_script_target.entry = 63658;
-    INSERT INTO spell_script_target VALUES (63658 ,1,33282);
-    DELETE FROM spell_script_target WHERE spell_script_target.entry = 63659;
-    INSERT INTO spell_script_target VALUES (63659 ,1,33282);
+UPDATE `creature_template` SET `faction_A` = 35, `faction_H` = 35 WHERE `entry` IN(33287, 33816, 33259, 34257, 34256, 34255); -- Prevent combat with other bosses
 
-    DELETE FROM spell_script_target WHERE spell_script_target.entry = 62505;
-    INSERT INTO spell_script_target VALUES (62505 ,1,33186);
+DELETE FROM `spell_script_target` WHERE `entry` IN(63524, 63657, 63658, 63659, 62505);
+INSERT INTO `spell_script_target` VALUES
+(63524, 1, 33282), -- Harpoon Shot - Razorscale Harpoon Fire State
+(63657, 1, 33282), -- Harpoon Shot - Razorscale Harpoon Fire State
+(63658, 1, 33282), -- Harpoon Shot - Razorscale Harpoon Fire State
+(63659, 1, 33282), -- Harpoon Shot - Razorscale Harpoon Fire State
+(62505, 1, 33186); -- Harpoon Shot - Razorscale
 
-
-    UPDATE gameobject_template SET data3 = 180000, ScriptName='go_repair_harpoon' WHERE entry IN (194543,194542,194541,194519);
-    -- only 2 harpoons for 10 man
-    UPDATE gameobject SET spawnMask = 2 WHERE guid IN (73595, 73592);
-    -- mole machines & adds
-    UPDATE creature_template SET ScriptName = 'mob_mole_machine' WHERE entry = 33245;
-    UPDATE creature_template SET ScriptName = 'mob_dark_rune_watcher' WHERE entry = 33453;
-    UPDATE creature_template SET ScriptName = 'mob_dark_rune_sentinel' WHERE entry = 33846;
-    UPDATE creature_template SET ScriptName = 'mob_dark_rune_guardian' WHERE entry = 33388;
-    UPDATE creature_template SET ScriptName = 'npc_expedition_commander' WHERE entry = 33210;
-    UPDATE creature_template SET ScriptName = 'mob_devouring_flame_target' WHERE entry = 34188;
+UPDATE `gameobject_template` SET `data3` = 180000, `ScriptName` = 'go_repair_harpoon' WHERE `entry` IN (194543, 194542, 194541, 194519);
+-- only 2 harpoons for 10 man
+UPDATE `gameobject` SET `spawnMask` = 2 WHERE `guid` IN (73595, 73592);
+-- mole machines & adds
+UPDATE `creature_template` SET `ScriptName` = 'mob_mole_machine' WHERE `entry` = 33245;
+UPDATE `creature_template` SET `ScriptName` = 'mob_dark_rune_watcher' WHERE `entry` = 33453;
+UPDATE `creature_template` SET `ScriptName` = 'mob_dark_rune_sentinel' WHERE `entry` = 33846;
+UPDATE `creature_template` SET `ScriptName` = 'mob_dark_rune_guardian' WHERE `entry` = 33388;
+UPDATE `creature_template` SET `ScriptName` = 'npc_expedition_commander' WHERE `entry` = 33210;
+UPDATE `creature_template` SET `ScriptName` = 'mob_devouring_flame_target' WHERE `entry` = 34188;
 
 -- XT002
 UPDATE creature_template SET mechanic_immune_mask=617299803, scriptname='boss_xt_002' WHERE entry=33293;

@@ -193,9 +193,9 @@ void instance_ulduar::OnObjectCreate(GameObject* pGo)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_BROKEN_HARPOON:
-            m_lBreakHarpoonGUID.push_back(pGo->GetObjectGuid());
+            m_lBrokenHarpoonGUID.push_back(pGo->GetObjectGuid());
             pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
-            break;
+            return;
 
             // Archivum
         case GO_IRON_ENTRANCE_DOOR:
