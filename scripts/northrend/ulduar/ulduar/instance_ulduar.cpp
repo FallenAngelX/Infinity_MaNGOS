@@ -402,7 +402,7 @@ void instance_ulduar::SetData(uint32 uiType, uint32 uiData)
                 DoStartTimedAchievement(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, ACHIEV_START_IGNIS_ID);
             }
             // Add respawn and kill
-            if (uiData == FAIL)
+            if (uiData == FAIL || uiData == IN_PROGRESS)
             {
                 for (GuidList::iterator itr = m_lIronConstructsGuids.begin(); itr != m_lIronConstructsGuids.end(); ++itr)
                 {

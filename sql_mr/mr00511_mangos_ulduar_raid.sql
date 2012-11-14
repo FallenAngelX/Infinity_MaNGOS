@@ -34,13 +34,18 @@ INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
 (63294, 1, 33365), -- Freya Dummy Blue - Thorim's Hammer
 (63292, 1, 33370); -- Freya Dummy Yellow - Mimiron's Inferno
 
--- Ignis
-    UPDATE creature_template SET mechanic_immune_mask=617299803, scriptname='boss_ignis' WHERE entry=33118;
-    UPDATE creature_template SET ScriptName = 'mob_iron_construct' WHERE entry = 33121;
-    REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('64474', '1', '33118');
-    REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('64475', '1', '33118');
-    -- this may not be correct
-    UPDATE creature_template SET minlevel=80, maxlevel=80, faction_h=1925, faction_a=1925, scale=0.5, scriptname='mob_scorch_target' WHERE entry=33221;
+-- ------------------------ --
+-- Ignis the Furnace Master --
+-- ------------------------ --
+UPDATE `creature_template` SET `mechanic_immune_mask` = 617299803, `scriptname` = 'boss_ignis' WHERE `entry` = 33118;
+UPDATE `creature_template` SET `ScriptName` = 'mob_iron_construct' WHERE `entry` = 33121;
+
+DELETE FROM `spell_script_target` WHERE `entry` IN(64474, 64475);
+INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
+(64474, 1, 33118), -- Strength of the Creator stack
+(64475, 1, 33118); -- Strength of the Creator unstack
+
+UPDATE `creature_template` SET `faction_A` = 35, `faction_H` = 35, `minlevel` = 80, `maxlevel` = 80, `scale` = 0.5, `ScriptName` = '' WHERE `entry` = 33221;
 
 -- ---------- --
 -- Razorscale --
