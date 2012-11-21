@@ -74,15 +74,17 @@ UPDATE `creature_template` SET `ScriptName` = 'mob_dark_rune_guardian' WHERE `en
 UPDATE `creature_template` SET `ScriptName` = 'npc_expedition_commander' WHERE `entry` = 33210;
 UPDATE `creature_template` SET `ScriptName` = 'mob_devouring_flame_target' WHERE `entry` = 34188;
 
--- XT002
-UPDATE creature_template SET mechanic_immune_mask=617299803, scriptname='boss_xt_002' WHERE entry=33293;
-UPDATE creature_template SET ScriptName = 'mob_pummeler' WHERE entry = 33344;
-UPDATE creature_template SET speed_run=0.5, faction_a=1925, faction_h=1925, scriptname='mob_boombot' WHERE entry=33346; -- Script or EventAI?
-UPDATE creature_template SET speed_run=0.5 WHERE entry=33343;
-UPDATE creature_template SET mechanic_immune_mask=652951551, scriptname='mob_xtheart' WHERE entry=33329;
-UPDATE creature_template SET ScriptName = 'mob_voidzone' WHERE entry = 34001;
-UPDATE creature_template SET minhealth = 176400, maxhealth = 176400, minlevel = 80, maxlevel = 80, faction_a = 14, faction_h = 14, ScriptName = 'mob_lifespark' WHERE entry = 34004;
-UPDATE creature SET spawnMask = 0 WHERE id IN (34004);
+-- -------------------- --
+-- XT-002 Deconstructor --
+-- -------------------- --
+UPDATE `creature_template` SET `ScriptName` = 'boss_xt_002' WHERE `entry` = 33293;
+UPDATE `creature_template` SET `scriptname` = 'mob_xtheart' WHERE `entry` = 33329;
+UPDATE `creature_template` SET `ScriptName` = 'mob_pummeler' WHERE `entry` = 33344;
+UPDATE `creature_template` SET `ScriptName` = 'npc_scrapbot' WHERE `entry` = 33343;
+UPDATE `creature_template` SET `ScriptName` = 'mob_boombot', `faction_A` = 14, `faction_H` = 14 WHERE `entry` = 33346;
+UPDATE `creature_template` SET `ScriptName` = 'mob_voidzone' WHERE `entry` = 34001;
+UPDATE `creature_template` SET `ScriptName` = 'mob_lifespark', `minhealth` = 176400, `maxhealth` = 176400, `faction_A` = 14, `faction_H` = 14 WHERE `entry` = 34004;
+DELETE FROM `creature` WHERE `id` = 34004;
 
 -- THIS IS A WORKAROUND FOR THE HARD MODE LOOT, PLEASE REMOVE IF YOU DON'T WANT TO USE IT!
 -- hard loot for the heart

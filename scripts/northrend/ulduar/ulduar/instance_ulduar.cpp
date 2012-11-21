@@ -75,6 +75,10 @@ void instance_ulduar::OnCreatureCreate(Creature* pCreature)
         case NPC_RAZORSCALE:
         case NPC_COMMANDER:
         case NPC_XT002:
+            break;
+        case NPC_XT_TOY_PILE:
+            m_lXtToyPileGuids.push_back(pCreature->GetObjectGuid());
+            return;
         // Assembly of Iron
         case NPC_STEELBREAKER:
         case NPC_MOLGEIM:
@@ -798,7 +802,7 @@ void instance_ulduar::SetData(uint32 uiType, uint32 uiData)
             << m_auiEncounter[TYPE_AURIAYA] << " " << m_auiEncounter[TYPE_MIMIRON] << " " << m_auiEncounter[TYPE_HODIR] << " "
             << m_auiEncounter[TYPE_THORIM] << " " << m_auiEncounter[TYPE_FREYA] << " " << m_auiEncounter[TYPE_VEZAX] << " "
             << m_auiEncounter[TYPE_YOGGSARON] << " " << m_auiEncounter[TYPE_ALGALON] << " " << m_auiEncounter[TYPE_LEVIATHAN_DIFFICULTY] << " "
-            << m_auiEncounter[TYPE_XT002_HARD] << " " << m_auiEncounter[TYPE_ASSEMBLY_HARD] << " " << m_auiEncounter[TYPE_ASSEMBLY_HARD] << " "
+            << m_auiEncounter[TYPE_ASSEMBLY_HARD] << " " << m_auiEncounter[TYPE_ASSEMBLY_HARD] << " "
             << m_auiEncounter[TYPE_HODIR_HARD] << " " << m_auiEncounter[TYPE_THORIM_HARD] << " " << m_auiEncounter[TYPE_FREYA_HARD] << " "
             << m_auiEncounter[TYPE_VEZAX_HARD] << " " << m_auiEncounter[TYPE_YOGGSARON_HARD] << " " << m_auiEncounter[TYPE_KEEPER_HODIR] << " "
             << m_auiEncounter[TYPE_KEEPER_THORIM] << " " << m_auiEncounter[TYPE_KEEPER_FREYA] << " " << m_auiEncounter[TYPE_KEEPER_MIMIRON] << " "
@@ -1049,7 +1053,7 @@ void instance_ulduar::Load(const char* strIn)
     loadStream >> m_auiEncounter[TYPE_LEVIATHAN] >> m_auiEncounter[TYPE_IGNIS] >> m_auiEncounter[TYPE_RAZORSCALE] >> m_auiEncounter[TYPE_XT002]
     >> m_auiEncounter[TYPE_ASSEMBLY] >> m_auiEncounter[TYPE_KOLOGARN] >> m_auiEncounter[TYPE_AURIAYA] >> m_auiEncounter[TYPE_MIMIRON]
     >> m_auiEncounter[TYPE_HODIR] >> m_auiEncounter[TYPE_THORIM] >> m_auiEncounter[TYPE_FREYA] >> m_auiEncounter[TYPE_VEZAX]
-    >> m_auiEncounter[TYPE_YOGGSARON] >> m_auiEncounter[TYPE_ALGALON] >> m_auiEncounter[TYPE_LEVIATHAN_DIFFICULTY] >> m_auiEncounter[TYPE_XT002_HARD]
+    >> m_auiEncounter[TYPE_YOGGSARON] >> m_auiEncounter[TYPE_ALGALON] >> m_auiEncounter[TYPE_LEVIATHAN_DIFFICULTY]
     >> m_auiEncounter[TYPE_ASSEMBLY_HARD] >> m_auiEncounter[TYPE_MIMIRON_HARD] >> m_auiEncounter[TYPE_HODIR_HARD] >> m_auiEncounter[TYPE_THORIM_HARD]
     >> m_auiEncounter[TYPE_FREYA_HARD] >> m_auiEncounter[TYPE_VEZAX_HARD] >> m_auiEncounter[TYPE_YOGGSARON_HARD] >> m_auiEncounter[TYPE_KEEPER_HODIR]
     >> m_auiEncounter[TYPE_KEEPER_THORIM] >> m_auiEncounter[TYPE_KEEPER_FREYA] >> m_auiEncounter[TYPE_KEEPER_MIMIRON] >> m_auiEncounter[TYPE_LEVIATHAN_TP]

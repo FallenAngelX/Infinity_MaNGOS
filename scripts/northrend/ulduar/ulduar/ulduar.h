@@ -76,6 +76,8 @@ enum
     NPC_COMMANDER               = 33210,
 
     NPC_XT002                   = 33293,
+    NPC_XT_TOY_PILE             = 33337,
+
 
     /* the antechamber of ulduar */
     NPC_STEELBREAKER            = 32867,
@@ -417,6 +419,7 @@ class MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
         void SortHandTrigger(Creature* pCreature);
         void DoColossusExplosion(ExplosionSide explosionSide);
 
+        GuidList m_lXtToyPileGuids;
         GuidList m_lThorimMobsGuids;
         GuidList m_lHandTriggerGuids[2][10];
         GuidList m_lLowerOrbs;
