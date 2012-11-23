@@ -226,7 +226,7 @@ void instance_gundrak::SetData(uint32 uiType, uint32 uiData)
                 DoUseDoorOrButton(GO_ECK_UNDERWATER_DOOR);
             break;
         default:
-            error_log("SD2: Instance Gundrak: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
+            script_error_log("Instance Gundrak: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
             return;
     }
 /*    if (m_auiEncounter[0] == SPECIAL && m_auiEncounter[1] == SPECIAL && m_auiEncounter[2] == SPECIAL)

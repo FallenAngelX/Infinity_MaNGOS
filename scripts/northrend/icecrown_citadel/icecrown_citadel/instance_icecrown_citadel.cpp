@@ -513,6 +513,9 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
          case TYPE_ICECROWN_QUESTS:
             m_auiEncounter[TYPE_ICECROWN_QUESTS] = uiData;
             break;
+        default:
+            script_error_log("Instance Icecrown Citadel: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
+            return;
     }
 
     if (uiData == DONE)
