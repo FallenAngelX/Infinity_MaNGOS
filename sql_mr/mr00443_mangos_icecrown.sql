@@ -567,5 +567,3 @@ REPLACE INTO `achievement_criteria_requirement` VALUES(12979,18,0,0);
 REPLACE INTO `achievement_criteria_requirement` VALUES(12980,18,0,0);
 DELETE FROM `achievement_criteria_requirement` WHERE criteria_id IN (12780, 13011, 13012, 13013);
 INSERT INTO `achievement_criteria_requirement` VALUES(12780,0,0,0),(13011,0,0,0),(13012,0,0,0),(13013,0,0,0);
-
--- ------

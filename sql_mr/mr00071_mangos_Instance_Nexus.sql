@@ -8,4 +8,3 @@ UPDATE `creature_template` SET `ScriptName` = 'mob_crystalline_tangler' WHERE `e
 UPDATE `creature_template` SET `ScriptName` = 'mob_chaotic_rift' WHERE `entry` = '26918';
 UPDATE `creature_template` SET `ScriptName` = 'boss_commander_kolurg' WHERE `entry` = 26798;
 UPDATE `creature_template` SET `ScriptName` = 'boss_commander_stoutbeard' WHERE `entry` = 26796;
-

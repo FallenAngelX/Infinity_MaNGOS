@@ -14,7 +14,7 @@ UPDATE `creature_template` SET `minhealth` = 46200, `modelid_2` = 7845, `maxheal
 UPDATE `creature_template` SET `minlevel` = 45, `maxlevel` = 45, `rank` = 3 WHERE `entry` = 7355;
   -- missing itm from loot table
 DELETE FROM `creature_loot_template` WHERE (`entry`=7355) AND (`item`=4637);
-INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES (7355, 4637, 0.1647, 0, 1, 1, 0, 0, 0);
+INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`) VALUES (7355, 4637, 0.1647, 0, 1, 1);
   -- delete static spawn he is spawned on third gong  ring
 DELETE FROM `creature` WHERE `id`=7355;
        -- OLD YTDB DATA

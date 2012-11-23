@@ -45,7 +45,7 @@ UPDATE `creature_template` SET `ScriptName` = "mob_twilight_egg_controller" WHER
 UPDATE `gameobject_template` SET `ScriptName` = "obsidian_sanctum_portals" WHERE `entry` = 193988;
 
 -- Safe Area dummy creature - mark targets in 40yd radius to be not targeted by Sartharion's Pyrobuffet
-UPDATE `creature_template` SET `spell1` = 56911 WHERE `entry` = 30494;
+REPLACE INTO `creature_template_spells` SET `entry` = 30494, `spell1` = 56911;
 
 -- TRASH ACID
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '30680';

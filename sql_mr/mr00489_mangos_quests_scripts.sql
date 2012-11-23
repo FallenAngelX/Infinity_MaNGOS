@@ -33,8 +33,8 @@ UPDATE `creature_template` SET `armor` = 7618, `faction_A` = 67, `faction_H` = 6
 -- -------------
 -- Quest 14104 -
 -- -------------
-DELETE FROM `event_scripts` WHERE `id` = 22030;
-INSERT INTO `event_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`x`,`y`,`z`,`o`,`comments`) VALUES (22030,3,10,35012,300000,10006.4,650.6,10.34,4.542,"");
+DELETE FROM `dbscripts_on_event` WHERE `id` = 22030;
+INSERT INTO `dbscripts_on_event` (`id`,`delay`,`command`,`datalong`,`datalong2`,`x`,`y`,`z`,`o`,`comments`) VALUES (22030,3,10,35012,300000,10006.4,650.6,10.34,4.542,"");
 
 DELETE FROM `creature_equip_template` WHERE (`entry`=110000);
 INSERT INTO `creature_equip_template` (`entry`, `equipentry1`, `equipentry2`, `equipentry3`) VALUES (110000, 34816, 34816, 0);
@@ -100,28 +100,27 @@ DELETE FROM creature WHERE id = 33707; -- Argent Champion
 DELETE FROM creature_addon WHERE guid = 129089;
 UPDATE creature_template SET faction_A = 7, faction_H = 7, npcflag = 0, KillCredit1 = 33708 WHERE entry = 33707;
 REPLACE INTO creature_template_addon (`entry`,`mount`,`auras`) VALUES (33707,14337,63501);
-UPDATE gossip_scripts SET datalong = 33707 WHERE id IN (33518,50102);
+UPDATE `dbscripts_on_gossip` SET datalong = 33707 WHERE id IN (33518,50102);
 UPDATE creature_template SET npcflag = 0 WHERE entry = 33448; -- Argent Valiant
  
 -- Among the Champions (4 quests)
-DELETE FROM gossip_scripts WHERE id IN (10453,10454,10455,10456,10457,10458,10459,10460,10461,10462);
+DELETE FROM `dbscripts_on_gossip` WHERE id IN (10453,10454,10455,10456,10457,10458,10459,10460,10461,10462);
 DELETE FROM gossip_menu_option WHERE menu_id IN (10453,10454,10455,10456,10457,10458,10459,10460,10461,10462);
  
 INSERT INTO `gossip_menu_option`(`menu_id`,`id`,`option_icon`,`option_text`,`option_id`,`npc_option_npcflag`,
-`action_menu_id`,`action_poi_id`,`action_script_id`,`box_coded`,`box_money`,`box_text`,`cond_1`,`cond_1_val_1`,
-`cond_1_val_2`,`cond_2`,`cond_2_val_1`,`cond_2_val_2`,`cond_3`,`cond_3_val_1`,`cond_3_val_2`) VALUES
-(10453,0,0,'I am ready to fight!',1,1,-1,0,10453,0,0,NULL,1,62853,0,6,469,0,0,0,0),
-(10454,0,0,'I am ready to fight!',1,1,-1,0,10454,0,0,NULL,1,62853,0,6,469,0,0,0,0),
-(10455,0,0,'I am ready to fight!',1,1,-1,0,10455,0,0,NULL,1,62853,0,6,469,0,0,0,0),
-(10456,0,0,'I am ready to fight!',1,1,-1,0,10456,0,0,NULL,1,62853,0,6,469,0,0,0,0),
-(10457,0,0,'I am ready to fight!',1,1,-1,0,10457,0,0,NULL,1,62853,0,6,67,0,0,0,0),
-(10458,0,0,'I am ready to fight!',1,1,-1,0,10458,0,0,NULL,1,62853,0,6,67,0,0,0,0),
-(10459,0,0,'I am ready to fight!',1,1,-1,0,10459,0,0,NULL,1,62853,0,6,67,0,0,0,0),
-(10460,0,0,'I am ready to fight!',1,1,-1,0,10460,0,0,NULL,1,62853,0,6,469,0,0,0,0),
-(10461,0,0,'I am ready to fight!',1,1,-1,0,10461,0,0,NULL,1,62853,0,6,67,0,0,0,0),
-(10462,0,0,'I am ready to fight!',1,1,-1,0,10462,0,0,NULL,1,62853,0,6,67,0,0,0,0);
+`action_menu_id`,`action_poi_id`,`action_script_id`,`box_coded`,`box_money`,`box_text`) VALUES
+(10453,0,0,'I am ready to fight!',1,1,-1,0,10453,0,0,NULL /*,1,62853,0,6,469,0,0,0,0*/),
+(10454,0,0,'I am ready to fight!',1,1,-1,0,10454,0,0,NULL /*,1,62853,0,6,469,0,0,0,0*/),
+(10455,0,0,'I am ready to fight!',1,1,-1,0,10455,0,0,NULL /*,1,62853,0,6,469,0,0,0,0*/),
+(10456,0,0,'I am ready to fight!',1,1,-1,0,10456,0,0,NULL /*,1,62853,0,6,469,0,0,0,0*/),
+(10457,0,0,'I am ready to fight!',1,1,-1,0,10457,0,0,NULL /*,1,62853,0,6,67,0,0,0,0*/),
+(10458,0,0,'I am ready to fight!',1,1,-1,0,10458,0,0,NULL /*,1,62853,0,6,67,0,0,0,0*/),
+(10459,0,0,'I am ready to fight!',1,1,-1,0,10459,0,0,NULL /*,1,62853,0,6,67,0,0,0,0*/),
+(10460,0,0,'I am ready to fight!',1,1,-1,0,10460,0,0,NULL /*,1,62853,0,6,469,0,0,0,0*/),
+(10461,0,0,'I am ready to fight!',1,1,-1,0,10461,0,0,NULL /*,1,62853,0,6,67,0,0,0,0*/),
+(10462,0,0,'I am ready to fight!',1,1,-1,0,10462,0,0,NULL /*,1,62853,0,6,67,0,0,0,0*/);
  
-INSERT INTO `gossip_scripts`(`id`,`delay`,`command`,`datalong`,`datalong2`,`buddy_entry`,`search_radius`,
+INSERT INTO `dbscripts_on_gossip`(`id`,`delay`,`command`,`datalong`,`datalong2`,`buddy_entry`,`search_radius`,
 `data_flags`,`dataint`,`dataint2`,`dataint3`,`dataint4`,`x`,`y`,`z`,`o`,`comments`) VALUES
 (10453,1,22,14,2,0,0,4,0,0,0,0,0,0,0,0,''),
 (10453,0,0,0,0,0,0,4,2000000449,2000000450,2000000451,0,0,0,0,0,''),
@@ -146,7 +145,7 @@ INSERT INTO `gossip_scripts`(`id`,`delay`,`command`,`datalong`,`datalong2`,`budd
 
 DELETE FROM creature_ai_texts WHERE entry = -335621;
 DELETE FROM creature_ai_scripts WHERE creature_id IN (33285,33306,33382,33383,33384,33558,33559,33561,33562,33564);
-UPDATE gossip_scripts SET buddy_entry = 0, search_radius = 0, data_flags = 4 WHERE command = 22 AND id IN (10469,10468,10470,10472,10473,10466,10464,10471,10465,10467);
+UPDATE `dbscripts_on_gossip` SET buddy_entry = 0, search_radius = 0, data_flags = 4 WHERE command = 22 AND id IN (10469,10468,10470,10472,10473,10466,10464,10471,10465,10467);
 UPDATE `creature_template` SET `gossip_menu_id` = 10470 WHERE `entry` = 33382;
 
 -- valiants
@@ -261,7 +260,7 @@ DELETE FROM `creature_ai_scripts` WHERE (`id`='2932953');
 INSERT INTO `creature_ai_scripts` VALUES ('2932953', '29329', '0', '0', '100', '0', '7000', '9000', '13000', '16000', '11', '32774', '1', '4', '0', '0', '0', '0', '0', '0', '0', '0', 'R2 - cast Avengers shield');
 
 -- onslaught gryphon rider
-UPDATE `creature_template` SET `spell2` = 40652, `spell3` = '0' WHERE `entry` = 29333; -- removed incorrect and dupe throw spear spell
+UPDATE `creature_template_spells` SET `spell2` = 40652, `spell3` = 0 WHERE `entry` = 29333; -- removed incorrect and dupe throw spear spell
 UPDATE `creature_template` SET `maxmana` = 7988 WHERE `entry` = 29333;
 UPDATE `creature_template` SET `maxhealth` = 12600 WHERE `entry` = 29333;
 DELETE FROM `creature_ai_scripts` WHERE (`id`='2933351');
@@ -694,4 +693,3 @@ INSERT INTO creature_ai_texts (entry,content_default,type,comment) VALUES
 
 DELETE FROM `creature_template_addon` WHERE (`entry`=21506);
 INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (21506, 0, 0, 0, 0, 0, 0, '');
-
