@@ -535,6 +535,9 @@ enum
     SPELL_ICY_TOUCH_DUEL        = 52372,
     SPELL_PLAGUE_STRIKE_DUEL    = 52373,
 
+    GOSSIP_ITEM_ACCEPT_DUEL     = -3609000,
+    GOSSIP_TEXT_ID_DUEL         = 13433,
+
     QUEST_DEATH_CHALLENGE       = 12733,
     FACTION_HOSTILE             = 2068
 };
@@ -543,8 +546,6 @@ int32 m_auiRandomSay[] =
 {
     SAY_DUEL_A, SAY_DUEL_B, SAY_DUEL_C, SAY_DUEL_D, SAY_DUEL_E, SAY_DUEL_F, SAY_DUEL_G, SAY_DUEL_H, SAY_DUEL_I
 };
-
-#define GOSSIP_ACCEPT_DUEL      "I challenge you, death knight!"
 
 struct MANGOS_DLL_DECL npc_death_knight_initiateAI : public ScriptedAI
 {
@@ -672,8 +673,8 @@ bool GossipHello_npc_death_knight_initiate(Player* pPlayer, Creature* pCreature)
 {
     if (pPlayer->GetQuestStatus(QUEST_DEATH_CHALLENGE) == QUEST_STATUS_INCOMPLETE)
     {
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ACCEPT_DUEL, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-        pPlayer->SEND_GOSSIP_MENU(13433, pCreature->GetObjectGuid());
+        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_ACCEPT_DUEL, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
+        pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_DUEL, pCreature->GetObjectGuid());
         return true;
     }
     return false;
@@ -1579,7 +1580,8 @@ enum LightOfDawn
     // others
     QUEST_ID_LIGHT_OF_DAWN              = 12801,
 
-    GOSSIP_ITEM_READY                   = -3609001
+    GOSSIP_ITEM_READY                   = -3609001,
+    GOSSIP_TEXT_ID_READY                = 13485,
 };
 
 struct MANGOS_DLL_DECL npc_highlord_darion_mograineAI : public npc_escortAI
@@ -2683,7 +2685,7 @@ bool GossipHello_npc_highlord_darion_mograine(Player* pPlayer, Creature* pCreatu
     if (pPlayer->GetQuestStatus(QUEST_ID_LIGHT_OF_DAWN) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_READY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
+    pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_READY, pCreature->GetObjectGuid());
 
     return true;
 }
