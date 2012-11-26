@@ -418,7 +418,7 @@ extern void AddSC_boss_sartharion();                        // obsidian_sanctum
 extern void AddSC_instance_obsidian_sanctum();
 extern void AddSC_boss_baltharus();                         // ruby_sanctum
 extern void AddSC_boss_halion();
-extern void AddSC_boss_ragefire();
+extern void AddSC_boss_saviana();
 extern void AddSC_boss_zarithrian();
 extern void AddSC_instance_ruby_sanctum();
 extern void AddSC_ruby_sanctum();
@@ -984,7 +984,7 @@ void AddScripts()
     AddSC_instance_obsidian_sanctum();
     AddSC_boss_baltharus();                                 // ruby_sanctum
     AddSC_boss_halion();
-    AddSC_boss_ragefire();
+    AddSC_boss_saviana();
     AddSC_boss_zarithrian();
     AddSC_instance_ruby_sanctum();
     AddSC_ruby_sanctum();

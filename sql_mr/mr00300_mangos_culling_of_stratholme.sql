@@ -2,8 +2,6 @@
 -- Instance CoS                 -
 -- ------------------------------
 
-UPDATE `instance_template` SET `ScriptName` = 'instance_culling_of_stratholme' WHERE map=595;
-
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` ='npc_mike' WHERE entry = 30571;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_chromi_start' WHERE entry=26527;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_roger' WHERE entry=27903;
@@ -16,8 +14,8 @@ UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_bartleby_cs' WHE
 UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_chromi_middle' WHERE entry=27915;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_uther' WHERE entry=26528;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_arthas' WHERE entry=26499;
-UPDATE `creature_template` SET `AIName` = 'EventAI',`ScriptName`='' WHERE entry = 27747;
-DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=27747);
+
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 27747; -- Need compare with ACID
 INSERT INTO `creature_ai_scripts` VALUES 
 (2774701, 27747, 1, 0, 100, 6, 0, 0, 0, 0, 21, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 'High Elf Mage-Priest - Prevent Combat Movement and Set Phase to 0 on Spawn'),
 (2774702, 27747, 4, 0, 100, 6, 0, 0, 0, 0, 11, 34232, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'High Elf Mage-Priest - Cast Holy Bolt and Set Phase 1 on Aggro'),
@@ -31,11 +29,12 @@ INSERT INTO `creature_ai_scripts` VALUES
 (2774710, 27747, 2, 0, 100, 6, 15, 0, 0, 0, 22, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'High Elf Mage-Priest - Set Phase 3 at 15% HP'),
 (2774711, 27747, 2, 7, 100, 6, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'High Elf Mage-Priest - Start Combat Movement and Flee at 15% HP (Phase 3)'),
 (2774712, 27747, 7, 0, 100, 6, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'High Elf Mage-Priest - Set Phase to 0 on Evade');
-UPDATE `creature_template` SET `AIName` = 'EventAI',`ScriptName`='' WHERE entry = 27745;
-DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=27745);
+
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 27745; -- Need compare with ACID
 INSERT INTO `creature_ai_scripts` VALUES 
 (2774501, 27745, 9, 0, 100, 7, 0, 5, 5000, 8000, 11, 25710, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Lordaeron Footman - Cast Heroic Strike'),
 (2774502, 27745, 0, 0, 100, 7, 7000, 12000, 9000, 15000, 11, 52317, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Lordaeron Footman - Cast Defend');
+
 UPDATE `creature_template` SET `AIName` = '',`ScriptName`='npc_arthas_priest' WHERE entry IN (70004, 70005);
 UPDATE `creature_template` SET `AIName` = '',`ScriptName`='npc_arthas_marine' WHERE entry IN (70000, 70001, 70002, 70003);
 UPDATE `creature_template` SET `AIName` = '',`ScriptName`='npc_dark_conversion' WHERE entry IN (31127, 31126, 28167, 28169);
@@ -111,20 +110,12 @@ UPDATE `quest_template` SET `SpecialFlags` = 1 WHERE `entry` = 13149;
 -- remove already spawned third chromi for summon after mal ganis is dead
 DELETE FROM `creature` WHERE `id`=30997;
 
--- Mal'Ganis completion of encounter
-DELETE FROM `achievement_criteria_requirement` WHERE `criteria_id` IN (6381, 6808);
-INSERT INTO `achievement_criteria_requirement` VALUES
-(6381, 12, 0, 0),
-(6808, 12, 1, 0);
-
 -- ----------------------------------------
 -- spell scripts and ect spell_area_stuff -
 -- ----------------------------------------
 
-REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES('58825','1','27733');
-REPLACE INTO `spell_area` (`spell`, `area`, `quest_start`, `quest_start_active`, `quest_end`, `aura_spell`, `racemask`, `gender`, `autocast`) VALUES('35481','4100','0','0','0','0','0','1','1');
-REPLACE INTO `spell_area` (`spell`, `area`, `quest_start`, `quest_start_active`, `quest_end`, `aura_spell`, `racemask`, `gender`, `autocast`) VALUES('35480','4100','0','0','0','0','0','0','1');
-REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('58825', '1', '27733');
+REPLACE INTO `spell_area` (`spell`, `area`, `quest_start`, `quest_start_active`, `quest_end`, `aura_spell`, `racemask`, `gender`, `autocast`) VALUES('35481','4100','0','0','0','0','0','1','1'); -- cause careate two spell with different racemask fore one area
+REPLACE INTO `spell_area` (`spell`, `area`, `quest_start`, `quest_start_active`, `quest_end`, `aura_spell`, `racemask`, `gender`, `autocast`) VALUES('35480','4100','0','0','0','0','0','0','1'); -- cause careate two spell with different racemask fore one area
 
 -- ----------------------------
 -- Creature Stuff             -
@@ -137,7 +128,6 @@ UPDATE `creature_template` SET `modelid_2` = 24949 WHERE `entry` = 26499;
 UPDATE `creature` SET `spawntimesecs`= 36000 WHERE `id` IN (31127, 31126, 28167, 28169);
 
 -- Remove old versions
-DELETE FROM `creature` WHERE `guid` IN (4456649,4456653,4458724,4458725,4458738,4458739,4458740,4458741,4459981,4459615);
 DELETE FROM `creature` WHERE `id` IN (27731,27734,28249,27736,27915,30571,26499,26497,26528,27891,27892,27884,32273,28439);
 
 -- DB error corrections for above sql query
