@@ -23,3 +23,18 @@ UPDATE creature_template SET ScriptName = 'npc_corrupted_soul_fragment' WHERE `e
 UPDATE creature_template SET ScriptName = 'boss_saviana' WHERE `entry` = 39747;
 UPDATE creature_template SET ScriptName = 'boss_drakkari_colossus' WHERE `entry` = 29307;
 UPDATE creature_template SET ScriptName = 'boss_drakkari_elemental' WHERE `entry` = 29573;
+
+-- ---------- --
+-- 2012-11-27 --
+-- ---------- --
+-- sd2_mr0518
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = '' WHERE `entry` = 28822;
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = '' WHERE `entry` = 28819;
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = '' WHERE `entry` = 28891;
+UPDATE `item_template` SET `ScriptName` = '' WHERE `entry` = 39253;
+
+-- sd2_mr0519
+-- Mirror Immage
+UPDATE `creature_template` SET `ScriptName`='' WHERE `entry` = 31216;
+-- DK Gargoyle
+UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` = '27829';

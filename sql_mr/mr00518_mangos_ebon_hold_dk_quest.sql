@@ -165,11 +165,6 @@ DELETE FROM `world_template` WHERE `map` = 609;
 INSERT INTO `world_template` VALUES (609, 'world_map_ebon_hold');
 INSERT IGNORE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('52514', '1', '28845');
 
-UPDATE `creature_template` SET `AIName` = '', `ScriptName` = '' WHERE `entry` = 28822;
-UPDATE `creature_template` SET `AIName` = '', `ScriptName` = '' WHERE `entry` = 28819;
-UPDATE `creature_template` SET `AIName` = '', `ScriptName` = '' WHERE `entry` = 28891;
-UPDATE `item_template` SET `ScriptName` = '' WHERE `entry` = 39253;
-
 -- EventAI for ghost needs tweaked and double checked
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 28846;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 28846;
