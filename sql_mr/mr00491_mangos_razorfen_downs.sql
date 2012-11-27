@@ -33,9 +33,9 @@ DELETE FROM `creature` WHERE `id`=7349;
 DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=7349);
 
 DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=7351);
-UPDATE `creature_template` SET `modelid_2` = 3004, `minlevel` = 44, `maxlevel` = 44, `maxhealth` = 7831, `mindmg` = 52, `maxdmg` = 72, `AIName` = '', `ScriptName` = 'npc_tomb_reaver' WHERE `entry` = 7351;
+UPDATE `creature_template` SET `minlevel` = 44, `maxlevel` = 44, `maxhealth` = 7831, `mindmg` = 52, `maxdmg` = 72, `AIName` = '', `ScriptName` = 'npc_tomb_reaver' WHERE `entry` = 7351;
 
-UPDATE `creature_template` SET `modelid_2` = 6842, `minhealth` = 3342, `maxhealth` = 3342, `AIName` = '', `ScriptName` = 'npc_tomb_fiend' WHERE `entry` = 7349;
+UPDATE `creature_template` SET `minhealth` = 3342, `maxhealth` = 3342, `AIName` = '', `ScriptName` = 'npc_tomb_fiend' WHERE `entry` = 7349;
 
 UPDATE `gameobject_template` SET `ScriptName` = 'go_gong_razor' WHERE `entry` = 148917;
 UPDATE `gameobject_template` SET `flags` = 32 WHERE `entry` = 148917;
