@@ -38,3 +38,9 @@ UPDATE `item_template` SET `ScriptName` = '' WHERE `entry` = 39253;
 UPDATE `creature_template` SET `ScriptName`='' WHERE `entry` = 31216;
 -- DK Gargoyle
 UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` = '27829';
+
+-- ---------- --
+-- 2012-11-28 --
+-- ---------- --
+-- sd2_mr0522
+UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` IN (27894, 28781);
