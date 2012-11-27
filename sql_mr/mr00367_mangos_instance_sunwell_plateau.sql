@@ -47,7 +47,6 @@ UPDATE `creature_template` SET `flags_extra` = 128 WHERE `entry` = 25703;
 -- remove static spawn as Felmyst is summoned when needed
 DELETE FROM `creature` WHERE `id` = 25038;
 
-UPDATE `creature_template` SET `ScriptName` = 'spell_dummy_npc_brutallus_cloud' WHERE `entry` = 25703;
 UPDATE `creature_template` SET `ScriptName` = 'npc_felmyst_vapor' WHERE `entry` = 25265;
 UPDATE `creature_template` SET `ScriptName` = 'npc_felmyst_vapor_cloud' WHERE `entry` = 25267;
 
