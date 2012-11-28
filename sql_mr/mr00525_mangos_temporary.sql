@@ -47,3 +47,8 @@ UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` IN (27894, 28781)
 
 -- [2766]
 UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` = 29175;
+
+-- sd2_mr0523
+UPDATE `gameobject_template` SET `data0` = 58420 WHERE `entry` = 193053;
+UPDATE `gameobject_template` SET `data0` = 58418 WHERE `entry` = 193052;
+UPDATE `gameobject_template` SET `ScriptName` = '' WHERE `entry` IN (193052, 193053);
