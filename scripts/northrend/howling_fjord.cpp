@@ -623,7 +623,7 @@ bool GossipSelect_npc_jack_adams(Player* pPlayer, Creature* pCreature, uint32 ui
     {
         pPlayer->CLOSE_GOSSIP_MENU();
         ItemPosCountVec dest;
-        uint8 msg = pPlayer->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, ITEM_JACK_ADAMS_DEBT, 1, false);
+        uint8 msg = pPlayer->CanStoreNewItem(NULL_BAG, NULL_SLOT, dest, ITEM_JACK_ADAMS_DEBT, 1);
         if (msg == EQUIP_ERR_OK)
             pPlayer->StoreNewItem(dest, ITEM_JACK_ADAMS_DEBT, 1, true);
         pCreature->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);

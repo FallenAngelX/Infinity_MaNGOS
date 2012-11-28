@@ -45,7 +45,7 @@ void SystemMgr::LoadVersion()
     strSD2Version.append(_FULLVERSION);
 
     outstring_log("Loading %s", strSD2Version.c_str());
-    outstring_log("");
+    // outstring_log("");
 }
 
 void SystemMgr::LoadScriptTexts()
@@ -98,14 +98,14 @@ void SystemMgr::LoadScriptTexts()
 
         delete pResult;
 
-        outstring_log("");
+        //outstring_log("");
         outstring_log(">> Loaded %u additional Script Texts data.", uiCount);
     }
     else
     {
         BarGoLink bar(1);
         bar.step();
-        outstring_log("");
+        //outstring_log("");
         outstring_log(">> Loaded 0 additional Script Texts data. DB table `script_texts` is empty.");
     }
 }
@@ -160,14 +160,14 @@ void SystemMgr::LoadScriptTextsCustom()
 
         delete pResult;
 
-        outstring_log("");
+        //outstring_log("");
         outstring_log(">> Loaded %u additional Custom Texts data.", uiCount);
     }
     else
     {
         BarGoLink bar(1);
         bar.step();
-        outstring_log("");
+        //outstring_log("");
         outstring_log(">> Loaded 0 additional Custom Texts data. DB table `custom_texts` is empty.");
     }
 }
@@ -233,14 +233,14 @@ void SystemMgr::LoadScriptWaypoints()
 
         delete pResult;
 
-        outstring_log("");
+        //outstring_log("");
         outstring_log(">> Loaded %u Script Waypoint nodes.", uiNodeCount);
     }
     else
     {
         BarGoLink bar(1);
         bar.step();
-        outstring_log("");
+        //outstring_log("");
         outstring_log(">> Loaded 0 Script Waypoints. DB table `script_waypoint` is empty.");
     }
 }
