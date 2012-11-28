@@ -23,8 +23,8 @@ enum
 
 npc_escortAI::npc_escortAI(Creature* pCreature) : ScriptedAI(pCreature),
     m_playerGuid(),
-    m_uiPlayerCheckTimer(1000),
     m_uiWPWaitTimer(2500),
+    m_uiPlayerCheckTimer(1000),
     m_uiEscortState(STATE_ESCORT_NONE),
     m_bIsRunning(false),
     m_pQuestForEscort(NULL),

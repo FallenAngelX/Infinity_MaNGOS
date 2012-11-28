@@ -3051,8 +3051,9 @@ struct MANGOS_DLL_DECL npc_valkyr_battle_maidenAI : ScriptedAI
     void Reset()
     {
         m_summonerGuid.Clear();
+        m_summonerGuid = (dynamic_cast<TemporarySummon*>(m_creature))->GetSummonerGuid();
 
-        if (m_summonerGuid = (dynamic_cast<TemporarySummon*>(m_creature))->GetSummonerGuid())
+        if (m_summonerGuid)
             if(Unit* pUnit = m_creature->GetMap()->GetUnit(m_summonerGuid))
                 if(pUnit->GetTypeId() != TYPEID_PLAYER)
                     m_summonerGuid.Clear();

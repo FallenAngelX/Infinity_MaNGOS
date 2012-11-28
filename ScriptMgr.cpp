@@ -64,7 +64,7 @@ void LoadDatabase()
     if (SD2Database.Initialize(strSD2DBinfo.c_str()))
     {
         outstring_log("SD2: ScriptDev2 database initialized.");
-        outstring_log("");
+        //outstring_log("");
 
         pSystemMgr.LoadVersion();
         pSystemMgr.LoadScriptTexts();
@@ -114,7 +114,7 @@ MANGOS_DLL_EXPORT
 void InitScriptLibrary()
 {
     // ScriptDev2 startup
-    outstring_log("");
+    // outstring_log("");
     outstring_log(" MMM  MMM    MM");
     outstring_log("M  MM M  M  M  M");
     outstring_log("MM    M   M   M");
@@ -143,7 +143,7 @@ void InitScriptLibrary()
     if (SD2Config.GetIntDefault("ConfVersion", 0) != SD2_CONF_VERSION)
         script_error_log("Configuration file version doesn't match expected version. Some config variables may be wrong or missing.");
 
-    outstring_log("");
+    // outstring_log("");
 
     // Load database (must be called after SD2Config.SetSource).
     LoadDatabase();
@@ -151,7 +151,7 @@ void InitScriptLibrary()
     outstring_log("SD2: Loading C++ scripts");
     BarGoLink bar(1);
     bar.step();
-    outstring_log("");
+    // outstring_log("");
 
     // Initialize script ids to needed ammount of assigned ScriptNames (from core)
     m_scripts = new SDScriptVec(GetScriptIdsCount(), NULL);
@@ -619,7 +619,7 @@ MANGOS_DLL_EXPORT
 CreatureAI* GetCreatureAI(Creature* pCreature)
 {
     if (!pCreature)
-        return false;
+        return NULL;
 
     Script* pTempScript = m_scripts->at(pCreature->GetScriptId());
 

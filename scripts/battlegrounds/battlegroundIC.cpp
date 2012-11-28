@@ -74,9 +74,9 @@ bool GOHello_go_ic_teleport(Player* pPlayer, GameObject* pGo)
     if (pPlayer->GetMapId() != 628)
         return false;
 
-    if (BattleGround *bg = pPlayer->GetBattleGround())                  // no need to check for faction, since only the eligible players can click the portal
+    if (BattleGround* bg = pPlayer->GetBattleGround())                  // no need to check for faction, since only the eligible players can click the portal
     {
-        BattleGroundIC * IoC = static_cast<BattleGroundIC*>(bg);
+        //BattleGroundIC* IoC = static_cast<BattleGroundIC*>(bg);
 
         for (uint32 i = 0; i < MAX_PORTALS; ++i)
         {

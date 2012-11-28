@@ -43,13 +43,11 @@ instance_icecrown_citadel::instance_icecrown_citadel(Map* pMap) : ScriptedInstan
 
 void instance_icecrown_citadel::Initialize()
 {
-    for (uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTERS_2; ++i)
         m_auiEncounter[i] = NOT_STARTED;
 
     for (uint8 i = 0; i < ACHIEVE_MAX_COUNT; ++i)
         m_bAchievCriteria[i] = false;
-
-    m_auiEncounter[0] = 0;
 
     m_auiEvent = 0;
     m_auiEventTimer = 1000;
@@ -91,7 +89,7 @@ void instance_icecrown_citadel::Initialize()
 
 bool instance_icecrown_citadel::IsEncounterInProgress()
 {
-    for(uint8 i = 1; i < MAX_ENCOUNTERS-2 ; ++i)
+    for(uint8 i = 1; i < MAX_ENCOUNTERS; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             return true;

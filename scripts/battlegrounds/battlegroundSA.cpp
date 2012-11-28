@@ -82,14 +82,16 @@ struct MANGOS_DLL_DECL npc_sa_vendorAI : public ScriptedAI
                 build[gydId]=false;
             }
             else build_time -= diff;
-
+/* FIXME - need implement correct saying.
             switch (build_time/2)
             {
                 case 15000: m_creature->MonsterSay(SA_MESSAGE_2,LANG_UNIVERSAL,0);
                     break;
                 case 7500: m_creature->MonsterSay(SA_MESSAGE_5,LANG_UNIVERSAL,0);
                     break;
+
             }
+*/
         }
     }
 };
@@ -101,15 +103,18 @@ CreatureAI* GetAI_npc_sa_vendor(Creature* pCreature)
 
 bool GossipHello_npc_sa_vendor(Player* pPlayer, Creature* pCreature)
 {
-    uint8 gyd = NULL;
+    uint8 gyd = 0;
     if (pCreature->GetEntry() == 29260)
         gyd = 0;
     if (pCreature->GetEntry() == 29262)
         gyd = 1;
+
     if (!build[gyd])
     {
         if (pPlayer->GetMapId() == 607)
+        {
             if (BattleGround *bg = pPlayer->GetBattleGround())
+            {
                 if (bg->GetDefender() != pPlayer->GetTeam())
                 {
                     if (bg->GetDefender() != ALLIANCE && bg->GetGydController(gyd) == BG_SA_GRAVE_STATUS_ALLY_OCCUPIED)
@@ -117,6 +122,8 @@ bool GossipHello_npc_sa_vendor(Player* pPlayer, Creature* pCreature)
                     if (bg->GetDefender() != HORDE && bg->GetGydController(gyd) == BG_SA_GRAVE_STATUS_HORDE_OCCUPIED)
                         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_START_EVENT_1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
                 }
+            }
+        }
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_START_EVENT_2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
     }
     else
