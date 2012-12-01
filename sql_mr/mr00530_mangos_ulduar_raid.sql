@@ -82,12 +82,12 @@ DELETE FROM `creature` WHERE `id` = 34004;
 
 -- THIS IS A WORKAROUND FOR THE HARD MODE LOOT, PLEASE REMOVE IF YOU DON'T WANT TO USE IT!
 -- hard loot for the heart
-UPDATE creature_template SET lootid = 33329 WHERE entry = 33329;
-UPDATE creature_template SET lootid = 33995 WHERE entry = 33995;
+UPDATE `creature_template` SET `lootid` = 33329 WHERE `entry` = 33329;
+UPDATE `creature_template` SET `lootid` = 33995 WHERE `entry` = 33995;
 -- rewrite loot for XT to support hard mode: moved hard mode loot to XT heart
 -- 10 man:
 -- hard mode loot for the heart
-DELETE FROM `creature_loot_template` WHERE (`entry`=33329);
+DELETE FROM `creature_loot_template` WHERE `entry` = 33329;
 INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`) VALUES 
 (33329, 45867, 0, 1, 1, 1),
 (33329, 45868, 0, 1, 1, 1),
@@ -96,7 +96,7 @@ INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `g
 (33329, 45871, 0, 1, 1, 1);
 -- 25 man:
 -- no hard loot on xt so moving to the heart
-DELETE FROM `creature_loot_template` WHERE (`entry`=33995);
+DELETE FROM `creature_loot_template` WHERE `entry` = 33995;
 INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`) VALUES 
 (33995, 45445, 0, 1, 1, 1),
 (33995, 45443, 0, 1, 1, 1),
@@ -104,13 +104,15 @@ INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `g
 (33995, 45446, 0, 1, 1, 1),
 (33995, 45442, 0, 1, 1, 1);
 
--- Iron council
-UPDATE `creature_template` SET `mechanic_immune_mask` = 617299803, `ScriptName` = 'boss_molgeim' WHERE `entry` = 32927;
-UPDATE `creature_template` SET `mechanic_immune_mask` = 617299803, `ScriptName` = 'boss_steelbreaker' WHERE `entry` = 32867;
-UPDATE creature_template SET ScriptName = 'mob_rune_of_power' WHERE entry = 33705;
-UPDATE creature_template SET ScriptName = 'mob_rune_of_summoning' WHERE entry = 33051;
-UPDATE creature_template SET ScriptName = 'mob_ulduar_lightning_elemental' WHERE entry = 32958;
-UPDATE `creature_template` SET `mechanic_immune_mask` = 619397115 WHERE `entry` IN (32857, 33694);
+-- ---------------- --
+-- Assembly of Iron --
+-- ---------------- --
+UPDATE `creature_template` SET `mechanic_immune_mask` = `mechanic_immune_mask` &~ 33554432 &~ 128 &~ 32 &~ 4 WHERE `entry` IN(32927, 32867);
+UPDATE `creature_template` SET `ScriptName` = 'npc_ulduar_lightning_elemental' WHERE `entry` = 32958;
+UPDATE `creature_template` SET `mechanic_immune_mask` =
+536870912|67108864|8388608|4194304|2097152|524288|131072|65536|8192|4096|2048|1024|512|256|128|64|32|16|8|2|1
+WHERE `entry` IN (32857, 33694); -- 619397115
+UPDATE `creature_template` SET `unit_flags` = 33554432 | 2 WHERE `entry` IN (33051, 33705);
 
 -- LOOT FOR THESE THREE SHOUDL BE PROGRESSIVE, MAYBE THIS IS NOT THE RIGHT WAY TO DO IT
 -- update loot id:
@@ -123,7 +125,7 @@ UPDATE `creature_template` SET `lootid` = 33693 WHERE `entry` = 33692;
 -- Rewrite loot for council: this will allow us to use hard mode loot because only the last killed boss will be lootable
 -- 10 man version
 -- Brundir:
-DELETE FROM `creature_loot_template` WHERE (`entry`=32857);
+DELETE FROM `creature_loot_template` WHERE `entry` = 32857;
 INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`) VALUES 
 (32857, 45322, 0, 2, 1, 1),
 (32857, 45324, 0, 1, 1, 1),
@@ -139,7 +141,7 @@ INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `g
 (32857, 47241, 100, 0, 1, 1);
 -- 25 man version
 -- Brundir:
-DELETE FROM `creature_loot_template` WHERE (`entry`=33694);
+DELETE FROM `creature_loot_template` WHERE `entry` = 33694;
 INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`) VALUES 
 (33694, 45224, 0, 3, 1, 1),
 (33694, 45228, 0, 3, 1, 1),

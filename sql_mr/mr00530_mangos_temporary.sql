@@ -55,3 +55,9 @@ UPDATE `gameobject_template` SET `ScriptName` = '' WHERE `entry` IN (193052, 193
 
 -- sd2_mr0528
 DELETE FROM `spell_script_target` WHERE `entry` = 45063;
+
+-- ---------- --
+-- 2012-12-01 --
+-- ---------- --
+-- sd2_mr0530
+UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` IN(33051, 33705);

@@ -81,8 +81,8 @@ void instance_ulduar::OnCreatureCreate(Creature* pCreature)
             return;
         // Assembly of Iron
         case NPC_STEELBREAKER:
-        case NPC_MOLGEIM:
-        case NPC_BRUNDIR:
+        case NPC_RUNEMASTER_MOLGEIM:
+        case NPC_STORMCALLER_BRUNDIR:
         // Kologarn
         case NPC_KOLOGARN:
         case NPC_KOLOGARN_BRIDGE_DUMMY:
@@ -205,9 +205,10 @@ void instance_ulduar::OnObjectCreate(GameObject* pGo)
         case GO_IRON_ENTRANCE_DOOR:
             break;
         case GO_ARCHIVUM_DOOR:
-            pGo->SetGoState(GO_STATE_READY);
-            if (m_auiEncounter[TYPE_ASSEMBLY])
+            if (GetData(TYPE_ASSEMBLY) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
+            else
+                pGo->SetGoState(GO_STATE_READY);
             break;
         case GO_ARCHIVUM_CONSOLE:
         case GO_UNIVERSE_FLOOR_ARCHIVUM:
@@ -459,12 +460,12 @@ void instance_ulduar::SetData(uint32 uiType, uint32 uiData)
             }
             else if (uiData == FAIL)
             {
-                if (Creature* pBrundir = GetSingleCreatureFromStorage(NPC_BRUNDIR))
+                if (Creature* pBrundir = GetSingleCreatureFromStorage(NPC_STORMCALLER_BRUNDIR))
                 {
                     if (!pBrundir->isAlive())
                         pBrundir->Respawn();
                 }
-                if (Creature* pMolgeim = GetSingleCreatureFromStorage(NPC_MOLGEIM))
+                if (Creature* pMolgeim = GetSingleCreatureFromStorage(NPC_RUNEMASTER_MOLGEIM))
                 {
                     if (!pMolgeim->isAlive())
                         pMolgeim->Respawn();
@@ -802,7 +803,7 @@ void instance_ulduar::SetData(uint32 uiType, uint32 uiData)
             << m_auiEncounter[TYPE_AURIAYA] << " " << m_auiEncounter[TYPE_MIMIRON] << " " << m_auiEncounter[TYPE_HODIR] << " "
             << m_auiEncounter[TYPE_THORIM] << " " << m_auiEncounter[TYPE_FREYA] << " " << m_auiEncounter[TYPE_VEZAX] << " "
             << m_auiEncounter[TYPE_YOGGSARON] << " " << m_auiEncounter[TYPE_ALGALON] << " " << m_auiEncounter[TYPE_LEVIATHAN_DIFFICULTY] << " "
-            << m_auiEncounter[TYPE_ASSEMBLY_HARD] << " " << m_auiEncounter[TYPE_ASSEMBLY_HARD] << " "
+            << m_auiEncounter[TYPE_MIMIRON_HARD] << " "
             << m_auiEncounter[TYPE_HODIR_HARD] << " " << m_auiEncounter[TYPE_THORIM_HARD] << " " << m_auiEncounter[TYPE_FREYA_HARD] << " "
             << m_auiEncounter[TYPE_VEZAX_HARD] << " " << m_auiEncounter[TYPE_YOGGSARON_HARD] << " " << m_auiEncounter[TYPE_KEEPER_HODIR] << " "
             << m_auiEncounter[TYPE_KEEPER_THORIM] << " " << m_auiEncounter[TYPE_KEEPER_FREYA] << " " << m_auiEncounter[TYPE_KEEPER_MIMIRON] << " "
@@ -1054,7 +1055,7 @@ void instance_ulduar::Load(const char* strIn)
     >> m_auiEncounter[TYPE_ASSEMBLY] >> m_auiEncounter[TYPE_KOLOGARN] >> m_auiEncounter[TYPE_AURIAYA] >> m_auiEncounter[TYPE_MIMIRON]
     >> m_auiEncounter[TYPE_HODIR] >> m_auiEncounter[TYPE_THORIM] >> m_auiEncounter[TYPE_FREYA] >> m_auiEncounter[TYPE_VEZAX]
     >> m_auiEncounter[TYPE_YOGGSARON] >> m_auiEncounter[TYPE_ALGALON] >> m_auiEncounter[TYPE_LEVIATHAN_DIFFICULTY]
-    >> m_auiEncounter[TYPE_ASSEMBLY_HARD] >> m_auiEncounter[TYPE_MIMIRON_HARD] >> m_auiEncounter[TYPE_HODIR_HARD] >> m_auiEncounter[TYPE_THORIM_HARD]
+    >> m_auiEncounter[TYPE_MIMIRON_HARD] >> m_auiEncounter[TYPE_HODIR_HARD] >> m_auiEncounter[TYPE_THORIM_HARD]
     >> m_auiEncounter[TYPE_FREYA_HARD] >> m_auiEncounter[TYPE_VEZAX_HARD] >> m_auiEncounter[TYPE_YOGGSARON_HARD] >> m_auiEncounter[TYPE_KEEPER_HODIR]
     >> m_auiEncounter[TYPE_KEEPER_THORIM] >> m_auiEncounter[TYPE_KEEPER_FREYA] >> m_auiEncounter[TYPE_KEEPER_MIMIRON] >> m_auiEncounter[TYPE_LEVIATHAN_TP]
     >> m_auiEncounter[TYPE_XT002_TP] >> m_auiEncounter[TYPE_MIMIRON_TP];
