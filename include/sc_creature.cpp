@@ -132,6 +132,10 @@ void ScriptedAI::UpdateAI(const uint32 uiDiff)
  */
 void ScriptedAI::EnterEvadeMode()
 {
+    VehicleKitPtr pVehicleKit = m_creature->GetVehicleKit();
+    if (pVehicleKit)
+        pVehicleKit->Reset();
+
     m_creature->RemoveAllAuras();
     m_creature->DeleteThreatList();
     m_creature->CombatStop(true);
