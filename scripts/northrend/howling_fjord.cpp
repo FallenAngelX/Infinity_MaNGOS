@@ -290,10 +290,7 @@ struct MANGOS_DLL_DECL npc_silvermoon_harryAI : public ScriptedAI
         m_uiScorchTimer = 5*IN_MILLISECONDS;
         m_uiBlastWaveTimer = 7*IN_MILLISECONDS;
 
-        m_uiResetBeatenTimer = MINUTE*IN_MILLISECONDS;
-
-        if (m_creature->getFaction() != m_creature->GetCreatureInfo()->faction_A)
-            m_creature->setFaction(m_creature->GetCreatureInfo()->faction_A);
+        m_uiResetBeatenTimer = MINUTE * IN_MILLISECONDS;
     }
 
     void AttackedBy(Unit* pAttacker)
@@ -318,9 +315,6 @@ struct MANGOS_DLL_DECL npc_silvermoon_harryAI : public ScriptedAI
                     m_creature->RemoveAllAuras();
                     m_creature->DeleteThreatList();
                     m_creature->CombatStop(true);
-
-                    if (m_creature->getFaction() != m_creature->GetCreatureInfo()->faction_A)
-                        m_creature->setFaction(m_creature->GetCreatureInfo()->faction_A);
 
                     DoScriptText(SAY_BEATEN, m_creature);
                     m_bHarryBeaten = true;
@@ -407,7 +401,7 @@ bool GossipSelect_npc_silvermoon_harry(Player* pPlayer, Creature* pCreature, uin
             pPlayer->CLOSE_GOSSIP_MENU();
 
             DoScriptText(SAY_AGGRO, pCreature, pPlayer);
-            pCreature->setFaction(FACTION_HOSTILE_SH);
+            pCreature->SetFactionTemporary(FACTION_HOSTILE_SH, TEMPFACTION_RESTORE_RESPAWN | TEMPFACTION_RESTORE_COMBAT_STOP);
             pCreature->AI()->AttackStart(pPlayer);
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
