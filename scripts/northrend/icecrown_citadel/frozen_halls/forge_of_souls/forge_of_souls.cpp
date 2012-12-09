@@ -252,7 +252,7 @@ uint32 uiSummon_counter;
             }
             else Step = 10;
             StepTimer = 100;
-            m_creature->SetVisibility(VISIBILITY_OFF);
+            m_creature->SetVisibility(VISIBILITY_ON);
         }
     }
 
