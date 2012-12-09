@@ -164,19 +164,30 @@ INSERT INTO `creature_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `g
 -- emblem 100% drop
 (33694, 47241, 100, 0, 1, 1);
 
--- Kologarn
-DELETE FROM creature WHERE id IN (32933, 32934);
--- fix arms position because of the missing vehicles
-INSERT INTO creature (id, map, spawnMask, phaseMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES (32933, 603, 3, 65535, 0, 0, 1799.68, -24.3599, 452.227, 3.14747, 604800, 0, 0, 543855, 0, 0, 0);
-INSERT INTO creature (id, map, spawnMask, phaseMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES (32934, 603, 3, 65535, 0, 0, 1799.68, -24.3599, 452.227, 3.14747, 604800, 0, 0, 543855, 0, 0, 0);
-UPDATE creature_model_info SET bounding_radius=15, combat_reach=15 WHERE modelid IN (28638, 28822, 28821);
+-- -------- --
+-- Kologarn --
+-- -------- --
 UPDATE `creature_template` SET `mechanic_immune_mask` = 617299803, `ScriptName` = 'boss_kologarn', `unit_flags` = 0 WHERE `entry` = 32930;
 UPDATE `creature_template` SET `mechanic_immune_mask` = 652951551, `ScriptName` = 'boss_right_arm' WHERE `entry` = 32934;
 UPDATE `creature_template` SET `mechanic_immune_mask` = 652951551, `ScriptName` = 'boss_left_arm' WHERE `entry` = 32933;
-UPDATE creature_template SET ScriptName = 'mob_ulduar_rubble' WHERE entry IN (33768, 33809);
-UPDATE `gameobject` SET `position_y` = -35.6824, `position_x` = 1837.59 WHERE `id` IN (195047);
-UPDATE `creature_template` SET `RegenHealth` = 1 WHERE `entry` = 33910;
-UPDATE `creature_template` SET `RegenHealth` = 1 WHERE `entry` = 33911;
+UPDATE `creature_template` SET `ScriptName` = 'mob_ulduar_rubble' WHERE `entry` IN (33768, 33809);
+
+DELETE FROM `creature` WHERE id IN (32933, 32934); -- Arms spawn by vehicle
+DELETE FROM `creature` WHERE id IN (33632, 33802); -- Triggers spawn by Spell
+UPDATE `creature` SET `position_x` = 1797, `position_z` = 449.718 WHERE `id` = 32930; -- Kologarn position
+UPDATE `gameobject` SET `position_y` = -35.6824, `position_x` = 1837.59 WHERE `id` = 195047; -- loot box position
+
+DELETE FROM `spell_script_target` WHERE `entry` = 63628;
+INSERT INTO `spell_script_target` VALUES
+(63628, 1, 32933), -- Instakill Kologarn Arm - Left Arm
+(63628, 1, 32934); -- Instakill Kologarn Arm - Right Arm
+
+UPDATE `creature_model_info` SET `bounding_radius` = 0.31, `combat_reach` = 20 WHERE `modelid` IN (28821, 28822);
+
+UPDATE `creature_template_addon` SET `bytes1` = 7 WHERE `entry` = 34297; -- Dummy death Kologarn
+UPDATE `creature` SET `spawnMask` = 3 WHERE `id` = 33661;
+UPDATE `spell_script_target` SET `targetentry` = 32930 WHERE `entry` = 63979;
+
 
 -- Auriaya
 UPDATE `creature_template` SET `ScriptName` = 'boss_auriaya', `mechanic_immune_mask` = 583745371, `equipment_id` = 103000 WHERE `entry` = 33515;

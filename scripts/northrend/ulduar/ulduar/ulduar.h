@@ -258,35 +258,36 @@ enum
 
     // achievements
     TYPE_ACHIEV_SHATTERED               = 0,
-    TYPE_ACHIEV_QUICK_SHAVE             = 1,
-    TYPE_ACHIEV_IRON_DWARF_MEDIUM_RARE  = 2,
-    TYPE_ACHIEV_NERF_ENGINEERING        = 3,
-    TYPE_ACHIEV_HEARTBREAKER            = 4,
-    TYPE_ACHIEV_YOU_BRUNDIR             = 5,
-    TYPE_ACHIEV_YOU_MOLGEIM             = 6,
-    TYPE_ACHIEV_YOU_STEELBREAKER        = 7,
-    TYPE_ACHIEV_DISARMED                = 8,
-    TYPE_ACHIEV_OPEN_ARMS               = 9,
-    TYPE_ACHIEV_RUBBLE_AND_ROLL         = 10,
-    TYPE_ACHIEV_NINE_LIVES              = 11,
-    TYPE_ACHIEV_CRAZY_CAT_LADY          = 12,
-    TYPE_ACHIEV_CHEESE_FREEZE           = 13,   // Hodir
-    TYPE_ACHIEV_COOLEST_FRIEND          = 14,
-    TYPE_ACHIEV_RARE_CACHE              = 15,
-    TYPE_ACHIEV_SIFFED                  = 16,   // Thorim
-    TYPE_ACHIEV_LOSE_YOUR_ILLUSION      = 17,
-    TYPE_ACHIEV_BACK_TO_NATURE          = 18,   // Freya
-    TYPE_ACHIEV_KNOCK_WOOD              = 19,
-    TYPE_ACHIEV_KNOCK_KNOCK_WOOD        = 20,
-    TYPE_ACHIEV_KNOCK_KNOCK_KNOCK_WOOD  = 21,
-    TYPE_ACHIEV_FIREFIGHTER             = 22,
-    TYPE_ACHIEV_MORNING_SARONITE        = 23,
-    TYPE_ACHIEV_THREE_LIGHTS            = 24,
-    TYPE_ACHIEV_TWO_LIGHTS              = 25,
-    TYPE_ACHIEV_ONE_LIGHT               = 26,
-    TYPE_ACHIEV_ALONE                   = 27,
+    TYPE_ACHIEV_QUICK_SHAVE                ,
+    TYPE_ACHIEV_IRON_DWARF_MEDIUM_RARE     ,
+    TYPE_ACHIEV_NERF_ENGINEERING           ,
+    TYPE_ACHIEV_HEARTBREAKER               ,
+    TYPE_ACHIEV_YOU_BRUNDIR                ,
+    TYPE_ACHIEV_YOU_MOLGEIM                ,
+    TYPE_ACHIEV_YOU_STEELBREAKER           ,
+    TYPE_ACHIEV_DISARMED                   ,
+    TYPE_ACHIEV_OPEN_ARMS                  ,
+    TYPE_ACHIEV_IF_LOOKS_COULD_KILL        ,
+    TYPE_ACHIEV_RUBBLE_AND_ROLL            ,
+    TYPE_ACHIEV_NINE_LIVES                 ,
+    TYPE_ACHIEV_CRAZY_CAT_LADY             ,
+    TYPE_ACHIEV_CHEESE_FREEZE              ,   // Hodir
+    TYPE_ACHIEV_COOLEST_FRIEND             ,
+    TYPE_ACHIEV_RARE_CACHE                 ,
+    TYPE_ACHIEV_SIFFED                     ,   // Thorim
+    TYPE_ACHIEV_LOSE_YOUR_ILLUSION         ,
+    TYPE_ACHIEV_BACK_TO_NATURE             ,   // Freya
+    TYPE_ACHIEV_KNOCK_WOOD                 ,
+    TYPE_ACHIEV_KNOCK_KNOCK_WOOD           ,
+    TYPE_ACHIEV_KNOCK_KNOCK_KNOCK_WOOD     ,
+    TYPE_ACHIEV_FIREFIGHTER                ,
+    TYPE_ACHIEV_MORNING_SARONITE           ,
+    TYPE_ACHIEV_THREE_LIGHTS               ,
+    TYPE_ACHIEV_TWO_LIGHTS                 ,
+    TYPE_ACHIEV_ONE_LIGHT                  ,
+    TYPE_ACHIEV_ALONE                      ,
 
-    MAX_SPECIAL_ACHIEV_CRITS            = 28,
+    MAX_SPECIAL_ACHIEV_CRITS               ,  // End achiev
 
     ACHIEV_CRIT_SHATTERED                            = 10068, // Ignis, achievs 2925, 2926
     ACHIEV_CRIT_SHATTERED_H                          = 10069,
@@ -316,6 +317,8 @@ enum
     ACHIEV_CRIT_DISARMED_H               = 10722,   // achiev 2954
     ACHIEV_CRIT_OPEN_ARMS                = 10285,   // achiev 2951
     ACHIEV_CRIT_OPEN_ARMS_H              = 10095,   // achiev 2952
+    ACHIEV_IF_LOOKS_COULD_KILL           = 10286,   // achiev 2955
+    ACHIEV_IF_LOOKS_COULD_KILL_H         = 10099,   // achiev 2956
     ACHIEV_CRIT_RUBBLE_AND_ROLL          = 10290,   // achiev 2959
     ACHIEV_CRIT_RUBBLE_AND_ROLL_H        = 10133,   // achiev 2960
     // Auriaya

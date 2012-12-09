@@ -61,3 +61,9 @@ DELETE FROM `spell_script_target` WHERE `entry` = 45063;
 -- ---------- --
 -- sd2_mr0530
 UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` IN(33051, 33705);
+
+-- ---------- --
+-- 2012-12-09 --
+-- ---------- --
+-- sd2_mr0536
+UPDATE `creature_model_info` SET `bounding_radius` = 0.31, `combat_reach` = 20 WHERE `modelid` = 28638; -- temp
