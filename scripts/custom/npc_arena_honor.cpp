@@ -34,16 +34,20 @@ EndScriptData */
 
 bool GossipHello_npc_arena_honor(Player* pPlayer, Creature *pCreature)
 {
+#ifdef SD2_WORLD_WOTLK
     pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_HONOR_TO_ARENA, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
     pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_HONOR_TO_ARENA1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
     pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_ARENA_TO_HONOR, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
     pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_ARENA_TO_HONOR1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
     pPlayer->SEND_GOSSIP_MENU(3961,pCreature->GetObjectGuid());
+#endif
     return true;
 }
 
 bool GossipSelect_npc_arena_honor(Player *pPlayer, Creature *pCreature, uint32 sender, uint32 action)
 {
+
+#ifdef SD2_WORLD_WOTLK
     if (action == GOSSIP_ACTION_INFO_DEF + 1)
     {
         if (pPlayer->GetHonorPoints() >= 1000)
@@ -84,6 +88,7 @@ bool GossipSelect_npc_arena_honor(Player *pPlayer, Creature *pCreature, uint32 s
         else
             DoScriptText(UNSUCCESSFUL_ARENA, pCreature);
     }
+#endif
     pPlayer->CLOSE_GOSSIP_MENU();
     return true;
 }
