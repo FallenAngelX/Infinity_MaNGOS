@@ -28,6 +28,11 @@
 // for that day.
 #define SD2_CONF_VERSION    2012112301
 
+// The path to config files
+#ifndef SYSCONFDIR
+#  define SYSCONFDIR        ""
+#endif
+
 #ifdef WIN32
   #define MANGOS_DLL_EXPORT extern "C" __declspec(dllexport)
 #elif defined( __GNUC__ )
@@ -51,10 +56,50 @@
   #else
     #define _FULLVERSION _VERSION " (Win32)"
   #endif
-  #define _SCRIPTDEV2_CONFIG  "scriptdev2.conf"
+  #define _SCRIPTDEV2_CONFIG   SYSCONFDIR"scriptdev2.conf"
 #else
   #define _FULLVERSION _VERSION " (Unix)"
   #define _SCRIPTDEV2_CONFIG  SYSCONFDIR"scriptdev2.conf"
+#endif
+
+#define VERSION       "${MANGOS_VERSION}"
+#define CLIENT_VERSION ${CLIENT_VERSION}
+
+#if CLIENT_VERSION >= 16057
+    #define MAX_EXPANSION 4
+    #define SD2_WORLD_MOP 1
+    #undef  SD2_WORLD_CATA
+    #undef  SD2_WORLD_WOTLK
+    #undef  SD2_WORLD_TBC
+    #undef  SD2_WORLD_CLASSIC
+#elif CLIENT_VERSION >= 13623
+    #define MAX_EXPANSION 3
+    #undef  SD2_WORLD_MOP
+    #define SD2_WORLD_CATA 1
+    #undef  SD2_WORLD_WOTLK
+    #undef  SD2_WORLD_TBC
+    #undef  SD2_WORLD_CLASSIC
+#elif CLIENT_VERSION > 8606
+    #define MAX_EXPANSION 2
+    #undef  SD2_WORLD_MOP
+    #undef  SD2_WORLD_CATA
+    #define SD2_WORLD_WOTLK 1
+    #undef  SD2_WORLD_TBC
+    #undef  SD2_WORLD_CLASSIC
+#elif CLIENT_VERSION > 6005
+    #define MAX_EXPANSION 1
+    #undef  SD2_WORLD_MOP
+    #undef  SD2_WORLD_CATA
+    #undef  SD2_WORLD_WOTLK
+    #define SD2_WORLD_TBC 1
+    #undef  SD2_WORLD_CLASSIC
+#else
+    #define MAX_EXPANSION 0
+    #define SD2_WORLD_MOP 1
+    #undef  SD2_WORLD_CATA
+    #undef  SD2_WORLD_WOTLK
+    #undef  SD2_WORLD_TBC
+    #define SD2_WORLD_CLASSIC 1
 #endif
 
 #endif
