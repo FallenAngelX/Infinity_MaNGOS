@@ -314,6 +314,10 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
 
     void EnterEvadeMode()
     {
+        VehicleKitPtr pVehicleKit = m_creature->GetVehicleKit();
+        if (pVehicleKit)
+            pVehicleKit->Reset();
+
         m_creature->RemoveAllAuras();
         m_creature->DeleteThreatList();
         m_creature->CombatStop(true);

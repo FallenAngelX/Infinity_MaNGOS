@@ -191,13 +191,14 @@ void instance_ulduar::OnObjectCreate(GameObject* pGo)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_LEVIATHAN_GATE:
-            if (m_auiEncounter[TYPE_LEVIATHAN] == DONE)
+            if (GetData(TYPE_LEVIATHAN) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
             break;
         case GO_XT002_GATE:
-            pGo->SetGoState(GO_STATE_READY);
-            if (m_auiEncounter[TYPE_LEVIATHAN] == DONE || m_auiEncounter[TYPE_XT002] == DONE)
+            if (GetData(TYPE_IGNIS) == DONE && GetData(TYPE_RAZORSCALE) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
+            else
+                pGo->SetGoState(GO_STATE_READY);
             break;
         case GO_BROKEN_HARPOON:
             m_lBrokenHarpoonGUID.push_back(pGo->GetObjectGuid());
@@ -427,9 +428,13 @@ void instance_ulduar::SetData(uint32 uiType, uint32 uiData)
                 for (GuidList::iterator itr = m_lIronConstructsGuids.begin(); itr != m_lIronConstructsGuids.end(); ++itr)
                 {
                     if (Creature* pAdd = instance->GetCreature(*itr))
+                    {
                         if (pAdd->isAlive())
                             pAdd->DealDamage(pAdd, pAdd->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                    }
                 }
+                if (GetData(TYPE_RAZORSCALE) == DONE)
+                    OpenDoor(GO_XT002_GATE);
             }
             break;
         case TYPE_RAZORSCALE:
@@ -437,6 +442,11 @@ void instance_ulduar::SetData(uint32 uiType, uint32 uiData)
             {
                 SetSpecialAchievementCriteria(TYPE_ACHIEV_QUICK_SHAVE, true);
                 SetSpecialAchievementCriteria(TYPE_ACHIEV_IRON_DWARF_MEDIUM_RARE, false);
+            }
+            else if (uiData == DONE)
+            {
+                if (GetData(TYPE_IGNIS) == DONE)
+                    OpenDoor(GO_XT002_GATE);
             }
             break;
         case TYPE_XT002:
