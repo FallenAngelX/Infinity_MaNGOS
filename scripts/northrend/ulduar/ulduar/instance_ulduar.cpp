@@ -827,15 +827,18 @@ void instance_ulduar::SetData(uint32 uiType, uint32 uiData)
         OUT_SAVE_INST_DATA_COMPLETE;
     }
 }
+
 void instance_ulduar::SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet)
 {
     if (uiType < MAX_SPECIAL_ACHIEV_CRITS)
         m_abAchievCriteria[uiType] = bIsMet;
 }
 
-bool instance_ulduar::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/)
+
+// TODO: implement all hard mode loot here!
+bool instance_ulduar::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType)
 {
-    switch (uiCriteriaId)
+    switch (uiInstanceConditionId)
     {
         case ACHIEV_CRIT_SHATTERED:
         case ACHIEV_CRIT_SHATTERED_H:
@@ -939,6 +942,9 @@ bool instance_ulduar::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player c
         case ACHIEV_CRIT_ALONE_H:
             return m_abAchievCriteria[TYPE_ACHIEV_ALONE];
     }
+
+    script_error_log("instance_ulduar::CheckConditionCriteriaMeet called with unsupported Id %u. Called with param plr %s, src %s, condition source type %u",
+                         uiInstanceConditionId, pPlayer ? pPlayer->GetGuidStr().c_str() : "NULL", pConditionSource ? pConditionSource->GetGuidStr().c_str() : "NULL", conditionSourceType);
     return false;
 }
 
