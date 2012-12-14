@@ -835,10 +835,9 @@ void instance_ulduar::SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet)
 }
 
 
-// TODO: implement all hard mode loot here!
-bool instance_ulduar::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType)
+bool instance_ulduar::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/)
 {
-    switch (uiInstanceConditionId)
+    switch (uiCriteriaId)
     {
         case ACHIEV_CRIT_SHATTERED:
         case ACHIEV_CRIT_SHATTERED_H:
@@ -873,7 +872,7 @@ bool instance_ulduar::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 u
         {
             if (GetData(TYPE_ASSEMBLY) == DONE)
             {
-                if (pSource->HasAura(SPELL_IRON_BOOT_AURA))
+                if (pSource && pSource->HasAura(SPELL_IRON_BOOT_AURA))
                     return true;
             }
             break;
@@ -943,19 +942,16 @@ bool instance_ulduar::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 u
             return m_abAchievCriteria[TYPE_ACHIEV_ALONE];
     }
 
-    script_error_log("instance_ulduar::CheckConditionCriteriaMeet called with unsupported Id %u. Called with param plr %s, src %s, condition source type %u",
-                         uiInstanceConditionId, pPlayer ? pPlayer->GetGuidStr().c_str() : "NULL", pConditionSource ? pConditionSource->GetGuidStr().c_str() : "NULL", conditionSourceType);
     return false;
 }
 
-bool instance_ulduar::CheckConditionCriteriaMeet(Player const* source, uint32 map_id, uint32 instance_condition_id)
+bool instance_ulduar::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType)
 {
-    if (map_id != instance->GetId())
-        return false;
-
-    if (GetData(instance_condition_id) == DONE)
+    if (GetData(uiInstanceConditionId) == DONE)
         return true;
 
+    script_error_log("instance_ulduar::CheckConditionCriteriaMeet called with unsupported Id %u. Called with param plr %s, src %s, condition source type %u",
+                         uiInstanceConditionId, pPlayer ? pPlayer->GetGuidStr().c_str() : "NULL", pConditionSource ? pConditionSource->GetGuidStr().c_str() : "NULL", conditionSourceType);
     return false;
 }
 
