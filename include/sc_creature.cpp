@@ -143,7 +143,7 @@ void ScriptedAI::EnterEvadeMode()
     if (pVehicleKit)
         pVehicleKit->Reset();
 
-    m_creature->RemoveAllAuras();
+    m_creature->RemoveAllAurasOnEvade();
     m_creature->DeleteThreatList();
     m_creature->CombatStop(true);
 

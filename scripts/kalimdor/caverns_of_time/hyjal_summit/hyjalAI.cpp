@@ -208,7 +208,7 @@ bool hyjalAI::IsEventInProgress() const
 
 void hyjalAI::EnterEvadeMode()
 {
-    m_creature->RemoveAllAuras();
+    m_creature->RemoveAllAurasOnEvade();
     m_creature->DeleteThreatList();
     m_creature->CombatStop(true);
 
