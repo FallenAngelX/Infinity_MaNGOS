@@ -171,6 +171,28 @@ void instance_ulduar::OnCreatureCreate(Creature* pCreature)
     m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
 }
 
+void instance_ulduar::OnPlayerEnterArea(Player* pPlayer, uint32 uiNewAreaId, uint32 uiOldAreaId)
+{
+    switch(uiNewAreaId)
+    {
+        case 4273:
+        {
+            // Prevent use vehicle for kill all bosses
+            VehicleKitPtr vehicleKit = pPlayer->GetVehicle();
+            if (vehicleKit)
+            {
+                pPlayer->ExitVehicle();
+                Creature* pCreature = (Creature*)vehicleKit->GetBase();
+                if (pCreature)
+                    pCreature->ForcedDespawn();
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+
 void instance_ulduar::OnObjectCreate(GameObject* pGo)
 {
     switch(pGo->GetEntry())
@@ -833,7 +855,6 @@ void instance_ulduar::SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet)
     if (uiType < MAX_SPECIAL_ACHIEV_CRITS)
         m_abAchievCriteria[uiType] = bIsMet;
 }
-
 
 bool instance_ulduar::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/)
 {

@@ -289,6 +289,10 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
 
     void JustDied(Unit* killer)
     {
+        m_creature->RemoveAllAuras();
+        DoExitVehiclePlayers();
+        SetUnselectableVehicles();
+
         if (m_pInstance)
         {
             m_pInstance->SetData(TYPE_LEVIATHAN, DONE);
@@ -436,6 +440,35 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
         m_creature->SetHealth(m_creature->GetMaxHealth());
     }
 
+    void DoExitVehiclePlayers()
+    {
+        Map* pMap = m_creature->GetMap();
+        Map::PlayerList const& lPlayers = pMap->GetPlayers();
+        if (!lPlayers.isEmpty())
+        {
+            for(Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
+            {
+                if (Player* pPlayer = itr->getSource())
+                    pPlayer->ExitVehicle();
+            }
+        }
+    }
+
+    bool SetUnselectableVehicles()
+    {
+        std::list<Creature*> lCreatureList;
+        GetCreatureListWithEntryInGrid(lCreatureList, m_creature, VEHICLE_SIEGE, 50000.0f);
+        GetCreatureListWithEntryInGrid(lCreatureList, m_creature, VEHICLE_DEMOLISHER, 50000.0f);
+        GetCreatureListWithEntryInGrid(lCreatureList, m_creature, VEHICLE_CHOPPER, 50000.0f);
+        if (lCreatureList.empty())
+            return false;
+        for (std::list<Creature*>::iterator itr = lCreatureList.begin(); itr != lCreatureList.end(); ++itr)
+        {
+            if ((*itr)->isAlive())
+                (*itr)->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);;
+        }
+        return true;
+    }
 
     void UpdateAI(const uint32 uiDiff)
     {
@@ -772,7 +805,7 @@ struct MANGOS_DLL_DECL mob_mimirons_infernoAI : public ScriptedAI
         {
             if (Creature* pTrigger = DoSpawnCreature(NPC_MIMIRON_INFERNO_TARGETTING, 0.0f, 0.0f, 100.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 30000))
             {
-                pTrigger->CastSpell(m_creature, SPELL_MIMIRON_INFERNO, true);
+                pTrigger->CastSpell(m_creature, SPELL_MIMIRON_INFERNO, true, 0, 0, m_creature->GetObjectGuid());
                 m_uiInfernoTimer = 2000;
             }
         }

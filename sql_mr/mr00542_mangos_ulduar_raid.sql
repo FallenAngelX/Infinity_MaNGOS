@@ -15,9 +15,10 @@ UPDATE `creature_template` SET `ScriptName` = 'mob_pool_of_tar' WHERE `entry` = 
 UPDATE `creature_template` SET `ScriptName` = 'mob_mechanolift' WHERE `entry` = 33214;
 UPDATE `creature_template` SET `ScriptName` = 'mob_freyas_ward' WHERE `entry` = 33367;
 UPDATE `creature_template` SET `ScriptName` = 'mob_hodirs_fury' WHERE `entry` = 33212;
-UPDATE `creature_template` SET `ScriptName` = 'mob_mimiron_inferno' WHERE `entry` = 33370;
+UPDATE `creature_template` SET `ScriptName` = 'mob_mimiron_inferno', `faction_A` = 1965, `faction_H` = 1965, `unit_flags` = 2|33554432 WHERE `entry` = 33370;
 UPDATE `creature_template` SET `ScriptName` = 'mob_thorims_hammer' WHERE `entry` = 33365;
 UPDATE `creature_template` SET `ScriptName` = 'mob_lorekeeper' WHERE `entry` = 33686;
+UPDATE `creature_template` SET `movementId` = 0, `vehicle_id` = 0, `unit_flags` = `unit_flags` | 4  WHERE `entry` = 33369;
 UPDATE `creature_template` SET `InhabitType` = 4 WHERE `entry` IN (33366, 33369, 33364, 33108);
 
 DELETE FROM `spell_script_target` WHERE `entry` IN(62906, 62909, 62911, 62533);
