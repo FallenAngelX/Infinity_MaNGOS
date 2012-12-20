@@ -77,7 +77,7 @@ INSERT INTO conditions VALUES
 (1006, -2, 1005, 1001); -- hardmode (2 OR 3) OR hardmode 1
 
 -- Sartharion special loot, 10m
-DELETE FROM creature_loot_template WHERE entry=28860 AND groupid IN (5, 6, 7);
+DELETE FROM  `creature_loot_template` WHERE `entry` = 28860 AND (`groupid` IN (5, 6, 7) OR `item` IN (43990, 43988, 43991, 43989, 43992, 43995, 43998, 43994, 43996, 43993, 43986));
 INSERT INTO creature_loot_template VALUES
 -- at least 1 drake
 (28860, 43990, 0, 5, 1, 1, 1006),
@@ -95,7 +95,7 @@ INSERT INTO creature_loot_template VALUES
 (28860, 43986, 0, 7, 1, 1, 1003);
 
 -- Sartharion special loot, 25m
-DELETE FROM creature_loot_template WHERE entry=31311 AND groupid IN (5, 6, 7);
+DELETE FROM `creature_loot_template` WHERE `entry` = 31311 AND (`groupid` IN (5, 6, 7) OR `item` IN (44004, 44000, 44002, 44003, 44007, 44006, 44005, 44011, 44008, 43954));
 INSERT INTO creature_loot_template VALUES
 -- at least 1 drake
 (31311, 44004, 0, 5, 1, 1, 1006),
