@@ -637,17 +637,12 @@ struct MANGOS_DLL_DECL mob_mechanoliftAI : public ScriptedAI
 {
     mob_mechanoliftAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    void Reset()
-    {
-    }
+    void Reset(){}
 
     void JustDied(Unit* pKiller)
     {
-        if (Creature* pLiquid = DoSpawnCreature(MOB_LIQUID, 0, 0, 0, 0, TEMPSUMMON_TIMED_DESPAWN, 30000))
-        {
-            pLiquid->CastSpell(pLiquid, SPELL_LIQUID_PYRITE, true);
-        }
-
+        DoSpawnCreature(MOB_LIQUID, 0.0f, 0.0f, -0.5f, 0.0f, TEMPSUMMON_MANUAL_DESPAWN, 0);
+        m_creature->ForcedDespawn(1000);
     }
 };
 
@@ -732,7 +727,7 @@ struct MANGOS_DLL_DECL mob_hodirs_furyAI : public ScriptedAI
             m_creature->StopMoving();
             m_creature->GetMotionMaster()->MoveIdle();
             if (Creature* pTrigger = DoSpawnCreature(NPC_HODIR_FURY_TARGETTING, 0.0f, 0.0f, 100.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 10000))
-                pTrigger->CastSpell(m_creature, SPELL_HODIR_FURY, true);
+                pTrigger->CastSpell(m_creature, SPELL_HODIR_FURY, true, 0, 0, m_creature->GetObjectGuid());
             m_uiHodirFuryTimer = urand(10000, 15000);
             m_uiRandomMovementTimer = 4000;
         }
@@ -858,7 +853,7 @@ struct MANGOS_DLL_DECL mob_thorims_hammerAI : public ScriptedAI
             m_creature->StopMoving();
             m_creature->GetMotionMaster()->MoveIdle();
             if (Creature* pTrigger = DoSpawnCreature(NPC_THORIM_HAMMER_TARGETTING, 0.0f, 0.0f, 100.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 10000))
-                pTrigger->CastSpell(m_creature, SPELL_THORIMS_HAMMER, true);
+                pTrigger->CastSpell(m_creature, SPELL_THORIMS_HAMMER, true, 0, 0, m_creature->GetObjectGuid());
             m_uiThorimsHammerTimer = urand(10000, 15000);
             m_uiRandomMovementTimer = 4000;
         }
