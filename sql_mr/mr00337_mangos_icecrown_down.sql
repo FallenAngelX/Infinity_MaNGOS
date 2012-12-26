@@ -32,10 +32,6 @@ update `creature` set spawnMask = 0 where `guid` in (123745, 123584, 123548, 123
 
 UPDATE `gameobject_template` SET `data10` = 1 WHERE `entry` = 196485;
 
-DELETE FROM `creature` WHERE `id`=36658;
-INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
-(null, 36658, 658, 3, 1, 0, 0, 1018.38, 167.25, 651.871, 5.2709, 14400, 0, 0, 653828, 0, 0, 0);
-
 -- spells
 REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('69347', '1', '36794');
 REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('70521', '1', '37581');
