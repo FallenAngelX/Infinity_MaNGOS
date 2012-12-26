@@ -47,3 +47,11 @@ UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` IN(33051, 33705);
 -- ---------- --
 -- sd2_mr0536
 UPDATE `creature_model_info` SET `bounding_radius` = 0.31, `combat_reach` = 20 WHERE `modelid` = 28638; -- temp
+
+-- ---------- --
+-- 2012-12-26 --
+-- ---------- --
+-- sd2_mr0546
+REPLACE INTO `conditions` (`condition_entry`, `type`, `value1`, `value2`) VALUES
+(1000, 24, 38622, 1), (1001, 24, 38623, 1), (1002, 24, 38624, 1), (1003, 16, 40686, 1), 
+(1004, 17, 54197, 0), (1005, 2, 33015, 1), (1006, 24, 49278, 1);
