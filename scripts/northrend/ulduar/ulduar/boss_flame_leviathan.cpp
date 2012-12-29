@@ -310,6 +310,21 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
                     case 1:
                         m_pInstance->DoCompleteAchievement(m_bIsRegularMode ? ACHIEV_10_ORBITAL_BOMBARDMENT : ACHIEV_25_ORBITAL_BOMBARDMENT);
                 }
+                switch (m_uiActiveTowers)
+                {
+                    case 4:
+                        m_pInstance->SetData(TYPE_LEVIATHAN_DIFFICULTY, HARD_DIFFICULTY_4_DONE);
+                        break;
+                    case 3:
+                        m_pInstance->SetData(TYPE_LEVIATHAN_DIFFICULTY, HARD_DIFFICULTY_3_DONE);
+                        break;
+                    case 2:
+                        m_pInstance->SetData(TYPE_LEVIATHAN_DIFFICULTY, HARD_DIFFICULTY_2_DONE);
+                        break;
+                    case 1:
+                        m_pInstance->SetData(TYPE_LEVIATHAN_DIFFICULTY, HARD_DIFFICULTY_1_DONE);
+                        break;
+                }
             }
         }
 

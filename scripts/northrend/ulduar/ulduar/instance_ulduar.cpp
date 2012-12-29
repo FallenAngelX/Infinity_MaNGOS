@@ -982,10 +982,14 @@ bool instance_ulduar::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 u
                     return GetData(TYPE_XT002_HARD) == DONE;
                 break;
             case INSTANCE_CONDITION_ID_HARD_MODE_2:
+                if (entry == NPC_LEVIATHAN)
+                    return GetData(TYPE_LEVIATHAN_DIFFICULTY) > HARD_DIFFICULTY_1_DONE;
                 break;
             case INSTANCE_CONDITION_ID_HARD_MODE_3:
                 break;
             case INSTANCE_CONDITION_ID_HARD_MODE_4:
+                if (entry == NPC_LEVIATHAN)
+                    return GetData(TYPE_LEVIATHAN_DIFFICULTY) == HARD_DIFFICULTY_4_DONE;
                 break;
             default:
                 break;
