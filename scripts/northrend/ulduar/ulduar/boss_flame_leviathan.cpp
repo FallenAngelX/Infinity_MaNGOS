@@ -129,10 +129,6 @@ enum Seats
 
 enum Vehicles
 {
-    VEHICLE_SIEGE      = 33060,
-    VEHICLE_CHOPPER    = 33062,
-    VEHICLE_DEMOLISHER = 33109,
-
     MAX_VEHICLE        = 5,
     MIN_VEHICLE        = 2
 };
@@ -293,6 +289,12 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
         DoExitVehiclePlayers();
         SetUnselectableVehicles();
 
+        std::list<Creature*> lCreatureList;
+        GetCreatureListWithEntryInGrid(lCreatureList, m_creature, 33090, 1000.0f);
+        if (!lCreatureList.empty())
+        for (std::list<Creature*>::iterator itr = lCreatureList.begin(); itr != lCreatureList.end(); ++itr)
+            (*itr)->ForcedDespawn();
+
         if (m_pInstance)
         {
             m_pInstance->SetData(TYPE_LEVIATHAN, DONE);
@@ -394,7 +396,7 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
     bool CollossusDead()
     {
         std::list<Creature*> lCreatureList;
-        GetCreatureListWithEntryInGrid(lCreatureList, m_creature, 33237, 100.0f);
+        GetCreatureListWithEntryInGrid(lCreatureList, m_creature, 33237, 300.0f);
         if (lCreatureList.empty())
             return false; // not loaded yet
         for (std::list<Creature*>::iterator itr = lCreatureList.begin(); itr != lCreatureList.end(); ++itr)

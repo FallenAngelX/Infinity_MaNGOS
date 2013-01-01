@@ -775,7 +775,14 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        {
+            if (m_Phase != PHASE_AIR)
+            {
+                m_Phase = PHASE_AIR;
+                m_creature->RemoveAurasDueToSpell(SPELL_STUN);
+            }
             return;
+        }
 
         // make boss land at 50% hp
         if (m_Phase != PHASE_PERMAGROUND && m_creature->GetHealthPercent() < 50.0f)
@@ -788,7 +795,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
             case PHASE_AIR:
             {
                 // Switch from Air to Ground Phase
-                if (m_uiHarpoonsUsed == m_uiMaxHarpoons)
+                if (m_uiHarpoonsUsed >= m_uiMaxHarpoons)
                 {
                     SetToGroundPhase();
                     return;
@@ -966,11 +973,15 @@ bool GOHello_go_repair_harpoon(Player* pPlayer, GameObject* pGo)
 {
     instance_ulduar* m_pInstance = (instance_ulduar*)pGo->GetInstanceData();
 
+    if (pGo->getLootState() != GO_READY) // TODO: Server side check for privent exploit.
+        return false;
     if (!m_pInstance)
         return false;
     if (Creature* pRazor = m_pInstance->GetSingleCreatureFromStorage(NPC_RAZORSCALE))
+    {
         if (boss_razorscaleAI* pRazorAI = (boss_razorscaleAI*)pRazor->AI())
             ++pRazorAI->m_uiHarpoonsUsed;
+    }
 
     return false;
 }

@@ -181,10 +181,20 @@ void instance_ulduar::OnPlayerEnterArea(Player* pPlayer, uint32 uiNewAreaId, uin
             VehicleKitPtr vehicleKit = pPlayer->GetVehicle();
             if (vehicleKit)
             {
-                pPlayer->ExitVehicle();
                 Creature* pCreature = (Creature*)vehicleKit->GetBase();
                 if (pCreature)
-                    pCreature->ForcedDespawn();
+                {
+                    switch(pCreature->GetEntry())
+                    {
+                        case VEHICLE_SIEGE:
+                        case VEHICLE_CHOPPER:
+                        case VEHICLE_DEMOLISHER:
+                            pCreature->DealDamage(pCreature, pCreature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
             break;
         }
@@ -717,8 +727,6 @@ void instance_ulduar::SetData(uint32 uiType, uint32 uiData)
             // Hard modes
         case TYPE_LEVIATHAN_DIFFICULTY:
         case TYPE_XT002_HARD:
-            break;
-        case TYPE_ASSEMBLY_HARD:
             break;
         case TYPE_MIMIRON_HARD:
             if (uiData == DONE)

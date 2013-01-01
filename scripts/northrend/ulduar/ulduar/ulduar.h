@@ -28,7 +28,6 @@ enum
     // hard mode bosses
     TYPE_LEVIATHAN_DIFFICULTY   = 20,
     TYPE_XT002_HARD             = 21,
-    TYPE_ASSEMBLY_HARD          = 22,
     TYPE_MIMIRON_HARD           = 23,
     TYPE_HODIR_HARD             = 24,
     TYPE_THORIM_HARD            = 25,
@@ -65,6 +64,10 @@ enum
     NPC_BRANN_BRONZEBEARD       = 33579,
 
     /* the siege of ulduar */
+    VEHICLE_SIEGE              = 33060,
+    VEHICLE_CHOPPER            = 33062,
+    VEHICLE_DEMOLISHER         = 33109,
+
     NPC_LEVIATHAN               = 33113,
     NPC_WARD_OF_LIFE            = 34275,
     NPC_WRITHING_LASHER         = 33387,
