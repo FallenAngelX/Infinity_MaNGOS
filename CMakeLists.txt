@@ -43,6 +43,7 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/src/framework
   ${CMAKE_SOURCE_DIR}/src/game
   ${CMAKE_SOURCE_DIR}/dep/include
+  ${CMAKE_SOURCE_DIR}/dep/include/g3dlite
   ${CMAKE_BINARY_DIR}
   ${ACE_INCLUDE_DIR}
   ${MYSQL_INCLUDE_DIR}
