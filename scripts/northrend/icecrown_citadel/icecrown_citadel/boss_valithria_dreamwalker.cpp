@@ -28,7 +28,7 @@ EndScriptData */
 #include "precompiled.h"
 #include "icecrown_citadel.h"
 
-static Locations SpawnLoc[]=
+static Location SpawnLoc[]=
 {
     {4203.470215f, 2484.500000f, 364.872009f},  // 0 Valithria
     {4240.688477f, 2405.794678f, 364.868591f},  // 1 Valithria Room 1

@@ -133,7 +133,7 @@ enum
     SAY_ROTFACE_DEATH           = -1631080,
 };
 
-static Locations SpawnLoc[]=
+static Location SpawnLoc[]=
 {
     {4356.779785f, 3263.510010f, 389.398010f, 1.586f},  // 0 Putricide start point o=1.586
     {4295.081055f, 3188.883545f, 389.330261f, 4.270f},  // 1 Puticide Festergut say, o=4.27

@@ -24,7 +24,7 @@ EndScriptData */
 #include "precompiled.h"
 #include "ruby_sanctum.h"
 
-static Locations SpawnLoc[]=
+static Location SpawnLoc[]=
 {
     {3152.329834f, 359.41757f, 85.301605f},    // Baltharus target point
     {3153.06f, 389.486f, 86.2596f},            // Baltharus initial point

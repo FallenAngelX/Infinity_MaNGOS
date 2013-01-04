@@ -112,11 +112,6 @@ enum
 #define GOSSIP_ITEM_START               "Brann, it would be our honor!"
 #define GOSSIP_ITEM_PROGRESS            "Let's move Brann, enough of the history lessons!"
 
-struct Location
-{
-    float fX, fY, fZ;
-};
-
 static Location SpawnLoc[]=
 {
     {946.992f, 397.016f, 208.374f},
@@ -255,16 +250,16 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
             {
                 uint32 uiSpawnNumber = (m_bIsRegularMode ? 2 : 3);
                 for (uint8 i = 0; i < uiSpawnNumber; ++i)
-                    m_creature->SummonCreature(NPC_DARK_RUNE_PROTECTOR, SpawnLoc[0].fX, SpawnLoc[0].fY, SpawnLoc[0].fZ, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 30000);
-                m_creature->SummonCreature(NPC_DARK_RUNE_STORMCALLER, SpawnLoc[0].fX, SpawnLoc[0].fY, SpawnLoc[0].fZ, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_DARK_RUNE_PROTECTOR, SpawnLoc[0].x, SpawnLoc[0].y, SpawnLoc[0].z, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 30000);
+                m_creature->SummonCreature(NPC_DARK_RUNE_STORMCALLER, SpawnLoc[0].x, SpawnLoc[0].y, SpawnLoc[0].z, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 30000);
                 break;
             }
             case NPC_DARK_RUNE_STORMCALLER:
                 for (uint8 i = 0; i < 2; ++i)
-                    m_creature->SummonCreature(NPC_DARK_RUNE_STORMCALLER, SpawnLoc[1].fX, SpawnLoc[1].fY, SpawnLoc[1].fZ, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 30000);
+                    m_creature->SummonCreature(NPC_DARK_RUNE_STORMCALLER, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 30000);
                 break;
             case NPC_IRON_GOLEM_CUSTODIAN:
-                m_creature->SummonCreature(NPC_IRON_GOLEM_CUSTODIAN, SpawnLoc[1].fX, SpawnLoc[1].fY, SpawnLoc[1].fZ, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 30000);
+                m_creature->SummonCreature(NPC_IRON_GOLEM_CUSTODIAN, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 30000);
                 break;
         }
     }

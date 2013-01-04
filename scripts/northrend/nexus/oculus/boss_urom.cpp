@@ -60,14 +60,8 @@ enum
     NPC_PHANTASMAL_FIRE                    = 27651,
     NPC_PHANTASMAL_WATER                   = 27653
 };
-/*
-struct Locations
-{
-    float x, y, z, o;
-    uint32 id;
-};
-*/
-struct Locations Teleport[]=
+
+struct Location Teleport[]=
 {
     {1177.469f, 937.721f, 527.405f, 2.21f}, //first platform
     {968.5880f, 1042.58f, 527.321f, 0.13f}, //second platform

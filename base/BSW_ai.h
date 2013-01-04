@@ -54,12 +54,6 @@ enum BossSpellTableParameters
   SPELLTABLEPARM_NUMBER
 };
 
-struct Locations
-{
-    float x, y, z, o;
-    int32 id;
-};
-
 struct WayPoints
 {
     WayPoints(int32 _id, float _x, float _y, float _z)
@@ -83,7 +77,7 @@ struct BSWRecord
     uint32 m_uiSpellTimerMin[DIFFICULTY_LEVELS];       // The timer (min) before the next spell casting, in milliseconds
     uint32 m_uiSpellTimerMax[DIFFICULTY_LEVELS];       // The timer (max) before the next spell casting
     uint32 m_uiSpellData[DIFFICULTY_LEVELS];           // Additional data for spell casting or summon
-    Locations LocData;                                 // Float data structure for locations
+    Location LocData;                                  // Float data structure for locations
     int    varData;                                    // Additional data for spell
     uint32 StageMaskN;                                 // Stage mask for this spell (normal)
     uint32 StageMaskH;                                 // Stage mask for this spell (heroic)

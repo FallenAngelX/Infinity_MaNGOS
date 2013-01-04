@@ -96,7 +96,7 @@ enum
     SAY_SLAY_2                  = -1631027,
 };
 
-static Locations SpawnLoc[]=
+static Location SpawnLoc[]=
 {
     {-623.055481f, 2211.326660f, 51.764259f},  // 0 Lady's stay point
     {-620.197449f, 2272.062256f, 50.848679f},  // 1 Right Door 1
