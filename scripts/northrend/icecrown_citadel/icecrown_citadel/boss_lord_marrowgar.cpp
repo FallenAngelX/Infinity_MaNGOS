@@ -164,16 +164,17 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
         if(!m_pInstance)
             return;
 
+        m_creature->SetInCombatWithZone();
         m_pInstance->SetData(TYPE_MARROWGAR, IN_PROGRESS);
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
     void KilledUnit(Unit* pVictim)
     {
-        DoScriptText(SAY_SLAY_1 - urand(0, 1),m_creature,pVictim);
+        DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature, pVictim);
     }
 
-    void JustDied(Unit *killer)
+    void JustDied(Unit* killer)
     {
         if(m_pInstance)
             m_pInstance->SetData(TYPE_MARROWGAR, DONE);
@@ -181,30 +182,16 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void JustSummoned(Creature *pSummoned)
+    void JustSummoned(Creature* pSummoned)
     {
         if (pSummoned->GetEntry() == NPC_COLDFLAME)
         {
             float x, y, z = pSummoned->GetPositionZ();
             m_creature->GetNearPoint2D(x, y, 120.0f, m_creature->GetAngle(pSummoned));
 
-            pSummoned->SetInCombatWithZone();
             pSummoned->CastSpell(pSummoned, SPELL_COLDFLAME_AURA, true);
             pSummoned->SetSpeedRate(MOVE_WALK, 2.0f); // should be via DB
             pSummoned->GetMotionMaster()->MovePoint(0, x, y, z, false);
-        }
-    }
-
-    // hacky way
-    void DoSummonSingleColdFlame()
-    {
-        if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
-        {
-            float summon_x, summon_y, summon_z, ang;
-            ang = m_creature->GetAngle(pTarget);
-            m_creature->GetNearPoint(m_creature, summon_x, summon_y, summon_z, m_creature->GetObjectBoundingRadius(), 5.0f, ang);
-
-            m_creature->SummonCreature(NPC_COLDFLAME, summon_x, summon_y, summon_z, ang, TEMPSUMMON_TIMED_DESPAWN, 12000);
         }
     }
 
@@ -228,7 +215,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
         // Berserk
         if (m_uiBerserkTimer <= uiDiff)
         {
-            if (DoCastSpellIfCan(m_creature, SPELL_BERSERK, CAST_TRIGGERED))
+            if (DoCastSpellIfCan(m_creature, SPELL_BERSERK, CAST_TRIGGERED) == CAST_OK)
             {
                 m_uiBerserkTimer = 10 * MINUTE * IN_MILLISECONDS;
                 DoScriptText(SAY_BERSERK, m_creature);
@@ -244,9 +231,8 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
                 // Coldflame (regular)
                 if (m_uiColdflameTimer <= uiDiff)
                 {
-                    //if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_COLDFLAME) == CAST_OK)
-                    DoSummonSingleColdFlame();
-                    m_uiColdflameTimer = 5000;
+                    if (DoCastSpellIfCan(m_creature, SPELL_COLDFLAME) == CAST_OK)
+                        m_uiColdflameTimer = 5000;
                 }
                 else
                     m_uiColdflameTimer -= uiDiff;
@@ -284,7 +270,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
                 // next charge to random enemy
                 if (m_uiBoneStormChargeTimer <= uiDiff)
                 {
-                    if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     {
                         float x, y, z;
                         pTarget->GetPosition(x, y, z);
@@ -355,9 +341,9 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
 ####*/
 struct MANGOS_DLL_DECL mob_coldflameAI : public ScriptedAI
 {
-    mob_coldflameAI(Creature *pCreature) : ScriptedAI(pCreature){}
+    mob_coldflameAI(Creature* pCreature) : ScriptedAI(pCreature){}
     void Reset(){}
-    void AttackStart(Unit *who){}
+    void AttackStart(Unit* who){}
     void UpdateAI(const uint32 uiDiff){}
 };
 
@@ -366,7 +352,7 @@ struct MANGOS_DLL_DECL mob_coldflameAI : public ScriptedAI
 ####*/
 struct MANGOS_DLL_DECL mob_bone_spikeAI : public ScriptedAI
 {
-    mob_bone_spikeAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_bone_spikeAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = ((instance_icecrown_citadel*)pCreature->GetInstanceData());
         m_victimGuid.Clear();
@@ -383,11 +369,11 @@ struct MANGOS_DLL_DECL mob_bone_spikeAI : public ScriptedAI
     {
         m_uiEmpaledTime = 0;
     }
-    void AttackStart(Unit *pWho){}
+    void AttackStart(Unit* pWho){}
 
-    void JustDied(Unit *Killer)
+    void JustDied(Unit* Killer)
     {
-        if (Unit *pCreator = m_creature->GetCreator())
+        if (Unit* pCreator = m_creature->GetCreator())
         {
             pCreator->RemoveAurasDueToSpell(SPELL_IMPALED);
             m_creature->ForcedDespawn();
@@ -426,20 +412,20 @@ CreatureAI* GetAI_boss_lord_marrowgar(Creature* pCreature)
 
 void AddSC_boss_lord_marrowgar()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_lord_marrowgar";
-    newscript->GetAI = &GetAI_boss_lord_marrowgar;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+    pNewScript = new Script;
+    pNewScript->Name = "boss_lord_marrowgar";
+    pNewScript->GetAI = &GetAI_boss_lord_marrowgar;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_coldflame";
-    newscript->GetAI = &GetAI_mob_coldflame;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_coldflame";
+    pNewScript->GetAI = &GetAI_mob_coldflame;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_bone_spike";
-    newscript->GetAI = &GetAI_mob_bone_spike;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_bone_spike";
+    pNewScript->GetAI = &GetAI_mob_bone_spike;
+    pNewScript->RegisterSelf();
 
 }
