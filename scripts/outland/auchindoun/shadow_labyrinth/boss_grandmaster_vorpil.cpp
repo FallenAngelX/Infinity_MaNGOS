@@ -59,13 +59,8 @@ enum
     MAX_PORTALS                     = 4
 };
 
-struct SummonLocations
-{
-    float m_fX, m_fY, m_fZ;
-};
-
 // Summon locations for the void portals
-static const SummonLocations aVorpilLocation[MAX_PORTALS] =
+static const LOCATION aVorpilLocation[MAX_PORTALS] =
 {
     {-262.40f, -229.57f, 17.08f},
     {-260.35f, -297.56f, 17.08f},
@@ -131,7 +126,7 @@ struct MANGOS_DLL_DECL boss_grandmaster_vorpilAI : public ScriptedAI
 
         // summon the other 4 portals
         for (uint8 i = 0; i < MAX_PORTALS; ++i)
-            m_creature->SummonCreature(NPC_VOID_PORTAL, aVorpilLocation[i].m_fX, aVorpilLocation[i].m_fY, aVorpilLocation[i].m_fZ, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 0);
+            m_creature->SummonCreature(NPC_VOID_PORTAL, aVorpilLocation[i].x, aVorpilLocation[i].y, aVorpilLocation[i].z, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 0);
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_VORPIL, IN_PROGRESS);

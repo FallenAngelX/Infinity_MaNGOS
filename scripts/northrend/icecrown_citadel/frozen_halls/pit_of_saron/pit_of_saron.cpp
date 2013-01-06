@@ -29,19 +29,15 @@ EndContentData */
 
 /******** JAINA & SYLVANAS *******/
 //Positional defines 
-struct LocationsXY
-{
-    float x, y, z, o;
-    uint32 id;
-};
-static LocationsXY SummonLoc[]=
+
+static LOCATION SummonLoc[]=
 {
     {441.81f, 217.28f, 528.707f, 0.198f},
     {448.92f, 209.52f, 528.710f, 0.198f},
     {442.13f, 200.32f, 528.710f, 0.198f},
 };
 
-static LocationsXY MoveLoc[]=
+static LOCATION MoveLoc[]=
 {
     {504.65f, 241.08f, 528.709f}, 
     {509.11f, 229.02f, 528.709f}, 

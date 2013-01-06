@@ -78,7 +78,7 @@ enum
     SAY_DEATH                   = -1631129,
 };
 
-static Location QueenLocs[]=
+static LOCATION QueenLocs[]=
 {
     {4595.640137f, 2769.195557f, 400.137054f},  // 0 Phased
     {4595.904785f, 2769.315918f, 421.838623f},  // 1 Fly

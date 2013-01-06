@@ -258,18 +258,13 @@ static const DialogueEntry aIntroDialogue[] =
     {0, 0, 0},
 };
 
-struct SummonLocation
-{
-    float m_fX, m_fY, m_fZ;
-};
-
-static const SummonLocation aMarauderSpawn[] =
+static const LOCATION aMarauderSpawn[] =
 {
     {-1291.492f, 2644.650f, 111.556f},
     {-1306.730f, 2675.163f, 111.561f},
 };
 
-static const SummonLocation aWranglerSpawn[] = {-1393.194f, 2429.465f, 88.689f};
+static const LOCATION aWranglerSpawn[] = {-1393.194f, 2429.465f, 88.689f};
 
 struct MANGOS_DLL_DECL npc_melizza_brimbuzzleAI : public npc_escortAI, private DialogueHelper
 {
@@ -312,7 +307,7 @@ struct MANGOS_DLL_DECL npc_melizza_brimbuzzleAI : public npc_escortAI, private D
                     {
                         // Summon 2 Marauders on each point
                         float fX, fY, fZ;
-                        m_creature->GetRandomPoint(aMarauderSpawn[i].m_fX, aMarauderSpawn[i].m_fY, aMarauderSpawn[i].m_fZ, 7.0f, fX, fY, fZ);
+                        m_creature->GetRandomPoint(aMarauderSpawn[i].x, aMarauderSpawn[i].y, aMarauderSpawn[i].z, 7.0f, fX, fY, fZ);
                         m_creature->SummonCreature(NPC_MARAUDINE_MARAUDER, fX, fY, fZ, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
                     }
                 }
@@ -321,10 +316,10 @@ struct MANGOS_DLL_DECL npc_melizza_brimbuzzleAI : public npc_escortAI, private D
                 for (uint8 i = 0; i < MAX_WRANGLERS; ++i)
                 {
                     float fX, fY, fZ;
-                    m_creature->GetRandomPoint(aWranglerSpawn[0].m_fX, aWranglerSpawn[0].m_fY, aWranglerSpawn[0].m_fZ, 10.0f, fX, fY, fZ);
+                    m_creature->GetRandomPoint(aWranglerSpawn[0].x, aWranglerSpawn[0].y, aWranglerSpawn[0].z, 10.0f, fX, fY, fZ);
                     m_creature->SummonCreature(NPC_MARAUDINE_BONEPAW, fX, fY, fZ, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
 
-                    m_creature->GetRandomPoint(aWranglerSpawn[0].m_fX, aWranglerSpawn[0].m_fY, aWranglerSpawn[0].m_fZ, 10.0f, fX, fY, fZ);
+                    m_creature->GetRandomPoint(aWranglerSpawn[0].x, aWranglerSpawn[0].y, aWranglerSpawn[0].z, 10.0f, fX, fY, fZ);
                     m_creature->SummonCreature(NPC_MARAUDINE_WRANGLER, fX, fY, fZ, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
                 }
                 break;

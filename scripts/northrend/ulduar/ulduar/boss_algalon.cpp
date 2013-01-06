@@ -105,13 +105,7 @@ enum
 };
 
 //Positional defines 
-struct LocationsXY
-{
-    float x, y;
-    uint32 id;
-};
-
-static LocationsXY PositionLoc[]=
+static LOCATION PositionLoc[]=
 {
     {1620, -320.75f},
     {1620, -290.75f },

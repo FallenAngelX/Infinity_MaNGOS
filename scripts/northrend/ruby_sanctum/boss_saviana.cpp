@@ -54,7 +54,7 @@ enum
     POINT_AIR                       = 1,
 };
 
-static Location SpawnLoc[]=
+static LOCATION SpawnLoc[]=
 {
     {3151.3898f, 636.8519f, 78.7396f},  // 0 Saviana start point
     {3149.6350f, 668.9644f, 90.5070f},  // 1 Saviana fly phase, o=4,69

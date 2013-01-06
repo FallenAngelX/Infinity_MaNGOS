@@ -44,7 +44,7 @@ enum Equipment
     EQUIP_DONE           = EQUIP_NO_CHANGE,
 };
 
-static Location SpawnLoc[]=
+static LOCATION SpawnLoc[]=
 {
     {3008.552734f, 530.471680f, 89.195290f},     // 0 - Zarithrian start point, o = 6,16
     {3014.313477f, 486.453735f, 89.255096f},    // 1 - Mob spawn 1

@@ -96,7 +96,7 @@ enum
     SAY_DEATH                   = -1631079,
 };
 
-static Location SpawnLoc[]=
+static LOCATION SpawnLoc[]=
 {
     {4322.85f, 3164.17f, 389.40f, 3.76f},               // festergut side
     {4311.91f, 3157.42f, 389.00f, 3.62f},               // hacky (LoS problems?) festergut side

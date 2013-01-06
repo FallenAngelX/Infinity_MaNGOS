@@ -173,7 +173,7 @@ enum
     TIMER_ACHIEV_SALT_AND_PEPPER                    = 21853,
 };
 
-static Location SpawnLoc[]=
+static LOCATION SpawnLoc[]=
 {
     {559.257996f, 90.266197f,  395.122986f}, // 0 Barrent
     {563.672974f, 139.571f,    393.837006f}, // 1 Center

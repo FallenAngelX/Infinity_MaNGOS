@@ -258,12 +258,7 @@ enum phases
 };
 
 //Positional defines 
-struct LocationsXY
-{
-    float x, y, z, o;
-    uint32 id;
-};
-static LocationsXY SummonLoc[]=
+static LOCATION SummonLoc[]=
 {
     {1951.097412f,-25.42042f, 326.162598f},
     {1970.677490f,-0.211162f, 325.478638f},
@@ -279,7 +274,7 @@ static LocationsXY SummonLoc[]=
     {1941.203735f,-52.999535f,327.246948f},
 };
 
-static LocationsXY SanityWellLoc[]=
+static LOCATION SanityWellLoc[]=
 {
     {1901.237915f, -46.305782f, 331.960754f}, 
     {1900.753052f,  -2.259287f, 332.061249f}, 
@@ -288,7 +283,7 @@ static LocationsXY SanityWellLoc[]=
     {1986.226807f, -95.087761f, 330.253998f},
 };
 
-static LocationsXY KeepersLoc[]=
+static LOCATION KeepersLoc[]=
 {
     {2036.859863f,  -74.113884f, 338.415222f, 2.488684f}, //thorim
     {1938.328247f,  -90.742043f, 338.459442f, 0.992500f}, //hodir
@@ -296,7 +291,7 @@ static LocationsXY KeepersLoc[]=
     {1939.021240f,  43.221031f,  338.460663f, 5.214388f}, // mimiron
 };
 
-static LocationsXY TeleportLoc[]=
+static LOCATION TeleportLoc[]=
 {
     {1941.587402f, 43.526680f,  239.666336f},    // stormwind
     {2055.460938f, -25.619570f, 239.721176f},    // dragons
@@ -304,7 +299,7 @@ static LocationsXY TeleportLoc[]=
     {1951.097f, -25.420f, 326.162f},             // yogg
 };
 
-static LocationsXY YoggPortalLoc[]=
+static LOCATION YoggPortalLoc[]=
 {
     {1959.765137f, -20.697853f, 325.352966f},   
     {1973.407837f,  -6.656567f, 324.889526f},  
@@ -318,7 +313,7 @@ static LocationsXY YoggPortalLoc[]=
     {2003.674316f, -23.050785f, 325.384064f}, 
 };
 
-static LocationsXY MadnessPortalLoc[]=
+static LOCATION MadnessPortalLoc[]=
 {
     {2001.015f,   4.185f, 242.747f},    
     {1999.690f, -54.931f, 242.418f},    
@@ -326,11 +321,6 @@ static LocationsXY MadnessPortalLoc[]=
 };
 // vison pos
 //Positional defines 
-struct VisionLocXY
-{
-    float x, y, z, o;
-    uint32 id;
-};
 // dragons
 const float PosYsera[4] = {2114.504f, -16.118f, 242.646f, 3.91f};
 const float PosMalygos[4] = {2113.388f, -34.381f, 242.646f, 2.26f};
@@ -339,7 +329,7 @@ const float PosAlexstrasza[4] = {2091.679f, -25.289f, 242.646f, 6.282f};
 const float PosVoiceDragon[3] = {2104.555f, -25.635f, 242.646f};
 const float DisplayDragons[10] = {2718, 2718, 2717, 2717, 12869, 12869, 1687, 1687, 2719, 2719};
 
-static VisionLocXY DragonLoc[]=
+static LOCATION DragonLoc[]=
 {
     {2071.951660f,   1.881840f, 239.794922f, 5.590341f},
     {2093.910156f,  19.939915f, 239.766830f, 4.962034f},
@@ -353,7 +343,7 @@ static VisionLocXY DragonLoc[]=
     {2071.001709f, -54.414040f, 239.719345f, 0.528450f},
 };
 
-static VisionLocXY SkullDragonLoc[]=
+static LOCATION SkullDragonLoc[]=
 {
     {2075.898193f, -5.637041f,  239.787735f},
     {2137.949219f, -26.778023f, 239.717712f},
@@ -365,7 +355,7 @@ const float PosGarona[4] = {1935.398926f, 54.017738f, 240.376465f, 2.008213f};
 const float PosKing[4] = {1930.465670f, 62.674065f, 242.376373f, 5.196925f};
 const float PosVoiceStormwind[3] = {1927.326f, 68.120f, 242.376f}; 
 
-static VisionLocXY KeepLoc[]=
+static LOCATION KeepLoc[]=
 {
     {1930.854370f, 39.910034f, 239.666443f, 1.641476f},
     {1909.771240f, 45.685230f, 239.666443f, 0.962106f},
@@ -377,7 +367,7 @@ static VisionLocXY KeepLoc[]=
     {1949.701416f, 51.040390f, 239.666443f, 2.481856f},
 };
 
-static VisionLocXY SkullKeepLoc[]=
+static LOCATION SkullKeepLoc[]=
 {
     {1908.942261f, 58.934380f, 239.666382f},
     {1916.902954f, 86.755638f, 239.66662f},
@@ -389,7 +379,7 @@ const float PosLichKing[4] = {1910.499268f,-147.709961f,239.989639f, 0.943203f};
 const float PosChampion[4] = {1915.371094f,-139.934219f,239.989639f, 4.159409f};
 const float PosVoiceIcecrown[3] = {1914.332f, -139.317f, 239.989f}; 
 
-static VisionLocXY IcecrownLoc[]=
+static LOCATION IcecrownLoc[]=
 {
     {1952.521606f, -137.052094f, 239.989716f, 2.513270f},
     {1946.220337f, -130.236008f, 239.989716f, 5.387829f},
@@ -402,7 +392,7 @@ static VisionLocXY IcecrownLoc[]=
     {1907.462891f, -139.149307f, 239.989716f, 0.176708f},
 };
 
-static VisionLocXY SkullIcecrownLoc[]=
+static LOCATION SkullIcecrownLoc[]=
 {
     {1962.658569f, -111.356392f, 239.98986f},
     {1940.515625f, -152.933945f, 239.989868f},

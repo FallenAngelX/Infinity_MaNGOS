@@ -80,12 +80,7 @@ enum
     AREATRIGGER_ENTER       = 4485,
 };
 
-struct PortalData
-{
-    float fX, fY, fZ, fOrient;
-};
-
-static const PortalData afPortalLocation[]=
+static const LOCATION afPortalLocation[]=
 {
     {-2030.832f, 7024.944f, 23.07182f, 3.141593f},
     {-1961.734f, 7029.528f, 21.8114f,  2.129302f},

@@ -76,20 +76,14 @@ static const float aGarfrostMoveLocs[2][3] =
 };
 
 //Positional defines 
-struct LocationsXY
-{
-    float x, y, z, o;
-    uint32 id;
-};
-
-static LocationsXY SummonLoc[]=
+static LOCATION SummonLoc[]=
 {
     {719.812f, -167.183f, 526.721f,},
     {698.703f, -165.497f, 527.464f,},
     {671.455f, -167.968f, 526.741f,},
 };
 
-static LocationsXY MoveLoc[]=
+static LOCATION MoveLoc[]=
 {
     {677.445f, -186.521f, 526.702f},
     {708.190f, -194.619f, 526.805f},

@@ -232,7 +232,7 @@ enum Point
     POINT_SPIRIT_BOMB           = 7, // Spirit Bomb moving down
 };
 
-static Location SpawnLoc[] =
+static LOCATION SpawnLoc[] =
 {
     {458.58889f, -2122.710284f, 1040.860107f},    // 0 Lich King Intro
     {503.15652f, -2124.516602f, 1040.860107f},    // 1 Center of the platform

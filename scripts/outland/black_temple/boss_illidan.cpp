@@ -258,18 +258,13 @@ enum Phase
     PHASE_TRANSITION        = 6,
 };
 
-struct Locations
-{
-    float fX, fY, fZ;
-};
-
-static const Locations aCenterLoc[]=
+static const LOCATION aCenterLoc[]=
 {
     {705.012f, 305.721f, 354.723f},             // front location
     {676.740f, 305.297f, 353.192f},             // center location
 };
 
-static const Locations aIllidariElitesPos[MAX_ILLIDARI_ELITES]=
+static const LOCATION aIllidariElitesPos[MAX_ILLIDARI_ELITES]=
 {
     {743.9686f, 289.6447f, 311.1807f},
     {753.8425f, 286.562f, 310.9353f},
@@ -283,7 +278,7 @@ static const Locations aIllidariElitesPos[MAX_ILLIDARI_ELITES]=
     {754.0332f, 325.8136f, 310.3195f},
 };
 
-static const Locations aEyeBlastPos[]=
+static const LOCATION aEyeBlastPos[]=
 {
     // spawn
     {650.600f, 258.124f, 352.996f},             // back left
@@ -617,10 +612,10 @@ struct MANGOS_DLL_DECL boss_illidan_stormrageAI : public ScriptedAI, private Dia
             case 3: uiTargetLoc = urand(7, 8); break;
         }
 
-        m_fTargetMoveX = aEyeBlastPos[uiTargetLoc].fX;
-        m_fTargetMoveY = aEyeBlastPos[uiTargetLoc].fY;
-        m_fTargetMoveZ = aEyeBlastPos[uiTargetLoc].fZ;
-        m_creature->SummonCreature(NPC_ILLIDAN_TARGET, aEyeBlastPos[uiSpawnLoc].fX, aEyeBlastPos[uiSpawnLoc].fY, aEyeBlastPos[uiSpawnLoc].fZ, 0, TEMPSUMMON_TIMED_DESPAWN, 15000);
+        m_fTargetMoveX = aEyeBlastPos[uiTargetLoc].x;
+        m_fTargetMoveY = aEyeBlastPos[uiTargetLoc].y;
+        m_fTargetMoveZ = aEyeBlastPos[uiTargetLoc].z;
+        m_creature->SummonCreature(NPC_ILLIDAN_TARGET, aEyeBlastPos[uiSpawnLoc].x, aEyeBlastPos[uiSpawnLoc].y, aEyeBlastPos[uiSpawnLoc].z, 0, TEMPSUMMON_TIMED_DESPAWN, 15000);
 
         return true;
     }
@@ -793,7 +788,7 @@ struct MANGOS_DLL_DECL boss_illidan_stormrageAI : public ScriptedAI, private Dia
                     {
                         // The movement is not very clear - it may be possible that he is moving around the center during this phase
                         // ToDo: this requires additional resarch. For now bring him near home position
-                        m_creature->GetMotionMaster()->MovePoint(0, aCenterLoc[0].fX, aCenterLoc[0].fY, aCenterLoc[0].fZ);
+                        m_creature->GetMotionMaster()->MovePoint(0, aCenterLoc[0].x, aCenterLoc[0].y, aCenterLoc[0].z);
                         m_uiCenterMoveTimer = 0;
                     }
                     else
@@ -1212,7 +1207,7 @@ struct MANGOS_DLL_DECL npc_akama_illidanAI : public npc_escortAI, private Dialog
             if (m_uiSummonMinionTimer < uiDiff)
             {
                 for (uint8 i = 0; i < MAX_ILLIDARI_ELITES; ++i)
-                    m_creature->SummonCreature(NPC_ILLIDARI_ELITE, aIllidariElitesPos[i].fX, aIllidariElitesPos[i].fY, aIllidariElitesPos[i].fZ, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
+                    m_creature->SummonCreature(NPC_ILLIDARI_ELITE, aIllidariElitesPos[i].x, aIllidariElitesPos[i].y, aIllidariElitesPos[i].z, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
 
                 m_uiSummonMinionTimer = urand(35000, 50000);
             }

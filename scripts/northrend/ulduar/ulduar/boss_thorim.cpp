@@ -200,12 +200,7 @@ enum phases
 };
 
 #define LOC_Z                       419.5f  
-struct LocationsXY
-{
-    float x, y, z;
-    uint32 id;
-};
-static LocationsXY ArenaLoc[]=
+static LOCATION ArenaLoc[]=
 {
     {2158.082f, -240.572f},
     {2111.883f, -240.561f},
@@ -215,7 +210,7 @@ static LocationsXY ArenaLoc[]=
     {2167.612f, -262.128f},
 };
 
-static LocationsXY OrbLoc[]=
+static LOCATION OrbLoc[]=
 {
     {2134.57f, -440.31f, 438.33f},
     {2225.91f, -431.68f, 412.17f},

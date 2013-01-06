@@ -70,12 +70,6 @@ enum
 
 const float RimefangSummon[4] = {1013.827f, 169.71f, 628.157f, 5.31f};
 
-struct LocationsXY
-{
-    float x, y, z, o;
-    uint32 id;
-};
-
 enum gauntlet
 {
     SAY_GAUNTLET1            = -1610081,
@@ -98,14 +92,14 @@ enum gauntlet
     NPC_GLACIAL_REVENANT     = 36874,
 };
 
-static LocationsXY SummonLoc[]=
+static LOCATION SummonLoc[]=
 {
     {1060.955f, 107.274f, 628.424f},
     {1052.122f, 103.916f, 628.454f},
     {1068.363f, 110.432f, 629.009f},
 };
 
-static LocationsXY MoveLoc[]=
+static LOCATION MoveLoc[]=
 {
     {1019.006f, 129.684f, 628.156f}, 
     {1003.889f, 159.652f, 628.159f},

@@ -96,7 +96,7 @@ enum
     SAY_DEATH                   = -1631157,
 };
 
-static Location SindragosaLoc[]=
+static LOCATION SindragosaLoc[]=
 {
     {4408.052734f, 2484.825439f, 203.374207f},  // 0 Sindragosa ground center
     {4474.239746f, 2484.243896f, 231.000000f},  // 1 Sindragosa fly o=3.11

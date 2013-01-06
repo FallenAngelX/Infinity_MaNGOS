@@ -163,12 +163,7 @@ enum MimironPhase
 #define CENTER_Z            364.312f 
 
 const float PosTankHome[2]= {2794.86f, 2597.83f};
-struct LocationsXY
-{
-    float x, y;
-    uint32 id;
-};
-static LocationsXY SummonLoc[]=
+static LOCATION SummonLoc[]=
 {
     {2753.665f, 2584.712f},
     {2754.150f, 2554.445f},

@@ -87,12 +87,6 @@ enum
     EMOTE_KEEPER_PORTAL         = -1608007
 };
 
-struct Locations
-{
-    float x, y, z;
-    uint32 id;
-};
-
 struct WayPoints
 {
     WayPoints(uint32 _id, float _x, float _y, float _z)
@@ -106,7 +100,7 @@ struct WayPoints
     float x, y, z;
 };
 
-static Locations SinclariWP[]=
+static LOCATION SinclariWP[]=
 {
     {1830.5f, 799.357f, 44.3418f}, // 0 use activation
     {1832.46f, 800.431f, 44.3117f}, // 1 SAY_BEGIN call back guards
@@ -116,7 +110,7 @@ static Locations SinclariWP[]=
 
 };
 
-static Locations PortalLoc[]=
+static LOCATION PortalLoc[]=
 {
     {1888.271f, 810.781f, 38.441f}, // 0 center
     {1857.125f, 763.295f, 38.654f}, // 1 Lavanthor
@@ -127,7 +121,7 @@ static Locations PortalLoc[]=
     {1936.101f, 802.950f, 52.417f}, // 6 at the highest platform
 };
 
-static Locations BossLoc[]=
+static LOCATION BossLoc[]=
 {
     {0,0,0},
     {0,0,0},
@@ -139,7 +133,7 @@ static Locations BossLoc[]=
     {1925.480f, 849.981f, 47.174f}, // Zuramat
 };
 
-static Locations DragonsWP[]=
+static LOCATION DragonsWP[]=
 {
     //center, ichoron
     {1869.393f, 803.902f, 38.768f}, // 0 

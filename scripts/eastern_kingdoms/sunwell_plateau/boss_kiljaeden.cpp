@@ -201,11 +201,6 @@ static const DialogueEntry aOutroDialogue[] =
     {0, 0, 0},
 };
 
-struct EventLocations
-{
-    float m_fX, m_fY, m_fZ, m_fO;
-};
-
 static const EventLocations aOutroLocations[] =
 {
     {1727.854f, 656.060f, 28.31f, 3.86f},       // portal summon loc

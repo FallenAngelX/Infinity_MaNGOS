@@ -68,14 +68,9 @@ enum
 };
 
 //Positional defines
-struct LocationsXY
-{
-    float x, y, z;
-    uint32 id;
-};
 
 // Movement coordinates
-static LocationsXY MoveLoc[]=
+static LOCATION MoveLoc[]=
 {
     {1489.307f, 701.451f, 50.5f},   // right   0
     {1447.672f, 649.917f, 50.5f},   // right   1

@@ -112,7 +112,7 @@ enum
 #define GOSSIP_ITEM_START               "Brann, it would be our honor!"
 #define GOSSIP_ITEM_PROGRESS            "Let's move Brann, enough of the history lessons!"
 
-static Location SpawnLoc[]=
+static LOCATION SpawnLoc[]=
 {
     {946.992f, 397.016f, 208.374f},
     {960.748f, 382.944f, 208.374f},

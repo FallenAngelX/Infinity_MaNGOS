@@ -667,7 +667,7 @@ static TorlothCinematic TorlothAnim[]=
     {0, TORLOTH, 0}
 };
 
-static Location SpawnLocation[]=
+static LOCATION SpawnLocation[]=
 {
     {-4615.8556f, 1342.2532f, 139.9f, 1.612f},              // Illidari Soldier
     {-4598.9365f, 1377.3182f, 139.9f, 3.917f},              // Illidari Soldier
@@ -1336,11 +1336,6 @@ static const DialogueEntry aOutroDialogue[] =
     {SAY_ORONOK_EPILOGUE_8,         NPC_ORONOK_TORN_HEART,          10000},
     {NPC_ORONOK_TORN_HEART,         0,                              0},
     {0, 0, 0},
-};
-
-struct EventLocations
-{
-    float m_fX, m_fY, m_fZ, m_fO;
 };
 
 const static EventLocations aDamnationLocations[] =

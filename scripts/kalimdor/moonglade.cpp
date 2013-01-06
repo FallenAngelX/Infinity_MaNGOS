@@ -265,11 +265,6 @@ static const DialogueEntry aIntroDialogue[] =
     {0, 0, 0},
 };
 
-struct EventLocations
-{
-    float m_fX, m_fY, m_fZ, m_fO;
-};
-
 static EventLocations aEranikusLocations[] =
 {
     {7881.72f, -2651.23f, 493.29f, 0.40f},          // eranikus spawn loc

@@ -186,12 +186,6 @@ static const DialogueEntry aEventDialogue[] =
     {0, 0, 0},
 };
 
-struct EventLocations
-{
-    float m_fX, m_fY, m_fZ, m_fO;
-    uint32 m_uiEntry;
-};
-
 static EventLocations aEternalBoardNPCs[MAX_DRAGONS] =
 {
     {-8029.301f, 1534.612f, 2.609f, 3.121f, NPC_FANDRAL_STAGHELM},

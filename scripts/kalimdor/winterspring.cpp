@@ -126,11 +126,6 @@ static const DialogueEntry aIntroDialogue[] =
     {0, 0, 0},
 };
 
-struct EventLocations
-{
-    float m_fX, m_fY, m_fZ, m_fO;
-};
-
 static EventLocations aWingThicketLocations[] =
 {
     {5515.98f, -4903.43f, 846.30f, 4.58f},      // 0 right priestess summon loc
