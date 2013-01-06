@@ -58,7 +58,7 @@ enum
     SPELL_TARGET_OMEGA              = 36852,                // Visual spell used by Mellichar
 };
 
-static const EventLocations aSummonPosition[5] =
+static const EVENTLOCATION aSummonPosition[5] =
 {
     {478.326f, -148.505f, 42.56f, 3.19f},                   // Trickster or Phase Hunter
     {413.292f, -148.378f, 42.56f, 6.27f},                   // Millhouse

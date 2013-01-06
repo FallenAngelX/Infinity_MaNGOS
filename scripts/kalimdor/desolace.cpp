@@ -258,13 +258,16 @@ static const DialogueEntry aIntroDialogue[] =
     {0, 0, 0},
 };
 
-static const LOCATION aMarauderSpawn[] =
+static const LOCATION aMarauderSpawn[]=
 {
     {-1291.492f, 2644.650f, 111.556f},
     {-1306.730f, 2675.163f, 111.561f},
 };
 
-static const LOCATION aWranglerSpawn[] = {-1393.194f, 2429.465f, 88.689f};
+static const LOCATION aWranglerSpawn[]= 
+{
+    {-1393.194f, 2429.465f, 88.689f},
+};
 
 struct MANGOS_DLL_DECL npc_melizza_brimbuzzleAI : public npc_escortAI, private DialogueHelper
 {

@@ -186,7 +186,7 @@ static const DialogueEntry aEventDialogue[] =
     {0, 0, 0},
 };
 
-static EventLocations aEternalBoardNPCs[MAX_DRAGONS] =
+static EVENTLOCATION aEternalBoardNPCs[MAX_DRAGONS] =
 {
     {-8029.301f, 1534.612f, 2.609f, 3.121f, NPC_FANDRAL_STAGHELM},
     {-8034.227f, 1536.580f, 2.609f, 6.161f, NPC_ARYGOS},
@@ -194,7 +194,7 @@ static EventLocations aEternalBoardNPCs[MAX_DRAGONS] =
     {-8034.106f, 1534.224f, 2.609f, 0.290f, NPC_MERITHRA_OF_THE_DREAM},
 };
 
-static EventLocations aEternalBoardMovement[] =
+static EVENTLOCATION aEternalBoardMovement[] =
 {
     {-8159.951f, 1525.241f, 74.994f},           // 0 Flight position for dragons
     {-8106.238f, 1525.948f, 2.639f},            // 1 Anachronos gate location

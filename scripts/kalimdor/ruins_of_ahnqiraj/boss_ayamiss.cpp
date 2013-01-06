@@ -46,13 +46,8 @@ enum
     PHASE_GROUND            = 1
 };
 
-struct SummonLocation
-{
-    float m_fX, m_fY, m_fZ;
-};
-
 // Spawn locations
-static const SummonLocation aAyamissSpawnLocs[] =
+static const EVENTLOCATION aAyamissSpawnLocs[] =
 {
     {-9674.4707f, 1528.4133f, 22.457f},         // larva
     {-9701.6005f, 1566.9993f, 24.118f},         // larva

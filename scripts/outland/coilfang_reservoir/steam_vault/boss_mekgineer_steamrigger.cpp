@@ -55,7 +55,7 @@ enum
 };
 
 // Spawn locations
-static const EventLocations aSteamriggerSpawnLocs[] =
+static const EVENTLOCATION aSteamriggerSpawnLocs[] =
 {
     {-316.101f, -166.444f, -7.66f},
     {-348.497f, -161.718f, -7.66f},

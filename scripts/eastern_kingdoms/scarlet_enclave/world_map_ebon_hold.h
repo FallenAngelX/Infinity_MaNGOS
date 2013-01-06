@@ -70,7 +70,7 @@ enum
 };
 
 // light champions
-static EventLocations aLightArmySpawnLoc[MAX_LIGHT_CHAMPIONS] =
+static EVENTLOCATION aLightArmySpawnLoc[MAX_LIGHT_CHAMPIONS] =
 {
     {2285.80f, -5308.82f, 87.04f, 1.67f, NPC_KORFAX_CHAMPION_OF_THE_LIGHT},
     {2276.96f, -5309.36f, 86.66f, 1.61f, NPC_LORD_MAXWELL_TYROSUS},
@@ -82,7 +82,7 @@ static EventLocations aLightArmySpawnLoc[MAX_LIGHT_CHAMPIONS] =
 };
 
 // four guards spawned for the outro
-static EventLocations aGuardsSpawnLoc[MAX_LIGHT_GUARDS] =
+static EVENTLOCATION aGuardsSpawnLoc[MAX_LIGHT_GUARDS] =
 {
     {2287.581f, -5284.991f, 82.535f, 2.60f},
     {2287.856f, -5281.127f, 82.225f, 3.44f},
@@ -92,7 +92,7 @@ static EventLocations aGuardsSpawnLoc[MAX_LIGHT_GUARDS] =
 
 // Tirion is spawned at the edge of the battle and runs toward the chapel
 // When he reach the chapel he cast some powerfull light spell and the battle ends
-static EventLocations aEventLocations[] =
+static EVENTLOCATION aEventLocations[] =
 {
     {2165.711f, -5266.124f, 95.50f, 0.13f},         // 0 Tirion spawn location
     {2281.390f, -5299.98f,  85.07f, 1.61f},         // 1 Tirion move location

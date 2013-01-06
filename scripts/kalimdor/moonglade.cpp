@@ -265,7 +265,7 @@ static const DialogueEntry aIntroDialogue[] =
     {0, 0, 0},
 };
 
-static EventLocations aEranikusLocations[] =
+static EVENTLOCATION aEranikusLocations[] =
 {
     {7881.72f, -2651.23f, 493.29f, 0.40f},          // eranikus spawn loc
     {7929.86f, -2574.88f, 505.35f},                 // eranikus flight move loc
@@ -273,7 +273,7 @@ static EventLocations aEranikusLocations[] =
     {7906.57f, -2565.63f, 488.39f},                 // eranikus redeemed loc
 };
 
-static EventLocations aTyrandeLocations[] =
+static EVENTLOCATION aTyrandeLocations[] =
 {
     // Tyrande should appear along the pathway, but because of the missing pathfinding we'll summon here closer to Eranikus
     {7948.89f, -2575.58f, 490.05f, 3.03f},          // tyrande spawn loc
@@ -281,7 +281,7 @@ static EventLocations aTyrandeLocations[] =
     {7901.83f, -2565.24f, 488.04f},                 // tyrande eranikus loc
 };
 
-static EventLocations aShadowsLocations[] =
+static EVENTLOCATION aShadowsLocations[] =
 {
     // Inside the house shades - first wave only
     {7832.78f, -2604.57f, 489.29f},

@@ -70,12 +70,7 @@ static const DialogueEntry aIntroDialogue[] =
     {0, 0, 0},
 };
 
-struct SpawnLocation
-{
-    float m_fX, m_fY, m_fZ;
-};
-
-static const SpawnLocation aNefarianLocs[4] =
+static const LOCATION aNefarianLocs[4] =
 {
     {-7599.32f, -1191.72f, 475.545f},                       // opening where red/blue/black darknid spawner appear (ori 3.05433)
     {-7526.27f, -1135.04f, 473.445f},                       // same as above, closest to door (ori 5.75959)
@@ -191,7 +186,7 @@ struct MANGOS_DLL_DECL boss_victor_nefariusAI : public ScriptedAI, private Dialo
             pSummoned->SetLevitate(true);
 
             // Let Nefarian fly towards combat area
-            pSummoned->GetMotionMaster()->MovePoint(1, aNefarianLocs[3].m_fX, aNefarianLocs[3].m_fY, aNefarianLocs[3].m_fZ);
+            pSummoned->GetMotionMaster()->MovePoint(1, aNefarianLocs[3].x, aNefarianLocs[3].y, aNefarianLocs[3].z);
             DoScriptText(SAY_NEFARIAN_INTRO, pSummoned);
         }
         else
@@ -333,11 +328,11 @@ struct MANGOS_DLL_DECL boss_victor_nefariusAI : public ScriptedAI, private Dialo
 
                 // 1 in 3 chance it will be a chromatic
                 uiCreatureId = urand(0, 2) ? m_uiDrakeTypeOne : NPC_CHROMATIC_DRAKANOID;
-                m_creature->SummonCreature(uiCreatureId, aNefarianLocs[0].m_fX, aNefarianLocs[0].m_fY, aNefarianLocs[0].m_fZ, 5.000f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000);
+                m_creature->SummonCreature(uiCreatureId, aNefarianLocs[0].x, aNefarianLocs[0].y, aNefarianLocs[0].z, 5.000f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000);
 
                 // 1 in 3 chance it will be a chromatic
                 uiCreatureId = urand(0, 2) ? m_uiDrakeTypeTwo : NPC_CHROMATIC_DRAKANOID;
-                m_creature->SummonCreature(uiCreatureId, aNefarianLocs[1].m_fX, aNefarianLocs[1].m_fY, aNefarianLocs[1].m_fZ, 5.000, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000);
+                m_creature->SummonCreature(uiCreatureId, aNefarianLocs[1].x, aNefarianLocs[1].y, aNefarianLocs[1].z, 5.000, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000);
 
                 //Begin phase 2 by spawning Nefarian
                 if (m_uiSpawnedAdds >= MAX_DRAKE_SUMMONS)
@@ -351,7 +346,7 @@ struct MANGOS_DLL_DECL boss_victor_nefariusAI : public ScriptedAI, private Dialo
 
                     // Spawn Nefarian
                     // Summon as active, to be able to work proper!
-                    m_creature->SummonCreature(NPC_NEFARIAN, aNefarianLocs[2].m_fX, aNefarianLocs[2].m_fY, aNefarianLocs[2].m_fZ, 0, TEMPSUMMON_DEAD_DESPAWN, 0, true);
+                    m_creature->SummonCreature(NPC_NEFARIAN, aNefarianLocs[2].x, aNefarianLocs[2].y, aNefarianLocs[2].z, 0, TEMPSUMMON_DEAD_DESPAWN, 0, true);
                 }
 
                 m_uiAddSpawnTimer = 4000;

@@ -56,12 +56,7 @@ enum
     POINT_DOWNSTAIRS    = 1
 };
 
-struct SpawnLocations
-{
-    float fX, fY, fZ, fAng;
-};
-
-static SpawnLocations aSpirits[]=
+static LOCATION aSpirits[]=
 {
     {-12150.9f, -1956.24f, 133.407f, 2.57835f},
     {-12157.1f, -1972.78f, 133.947f, 2.64903f},
@@ -125,7 +120,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
         DoScriptText(SAY_AGGRO, m_creature);
 
         for(uint8 i = 0; i < countof(aSpirits); ++i)
-            m_creature->SummonCreature(NPC_CHAINED_SPIRIT, aSpirits[i].fX, aSpirits[i].fY, aSpirits[i].fZ, aSpirits[i].fAng, TEMPSUMMON_CORPSE_DESPAWN, 0);
+            m_creature->SummonCreature(NPC_CHAINED_SPIRIT, aSpirits[i].x, aSpirits[i].y, aSpirits[i].z, aSpirits[i].o, TEMPSUMMON_CORPSE_DESPAWN, 0);
 
         //At combat start Mandokir is mounted so we must unmount it first
         m_creature->Unmount();

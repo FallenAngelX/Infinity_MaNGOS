@@ -26,11 +26,6 @@ EndScriptData */
 #include "precompiled.h"
 #include "ahnkahet.h"
 
-struct Locations
-{
-    float x, y, z, o;
-    uint32 id;
-};
 enum
 {
     SPELL_SPHERE_VISUAL                 = 56075,
@@ -93,7 +88,7 @@ enum
 #define JEDOGA_Z                        -11.720f
 #define JEDOGA_O                        5.565f
 
-static Locations VolunteerLoc[]=
+static LOCATION VolunteerLoc[]=
 {
     //29 Volunteers
     {365.68f, -735.95f, -16.17f, 1.607f}, // Right, first line

@@ -57,13 +57,7 @@ enum
     SAY_MAJORDOMO_SPAWN         = -1409004,
 };
 
-struct sSpawnLocation
-{
-    uint32 m_uiEntry;
-    float m_fX, m_fY, m_fZ, m_fO;
-};
-
-static sSpawnLocation m_aBosspawnLocs[MAX_MAJORDOMO_ADDS] =
+static SPAWNLOCATION m_aBosspawnLocs[MAX_MAJORDOMO_ADDS] =
 {
     {NPC_FLAMEWAKER_ELITE,  737.945f, -1156.48f, -118.945f, 4.46804f},
     {NPC_FLAMEWAKER_ELITE,  752.520f, -1191.02f, -118.218f, 2.49582f},
@@ -75,7 +69,7 @@ static sSpawnLocation m_aBosspawnLocs[MAX_MAJORDOMO_ADDS] =
     {NPC_FLAMEWAKER_HEALER, 755.910f, -1184.46f, -118.449f, 2.80998f}
 };
 
-static sSpawnLocation m_aMajordomoLocations[2] =
+static SPAWNLOCATION m_aMajordomoLocations[2] =
 {
     {NPC_MAJORDOMO, 758.089f, -1176.71f, -118.640f, 3.12414f},  // Summon fight position
     {NPC_MAJORDOMO, 847.103f, -816.153f, -229.775f, 4.344f}     // Summon and teleport location (near Ragnaros)

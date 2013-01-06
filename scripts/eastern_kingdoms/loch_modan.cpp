@@ -97,7 +97,7 @@ enum
     NPC_DARK_IRON_DWARF   = 2149
 };
 
-static const Location m_afAmbushSpawn[] =
+static const LOCATION m_afAmbushSpawn[] =
 {
     {-5691.93f,-3745.91f,319.159f, 2.21f},
     {-5706.98f,-3745.39f,318.728f, 1.04f}

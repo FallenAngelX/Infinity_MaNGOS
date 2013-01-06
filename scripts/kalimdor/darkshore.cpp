@@ -408,13 +408,8 @@ enum
     QUEST_ESCAPE_THROUGH_STEALTH    = 995,
 };
 
-struct SummonLocation
-{
-    float m_fX, m_fY, m_fZ, m_fO;
-};
-
 // Spawn locations
-static const SummonLocation aVolcorSpawnLocs[] =
+static const EVENTLOCATION aVolcorSpawnLocs[] =
 {
     {4630.2f, 22.6f, 70.1f, 2.4f},
     {4603.8f, 53.5f, 70.4f, 5.4f},

@@ -63,7 +63,7 @@ enum
     FACTION_BLACK_DRAGON        = 103
 };
 
-static const EventLocations aStadiumLocs[7] =
+static const EVENTLOCATION aStadiumLocs[7] =
 {
     {210.00f, -420.30f, 110.94f, 3.14f},                    // dragons summon location
     {210.14f, -397.54f, 111.1f},                            // Gyth summon location

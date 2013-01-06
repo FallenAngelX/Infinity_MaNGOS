@@ -92,12 +92,8 @@ enum
     PHASE_INSANITY_2                = 3, 
     PHASE_INSANITY_3                = 4, 
 };
-struct Locations
-{
-    float x, y, z;
-    uint32 id;
-};
-static Locations SpawnLoc[]=
+
+static LOCATION SpawnLoc[]=
 {
     //Around room
     {571.48f, -494.01f, 26.35f},

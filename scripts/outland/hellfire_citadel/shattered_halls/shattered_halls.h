@@ -42,7 +42,7 @@ enum
     //AT_NETHEKURSE               = 4524,                     // Area trigger used for the execution event
 };
 
-struct SpawnLocation
+struct sSpawnLocation
 {
     uint32 m_uiAllianceEntry, m_uiHordeEntry;
     float m_fX, m_fY, m_fZ, m_fO;
@@ -50,7 +50,7 @@ struct SpawnLocation
 
 const float afExecutionerLoc[4] = {151.443f, -84.439f, 1.938f, 6.283f};
 
-static SpawnLocation aSoldiersLocs[] =
+static sSpawnLocation aSoldiersLocs[] =
 {
     {0,                      NPC_SOLDIER_HORDE_1, 119.609f, 256.127f, -45.254f, 5.133f},
     {NPC_SOLDIER_ALLIANCE_1, 0,                   131.106f, 254.520f, -45.236f, 3.951f},

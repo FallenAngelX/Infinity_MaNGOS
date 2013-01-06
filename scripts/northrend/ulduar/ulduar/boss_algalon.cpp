@@ -107,10 +107,11 @@ enum
 //Positional defines 
 static LOCATION PositionLoc[]=
 {
-    {1620, -320.75f},
-    {1620, -290.75f },
-    {1645.5f, -290.75f },
-    {1645.5f, -320.75f },
+    // Z coord not used
+    {1620, -320.75f, 0.0f},
+    {1620, -290.75f, 0.0f},
+    {1645.5f, -290.75f, 0.0f},
+    {1645.5f, -320.75f, 0.0f},
 };
 
 //Black hole

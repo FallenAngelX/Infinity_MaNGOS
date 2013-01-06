@@ -81,7 +81,7 @@ enum
     SAY_EPILOGUE                = -1329015,
 };
 
-static const EventLocations aStratholmeLocation[] =
+static const EVENTLOCATION aStratholmeLocation[] =
 {
     {3725.577f, -3599.484f, 142.367f},                      // Barthilas door run
     {4068.284f, -3535.678f, 122.771f, 2.50f},               // Barthilas tele
@@ -93,7 +93,7 @@ static const EventLocations aStratholmeLocation[] =
     {4042.575f, -3337.929f, 115.059f}                       // Ysida move loc
 };
 
-static const EventLocations aTimmyLocation[] =
+static const EVENTLOCATION aTimmyLocation[] =
 {
     {3696.851f, -3152.736f, 127.661f, 4.024f},              // Timmy spawn loc
     {3668.603f, -3183.314f, 126.215f}                       // Courtyard mobs sort point

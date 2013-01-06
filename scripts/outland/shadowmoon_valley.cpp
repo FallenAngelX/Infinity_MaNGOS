@@ -1338,7 +1338,7 @@ static const DialogueEntry aOutroDialogue[] =
     {0, 0, 0},
 };
 
-const static EventLocations aDamnationLocations[] =
+const static EVENTLOCATION aDamnationLocations[] =
 {
     {-3605.09f, 1885.47f, 47.24f, 1.81f},      // 0 fire spirit summon loc
     {-3600.68f, 1886.58f, 47.24f, 1.81f},      // 1 earth spirit summon loc

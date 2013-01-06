@@ -58,7 +58,7 @@ enum
 };
 
 // Platform locations from left to right (as standing at the entrance)
-static const EventLocations aPlatformLocation[MAX_PLATFORMS] =
+static const EVENTLOCATION aPlatformLocation[MAX_PLATFORMS] =
 {
     {340.15f, 58.65f,  17.71f},
     {388.09f, 31.54f,  20.18f},
@@ -66,7 +66,7 @@ static const EventLocations aPlatformLocation[MAX_PLATFORMS] =
     {340.29f, -60.19f, 17.72f}
 };
 
-static const EventLocations aCenterLocation[] =
+static const EVENTLOCATION aCenterLocation[] =
 {
     {331.0f, 0.01f, 39.0f},
     {331.0, 0.01f, -2.39f},

@@ -126,7 +126,7 @@ static const DialogueEntry aIntroDialogue[] =
     {0, 0, 0},
 };
 
-static EventLocations aWingThicketLocations[] =
+static EVENTLOCATION aWingThicketLocations[] =
 {
     {5515.98f, -4903.43f, 846.30f, 4.58f},      // 0 right priestess summon loc
     {5501.94f, -4920.20f, 848.69f, 6.15f},      // 1 left priestess summon loc

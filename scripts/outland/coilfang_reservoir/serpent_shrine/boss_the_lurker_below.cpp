@@ -53,14 +53,8 @@ enum Phases
     PHASE_SUBMERGED             = 3,
 };
 
-struct AddsLocations
-{
-    uint32 uiEntry;
-    float fX, fY, fZ;
-};
-
 // Coords are guesswork
-static const AddsLocations aLurkerLoc[MAX_SUBMERGE_ADDS]=
+static const SPAWNLOCATION aLurkerLoc[MAX_SUBMERGE_ADDS]=
 {
     {NPC_COILFANG_AMBUSHER, 2.855f,  -459.823f, -19.18f},
     {NPC_COILFANG_AMBUSHER, 12.458f, -466.042f, -19.18f},
@@ -131,7 +125,7 @@ struct MANGOS_DLL_DECL boss_the_lurker_belowAI : public Scripted_NoMovementAI
     void DoSummonCoilfangNaga()
     {
         for (uint8 i = 0; i < MAX_SUBMERGE_ADDS; ++i)
-            m_creature->SummonCreature(aLurkerLoc[i].uiEntry, aLurkerLoc[i].fX, aLurkerLoc[i].fY, aLurkerLoc[i].fZ, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
+            m_creature->SummonCreature(aLurkerLoc[i].m_uiEntry, aLurkerLoc[i].m_fX, aLurkerLoc[i].m_fY, aLurkerLoc[i].m_fZ, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
     }
 
     // Custom threat management

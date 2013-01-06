@@ -83,12 +83,7 @@ enum
 // This is also the needed order for activation: S, N, SW, SE, NW, NE
 static const uint32 m_aAtalaiStatueEvents[MAX_STATUES] = {EVENT_ID_STATUE_1, EVENT_ID_STATUE_2, EVENT_ID_STATUE_3, EVENT_ID_STATUE_4, EVENT_ID_STATUE_5, EVENT_ID_STATUE_6};
 
-struct SummonLocations
-{
-    float m_fX, m_fY, m_fZ, m_fO;
-};
-
-static const SummonLocations aSunkenTempleLocation[] =
+static const LOCATION aSunkenTempleLocation[] =
 {
     {-466.5130f, 95.19820f, -189.646f, 0.0349f},            // Atalarion summon loc
     {-466.8673f,272.31204f, -90.7441f, 3.5255f},            // Shade of hakkar summon loc
@@ -96,7 +91,7 @@ static const SummonLocations aSunkenTempleLocation[] =
 };
 
 // Summon location for the suppressors
-static const SummonLocations aHakkariDoorLocations[2] =
+static const LOCATION aHakkariDoorLocations[2] =
 {
     {-420.629f, 276.682f, -90.827f},
     {-512.015f, 276.134f, -90.827f}

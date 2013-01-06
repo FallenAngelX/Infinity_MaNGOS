@@ -201,7 +201,7 @@ static const DialogueEntry aOutroDialogue[] =
     {0, 0, 0},
 };
 
-static const EventLocations aOutroLocations[] =
+static const EVENTLOCATION aOutroLocations[] =
 {
     {1727.854f, 656.060f, 28.31f, 3.86f},       // portal summon loc
     {1716.969f, 646.407f, 28.05f, 3.91f},       // velen summon loc

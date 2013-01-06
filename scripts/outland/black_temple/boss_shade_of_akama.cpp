@@ -88,13 +88,13 @@ static const DialogueEntry aOutroDialogue[] =
     {0, 0, 0},
 };
 
-static const Location afAkamaWP[]=
+static const LOCATION afAkamaWP[]=
 {
     {516.885193f, 400.836060f, 112.784f},
     {469.597443f, 402.264404f, 118.537f}
 };
 
-static const Location afBrokenSpawnLoc[]=
+static const LOCATION afBrokenSpawnLoc[]=
 {
     {541.375916f, 401.439575f, 112.784f},       // The place where Akama channels
     {534.130005f, 352.394531f, 112.784f},       // Behind a 'pillar' which is behind the east alcove

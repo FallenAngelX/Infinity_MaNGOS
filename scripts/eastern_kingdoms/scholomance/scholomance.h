@@ -56,7 +56,7 @@ enum
     SAY_GANDLING_SPAWN      = -1289000,
 };
 
-static const EventLocations aGandlingSpawnLocs[1] =
+static const EVENTLOCATION aGandlingSpawnLocs[1] =
 {
     {180.771f, -5.4286f, 75.5702f, 1.29154f}
 };

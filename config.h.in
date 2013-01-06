@@ -104,8 +104,12 @@
 
 #if (COMPILER == COMPILER_MICROSOFT)
 #  define LOCATION StaticLocation
+#  define EVENTLOCATION EventLocations
+#  define SPAWNLOCATION SpawnLocation
 #else
 #  define LOCATION Location
+#  define EVENTLOCATION EventLocations
+#  define SPAWNLOCATION SpawnLocation
 #endif
 
 #endif

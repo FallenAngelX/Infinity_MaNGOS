@@ -115,4 +115,10 @@ struct EventLocations
     uint32 m_uiEntry;
 };
 
+struct SpawnLocation
+{
+    uint32 m_uiEntry;
+    float m_fX, m_fY, m_fZ, m_fO;
+};
+
 #endif // SC_UTILITY_H
