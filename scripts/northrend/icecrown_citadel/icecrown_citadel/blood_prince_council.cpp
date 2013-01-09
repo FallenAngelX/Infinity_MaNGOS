@@ -27,6 +27,7 @@ EndScriptData */
 
 #include "precompiled.h"
 #include "icecrown_citadel.h"
+#include "GridNotifiers.h"
 
 enum BossSpells
 {
@@ -689,25 +690,26 @@ struct MANGOS_DLL_DECL boss_taldaram_iccAI : public base_blood_prince_council_bo
         }
     }
 
-    Player* GetFarthestPlayer(Creature *pCreature, float MaxRangeDistance = 100.0f)
+    Player* GetFarthestPlayer(Creature* pCreature, float MaxRangeDistance = 100.0f)
     {
-        Player* farPlayer;
-        uint32 m_iuMaxDistance = 0;
-        uint32 m_iuCurDistance = 0;
-        Map* pMap = pCreature->GetMap();
-        Map::PlayerList const& pPlayers = pMap->GetPlayers();
+        Player* farPlayer = NULL;
+        std::list<Player*> targets;
+        float distance = 0.0f;
 
-        if (!pPlayers.isEmpty())
-        for (Map::PlayerList::const_iterator itr = pPlayers.begin(); itr != pPlayers.end(); ++itr)
+        MaNGOS::AnyPlayerInObjectRangeCheck u_check(pCreature, 100.0f);
+        MaNGOS::PlayerListSearcher<MaNGOS::AnyPlayerInObjectRangeCheck > checker(targets, u_check);
+        Cell::VisitWorldObjects(pCreature, checker, 100.0f);
+
+        for (std::list<Player*>::iterator itr = targets.begin(); itr != targets.end(); ++itr)
         {
-            Player* pPlayer = itr->getSource();
-            if(pPlayer)
+            Player* pPlayer = *itr;
+            if(pPlayer && pPlayer->IsInWorld())
             {
-                m_iuCurDistance = pCreature->GetDistance(pPlayer);
-                if (m_iuCurDistance > m_iuMaxDistance && m_iuCurDistance < MaxRangeDistance)
+                float distance2 = pCreature->GetDistance(pPlayer);
+                if (distance2 > distance)
                 {
-                    m_iuMaxDistance = m_iuCurDistance;
                     farPlayer = pPlayer;
+                    distance = distance2;
                 }
             }
         }
