@@ -3043,7 +3043,10 @@ struct MANGOS_DLL_DECL npc_valkyr_battle_maidenAI : ScriptedAI
     void Reset()
     {
         m_summonerGuid.Clear();
-        m_summonerGuid = (dynamic_cast<TemporarySummon*>(m_creature))->GetSummonerGuid();
+        if (m_creature->IsTemporarySummon())
+            m_summonerGuid = ((TemporarySummon*)m_creature)->GetSummonerGuid();
+        else
+            script_error_log("npc_valkyr_battle_maiden: Creature %s must be tempSummoned, but seems as regular summon. Pleas, correct DB contains!", m_creature->GetObjectGuid().GetString().c_str());
 
         if (m_summonerGuid)
             if(Unit* pUnit = m_creature->GetMap()->GetUnit(m_summonerGuid))

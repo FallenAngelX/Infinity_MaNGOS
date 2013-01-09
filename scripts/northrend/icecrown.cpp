@@ -258,8 +258,9 @@ struct MANGOS_DLL_DECL npc_black_knights_gryphonAI : public npc_escortAI
  
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
     {
-        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(((TemporarySummon*)m_creature)->GetSummonerGuid()))
-            pPlayer->KilledMonsterCredit(m_creature->GetEntry(), m_creature->GetObjectGuid());
+        if (m_creature->IsTemporarySummon())
+            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(((TemporarySummon*)m_creature)->GetSummonerGuid()))
+                pPlayer->KilledMonsterCredit(m_creature->GetEntry(), m_creature->GetObjectGuid());
  
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         m_creature->SetSpeedRate(MOVE_RUN, 3.0f);
