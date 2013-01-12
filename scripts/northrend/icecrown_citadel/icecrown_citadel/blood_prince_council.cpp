@@ -696,9 +696,7 @@ struct MANGOS_DLL_DECL boss_taldaram_iccAI : public base_blood_prince_council_bo
         std::list<Player*> targets;
         float distance = 0.0f;
 
-        MaNGOS::AnyPlayerInObjectRangeCheck u_check(pCreature, 100.0f);
-        MaNGOS::PlayerListSearcher<MaNGOS::AnyPlayerInObjectRangeCheck > checker(targets, u_check);
-        Cell::VisitWorldObjects(pCreature, checker, 100.0f);
+        GetPlayerListInGrid(targets, m_creature, 100.0f);
 
         for (std::list<Player*>::iterator itr = targets.begin(); itr != targets.end(); ++itr)
         {
