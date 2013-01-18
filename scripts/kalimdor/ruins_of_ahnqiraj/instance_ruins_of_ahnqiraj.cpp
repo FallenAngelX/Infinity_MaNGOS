@@ -107,6 +107,11 @@ void instance_ruins_of_ahnqiraj::OnCreatureEvade(Creature* pCreature)
 
 void instance_ruins_of_ahnqiraj::OnCreatureDeath(Creature* pCreature)
 {
+    if (!pCreature)
+        return;
+
+    ObjectGuid guid = pCreature->GetObjectGuid();
+
     switch (pCreature->GetEntry())
     {
         case NPC_KURINNAXX: SetData(TYPE_KURINNAXX, DONE); break;
@@ -127,19 +132,24 @@ void instance_ruins_of_ahnqiraj::OnCreatureDeath(Creature* pCreature)
         {
             // If event isn't started by Andorov, return
             if (GetData(TYPE_RAJAXX) != IN_PROGRESS)
-                return;
+                break;
+
+            GuidSet& army = m_sArmyWavesGuids[m_uiCurrentArmyWave - 1];
+
+            if (army.empty() || army.find(guid) == army.end())
+                break;
 
             // Check if the dead creature belongs to the current wave
-            if (m_sArmyWavesGuids[m_uiCurrentArmyWave - 1].find(pCreature->GetObjectGuid()) != m_sArmyWavesGuids[m_uiCurrentArmyWave - 1].end())
-            {
-                m_sArmyWavesGuids[m_uiCurrentArmyWave - 1].erase(pCreature->GetObjectGuid());
+            army.erase(guid);
 
-                // If all the soldiers from the current wave are dead, then send the next one
-                if (m_sArmyWavesGuids[m_uiCurrentArmyWave - 1].empty())
-                    DoSendNextArmyWave();
-            }
+            // If all the soldiers from the current wave are dead, then send the next one
+            if (army.empty())
+                DoSendNextArmyWave();
+
             break;
         }
+        default:
+            break;
     }
 }
 
