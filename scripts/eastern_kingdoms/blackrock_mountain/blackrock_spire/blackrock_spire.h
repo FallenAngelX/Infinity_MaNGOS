@@ -101,8 +101,8 @@ class MANGOS_DLL_DECL instance_blackrock_spire : public ScriptedInstance, privat
         void OnCreatureEvade(Creature* pCreature);
         void OnCreatureEnterCombat(Creature* pCreature);
 
-        void SetData(uint32 uiType, uint32 uiData) override;
-        uint32 GetData(uint32 uiType) const override;
+        void SetData(uint32 uiType, uint32 uiData);
+        uint32 GetData(uint32 uiType) const;
 
         const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
