@@ -186,6 +186,17 @@ INSERT INTO `spell_script_target` VALUES
 -- delete Grow Stacker - handle in script
 DELETE FROM `creature_template_addon` WHERE `entry` = 37690;
 
+-- Transform
+REPLACE INTO `spell_script_target`
+(`entry`, `type`, `targetEntry`) VALUES
+(72850, 1, 38308),
+(72850, 1, 38309),
+(72851, 1, 38308),
+(72851, 1, 38309),
+(72852, 1, 38308),
+(72852, 1, 38309);
+
+
 -- remove proc from Mutated Strength - currently cooldown for creatures not handled in core
 DELETE FROM `spell_proc_event` WHERE `entry` IN (71604, 72673, 72674, 72675);
 INSERT INTO `spell_proc_event` (`entry`, `procFlags`) VALUES
