@@ -517,27 +517,27 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
         {
             case PHASE_ONE:
             {
-//                UpdateSlimePuddle(uiDiff);
-//                UpdateUnstableExperiment(uiDiff);
+                UpdateSlimePuddle(uiDiff);
+                UpdateUnstableExperiment(uiDiff);
                 UpdateUnboundPlague(uiDiff);
                 UpdateSwitchPhaseIntro(uiDiff);
                 break;
             }
             case PHASE_TWO:
             {
-//                UpdateSlimePuddle(uiDiff);
-//                UpdateUnstableExperiment(uiDiff);
+                UpdateSlimePuddle(uiDiff);
+                UpdateUnstableExperiment(uiDiff);
                 UpdateUnboundPlague(uiDiff);
-//                UpdateMalleableGoo(uiDiff);
-//                UpdateChokingGasBomb(uiDiff);
+                UpdateMalleableGoo(uiDiff);
+                UpdateChokingGasBomb(uiDiff);
                 UpdateSwitchPhaseIntro(uiDiff);
                 break;
             }
             case PHASE_THREE:
             {
-//                UpdateSlimePuddle(uiDiff);
-//                UpdateMalleableGoo(uiDiff);
-//                UpdateChokingGasBomb(uiDiff);
+                UpdateSlimePuddle(uiDiff);
+                UpdateMalleableGoo(uiDiff);
+                UpdateChokingGasBomb(uiDiff);
                 UpdateUnboundPlague(uiDiff);
 
                 // Mutated Plague (proc cooldown for creatures doesn't work)
