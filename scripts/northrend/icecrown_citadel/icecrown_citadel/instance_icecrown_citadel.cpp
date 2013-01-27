@@ -89,7 +89,7 @@ void instance_icecrown_citadel::Initialize()
 
 bool instance_icecrown_citadel::IsEncounterInProgress()
 {
-    for(uint8 i = 1; i < MAX_ENCOUNTERS; ++i)
+    for (uint8 i = 1; i < MAX_ENCOUNTERS; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             return true;
@@ -138,100 +138,80 @@ void instance_icecrown_citadel::OnObjectCreate(GameObject* pGo)
         case GO_ICEWALL_1:
             if (m_auiEncounter[TYPE_MARROWGAR] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_ICEWALL_2:
             if (m_auiEncounter[TYPE_MARROWGAR] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_DEATHWHISPER_ELEVATOR:
         case GO_SAURFANG_DOOR:
             if (m_auiEncounter[TYPE_SAURFANG] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_ORANGE_PLAGUE:
             if (m_auiEncounter[TYPE_FESTERGUT] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_GREEN_PLAGUE:
             if (m_auiEncounter[TYPE_ROTFACE] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_SCIENTIST_DOOR_GREEN:
             if (m_auiEncounter[TYPE_ROTFACE] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_SCIENTIST_DOOR_ORANGE:
             if (m_auiEncounter[TYPE_FESTERGUT] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_SCIENTIST_DOOR_COLLISION:
             if (m_auiEncounter[TYPE_FESTERGUT] == DONE && m_auiEncounter[TYPE_ROTFACE] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_SCIENTIST_DOOR:
             if (m_auiEncounter[TYPE_FESTERGUT] == DONE && m_auiEncounter[TYPE_ROTFACE] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_ORANGE_TUBES:
             if (m_auiEncounter[TYPE_FESTERGUT] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_GREEN_TUBES:
             if (m_auiEncounter[TYPE_ROTFACE] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_CRIMSON_HALL_DOOR:
             if (m_auiEncounter[TYPE_BLOOD_COUNCIL] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_COUNCIL_DOOR_1:
             if (m_auiEncounter[TYPE_BLOOD_COUNCIL] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_COUNCIL_DOOR_2:
             if (m_auiEncounter[TYPE_BLOOD_COUNCIL] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_GREEN_DRAGON_DOOR_2:
             if (m_auiEncounter[TYPE_VALITHRIA] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_SINDRAGOSA_DOOR_1:
             if (m_auiEncounter[TYPE_VALITHRIA] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_SINDRAGOSA_DOOR_2:
             if (m_auiEncounter[TYPE_VALITHRIA] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_DRINK_ME_TABLE:
             pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_ARTHAS_PLATFORM:
             pGo->SetUInt32Value(GAMEOBJECT_PARENTROTATION, 5535469);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_ARTHAS_PRECIPICE:
             pGo->SetUInt32Value(GAMEOBJECT_PARENTROTATION, 4178312);
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         case GO_SAURFANG_CACHE_10:
         case GO_SAURFANG_CACHE_25:
@@ -270,11 +250,12 @@ void instance_icecrown_citadel::OnObjectCreate(GameObject* pGo)
         case GO_BLOODWING_DOOR:
         case GO_ORATORY_DOOR:
         case GO_SINDRAGOSA_ICE_WALL:
-            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
         default:
-            break;
+            return;
     }
+
+    m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
 }
 
 void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
@@ -287,8 +268,6 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
         case TYPE_TELEPORT:
             break;
         case TYPE_MARROWGAR:
-            m_auiEncounter[TYPE_MARROWGAR] = uiData;
-
             DoUseDoorOrButton(GO_MARROWGAR_DOOR);
 
             if (uiData == DONE)
@@ -300,8 +279,6 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
             }
             break;
          case TYPE_DEATHWHISPER:
-            m_auiEncounter[TYPE_DEATHWHISPER] = uiData;
-
             DoUseDoorOrButton(GO_ORATORY_DOOR);
 
             if (uiData == DONE)
@@ -314,11 +291,8 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
             }
             break;
          case TYPE_FLIGHT_WAR:
-            m_auiEncounter[3] = uiData;
             break;
          case TYPE_SAURFANG:
-            m_auiEncounter[TYPE_SAURFANG] = uiData;
-
             if (uiData == DONE)
             {
                 DoUseDoorOrButton(GO_SAURFANG_DOOR);
@@ -326,13 +300,11 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
                 if (GameObject* pChest = GetSingleGameObjectFromStorage(m_uiSaurfangCache))
                 {
                     if (pChest && !pChest->isSpawned())
-                        pChest->SetRespawnTime(7*DAY);
+                        pChest->SetRespawnTime(7 * DAY);
                 }
             }
             break;
          case TYPE_FESTERGUT:
-            m_auiEncounter[TYPE_FESTERGUT] = uiData;
-
             DoUseDoorOrButton(GO_ORANGE_PLAGUE);
 
             if (uiData == DONE)
@@ -347,14 +319,12 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
             }
             break;
          case TYPE_ROTFACE:
-            m_auiEncounter[TYPE_ROTFACE] = uiData;
-
             DoUseDoorOrButton(GO_GREEN_PLAGUE);
 
             if (uiData == DONE)
             {
                 DoUseDoorOrButton(GO_GREEN_TUBES);
-                if (m_auiEncounter[TYPE_FESTERGUT] == DONE)
+                if (GetData(TYPE_FESTERGUT) == DONE)
                 {
                     DoUseDoorOrButton(GO_SCIENTIST_DOOR_GREEN, 0, true);
                     DoUseDoorOrButton(GO_SCIENTIST_DOOR_ORANGE, 0, true);
@@ -363,50 +333,26 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
             }
             break;
          case TYPE_PUTRICIDE:
-            m_auiEncounter[TYPE_PUTRICIDE] = uiData;
+            if (uiData == DONE && GetData(TYPE_SINDRAGOSA) == DONE && GetData(TYPE_LANATHEL) == DONE)
+                m_auiEncounter[TYPE_KINGS_OF_ICC] = DONE;
 
-            if (uiData == DONE)
+            switch (uiData)
             {
-                if (m_auiEncounter[TYPE_SINDRAGOSA] == DONE &&
-                    m_auiEncounter[TYPE_LANATHEL] == DONE)
-                {
-                    m_auiEncounter[TYPE_KINGS_OF_ICC] = DONE;
-                }
-            }
-
-            {
-                // Proff sometimes does't trigger door, so let's check it explicitly
-                GameObject* pDoor = GetSingleGameObjectFromStorage(GO_SCIENTIST_DOOR);
-                if (pDoor)
-                {
-                    switch (uiData)
-                    {
-                        case IN_PROGRESS:
-                        case SPECIAL:
-                        {
-                            // Close door if it's open
-                            if (pDoor->getLootState() != GO_ACTIVATED)
-                                DoUseDoorOrButton(GO_SCIENTIST_DOOR);
-                            break;
-                        }
-                        case NOT_STARTED:
-                        case FAIL:
-                        case DONE:
-                        {
-                            // Open door if it's closed
-                            if (pDoor->getLootState() != GO_READY)
-                                DoUseDoorOrButton(GO_SCIENTIST_DOOR);
-                            break;
-                        }
-                        default: break;
-                    }
-                }
+                case IN_PROGRESS:
+                case SPECIAL:
+                    DoCloseDoor(GO_SCIENTIST_DOOR);
+                    break;
+                case NOT_STARTED:
+                case FAIL:
+                case DONE:
+                    DoOpenDoor(GO_SCIENTIST_DOOR);
+                    break;
+                default:
+                    break;
             }
 
             break;
          case TYPE_BLOOD_COUNCIL:
-            m_auiEncounter[TYPE_BLOOD_COUNCIL] = uiData;
-
             DoUseDoorOrButton(GO_CRIMSON_HALL_DOOR);
 
             if (bChange && uiData == IN_PROGRESS)
@@ -435,24 +381,17 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
             }
             break;
          case TYPE_LANATHEL:
-            m_auiEncounter[TYPE_LANATHEL] = uiData;
-
             DoUseDoorOrButton(GO_BLOODPRINCE_DOOR);
 
             if (uiData == DONE)
             {
                 DoUseDoorOrButton(GO_ICECROWN_GRATE);
 
-                if (m_auiEncounter[TYPE_PUTRICIDE] == DONE &&
-                    m_auiEncounter[TYPE_SINDRAGOSA] == DONE)
-                {
+                if (GetData(TYPE_PUTRICIDE) == DONE && GetData(TYPE_SINDRAGOSA) == DONE)
                     m_auiEncounter[TYPE_KINGS_OF_ICC] = DONE;
-                }
             }
             break;
          case TYPE_VALITHRIA:
-            m_auiEncounter[TYPE_VALITHRIA] = uiData;
-
             DoUseDoorOrButton(GO_GREEN_DRAGON_DOOR_1);
             DoUseDoorOrButton(GO_VALITHRIA_DOOR_1);
             DoUseDoorOrButton(GO_VALITHRIA_DOOR_2);
@@ -479,42 +418,31 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
                 DoUseDoorOrButton(GO_SINDRAGOSA_DOOR_1);
                 DoUseDoorOrButton(GO_SINDRAGOSA_DOOR_2);
 
-                if (GameObject* pChest = GetSingleGameObjectFromStorage( m_uiValithriaCache))
+                if (GameObject* pChest = GetSingleGameObjectFromStorage(m_uiValithriaCache))
                 {
                     if (pChest && !pChest->isSpawned())
-                        pChest->SetRespawnTime(7*DAY);
+                        pChest->SetRespawnTime(7 * DAY);
                 }
             }
 
             break;
          case TYPE_SINDRAGOSA:
-            m_auiEncounter[TYPE_SINDRAGOSA] = uiData;
-
             DoUseDoorOrButton(GO_SINDRAGOSA_ENTRANCE);
             DoUseDoorOrButton(GO_SINDRAGOSA_ICE_WALL);
 
-            if (uiData == DONE)
-            {
-                if (m_auiEncounter[TYPE_PUTRICIDE] == DONE &&
-                    m_auiEncounter[TYPE_LANATHEL] == DONE)
-                {
-                    m_auiEncounter[TYPE_KINGS_OF_ICC] = DONE;
-                }
-            }
+            if (uiData == DONE && GetData(TYPE_PUTRICIDE) == DONE &&  GetData(TYPE_LANATHEL) == DONE)
+                m_auiEncounter[TYPE_KINGS_OF_ICC] = DONE;
             break;
          case TYPE_LICH_KING:
-            m_auiEncounter[TYPE_LICH_KING] = uiData;
-            break;
          case TYPE_FROSTMOURNE_ROOM:
-             m_auiEncounter[TYPE_FROSTMOURNE_ROOM] = uiData;
-             break;
          case TYPE_ICECROWN_QUESTS:
-            m_auiEncounter[TYPE_ICECROWN_QUESTS] = uiData;
             break;
         default:
             script_error_log("Instance Icecrown Citadel: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
             return;
     }
+
+    m_auiEncounter[uiType] = uiData;
 
     if (uiData == DONE)
     {
@@ -522,7 +450,7 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
 
         std::ostringstream saveStream;
 
-        for(uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
+        for (uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
             saveStream << m_auiEncounter[i] << " ";
 
         strSaveData = saveStream.str();
@@ -554,7 +482,8 @@ uint32 instance_icecrown_citadel::GetData(uint32 uiType)
          case TYPE_ICECROWN_QUESTS:
              return m_auiEncounter[uiType];
          default:
-             return 0;
+            script_error_log("Instance Icecrown Citadel: ERROR GetData for type %u does not exist/not implemented.", uiType);
+            return 0;
     }
 }
 bool instance_icecrown_citadel::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/)
@@ -639,7 +568,7 @@ void instance_icecrown_citadel::Load(const char* chrIn)
 
     std::istringstream loadStream(chrIn);
 
-    for(uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
     {
         loadStream >> m_auiEncounter[i];
 

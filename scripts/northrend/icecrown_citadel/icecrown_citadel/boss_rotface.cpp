@@ -98,8 +98,6 @@ enum
 
 static LOCATION SpawnLoc[]=
 {
-    {4322.85f, 3164.17f, 389.40f, 3.76f},               // festergut side
-    {4311.91f, 3157.42f, 389.00f, 3.62f},               // hacky (LoS problems?) festergut side
     {4391.38f, 3163.71f, 389.40f, 5.8f}                 // rotface side
 };
 
@@ -120,22 +118,22 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public base_icc_bossAI
 
     void Reset()
     {
-        m_uiSlimeSprayTimer = urand(17000, 23000);
-        m_uiVileGasTimer = 20000;
+        m_uiSlimeSprayTimer       = urand(17000, 23000);
+        m_uiVileGasTimer          = 20000;
         m_uiMutatedInfectionTimer = m_uiMutatedInfectionBeforeTimer = 60000;
-        m_uiInfectionsRate = 1;
-        m_uiSlimeFlowTimer = 20000;
+        m_uiInfectionsRate        = 1;
+        m_uiSlimeFlowTimer        = 20000;
     }
 
-    void Aggro(Unit *pWho)
+    void Aggro(Unit* pWho)
     {
         if (m_pInstance)
         {
             m_pInstance->SetData(TYPE_ROTFACE, IN_PROGRESS);
 
-            if (Creature *pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
+            if (Creature* pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
             {
-                pProfessor->NearTeleportTo(SpawnLoc[2].x, SpawnLoc[2].y, SpawnLoc[2].z, SpawnLoc[2].o);
+                pProfessor->NearTeleportTo(SpawnLoc[0].x, SpawnLoc[0].y, SpawnLoc[0].z, SpawnLoc[0].o);
                 pProfessor->SetInCombatWithZone();
             }
         }
@@ -152,7 +150,7 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public base_icc_bossAI
         {
             m_pInstance->SetData(TYPE_ROTFACE, FAIL);
 
-            if (Creature *pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
+            if (Creature* pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
                 pProfessor->AI()->EnterEvadeMode();
         }
 
@@ -162,16 +160,16 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public base_icc_bossAI
     void KilledUnit(Unit* pVictim)
     {
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
-            DoScriptText(SAY_SLAY_1 - urand(0,1), m_creature, pVictim);
+            DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature, pVictim);
     }
 
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller)
     {
         if (m_pInstance)
         {
             m_pInstance->SetData(TYPE_ROTFACE, DONE);
 
-            if (Creature *pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
+            if (Creature* pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
                 pProfessor->AI()->EnterEvadeMode();
         }
 
@@ -221,9 +219,9 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public base_icc_bossAI
         {
             if (m_uiVileGasTimer <= uiDiff)
             {
-                if (Creature *pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
+                if (Creature* pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
                 {
-                    if (Unit *pTarget = SelectRandomRangedTarget(m_creature))
+                    if (Unit* pTarget = SelectRandomRangedTarget(m_creature))
                     {
                         if (DoCastSpellIfCan(pTarget, SPELL_VILE_GAS_SUMMON_TRIG, CAST_TRIGGERED) == CAST_OK)
                         {
@@ -240,7 +238,7 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public base_icc_bossAI
         // Slime Flow
         if (m_uiSlimeFlowTimer <= uiDiff)
         {
-            if (Creature *pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
+            if (Creature* pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
                 DoScriptText(SAY_SLIME_FLOW_1 - urand(0, 1), pProfessor);
 
             m_uiSlimeFlowTimer = 20000;
@@ -258,14 +256,16 @@ CreatureAI* GetAI_boss_rotface(Creature* pCreature)
 }
 
 // all passive dummy NPCs
-struct MANGOS_DLL_DECL  mob_rotface_ooze_dummyAI : public ScriptedAI
+struct MANGOS_DLL_DECL mob_rotface_ooze_dummyAI : public ScriptedAI
 {
-    mob_rotface_ooze_dummyAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_rotface_ooze_dummyAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         SetCombatMovement(false);
+        if (pCreature->GetEntry() == 37986)
+            pCreature->ForcedDespawn(10000);
     }
     void Reset(){}
-    void AttackStart(Unit *pWho){}
+    void AttackStart(Unit* pWho){}
     void DamageTaken(Unit* pDealer, uint32& uiDamage)
     {
         uiDamage = 0;
@@ -280,13 +280,13 @@ CreatureAI* GetAI_mob_rotface_ooze_dummy(Creature* pCreature)
 
 struct MANGOS_DLL_DECL mob_little_oozeAI : public ScriptedAI
 {
-    mob_little_oozeAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_little_oozeAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
     }
 
-    ScriptedInstance *m_pInstance;
+    ScriptedInstance* m_pInstance;
     uint32 m_uiStickyOozeTimer;
 
     void Reset()
@@ -294,14 +294,10 @@ struct MANGOS_DLL_DECL mob_little_oozeAI : public ScriptedAI
         m_uiStickyOozeTimer = 5000;
     }
 
-    void EnterEvadeMode()
+    void Aggro(Unit* pWho)
     {
-        m_creature->ForcedDespawn();
-    }
-
-    void Aggro(Unit *pWho)
-    {
-        m_creature->AddThreat(pWho, 500000.0f);
+        m_creature->FixateTarget(pWho);
+        m_creature->SetInCombatWithZone();
         m_creature->SetSpeedRate(MOVE_RUN, 0.5f);
         DoCastSpellIfCan(m_creature, SPELL_WEAK_RADIATING_OOZE, CAST_TRIGGERED);
         DoCastSpellIfCan(m_creature, SPELL_LITTLE_OOZE_COMBINE, CAST_TRIGGERED);
@@ -309,17 +305,17 @@ struct MANGOS_DLL_DECL mob_little_oozeAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (m_pInstance)
+        if (m_pInstance && m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
         {
-            if (m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
-            {
-                m_creature->ForcedDespawn();
-                return;
-            }
+            m_creature->ForcedDespawn();
+            return;
         }
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        if (!m_creature->GetFixatedTarget())
+            m_creature->FixateTarget(m_creature->getVictim());
 
         if (m_uiStickyOozeTimer <= uiDiff)
         {
@@ -340,13 +336,13 @@ CreatureAI* GetAI_mob_little_ooze(Creature* pCreature)
 
 struct MANGOS_DLL_DECL mob_big_oozeAI : public ScriptedAI
 {
-    mob_big_oozeAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_big_oozeAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
     }
 
-    ScriptedInstance *m_pInstance;
+    ScriptedInstance* m_pInstance;
     uint32 m_uiStickyOozeTimer;
     uint32 m_uiCheckTimer;
     bool m_bHasSaid;
@@ -354,18 +350,14 @@ struct MANGOS_DLL_DECL mob_big_oozeAI : public ScriptedAI
     void Reset()
     {
         m_uiStickyOozeTimer = 5000;
-        m_uiCheckTimer = 1000;
-        m_bHasSaid = false;
+        m_uiCheckTimer      = 1000;
+        m_bHasSaid          = false;
     }
 
-    void JustReachedHome()
+    void Aggro(Unit* pWho)
     {
-        m_creature->ForcedDespawn();
-    }
-
-    void Aggro(Unit *pWho)
-    {
-        m_creature->AddThreat(pWho, 500000.0f);
+        m_creature->FixateTarget(pWho);
+        m_creature->SetInCombatWithZone();
         m_creature->SetSpeedRate(MOVE_RUN, 0.5f);
         DoCastSpellIfCan(m_creature, SPELL_RADIATING_OOZE, CAST_TRIGGERED);
         DoCastSpellIfCan(m_creature, SPELL_BIG_OOZE_COMBINE, CAST_TRIGGERED);
@@ -374,30 +366,30 @@ struct MANGOS_DLL_DECL mob_big_oozeAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (m_pInstance)
+        if (m_pInstance && m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
         {
-            if (m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
-            {
-                m_creature->ForcedDespawn();
-                return;
-            }
+            m_creature->ForcedDespawn();
+            return;
         }
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        if (!m_creature->GetFixatedTarget())
+            m_creature->FixateTarget(m_creature->getVictim());
 
         // Unstable Ooze
         if (!m_bHasSaid)
         {
             if (m_uiCheckTimer <= uiDiff)
             {
-                if (SpellAuraHolderPtr holder= m_creature->GetSpellAuraHolder(SPELL_UNSTABLE_OOZE))
+                if (SpellAuraHolderPtr holder = m_creature->GetSpellAuraHolder(SPELL_UNSTABLE_OOZE))
                 {
                     if (holder->GetStackAmount() >= 5)
                     {
                         if (m_pInstance)
                         {
-                            if (Creature *pRotface = m_pInstance->GetSingleCreatureFromStorage(NPC_ROTFACE))
+                            if (Creature* pRotface = m_pInstance->GetSingleCreatureFromStorage(NPC_ROTFACE))
                             {
                                 DoScriptText(SAY_OOZE_EXPLODE, pRotface);
                                 m_bHasSaid = true;
@@ -432,7 +424,7 @@ CreatureAI* GetAI_mob_big_ooze(Creature* pCreature)
 // Ooze explosion stalker
 struct MANGOS_DLL_DECL mob_ooze_explosion_stalkerAI : public ScriptedAI
 {
-    mob_ooze_explosion_stalkerAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_ooze_explosion_stalkerAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         pCreature->ForcedDespawn(10000);
     }
@@ -447,14 +439,14 @@ CreatureAI* GetAI_mob_ooze_explosion_stalker(Creature* pCreature)
 
 struct MANGOS_DLL_DECL mob_sticky_oozeAI : public ScriptedAI
 {
-    mob_sticky_oozeAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_sticky_oozeAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         SetCombatMovement(false);
         pCreature->CastSpell(pCreature, SPELL_STICKY_AURA, true);
     }
 
-    ScriptedInstance *m_pInstance;
+    ScriptedInstance* m_pInstance;
 
     void Reset(){}
     void DamageTaken(Unit* pDealer, uint32& uiDamage)
@@ -463,13 +455,10 @@ struct MANGOS_DLL_DECL mob_sticky_oozeAI : public ScriptedAI
     }
     void UpdateAI(const uint32 uiDiff)
     {
-        if (m_pInstance)
+        if (m_pInstance && m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
         {
-            if (m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
-            {
-                m_creature->ForcedDespawn();
-                return;
-            }
+            m_creature->ForcedDespawn();
+            return;
         }
     }
 };
@@ -481,34 +470,34 @@ CreatureAI* GetAI_mob_sticky_ooze(Creature* pCreature)
 
 void AddSC_boss_rotface()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_rotface";
-    newscript->GetAI = &GetAI_boss_rotface;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+    pNewScript = new Script;
+    pNewScript->Name = "boss_rotface";
+    pNewScript->GetAI = &GetAI_boss_rotface;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_rotface_ooze_dummy";
-    newscript->GetAI = &GetAI_mob_rotface_ooze_dummy;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_rotface_ooze_dummy";
+    pNewScript->GetAI = &GetAI_mob_rotface_ooze_dummy;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_little_ooze";
-    newscript->GetAI = &GetAI_mob_little_ooze;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_little_ooze";
+    pNewScript->GetAI = &GetAI_mob_little_ooze;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_big_ooze";
-    newscript->GetAI = &GetAI_mob_big_ooze;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_big_ooze";
+    pNewScript->GetAI = &GetAI_mob_big_ooze;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_sticky_ooze";
-    newscript->GetAI = &GetAI_mob_sticky_ooze;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_sticky_ooze";
+    pNewScript->GetAI = &GetAI_mob_sticky_ooze;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_ooze_explosion_stalker";
-    newscript->GetAI = &GetAI_mob_ooze_explosion_stalker;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_ooze_explosion_stalker";
+    pNewScript->GetAI = &GetAI_mob_ooze_explosion_stalker;
+    pNewScript->RegisterSelf();
 }

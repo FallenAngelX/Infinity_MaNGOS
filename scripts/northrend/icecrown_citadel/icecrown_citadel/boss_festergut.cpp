@@ -97,13 +97,12 @@ enum
 static LOCATION SpawnLoc[]=
 {
     {4322.85f, 3164.17f, 389.40f, 3.76f},               // festergut side
-    {4311.91f, 3157.42f, 389.00f, 3.62f},               // hacky (LoS problems?) festergut side
-    {4391.38f, 3163.71f, 389.40f, 5.8f}                 // rotface side
+    {4311.91f, 3157.42f, 389.00f, 3.62f}                // hacky (LoS problems?) festergut side
 };
 
 struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
 {
-    boss_festergutAI(Creature *pCreature) : base_icc_bossAI(pCreature)
+    boss_festergutAI(Creature* pCreature) : base_icc_bossAI(pCreature)
     {
         Reset();
     }
@@ -117,15 +116,15 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
 
     void Reset()
     {
-        m_uiBerserkTimer = 5 * MINUTE * IN_MILLISECONDS;
+        m_uiBerserkTimer      = 5 * MINUTE * IN_MILLISECONDS;
         m_uiGastricBloatTimer = 10000;
         m_uiInhaleBlightTimer = 30000;
-        m_uiGasSporeTimer = 20000;
-        m_uiVileGasTimer = 10000;
+        m_uiGasSporeTimer     = 20000;
+        m_uiVileGasTimer      = 10000;
         m_uiMalleableGooTimer = urand(15000, 20000);
     }
 
-    void Aggro(Unit *pWho)
+    void Aggro(Unit* pWho)
     {
         // not working as intended currently
         // DoCastSpellIfCan(m_creature, SPELL_GASTRIC_BLOAT, CAST_TRIGGERED);
@@ -139,7 +138,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
         {
             m_pInstance->SetData(TYPE_FESTERGUT, IN_PROGRESS);
 
-            if (Creature *pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
+            if (Creature* pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
             {
                 pProfessor->NearTeleportTo(SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z, SpawnLoc[1].o);
                 pProfessor->SetInCombatWithZone();
@@ -147,7 +146,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
         }
     }
 
-    void KilledUnit(Unit *pVictim)
+    void KilledUnit(Unit* pVictim)
     {
         DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature);
     }
@@ -158,20 +157,20 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
         {
             m_pInstance->SetData(TYPE_FESTERGUT, FAIL);
 
-            if (Creature *pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
+            if (Creature* pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
                 pProfessor->AI()->EnterEvadeMode();
         }
 
         DoCastSpellIfCan(m_creature, SPELL_REMOVE_INOCULENT, CAST_TRIGGERED);
     }
 
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller)
     {
         if (m_pInstance)
         {
             m_pInstance->SetData(TYPE_FESTERGUT, DONE);
 
-            if (Creature *pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
+            if (Creature* pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
                 pProfessor->AI()->EnterEvadeMode();
         }
 
@@ -232,7 +231,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
             {
                 if (m_pInstance)
                 {
-                    if (Creature *pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
+                    if (Creature* pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
                         DoScriptText(SAY_BLIGHT, pProfessor);
                 }
                 m_uiInhaleBlightTimer = 30000;
@@ -263,7 +262,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
             // DoCastSpellIfCan(m_creature, SPELL_VILE_GAS_SUMMON, CAST_TRIGGERED);
             // DoCastSpellIfCan(m_creature, SPELL_VILE_GAS, CAST_TRIGGERED);
 
-            if (Unit *pTarget = SelectRandomRangedTarget(m_creature))
+            if (Unit* pTarget = SelectRandomRangedTarget(m_creature))
             {
                 pTarget->CastSpell(pTarget, SPELL_VILE_GAS_SUMMON_TRIG, true);
                 DoCastSpellIfCan(m_creature, SPELL_VILE_GAS, CAST_TRIGGERED);
@@ -278,16 +277,16 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
         {
             if (m_uiMalleableGooTimer <= uiDiff)
             {
-                if (Creature *pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
+                if (Creature* pProfessor = m_pInstance->GetSingleCreatureFromStorage(NPC_PROFESSOR_PUTRICIDE))
                 {
-                    if (Unit *pTarget = SelectRandomRangedTarget(m_creature))
+                    if (Unit* pTarget = SelectRandomRangedTarget(m_creature))
                     {
                         // pProfessor->CastSpell(m_creature, SPELL_MALLEABLE_GOO_SUMMON, true);
                         // pProfessor->CastSpell(m_creature, SPELL_MALLEABLE_GOO, true);
 
                         float x, y, z;
                         pTarget->GetPosition(x, y, z);
-                        if (Creature *pTmp = m_creature->SummonCreature(NPC_MALLEABLE_GOO, x, y, z, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 20000))
+                        if (Creature* pTmp = m_creature->SummonCreature(NPC_MALLEABLE_GOO, x, y, z, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 20000))
                         {
                             pProfessor->CastSpell(pTmp, SPELL_MALLEABLE_GOO_MISSILE, false);
                             m_uiMalleableGooTimer = urand(15000, 20000);
@@ -314,9 +313,14 @@ struct MANGOS_DLL_DECL mob_vile_gas_malleable_gooAI : public ScriptedAI
     {
         SetCombatMovement(false);
     }
-    void DamageTaken(Unit *pDealer, uint32 &uiDamage){ uiDamage = 0; }
+
+    void DamageTaken(Unit* pDealer, uint32& uiDamage)
+    {
+        uiDamage = 0;
+    }
+
     void Reset(){}
-    void AttackStart(Unit *pWho){}
+    void AttackStart(Unit* pWho){}
     void UpdateAI(const uint32 uiDiff){}
 };
 
@@ -327,14 +331,14 @@ CreatureAI* GetAI_mob_vile_gas_malleable_goo(Creature* pCreature)
 
 void AddSC_boss_festergut()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_festergut";
-    newscript->GetAI = &GetAI_boss_festergut;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+    pNewScript = new Script;
+    pNewScript->Name = "boss_festergut";
+    pNewScript->GetAI = &GetAI_boss_festergut;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_vile_gas_malleable_goo";
-    newscript->GetAI = &GetAI_mob_vile_gas_malleable_goo;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_vile_gas_malleable_goo";
+    pNewScript->GetAI = &GetAI_mob_vile_gas_malleable_goo;
+    pNewScript->RegisterSelf();
 }

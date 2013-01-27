@@ -318,9 +318,9 @@ struct MANGOS_DLL_DECL base_icc_bossAI : public ScriptedAI
     void Reset(){}
     void UpdateAI(const uint32 uiDiff){}
 
-    Unit* SelectRandomRangedTarget(Unit *pSource)
+    Unit* SelectRandomRangedTarget(Unit* pSource)
     {
-        Unit *pResult = NULL;
+        Unit* pResult = NULL;
         std::list<Unit*> lTargets;
         ThreatList const& tList = m_creature->getThreatManager().getThreatList();
 
