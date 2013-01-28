@@ -234,17 +234,17 @@ enum Point
 
 static LOCATION SpawnLoc[] =
 {
-    {458.58889f, -2122.710284f, 1040.860107f},    // 0 Lich King Intro
-    {503.15652f, -2124.516602f, 1040.860107f},    // 1 Center of the platform
-    {500.15652f, -2124.516602f, 1040.860107f},    // 2 Tirion strikes Lich King
-    {481.69797f, -2124.638184f, 1040.860107f},    // 3 Tirion 2
-    {498.00448f, -2201.573486f, 1046.093872f},    // 4 Valkyrs?
-    {517.48291f, -2124.905762f, 1040.861328f},    // 5 Tirion?
-    {529.85302f, -2124.709961f, 1040.859985f},    // 6 Lich king final, o=3.1146
-    {520.311f,   -2124.709961f, 1040.859985f},    // 7 Frostmourne
-    {453.80f,    -2088.20f,     1040.859985f},    // 8 Val'kyr drop point right to Frozen Throne
-    {457.03f,    -2155.08f,     1040.859985f},    // 9 Val'kyr drop point left to Frozen Throne
-    {494.313f,   -2523.079f,    1249.87f},        // 10 center of platform inside Frostmourne
+    {458.58889f, -2122.710284f, 840.86f},    // 0 Lich King Intro
+    {503.15652f, -2124.516602f, 840.86f},    // 1 Center of the platform
+    {500.15652f, -2124.516602f, 840.86f},    // 2 Tirion strikes Lich King
+    {481.69797f, -2124.638184f, 840.86f},    // 3 Tirion 2
+    {498.00448f, -2201.573486f, 846.09f},    // 4 Valkyrs?
+    {517.48291f, -2124.905762f, 840.86f},    // 5 Tirion?
+    {529.85302f, -2124.709961f, 840.86f},    // 6 Lich king final, o=3.1146
+    {520.311f,   -2124.709961f, 840.86f},    // 7 Frostmourne
+    {453.80f,    -2088.20f,     840.86f},    // 8 Val'kyr drop point right to Frozen Throne
+    {457.03f,    -2155.08f,     840.86f},    // 9 Val'kyr drop point left to Frozen Throne
+    {494.313f,   -2523.079f,    1049.87f}    // 10 center of platform inside Frostmourne
 };
 
 #define GOSSIP_TIRION_START_EVENT "We are prepared, Highlord. Let us battle for the fate of Azeroth! For the light of dawn!"
