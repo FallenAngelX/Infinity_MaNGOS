@@ -1,5 +1,5 @@
-/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2011 MangosR2_ScriptDev2
+/* Copyright (C) 2006 - 2013 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 - 2013 MangosR2 <http://github.com/mangosR2/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -354,4 +354,3 @@ void AddSC_boss_tuten_kash()
     pNewScript->pGOUse = &GOUse_go_gong_razor;
     pNewScript->RegisterSelf();
 }
-
