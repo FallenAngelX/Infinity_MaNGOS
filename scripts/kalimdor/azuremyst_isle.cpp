@@ -85,10 +85,10 @@ struct MANGOS_DLL_DECL npc_draenei_survivorAI : public ScriptedAI
     void MoveInLineOfSight(Unit* pWho)
     {
         if (m_bCanSayHelp && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsFriendlyTo(pWho) &&
-            m_creature->IsWithinDistInMap(pWho, 25.0f))
+                m_creature->IsWithinDistInMap(pWho, 25.0f))
         {
-            //Random switch between 4 texts
-            switch(urand(0, 3))
+            // Random switch between 4 texts
+            switch (urand(0, 3))
             {
                 case 0: DoScriptText(SAY_HELP1, m_creature, pWho); break;
                 case 1: DoScriptText(SAY_HELP2, m_creature, pWho); break;
@@ -129,7 +129,7 @@ struct MANGOS_DLL_DECL npc_draenei_survivorAI : public ScriptedAI
                     if (pPlayer->GetTypeId() != TYPEID_PLAYER)
                         return;
 
-                    switch(urand(0, 3))
+                    switch (urand(0, 3))
                     {
                         case 0: DoScriptText(SAY_HEAL1, m_creature, pPlayer); break;
                         case 1: DoScriptText(SAY_HEAL2, m_creature, pPlayer); break;
@@ -145,7 +145,8 @@ struct MANGOS_DLL_DECL npc_draenei_survivorAI : public ScriptedAI
 
                 m_uiRunAwayTimer = 10000;
                 m_uiSayThanksTimer = 0;
-            }else m_uiSayThanksTimer -= uiDiff;
+            }
+            else m_uiSayThanksTimer -= uiDiff;
 
             return;
         }
@@ -164,7 +165,8 @@ struct MANGOS_DLL_DECL npc_draenei_survivorAI : public ScriptedAI
         {
             m_bCanSayHelp = true;
             m_uiSayHelpTimer = 20000;
-        }else m_uiSayHelpTimer -= uiDiff;
+        }
+        else m_uiSayHelpTimer -= uiDiff;
     }
 };
 
@@ -220,7 +222,7 @@ struct MANGOS_DLL_DECL npc_engineer_spark_overgrindAI : public ScriptedAI
         m_bIsTreeEvent = false;
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* who)
     {
         DoScriptText(SAY_ATTACK, m_creature, who);
     }
@@ -239,7 +241,7 @@ struct MANGOS_DLL_DECL npc_engineer_spark_overgrindAI : public ScriptedAI
         }
         else if (m_bIsTreeEvent)
         {
-            //nothing here yet
+            // nothing here yet
             return;
         }
 
@@ -294,16 +296,16 @@ struct MANGOS_DLL_DECL npc_injured_draeneiAI : public ScriptedAI
     {
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IN_COMBAT);
         m_creature->SetHealth(int(m_creature->GetMaxHealth()*.15));
-        switch(urand(0, 1))
+        switch (urand(0, 1))
         {
             case 0: m_creature->SetStandState(UNIT_STAND_STATE_SIT); break;
             case 1: m_creature->SetStandState(UNIT_STAND_STATE_SLEEP); break;
         }
     }
 
-    void MoveInLineOfSight(Unit* pWho) { }                  // ignore everyone around them (won't aggro anything)
+    void MoveInLineOfSight(Unit* pWho) {}          // ignore everyone around them (won't aggro anything)
 
-    void UpdateAI(const uint32 uiDiff) { }
+    void UpdateAI(const uint32 uiDiff) {}
 };
 
 CreatureAI* GetAI_npc_injured_draenei(Creature* pCreature)
@@ -338,7 +340,7 @@ struct MANGOS_DLL_DECL npc_magwinAI : public npc_escortAI
         if (!pPlayer)
             return;
 
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 0:
                 DoScriptText(SAY_START, m_creature, pPlayer);

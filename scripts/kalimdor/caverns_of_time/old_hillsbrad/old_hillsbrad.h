@@ -48,10 +48,10 @@ enum
     WORLD_STATE_OH                  = 2436,
 };
 
-static const float afInstanceLoc[][4]=
+static const float afInstanceLoc[][4] =
 {
     {2104.51f, 91.96f, 53.14f, 0},                  // right orcs outside loc
-    {2192.58f, 238.44f,52.44f, 0},                  // left orcs outside loc
+    {2192.58f, 238.44f, 52.44f, 0},                 // left orcs outside loc
 };
 
 static const float aDrakeSummonLoc[4] = {2128.43f, 71.01f, 64.42f, 1.74f};
@@ -73,11 +73,11 @@ class MANGOS_DLL_DECL instance_old_hillsbrad : public ScriptedInstance
         void OnCreatureDeath(Creature* pCreature);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
         uint32 GetThrallEventCount() { return m_uiThrallEventCount; }
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
         void Update(uint32 uiDiff);

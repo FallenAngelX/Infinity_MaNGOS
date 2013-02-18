@@ -7,6 +7,7 @@
 
 enum
 {
+    MAX_ENCOUNTER               = 9,
 
     TYPE_SKERAM                 = 0,
     TYPE_BUG_TRIO               = 1,
@@ -17,17 +18,16 @@ enum
     TYPE_TWINS                  = 6,
     TYPE_OURO                   = 7,
     TYPE_CTHUN                  = 8,
-    MAX_ENCOUNTER,
 
     NPC_SKERAM                  = 15263,
-    //NPC_KRI                   = 15511,
-    //NPC_VEM                   = 15544,
-    //NPC_YAUJ                  = 15543,
+    // NPC_KRI                   = 15511,
+    // NPC_VEM                   = 15544,
+    // NPC_YAUJ                  = 15543,
     NPC_VEKLOR                  = 15276,
     NPC_VEKNILASH               = 15275,
     NPC_MASTERS_EYE             = 15963,
     NPC_OURO_SPAWNER            = 15957,
-    //NPC_EYE_OF_CTHUN          = 15589,
+    // NPC_EYE_OF_CTHUN          = 15589,
     NPC_CTHUN                   = 15727,
 
     GO_SKERAM_GATE              = 180636,
@@ -78,11 +78,11 @@ class MANGOS_DLL_DECL instance_temple_of_ahnqiraj : public ScriptedInstance
         void OnObjectCreate(GameObject* pGo);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
         void DoHandleTempleAreaTrigger(uint32 uiTriggerId);
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
         void Update(uint32 uiDiff);

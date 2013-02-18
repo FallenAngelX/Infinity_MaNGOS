@@ -49,10 +49,9 @@ enum
     NPC_TAMED_KODO                  = 11627,
 
     SPELL_KODO_KOMBO_ITEM           = 18153,
-    SPELL_KODO_KOMBO_PLAYER_BUFF    = 18172,                //spells here have unclear function, but using them at least for visual parts and checks
+    SPELL_KODO_KOMBO_PLAYER_BUFF    = 18172,                // spells here have unclear function, but using them at least for visual parts and checks
     SPELL_KODO_KOMBO_DESPAWN_BUFF   = 18377,
     SPELL_KODO_KOMBO_GOSSIP         = 18362
-
 };
 
 struct MANGOS_DLL_DECL npc_aged_dying_ancient_kodoAI : public ScriptedAI
@@ -75,15 +74,15 @@ struct MANGOS_DLL_DECL npc_aged_dying_ancient_kodoAI : public ScriptedAI
 
             if (m_creature->IsWithinDistInMap(pWho, 10.0f))
             {
-                switch(urand(0, 2))
+                switch (urand(0, 2))
                 {
                     case 0: DoScriptText(SAY_SMEED_HOME_1, pWho); break;
                     case 1: DoScriptText(SAY_SMEED_HOME_2, pWho); break;
                     case 2: DoScriptText(SAY_SMEED_HOME_3, pWho); break;
                 }
 
-                //spell have no implemented effect (dummy), so useful to notify spellHit
-                m_creature->CastSpell(m_creature,SPELL_KODO_KOMBO_GOSSIP,true);
+                // spell have no implemented effect (dummy), so useful to notify spellHit
+                m_creature->CastSpell(m_creature, SPELL_KODO_KOMBO_GOSSIP, true);
             }
         }
     }
@@ -99,7 +98,7 @@ struct MANGOS_DLL_DECL npc_aged_dying_ancient_kodoAI : public ScriptedAI
 
     void UpdateAI(const uint32 diff)
     {
-        //timer should always be == 0 unless we already updated entry of creature. Then not expect this updated to ever be in combat.
+        // timer should always be == 0 unless we already updated entry of creature. Then not expect this updated to ever be in combat.
         if (m_uiDespawnTimer && m_uiDespawnTimer <= diff)
         {
             if (!m_creature->getVictim() && m_creature->isAlive())
@@ -109,7 +108,8 @@ struct MANGOS_DLL_DECL npc_aged_dying_ancient_kodoAI : public ScriptedAI
                 m_creature->Respawn();
                 return;
             }
-        } else m_uiDespawnTimer -= diff;
+        }
+        else m_uiDespawnTimer -= diff;
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -123,23 +123,23 @@ CreatureAI* GetAI_npc_aged_dying_ancient_kodo(Creature* pCreature)
     return new npc_aged_dying_ancient_kodoAI(pCreature);
 }
 
-bool EffectDummyCreature_npc_aged_dying_ancient_kodo(Unit *pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature *pCreatureTarget)
+bool EffectDummyCreature_npc_aged_dying_ancient_kodo(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pCreatureTarget)
 {
-    //always check spellid and effectindex
+    // always check spellid and effectindex
     if (spellId == SPELL_KODO_KOMBO_ITEM && effIndex == EFFECT_INDEX_0)
     {
-        //no effect if player/creature already have aura from spells
+        // no effect if player/creature already have aura from spells
         if (pCaster->HasAura(SPELL_KODO_KOMBO_PLAYER_BUFF) || pCreatureTarget->HasAura(SPELL_KODO_KOMBO_DESPAWN_BUFF))
             return true;
 
         if (pCreatureTarget->GetEntry() == NPC_AGED_KODO ||
-            pCreatureTarget->GetEntry() == NPC_DYING_KODO ||
-            pCreatureTarget->GetEntry() == NPC_ANCIENT_KODO)
+                pCreatureTarget->GetEntry() == NPC_DYING_KODO ||
+                pCreatureTarget->GetEntry() == NPC_ANCIENT_KODO)
         {
-            pCaster->CastSpell(pCaster,SPELL_KODO_KOMBO_PLAYER_BUFF,true);
+            pCaster->CastSpell(pCaster, SPELL_KODO_KOMBO_PLAYER_BUFF, true);
 
             pCreatureTarget->UpdateEntry(NPC_TAMED_KODO);
-            pCreatureTarget->CastSpell(pCreatureTarget,SPELL_KODO_KOMBO_DESPAWN_BUFF,false);
+            pCreatureTarget->CastSpell(pCreatureTarget, SPELL_KODO_KOMBO_DESPAWN_BUFF, false);
 
             if (pCreatureTarget->GetMotionMaster()->GetCurrentMovementGeneratorType() == WAYPOINT_MOTION_TYPE)
                 pCreatureTarget->GetMotionMaster()->MoveIdle();
@@ -147,7 +147,7 @@ bool EffectDummyCreature_npc_aged_dying_ancient_kodo(Unit *pCaster, uint32 spell
             pCreatureTarget->GetMotionMaster()->MoveFollow(pCaster, PET_FOLLOW_DIST, PET_FOLLOW_ANGLE);
         }
 
-        //always return true when we are handling this spell and effect
+        // always return true when we are handling this spell and effect
         return true;
     }
     return false;
@@ -157,7 +157,7 @@ bool GossipHello_npc_aged_dying_ancient_kodo(Player* pPlayer, Creature* pCreatur
 {
     if (pPlayer->HasAura(SPELL_KODO_KOMBO_PLAYER_BUFF) && pCreature->HasAura(SPELL_KODO_KOMBO_DESPAWN_BUFF))
     {
-        //the expected quest objective
+        // the expected quest objective
         pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
 
         pPlayer->RemoveAurasDueToSpell(SPELL_KODO_KOMBO_PLAYER_BUFF);
@@ -260,8 +260,8 @@ static const DialogueEntry aIntroDialogue[] =
 
 static const LOCATION aMarauderSpawn[]=
 {
-    {-1291.492f, 2644.650f, 111.556f},
-    {-1306.730f, 2675.163f, 111.561f},
+    { -1291.492f, 2644.650f, 111.556f},
+    { -1306.730f, 2675.163f, 111.561f},
 };
 
 static const LOCATION aWranglerSpawn[]= 
@@ -295,7 +295,7 @@ struct MANGOS_DLL_DECL npc_melizza_brimbuzzleAI : public npc_escortAI, private D
 
     void WaypointReached(uint32 uiPointId)
     {
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 1:
                 if (Player* pPlayer = GetPlayerForEscort())
@@ -333,7 +333,6 @@ struct MANGOS_DLL_DECL npc_melizza_brimbuzzleAI : public npc_escortAI, private D
                 StartNextDialogueText(POINT_ID_EVENT_COMPLETE);
                 break;
         }
-
     }
 
     void JustDidDialogueStep(int32 iEntry)

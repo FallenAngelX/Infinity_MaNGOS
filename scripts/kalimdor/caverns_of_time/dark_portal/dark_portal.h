@@ -80,16 +80,16 @@ enum
     AREATRIGGER_ENTER       = 4485,
 };
 
-static const LOCATION afPortalLocation[]=
+static const LOCATION afPortalLocation[] =
 {
-    {-2030.832f, 7024.944f, 23.07182f, 3.141593f},
-    {-1961.734f, 7029.528f, 21.8114f,  2.129302f},
-    {-1887.695f, 7106.557f, 22.0495f,  4.956735f},
-    {-1930.911f, 7183.597f, 23.00764f, 3.595378f}
+    { -2030.832f, 7024.944f, 23.07182f, 3.141593f},
+    { -1961.734f, 7029.528f, 21.8114f,  2.129302f},
+    { -1887.695f, 7106.557f, 22.0495f,  4.956735f},
+    { -1930.911f, 7183.597f, 23.00764f, 3.595378f}
 };
 
 // Dark Crystal summon location
-static const float fDarkPortalCrystalLoc[3] = {-2024.31f, 7127.75f, 22.65419f};
+static const float fDarkPortalCrystalLoc[3] = { -2024.31f, 7127.75f, 22.65419f};
 
 static const int32 uiMedivhWeakYell[3] = {SAY_MEDIVH_WEAK75, SAY_MEDIVH_WEAK50, SAY_MEDIVH_WEAK25};
 
@@ -108,9 +108,9 @@ class MANGOS_DLL_DECL instance_dark_portal : public ScriptedInstance
         void OnCreatureDeath(Creature* pCreature);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
         void DoHandleAreaTrigger(uint32 uiTriggerId);
@@ -133,11 +133,10 @@ class MANGOS_DLL_DECL instance_dark_portal : public ScriptedInstance
         uint32 m_uiWorldStateShieldCount;
 
         bool m_bHasIntroYelled;
+        uint32 m_uiMedivhYellCount;
 
         uint32 m_uiNextPortalTimer;
         uint8 m_uiCurrentRiftId;
-
-        uint32 m_uiMedivhYellCount;
 };
 
 #endif

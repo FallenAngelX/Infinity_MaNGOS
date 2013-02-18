@@ -109,13 +109,13 @@ class MANGOS_DLL_DECL instance_ruins_of_ahnqiraj : public ScriptedInstance
         void OnCreatureDeath(Creature* pCreature);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
-        void GetKaldoreiGuidList(GuidList &lList) { lList = m_lKaldoreiGuidList; }
+        void GetKaldoreiGuidList(GuidList& lList) { lList = m_lKaldoreiGuidList; }
 
         void Update(uint32 uiDiff);
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
     private:
