@@ -52,6 +52,13 @@ enum
     SAY_KALECGOS_OUTRO          = -1580043,
     SAY_TWINS_INTRO             = -1580044,
 
+    // Kil'jaeden yells
+    SAY_ORDER_1                 = -1580064,
+    SAY_ORDER_2                 = -1580065,
+    SAY_ORDER_3                 = -1580066,
+    SAY_ORDER_4                 = -1580067,
+    SAY_ORDER_5                 = -1580068,
+
     AREATRIGGER_TWINS           = 4937,
 
     // Felmyst ouro spell
@@ -82,13 +89,14 @@ class MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance, privat
         void OnObjectCreate(GameObject* pGo);
         void OnCreatureCreate(Creature* pCreature);
         void OnCreatureDeath(Creature* pCreature);
+        void OnCreatureEvade(Creature* pCreature);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
         void Update(uint32 uiDiff);
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
     protected:
@@ -102,5 +110,8 @@ class MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance, privat
         uint32 m_uiSpectralRealmTimer;
         uint32 m_uiKalecRespawnTimer;
         uint32 m_uiMuruBerserkTimer;
+        uint32 m_uiKiljaedenYellTimer;
+
+        GuidList m_lDeceiversGuidList;
 };
 #endif

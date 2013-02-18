@@ -39,13 +39,13 @@ struct MANGOS_DLL_DECL npc_ragged_johnAI : public ScriptedAI
 
     void Reset() {}
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who)
     {
         if (who->HasAura(16468, EFFECT_INDEX_0))
         {
             if (who->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(who, 15) && who->isInAccessablePlaceFor(m_creature))
             {
-                DoCastSpellIfCan(who,16472);
+                DoCastSpellIfCan(who, 16472);
                 ((Player*)who)->AreaExploredOrEventHappens(4866);
             }
         }
@@ -76,7 +76,7 @@ bool GossipHello_npc_ragged_john(Player* pPlayer, Creature* pCreature)
         pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->GetQuestStatus(4224) == QUEST_STATUS_INCOMPLETE)
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Official buisness, John. I need some information about Marsha Windsor. Tell me about the last time you saw him.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Official business, John. I need some information about Marshal Windsor. Tell me about he last time you saw him.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
 
     pPlayer->SEND_GOSSIP_MENU(2713, pCreature->GetObjectGuid());
     return true;
@@ -84,7 +84,7 @@ bool GossipHello_npc_ragged_john(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_ragged_john(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "So what did you do?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
@@ -99,7 +99,7 @@ bool GossipSelect_npc_ragged_john(Player* pPlayer, Creature* pCreature, uint32 u
             pPlayer->SEND_GOSSIP_MENU(2716, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+3:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Interesting... continue John.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Interesting... continue, John.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
             pPlayer->SEND_GOSSIP_MENU(2717, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+4:
@@ -111,7 +111,7 @@ bool GossipSelect_npc_ragged_john(Player* pPlayer, Creature* pCreature, uint32 u
             pPlayer->SEND_GOSSIP_MENU(2719, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+6:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ok so where the hell is he? Wait a minute! Are you drunk?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ok, so where the hell is he? Wait a minute! Are you drunk?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7);
             pPlayer->SEND_GOSSIP_MENU(2720, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+7:
@@ -123,11 +123,11 @@ bool GossipSelect_npc_ragged_john(Player* pPlayer, Creature* pCreature, uint32 u
             pPlayer->SEND_GOSSIP_MENU(2722, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+9:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ahh... Ironfoe", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 10);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Ahh... Ironfoe.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 10);
             pPlayer->SEND_GOSSIP_MENU(2723, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+10:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Thanks, Ragged John. Your story was very uplifting and informative", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 11);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Thanks, Ragged John. Your story was very uplifting and informative.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 11);
             pPlayer->SEND_GOSSIP_MENU(2725, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+11:
@@ -302,7 +302,7 @@ struct MANGOS_DLL_DECL npc_grark_lorkrubAI : public npc_escortAI, private Dialog
 
     void JustDidDialogueStep(int32 iEntry)
     {
-        switch(iEntry)
+        switch (iEntry)
         {
             case SAY_LEXLORT_1:
                 m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
@@ -428,7 +428,7 @@ bool QuestAccept_npc_grark_lorkrub(Player* pPlayer, Creature* pCreature, const Q
 
 bool EffectDummyCreature_spell_capture_grark(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
 {
-    //always check spellid and effectindex
+    // always check spellid and effectindex
     if (uiSpellId == SPELL_CAPTURE_GRARK && uiEffIndex == EFFECT_INDEX_0)
     {
         // Note: this implementation needs additional research! There is a lot of guesswork involved in this!
@@ -440,7 +440,7 @@ bool EffectDummyCreature_spell_capture_grark(Unit* pCaster, uint32 uiSpellId, Sp
         pCreatureTarget->SetFactionTemporary(FACTION_FRIENDLY, TEMPFACTION_RESTORE_RESPAWN);
         pCreatureTarget->AI()->EnterEvadeMode();
 
-        //always return true when we are handling this spell and effect
+        // always return true when we are handling this spell and effect
         return true;
     }
 

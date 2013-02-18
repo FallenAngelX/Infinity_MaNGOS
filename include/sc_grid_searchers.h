@@ -42,7 +42,7 @@ void GetCreatureListWithEntryInGrid(std::list<Creature*>& lList, WorldObject* pS
 
 void GetPlayerListInGrid(std::list<Player*>& pList, WorldObject* pSource, float fMaxSearchRange);
 
-//Used in: hyjalAI.cpp
+// Used in: hyjalAI.cpp
 /*
 class AllFriendlyCreaturesInGrid
 {

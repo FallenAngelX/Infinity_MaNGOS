@@ -52,16 +52,16 @@ class MANGOS_DLL_DECL ScriptedInstance : public InstanceData
         // Sends world state update to all players in instance
         void DoUpdateWorldState(uint32 uiStateId, uint32 uiStateData);
 
-        //sends completed achievments to all players in instance
+        // Sends completed achievments to all players in instance
         void DoCompleteAchievement(uint32 uiAchievmentId);
 
-        //sends achievment criteria update to all players in instance
+        // Sends achievment criteria update to all players in instance
         void DoUpdateAchievementCriteria(AchievementCriteriaTypes type, uint32 miscvalue1 = 0, uint32 miscvalue2 = 0);
 
         // Get a Player from map
         Player* GetPlayerInMap(bool bOnlyAlive = false, bool bCanBeGamemaster = true);
 
-        // destroys an item from all players in this instance (encounters like Vashj, Najentus....) 
+        // Destroys an item from all players in this instance (encounters like Vashj, Najentus....) 
         void DestroyItemFromAllPlayers(uint32 uiItemId);
 
         /// Wrapper for simulating map-wide text in this instance. It is expected that the Creature is stored in m_mNpcEntryGuidStore if loaded.

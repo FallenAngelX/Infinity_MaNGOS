@@ -37,7 +37,7 @@ void instance_scarlet_monastery::Initialize()
 
 void instance_scarlet_monastery::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_HEAD:
         case NPC_PUMPKIN_FIEND:
@@ -68,22 +68,22 @@ void instance_scarlet_monastery::OnObjectCreate(GameObject* pGo)
 
 void instance_scarlet_monastery::SetData(uint32 uiType, uint32 uiData)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_MOGRAINE_AND_WHITE_EVENT:
             if (uiData == IN_PROGRESS)
                 DoUseDoorOrButton(GO_WHITEMANE_DOOR);
             if (uiData == FAIL)
                 DoUseDoorOrButton(GO_WHITEMANE_DOOR);
-                m_auiEncounter[0] = uiData;
-                break;
+            m_auiEncounter[0] = uiData;
+            break;
         case TYPE_HALLOWSEND_EVENT:
-                m_auiEncounter[1] = uiData;
-                break;
+            m_auiEncounter[1] = uiData;
+            break;
     }
 }
 
-uint32 instance_scarlet_monastery::GetData(uint32 uiData)
+uint32 instance_scarlet_monastery::GetData(uint32 uiData) const
 {
     switch(uiData)
     {

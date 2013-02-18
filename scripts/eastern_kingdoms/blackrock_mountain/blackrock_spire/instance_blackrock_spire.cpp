@@ -96,7 +96,7 @@ void instance_blackrock_spire::Initialize()
 
 void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_EMBERSEER_IN:
             if (GetData(TYPE_ROOM_EVENT) == DONE)
@@ -146,7 +146,7 @@ void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
 
 void instance_blackrock_spire::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_PYROGUARD_EMBERSEER:
         case NPC_LORD_VICTOR_NEFARIUS:
@@ -164,16 +164,16 @@ void instance_blackrock_spire::OnCreatureCreate(Creature* pCreature)
 
 void instance_blackrock_spire::SetData(uint32 uiType, uint32 uiData)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_ROOM_EVENT:
             if (uiData == DONE)
                 DoUseDoorOrButton(GO_EMBERSEER_IN);
-            m_auiEncounter[0] = uiData;
+            m_auiEncounter[uiType] = uiData;
             break;
         case TYPE_EMBERSEER:
             // Don't set the same data twice
-            if (m_auiEncounter[1] == uiData)
+            if (m_auiEncounter[uiType] == uiData)
                 break;
             // Combat door
             DoUseDoorOrButton(GO_DOORS);
@@ -197,14 +197,14 @@ void instance_blackrock_spire::SetData(uint32 uiType, uint32 uiData)
                 DoUseEmberseerRunes();
                 DoUseDoorOrButton(GO_EMBERSEER_OUT);
             }
-            m_auiEncounter[1] = uiData;
+            m_auiEncounter[uiType] = uiData;
             break;
         case TYPE_FLAMEWREATH:
-            m_auiEncounter[2] = uiData;
+            m_auiEncounter[uiType] = uiData;
             break;
         case TYPE_STADIUM:
             // Don't set the same data twice
-            if (m_auiEncounter[3] == uiData)
+            if (m_auiEncounter[uiType] == uiData)
                 break;
             // Combat door
             DoUseDoorOrButton(GO_GYTH_ENTRY_DOOR);
@@ -227,10 +227,10 @@ void instance_blackrock_spire::SetData(uint32 uiType, uint32 uiData)
                 m_uiStadiumMobsAlive = 0;
                 m_uiStadiumWaves = 0;
             }
-            m_auiEncounter[3] = uiData;
+            m_auiEncounter[uiType] = uiData;
             break;
         case TYPE_VALTHALAK:
-            m_auiEncounter[4] = uiData;
+            m_auiEncounter[uiType] = uiData;
             break;
     }
 
@@ -261,7 +261,7 @@ void instance_blackrock_spire::Load(const char* chrIn)
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3] >> m_auiEncounter[4];
 
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             m_auiEncounter[i] = NOT_STARTED;
@@ -272,14 +272,9 @@ void instance_blackrock_spire::Load(const char* chrIn)
 
 uint32 instance_blackrock_spire::GetData(uint32 uiType) const
 {
-    switch(uiType)
-    {
-        case TYPE_ROOM_EVENT:   return m_auiEncounter[0];
-        case TYPE_EMBERSEER:    return m_auiEncounter[1];
-        case TYPE_FLAMEWREATH:  return m_auiEncounter[2];
-        case TYPE_STADIUM:      return m_auiEncounter[3];
-        case TYPE_VALTHALAK:    return m_auiEncounter[4];
-    }
+    if (uiType < MAX_ENCOUNTER)
+        return m_auiEncounter[uiType];
+
     return 0;
 }
 
@@ -360,7 +355,7 @@ void instance_blackrock_spire::OnCreatureEvade(Creature* pCreature)
 {
     switch (pCreature->GetEntry())
     {
-        // Emberseer should evade if the incarcerators evade
+            // Emberseer should evade if the incarcerators evade
         case NPC_BLACKHAND_INCARCERATOR:
             if (Creature* pEmberseer = GetSingleCreatureFromStorage(NPC_PYROGUARD_EMBERSEER))
                 pEmberseer->AI()->EnterEvadeMode();
@@ -383,7 +378,7 @@ void instance_blackrock_spire::OnCreatureEnterCombat(Creature* pCreature)
 {
     switch (pCreature->GetEntry())
     {
-        // Once one of the Incarcerators gets Aggro, the door should close
+            // Once one of the Incarcerators gets Aggro, the door should close
         case NPC_BLACKHAND_INCARCERATOR:
             SetData(TYPE_EMBERSEER, IN_PROGRESS);
             break;
@@ -476,7 +471,6 @@ void instance_blackrock_spire::JustDidDialogueStep(int32 iEntry)
                 pNefarius->GetMotionMaster()->MovePoint(0, aStadiumLocs[6].m_fX, aStadiumLocs[6].m_fY, aStadiumLocs[6].m_fZ);
             }
             break;
-
     }
 }
 
@@ -484,7 +478,7 @@ void instance_blackrock_spire::DoSendNextStadiumWave()
 {
     if (m_uiStadiumWaves < MAX_STADIUM_WAVES)
     {
-         // Send current wave mobs
+        // Send current wave mobs
         if (Creature* pNefarius = GetSingleCreatureFromStorage(NPC_LORD_VICTOR_NEFARIUS))
         {
             float fX, fY, fZ;
@@ -494,12 +488,12 @@ void instance_blackrock_spire::DoSendNextStadiumWave()
                     continue;
 
                 pNefarius->GetRandomPoint(aStadiumLocs[0].m_fX, aStadiumLocs[0].m_fY, aStadiumLocs[0].m_fZ, 7.0f, fX, fY, fZ);
-                fX = std::min(aStadiumLocs[0].m_fX, fX);            // Halfcircle - suits better the rectangular form
+                fX = std::min(aStadiumLocs[0].m_fX, fX);    // Halfcircle - suits better the rectangular form
                 if (Creature* pTemp = pNefarius->SummonCreature(aStadiumEventNpcs[m_uiStadiumWaves][i], fX, fY, fZ, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0))
                 {
                     // Get some point in the center of the stadium
                     pTemp->GetRandomPoint(aStadiumLocs[2].m_fX, aStadiumLocs[2].m_fY, aStadiumLocs[2].m_fZ, 5.0f, fX, fY, fZ);
-                    fX = std::min(aStadiumLocs[2].m_fX, fX);        // Halfcircle - suits better the rectangular form
+                    fX = std::min(aStadiumLocs[2].m_fX, fX);// Halfcircle - suits better the rectangular form
 
                     pTemp->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
                     ++m_uiStadiumMobsAlive;
@@ -514,7 +508,7 @@ void instance_blackrock_spire::DoSendNextStadiumWave()
         StartNextDialogueText(SAY_NEFARIUS_LOSE_4);
     else
     {
-       // Send Gyth
+        // Send Gyth
         if (Creature* pNefarius = GetSingleCreatureFromStorage(NPC_LORD_VICTOR_NEFARIUS))
         {
             if (Creature* pTemp = pNefarius->SummonCreature(NPC_GYTH, aStadiumLocs[1].m_fX, aStadiumLocs[1].m_fY, aStadiumLocs[1].m_fZ, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0))

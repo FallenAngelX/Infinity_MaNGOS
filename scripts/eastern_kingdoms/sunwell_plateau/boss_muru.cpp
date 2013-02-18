@@ -18,7 +18,7 @@
 /* ScriptData
 SDName: boss_muru
 SD%Complete: 80
-SDComment: Spell Negative Energy for Entropius needs core support; Summon humanoids spells have some core issues;
+SDComment: Spell Negative Energy for Entropius needs core support; Summon humanoids spells have some core issues; Dark Fiend, Singularity and Darkness NPCs need eventAI support
 SDCategory: Sunwell Plateau
 EndScriptData */
 
@@ -90,10 +90,10 @@ struct MANGOS_DLL_DECL boss_muruAI : public Scripted_NoMovementAI
 
     void Reset()
     {
-         m_uiDarknessTimer          = 45000;
-         m_uiSummonHumanoidsTimer   = 15000;
-         m_uiDarkFiendsTimer        = 0;
-         m_bIsTransition            = false;
+        m_uiDarknessTimer          = 45000;
+        m_uiSummonHumanoidsTimer   = 15000;
+        m_uiDarkFiendsTimer        = 0;
+        m_bIsTransition            = false;
     }
 
     void Aggro(Unit* pWho)
@@ -111,7 +111,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public Scripted_NoMovementAI
             m_pInstance->SetData(TYPE_MURU, FAIL);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
     {
         if (uiDamage > m_creature->GetHealth())
         {
@@ -207,13 +207,12 @@ struct MANGOS_DLL_DECL boss_muruAI : public Scripted_NoMovementAI
         if (m_uiSummonHumanoidsTimer < uiDiff)
         {
             DoSummonHumanoids();
-            m_uiSummonHumanoidsTimer = 1*MINUTE*IN_MILLISECONDS;
+            m_uiSummonHumanoidsTimer = 1 * MINUTE * IN_MILLISECONDS;
         }
         else
             m_uiSummonHumanoidsTimer -= uiDiff;
     }
 };
-
 
 struct MANGOS_DLL_DECL boss_entropiusAI : public ScriptedAI
 {
@@ -326,23 +325,19 @@ struct MANGOS_DLL_DECL npc_portal_targetAI : public Scripted_NoMovementAI
     uint8 m_uiTransformCount;
     uint32 m_uiTransformTimer;
     uint32 m_uiSentinelTimer;
-    bool m_bSentinelSummoned;
 
     void Reset()
     {
         m_uiTransformCount = 0;
         m_uiTransformTimer = 0;
         m_uiSentinelTimer  = 0;
-
-        m_bSentinelSummoned = false;
     }
 
     void JustSummoned(Creature* pSummoned)
     {
         // Cast a visual ball on the summoner
-        if (!m_bSentinelSummoned && pSummoned->GetEntry() == NPC_VOID_SENTINEL_SUMMONER)
+        if (pSummoned->GetEntry() == NPC_VOID_SENTINEL_SUMMONER)
             DoCastSpellIfCan(pSummoned, SPELL_SENTINEL_SUMMONER_VISUAL, CAST_TRIGGERED);
-        m_bSentinelSummoned = true; // TODO: Avoid double summoning ! Maybe core bug.
     }
 
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
@@ -351,11 +346,11 @@ struct MANGOS_DLL_DECL npc_portal_targetAI : public Scripted_NoMovementAI
         // They could use the EffectDummyCreature to handle this, but this makes code easier
         switch (pSpell->Id)
         {
-            // Init sentinel summon timer
+                // Init sentinel summon timer
             case SPELL_OPEN_PORTAL:
                 m_uiSentinelTimer = 5000;
                 break;
-            // Start transition effect
+                // Start transition effect
             case SPELL_OPEN_ALL_PORTALS:
                 m_uiTransformTimer = 2000;
                 break;
@@ -393,7 +388,7 @@ struct MANGOS_DLL_DECL npc_portal_targetAI : public Scripted_NoMovementAI
                 }
 
                 // Summon Entropius when reached half of the transition
-                if (m_uiTransformCount == MAX_TRANSFORM_CASTS/2)
+                if (m_uiTransformCount == MAX_TRANSFORM_CASTS / 2)
                 {
                     if (Creature* pMuru = m_pInstance->GetSingleCreatureFromStorage(NPC_MURU))
                         pMuru->CastSpell(pMuru, SPELL_SUMMON_ENTROPIUS, false);
@@ -433,22 +428,22 @@ struct MANGOS_DLL_DECL npc_void_sentinel_summonerAI : public Scripted_NoMovement
     void UpdateAI(const uint32 uiDiff) { }
 };
 
-CreatureAI* GetAI_boss_muru(Creature *pCreature)
+CreatureAI* GetAI_boss_muru(Creature* pCreature)
 {
     return new boss_muruAI(pCreature);
 }
 
-CreatureAI* GetAI_boss_entropius(Creature *pCreature)
+CreatureAI* GetAI_boss_entropius(Creature* pCreature)
 {
     return new boss_entropiusAI(pCreature);
 }
 
-CreatureAI* GetAI_npc_portal_target(Creature *pCreature)
+CreatureAI* GetAI_npc_portal_target(Creature* pCreature)
 {
     return new npc_portal_targetAI(pCreature);
 }
 
-CreatureAI* GetAI_npc_void_sentinel_summoner(Creature *pCreature)
+CreatureAI* GetAI_npc_void_sentinel_summoner(Creature* pCreature)
 {
     return new npc_void_sentinel_summonerAI(pCreature);
 }
@@ -566,32 +561,32 @@ void AddSC_boss_muru()
     Script* pNewScript;
 
     pNewScript = new Script;
-    pNewScript->Name="boss_muru";
+    pNewScript->Name = "boss_muru";
     pNewScript->GetAI = &GetAI_boss_muru;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name="boss_entropius";
+    pNewScript->Name = "boss_entropius";
     pNewScript->GetAI = &GetAI_boss_entropius;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name="npc_portal_target";
+    pNewScript->Name = "npc_portal_target";
     pNewScript->GetAI = &GetAI_npc_portal_target;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name="npc_void_sentinel_summoner";
+    pNewScript->Name = "npc_void_sentinel_summoner";
     pNewScript->GetAI = &GetAI_npc_void_sentinel_summoner;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name="mob_dark_fiend";
+    pNewScript->Name = "mob_dark_fiend";
     pNewScript->GetAI = &GetAI_mob_dark_fiend;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name="mob_singularity";
+    pNewScript->Name = "mob_singularity";
     pNewScript->GetAI = &GetAI_mob_singularity;
     pNewScript->RegisterSelf();
 }

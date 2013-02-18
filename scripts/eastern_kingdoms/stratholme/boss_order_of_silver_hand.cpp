@@ -116,7 +116,7 @@ struct MANGOS_DLL_DECL boss_silver_hand_bossesAI : public ScriptedAI
     {
         Unit* pTarget = NULL;
 
-        switch(m_aSilverHandAbility[uiIndex].m_uiTargetType)
+        switch (m_aSilverHandAbility[uiIndex].m_uiTargetType)
         {
             case TARGET_TYPE_SELF:
                 pTarget = m_creature;
@@ -143,7 +143,7 @@ struct MANGOS_DLL_DECL boss_silver_hand_bossesAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        //Return since we have no target
+        // Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
@@ -163,7 +163,6 @@ struct MANGOS_DLL_DECL boss_silver_hand_bossesAI : public ScriptedAI
 
         DoMeleeAttackIfReady();
     }
-
 };
 
 CreatureAI* GetAI_boss_silver_hand_bossesAI(Creature* pCreature)

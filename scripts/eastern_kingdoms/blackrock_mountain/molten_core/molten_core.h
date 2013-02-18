@@ -89,9 +89,9 @@ class MANGOS_DLL_DECL instance_molten_core : public ScriptedInstance
         void OnPlayerEnter(Player* pPlayer);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
     protected:

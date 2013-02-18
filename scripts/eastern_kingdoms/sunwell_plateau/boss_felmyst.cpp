@@ -67,7 +67,7 @@ enum
     PHASE_AIR                   = 2,
 };
 
-//Positional defines
+// Positional defines
 
 // Movement coordinates
 static LOCATION MoveLoc[]=
@@ -118,7 +118,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_FELBLAZE_VISUAL);
 
         m_uiPhase               = PHASE_GROUND;
-        m_uiBerserkTimer        = 10*MINUTE*IN_MILLISECONDS;
+        m_uiBerserkTimer        = 10 * MINUTE * IN_MILLISECONDS;
 
         // Ground Phase
         m_uiCorrosionTimer      = 30000;
@@ -179,12 +179,12 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
         SetCombatMovement(false);
         m_creature->SetWalk(false);
         m_creature->SetSpeedRate(MOVE_RUN, 2.0f);
-        m_creature->GetMotionMaster()->MovePoint(2, pWho->GetPositionX(), pWho->GetPositionY(), pWho->GetPositionZ()+5.0f);
+        m_creature->GetMotionMaster()->MovePoint(2, pWho->GetPositionX(), pWho->GetPositionY(), pWho->GetPositionZ() + 5.0f);
     }
 
     void KilledUnit(Unit* pVictim)
     {
-        //won't say killing pet/other unit
+        // Won't say killing pet/other unit
         if (pVictim->GetTypeId() != TYPEID_PLAYER)
             return;
         DoScriptText(urand(0, 1) ? SAY_KILL_1 : SAY_KILL_2, m_creature);
@@ -346,7 +346,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
             {
                 ++m_uiBreathCount;
                 // TODO: Skip Fog Of Corruption. because spell not implemented yet
-                //if (m_uiBreathCount == 3)
+                // if (m_uiBreathCount == 3)
                 {
                     m_creature->GetMotionMaster()->Clear();
                     m_creature->GetMotionMaster()->MovePoint(2, m_creature->getVictim()->GetPositionX(), m_creature->getVictim()->GetPositionY(), m_creature->getVictim()->GetPositionZ()+5.0f);
@@ -377,7 +377,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
             {
                 if (m_uiFogSummonTimer < uiDiff)
                 {
-                    //DoCast(m_creature, SPELL_SUMMON_DEATH_CLOUD); //TODO: this is wrong ! must find exact summoner.
+                    // DoCast(m_creature, SPELL_SUMMON_DEATH_CLOUD); //TODO: this is wrong ! must find exact summoner.
                     m_uiFogSummonTimer = 2000;
                 }
                 else

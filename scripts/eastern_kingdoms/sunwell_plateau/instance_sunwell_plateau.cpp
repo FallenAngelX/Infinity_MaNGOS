@@ -59,7 +59,7 @@ void instance_sunwell_plateau::Initialize()
 
 bool instance_sunwell_plateau::IsEncounterInProgress() const
 {
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             return true;
@@ -84,7 +84,7 @@ void instance_sunwell_plateau::OnPlayerEnter(Player* pPlayer)
 
 void instance_sunwell_plateau::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_KALECGOS_DRAGON:
         case NPC_KALECGOS_HUMAN:
@@ -104,6 +104,9 @@ void instance_sunwell_plateau::OnCreatureCreate(Creature* pCreature)
         case NPC_VELEN:
         case NPC_LIADRIN:
             m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+            break;
+        case NPC_DECEIVER:
+            m_lDeceiversGuidList.push_back(pCreature->GetObjectGuid());
             break;
     }
 }
@@ -127,9 +130,16 @@ void instance_sunwell_plateau::OnCreatureDeath(Creature* pCreature)
     }
 }
 
+void instance_sunwell_plateau::OnCreatureEvade(Creature* pCreature)
+{
+    // Reset encounter if raid wipes at deceivers
+    if (pCreature->GetEntry() == NPC_DECEIVER)
+        SetData(TYPE_KILJAEDEN, FAIL);
+}
+
 void instance_sunwell_plateau::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_FORCEFIELD:
         case GO_BOSS_COLLISION_1:
@@ -169,7 +179,7 @@ void instance_sunwell_plateau::OnObjectCreate(GameObject* pGo)
 
 void instance_sunwell_plateau::SetData(uint32 uiType, uint32 uiData)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_KALECGOS:
             m_auiEncounter[uiType] = uiData;
@@ -223,13 +233,24 @@ void instance_sunwell_plateau::SetData(uint32 uiType, uint32 uiData)
                 DoUseDoorOrButton(GO_THIRD_GATE);
             }
             else if (uiData == IN_PROGRESS)
-                m_uiMuruBerserkTimer = 10*MINUTE*IN_MILLISECONDS;
+                m_uiMuruBerserkTimer = 10 * MINUTE * IN_MILLISECONDS;
             break;
         case TYPE_KILJAEDEN:
             m_auiEncounter[uiType] = uiData;
-            // When event fails the deceivers are respawned so restart the counter
             if (uiData == FAIL)
+            {
                 m_uiDeceiversKilled = 0;
+
+                // Respawn deceivers
+                for (GuidList::const_iterator itr = m_lDeceiversGuidList.begin(); itr != m_lDeceiversGuidList.end(); ++itr)
+                {
+                    if (Creature* pDeceiver = instance->GetCreature(*itr))
+                    {
+                        if (!pDeceiver->isAlive())
+                            pDeceiver->Respawn();
+                    }
+                }
+            }
             break;
     }
 
@@ -239,7 +260,7 @@ void instance_sunwell_plateau::SetData(uint32 uiType, uint32 uiData)
 
         std::ostringstream saveStream;
         saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " "
-            << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5];
+                   << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5];
 
         m_strInstData = saveStream.str();
 
@@ -248,7 +269,7 @@ void instance_sunwell_plateau::SetData(uint32 uiType, uint32 uiData)
     }
 }
 
-uint32 instance_sunwell_plateau::GetData(uint32 uiType)
+uint32 instance_sunwell_plateau::GetData(uint32 uiType) const
 {
     if (uiType < MAX_ENCOUNTER)
         return m_auiEncounter[uiType];
@@ -284,10 +305,31 @@ void instance_sunwell_plateau::Update(uint32 uiDiff)
             else if (Creature* pMuru = GetSingleCreatureFromStorage(NPC_MURU))
                 pMuru->CastSpell(pMuru, SPELL_MURU_BERSERK, true);
 
-            m_uiMuruBerserkTimer = 10*MINUTE*IN_MILLISECONDS;
+            m_uiMuruBerserkTimer = 10 * MINUTE * IN_MILLISECONDS;
         }
         else
             m_uiMuruBerserkTimer -= uiDiff;
+    }
+
+    if (m_auiEncounter[TYPE_KILJAEDEN] == NOT_STARTED || m_auiEncounter[TYPE_KILJAEDEN] == FAIL)
+    {
+        if (m_uiKiljaedenYellTimer < uiDiff)
+        {
+            if (Creature* pKiljaeden = GetSingleCreatureFromStorage(NPC_KILJAEDEN_CONTROLLER))
+            {
+                switch (urand(0, 4))
+                {
+                    case 0: DoScriptText(SAY_ORDER_1, pKiljaeden); break;
+                    case 1: DoScriptText(SAY_ORDER_2, pKiljaeden); break;
+                    case 2: DoScriptText(SAY_ORDER_3, pKiljaeden); break;
+                    case 3: DoScriptText(SAY_ORDER_4, pKiljaeden); break;
+                    case 4: DoScriptText(SAY_ORDER_5, pKiljaeden); break;
+                }
+            }
+            m_uiKiljaedenYellTimer = 90000;
+        }
+        else
+            m_uiKiljaedenYellTimer -= uiDiff;
     }
 }
 
@@ -303,9 +345,9 @@ void instance_sunwell_plateau::Load(const char* in)
 
     std::istringstream loadStream(in);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >>
-        m_auiEncounter[3] >> m_auiEncounter[4] >> m_auiEncounter[5];
+               m_auiEncounter[3] >> m_auiEncounter[4] >> m_auiEncounter[5];
 
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             m_auiEncounter[i] = NOT_STARTED;
@@ -321,7 +363,7 @@ void instance_sunwell_plateau::JustDidDialogueStep(int32 iEntry)
         case NPC_KALECGOS:
             if (Creature* pTrigger = GetSingleCreatureFromStorage(NPC_FLIGHT_TRIGGER_LEFT))
             {
-                if (Creature* pKalec = pTrigger->SummonCreature(NPC_KALECGOS, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 1*MINUTE*IN_MILLISECONDS))
+                if (Creature* pKalec = pTrigger->SummonCreature(NPC_KALECGOS, pTrigger->GetPositionX(), pTrigger->GetPositionY(), pTrigger->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 1 * MINUTE * IN_MILLISECONDS))
                 {
                     pKalec->SetWalk(false);
                     pKalec->SetLevitate(true);

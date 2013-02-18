@@ -59,9 +59,9 @@ struct MANGOS_DLL_DECL guardAI : public ScriptedAI
 
         void Reset();
 
-        void Aggro(Unit *pWho);
+        void Aggro(Unit* pWho);
 
-        void JustDied(Unit *pKiller);
+        void JustDied(Unit* pKiller);
 
         void SummonGuardsHelpers();
 

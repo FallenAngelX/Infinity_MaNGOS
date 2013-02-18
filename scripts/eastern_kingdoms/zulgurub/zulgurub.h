@@ -41,7 +41,7 @@ enum
     AREATRIGGER_ALTAR       = 3960,
 };
 
-static const float aMandokirDownstairsPos[3] = {-12196.30f, -1948.37f, 130.31f};
+static const float aMandokirDownstairsPos[3] = { -12196.30f, -1948.37f, 130.31f};
 
 class MANGOS_DLL_DECL instance_zulgurub : public ScriptedInstance
 {
@@ -56,9 +56,9 @@ class MANGOS_DLL_DECL instance_zulgurub : public ScriptedInstance
         void OnObjectCreate(GameObject* pGo);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
         void DoYellAtTriggerIfCan(uint32 uiTriggerId);

@@ -85,16 +85,16 @@ static const uint32 m_aAtalaiStatueEvents[MAX_STATUES] = {EVENT_ID_STATUE_1, EVE
 
 static const LOCATION aSunkenTempleLocation[] =
 {
-    {-466.5130f, 95.19820f, -189.646f, 0.0349f},            // Atalarion summon loc
-    {-466.8673f,272.31204f, -90.7441f, 3.5255f},            // Shade of hakkar summon loc
-    {-660.5277f, -16.7117f, -90.8357f, 1.6055f}             // Malfurion summon loc
+    { -466.5130f, 95.19820f, -189.646f, 0.0349f},           // Atalarion summon loc
+    { -466.8673f, 272.31204f, -90.7441f, 3.5255f},          // Shade of hakkar summon loc
+    { -660.5277f, -16.7117f, -90.8357f, 1.6055f}            // Malfurion summon loc
 };
 
 // Summon location for the suppressors
 static const LOCATION aHakkariDoorLocations[2] =
 {
-    {-420.629f, 276.682f, -90.827f},
-    {-512.015f, 276.134f, -90.827f}
+    { -420.629f, 276.682f, -90.827f},
+    { -512.015f, 276.134f, -90.827f}
 };
 
 class MANGOS_DLL_DECL instance_sunken_temple : public ScriptedInstance
@@ -112,13 +112,13 @@ class MANGOS_DLL_DECL instance_sunken_temple : public ScriptedInstance
         void OnCreatureDeath(Creature* pCreature);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
         void Update(uint32 uiDiff);
 
         bool ProcessStatueEvent(uint32 uiEventId);
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
     protected:

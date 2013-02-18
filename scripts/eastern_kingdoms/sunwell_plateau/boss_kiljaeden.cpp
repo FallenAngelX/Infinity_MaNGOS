@@ -17,7 +17,7 @@
 
 /* ScriptData
 SDName: boss_kiljaeden
-SD%Complete: 60
+SD%Complete: 80
 SDComment: Sinister Reflection need core and AI support; Armageddon NYI; Offcombat yells NYI;
 SDCategory: Sunwell Plateau
 EndScriptData */
@@ -27,11 +27,6 @@ EndScriptData */
 
 enum
 {
-    SAY_ORDER_1                 = -1580064,
-    SAY_ORDER_2                 = -1580065,
-    SAY_ORDER_3                 = -1580066,
-    SAY_ORDER_4                 = -1580067,
-    SAY_ORDER_5                 = -1580068,
     SAY_EMERGE                  = -1580069,
     SAY_SLAY_1                  = -1580070,
     SAY_SLAY_2                  = -1580071,
@@ -154,13 +149,13 @@ static const DialogueEntry aPhaseDialogue[] =
     {SAY_KALECGOS_AWAKE_1,      NPC_KALECGOS,   6000},
     {SAY_ANVEENA_IMPRISONED,    NPC_ANVEENA,    5000},
     {SAY_PHASE_3,               NPC_KILJAEDEN,  6000},
-    {SAY_KALECGOS_ORB_1,        NPC_KALECGOS,   0},             // phase 2 transition end
+    {SAY_KALECGOS_ORB_1,        NPC_KALECGOS,   0},         // phase 2 transition end
     {PHASE_ARMAGEDDON,          0,              2000},
     {EVENT_SWITCH_PHASE_3,      0,              14000},
     {SAY_KALECGOS_AWAKE_2,      NPC_KALECGOS,   7000},
     {SAY_ANVEENA_LOST,          NPC_ANVEENA,    7000},
     {SAY_PHASE_4,               NPC_KILJAEDEN,  6000},
-    {EVENT_DRAGON_ORB,          0,              0},             // phase 3 transition end
+    {EVENT_DRAGON_ORB,          0,              0},         // phase 3 transition end
     {PHASE_SACRIFICE,           0,              2000},
     {EVENT_SWITCH_PHASE_4,      0,              5000},
     {SAY_KALECGOS_AWAKE_4,      NPC_KALECGOS,   10000},
@@ -169,7 +164,7 @@ static const DialogueEntry aPhaseDialogue[] =
     {SAY_ANVEENA_SACRIFICE,     NPC_ANVEENA,    5000},
     {SAY_PHASE_5,               NPC_KILJAEDEN,  13000},
     {SAY_KALECGOS_ORB_4,        NPC_KALECGOS,   5000},
-    {SAY_KALECGOS_ENCOURAGE,    NPC_KALECGOS,   0},             // phase 4 transition end
+    {SAY_KALECGOS_ENCOURAGE,    NPC_KALECGOS,   0},         // phase 4 transition end
     {0, 0, 0},
 };
 
@@ -209,6 +204,10 @@ static const EVENTLOCATION aOutroLocations[] =
     {1712.110f, 641.044f, 27.80f},              // velen move forward
     {1711.537f, 637.600f, 27.34f}               // liadrin move forward
 };
+
+/*######
+## npc_kiljaeden_controller
+######*/
 
 struct MANGOS_DLL_DECL npc_kiljaeden_controllerAI : public Scripted_NoMovementAI, private DialogueHelper
 {
@@ -260,7 +259,7 @@ struct MANGOS_DLL_DECL npc_kiljaeden_controllerAI : public Scripted_NoMovementAI
                 m_creature->SummonCreature(NPC_VELEN, aOutroLocations[1].m_fX, aOutroLocations[1].m_fY, aOutroLocations[1].m_fZ, aOutroLocations[1].m_fO, TEMPSUMMON_CORPSE_DESPAWN, 0);
                 break;
             case NPC_LIADRIN:
-                m_creature->SummonCreature(NPC_LIADRIN, aOutroLocations[2].m_fX, aOutroLocations[2].m_fY, aOutroLocations[2].m_fZ, aOutroLocations[2].m_fO, TEMPSUMMON_TIMED_DESPAWN, 4*MINUTE*IN_MILLISECONDS);
+                m_creature->SummonCreature(NPC_LIADRIN, aOutroLocations[2].m_fX, aOutroLocations[2].m_fY, aOutroLocations[2].m_fZ, aOutroLocations[2].m_fO, TEMPSUMMON_TIMED_DESPAWN, 4 * MINUTE * IN_MILLISECONDS);
                 break;
             case SPELL_CALL_ENTROPIUS:
                 if (Creature* pVelen = m_pInstance->GetSingleCreatureFromStorage(NPC_VELEN))
@@ -295,7 +294,7 @@ struct MANGOS_DLL_DECL npc_kiljaeden_controllerAI : public Scripted_NoMovementAI
 
     void JustSummoned(Creature* pSummoned)
     {
-        switch(pSummoned->GetEntry())
+        switch (pSummoned->GetEntry())
         {
             case NPC_VELEN:
                 pSummoned->GetMotionMaster()->MovePoint(0, aOutroLocations[3].m_fX, aOutroLocations[3].m_fY, aOutroLocations[3].m_fZ);
@@ -358,6 +357,10 @@ struct MANGOS_DLL_DECL npc_kiljaeden_controllerAI : public Scripted_NoMovementAI
         DialogueUpdate(uiDiff);
     }
 };
+
+/*######
+## boss_kiljaeden
+######*/
 
 struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI, private DialogueHelper
 {
@@ -430,18 +433,6 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI, private 
                     pAnveena->Respawn();
             }
 
-            // Respawn Decievers
-            std::list<Creature*> lDecievers;
-            GetCreatureListWithEntryInGrid(lDecievers, m_creature, NPC_DECEIVER, 40.0f);
-            if (!lDecievers.empty())
-            {
-                for(std::list<Creature*>::iterator iter = lDecievers.begin(); iter != lDecievers.end(); ++iter)
-                {
-                    if ((*iter) && !(*iter)->isAlive())
-                       (*iter)->Respawn();
-                }
-            }
-
             // Despawn Kalec if already summoned
             if (Creature* pKalec = m_pInstance->GetSingleCreatureFromStorage(NPC_KALECGOS, true))
                 pKalec->ForcedDespawn();
@@ -453,6 +444,9 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI, private 
 
     void KilledUnit(Unit* pVictim)
     {
+        if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            return;
+
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
@@ -512,8 +506,8 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI, private 
                     DoScriptText(irand(0, 1) ? SAY_REFLECTION_1 : SAY_REFLECTION_2, m_creature);
 
                     // In the 2nd and 3rd transition kill all drakes . TODO: need spell_script_target for prevent kill all players.
-                    //if (iEntry == PHASE_ARMAGEDDON || iEntry == PHASE_SACRIFICE)
-                        //DoCastSpellIfCan(m_creature, SPELL_DESTROY_DRAKES, CAST_TRIGGERED);
+                    // if (iEntry == PHASE_ARMAGEDDON || iEntry == PHASE_SACRIFICE)
+                        // DoCastSpellIfCan(m_creature, SPELL_DESTROY_DRAKES, CAST_TRIGGERED);
 
                     m_uiPhase = PHASE_TRANSITION;
                     // Darkness of Souls needs the timer reseted
@@ -605,6 +599,7 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI, private 
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
         DialogueUpdate(uiDiff);
 
         switch (m_uiPhase)
@@ -737,17 +732,11 @@ bool EffectAuraDummy_spell_aura_dummy_darkness_of_souls(const Aura* pAura, bool 
         {
             pTarget->CastSpell(pTarget, pAura->GetSpellProto()->CalculateSimpleValue(EFFECT_INDEX_2), true);
 
-            switch (irand(0, 2))
+            switch (urand(0, 2))
             {
-                case 0:
-                    DoScriptText(SAY_DARKNESS_1, pTarget);
-                    break;
-                case 1:
-                    DoScriptText(SAY_DARKNESS_2, pTarget);
-                    break;
-                case 2:
-                    DoScriptText(SAY_DARKNESS_3, pTarget);
-                    break;
+                case 0: DoScriptText(SAY_DARKNESS_1, pTarget); break;
+                case 1: DoScriptText(SAY_DARKNESS_2, pTarget); break;
+                case 2: DoScriptText(SAY_DARKNESS_3, pTarget); break;
             }
         }
     }
@@ -908,13 +897,13 @@ void AddSC_boss_kiljaeden()
     Script* pNewScript;
 
     pNewScript = new Script;
-    pNewScript->Name="boss_kiljaeden";
+    pNewScript->Name = "boss_kiljaeden";
     pNewScript->GetAI = &GetAI_boss_kiljaeden;
     pNewScript->pEffectAuraDummy = &EffectAuraDummy_spell_aura_dummy_darkness_of_souls;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name="npc_kiljaeden_controller";
+    pNewScript->Name = "npc_kiljaeden_controller";
     pNewScript->GetAI = &GetAI_npc_kiljaeden_controller;
     pNewScript->RegisterSelf();
 
@@ -924,17 +913,17 @@ void AddSC_boss_kiljaeden()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name="mob_shield_orb";
+    pNewScript->Name = "mob_shield_orb";
     pNewScript->GetAI = &GetAI_mob_shield_orb;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name="npc_armageddon_target";
+    pNewScript->Name = "npc_armageddon_target";
     pNewScript->GetAI = &GetAI_npc_armageddon_target;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name="mob_felfire_portal";
+    pNewScript->Name = "mob_felfire_portal";
     pNewScript->GetAI = &GetAI_mob_felfire_portal;
     pNewScript->RegisterSelf();
 }

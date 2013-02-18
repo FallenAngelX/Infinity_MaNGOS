@@ -60,7 +60,7 @@ const int32 uiSayId[4] =
     -1000322
 };
 
-float fChallengerLoc[4][4]=
+float fChallengerLoc[4][4] =
 {
     {10110.667f, -6628.059f, 4.100f, 2.708f},
     {10093.919f, -6634.340f, 4.098f, 1.106f},
@@ -128,12 +128,12 @@ struct MANGOS_DLL_DECL npc_kelerun_bloodmournAI : public ScriptedAI
 
     void DoSpawnChallengers()
     {
-        for(uint8 i = 0; i < MAX_CHALLENGER; ++i)
+        for (uint8 i = 0; i < MAX_CHALLENGER; ++i)
         {
             if (Creature* pCreature = m_creature->SummonCreature(uiChallengerId[i],
-                fChallengerLoc[i][0], fChallengerLoc[i][1],
-                fChallengerLoc[i][2], fChallengerLoc[i][3],
-                TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 600000))
+                                      fChallengerLoc[i][0], fChallengerLoc[i][1],
+                                      fChallengerLoc[i][2], fChallengerLoc[i][3],
+                                      TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 600000))
             {
                 m_aChallengerGuids[i] = pCreature->GetObjectGuid();
                 pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -149,7 +149,7 @@ struct MANGOS_DLL_DECL npc_kelerun_bloodmournAI : public ScriptedAI
             {
                 if (!m_playerGuid)
                 {
-                    //player are expected to use GO within a minute, if not, event will fail.
+                    // player are expected to use GO within a minute, if not, event will fail.
                     Reset();
                     return;
                 }
@@ -175,7 +175,7 @@ struct MANGOS_DLL_DECL npc_kelerun_bloodmournAI : public ScriptedAI
 
                         ++m_uiChallengerCount;
 
-                        //count starts at 0
+                        // count starts at 0
                         if (m_uiChallengerCount == MAX_CHALLENGER)
                         {
                             if (pPlayer && pPlayer->isAlive())
@@ -220,7 +220,7 @@ CreatureAI* GetAI_npc_kelerun_bloodmourn(Creature* pCreature)
     return new npc_kelerun_bloodmournAI(pCreature);
 }
 
-//easiest way is to expect database to respawn GO at quest accept (quest_start_script)
+// easiest way is to expect database to respawn GO at quest accept (quest_start_script)
 bool QuestAccept_npc_kelerun_bloodmourn(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
 {
     if (pQuest->GetQuestId() == QUEST_SECOND_TRIAL)
@@ -304,7 +304,7 @@ CreatureAI* GetAI_npc_prospector_anvilward(Creature* pCreature)
 bool GossipHello_npc_prospector_anvilward(Player* pPlayer, Creature* pCreature)
 {
     if (pPlayer->GetQuestStatus(QUEST_THE_DWARVEN_SPY) == QUEST_STATUS_INCOMPLETE)
-        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_MOMENT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_MOMENT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
     pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_MOMENT, pCreature->GetObjectGuid());
     return true;
@@ -312,10 +312,10 @@ bool GossipHello_npc_prospector_anvilward(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_prospector_anvilward(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF+1:
-            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_SHOW, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+            pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, GOSSIP_ITEM_SHOW, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
             pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXT_ID_SHOW, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
@@ -398,9 +398,9 @@ struct MANGOS_DLL_DECL npc_apprentice_mirvedaAI : public ScriptedAI
         m_creature->SummonCreature(NPC_ANGERSHADE, 8745.0f, -7134.32f, 35.22f, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 4000);
     }
 
-    void UpdateAI (const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff)
     {
-        //Return since we have no target
+        // Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
@@ -426,7 +426,7 @@ bool QuestAccept_unexpected_results(Player* pPlayer, Creature* pCreature, const 
 
 CreatureAI* GetAI_npc_apprentice_mirvedaAI(Creature* pCreature)
 {
-    return new npc_apprentice_mirvedaAI (pCreature);
+    return new npc_apprentice_mirvedaAI(pCreature);
 }
 
 /*######
@@ -435,9 +435,9 @@ CreatureAI* GetAI_npc_apprentice_mirvedaAI(Creature* pCreature)
 
 enum
 {
-    NPC_ENRAGED_WRATH           = 17086,
-    QUEST_POWERING_OUR_DEFENSES = 8490,
-    INFUSED_CRYSTAL_EMOTE       = -1000668,
+    QUEST_POWERING_OUR_DEFENSES     = 8490,
+    SAY_DEFENSE_FINISH              = -1000668,
+    NPC_ENRAGED_WRAITH              = 17086,
 };
 
 float fEnragedWrathPosition[3][4] =
@@ -491,7 +491,7 @@ struct MANGOS_DLL_DECL npc_infused_crystalAI : public ScriptedAI
     }
 
     void UpdateAI(const uint32 uiDiff)
-    {    
+    {
         if (bCompleted) 
             return;
 
@@ -499,7 +499,7 @@ struct MANGOS_DLL_DECL npc_infused_crystalAI : public ScriptedAI
         {
             for (uint8 i = 0; i < 3; ++i)
             {
-                if (Creature* pEnragedWrath = m_creature->SummonCreature(NPC_ENRAGED_WRATH, fEnragedWrathPosition[i][0], fEnragedWrathPosition[i][1], fEnragedWrathPosition[i][2], fEnragedWrathPosition[i][3], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000))
+                if (Creature* pEnragedWrath = m_creature->SummonCreature(NPC_ENRAGED_WRAITH, fEnragedWrathPosition[i][0], fEnragedWrathPosition[i][1], fEnragedWrathPosition[i][2], fEnragedWrathPosition[i][3], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000))
                 {
                     pEnragedWrath->AI()->AttackStart(m_creature);
                 }
@@ -511,10 +511,10 @@ struct MANGOS_DLL_DECL npc_infused_crystalAI : public ScriptedAI
 
         if (m_uiQuestTimer < uiDiff)
         {
-            if(Player* pPlayer = m_creature->GetMap()->GetPlayer(m_uiPlayerGUID))
+            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_uiPlayerGUID))
             {
                 pPlayer->KilledMonsterCredit(m_creature->GetEntry());
-                DoScriptText(INFUSED_CRYSTAL_EMOTE , m_creature);
+                DoScriptText(SAY_DEFENSE_FINISH, m_creature);
                 m_creature->ForcedDespawn(5000);
             }
             bCompleted = true;          
@@ -526,7 +526,7 @@ struct MANGOS_DLL_DECL npc_infused_crystalAI : public ScriptedAI
 
 CreatureAI* GetAI_npc_infused_crystalAI(Creature* pCreature)
 {
-    return new npc_infused_crystalAI (pCreature);
+    return new npc_infused_crystalAI(pCreature);
 }
 
 void AddSC_eversong_woods()
