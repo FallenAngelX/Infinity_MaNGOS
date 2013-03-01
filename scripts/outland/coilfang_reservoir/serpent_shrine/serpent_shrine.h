@@ -41,15 +41,15 @@ enum
     GO_SHIELD_GENERATOR_4           = 185054,
 
     // Objects and doors no longer used since 2.4.0
-    //GO_CONSOLE_HYDROSS            = 185117,
-    //GO_CONSOLE_LURKER             = 185118,
-    //GO_CONSOLE_LEOTHERAS          = 185115,
-    //GO_CONSOLE_KARATHRESS         = 185114,
-    //GO_CONSOLE_MOROGRIM           = 185116,
-    //GO_CONSOLE_VASHJ              = 184568,
-    //GO_BRIDGE_PART_1              = 184203,
-    //GO_BRIDGE_PART_2              = 184204,
-    //GO_BRIDGE_PART_3              = 184205,
+    // GO_CONSOLE_HYDROSS            = 185117,
+    // GO_CONSOLE_LURKER             = 185118,
+    // GO_CONSOLE_LEOTHERAS          = 185115,
+    // GO_CONSOLE_KARATHRESS         = 185114,
+    // GO_CONSOLE_MOROGRIM           = 185116,
+    // GO_CONSOLE_VASHJ              = 184568,
+    // GO_BRIDGE_PART_1              = 184203,
+    // GO_BRIDGE_PART_2              = 184204,
+    // GO_BRIDGE_PART_3              = 184205,
 
     SPELL_LEOTHERAS_BANISH          = 37546,
 };
@@ -68,16 +68,16 @@ class MANGOS_DLL_DECL instance_serpentshrine_cavern : public ScriptedInstance
         void OnObjectCreate(GameObject* pGo);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
         void SetData64(uint32 uiType, uint64 uiGuid) override;
 
-        bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) override;
+        bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const;
 
         void GetBeamHelpersGUIDList(GuidList& lList) { lList = m_lBeamHelpersGUIDList; }
         void GetShieldGeneratorsGUIDList(GuidList& lList) { lList = m_lShieldGeneratorGUIDList; }
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
     private:

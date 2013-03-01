@@ -20,7 +20,7 @@ enum
     NPC_GYRO_KILL           = 19218,
     NPC_IRON_HAND           = 19710,
     NPC_LORD_CAPACITUS      = 19219,
-    //NPC_SEPETHREA         = 19221,
+    // NPC_SEPETHREA         = 19221,
     NPC_PATHALEON           = 19220,
 
     // bridge event related
@@ -92,9 +92,9 @@ class MANGOS_DLL_DECL instance_mechanar : public ScriptedInstance
         void OnCreatureDeath(Creature* pCreature);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
         void Update(uint32 uiDiff);

@@ -58,7 +58,7 @@ enum
     GO_RED_SNAPPER              = 181616,
     NPC_ANGRY_MURLOC            = 17102,
     ITEM_RED_SNAPPER            = 23614,
-    //SPELL_SUMMON_TEST           = 49214                   // ! Just wrong spell name? It summon correct creature (17102)but does not appear to be used.
+    // SPELL_SUMMON_TEST           = 49214                  // ! Just wrong spell name? It summon correct creature (17102)but does not appear to be used.
 
     // quest 11472
     SPELL_ANUNIAQS_NET          = 21014,
@@ -69,7 +69,7 @@ enum
 
 bool EffectDummyGameObj_spell_dummy_go(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, GameObject* pGOTarget)
 {
-    switch(uiSpellId)
+    switch (uiSpellId)
     {
         case SPELL_ANUNIAQS_NET:
         {
@@ -103,7 +103,7 @@ bool EffectDummyGameObj_spell_dummy_go(Unit* pCaster, uint32 uiSpellId, SpellEff
 
                 if (urand(0, 2))
                 {
-                    if (Creature* pMurloc = pCaster->SummonCreature(NPC_ANGRY_MURLOC, pCaster->GetPositionX(), pCaster->GetPositionY()+20.0f, pCaster->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000))
+                    if (Creature* pMurloc = pCaster->SummonCreature(NPC_ANGRY_MURLOC, pCaster->GetPositionX(), pCaster->GetPositionY() + 20.0f, pCaster->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000))
                         pMurloc->AI()->AttackStart(pCaster);
                 }
                 else
@@ -323,7 +323,7 @@ enum
 
 bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
 {
-    switch(pAura->GetId())
+    switch (pAura->GetId())
     {
         case SPELL_HEALING_SALVE:
         {
@@ -352,7 +352,7 @@ bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
                 if (pCreature->getStandState() == UNIT_STAND_STATE_KNEEL)
                     pCreature->SetStandState(UNIT_STAND_STATE_STAND);
 
-                pCreature->ForcedDespawn(60*IN_MILLISECONDS);
+                pCreature->ForcedDespawn(60 * IN_MILLISECONDS);
             }
 
             return true;
@@ -457,7 +457,7 @@ bool EffectAuraDummy_spell_aura_dummy_npc(const Aura* pAura, bool bApply)
 
 bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
 {
-    switch(uiSpellId)
+    switch (uiSpellId)
     {
         case SPELL_ADMINISTER_ANTIDOTE:
         {
@@ -501,11 +501,11 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
                 if (pCreatureTarget->getStandState() == UNIT_STAND_STATE_STAND)
                     return true;
 
-                switch(urand(1,2))
+                switch (urand(1, 2))
                 {
                     case 1:
                     {
-                        switch(urand(1,3))
+                        switch (urand(1, 3))
                         {
                             case 1: DoScriptText(SAY_RAND_ATTACK1, pCreatureTarget); break;
                             case 2: DoScriptText(SAY_RAND_ATTACK2, pCreatureTarget); break;
@@ -518,7 +518,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
                     }
                     case 2:
                     {
-                        switch(urand(1,3))
+                        switch (urand(1, 3))
                         {
                             case 1: DoScriptText(SAY_RAND_WORK1, pCreatureTarget); break;
                             case 2: DoScriptText(SAY_RAND_WORK2, pCreatureTarget); break;
@@ -545,7 +545,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
                 pCreatureTarget->UpdateEntry(NPC_OWLKIN_INOC);
                 ((Player*)pCaster)->KilledMonsterCredit(NPC_OWLKIN_INOC);
 
-                //set despawn timer, since we want to remove creature after a short time
+                // set despawn timer, since we want to remove creature after a short time
                 pCreatureTarget->ForcedDespawn(15000);
 
                 return true;
@@ -623,7 +623,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
             {
                 uint32 uiNewEntry = 0;
 
-                switch(pCreatureTarget->GetEntry())
+                switch (pCreatureTarget->GetEntry())
                 {
                     case NPC_REANIMATED_FROSTWYRM:  uiNewEntry = NPC_WEAK_REANIMATED_FROSTWYRM; break;
                     case NPC_TURGID:                uiNewEntry = NPC_WEAK_TURGID; break;
@@ -694,7 +694,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
                 {
                     uint32 newSpellId = 0;
 
-                    switch(pCreatureTarget->GetEntry())
+                    switch (pCreatureTarget->GetEntry())
                     {
                         case NPC_COLLECT_A_TRON:    newSpellId = SPELL_SUMMON_COLLECT_A_TRON; break;
                         case NPC_DEFENDO_TANK:      newSpellId = SPELL_SUMMON_DEFENDO_TANK; break;
@@ -732,7 +732,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
         {
             if (uiEffIndex == EFFECT_INDEX_2)
             {
-                switch(urand(0,2))
+                switch (urand(0, 2))
                 {
                     case 0:
                     {
@@ -741,7 +741,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
                     }
                     case 1:
                     {
-                        for (int i = 0; i<2; ++i)
+                        for (int i = 0; i < 2; ++i)
                         {
                             if (Creature* pSandGnome = pCaster->SummonCreature(NPC_SAND_GNOME, pCreatureTarget->GetPositionX(), pCreatureTarget->GetPositionY(), pCreatureTarget->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000))
                                 pSandGnome->AI()->AttackStart(pCaster);
@@ -750,7 +750,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
                     }
                     case 2:
                     {
-                        for (int i = 0; i<2; ++i)
+                        for (int i = 0; i < 2; ++i)
                         {
                             if (Creature* pMatureBoneSifter = pCaster->SummonCreature(NPC_MATURE_BONE_SIFTER, pCreatureTarget->GetPositionX(), pCreatureTarget->GetPositionY(), pCreatureTarget->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 30000))
                                 pMatureBoneSifter->AI()->AttackStart(pCaster);
@@ -779,7 +779,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
         {
             if (uiEffIndex == EFFECT_INDEX_0)
             {
-                bool isMale = urand(0,1);
+                bool isMale = urand(0, 1);
                 Player* pPlayer = pCreatureTarget->GetLootRecipient();
 
                 if (!pPlayer)
@@ -790,7 +790,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
                 else
                     DoScriptText(SAY_ITS_FEMALE, pCreatureTarget, pPlayer);
 
-                switch(pCreatureTarget->GetEntry())
+                switch (pCreatureTarget->GetEntry())
                 {
                     case NPC_FROST_LEOPARD:
                     {
@@ -827,7 +827,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
         {
             if (uiEffIndex == EFFECT_INDEX_0)
             {
-                for(int i = 0; i < 3; ++i)
+                for (int i = 0; i < 3; ++i)
                 {
                     if (irand(i, 2))                        // 2-3 summons
                         pCreatureTarget->SummonCreature(NPC_MINION_OF_GUROK, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 5000);
@@ -855,7 +855,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
 
                 pCreatureTarget->CastSpell(pCreatureTarget, SPELL_APPLE_FALLS_TO_GROUND, false);
 
-                if (Creature* pLuckyWilhelm = GetClosestCreatureWithEntry(pCreatureTarget, NPC_LUCKY_WILHELM, 2*INTERACTION_DISTANCE))
+                if (Creature* pLuckyWilhelm = GetClosestCreatureWithEntry(pCreatureTarget, NPC_LUCKY_WILHELM, 2 * INTERACTION_DISTANCE))
                     DoScriptText(SAY_LUCKY_HIT_APPLE, pLuckyWilhelm);
             }
             return true;
@@ -871,7 +871,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
                     case 3: DoScriptText(SAY_LUCKY_HIT_3, pCreatureTarget); break;
                 }
 
-                if (Creature* pDrostan = GetClosestCreatureWithEntry(pCreatureTarget, NPC_DROSTAN, 4*INTERACTION_DISTANCE))
+                if (Creature* pDrostan = GetClosestCreatureWithEntry(pCreatureTarget, NPC_DROSTAN, 4 * INTERACTION_DISTANCE))
                     DoScriptText(urand(0, 1) ? SAY_DROSTAN_GOT_LUCKY_1 : SAY_DROSTAN_GOT_LUCKY_2, pDrostan);
             }
             return true;
@@ -880,7 +880,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
         {
             if (uiEffIndex == EFFECT_INDEX_0)
             {
-                if (Creature* pDrostan = GetClosestCreatureWithEntry(pCreatureTarget, NPC_DROSTAN, 5*INTERACTION_DISTANCE))
+                if (Creature* pDrostan = GetClosestCreatureWithEntry(pCreatureTarget, NPC_DROSTAN, 5 * INTERACTION_DISTANCE))
                     DoScriptText(urand(0, 1) ? SAY_DROSTAN_HIT_BIRD_1 : SAY_DROSTAN_HIT_BIRD_2, pDrostan);
 
                 pCreatureTarget->DealDamage(pCreatureTarget, pCreatureTarget->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
@@ -894,7 +894,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
                 if (pCreatureTarget->GetEntry() != NPC_CHILL_NYMPH || pCaster->GetTypeId() != TYPEID_PLAYER)
                     return true;
 
-                switch(urand(0, 2))
+                switch (urand(0, 2))
                 {
                     case 0: DoScriptText(SAY_FREE_1, pCreatureTarget); break;
                     case 1: DoScriptText(SAY_FREE_2, pCreatureTarget); break;
@@ -906,7 +906,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
                 pCreatureTarget->DeleteThreatList();
                 pCreatureTarget->AttackStop(true);
                 pCreatureTarget->GetMotionMaster()->MoveFleeing(pCaster, 7);
-                pCreatureTarget->ForcedDespawn(7*IN_MILLISECONDS);
+                pCreatureTarget->ForcedDespawn(7 * IN_MILLISECONDS);
             }
             return true;
         }

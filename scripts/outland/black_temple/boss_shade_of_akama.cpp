@@ -49,7 +49,7 @@ enum
     // Other spells
     SPELL_SUMMON_DEFENDER           = 40474,
     SPELL_SUMMON_SORCERER           = 40476,
-    //SPELL_VERTEX_SHADE_BLACK      = 39833,                // used by the shade - in c_t_a
+    // SPELL_VERTEX_SHADE_BLACK      = 39833,               // used by the shade - in c_t_a
     SPELL_SHADE_SOUL_CHANNEL        = 40401,                // channel spell, used to banish the shade
     SPELL_SUMMON_SHADE_TRIGGER      = 40955,
 
@@ -61,7 +61,7 @@ enum
     NPC_ASH_SPIRITBIND              = 23524,
     NPC_ASH_BROKEN                  = 23319,
 
-    //akama's phases
+    // akama's phases
     PHASE_CHANNEL                   = 1,
     PHASE_COMBAT                    = 2,
     PHASE_EPILOGUE                  = 3,
@@ -69,7 +69,7 @@ enum
     MAX_CHANNELERS                  = 6,
 };
 
-static const uint32 auiRandSpawnEntry[]=
+static const uint32 auiRandSpawnEntry[] =
 {
     NPC_ASH_ELEMENTAL,
     NPC_ASH_ROGUE,
@@ -88,13 +88,13 @@ static const DialogueEntry aOutroDialogue[] =
     {0, 0, 0},
 };
 
-static const LOCATION afAkamaWP[]=
+static const LOCATION afAkamaWP[] =
 {
     {516.885193f, 400.836060f, 112.784f},
     {469.597443f, 402.264404f, 118.537f}
 };
 
-static const LOCATION afBrokenSpawnLoc[]=
+static const LOCATION afBrokenSpawnLoc[] =
 {
     {541.375916f, 401.439575f, 112.784f},       // The place where Akama channels
     {534.130005f, 352.394531f, 112.784f},       // Behind a 'pillar' which is behind the east alcove
@@ -186,7 +186,7 @@ struct MANGOS_DLL_DECL npc_akamaAI : public ScriptedAI, private DialogueHelper
                 m_creature->GetMotionMaster()->MovePoint(PHASE_EPILOGUE, afAkamaWP[1].x, afAkamaWP[1].y, afAkamaWP[1].z);
                 break;
             case NPC_ASH_SORCERER:
-                 // Decrease the sorcerer counter
+                // Decrease the sorcerer counter
                 m_lSorcerersGUIDList.remove(pVictim->GetObjectGuid());
                 break;
             case NPC_ASH_CHANNELER:
@@ -224,10 +224,10 @@ struct MANGOS_DLL_DECL npc_akamaAI : public ScriptedAI, private DialogueHelper
         }
     }
 
-    void CorpseRemoved(uint32 &uiRespawnDelay)
+    void CorpseRemoved(uint32& uiRespawnDelay)
     {
         // Resapwn after 5 min
-        uiRespawnDelay = 5*MINUTE;
+        uiRespawnDelay = 5 * MINUTE;
     }
 
     void JustSummoned(Creature* pSummoned)
@@ -386,10 +386,10 @@ struct MANGOS_DLL_DECL npc_akamaAI : public ScriptedAI, private DialogueHelper
             for (uint8 j = 0; j < 4; ++j)
             {
                 fX = afBrokenSpawnLoc[i].x;
-                fY = afBrokenSpawnLoc[i].y + (j*7);
+                fY = afBrokenSpawnLoc[i].y + (j * 7);
                 fZ = afBrokenSpawnLoc[i].z;
 
-                m_creature->SummonCreature(NPC_ASH_BROKEN, fX, fY, fZ, 0, TEMPSUMMON_TIMED_DESPAWN, 10*MINUTE*IN_MILLISECONDS);
+                m_creature->SummonCreature(NPC_ASH_BROKEN, fX, fY, fZ, 0, TEMPSUMMON_TIMED_DESPAWN, 10 * MINUTE * IN_MILLISECONDS);
             }
         }
 
@@ -404,7 +404,7 @@ struct MANGOS_DLL_DECL npc_akamaAI : public ScriptedAI, private DialogueHelper
                 for (uint8 j = 0; j < 4; ++j)
                 {
                     pGenerator->GetRandomPoint(pGenerator->GetPositionX(), pGenerator->GetPositionY(), pGenerator->GetPositionZ(), 10.0f, fX, fY, fZ);
-                    m_creature->SummonCreature(NPC_ASH_BROKEN, fX, fY, fZ, 0, TEMPSUMMON_TIMED_DESPAWN, 10*MINUTE*IN_MILLISECONDS);
+                    m_creature->SummonCreature(NPC_ASH_BROKEN, fX, fY, fZ, 0, TEMPSUMMON_TIMED_DESPAWN, 10 * MINUTE * IN_MILLISECONDS);
                 }
             }
         }
@@ -495,7 +495,7 @@ bool GossipHello_npc_akama(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_akama(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)               //Fight time
+    if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)             // Fight time
     {
         pPlayer->CLOSE_GOSSIP_MENU();
 

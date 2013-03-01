@@ -19,8 +19,8 @@ enum
     NPC_VORPIL              = 18732,
     NPC_FEL_OVERSEER        = 18796,
 
-    GO_REFECTORY_DOOR       = 183296,                       //door opened when blackheart the inciter dies
-    GO_SCREAMING_HALL_DOOR  = 183295,                       //door opened when grandmaster vorpil dies
+    GO_REFECTORY_DOOR       = 183296,                       // door opened when blackheart the inciter dies
+    GO_SCREAMING_HALL_DOOR  = 183295,                       // door opened when grandmaster vorpil dies
 
     SAY_HELLMAW_INTRO       = -1555000,
 
@@ -38,9 +38,9 @@ class MANGOS_DLL_DECL instance_shadow_labyrinth : public ScriptedInstance
         void OnCreatureCreate(Creature* pCreature);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
     private:

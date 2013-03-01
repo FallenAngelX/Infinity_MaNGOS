@@ -42,7 +42,7 @@ enum
 };
 
 // Random Magtheridon taunt
-static const int32 aRandomTaunt[]= {-1544000, -1544001, -1544002, -1544003, -1544004, -1544005};
+static const int32 aRandomTaunt[] = { -1544000, -1544001, -1544002, -1544003, -1544004, -1544005};
 
 struct BroggokEventInfo
 {
@@ -68,12 +68,12 @@ class MANGOS_DLL_DECL instance_blood_furnace : public ScriptedInstance
         void OnCreatureEvade(Creature* pCreature);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
         void Update(uint32 uiDiff);
 
         void Load(const char* chrIn);
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
 
         void GetMovementDistanceForIndex(uint32 uiIndex, float& dx, float& dy);
 

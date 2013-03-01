@@ -62,7 +62,7 @@ struct MANGOS_DLL_DECL boss_void_reaverAI : public ScriptedAI
         m_uiPoundingTimer   = 13000;
         m_uiArcaneOrbTimer  = 3000;
         m_uiKnockAwayTimer  = 30000;
-        m_uiBerserkTimer    = 10*MINUTE*IN_MILLISECONDS;
+        m_uiBerserkTimer    = 10 * MINUTE * IN_MILLISECONDS;
     }
 
     void KilledUnit(Unit* pVictim)
@@ -70,7 +70,7 @@ struct MANGOS_DLL_DECL boss_void_reaverAI : public ScriptedAI
         if (pVictim->GetTypeId() != TYPEID_PLAYER)
             return;
 
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_SLAY1, m_creature); break;
             case 1: DoScriptText(SAY_SLAY2, m_creature); break;
@@ -129,9 +129,8 @@ struct MANGOS_DLL_DECL boss_void_reaverAI : public ScriptedAI
             // Search only for players which are not within 18 yards of the boss
             std::vector<Unit*> suitableTargets;
             ThreatList const& threatList = m_creature->getThreatManager().getThreatList();
-            ThreatList::const_iterator itr = threatList.begin();
 
-            for (itr; itr != threatList.end(); ++itr)
+            for (ThreatList::const_iterator itr = threatList.begin(); itr != threatList.end(); ++itr)
             {
                 if (Unit* pTarget = m_creature->GetMap()->GetUnit((*itr)->getUnitGuid()))
                 {

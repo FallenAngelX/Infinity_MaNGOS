@@ -40,10 +40,6 @@ npc_innkeeper            25%    ScriptName not assigned. Innkeepers in general.
 npc_mount_vendor        100%    Regular mount vendors all over the world. Display gossip if player doesn't meet the requirements to buy
 npc_sayge               100%    Darkmoon event fortune teller, buff player based on answers given
 npc_tabard_vendor        50%    allow recovering quest related tabards, achievement related ones need core support
-npc_locksmith            75%    list of keys needs to be confirmed
-npc_death_knight_gargoyle       AI for summoned gargoyle of deathknights
-npc_horseman_fire_bunny
-npc_shade_of_horseman
 npc_spring_rabbit         1%    Used for pet "Spring Rabbit" of Noblegarden
 npc_redemption_target   100%    Used for the paladin quests: 1779,1781,9600,9685
 EndContentData */
@@ -76,33 +72,33 @@ const float RANGE_GUARDS_MARK       = 50.0f;
 
 SpawnAssociation m_aSpawnAssociations[] =
 {
-    {2614,  15241, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Alliance)
-    {2615,  15242, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Horde)
-    {21974, 21976, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Area 52)
-    {21993, 15242, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Horde - Bat Rider)
-    {21996, 15241, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Alliance - Gryphon)
-    {21997, 21976, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Goblin - Area 52 - Zeppelin)
-    {21999, 15241, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Alliance)
-    {22001, 15242, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Horde)
-    {22002, 15242, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Ground (Horde)
-    {22003, 15241, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Ground (Alliance)
-    {22063, 21976, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Goblin - Area 52)
-    {22065, 22064, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Ethereal - Stormspire)
-    {22066, 22067, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Scryer - Dragonhawk)
-    {22068, 22064, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Ethereal - Stormspire)
-    {22069, 22064, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Stormspire)
-    {22070, 22067, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Scryer)
-    {22071, 22067, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Scryer)
-    {22078, 22077, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Aldor)
-    {22079, 22077, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Aldor - Gryphon)
-    {22080, 22077, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Aldor)
-    {22086, 22085, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Sporeggar)
-    {22087, 22085, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Sporeggar - Spore Bat)
-    {22088, 22085, SPAWNTYPE_TRIPWIRE_ROOFTOP},             //Air Force Trip Wire - Rooftop (Sporeggar)
-    {22090, 22089, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Toshley's Station - Flying Machine)
-    {22124, 22122, SPAWNTYPE_ALARMBOT},                     //Air Force Alarm Bot (Cenarion)
-    {22125, 22122, SPAWNTYPE_ALARMBOT},                     //Air Force Guard Post (Cenarion - Stormcrow)
-    {22126, 22122, SPAWNTYPE_ALARMBOT}                      //Air Force Trip Wire - Rooftop (Cenarion Expedition)
+    {2614,  15241, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Alliance)
+    {2615,  15242, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Horde)
+    {21974, 21976, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Area 52)
+    {21993, 15242, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Horde - Bat Rider)
+    {21996, 15241, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Alliance - Gryphon)
+    {21997, 21976, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Goblin - Area 52 - Zeppelin)
+    {21999, 15241, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Alliance)
+    {22001, 15242, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Horde)
+    {22002, 15242, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Ground (Horde)
+    {22003, 15241, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Ground (Alliance)
+    {22063, 21976, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Goblin - Area 52)
+    {22065, 22064, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Ethereal - Stormspire)
+    {22066, 22067, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Scryer - Dragonhawk)
+    {22068, 22064, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Ethereal - Stormspire)
+    {22069, 22064, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Stormspire)
+    {22070, 22067, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Scryer)
+    {22071, 22067, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Scryer)
+    {22078, 22077, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Aldor)
+    {22079, 22077, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Aldor - Gryphon)
+    {22080, 22077, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Aldor)
+    {22086, 22085, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Sporeggar)
+    {22087, 22085, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Sporeggar - Spore Bat)
+    {22088, 22085, SPAWNTYPE_TRIPWIRE_ROOFTOP},             // Air Force Trip Wire - Rooftop (Sporeggar)
+    {22090, 22089, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Toshley's Station - Flying Machine)
+    {22124, 22122, SPAWNTYPE_ALARMBOT},                     // Air Force Alarm Bot (Cenarion)
+    {22125, 22122, SPAWNTYPE_ALARMBOT},                     // Air Force Guard Post (Cenarion - Stormcrow)
+    {22126, 22122, SPAWNTYPE_ALARMBOT}                      // Air Force Trip Wire - Rooftop (Cenarion Expedition)
 };
 
 struct MANGOS_DLL_DECL npc_air_force_botsAI : public ScriptedAI
@@ -185,7 +181,7 @@ struct MANGOS_DLL_DECL npc_air_force_botsAI : public ScriptedAI
             if (!pLastSpawnedGuard)
                 m_spawnedGuid.Clear();
 
-            switch(m_pSpawnAssoc->m_SpawnType)
+            switch (m_pSpawnAssoc->m_SpawnType)
             {
                 case SPAWNTYPE_ALARMBOT:
                 {
@@ -385,7 +381,7 @@ struct MANGOS_DLL_DECL npc_dancing_flamesAI : public ScriptedAI
             pPlayer->RemoveSpellsCausingAura(SPELL_AURA_MOUNTED);
         }
 
-        switch(uiEmote)
+        switch (uiEmote)
         {
             case TEXTEMOTE_DANCE: DoCastSpellIfCan(pPlayer, SPELL_FIERY_SEDUCTION); break;// dance -> cast SPELL_FIERY_SEDUCTION
             case TEXTEMOTE_WAVE:  m_creature->HandleEmote(EMOTE_ONESHOT_WAVE);      break;// wave -> wave
@@ -422,31 +418,31 @@ enum
 
 static LOCATION AllianceCoords[]=
 {
-    {-3757.38f, -4533.05f, 14.16f, 3.62f},                  // Top-far-right bunk as seen from entrance
-    {-3754.36f, -4539.13f, 14.16f, 5.13f},                  // Top-far-left bunk
-    {-3749.54f, -4540.25f, 14.28f, 3.34f},                  // Far-right bunk
-    {-3742.10f, -4536.85f, 14.28f, 3.64f},                  // Right bunk near entrance
-    {-3755.89f, -4529.07f, 14.05f, 0.57f},                  // Far-left bunk
-    {-3749.51f, -4527.08f, 14.07f, 5.26f},                  // Mid-left bunk
-    {-3746.37f, -4525.35f, 14.16f, 5.22f},                  // Left bunk near entrance
+    { -3757.38f, -4533.05f, 14.16f, 3.62f},                 // Top-far-right bunk as seen from entrance
+    { -3754.36f, -4539.13f, 14.16f, 5.13f},                 // Top-far-left bunk
+    { -3749.54f, -4540.25f, 14.28f, 3.34f},                 // Far-right bunk
+    { -3742.10f, -4536.85f, 14.28f, 3.64f},                 // Right bunk near entrance
+    { -3755.89f, -4529.07f, 14.05f, 0.57f},                 // Far-left bunk
+    { -3749.51f, -4527.08f, 14.07f, 5.26f},                 // Mid-left bunk
+    { -3746.37f, -4525.35f, 14.16f, 5.22f},                 // Left bunk near entrance
 };
 
-//alliance run to where
+// alliance run to where
 #define A_RUNTOX -3742.96f
 #define A_RUNTOY -4531.52f
 #define A_RUNTOZ 11.91f
 
 static LOCATION HordeCoords[]=
 {
-    {-1013.75f, -3492.59f, 62.62f, 4.34f},                  // Left, Behind
-    {-1017.72f, -3490.92f, 62.62f, 4.34f},                  // Right, Behind
-    {-1015.77f, -3497.15f, 62.82f, 4.34f},                  // Left, Mid
-    {-1019.51f, -3495.49f, 62.82f, 4.34f},                  // Right, Mid
-    {-1017.25f, -3500.85f, 62.98f, 4.34f},                  // Left, front
-    {-1020.95f, -3499.21f, 62.98f, 4.34f}                   // Right, Front
+    { -1013.75f, -3492.59f, 62.62f, 4.34f},                 // Left, Behind
+    { -1017.72f, -3490.92f, 62.62f, 4.34f},                 // Right, Behind
+    { -1015.77f, -3497.15f, 62.82f, 4.34f},                 // Left, Mid
+    { -1019.51f, -3495.49f, 62.82f, 4.34f},                 // Right, Mid
+    { -1017.25f, -3500.85f, 62.98f, 4.34f},                 // Left, front
+    { -1020.95f, -3499.21f, 62.98f, 4.34f}                  // Right, Front
 };
 
-//horde run to where
+// horde run to where
 #define H_RUNTOX -1016.44f
 #define H_RUNTOY -3508.48f
 #define H_RUNTOZ 62.96f
@@ -460,9 +456,9 @@ const uint32 AllianceSoldierId[3] =
 
 const uint32 HordeSoldierId[3] =
 {
-    12923,                                                  //12923 Injured Soldier
-    12924,                                                  //12924 Badly injured Soldier
-    12925                                                   //12925 Critically injured Soldier
+    12923,                                                  // 12923 Injured Soldier
+    12924,                                                  // 12924 Badly injured Soldier
+    12925                                                   // 12925 Critically injured Soldier
 };
 
 /*######
@@ -524,26 +520,26 @@ struct MANGOS_DLL_DECL npc_injured_patientAI : public ScriptedAI
         m_doctorGuid.Clear();
         m_pCoord = NULL;
 
-        //no select
+        // no select
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-        //no regen health
+        // no regen health
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IN_COMBAT);
-        //to make them lay with face down
+        // to make them lay with face down
         m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
 
         switch (m_creature->GetEntry())
         {
                 // lower max health
             case 12923:
-            case 12938:                                     //Injured Soldier
+            case 12938:                                     // Injured Soldier
                 m_creature->SetHealth(uint32(m_creature->GetMaxHealth()*.75));
                 break;
             case 12924:
-            case 12936:                                     //Badly injured Soldier
+            case 12936:                                     // Badly injured Soldier
                 m_creature->SetHealth(uint32(m_creature->GetMaxHealth()*.50));
                 break;
             case 12925:
-            case 12937:                                     //Critically injured Soldier
+            case 12937:                                     // Critically injured Soldier
                 m_creature->SetHealth(uint32(m_creature->GetMaxHealth()*.25));
                 break;
         }
@@ -562,18 +558,18 @@ struct MANGOS_DLL_DECL npc_injured_patientAI : public ScriptedAI
                         pDocAI->PatientSaved(m_creature, pPlayer, m_pCoord);
                 }
             }
-            //make not selectable
+            // make not selectable
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-            //regen health
+            // regen health
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_IN_COMBAT);
-            //stand up
+            // stand up
             m_creature->SetStandState(UNIT_STAND_STATE_STAND);
 
-            switch(urand(0, 2))
+            switch (urand(0, 2))
             {
-                case 0: DoScriptText(SAY_DOC1,m_creature); break;
-                case 1: DoScriptText(SAY_DOC2,m_creature); break;
-                case 2: DoScriptText(SAY_DOC3,m_creature); break;
+                case 0: DoScriptText(SAY_DOC1, m_creature); break;
+                case 1: DoScriptText(SAY_DOC2, m_creature); break;
+                case 2: DoScriptText(SAY_DOC3, m_creature); break;
             }
 
             m_creature->SetWalk(false);
@@ -637,7 +633,7 @@ void npc_doctorAI::BeginEvent(Player* pPlayer)
     m_uiPatientDiedCount = 0;
     m_uiPatientSavedCount = 0;
 
-    switch(m_creature->GetEntry())
+    switch (m_creature->GetEntry())
     {
         case DOCTOR_ALLIANCE:
             for (uint8 i = 0; i < ALLIANCE_COORDS; ++i)
@@ -724,7 +720,7 @@ void npc_doctorAI::UpdateAI(const uint32 uiDiff)
             std::vector<LOCATION*>::iterator itr = m_vPatientSummonCoordinates.begin() + urand(0, m_vPatientSummonCoordinates.size() - 1);
             uint32 patientEntry = 0;
 
-            switch(m_creature->GetEntry())
+            switch (m_creature->GetEntry())
             {
                 case DOCTOR_ALLIANCE: patientEntry = AllianceSoldierId[urand(0, 2)]; break;
                 case DOCTOR_HORDE:    patientEntry = HordeSoldierId[urand(0, 2)];    break;
@@ -735,7 +731,7 @@ void npc_doctorAI::UpdateAI(const uint32 uiDiff)
 
             if (Creature* Patient = m_creature->SummonCreature(patientEntry, (*itr)->x, (*itr)->y, (*itr)->z, (*itr)->o, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000))
             {
-                //303, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
+                // 303, this flag appear to be required for client side item->spell to work (TARGET_SINGLE_FRIEND)
                 Patient->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
 
                 m_lPatientGuids.push_back(Patient->GetObjectGuid());
@@ -827,7 +823,7 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
 
         m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
         // expect database to have RegenHealth=0
-        m_creature->SetHealth(int(m_creature->GetMaxHealth()*0.7));
+        m_creature->SetHealth(int(m_creature->GetMaxHealth() * 0.7));
     }
 
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
@@ -844,7 +840,7 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
 
             if (pCaster->GetTypeId() == TYPEID_PLAYER)
             {
-                switch(m_creature->GetEntry())
+                switch (m_creature->GetEntry())
                 {
                     case ENTRY_SHAYA:
                         if (((Player*)pCaster)->GetQuestStatus(QUEST_MOON) == QUEST_STATUS_INCOMPLETE)
@@ -950,7 +946,7 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
             {
                 if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
                 {
-                    switch(m_creature->GetEntry())
+                    switch (m_creature->GetEntry())
                     {
                         case ENTRY_SHAYA:   DoScriptText(SAY_SHAYA_GOODBYE, m_creature, pPlayer);   break;
                         case ENTRY_ROBERTS: DoScriptText(SAY_ROBERTS_GOODBYE, m_creature, pPlayer); break;
@@ -1004,7 +1000,7 @@ struct MANGOS_DLL_DECL npc_guardianAI : public ScriptedAI
 
         if (m_creature->isAttackReady())
         {
-            m_creature->CastSpell(m_creature->getVictim(),SPELL_DEATHTOUCH, true);
+            m_creature->CastSpell(m_creature->getVictim(), SPELL_DEATHTOUCH, true);
             m_creature->resetAttackTimer();
         }
     }
@@ -1027,8 +1023,8 @@ enum
 {
     TEXT_ID_WHAT_TO_DO              = 1853,
 
-    SPELL_TRICK_OR_TREAT            = 24751,                 // create item or random buff
-    SPELL_TRICK_OR_TREATED          = 24755,                 // buff player get when tricked or treated
+    SPELL_TRICK_OR_TREAT            = 24751,                // create item or random buff
+    SPELL_TRICK_OR_TREATED          = 24755,                // buff player get when tricked or treated
 };
 
 #define GOSSIP_ITEM_TRICK_OR_TREAT  "Trick or Treat!"
@@ -1039,13 +1035,13 @@ bool GossipHello_npc_innkeeper(Player* pPlayer, Creature* pCreature)
     pPlayer->PrepareGossipMenu(pCreature, pPlayer->GetDefaultGossipMenuForSource(pCreature));
 
     if (IsHolidayActive(HOLIDAY_HALLOWS_END) && !pPlayer->HasAura(SPELL_TRICK_OR_TREATED, EFFECT_INDEX_0))
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TRICK_OR_TREAT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TRICK_OR_TREAT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
 
     // Should only apply to innkeeper close to start areas.
     if (AreaTableEntry const* pAreaEntry = GetAreaEntryByAreaID(pCreature->GetAreaId()))
     {
         if (pAreaEntry->flags & AREA_FLAG_LOWLEVEL)
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_WHAT_TO_DO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_WHAT_TO_DO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
     }
 
     pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
@@ -1055,7 +1051,7 @@ bool GossipHello_npc_innkeeper(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_innkeeper(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF+1:
             pPlayer->SEND_GOSSIP_MENU(TEXT_ID_WHAT_TO_DO, pCreature->GetObjectGuid());
@@ -1092,55 +1088,55 @@ bool GossipHello_npc_mount_vendor(Player* pPlayer, Creature* pCreature)
 
     switch (vendor)
     {
-        case 384:                                           //Katie Hunter
-        case 1460:                                          //Unger Statforth
-        case 2357:                                          //Merideth Carlson
-        case 4885:                                          //Gregor MacVince
+        case 384:                                           // Katie Hunter
+        case 1460:                                          // Unger Statforth
+        case 2357:                                          // Merideth Carlson
+        case 4885:                                          // Gregor MacVince
             if (pPlayer->GetReputationRank(72) != REP_EXALTED && race != RACE_HUMAN)
                 pPlayer->SEND_GOSSIP_MENU(5855, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
-        case 1261:                                          //Veron Amberstill
+        case 1261:                                          // Veron Amberstill
             if (pPlayer->GetReputationRank(47) != REP_EXALTED && race != RACE_DWARF)
                 pPlayer->SEND_GOSSIP_MENU(5856, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
-        case 3362:                                          //Ogunaro Wolfrunner
+        case 3362:                                          // Ogunaro Wolfrunner
             if (pPlayer->GetReputationRank(76) != REP_EXALTED && race != RACE_ORC)
                 pPlayer->SEND_GOSSIP_MENU(5841, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
-        case 3685:                                          //Harb Clawhoof
+        case 3685:                                          // Harb Clawhoof
             if (pPlayer->GetReputationRank(81) != REP_EXALTED && race != RACE_TAUREN)
                 pPlayer->SEND_GOSSIP_MENU(5843, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
-        case 4730:                                          //Lelanai
+        case 4730:                                          // Lelanai
             if (pPlayer->GetReputationRank(69) != REP_EXALTED && race != RACE_NIGHTELF)
                 pPlayer->SEND_GOSSIP_MENU(5844, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
-        case 4731:                                          //Zachariah Post
+        case 4731:                                          // Zachariah Post
             if (pPlayer->GetReputationRank(68) != REP_EXALTED && race != RACE_UNDEAD)
                 pPlayer->SEND_GOSSIP_MENU(5840, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
-        case 7952:                                          //Zjolnir
+        case 7952:                                          // Zjolnir
             if (pPlayer->GetReputationRank(530) != REP_EXALTED && race != RACE_TROLL)
                 pPlayer->SEND_GOSSIP_MENU(5842, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
-        case 7955:                                          //Milli Featherwhistle
+        case 7955:                                          // Milli Featherwhistle
             if (pPlayer->GetReputationRank(54) != REP_EXALTED && race != RACE_GNOME)
                 pPlayer->SEND_GOSSIP_MENU(5857, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
-        case 16264:                                         //Winaestra
+        case 16264:                                         // Winaestra
             if (pPlayer->GetReputationRank(911) != REP_EXALTED && race != RACE_BLOODELF)
                 pPlayer->SEND_GOSSIP_MENU(10305, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
-        case 17584:                                         //Torallius the Pack Handler
+        case 17584:                                         // Torallius the Pack Handler
             if (pPlayer->GetReputationRank(930) != REP_EXALTED && race != RACE_DRAENEI)
                 pPlayer->SEND_GOSSIP_MENU(10239, pCreature->GetObjectGuid());
             else canBuy = true;
@@ -1168,15 +1164,15 @@ bool GossipSelect_npc_mount_vendor(Player* pPlayer, Creature* pCreature, uint32 
 ## npc_sayge
 ######*/
 
-#define SPELL_DMG       23768                               //dmg
-#define SPELL_RES       23769                               //res
-#define SPELL_ARM       23767                               //arm
-#define SPELL_SPI       23738                               //spi
-#define SPELL_INT       23766                               //int
-#define SPELL_STM       23737                               //stm
-#define SPELL_STR       23735                               //str
-#define SPELL_AGI       23736                               //agi
-#define SPELL_FORTUNE   23765                               //faire fortune
+#define SPELL_DMG       23768                               // dmg
+#define SPELL_RES       23769                               // res
+#define SPELL_ARM       23767                               // arm
+#define SPELL_SPI       23738                               // spi
+#define SPELL_INT       23766                               // int
+#define SPELL_STM       23737                               // stm
+#define SPELL_STR       23735                               // str
+#define SPELL_AGI       23736                               // agi
+#define SPELL_FORTUNE   23765                               // faire fortune
 
 bool GossipHello_npc_sayge(Player* pPlayer, Creature* pCreature)
 {
@@ -1184,17 +1180,17 @@ bool GossipHello_npc_sayge(Player* pPlayer, Creature* pCreature)
         pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->HasSpellCooldown(SPELL_INT) ||
-        pPlayer->HasSpellCooldown(SPELL_ARM) ||
-        pPlayer->HasSpellCooldown(SPELL_DMG) ||
-        pPlayer->HasSpellCooldown(SPELL_RES) ||
-        pPlayer->HasSpellCooldown(SPELL_STR) ||
-        pPlayer->HasSpellCooldown(SPELL_AGI) ||
-        pPlayer->HasSpellCooldown(SPELL_STM) ||
-        pPlayer->HasSpellCooldown(SPELL_SPI))
+            pPlayer->HasSpellCooldown(SPELL_ARM) ||
+            pPlayer->HasSpellCooldown(SPELL_DMG) ||
+            pPlayer->HasSpellCooldown(SPELL_RES) ||
+            pPlayer->HasSpellCooldown(SPELL_STR) ||
+            pPlayer->HasSpellCooldown(SPELL_AGI) ||
+            pPlayer->HasSpellCooldown(SPELL_STM) ||
+            pPlayer->HasSpellCooldown(SPELL_SPI))
         pPlayer->SEND_GOSSIP_MENU(7393, pCreature->GetObjectGuid());
     else
     {
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Yes", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Yes", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
         pPlayer->SEND_GOSSIP_MENU(7339, pCreature->GetObjectGuid());
     }
 
@@ -1203,41 +1199,41 @@ bool GossipHello_npc_sayge(Player* pPlayer, Creature* pCreature)
 
 void SendAction_npc_sayge(Player* pPlayer, Creature* pCreature, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF+1:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Slay the Man",                      GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Turn him over to liege",            GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Confiscate the corn",               GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let him go and have the corn",      GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+5);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Slay the Man",                      GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Turn him over to liege",            GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Confiscate the corn",               GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let him go and have the corn",      GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
             pPlayer->SEND_GOSSIP_MENU(7340, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Execute your friend painfully",     GOSSIP_SENDER_MAIN+1, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Execute your friend painlessly",    GOSSIP_SENDER_MAIN+2, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let your friend go",                GOSSIP_SENDER_MAIN+3, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Execute your friend painfully",     GOSSIP_SENDER_MAIN + 1, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Execute your friend painlessly",    GOSSIP_SENDER_MAIN + 2, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let your friend go",                GOSSIP_SENDER_MAIN + 3, GOSSIP_ACTION_INFO_DEF);
             pPlayer->SEND_GOSSIP_MENU(7341, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+3:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Confront the diplomat",             GOSSIP_SENDER_MAIN+4, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Show not so quiet defiance",        GOSSIP_SENDER_MAIN+5, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Remain quiet",                      GOSSIP_SENDER_MAIN+2, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Confront the diplomat",             GOSSIP_SENDER_MAIN + 4, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Show not so quiet defiance",        GOSSIP_SENDER_MAIN + 5, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Remain quiet",                      GOSSIP_SENDER_MAIN + 2, GOSSIP_ACTION_INFO_DEF);
             pPlayer->SEND_GOSSIP_MENU(7361, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+4:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Speak against your brother openly", GOSSIP_SENDER_MAIN+6, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Help your brother in",              GOSSIP_SENDER_MAIN+7, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Keep your brother out without letting him know", GOSSIP_SENDER_MAIN+8, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Speak against your brother openly", GOSSIP_SENDER_MAIN + 6, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Help your brother in",              GOSSIP_SENDER_MAIN + 7, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Keep your brother out without letting him know", GOSSIP_SENDER_MAIN + 8, GOSSIP_ACTION_INFO_DEF);
             pPlayer->SEND_GOSSIP_MENU(7362, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+5:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Take credit, keep gold",            GOSSIP_SENDER_MAIN+5, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Take credit, share the gold",       GOSSIP_SENDER_MAIN+4, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let the knight take credit",        GOSSIP_SENDER_MAIN+3, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Take credit, keep gold",            GOSSIP_SENDER_MAIN + 5, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Take credit, share the gold",       GOSSIP_SENDER_MAIN + 4, GOSSIP_ACTION_INFO_DEF);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let the knight take credit",        GOSSIP_SENDER_MAIN + 3, GOSSIP_ACTION_INFO_DEF);
             pPlayer->SEND_GOSSIP_MENU(7363, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF:
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Thanks",                            GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+6);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Thanks",                            GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6);
             pPlayer->SEND_GOSSIP_MENU(7364, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+6:
@@ -1249,49 +1245,49 @@ void SendAction_npc_sayge(Player* pPlayer, Creature* pCreature, uint32 uiAction)
 
 bool GossipSelect_npc_sayge(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiSender)
+    switch (uiSender)
     {
         case GOSSIP_SENDER_MAIN:
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+1:
             pCreature->CastSpell(pPlayer, SPELL_DMG, false);
-            pPlayer->AddSpellCooldown(SPELL_DMG,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_DMG, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+2:
             pCreature->CastSpell(pPlayer, SPELL_RES, false);
-            pPlayer->AddSpellCooldown(SPELL_RES,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_RES, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+3:
             pCreature->CastSpell(pPlayer, SPELL_ARM, false);
-            pPlayer->AddSpellCooldown(SPELL_ARM,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_ARM, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+4:
             pCreature->CastSpell(pPlayer, SPELL_SPI, false);
-            pPlayer->AddSpellCooldown(SPELL_SPI,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_SPI, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+5:
             pCreature->CastSpell(pPlayer, SPELL_INT, false);
-            pPlayer->AddSpellCooldown(SPELL_INT,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_INT, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+6:
             pCreature->CastSpell(pPlayer, SPELL_STM, false);
-            pPlayer->AddSpellCooldown(SPELL_STM,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_STM, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+7:
             pCreature->CastSpell(pPlayer, SPELL_STR, false);
-            pPlayer->AddSpellCooldown(SPELL_STR,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_STR, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
         case GOSSIP_SENDER_MAIN+8:
             pCreature->CastSpell(pPlayer, SPELL_AGI, false);
-            pPlayer->AddSpellCooldown(SPELL_AGI,0,time(NULL) + 7200);
+            pPlayer->AddSpellCooldown(SPELL_AGI, 0, time(NULL) + 7200);
             SendAction_npc_sayge(pPlayer, pCreature, uiAction);
             break;
     }
@@ -1358,31 +1354,31 @@ bool GossipHello_npc_tabard_vendor(Player* pPlayer, Creature* pCreature)
     bool m_bLostIllidari    = false;
     bool m_bLostSummer      = false;
 
-    //Tabard of the Blood Knight
+    // Tabard of the Blood Knight
     if (pPlayer->GetQuestRewardStatus(QUEST_TRUE_MASTERS_OF_LIGHT) && !pPlayer->HasItemCount(ITEM_TABARD_OF_THE_BLOOD_KNIGHT, 1, true))
         m_bLostBloodKnight = true;
 
-    //Tabard of the Hand
+    // Tabard of the Hand
     if (pPlayer->GetQuestRewardStatus(QUEST_THE_UNWRITTEN_PROPHECY) && !pPlayer->HasItemCount(ITEM_TABARD_OF_THE_HAND, 1, true))
         m_bLostHand = true;
 
-    //Tabard of the Protector
+    // Tabard of the Protector
     if (pPlayer->GetQuestRewardStatus(QUEST_INTO_THE_BREACH) && !pPlayer->HasItemCount(ITEM_TABARD_OF_THE_PROTECTOR, 1, true))
         m_bLostProtector = true;
 
-    //Green Trophy Tabard of the Illidari
-    //Purple Trophy Tabard of the Illidari
+    // Green Trophy Tabard of the Illidari
+    // Purple Trophy Tabard of the Illidari
     if (pPlayer->GetQuestRewardStatus(QUEST_BATTLE_OF_THE_CRIMSON_WATCH) &&
-        (!pPlayer->HasItemCount(ITEM_GREEN_TROPHY_TABARD_OF_THE_ILLIDARI, 1, true) &&
-        !pPlayer->HasItemCount(ITEM_PURPLE_TROPHY_TABARD_OF_THE_ILLIDARI, 1, true) &&
-        !pPlayer->HasItemCount(ITEM_OFFERING_OF_THE_SHATAR, 1, true)))
+            (!pPlayer->HasItemCount(ITEM_GREEN_TROPHY_TABARD_OF_THE_ILLIDARI, 1, true) &&
+             !pPlayer->HasItemCount(ITEM_PURPLE_TROPHY_TABARD_OF_THE_ILLIDARI, 1, true) &&
+             !pPlayer->HasItemCount(ITEM_OFFERING_OF_THE_SHATAR, 1, true)))
         m_bLostIllidari = true;
 
-    //Tabard of Summer Skies
-    //Tabard of Summer Flames
+    // Tabard of Summer Skies
+    // Tabard of Summer Flames
     if (pPlayer->GetQuestRewardStatus(QUEST_SHARDS_OF_AHUNE) &&
-        !pPlayer->HasItemCount(ITEM_TABARD_OF_THE_SUMMER_SKIES, 1, true) &&
-        !pPlayer->HasItemCount(ITEM_TABARD_OF_THE_SUMMER_FLAMES, 1, true))
+            !pPlayer->HasItemCount(ITEM_TABARD_OF_THE_SUMMER_SKIES, 1, true) &&
+            !pPlayer->HasItemCount(ITEM_TABARD_OF_THE_SUMMER_FLAMES, 1, true))
         m_bLostSummer = true;
 
     if (m_bLostBloodKnight || m_bLostHand || m_bLostProtector || m_bLostIllidari || m_bLostSummer)
@@ -1390,24 +1386,24 @@ bool GossipHello_npc_tabard_vendor(Player* pPlayer, Creature* pCreature)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_VENDOR, GOSSIP_TEXT_BROWSE_GOODS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRADE);
 
         if (m_bLostBloodKnight)
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_TABARD_OF_BLOOD_KNIGHT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF +1);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_TABARD_OF_BLOOD_KNIGHT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
 
         if (m_bLostHand)
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_TABARD_OF_THE_HAND, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF +2);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_TABARD_OF_THE_HAND, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
 
         if (m_bLostProtector)
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_TABARD_OF_THE_PROTECTOR, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_TABARD_OF_THE_PROTECTOR, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
 
         if (m_bLostIllidari)
         {
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_GREEN_TROPHY_TABARD_OF_THE_ILLIDARI, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_PURPLE_TROPHY_TABARD_OF_THE_ILLIDARI, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+5);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_GREEN_TROPHY_TABARD_OF_THE_ILLIDARI, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 4);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_PURPLE_TROPHY_TABARD_OF_THE_ILLIDARI, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 5);
         }
 
         if (m_bLostSummer)
         {
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_TABARD_OF_SUMMER_SKIES, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+6);
-            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_TABARD_OF_SUMMER_FLAMES, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_TABARD_OF_SUMMER_SKIES, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 6);
+            pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_TABARD_OF_SUMMER_FLAMES, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 7);
         }
 
         pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
@@ -1420,7 +1416,7 @@ bool GossipHello_npc_tabard_vendor(Player* pPlayer, Creature* pCreature)
 
 bool GossipSelect_npc_tabard_vendor(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-    switch(uiAction)
+    switch (uiAction)
     {
         case GOSSIP_ACTION_TRADE:
             pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
@@ -2238,7 +2234,7 @@ struct MANGOS_DLL_DECL npc_spring_rabbitAI : public ScriptedPetAI
                 m_creature->SetFacingTo(m_fMoveAngle + M_PI_F * 0.5f);
         }
 
-        //m_creature->GetMotionMaster()->MoveRandom(); // does not move around current position, hence not usefull right now
+        // m_creature->GetMotionMaster()->MoveRandom(); // does not move around current position, hence not usefull right now
         m_creature->GetMotionMaster()->MoveIdle();
     }
 
@@ -2364,7 +2360,7 @@ struct MANGOS_DLL_DECL npc_redemption_targetAI : public ScriptedAI
                 m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_DEAD);
                 m_creature->SetStandState(UNIT_STAND_STATE_STAND);
                 m_uiHealTimer = 0;
-                m_uiEvadeTimer = 2*MINUTE*IN_MILLISECONDS;
+                m_uiEvadeTimer = 2 * MINUTE * IN_MILLISECONDS;
             }
             else
                 m_uiHealTimer -= uiDiff;
@@ -2390,13 +2386,13 @@ CreatureAI* GetAI_npc_redemption_target(Creature* pCreature)
 
 bool EffectDummyCreature_npc_redemption_target(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
 {
-    //always check spellid and effectindex
+    // always check spellid and effectindex
     if ((uiSpellId == SPELL_SYMBOL_OF_LIFE || uiSpellId == SPELL_SHIMMERING_VESSEL) && uiEffIndex == EFFECT_INDEX_0)
     {
         if (npc_redemption_targetAI* pTargetAI = dynamic_cast<npc_redemption_targetAI*>(pCreatureTarget->AI()))
             pTargetAI->DoReviveSelf(pCaster->GetObjectGuid());
 
-        //always return true when we are handling this spell and effect
+        // always return true when we are handling this spell and effect
         return true;
     }
 
@@ -2449,7 +2445,7 @@ void AddSC_npcs_special()
     pNewScript->Name = "npc_innkeeper";
     pNewScript->pGossipHello = &GossipHello_npc_innkeeper;
     pNewScript->pGossipSelect = &GossipSelect_npc_innkeeper;
-    pNewScript->RegisterSelf(false);                         // script and error report disabled, but script can be used for custom needs, adding ScriptName
+    pNewScript->RegisterSelf(false);                        // script and error report disabled, but script can be used for custom needs, adding ScriptName
 
     pNewScript = new Script;
     pNewScript->Name = "npc_mount_vendor";

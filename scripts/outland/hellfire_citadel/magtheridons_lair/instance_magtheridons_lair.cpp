@@ -25,9 +25,9 @@ EndScriptData */
 #include "magtheridons_lair.h"
 
 instance_magtheridons_lair::instance_magtheridons_lair(Map* pMap) : ScriptedInstance(pMap),
+    m_uiRandYellTimer(90000),
     m_uiCageBreakTimer(0),
-    m_uiCageBreakStage(0),
-    m_uiRandYellTimer(90000)
+    m_uiCageBreakStage(0)
 {
     Initialize();
 }
@@ -50,7 +50,7 @@ bool instance_magtheridons_lair::IsEncounterInProgress() const
 
 void instance_magtheridons_lair::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_MAGTHERIDON:
             m_mNpcEntryGuidStore[NPC_MAGTHERIDON] = pCreature->GetObjectGuid();
@@ -63,7 +63,7 @@ void instance_magtheridons_lair::OnCreatureCreate(Creature* pCreature)
 
 void instance_magtheridons_lair::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_DOODAD_HF_MAG_DOOR01:                       // event door
             m_mGoEntryGuidStore[GO_DOODAD_HF_MAG_DOOR01] = pGo->GetObjectGuid();
@@ -85,7 +85,7 @@ void instance_magtheridons_lair::OnObjectCreate(GameObject* pGo)
 
 void instance_magtheridons_lair::SetData(uint32 uiType, uint32 uiData)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_MAGTHERIDON_EVENT:
             switch (uiData)
@@ -175,7 +175,7 @@ void instance_magtheridons_lair::SetData(uint32 uiType, uint32 uiData)
                     if (pMagtheridon->isAlive())
                     {
                         DoScriptText(EMOTE_EVENT_BEGIN, pMagtheridon);
-                        m_uiCageBreakTimer = MINUTE*IN_MILLISECONDS;
+                        m_uiCageBreakTimer = MINUTE * IN_MILLISECONDS;
                     }
                 }
 
@@ -189,7 +189,7 @@ void instance_magtheridons_lair::SetData(uint32 uiType, uint32 uiData)
     // Instance save isn't needed for this one
 }
 
-uint32 instance_magtheridons_lair::GetData(uint32 uiType)
+uint32 instance_magtheridons_lair::GetData(uint32 uiType) const
 {
     if (uiType < MAX_ENCOUNTER)
         return m_auiEncounter[uiType];
@@ -212,7 +212,7 @@ void instance_magtheridons_lair::Update(uint32 uiDiff)
                         if (pMagtheridon->isAlive())
                         {
                             DoScriptText(EMOTE_NEARLY_FREE, pMagtheridon);
-                            m_uiCageBreakTimer = MINUTE*IN_MILLISECONDS;
+                            m_uiCageBreakTimer = MINUTE * IN_MILLISECONDS;
                         }
                     }
                     break;

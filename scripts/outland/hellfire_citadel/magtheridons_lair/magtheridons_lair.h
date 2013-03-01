@@ -29,7 +29,7 @@ enum
     EMOTE_NEARLY_FREE           = -1544016,
 };
 
-static const int32 aRandomTaunt[]= {-1544000, -1544001, -1544002, -1544003, -1544004, -1544005};
+static const int32 aRandomTaunt[] = { -1544000, -1544001, -1544002, -1544003, -1544004, -1544005};
 
 class MANGOS_DLL_DECL instance_magtheridons_lair : public ScriptedInstance
 {
@@ -44,7 +44,7 @@ class MANGOS_DLL_DECL instance_magtheridons_lair : public ScriptedInstance
         void OnObjectCreate(GameObject* pGo);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
         void Update(uint32 uiDiff);
 

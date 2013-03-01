@@ -109,7 +109,7 @@ struct MANGOS_DLL_DECL boss_supremusAI : public ScriptedAI
         m_uiSummonFlameTimer   = 20000;
         m_uiPhaseSwitchTimer   = 60000;
         m_uiMoltenPunchTimer   = 8000;
-        m_uiBerserkTimer       = 15*MINUTE*IN_MILLISECONDS;
+        m_uiBerserkTimer       = 15 * MINUTE * IN_MILLISECONDS;
 
         m_bTankPhase = true;
     }

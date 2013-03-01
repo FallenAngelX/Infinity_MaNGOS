@@ -62,7 +62,7 @@ void instance_the_eye::OnCreatureCreate(Creature* pCreature)
 
 void instance_the_eye::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_ARCANE_DOOR_HORIZ_3:
         case GO_ARCANE_DOOR_HORIZ_4:
@@ -115,7 +115,7 @@ void instance_the_eye::SetData(uint32 uiType, uint32 uiData)
     }
 }
 
-uint32 instance_the_eye::GetData(uint32 uiType)
+uint32 instance_the_eye::GetData(uint32 uiType) const
 {
     if (uiType < MAX_ENCOUNTER)
         return m_auiEncounter[uiType];

@@ -88,7 +88,7 @@ void instance_serpentshrine_cavern::OnCreatureCreate(Creature* pCreature)
 
 void instance_serpentshrine_cavern::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_SHIELD_GENERATOR_1:
         case GO_SHIELD_GENERATOR_2:
@@ -150,7 +150,7 @@ void instance_serpentshrine_cavern::SetData(uint32 uiType, uint32 uiData)
 
         std::ostringstream saveStream;
         saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " "
-            << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5];
+                   << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5];
 
         m_strInstData = saveStream.str();
 
@@ -171,7 +171,7 @@ void instance_serpentshrine_cavern::Load(const char* chrIn)
 
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3]
-        >> m_auiEncounter[4] >> m_auiEncounter[5];
+               >> m_auiEncounter[4] >> m_auiEncounter[5];
 
     for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
@@ -182,7 +182,7 @@ void instance_serpentshrine_cavern::Load(const char* chrIn)
     OUT_LOAD_INST_DATA_COMPLETE;
 }
 
-uint32 instance_serpentshrine_cavern::GetData(uint32 uiType)
+uint32 instance_serpentshrine_cavern::GetData(uint32 uiType) const
 {
     if (uiType < MAX_ENCOUNTER)
         return m_auiEncounter[uiType];
@@ -201,7 +201,7 @@ void instance_serpentshrine_cavern::SetData64(uint32 uiData, uint64 uiGuid)
     }
 }
 
-bool instance_serpentshrine_cavern::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType)
+bool instance_serpentshrine_cavern::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const
 {
     switch (uiInstanceConditionId)
     {

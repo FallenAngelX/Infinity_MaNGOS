@@ -39,7 +39,7 @@ enum
     SAY_KARGATH_EXECUTE_ALLY    = -1540049,
     SAY_KARGATH_EXECUTE_HORDE   = -1540050,
 
-    //AT_NETHEKURSE               = 4524,                     // Area trigger used for the execution event
+    // AT_NETHEKURSE               = 4524,                  // Area trigger used for the execution event
 };
 
 struct sSpawnLocation
@@ -76,9 +76,9 @@ class MANGOS_DLL_DECL instance_shattered_halls : public ScriptedInstance
         void OnCreatureEnterCombat(Creature* pCreature);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
         void Update(uint32 uiDiff);
