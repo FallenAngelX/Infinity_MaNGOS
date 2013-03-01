@@ -27,18 +27,8 @@ Config SD2Config;
 +additions for windows compiler
 **********************************************************************/
 #ifdef _WIN32
-template<> bool MaNGOS::Singleton<World>::si_destroyed;
-template<> bool MaNGOS::Singleton<ObjectMgr>::si_destroyed;
-template<> World *MaNGOS::Singleton<World>::si_instance;
-World::World()
-{
-}
-World::~World()
-{
-}
-ObjectMgr::~ObjectMgr()
-{
-}
+World::World(){}
+World::~World(){}
 #endif
 /***********************************************************************/
 
