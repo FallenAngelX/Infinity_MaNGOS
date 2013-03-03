@@ -82,14 +82,14 @@ class MANGOS_DLL_DECL instance_halls_of_stone : public ScriptedInstance
         void OnCreatureDeath(Creature* pCreature) override;
 
         void SetData(uint32 uiType, uint32 uiData) override;
-        uint32 GetData(uint32 uiType) const override;
+        uint32 GetData(uint32 uiType) const;
 
         const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
         void Update(uint32 uiDiff);
 
-        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
+        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const;
 
         void ActivateFace(uint8 uiFace, bool bAfterEvent);
         void DoFaceSpeak(uint8 uiFace, int32 iTextId);
