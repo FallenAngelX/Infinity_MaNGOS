@@ -7,9 +7,13 @@
 
 enum
 {
-    MAX_ENCOUNTER               = 2,
+    ENCOUNTER_KELRIS            = 0,
+    ENCOUNTER_SHRINE,
+    MAX_ENCOUNTER,
+
     MAX_FIRES                   = 4,
     MAX_COUNT_POS               = 3,
+    SUMMONS_COUNT               = 6,
 
     TYPE_KELRIS                 = 1,
     TYPE_SHRINE                 = 2,
@@ -46,7 +50,6 @@ enum
 
 * On wipe the mobs don't despawn; they stay there until player returns
 */
-
 static const LOCATION aSpawnLocations[6] =                 // Should be near the correct positions
 {
     { -768.949f, -174.413f, -25.87f, 3.09f},                // Left side
@@ -82,6 +85,8 @@ static const SummonInformation aWaveSummonInformation[] =
 
 class MANGOS_DLL_DECL instance_blackfathom_deeps : public ScriptedInstance
 {
+    public:
+
     public:
         instance_blackfathom_deeps(Map* pMap);
         ~instance_blackfathom_deeps() {}

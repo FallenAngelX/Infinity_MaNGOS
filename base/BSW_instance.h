@@ -12,7 +12,7 @@ class MANGOS_DLL_DECL BSWScriptedInstance : public ScriptedInstance
     public:
 
         BSWScriptedInstance(Map* pMap);
-        ~BSWScriptedInstance();
+        virtual ~BSWScriptedInstance();
 
         //sends completed achievments to all players in instance
         void DoCompleteAchievement(uint32 uiAchievmentId);

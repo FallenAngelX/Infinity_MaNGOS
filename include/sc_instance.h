@@ -27,7 +27,7 @@ class MANGOS_DLL_DECL ScriptedInstance : public InstanceData
 {
     public:
         ScriptedInstance(Map* pMap) : InstanceData(pMap) {}
-        ~ScriptedInstance() {}
+        virtual ~ScriptedInstance() {}
 
         // Default accessor functions
         GameObject* GetSingleGameObjectFromStorage(uint32 uiEntry);
@@ -86,6 +86,7 @@ class MANGOS_DLL_DECL ScriptedMap : public ScriptedInstance
 {
     public:
         ScriptedMap(Map* pMap) : ScriptedInstance(pMap) {}
+        virtual ~ScriptedMap() {}
 };
 
 /// A static const array of this structure must be handled to DialogueHelper

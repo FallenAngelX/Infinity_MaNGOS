@@ -60,7 +60,6 @@ void instance_blackfathom_deeps::OnObjectCreate(GameObject* pGo)
         case GO_PORTAL_DOOR:
             if (m_auiEncounter[1] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-
             m_mGoEntryGuidStore[GO_PORTAL_DOOR] = pGo->GetObjectGuid();
             break;
         case GO_SHRINE_1:
@@ -70,20 +69,22 @@ void instance_blackfathom_deeps::OnObjectCreate(GameObject* pGo)
             if (m_auiEncounter[1] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
+        default:
+            break;
     }
 }
 
 void instance_blackfathom_deeps::DoSpawnMobs(uint8 uiWaveIndex)
 {
     Creature* pKelris = GetSingleCreatureFromStorage(NPC_KELRIS);
-    if (!pKelris)
+    if (!pKelris || !pKelris->IsInWorld() || uiWaveIndex >= MAX_FIRES)
         return;
 
     float fX_resp, fY_resp, fZ_resp;
 
     pKelris->GetRespawnCoord(fX_resp, fY_resp, fZ_resp);
 
-    for (uint8 i = 0; i < countof(aWaveSummonInformation); ++i)
+    for (uint8 i = 0; i < SUMMONS_COUNT; ++i)
     {
         if (aWaveSummonInformation[i].m_uiWaveIndex != uiWaveIndex)
             continue;
@@ -118,12 +119,12 @@ void instance_blackfathom_deeps::SetData(uint32 uiType, uint32 uiData)
     switch (uiType)
     {
         case TYPE_KELRIS:                                   // EventAI must set instance data (1,3) at his death
-            if (m_auiEncounter[0] != DONE && uiData == DONE)
-                m_auiEncounter[0] = uiData;
+            if (m_auiEncounter[ENCOUNTER_KELRIS] != DONE && uiData == DONE)
+                m_auiEncounter[ENCOUNTER_KELRIS] = uiData;
             break;
         case TYPE_SHRINE:
-            m_auiEncounter[1] = uiData;
-            if (uiData == IN_PROGRESS)
+            m_auiEncounter[ENCOUNTER_SHRINE] = uiData;
+            if (uiData == IN_PROGRESS && m_uiWaveCounter < MAX_FIRES)
             {
                 m_uiSpawnMobsTimer[m_uiWaveCounter] = 3000;
                 ++m_uiWaveCounter;
@@ -131,6 +132,8 @@ void instance_blackfathom_deeps::SetData(uint32 uiType, uint32 uiData)
             else if (uiData == DONE)
                 DoUseDoorOrButton(GO_PORTAL_DOOR);
             break;
+        default:
+            return;
     }
 
     if (uiData == DONE)
@@ -139,7 +142,7 @@ void instance_blackfathom_deeps::SetData(uint32 uiType, uint32 uiData)
 
         std::ostringstream saveStream;
 
-        saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1];
+        saveStream << m_auiEncounter[ENCOUNTER_KELRIS] << " " << m_auiEncounter[ENCOUNTER_SHRINE];
 
         m_strInstData = saveStream.str();
         SaveToDB();
@@ -151,8 +154,10 @@ uint32 instance_blackfathom_deeps::GetData(uint32 uiType) const
 {
     switch (uiType)
     {
-        case TYPE_KELRIS: return m_auiEncounter[0];
-        case TYPE_SHRINE: return m_auiEncounter[1];
+        case TYPE_KELRIS: 
+            return m_auiEncounter[ENCOUNTER_KELRIS];
+        case TYPE_SHRINE: 
+            return m_auiEncounter[ENCOUNTER_SHRINE];
         default:
             return 0;
     }
@@ -169,7 +174,7 @@ void instance_blackfathom_deeps::Load(const char* chrIn)
     OUT_LOAD_INST_DATA(chrIn);
 
     std::istringstream loadStream(chrIn);
-    loadStream >> m_auiEncounter[0] >> m_auiEncounter[1];
+    loadStream >> m_auiEncounter[ENCOUNTER_KELRIS] >> m_auiEncounter[ENCOUNTER_SHRINE];
 
     for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
@@ -188,13 +193,13 @@ void instance_blackfathom_deeps::OnCreatureDeath(Creature* pCreature)
 
     switch (pCreature->GetEntry())
     {
-        case NPC_AKUMAI_SERVANT:
-            if (!m_lWaveMobsGuids[1].empty())
-                m_lWaveMobsGuids[1].remove(pCreature->GetObjectGuid());
-            break;
         case NPC_AKUMAI_SNAPJAW:
             if (!m_lWaveMobsGuids[0].empty())
                 m_lWaveMobsGuids[0].remove(pCreature->GetObjectGuid());
+            break;
+        case NPC_AKUMAI_SERVANT:
+            if (!m_lWaveMobsGuids[1].empty())
+                m_lWaveMobsGuids[1].remove(pCreature->GetObjectGuid());
             break;
         case NPC_BARBED_CRUSTACEAN:
             if (!m_lWaveMobsGuids[2].empty())
@@ -232,7 +237,7 @@ bool instance_blackfathom_deeps::IsWaveEventFinished()
 void instance_blackfathom_deeps::Update(uint32 uiDiff)
 {
     // Only use this function if shrine event is in progress
-    if (m_auiEncounter[1] != IN_PROGRESS)
+    if (m_auiEncounter[ENCOUNTER_SHRINE] != IN_PROGRESS)
         return;
 
     for (uint8 i = 0; i < MAX_FIRES; ++i)
@@ -265,7 +270,7 @@ bool GOUse_go_fire_of_akumai(Player* pPlayer, GameObject* pGo)
     if (pInstance->GetData(TYPE_SHRINE) == DONE)
         return true;
 
-    if (pInstance->GetData(TYPE_KELRIS) == DONE)
+    if (pInstance->GetData(TYPE_KELRIS) == DONE && pInstance->GetData(TYPE_SHRINE) != DONE)
     {
         pInstance->SetData(TYPE_SHRINE, IN_PROGRESS);
         return false;
