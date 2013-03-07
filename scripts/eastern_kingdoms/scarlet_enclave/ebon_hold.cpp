@@ -2862,6 +2862,7 @@ struct MANGOS_DLL_DECL npc_acherus_deathchargerAI : public ScriptedAI
         m_uiQuestEndStage = 0;
         m_uiQuestEndTimer = 0;
 
+        SetCombatMovement(true);
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     }
 
@@ -2880,6 +2881,7 @@ struct MANGOS_DLL_DECL npc_acherus_deathchargerAI : public ScriptedAI
             m_creature->GetMotionMaster()->MoveIdle();
 
             // Prepare to be mounted
+            SetCombatMovement(false);
             DoScriptText(EMOTE_HORSE_READY, m_creature);
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             m_creature->SetFactionTemporary(FACTION_FRIENDLY, TEMPFACTION_RESTORE_RESPAWN);
