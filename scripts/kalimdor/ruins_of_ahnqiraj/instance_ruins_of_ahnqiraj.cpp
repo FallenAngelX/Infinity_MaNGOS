@@ -136,16 +136,21 @@ void instance_ruins_of_ahnqiraj::OnCreatureDeath(Creature* pCreature)
             if (GetData(TYPE_RAJAXX) != IN_PROGRESS)
                 break;
 
-            GuidSet& army = m_sArmyWavesGuids[m_uiCurrentArmyWave - 1];
+            bool startNext = false;
+            {
+                MAPLOCK_WRITE(pCreature, MAP_LOCK_TYPE_DEFAULT);
+                GuidSet& army = m_sArmyWavesGuids[m_uiCurrentArmyWave - 1];
 
-            if (army.empty() || army.find(guid) == army.end())
-                break;
+                if (army.empty() || army.find(guid) == army.end())
+                    break;
 
-            // Check if the dead creature belongs to the current wave
-            army.erase(guid);
+                // Check if the dead creature belongs to the current wave
+                army.erase(guid);
+                startNext = army.empty();
+            }
 
             // If all the soldiers from the current wave are dead, then send the next one
-            if (army.empty())
+            if (startNext)
                 DoSendNextArmyWave();
 
             break;
