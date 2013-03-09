@@ -156,28 +156,23 @@ void AddSC_item_scripts()
 {
     Script* pNewScript;
 
-    pNewScript = new Script;
-    pNewScript->Name = "item_arcane_charges";
+    pNewScript = new Script("item_arcane_charges");
     pNewScript->pItemUse = &ItemUse_item_arcane_charges;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "item_flying_machine";
+    pNewScript = new Script("item_flying_machine");
     pNewScript->pItemUse = &ItemUse_item_flying_machine;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "item_gor_dreks_ointment";
+    pNewScript = new Script("item_gor_dreks_ointment");
     pNewScript->pItemUse = &ItemUse_item_gor_dreks_ointment;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "item_petrov_cluster_bombs";
+    pNewScript = new Script("item_petrov_cluster_bombs");
     pNewScript->pItemUse = &ItemUse_item_petrov_cluster_bombs;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "item_jungle_punch_sample";
+    pNewScript = new Script("item_jungle_punch_sample");
     pNewScript->pItemUse = &ItemUse_item_jungle_punch_sample;
     pNewScript->RegisterSelf();
 }

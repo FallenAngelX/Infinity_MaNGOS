@@ -38,7 +38,7 @@ enum greater_fire_elemental_spells
 
 struct MANGOS_DLL_DECL pet_greater_fire_elemental : public ScriptedPetAI
 {
-    pet_greater_fire_elemental(Creature* pCreature) : ScriptedPetAI(pCreature) 
+    pet_greater_fire_elemental(Creature* pCreature) : ScriptedPetAI(pCreature)
     {
         Reset();
     }
@@ -116,7 +116,7 @@ enum greater_earth_elemental_spells
 
 struct MANGOS_DLL_DECL pet_greater_earth_elemental : public ScriptedPetAI
 {
-    pet_greater_earth_elemental(Creature* pCreature) : ScriptedPetAI(pCreature) 
+    pet_greater_earth_elemental(Creature* pCreature) : ScriptedPetAI(pCreature)
     {
         Reset();
     }
@@ -199,13 +199,11 @@ void AddSC_pet_scripts()
 {
     Script* pNewScript;
 
-    pNewScript = new Script;
-    pNewScript->Name = "pet_greater_fire_elemental";
+    pNewScript = new Script("pet_greater_fire_elemental");
     pNewScript->GetAI = &GetAI_pet_greater_fire_elemental;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "pet_greater_earth_elemental";
+    pNewScript = new Script("pet_greater_earth_elemental");
     pNewScript->GetAI = &GetAI_pet_greater_earth_elemental;
     pNewScript->RegisterSelf();
 }

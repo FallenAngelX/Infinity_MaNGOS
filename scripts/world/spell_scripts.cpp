@@ -963,13 +963,11 @@ void AddSC_spell_scripts()
 {
     Script* pNewScript;
 
-    pNewScript = new Script;
-    pNewScript->Name = "spell_dummy_go";
+    pNewScript = new Script("spell_dummy_go");
     pNewScript->pEffectDummyGO = &EffectDummyGameObj_spell_dummy_go;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "spell_dummy_npc";
+    pNewScript = new Script("spell_dummy_npc");
     pNewScript->pEffectDummyNPC = &EffectDummyCreature_spell_dummy_npc;
     pNewScript->pEffectAuraDummy = &EffectAuraDummy_spell_aura_dummy_npc;
     pNewScript->RegisterSelf();

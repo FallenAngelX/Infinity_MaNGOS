@@ -167,8 +167,7 @@ void AddSC_generic_creature()
 {
     Script* pNewScript;
 
-    pNewScript = new Script;
-    pNewScript->Name = "generic_creature";
+    pNewScript = new Script("generic_creature");
     pNewScript->GetAI = &GetAI_generic_creature;
     pNewScript->RegisterSelf(false);
 }

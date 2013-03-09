@@ -327,58 +327,47 @@ void AddSC_areatrigger_scripts()
 {
     Script* pNewScript;
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_childrens_week_spot";
+    pNewScript = new Script("at_childrens_week_spot");
     pNewScript->pAreaTrigger = &AreaTrigger_at_childrens_week_spot;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_aldurthar_gate";
+    pNewScript = new Script("at_aldurthar_gate");
     pNewScript->pAreaTrigger = &AreaTrigger_at_aldurthar_gate;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_coilfang_waterfall";
+    pNewScript = new Script("at_coilfang_waterfall");
     pNewScript->pAreaTrigger = &AreaTrigger_at_coilfang_waterfall;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_legion_teleporter";
+    pNewScript = new Script("at_legion_teleporter");
     pNewScript->pAreaTrigger = &AreaTrigger_at_legion_teleporter;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_ravenholdt";
+    pNewScript = new Script("at_ravenholdt");
     pNewScript->pAreaTrigger = &AreaTrigger_at_ravenholdt;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_spearborn_encampment";
+    pNewScript = new Script("at_spearborn_encampment");
     pNewScript->pAreaTrigger = &AreaTrigger_at_spearborn_encampment;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_warsong_farms";
+    pNewScript = new Script("at_warsong_farms");
     pNewScript->pAreaTrigger = &AreaTrigger_at_warsong_farms;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_waygate";
+    pNewScript = new Script("at_waygate");
     pNewScript->pAreaTrigger = &AreaTrigger_at_waygate;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_stormwright_shelf";
+    pNewScript = new Script("at_stormwright_shelf");
     pNewScript->pAreaTrigger = &AreaTrigger_at_stormwright_shelf;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_scent_larkorwi";
+    pNewScript = new Script("at_scent_larkorwi");
     pNewScript->pAreaTrigger = &AreaTrigger_at_scent_larkorwi;
     pNewScript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_murkdeep";
+    pNewScript = new Script("at_murkdeep");
     pNewScript->pAreaTrigger = &AreaTrigger_at_murkdeep;
     pNewScript->RegisterSelf();
 }
