@@ -62,7 +62,7 @@ enum EscortFaction
 
 struct Script
 {
-    Script() :
+    Script(const char* scriptName = NULL) : Name(scriptName),
         pGossipHello(NULL), pGossipHelloGO(NULL), pGossipSelect(NULL), pGossipSelectGO(NULL),
         pGossipSelectWithCode(NULL), pGossipSelectGOWithCode(NULL),
         pDialogStatusNPC(NULL), pDialogStatusGO(NULL),
@@ -73,7 +73,7 @@ struct Script
         GetAI(NULL), GetInstanceData(NULL)
     {}
 
-    std::string Name;
+    const char* Name;
 
     bool (*pGossipHello             )(Player*, Creature*);
     bool (*pGossipHelloGO           )(Player*, GameObject*);
