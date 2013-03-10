@@ -62,17 +62,25 @@ add_library(mangosscriptR2 SHARED
 )
 
 if(WIN32)
+  SET_TARGET_PROPERTIES(mangosd PROPERTIES
+    ENABLE_EXPORTS TRUE)
+
   target_link_libraries(mangosscriptR2
+    mangosd
     ${ACE_LIBRARIES}
 #    debug ${WIN_DEBUGLIBS}
   )
 endif()
 
 add_dependencies(mangosscriptR2 revision.h)
+add_dependencies(mangosscriptR2 shared)
+
+# seems as need only for linking
+#add_dependencies(mangosscriptR2 game)
+
 if(NOT ACE_USE_EXTERNAL)
   add_dependencies(mangosscriptR2 ACE_Project)
 # add_dependencies(mangosscriptR2 ace)
-  add_dependencies(mangosscriptR2 game)
 endif()
 
 if(UNIX)
