@@ -246,17 +246,13 @@ bool GOHello_go_sa_def_portal(Player* pPlayer, GameObject* pGo)
 
 void AddSC_battlegroundSA()
 {
-    Script* pNewScript;
+    Scripter s;
 
-    pNewScript = new Script;
-    pNewScript->Name = "npc_sa_vendor";
-    pNewScript->GetAI = &GetAI_npc_sa_vendor;
-    pNewScript->pGossipHello = &GossipHello_npc_sa_vendor;
-    pNewScript->pGossipSelect = &GossipSelect_npc_sa_vendor;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_sa_vendor");
+    s->GetAI = &GetAI_npc_sa_vendor;
+    s->pGossipHello = &GossipHello_npc_sa_vendor;
+    s->pGossipSelect = &GossipSelect_npc_sa_vendor;
 
-    pNewScript = new Script;
-    pNewScript->Name = "go_sa_def_portal";
-    pNewScript->pGOUse = &GOHello_go_sa_def_portal;
-    pNewScript->RegisterSelf();
+    s.newScript("go_sa_def_portal");
+    s->pGOUse = &GOHello_go_sa_def_portal;
 }
