@@ -155,6 +155,7 @@ class MANGOS_DLL_DECL instance_zulaman : public ScriptedInstance
         void Initialize();
         bool IsEncounterInProgress() const;
 
+        void OnPlayerEnter(Player* pPlayer);
         void OnCreatureCreate(Creature* pCreature);
         void OnObjectCreate(GameObject* pGo);
         void OnCreatureDeath(Creature* pCreature);
