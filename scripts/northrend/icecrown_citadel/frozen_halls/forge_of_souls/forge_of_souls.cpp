@@ -72,6 +72,7 @@ bool StartEvent;
             m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
             Step = 0;
             StepTimer = 100;
+            StartEvent = false;
             if(m_pInstance->GetData(TYPE_INTRO) == DONE)
             {
               m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
