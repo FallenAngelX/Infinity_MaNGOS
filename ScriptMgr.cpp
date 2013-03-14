@@ -345,35 +345,23 @@ void Script::RegisterSelf(bool bReportError)
 }
 
 //*********************************
-//******** SimpleScript ***********
+//******** AutoScript *************
 
-SimpleScript::SimpleScript(const char* scriptName)
+Script* AutoScript::newScript(const char* scriptName, bool reportError/*=true*/)
 {
+    Register(); // register last added script (if any)
+
     m_script = new Script(scriptName);
+    m_reportError = reportError;
+    return m_script;
 }
 
-SimpleScript::~SimpleScript()
+void AutoScript::Register()
 {
-    if (m_script)
-        m_script->RegisterSelf();
-}
-
-//*********************************
-//********** Scripter *************
-
-Script* Scripter::newScript(const char* scriptName)
-{
-    RegisterScript(); // register previously added script (if any)
-    m_curScript = new Script(scriptName);
-    return m_curScript;
-}
-
-void Scripter::RegisterScript(bool reportError/*=true*/)
-{
-    if (!m_curScript)
+    if (!m_script)
         return;
-    m_curScript->RegisterSelf(reportError);
-    m_curScript = NULL;
+    m_script->RegisterSelf(m_reportError);
+    m_script = NULL;
 }
 
 //********************************

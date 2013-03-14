@@ -197,7 +197,7 @@ CreatureAI* GetAI_pet_greater_earth_elemental(Creature* pCreature)
 
 void AddSC_pet_scripts()
 {
-    Scripter s;
+    AutoScript s;
     s.newScript("pet_greater_fire_elemental")->GetAI = &GetAI_pet_greater_fire_elemental;
     s.newScript("pet_greater_earth_elemental")->GetAI = &GetAI_pet_greater_earth_elemental;
 }

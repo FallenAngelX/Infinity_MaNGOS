@@ -961,7 +961,7 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
 
 void AddSC_spell_scripts()
 {
-    Scripter s;
+    AutoScript s;
 
     s.newScript("spell_dummy_go");
     s->pEffectDummyGO = &EffectDummyGameObj_spell_dummy_go;

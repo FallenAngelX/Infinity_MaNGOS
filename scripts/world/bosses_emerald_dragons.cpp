@@ -608,7 +608,7 @@ CreatureAI* GetAI_mob_dementeddruids(Creature* pCreature)
 
 void AddSC_bosses_emerald_dragons()
 {
-    Scripter s;
+    AutoScript s;
 
     s.newScript("boss_emeriss");
     s->GetAI = &GetAI_boss_emeriss;

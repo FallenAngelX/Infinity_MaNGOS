@@ -154,7 +154,7 @@ bool ItemUse_item_jungle_punch_sample(Player* pPlayer, Item* pItem, const SpellC
 
 void AddSC_item_scripts()
 {
-    Scripter s;
+    AutoScript s;
 
     s.newScript("item_arcane_charges");
     s->pItemUse = &ItemUse_item_arcane_charges;

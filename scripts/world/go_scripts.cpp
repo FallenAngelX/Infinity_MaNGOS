@@ -358,7 +358,7 @@ bool GOUse_go_lab_work_reagents(Player* pPlayer, GameObject* pGo)
 
 void AddSC_go_scripts()
 {
-    Scripter s;
+    AutoScript s;
 
     s.newScript("go_barov_journal");
     s->pGOUse = &GOUse_go_barov_journal;

@@ -152,7 +152,7 @@ CreatureAI* GetAI_boss_bg_ioc(Creature* pCreature)
 
 void AddSC_battlegroundIC()
 {
-    Scripter s;
+    AutoScript s;
     s.newScript("go_ic_teleport")->pGOUse = &GOHello_go_ic_teleport;
     s.newScript("boss_bg_ioc")->GetAI = &GetAI_boss_bg_ioc;
 }

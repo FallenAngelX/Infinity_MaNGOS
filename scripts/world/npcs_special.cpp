@@ -2401,7 +2401,7 @@ bool EffectDummyCreature_npc_redemption_target(Unit* pCaster, uint32 uiSpellId, 
 
 void AddSC_npcs_special()
 {
-    Scripter s;
+    AutoScript s;
 
     s.newScript("npc_air_force_bots");
     s->GetAI = &GetAI_npc_air_force_bots;
@@ -2427,13 +2427,12 @@ void AddSC_npcs_special()
     s.newScript("npc_guardian");
     s->GetAI = &GetAI_npc_guardian;
 
-    s.newScript("npc_innkeeper");
+    s.newScript("npc_innkeeper", false);  // script and error report disabled, but script can be used for custom needs, adding ScriptName
     s->pGossipHello = &GossipHello_npc_innkeeper;
     s->pGossipSelect = &GossipSelect_npc_innkeeper;
-    s.RegisterScript(false);                        // script and error report disabled, but script can be used for custom needs, adding ScriptName
 
     s.newScript("npc_mount_vendor");
-    s->pGossipHello =  &GossipHello_npc_mount_vendor;
+    s->pGossipHello = &GossipHello_npc_mount_vendor;
     s->pGossipSelect = &GossipSelect_npc_mount_vendor;
 
     s.newScript("npc_sayge");

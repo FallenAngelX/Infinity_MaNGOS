@@ -273,7 +273,7 @@ CreatureAI* GetAI_guard_undercity(Creature* pCreature)
 
 void AddSC_guards()
 {
-    Scripter s;
+    AutoScript s;
 
     s.newScript("guard_azuremyst");
     s->GetAI = &GetAI_guard_azuremyst;
