@@ -2430,7 +2430,7 @@ void AddSC_npcs_special()
     s.newScript("npc_innkeeper");
     s->pGossipHello = &GossipHello_npc_innkeeper;
     s->pGossipSelect = &GossipSelect_npc_innkeeper;
-    s.RegisterScript(false);                        // script and error report disabled, but script can be used for custom needs, adding ScriptName
+    s->RegisterScript(false);                        // script and error report disabled, but script can be used for custom needs, adding ScriptName
 
     s.newScript("npc_mount_vendor");
     s->pGossipHello =  &GossipHello_npc_mount_vendor;
