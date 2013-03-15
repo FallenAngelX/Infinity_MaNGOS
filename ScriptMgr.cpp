@@ -344,38 +344,6 @@ void Script::RegisterSelf(bool bReportError)
     }
 }
 
-//*********************************
-//******** SimpleScript ***********
-
-SimpleScript::SimpleScript(const char* scriptName)
-{
-    m_script = new Script(scriptName);
-}
-
-SimpleScript::~SimpleScript()
-{
-    if (m_script)
-        m_script->RegisterSelf();
-}
-
-//*********************************
-//********** Scripter *************
-
-Script* Scripter::newScript(const char* scriptName)
-{
-    RegisterScript(); // register previously added script (if any)
-    m_curScript = new Script(scriptName);
-    return m_curScript;
-}
-
-void Scripter::RegisterScript(bool reportError/*=true*/)
-{
-    if (!m_curScript)
-        return;
-    m_curScript->RegisterSelf(reportError);
-    m_curScript = NULL;
-}
-
 //********************************
 //*** Functions to be Exported ***
 

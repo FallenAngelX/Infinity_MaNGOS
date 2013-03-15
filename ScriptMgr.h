@@ -104,49 +104,6 @@ struct Script
 };
 
 // *********************************************************
-// ******************* SimpleScript ************************
-
-class SimpleScript
-{
-    private:
-        Script* m_script;
-
-    public:
-        SimpleScript() : m_script(NULL) {}
-        SimpleScript(const char* scriptName);
-        ~SimpleScript();
-
-        Script* operator -> ()
-        {
-            if (!m_script)
-                m_script = new Script();
-            return m_script;
-        }
-};
-
-// *********************************************************
-// ********************* Scripter **************************
-
-class Scripter
-{
-    private:
-        Script* m_curScript;
-
-    public:
-        Scripter() : m_curScript(NULL) {}
-        ~Scripter() { RegisterScript(); }
-
-        Script* newScript(const char* scriptName = NULL);
-        void RegisterScript(bool reportError = true);
-
-        Script* operator -> ()
-        {
-            MANGOS_ASSERT(m_curScript != NULL && "Scripter: use NewScript() before!");
-            return m_curScript;
-        }
-};
-
-// *********************************************************
 // ************* Some functions used globally **************
 
 // Generic scripting text function
