@@ -201,17 +201,21 @@ InstanceData* GetInstanceData_world_map_northrend(Map* pMap)
 
 void AddSC_world_map_scripts()
 {
-    Scripter s;
+    Script* pNewScript;
 
-    s.newScript("world_map_eastern_kingdoms");
-    s->GetInstanceData = &GetInstanceData_world_map_eastern_kingdoms;
+    pNewScript = new Script("world_map_eastern_kingdoms");
+    pNewScript->GetInstanceData = &GetInstanceData_world_map_eastern_kingdoms;
+    pNewScript->RegisterSelf();
 
-    s.newScript("world_map_kalimdor");
-    s->GetInstanceData = &GetInstanceData_world_map_kalimdor;
+    pNewScript = new Script("world_map_kalimdor");
+    pNewScript->GetInstanceData = &GetInstanceData_world_map_kalimdor;
+    pNewScript->RegisterSelf();
 
-    s.newScript("world_map_outland");
-    s->GetInstanceData = &GetInstanceData_world_map_outland;
+    pNewScript = new Script("world_map_outland");
+    pNewScript->GetInstanceData = &GetInstanceData_world_map_outland;
+    pNewScript->RegisterSelf();
 
-    s.newScript("world_map_northrend");
-    s->GetInstanceData = &GetInstanceData_world_map_northrend;
+    pNewScript = new Script("world_map_northrend");
+    pNewScript->GetInstanceData = &GetInstanceData_world_map_northrend;
+    pNewScript->RegisterSelf();
 }
