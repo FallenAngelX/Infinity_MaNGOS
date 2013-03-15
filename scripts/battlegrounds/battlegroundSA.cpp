@@ -246,7 +246,7 @@ bool GOHello_go_sa_def_portal(Player* pPlayer, GameObject* pGo)
 
 void AddSC_battlegroundSA()
 {
-    AutoScript s;
+    Scripter s;
 
     s.newScript("npc_sa_vendor");
     s->GetAI = &GetAI_npc_sa_vendor;

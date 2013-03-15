@@ -325,7 +325,7 @@ bool AreaTrigger_at_murkdeep(Player* pPlayer, AreaTriggerEntry const* pAt)
 
 void AddSC_areatrigger_scripts()
 {
-    AutoScript s;
+    Scripter s;
 
     s.newScript("at_childrens_week_spot");
     s->pAreaTrigger = &AreaTrigger_at_childrens_week_spot;

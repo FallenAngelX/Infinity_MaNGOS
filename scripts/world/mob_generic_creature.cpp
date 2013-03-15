@@ -165,5 +165,8 @@ CreatureAI* GetAI_generic_creature(Creature* pCreature)
 
 void AddSC_generic_creature()
 {
-    AutoScript("generic_creature", false)->GetAI = &GetAI_generic_creature;
+    Scripter s;
+    s.newScript("generic_creature");
+    s->GetAI = &GetAI_generic_creature;
+    s.RegisterScript(false);
 }

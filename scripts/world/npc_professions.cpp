@@ -1203,7 +1203,7 @@ bool GossipSelect_npc_prof_tailor(Player* pPlayer, Creature* pCreature, uint32 u
 
 void AddSC_npc_professions()
 {
-    AutoScript s;
+    Scripter s;
 
     s.newScript("npc_prof_alchemy");
     s->pGossipHello =  &GossipHello_npc_prof_alchemy;

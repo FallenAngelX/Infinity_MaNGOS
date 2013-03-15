@@ -201,7 +201,7 @@ InstanceData* GetInstanceData_world_map_northrend(Map* pMap)
 
 void AddSC_world_map_scripts()
 {
-    AutoScript s;
+    Scripter s;
 
     s.newScript("world_map_eastern_kingdoms");
     s->GetInstanceData = &GetInstanceData_world_map_eastern_kingdoms;

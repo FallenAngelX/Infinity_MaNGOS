@@ -107,7 +107,7 @@ CreatureAI* GetAI_npc_spirit_guide(Creature* pCreature)
 
 void AddSC_battleground()
 {
-    AutoScript s("npc_spirit_guide");
-    s->GetAI = &GetAI_npc_spirit_guide;
-    s->pGossipHello = &GossipHello_npc_spirit_guide;
+    SimpleScript ss("npc_spirit_guide");
+    ss->GetAI = &GetAI_npc_spirit_guide;
+    ss->pGossipHello = &GossipHello_npc_spirit_guide;
 }

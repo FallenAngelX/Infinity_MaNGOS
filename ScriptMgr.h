@@ -104,27 +104,45 @@ struct Script
 };
 
 // *********************************************************
-// ******************* AutoScript **************************
+// ******************* SimpleScript ************************
 
-class AutoScript
+class SimpleScript
 {
     private:
         Script* m_script;
-        bool m_reportError;
-
-        void Register();
 
     public:
-        AutoScript() : m_script(NULL), m_reportError(true) {}
-        AutoScript(const char* scriptName, bool reportError = true) { newScript(scriptName, reportError); }
-        ~AutoScript() { Register(); }
-
-        Script* newScript(const char* scriptName, bool reportError = true);
+        SimpleScript() : m_script(NULL) {}
+        SimpleScript(const char* scriptName);
+        ~SimpleScript();
 
         Script* operator -> ()
         {
-            MANGOS_ASSERT(m_script != NULL && "AutoScript: use newScript() before!");
+            if (!m_script)
+                m_script = new Script();
             return m_script;
+        }
+};
+
+// *********************************************************
+// ********************* Scripter **************************
+
+class Scripter
+{
+    private:
+        Script* m_curScript;
+
+    public:
+        Scripter() : m_curScript(NULL) {}
+        ~Scripter() { RegisterScript(); }
+
+        Script* newScript(const char* scriptName = NULL);
+        void RegisterScript(bool reportError = true);
+
+        Script* operator -> ()
+        {
+            MANGOS_ASSERT(m_curScript != NULL && "Scripter: use NewScript() before!");
+            return m_curScript;
         }
 };
 
