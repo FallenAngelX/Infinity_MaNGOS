@@ -678,7 +678,7 @@ bool EffectDummyItem(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, I
 MANGOS_DLL_EXPORT
 bool EffectScriptEffectCreature(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pTarget)
 {
-    Script* pTempScript = m_scripts[pTarget->GetScriptId()];
+    Script* pTempScript = m_scripts->at(pTarget->GetScriptId());
 
     if (!pTempScript || !pTempScript->pEffectScriptEffectNPC)
         return false;
