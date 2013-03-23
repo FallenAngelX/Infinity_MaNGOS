@@ -51,8 +51,6 @@ struct MANGOS_DLL_DECL npc_bartlebyAI : public ScriptedAI
         Reset();
     }
 
-    uint32 m_uiNormalFaction;
-
     void Reset() override {}
 
     void AttackedBy(Unit* pAttacker)
