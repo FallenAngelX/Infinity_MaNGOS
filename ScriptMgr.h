@@ -105,6 +105,31 @@ struct Script
 };
 
 // *********************************************************
+// ******************* AutoScript **************************
+
+class AutoScript
+{
+    private:
+        Script* m_script;
+        bool m_reportError;
+
+        void Register();
+
+    public:
+        AutoScript() : m_script(NULL), m_reportError(true) {}
+        AutoScript(const char* scriptName, bool reportError = true) : m_script(NULL) { newScript(scriptName, reportError); }
+        ~AutoScript() { Register(); }
+
+        Script* newScript(const char* scriptName, bool reportError = true);
+
+        Script* operator -> ()
+        {
+            MANGOS_ASSERT(m_script != NULL && "AutoScript: use newScript() before!");
+            return m_script;
+        }
+};
+
+// *********************************************************
 // ************* Some functions used globally **************
 
 // Generic scripting text function
