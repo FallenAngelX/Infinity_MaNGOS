@@ -2401,102 +2401,80 @@ bool EffectDummyCreature_npc_redemption_target(Unit* pCaster, uint32 uiSpellId, 
 
 void AddSC_npcs_special()
 {
-    Script* pNewScript;
+    AutoScript s;
 
-    pNewScript = new Script("npc_air_force_bots");
-    pNewScript->GetAI = &GetAI_npc_air_force_bots;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_air_force_bots");
+    s->GetAI = &GetAI_npc_air_force_bots;
 
-    pNewScript = new Script("npc_chicken_cluck");
-    pNewScript->GetAI = &GetAI_npc_chicken_cluck;
-    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_chicken_cluck;
-    pNewScript->pQuestRewardedNPC = &QuestRewarded_npc_chicken_cluck;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_chicken_cluck");
+    s->GetAI = &GetAI_npc_chicken_cluck;
+    s->pQuestAcceptNPC = &QuestAccept_npc_chicken_cluck;
+    s->pQuestRewardedNPC = &QuestRewarded_npc_chicken_cluck;
 
-    pNewScript = new Script("npc_dancing_flames");
-    pNewScript->GetAI = &GetAI_npc_dancing_flames;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_dancing_flames");
+    s->GetAI = &GetAI_npc_dancing_flames;
 
-    pNewScript = new Script("npc_injured_patient");
-    pNewScript->GetAI = &GetAI_npc_injured_patient;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_injured_patient");
+    s->GetAI = &GetAI_npc_injured_patient;
 
-    pNewScript = new Script("npc_doctor");
-    pNewScript->GetAI = &GetAI_npc_doctor;
-    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_doctor;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_doctor");
+    s->GetAI = &GetAI_npc_doctor;
+    s->pQuestAcceptNPC = &QuestAccept_npc_doctor;
 
-    pNewScript = new Script("npc_garments_of_quests");
-    pNewScript->GetAI = &GetAI_npc_garments_of_quests;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_garments_of_quests");
+    s->GetAI = &GetAI_npc_garments_of_quests;
 
-    pNewScript = new Script("npc_guardian");
-    pNewScript->GetAI = &GetAI_npc_guardian;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_guardian");
+    s->GetAI = &GetAI_npc_guardian;
 
-    pNewScript = new Script("npc_innkeeper");
-    pNewScript->pGossipHello = &GossipHello_npc_innkeeper;
-    pNewScript->pGossipSelect = &GossipSelect_npc_innkeeper;
-    pNewScript->RegisterSelf(false);                        // script and error report disabled, but script can be used for custom needs, adding ScriptName
+    s.newScript("npc_innkeeper", false);  // script and error report disabled, but script can be used for custom needs, adding ScriptName
+    s->pGossipHello = &GossipHello_npc_innkeeper;
+    s->pGossipSelect = &GossipSelect_npc_innkeeper;
 
-    pNewScript = new Script("npc_mount_vendor");
-    pNewScript->pGossipHello =  &GossipHello_npc_mount_vendor;
-    pNewScript->pGossipSelect = &GossipSelect_npc_mount_vendor;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_mount_vendor");
+    s->pGossipHello = &GossipHello_npc_mount_vendor;
+    s->pGossipSelect = &GossipSelect_npc_mount_vendor;
 
-    pNewScript = new Script("npc_sayge");
-    pNewScript->pGossipHello = &GossipHello_npc_sayge;
-    pNewScript->pGossipSelect = &GossipSelect_npc_sayge;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_sayge");
+    s->pGossipHello = &GossipHello_npc_sayge;
+    s->pGossipSelect = &GossipSelect_npc_sayge;
 
-    pNewScript = new Script("npc_tabard_vendor");
-    pNewScript->pGossipHello = &GossipHello_npc_tabard_vendor;
-    pNewScript->pGossipSelect = &GossipSelect_npc_tabard_vendor;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_tabard_vendor");
+    s->pGossipHello = &GossipHello_npc_tabard_vendor;
+    s->pGossipSelect = &GossipSelect_npc_tabard_vendor;
 
-    pNewScript = new Script("npc_snake_trap_serpents");
-    pNewScript->GetAI = &GetAI_npc_snake_trap_serpents;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_snake_trap_serpents");
+    s->GetAI = &GetAI_npc_snake_trap_serpents;
 
-    pNewScript = new Script("npc_runeblade");
-    pNewScript->GetAI = &GetAI_npc_rune_blade;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_runeblade");
+    s->GetAI = &GetAI_npc_rune_blade;
 
-    pNewScript = new Script("npc_risen_ally");
-    pNewScript->GetAI = &GetAI_npc_risen_ally;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_risen_ally");
+    s->GetAI = &GetAI_npc_risen_ally;
 
-    pNewScript = new Script("npc_explosive_decoy");
-    pNewScript->GetAI = &GetAI_npc_explosive_decoy;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_explosive_decoy");
+    s->GetAI = &GetAI_npc_explosive_decoy;
 
-    pNewScript = new Script("npc_eye_of_kilrogg");
-    pNewScript->GetAI = &GetAI_npc_eye_of_kilrogg;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_eye_of_kilrogg");
+    s->GetAI = &GetAI_npc_eye_of_kilrogg;
 
-    pNewScript = new Script("npc_horseman_fire_bunny");
-    pNewScript->GetAI = &GetAI_npc_horseman_fire_bunny;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_horseman_fire_bunny");
+    s->GetAI = &GetAI_npc_horseman_fire_bunny;
 
-    pNewScript = new Script("npc_shade_of_horseman");
-    pNewScript->GetAI = &GetAI_npc_shade_of_horseman;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_shade_of_horseman");
+    s->GetAI = &GetAI_npc_shade_of_horseman;
 
-    pNewScript = new Script("npc_wild_turkey");
-    pNewScript->GetAI = &GetAI_npc_wild_turkey;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_wild_turkey");
+    s->GetAI = &GetAI_npc_wild_turkey;
 
-    pNewScript = new Script("npc_experience");
-    pNewScript->pGossipHello = &GossipHello_npc_experience;
-    pNewScript->pGossipSelect = &GossipSelect_npc_experience;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_experience");
+    s->pGossipHello = &GossipHello_npc_experience;
+    s->pGossipSelect = &GossipSelect_npc_experience;
 
-    pNewScript = new Script("npc_spring_rabbit");
-    pNewScript->GetAI = &GetAI_npc_spring_rabbit;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_spring_rabbit");
+    s->GetAI = &GetAI_npc_spring_rabbit;
 
-    pNewScript = new Script("npc_redemption_target");
-    pNewScript->GetAI = &GetAI_npc_redemption_target;
-    pNewScript->pEffectDummyNPC = &EffectDummyCreature_npc_redemption_target;
-    pNewScript->RegisterSelf();
+    s.newScript("npc_redemption_target");
+    s->GetAI = &GetAI_npc_redemption_target;
+    s->pEffectDummyNPC = &EffectDummyCreature_npc_redemption_target;
 }
