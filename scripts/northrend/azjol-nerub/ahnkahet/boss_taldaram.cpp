@@ -1,5 +1,4 @@
 /* Copyright (C) 2006 - 2013 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2011 - 2013 MangosR2 <http://github.com/mangosR2/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,9 +16,8 @@
 
 /* ScriptData
 SDName: Boss_Taldaram
-SD%Complete: 80%
-SDAuthor: Tassadar
-SDComment: Timers, maybe wrong orb behavior
+SD%Complete: 90%
+SDComment: Timers;
 SDCategory: Ahn'kahet
 EndScriptData */
 
@@ -28,21 +26,6 @@ EndScriptData */
 
 enum
 {
-    SPELL_BEAM_VISUAL               = 60342,      // Used when taldram levitates before encounter
-    SPELL_CONJURE_FLAME_ORB         = 55931,      // Dummy spell, dont do anything except cast
-    SPELL_BLOODTHIRST               = 55968,
-    SPELL_VANISH                    = 55964,      // Does not work...?
-    SPELL_EMBRACE_OF_THE_VAMPYR     = 55959,
-    SPELL_EMBRACE_OF_THE_VAMPYR_H   = 59513,
-
-    SPELL_FLAME_ORB_SPAWN_EFFECT    = 55891, // Orb Grow up
-    SPELL_FLAME_ORB_VISUAL          = 55928, // Flame orb effect
-    SPELL_FLAME_ORB_DEATH           = 55947, // Despawn effect
-    SPELL_FLAME_ORB                 = 57750, // Flame orb damage    
-    SPELL_FLAME_ORB_H               = 58937,
-
-    NPC_FLAME_ORB                   = 30702,
-
     SAY_AGGRO                       = -1619008,
     SAY_VANISH_1                    = -1619009,
     SAY_VANISH_2                    = -1619010,
@@ -53,19 +36,22 @@ enum
     SAY_SLAY_3                      = -1619015,
     SAY_DEATH                       = -1619016,
 
-    FLAME_ORB_Z                     = 17,
+    SPELL_BEAM_VISUAL               = 60342,        // Visual spell, used before Taltaram is lowered to the ground
+    SPELL_CONJURE_FLAME_SPHERE      = 55931,
+    SPELL_FLAME_SPHERE_SUMMON_1     = 55895,        // summons 30106
+    SPELL_FLAME_SPHERE_SUMMON_2     = 59511,        // summons 31686
+    SPELL_FLAME_SPHERE_SUMMON_3     = 59512,        // summons 31687
+    SPELL_BLOODTHIRST               = 55968,
+    SPELL_VANISH                    = 55964,
+    SPELL_EMBRACE_OF_THE_VAMPYR     = 55959,
+    SPELL_EMBRACE_OF_THE_VAMPYR_H   = 59513,
 
-    FLAME_ORB_UP_X                  = 383,
-    FLAME_ORB_UP_Y                  = -984,
-
-    FLAME_ORB_DOWN_X                = 632,
-    FLAME_ORB_DOWN_Y                = -684,
-
-    FLAME_ORB_RIGHT_X               = 350,
-    FLAME_ORB_RIGHT_Y               = -705,
-
-    FLAME_ORB_LEFT_X                = 613,
-    FLAME_ORB_LEFT_Y                = -966,
+    // Spells used by the Flame Sphere
+    SPELL_FLAME_SPHERE_PERIODIC     = 55926,
+    SPELL_FLAME_SPHERE_PERIODIC_H   = 59508,
+    SPELL_FLAME_SPHERE_SPAWN_EFFECT = 55891,
+    SPELL_FLAME_SPHERE_VISUAL       = 55928,
+    SPELL_FLAME_SPHERE_DEATH_EFFECT = 55947,
 };
 
 /*######
@@ -78,47 +64,49 @@ struct MANGOS_DLL_DECL boss_taldaramAI : public ScriptedAI
     {
         m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+        // Don't set the visual timers if the devices are already activated (reload case)
+        m_uiVisualTimer = m_pInstance->GetData(TYPE_TALDARAM) == SPECIAL ? 0 : 1000;
         Reset();
     }
 
     instance_ahnkahet* m_pInstance;
     bool m_bIsRegularMode;
-    uint8 m_uiVanishPhase;
-    uint32 m_uiDamageTaken;
-    Unit* m_uEmbraceTarget;
 
-    uint32 m_uiBloodthirst_Timer;
-    uint32 m_uiSummonOrb_Timer;
-    uint32 m_uiVanish_Timer;
-    uint32 m_uiVanishPhase_Timer;
-    uint32 m_uiEmbrace_Timer;
+    bool m_bIsFirstAggro;
+    uint32 m_uiVisualTimer;
+    uint32 m_uiBloodthirstTimer;
+    uint32 m_uiFlameOrbTimer;
+    uint32 m_uiVanishTimer;
+    uint32 m_uiEmbraceTimer;
 
-    void Reset()
+    GuidList m_lFlameOrbsGuidList;
+
+    void Reset() override
     {
-        m_creature->SetRespawnDelay(DAY);
-        m_uiBloodthirst_Timer = 4000;
-        m_uiSummonOrb_Timer = 13000;
-        m_uiVanish_Timer = 17000;
-        m_uiVanishPhase_Timer = 0;
-        m_uiEmbrace_Timer = 0;
-        m_uiVanishPhase = 0;
-        m_uiDamageTaken = 0;
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_TALDARAM, NOT_STARTED);
+        // Timers seem to be very random...
+        m_uiBloodthirstTimer    = urand(20000, 25000);
+        m_uiFlameOrbTimer       = urand(15000, 20000);
+        m_uiVanishTimer         = 0;
+        m_uiEmbraceTimer        = 0;
+        m_bIsFirstAggro         = false;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
+        // Aggro is called after the boss vanish expires. There is no need to call this multiple times
+        if (m_bIsFirstAggro)
+            return;
+
         DoScriptText(SAY_AGGRO, m_creature);
-        m_creature->RemoveAurasDueToSpell(SPELL_BEAM_VISUAL);
-        m_creature->SetLevitate(false);
+        m_bIsFirstAggro = true;
+
         if (m_pInstance)
             m_pInstance->SetData(TYPE_TALDARAM, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* /*pVictim*/) override
     {
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
             case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
@@ -126,7 +114,7 @@ struct MANGOS_DLL_DECL boss_taldaramAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -134,107 +122,166 @@ struct MANGOS_DLL_DECL boss_taldaramAI : public ScriptedAI
             m_pInstance->SetData(TYPE_TALDARAM, DONE);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void JustReachedHome() override
     {
-        if(m_creature->IsNonMeleeSpellCasted(false))
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_TALDARAM, FAIL);
+    }
+
+    void EnterEvadeMode() override
+    {
+        // Don't allow him to evade during vanish
+        if (m_uiEmbraceTimer)
+            return;
+
+        m_creature->RemoveAllAuras();
+        m_creature->DeleteThreatList();
+        m_creature->CombatStop(true);
+        m_creature->LoadCreatureAddon(true);
+
+        // should evade on the ground
+        if (m_creature->isAlive())
+            m_creature->GetMotionMaster()->MovePoint(1, aTaldaramLandingLoc[0], aTaldaramLandingLoc[1], aTaldaramLandingLoc[2]);
+
+        m_creature->SetLootRecipient(NULL);
+
+        Reset();
+    }
+
+    void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
+    {
+        if (uiMoveType != POINT_MOTION_TYPE)
+            return;
+
+        // Adjust orientation
+        if (uiPointId)
         {
-            m_uiDamageTaken += uiDamage;
-            uint32 m_uiMinDamage = m_bIsRegularMode ? 20000 : 40000;
-            if(m_uiDamageTaken >= m_uiMinDamage)
-            {
-                m_uiVanishPhase = 0; 
-                m_creature->InterruptNonMeleeSpells(false);
-            }
+            m_creature->SetLevitate(false);
+            m_creature->SetFacingTo(aTaldaramLandingLoc[3]);
         }
     }
-    void UpdateAI(const uint32 uiDiff)
+
+    void JustSummoned(Creature* pSummoned) override
     {
+        pSummoned->CastSpell(pSummoned, SPELL_FLAME_SPHERE_SPAWN_EFFECT, true);
+        pSummoned->CastSpell(pSummoned, SPELL_FLAME_SPHERE_VISUAL, true);
+
+        m_lFlameOrbsGuidList.push_back(pSummoned->GetObjectGuid());
+    }
+
+    void SummonedCreatureDespawn(Creature* pSummoned) override
+    {
+        pSummoned->CastSpell(pSummoned, SPELL_FLAME_SPHERE_DEATH_EFFECT, true);
+    }
+
+    // Wrapper which sends each sphere in a different direction
+    void DoSetSpheresInMotion()
+    {
+        float fX, fY;
+        uint8 uiIndex = m_bIsRegularMode ? urand(0, 2) : 0;
+        for (GuidList::const_iterator itr = m_lFlameOrbsGuidList.begin(); itr != m_lFlameOrbsGuidList.end(); ++itr)
+        {
+            if (Creature* pOrb = m_creature->GetMap()->GetCreature(*itr))
+            {
+                pOrb->CastSpell(pOrb, m_bIsRegularMode ? SPELL_FLAME_SPHERE_PERIODIC : SPELL_FLAME_SPHERE_PERIODIC_H, true);
+
+                pOrb->GetNearPoint2D(fX, fY, 70.0f, (2 * M_PI_F / 3)*uiIndex);
+                pOrb->GetMotionMaster()->MovePoint(0, fX, fY, pOrb->GetPositionZ());
+            }
+            ++uiIndex;
+        }
+    }
+
+    void UpdateAI(const uint32 uiDiff) override
+    {
+        if (m_uiVisualTimer)
+        {
+            if (m_uiVisualTimer <= uiDiff)
+            {
+                GuidList lControllersList;
+                if (m_pInstance)
+                    m_pInstance->GetJedogaControllersList(lControllersList);
+
+                for (GuidList::const_iterator itr = lControllersList.begin(); itr != lControllersList.end(); ++itr)
+                {
+                    if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
+                        pTemp->CastSpell(m_creature, SPELL_BEAM_VISUAL, false);
+                }
+                m_uiVisualTimer = 0;
+            }
+            else
+                m_uiVisualTimer -= uiDiff;
+        }
+
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (!m_pInstance) return;
-
-        if(m_uiVanishPhase != 0)
+        // Cast Embrace of the Vampyr after Vanish expires - note: because of the invisibility effect, the timers won't decrease during vanish
+        if (m_uiEmbraceTimer)
         {
-            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-
-            if(m_uiVanishPhase_Timer <= uiDiff)
+            if (m_uiEmbraceTimer <= uiDiff)
             {
-                m_creature->InterruptNonMeleeSpells(false);
-                m_uiVanishPhase = 0;
-            }else m_uiVanishPhase_Timer -= uiDiff;
-
-            if(m_uiVanishPhase != 1)
-                return;
-
-            // Embrace of the Vampyr
-            if(m_uiEmbrace_Timer <= uiDiff)
-            {
-                switch(urand(0, 1))
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
-                    case 0: DoScriptText(SAY_FEED_1, m_creature); break;
-                    case 1: DoScriptText(SAY_FEED_2, m_creature); break;
+                    if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_EMBRACE_OF_THE_VAMPYR : SPELL_EMBRACE_OF_THE_VAMPYR_H) == CAST_OK)
+                    {
+                        DoScriptText(urand(0, 1) ? SAY_FEED_1 : SAY_FEED_2, m_creature);
+                        m_uiEmbraceTimer = 0;
+                    }
                 }
-                m_creature->SetVisibility(VISIBILITY_ON);
-                if(m_uEmbraceTarget && m_uEmbraceTarget->isAlive())
-                    DoCast(m_uEmbraceTarget, m_bIsRegularMode ? SPELL_EMBRACE_OF_THE_VAMPYR : SPELL_EMBRACE_OF_THE_VAMPYR_H);
-                m_uiDamageTaken = 0;
-                m_uiVanishPhase = 2;
-            }else m_uiEmbrace_Timer -= uiDiff;    
+            }
+            else
+                m_uiEmbraceTimer -= uiDiff;
+
+            // do not use other abilities during vanish
             return;
         }
 
-        // Bloodthirst
-        if(m_uiBloodthirst_Timer <= uiDiff)
+        if (m_uiVanishTimer)
         {
-            DoCast(m_creature->getVictim(), SPELL_BLOODTHIRST);
-            m_uiBloodthirst_Timer = 8000 + rand()%6000;
-        }else m_uiBloodthirst_Timer -= uiDiff;
+            if (m_uiVanishTimer <= uiDiff)
+            {
+                if (DoCastSpellIfCan(m_creature, SPELL_VANISH) == CAST_OK)
+                {
+                    DoScriptText(urand(0, 1) ? SAY_VANISH_1 : SAY_VANISH_2, m_creature);
+                    m_uiVanishTimer  = 0;
+                    m_uiEmbraceTimer = 2000;
+                }
+            }
+            else
+                m_uiVanishTimer -= uiDiff;
+        }
 
-        // Summon Flame Orb
-        if(m_uiSummonOrb_Timer <= uiDiff)
+        if (m_uiBloodthirstTimer < uiDiff)
         {
-            for(int i = 0; i <= 3; ++i)
-            {
-                m_creature->SummonCreature(NPC_FLAME_ORB, m_creature->GetPositionX(), m_creature->GetPositionY(), FLAME_ORB_Z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
-                if(m_bIsRegularMode)
-                    break;
-            }
-            DoCast(m_creature, SPELL_CONJURE_FLAME_ORB);
-            m_uiSummonOrb_Timer = 16000 + rand()%10000;
-            m_uiVanish_Timer = 16000;
-        }else m_uiSummonOrb_Timer -= uiDiff;
+            if (DoCastSpellIfCan(m_creature, SPELL_BLOODTHIRST) == CAST_OK)
+                m_uiBloodthirstTimer = urand(20000, 25000);
+        }
+        else
+            m_uiBloodthirstTimer -= uiDiff;
 
-        // Vanish
-        if(m_uiVanish_Timer <= uiDiff)
+        if (m_uiFlameOrbTimer < uiDiff)
         {
-            switch(urand(0, 1))
+            if (DoCastSpellIfCan(m_creature, SPELL_CONJURE_FLAME_SPHERE) == CAST_OK)
             {
-                case 0: DoScriptText(SAY_VANISH_1, m_creature); break;
-                case 1: DoScriptText(SAY_VANISH_2, m_creature); break;
+                m_lFlameOrbsGuidList.clear();
+
+                // Flame speres are summoned above the boss
+                m_creature->CastSpell(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 5.0f, SPELL_FLAME_SPHERE_SUMMON_1, true);
+
+                // 2 more spheres on heroic
+                if (!m_bIsRegularMode)
+                {
+                    m_creature->CastSpell(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 5.0f, SPELL_FLAME_SPHERE_SUMMON_2, true);
+                    m_creature->CastSpell(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 5.0f, SPELL_FLAME_SPHERE_SUMMON_3, true);
+                }
+
+                m_uiFlameOrbTimer = urand(50000, 60000);
+                m_uiVanishTimer   = 12000;
             }
-
-            //DoCast(m_creature, SPELL_VANISH); We dont want to drop aggro
-            m_uiVanishPhase = 1;
-            bool stop = false;
-            while(!stop)
-            {
-                m_uEmbraceTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
-                if(m_uEmbraceTarget && m_uEmbraceTarget->isAlive() && m_uEmbraceTarget->GetTypeId() == TYPEID_PLAYER)
-                    stop = true;
-                else
-                    continue;
-
-                m_creature->GetMotionMaster()->MoveChase(m_uEmbraceTarget);
-                break;
-            }
-
-            m_creature->SetVisibility(VISIBILITY_OFF);
-            m_uiVanish_Timer = 10000 + rand()%10000;
-            m_uiEmbrace_Timer = 3500;
-            m_uiVanishPhase_Timer = 22500;
-            return;
-        }else m_uiVanish_Timer -= uiDiff;
+        }
+        else
+            m_uiFlameOrbTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
@@ -245,87 +292,19 @@ CreatureAI* GetAI_boss_taldaram(Creature* pCreature)
     return new boss_taldaramAI(pCreature);
 }
 
-/*######
-## mob_flame_orb
-######*/
-
-struct MANGOS_DLL_DECL mob_flame_orbAI : public ScriptedAI
+bool EffectDummyCreature_spell_conjure_flame_orbs(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
 {
-    mob_flame_orbAI(Creature* pCreature) : ScriptedAI(pCreature)
+    // always check spellid and effectindex
+    if (uiSpellId == SPELL_CONJURE_FLAME_SPHERE && uiEffIndex == EFFECT_INDEX_0)
     {
-        m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        Reset();
+        if (boss_taldaramAI* pBossAI = dynamic_cast<boss_taldaramAI*>(pCreatureTarget->AI()))
+            pBossAI->DoSetSpheresInMotion();
+
+        // always return true when we are handling this spell and effect
+        return true;
     }
 
-    instance_ahnkahet* m_pInstance;
-    bool m_bIsRegularMode;
-    bool m_bIsFlying;
-    int8 direction;
-
-    uint32 m_uiDespawn_Timer;
-    uint32 m_uiCast_Timer;
-
-    void Reset()
-    {
-        m_uiDespawn_Timer = 13000;
-        m_uiCast_Timer = 3000;
-        direction = -1;
-        m_bIsFlying = false;
-        DoCast(m_creature, SPELL_FLAME_ORB_VISUAL);
-        DoCast(m_creature, SPELL_FLAME_ORB_SPAWN_EFFECT);
-        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-    }
-    void AttackStart(Unit* pWho)
-    {
-        return;
-    }
-    void UpdateAI(const uint32 uiDiff)
-    {
-        // Despawn Timer
-        if(m_uiDespawn_Timer <= uiDiff)
-        {
-            DoCast(m_creature, SPELL_FLAME_ORB_DEATH);
-            m_creature->ForcedDespawn();
-        }else m_uiDespawn_Timer -= uiDiff;
-
-        // Fly timer
-        if(m_uiCast_Timer <= uiDiff)
-        {
-            if(m_bIsFlying)
-                return;
-
-            DoCast(m_creature, m_bIsRegularMode ? SPELL_FLAME_ORB : SPELL_FLAME_ORB_H);
-            direction = rand()%4;
-            switch(direction)
-            {
-                case 0: // Up
-                    m_creature->GetMotionMaster()->MovePoint(0, FLAME_ORB_UP_X, FLAME_ORB_UP_Y, FLAME_ORB_Z);
-                    break;
-                case 1: // Down
-                    m_creature->GetMotionMaster()->MovePoint(0, FLAME_ORB_DOWN_X, FLAME_ORB_DOWN_Y, FLAME_ORB_Z);
-                    break;
-                case 2: // Right
-                    m_creature->GetMotionMaster()->MovePoint(0, FLAME_ORB_RIGHT_X, FLAME_ORB_RIGHT_Y, FLAME_ORB_Z);
-                    break;
-                case 3: // Left
-                    m_creature->GetMotionMaster()->MovePoint(0, FLAME_ORB_LEFT_X, FLAME_ORB_LEFT_Y, FLAME_ORB_Z);
-                    break;
-                default:
-                    m_creature->GetMotionMaster()->MovePoint(0, FLAME_ORB_UP_X, FLAME_ORB_UP_Y, FLAME_ORB_Z);
-                    break;
-
-            }
-            m_bIsFlying = true;
-            m_creature->SetLevitate(true);
-        }else m_uiCast_Timer -= uiDiff;
-    }
-};
-
-CreatureAI* GetAI_mob_flame_orb(Creature* pCreature)
-{
-    return new mob_flame_orbAI(pCreature);
+    return false;
 }
 
 /*######
@@ -339,8 +318,11 @@ bool GOUse_go_nerubian_device(Player* pPlayer, GameObject* pGo)
     if (!pInstance)
         return false;
 
+    // Don't allow players to use the devices if encounter is already finished or in progress (reload case)
+    if (pInstance->GetData(TYPE_TALDARAM) == SPECIAL || pInstance->GetData(TYPE_TALDARAM) == DONE)
+        return false;
+
     pInstance->SetData(TYPE_TALDARAM, SPECIAL);
-    pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
     return false;
 }
 
@@ -351,15 +333,11 @@ void AddSC_boss_taldaram()
     pNewScript = new Script;
     pNewScript->Name = "boss_taldaram";
     pNewScript->GetAI = &GetAI_boss_taldaram;
+    pNewScript->pEffectDummyNPC = &EffectDummyCreature_spell_conjure_flame_orbs;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
     pNewScript->Name = "go_nerubian_device";
     pNewScript->pGOUse = &GOUse_go_nerubian_device;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name = "mob_flame_orb";
-    pNewScript->GetAI = &GetAI_mob_flame_orb;
     pNewScript->RegisterSelf();
 }
