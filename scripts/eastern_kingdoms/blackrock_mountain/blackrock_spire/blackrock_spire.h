@@ -7,19 +7,21 @@
 
 enum
 {
-    MAX_ENCOUNTER               = 5,
+    MAX_ENCOUNTER               = 6,
     MAX_ROOMS                   = 7,
 
     TYPE_ROOM_EVENT             = 0,
     TYPE_EMBERSEER              = 1,
     TYPE_FLAMEWREATH            = 2,                        // Only summon once per instance
     TYPE_STADIUM                = 3,
-    TYPE_VALTHALAK              = 4,                        // Only summon once per instance
+    TYPE_DRAKKISATH             = 4,
+    TYPE_VALTHALAK              = 5,                        // Only summon once per instance
 
     NPC_SCARSHIELD_INFILTRATOR  = 10299,
     NPC_BLACKHAND_SUMMONER      = 9818,
     NPC_BLACKHAND_VETERAN       = 9819,
     NPC_PYROGUARD_EMBERSEER     = 9816,
+    NPC_SOLAKAR_FLAMEWREATH     = 10264,
     NPC_BLACKHAND_INCARCERATOR  = 10316,
     NPC_LORD_VICTOR_NEFARIUS    = 10162,
     NPC_REND_BLACKHAND          = 10429,
@@ -33,6 +35,7 @@ enum
     GO_EMBERSEER_IN             = 175244,
     GO_DOORS                    = 175705,
     GO_EMBERSEER_OUT            = 175153,
+    GO_FATHER_FLAME             = 175245,
     GO_GYTH_ENTRY_DOOR          = 164726,
     GO_GYTH_COMBAT_DOOR         = 175185,
     GO_GYTH_EXIT_DOOR           = 175186,
@@ -111,28 +114,31 @@ class MANGOS_DLL_DECL instance_blackrock_spire : public ScriptedInstance, privat
         void DoProcessEmberseerEvent();
 
         void DoSortRoomEventMobs();
-        void GetIncarceratorGuidList(GuidList& lList) { lList = m_lIncarceratorGuidList; }
-        void GetRookeryEggGuidList(GuidList& lList) { lList = m_lRookeryEggGuidList; }
+        void GetIncarceratorGUIDList(GuidList& lList) { lList = m_lIncarceratorGUIDList; }
+
+        void StartflamewreathEventIfCan();
 
         void Update(uint32 uiDiff);
 
     private:
         void JustDidDialogueStep(int32 iEntry);
         void DoSendNextStadiumWave();
+        void DoSendNextFlamewreathWave();
 
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
 
+        uint32 m_uiFlamewreathEventTimer;
+        uint32 m_uiFlamewreathWaveCount;
         uint32 m_uiStadiumEventTimer;
         uint8 m_uiStadiumWaves;
         uint8 m_uiStadiumMobsAlive;
 
         ObjectGuid m_aRoomRuneGuid[MAX_ROOMS];
         GuidList m_alRoomEventMobGUIDSorted[MAX_ROOMS];
-        GuidList m_lRoomEventMobGuidList;
-        GuidList m_lIncarceratorGuidList;
-        GuidList m_lRookeryEggGuidList;
-        GuidList m_lEmberseerRunesGuidList;
+        GuidList m_lRoomEventMobGUIDList;
+        GuidList m_lIncarceratorGUIDList;
+        GuidList m_lEmberseerRunesGUIDList;
 };
 
 #endif
