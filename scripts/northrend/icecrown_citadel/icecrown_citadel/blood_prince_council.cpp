@@ -353,7 +353,10 @@ struct MANGOS_DLL_DECL base_blood_prince_council_bossAI : public base_icc_bossAI
     void DamageTaken(Unit* pDealer, uint32& uiDamage)
     {
         if (!m_bIsEmpowered && pDealer->GetEntry() != NPC_BLOOD_ORB_CONTROL)
+        {
+            m_creature->AddThreat(pDealer, uiDamage);
             uiDamage = 0;
+        }
     }
 
     void JustDied(Unit* pKiller)
