@@ -337,7 +337,7 @@ struct MANGOS_DLL_DECL npc_infernal_targetAI : public Scripted_NoMovementAI
 {
     npc_infernal_targetAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
-    void Reset() { }
+    void Reset() override { }
     void MoveInLineOfSight(Unit* /*pWho*/) override { }
     void AttackStart(Unit* /*pWho*/) override { }
     void UpdateAI(const uint32 /*uiDiff*/) override { }

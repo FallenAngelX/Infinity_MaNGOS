@@ -261,7 +261,7 @@ struct MANGOS_DLL_DECL mob_demon_chainAI : public Scripted_NoMovementAI
 {
     mob_demon_chainAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
-    void Reset() { }
+    void Reset() override { }
     void MoveInLineOfSight(Unit* /*pWho*/) override { }
     void AttackStart(Unit* /*pWho*/) override { }
     void UpdateAI(const uint32 /*uiDiff*/) override { }

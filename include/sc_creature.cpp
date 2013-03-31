@@ -118,7 +118,7 @@ Unit* ScriptedAI::SelectVictim()
  * Handle (if required) melee attack with DoMeleeAttackIfReady()
  * This is usally overwritten to support timers for ie spells
  */
-void ScriptedAI::UpdateAI(uint32 const /*uiDiff*/)
+void ScriptedAI::UpdateAI(const uint32 /*uiDiff*/)
 {
     // Check if we have a current target
     if (!SelectVictim())

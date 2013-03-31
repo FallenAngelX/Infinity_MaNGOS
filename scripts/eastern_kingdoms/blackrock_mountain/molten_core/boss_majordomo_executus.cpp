@@ -242,7 +242,7 @@ struct MANGOS_DLL_DECL boss_majordomoAI : public ScriptedAI
         m_luiMajordomoAddsGUIDs.clear();
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDealer*/, uint32& uiDamage) override
     {
         if (uiDamage > m_creature->GetHealth())
         {
@@ -431,7 +431,7 @@ bool GossipHello_boss_majordomo(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_boss_majordomo(Player* pPlayer, Creature* pCreature, uint32 sender, uint32 uiAction)
+bool GossipSelect_boss_majordomo(Player* pPlayer, Creature* pCreature, uint32 /*sender*/, uint32 uiAction)
 {
     switch (uiAction)
     {

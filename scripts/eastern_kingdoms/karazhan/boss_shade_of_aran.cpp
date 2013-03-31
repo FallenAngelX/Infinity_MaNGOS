@@ -403,7 +403,7 @@ struct MANGOS_DLL_DECL npc_shade_of_aran_blizzardAI : public ScriptedAI
 {
     npc_shade_of_aran_blizzardAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    void Reset() { }
+    void Reset() override { }
     void MoveInLineOfSight(Unit* /*pWho*/) override { }
     void AttackStart(Unit* /*pWho*/) override { }
     void UpdateAI(const uint32 /*uiDiff*/) override { }

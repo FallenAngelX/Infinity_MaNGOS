@@ -95,7 +95,7 @@ struct MANGOS_DLL_DECL boss_ormorokAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ORMOROK, NOT_STARTED);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
     }
