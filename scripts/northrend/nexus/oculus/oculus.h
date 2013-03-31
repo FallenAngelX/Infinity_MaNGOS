@@ -93,13 +93,13 @@ struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
         void OnObjectCreate(GameObject* pGo);
         void OnCreatureCreate(Creature* pCreature);
 
-        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/);
+        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
         void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
 
         void SetData(uint32 type, uint32 data);
-        uint32 GetData(uint32 type);
+        uint32 GetData(uint32 type) const;
 
-        const char* Save();
+        const char* Save() const;
         void Load(const char* chrIn);
 
     private:

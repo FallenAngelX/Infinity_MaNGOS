@@ -269,7 +269,7 @@ struct MANGOS_DLL_DECL instance_violet_hold : public ScriptedInstance
         return 0;
     }
 
-const char* Save()
+const char* Save() const
     {
         return m_strInstData.c_str();
     }

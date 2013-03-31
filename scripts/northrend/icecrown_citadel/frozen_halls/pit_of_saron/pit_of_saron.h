@@ -68,9 +68,9 @@ class MANGOS_DLL_DECL instance_pit_of_saron : public ScriptedInstance
         void OnObjectCreate(GameObject* pGo);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
-        const char* Save() { return strInstData.c_str(); }
+        const char* Save() const { return strInstData.c_str(); }
         void Load(const char* chrIn);
 
     protected:

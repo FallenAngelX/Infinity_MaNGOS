@@ -100,7 +100,7 @@ struct MANGOS_DLL_DECL instance_vault_of_archavon : public ScriptedInstance
         }
     }
 
-    uint32 GetData(uint32 uiType)
+    uint32 GetData(uint32 uiType) const
     {
         switch (uiType)
         {
@@ -117,7 +117,7 @@ struct MANGOS_DLL_DECL instance_vault_of_archavon : public ScriptedInstance
     }
 
 
-    const char* Save()
+    const char* Save() const
     {
         return strInstData.c_str();
     }

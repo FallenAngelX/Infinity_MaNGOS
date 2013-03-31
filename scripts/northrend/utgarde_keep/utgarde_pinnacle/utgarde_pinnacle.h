@@ -77,16 +77,16 @@ class MANGOS_DLL_DECL instance_pinnacle : public ScriptedInstance
         void OnCreatureCreate(Creature* pCreature);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
         void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
-        bool CheckAchievementCriteriaMeet(uint32 criteria_id, Player const* source, Unit const* target = NULL, uint32 miscvalue1 = 0);
+        bool CheckAchievementCriteriaMeet(uint32 criteria_id, Player const* source, Unit const* target = NULL, uint32 miscvalue1 = 0) const override;
 
         void OnCreatureDeath(Creature * pCreature);
         void OnCreatureEvade(Creature * pCreature);
         void Update(uint32 uiDiff);
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
         void DoProcessCallFlamesEvent();

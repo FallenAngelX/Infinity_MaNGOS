@@ -864,7 +864,7 @@ void instance_ulduar::SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet)
         m_abAchievCriteria[uiType] = bIsMet;
 }
 
-bool instance_ulduar::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/)
+bool instance_ulduar::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const
 {
     switch (uiCriteriaId)
     {
@@ -974,7 +974,7 @@ bool instance_ulduar::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player c
     return false;
 }
 
-bool instance_ulduar::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType)
+bool instance_ulduar::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) const
 {
     if (pConditionSource->GetTypeId() == TYPEID_UNIT)
     {
@@ -1098,7 +1098,7 @@ void instance_ulduar::Update(uint32 const uiDiff)
         m_uiExplosionTimer -= uiDiff;
 }
 
-uint32 instance_ulduar::GetData(uint32 uiType)
+uint32 instance_ulduar::GetData(uint32 uiType) const
 {
     if (uiType < MAX_ENCOUNTER)
         return m_auiEncounter[uiType];
@@ -1106,7 +1106,7 @@ uint32 instance_ulduar::GetData(uint32 uiType)
     return 0;
 }
 
-const char* instance_ulduar::Save()
+const char* instance_ulduar::Save() const
 {
     return m_strInstData.c_str();
 }

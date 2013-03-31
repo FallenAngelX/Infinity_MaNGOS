@@ -277,13 +277,13 @@ public:
     void OnCreatureCreate(Creature* pCreature);
     void OnObjectCreate(GameObject *pGo);
 
-    bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/);
+    bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
     void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
 
     void SetData(uint32 uiType, uint32 uiData);
     uint32 GetData(uint32 uiType);
 
-    const char* Save() { return m_strInstData.c_str(); }
+    const char* Save() const { return m_strInstData.c_str(); }
 
     void Load(const char* chrIn);
 

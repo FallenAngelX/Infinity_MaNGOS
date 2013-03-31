@@ -82,11 +82,11 @@ class MANGOS_DLL_DECL instance_obsidian_sanctum : public ScriptedInstance
 
     void SetData(uint32 uiType, uint32 uiData);
     void SetAcolyteGuid(uint32 uiEntry, ObjectGuid guid);
-    uint32 GetData(uint32 uiType);
+    uint32 GetData(uint32 uiType) const;
     bool IsEncounterInProgress() const;
 
-    bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) override;
-    bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) override;
+    bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
+    bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) const override;
 };
 
 #endif

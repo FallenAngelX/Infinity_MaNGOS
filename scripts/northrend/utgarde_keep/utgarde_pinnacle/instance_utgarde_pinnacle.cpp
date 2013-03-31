@@ -153,7 +153,7 @@ void instance_pinnacle::SetData(uint32 uiType, uint32 uiData)
     }
 }
 
-uint32 instance_pinnacle::GetData(uint32 uiType)
+uint32 instance_pinnacle::GetData(uint32 uiType) const
 {
     if (uiType < MAX_ENCOUNTER)
         return m_auiEncounter[uiType];
@@ -180,7 +180,7 @@ void instance_pinnacle::OnCreatureDeath(Creature * pCreature)
     }
 }
 
-bool instance_pinnacle::CheckAchievementCriteriaMeet(uint32 criteria_id, Player const* source, Unit const* target, uint32 miscvalue1)
+bool instance_pinnacle::CheckAchievementCriteriaMeet(uint32 criteria_id, Player const* source, Unit const* target, uint32 miscvalue1) const
 {
     switch(criteria_id)
     {

@@ -50,13 +50,13 @@ class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
         void OnObjectCreate(GameObject* pGo);
         void OnCreatureCreate(Creature* pCreature);
 
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
         void SetData(uint32 uiType, uint32 uiData);
 
         void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
-        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/);
+        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
 
-        const char* Save() { return m_strInstData.c_str(); }
+        const char* Save() const { return m_strInstData.c_str(); }
 
         void Load(const char* chrIn);
 

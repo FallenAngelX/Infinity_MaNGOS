@@ -91,7 +91,7 @@ void instance_oculus::OnCreatureCreate(Creature* pCreature)
     }
 }
 
-bool instance_oculus::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/)
+bool instance_oculus::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const
 {
     switch (uiCriteriaId)
     {
@@ -169,7 +169,7 @@ void instance_oculus::SetData(uint32 type, uint32 data)
     }
 }
 
-uint32 instance_oculus::GetData(uint32 type)
+uint32 instance_oculus::GetData(uint32 type) const
 {
     switch(type)
     {
@@ -186,7 +186,7 @@ uint32 instance_oculus::GetData(uint32 type)
     return 0;
 }
 
-const char* instance_oculus::Save()
+const char* instance_oculus::Save() const
 {
     return strSaveData.c_str();
 }

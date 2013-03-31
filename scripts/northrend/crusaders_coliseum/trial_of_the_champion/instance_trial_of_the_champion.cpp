@@ -261,7 +261,7 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
         }
     }
 
-    uint32 GetData(uint32 uiType)
+    uint32 GetData(uint32 uiType) const
     {
         switch(uiType)
         {
@@ -290,7 +290,7 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
         return 0;
     }
 
-    const char* Save()
+    const char* Save() const
     {
         return m_strInstData.c_str();
     }

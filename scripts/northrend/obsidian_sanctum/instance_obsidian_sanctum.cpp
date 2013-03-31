@@ -81,7 +81,7 @@ void instance_obsidian_sanctum::SetData(uint32 uiType, uint32 uiData)
     m_auiEncounter[uiType - 1] = uiData;
 }
 
-uint32 instance_obsidian_sanctum::GetData(uint32 uiType)
+uint32 instance_obsidian_sanctum::GetData(uint32 uiType) const
 {
     return m_auiEncounter[uiType - 1];
 }
@@ -95,7 +95,7 @@ bool instance_obsidian_sanctum::IsEncounterInProgress() const
     return false;
 }
 
-bool instance_obsidian_sanctum::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1)
+bool instance_obsidian_sanctum::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1) const
 {
     switch (uiCriteriaId)
     {
@@ -126,7 +126,7 @@ bool instance_obsidian_sanctum::CheckAchievementCriteriaMeet(uint32 uiCriteriaId
         case ACHIEV_CRIT_VOLCANO_10:
             if (instance->IsRegularDifficulty())
             {
-                for (GuidList::iterator i = m_lHitByVolcanoGuidList.begin(); i != m_lHitByVolcanoGuidList.end(); i++)
+                for (GuidList::const_iterator i = m_lHitByVolcanoGuidList.begin(); i != m_lHitByVolcanoGuidList.end(); i++)
                     if (pSource->GetObjectGuid() == *i)
                         return false;
 
@@ -136,7 +136,7 @@ bool instance_obsidian_sanctum::CheckAchievementCriteriaMeet(uint32 uiCriteriaId
         case ACHIEV_CRIT_VOLCANO_25:
             if (!instance->IsRegularDifficulty())
             {
-                for (GuidList::iterator i = m_lHitByVolcanoGuidList.begin(); i != m_lHitByVolcanoGuidList.end(); i++)
+                for (GuidList::const_iterator i = m_lHitByVolcanoGuidList.begin(); i != m_lHitByVolcanoGuidList.end(); i++)
                     if (pSource->GetObjectGuid() == *i)
                         return false;
 
@@ -148,7 +148,7 @@ bool instance_obsidian_sanctum::CheckAchievementCriteriaMeet(uint32 uiCriteriaId
     return false;
 }
 
-bool instance_obsidian_sanctum::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType)
+bool instance_obsidian_sanctum::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) const
 {
     switch (uiInstanceConditionId)
     {

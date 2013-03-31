@@ -410,17 +410,17 @@ class MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
         void OnPlayerEnterArea(Player* Player, uint32 uiNewAreaId, uint32 uiOldAreaId);
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
-        const char* Save();
+        const char* Save() const;
         void Load(const char* chrIn);
 
         void Update(uint32 uiDiff);
 
         void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
-        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/);
+        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
         // Dummy, leave till correct solution for hardmode found
-        bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) override;
+        bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) const override;
 
         void OpenDoor(uint32 uiEntry);
         void CloseDoor(uint32 uiEntry);

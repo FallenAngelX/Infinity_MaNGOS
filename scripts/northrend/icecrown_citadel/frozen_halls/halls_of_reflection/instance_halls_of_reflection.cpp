@@ -201,12 +201,12 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
         }
     }
 
-    const char* Save()
+    const char* Save() const
     {
         return strSaveData.c_str();
     }
 
-    uint32 GetData(uint32 uiType)
+    uint32 GetData(uint32 uiType) const
     {
         switch(uiType)
         {

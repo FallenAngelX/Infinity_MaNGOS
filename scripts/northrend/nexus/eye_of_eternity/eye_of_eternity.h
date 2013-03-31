@@ -64,9 +64,9 @@ struct MANGOS_DLL_DECL instance_eye_of_eternity : public ScriptedInstance
         bool IsEncounterInProgress() const;
 
         void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType);
+        uint32 GetData(uint32 uiType) const;
 
-        const char* Save() {   return strInstData.c_str();}
+        const char* Save() const {   return strInstData.c_str();}
         void Load(const char* chrIn);
 
         void DespawnCreatures(uint32 uiEntry);

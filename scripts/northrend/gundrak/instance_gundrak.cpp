@@ -315,7 +315,7 @@ bool instance_gundrak::IsValidLivingMojo(ObjectGuid callerGuid)
     return false;
 }
 
-uint32 instance_gundrak::GetData(uint32 uiType)
+uint32 instance_gundrak::GetData(uint32 uiType) const
 {
     if (uiType < MAX_ENCOUNTER)
         return m_auiEncounter[uiType];
