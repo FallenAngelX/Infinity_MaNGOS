@@ -201,7 +201,7 @@ void instance_serpentshrine_cavern::SetData64(uint32 uiData, uint64 uiGuid)
     }
 }
 
-bool instance_serpentshrine_cavern::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const
+bool instance_serpentshrine_cavern::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) const
 {
     switch (uiInstanceConditionId)
     {
