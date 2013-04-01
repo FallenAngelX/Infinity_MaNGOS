@@ -29,9 +29,9 @@ enum
     GO_FORGEFIRE_1              = 186692,
     GO_FORGEFIRE_2              = 186693,
     GO_FORGEFIRE_3              = 186691,
-
-    GO_EXITDOOR_1               = 186756,
-    GO_EXITDOOR_2               = 186694,
+    GO_PORTCULLIS_COMBAT        = 186612,
+    GO_PORTCULLIS_EXIT_1        = 186694,
+    GO_PORTCULLIS_EXIT_2        = 186756,
 
     ACHIEV_CRIT_ON_THE_ROCKS    = 7231,
 };

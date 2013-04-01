@@ -76,9 +76,14 @@ void instance_utgarde_keep::OnObjectCreate(GameObject* pGo)
             if (m_auiEncounter[TYPE_BELLOW_3] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
-        case GO_EXITDOOR_1:
-        case GO_EXITDOOR_2:
+        case GO_PORTCULLIS_EXIT_1:
+        case GO_PORTCULLIS_EXIT_2:
+            if (m_auiEncounter[TYPE_INGVAR] == DONE)
+                pGo->SetGoState(GO_STATE_ACTIVE);
             break;
+        case GO_PORTCULLIS_COMBAT:
+            break;
+
         default:
             return;
     }
@@ -101,7 +106,17 @@ void instance_utgarde_keep::SetData(uint32 uiType, uint32 uiData)
             m_auiEncounter[uiType] = uiData;
             break;
         case TYPE_SKARVALD_DALRONN:
+            m_auiEncounter[uiType] = uiData;
+            break;
         case TYPE_INGVAR:
+            if (m_auiEncounter[uiType] == uiData)
+                return;
+            DoUseDoorOrButton(GO_PORTCULLIS_COMBAT);
+            if (uiData == DONE)
+            {
+                DoUseDoorOrButton(GO_PORTCULLIS_EXIT_1);
+                DoUseDoorOrButton(GO_PORTCULLIS_EXIT_2);
+            }
             m_auiEncounter[uiType] = uiData;
             if (uiData == DONE)
             {
