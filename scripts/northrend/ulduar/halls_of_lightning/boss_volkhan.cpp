@@ -43,14 +43,14 @@ enum
     SPELL_SHATTERING_STOMP                  = 52237,
     SPELL_SHATTERING_STOMP_H                = 59529,
 
-    //unclear how "directions" of spells must be. Last, summoning GO, what is it for? Script depend on:
-    SPELL_TEMPER                            = 52238,        //TARGET_SCRIPT boss->anvil
-    SPELL_TEMPER_DUMMY                      = 52654,        //TARGET_SCRIPT anvil->boss
-    //SPELL_TEMPER_VISUAL                   = 52661,        //summons GO
+    // unclear how "directions" of spells must be. Last, summoning GO, what is it for? Script depend on:
+    SPELL_TEMPER                            = 52238,        // TARGET_SCRIPT boss->anvil
+    SPELL_TEMPER_DUMMY                      = 52654,        // TARGET_SCRIPT anvil->boss
+    // SPELL_TEMPER_VISUAL                   = 52661,       // summons GO
 
     SPELL_SUMMON_MOLTEN_GOLEM               = 52405,
 
-    //Molten Golem
+    // Molten Golem
     SPELL_BLAST_WAVE                        = 23113,
     SPELL_IMMOLATION_STRIKE                 = 52433,
     SPELL_IMMOLATION_STRIKE_H               = 59530,
@@ -70,7 +70,7 @@ enum
 
 struct MANGOS_DLL_DECL boss_volkhanAI : public ScriptedAI
 {
-    boss_volkhanAI(Creature *pCreature) : ScriptedAI(pCreature)
+    boss_volkhanAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
@@ -79,7 +79,7 @@ struct MANGOS_DLL_DECL boss_volkhanAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    GuidList m_lGolemGuidList;
+    GuidList m_lGolemGUIDList;
 
     bool m_bIsRegularMode;
     bool m_bHasShattered;
@@ -88,7 +88,7 @@ struct MANGOS_DLL_DECL boss_volkhanAI : public ScriptedAI
     uint32 m_uiHeatTimer;
     uint32 m_uiTemperTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_bHasShattered = false;
 
@@ -97,7 +97,7 @@ struct MANGOS_DLL_DECL boss_volkhanAI : public ScriptedAI
         m_uiTemperTimer = 10000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -105,7 +105,7 @@ struct MANGOS_DLL_DECL boss_volkhanAI : public ScriptedAI
             m_pInstance->SetData(TYPE_VOLKHAN, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
         DespawnGolems();
@@ -114,7 +114,7 @@ struct MANGOS_DLL_DECL boss_volkhanAI : public ScriptedAI
             m_pInstance->SetData(TYPE_VOLKHAN, DONE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         DespawnGolems();
 
@@ -122,9 +122,9 @@ struct MANGOS_DLL_DECL boss_volkhanAI : public ScriptedAI
             m_pInstance->SetData(TYPE_VOLKHAN, FAIL);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* /*pVictim*/) override
     {
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
             case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
@@ -134,10 +134,10 @@ struct MANGOS_DLL_DECL boss_volkhanAI : public ScriptedAI
 
     void DespawnGolems()
     {
-        if (m_lGolemGuidList.empty())
+        if (m_lGolemGUIDList.empty())
             return;
 
-        for(GuidList::const_iterator itr = m_lGolemGuidList.begin(); itr != m_lGolemGuidList.end(); ++itr)
+        for (GuidList::const_iterator itr = m_lGolemGUIDList.begin(); itr != m_lGolemGUIDList.end(); ++itr)
         {
             if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
             {
@@ -149,16 +149,16 @@ struct MANGOS_DLL_DECL boss_volkhanAI : public ScriptedAI
 
     void ShatterGolems()
     {
-        if (m_lGolemGuidList.empty())
+        if (m_lGolemGUIDList.empty())
             return;
 
         uint8 m_uiBrittleGolemsCount = 0;
 
-        for(GuidList::const_iterator itr = m_lGolemGuidList.begin(); itr != m_lGolemGuidList.end(); ++itr)
+        for (GuidList::const_iterator itr = m_lGolemGUIDList.begin(); itr != m_lGolemGUIDList.end(); ++itr)
         {
             if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
             {
-                 // only shatter brittle golems
+                // only shatter brittle golems
                 if (pTemp->GetEntry() == NPC_BRITTLE_GOLEM)
                 {
                     pTemp->CastSpell(pTemp, m_bIsRegularMode ? SPELL_SHATTER : SPELL_SHATTER_H, true);
@@ -175,18 +175,18 @@ struct MANGOS_DLL_DECL boss_volkhanAI : public ScriptedAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_MOLTEN_GOLEM)
         {
-            m_lGolemGuidList.push_back(pSummoned->GetObjectGuid());
+            m_lGolemGUIDList.push_back(pSummoned->GetObjectGuid());
 
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 pSummoned->AI()->AttackStart(pTarget);
         }
     }
 
-    void MovementInform(uint32 uiMoveType, uint32 uiPointId)
+    void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
     {
         if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
             return;
@@ -195,9 +195,9 @@ struct MANGOS_DLL_DECL boss_volkhanAI : public ScriptedAI
         SetCombatMovement(true);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
-        //Return since we have no target
+        // Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
@@ -271,7 +271,7 @@ CreatureAI* GetAI_boss_volkhan(Creature* pCreature)
 
 bool EffectDummyCreature_boss_volkhan(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
 {
-    //always check spellid and effectindex
+    // always check spellid and effectindex
     if (uiSpellId == SPELL_TEMPER_DUMMY && uiEffIndex == EFFECT_INDEX_0)
     {
         if (pCaster->GetEntry() != NPC_VOLKHAN_ANVIL || pCreatureTarget->GetEntry() != NPC_VOLKHAN)
@@ -280,7 +280,7 @@ bool EffectDummyCreature_boss_volkhan(Unit* pCaster, uint32 uiSpellId, SpellEffe
         for (uint8 i = 0; i < MAX_GOLEM; ++i)
             pCreatureTarget->CastSpell(pCaster, SPELL_SUMMON_MOLTEN_GOLEM, true);
 
-        //always return true when we are handling this spell and effect
+        // always return true when we are handling this spell and effect
         return true;
     }
 
@@ -293,7 +293,7 @@ bool EffectDummyCreature_boss_volkhan(Unit* pCaster, uint32 uiSpellId, SpellEffe
 
 bool EffectDummyCreature_npc_volkhan_anvil(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
 {
-    //always check spellid and effectindex
+    // always check spellid and effectindex
     if (uiSpellId == SPELL_TEMPER && uiEffIndex == EFFECT_INDEX_0)
     {
         if (pCaster->GetEntry() != NPC_VOLKHAN || pCreatureTarget->GetEntry() != NPC_VOLKHAN_ANVIL)
@@ -308,7 +308,7 @@ bool EffectDummyCreature_npc_volkhan_anvil(Unit* pCaster, uint32 uiSpellId, Spel
             pCaster->GetMotionMaster()->MoveChase(pCaster->getVictim());
         }
 
-        //always return true when we are handling this spell and effect
+        // always return true when we are handling this spell and effect
         return true;
     }
 
@@ -321,7 +321,7 @@ bool EffectDummyCreature_npc_volkhan_anvil(Unit* pCaster, uint32 uiSpellId, Spel
 
 struct MANGOS_DLL_DECL mob_molten_golemAI : public ScriptedAI
 {
-    mob_molten_golemAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_molten_golemAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
@@ -335,16 +335,16 @@ struct MANGOS_DLL_DECL mob_molten_golemAI : public ScriptedAI
     uint32 m_uiBlastTimer;
     uint32 m_uiImmolationTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiBlastTimer = 20000;
         m_uiImmolationTimer = 5000;
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         // Evade but keep the current location
-        m_creature->RemoveAllAuras();
+        m_creature->RemoveAllAurasOnEvade();
         m_creature->DeleteThreatList();
         m_creature->CombatStop(true);
         m_creature->LoadCreatureAddon(true);
@@ -356,7 +356,7 @@ struct MANGOS_DLL_DECL mob_molten_golemAI : public ScriptedAI
         m_creature->UpdateEntry(NPC_BRITTLE_GOLEM);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* /*pDoneBy*/, uint32& uiDamage) override
     {
         // Transform intro Brittle when damaged to 0 HP
         if (uiDamage >= m_creature->GetHealth())
@@ -370,7 +370,7 @@ struct MANGOS_DLL_DECL mob_molten_golemAI : public ScriptedAI
         }
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
         // This is the dummy effect of the spells - Note: should be handled as a dummy effect in core
         if (pSpell->Id == SPELL_SHATTER || pSpell->Id == SPELL_SHATTER_H)
@@ -380,24 +380,24 @@ struct MANGOS_DLL_DECL mob_molten_golemAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
-        //Return since we have no target or if we are frozen
+        // Return since we have no target or if we are frozen
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
         if (m_uiBlastTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature, SPELL_BLAST_WAVE);
-            m_uiBlastTimer = 20000;
+            if (DoCastSpellIfCan(m_creature, SPELL_BLAST_WAVE) == CAST_OK)
+                m_uiBlastTimer = 20000;
         }
         else
             m_uiBlastTimer -= uiDiff;
 
         if (m_uiImmolationTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_IMMOLATION_STRIKE : SPELL_IMMOLATION_STRIKE_H);
-            m_uiImmolationTimer = 5000;
+            if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_IMMOLATION_STRIKE : SPELL_IMMOLATION_STRIKE_H) == CAST_OK)
+                m_uiImmolationTimer = 5000;
         }
         else
             m_uiImmolationTimer -= uiDiff;

@@ -32,6 +32,7 @@ EndScriptData */
 */
 
 instance_halls_of_lightning::instance_halls_of_lightning(Map* pMap) : ScriptedInstance(pMap),
+    m_bLightningStruck(false),
     m_bIsShatterResistant(false)
 {
     Initialize();
@@ -44,7 +45,7 @@ void instance_halls_of_lightning::Initialize()
 
 void instance_halls_of_lightning::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_BJARNGRIM:
         case NPC_IONAR:
@@ -56,7 +57,7 @@ void instance_halls_of_lightning::OnCreatureCreate(Creature* pCreature)
 
 void instance_halls_of_lightning::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_VOLKHAN_DOOR:
             if (m_auiEncounter[TYPE_VOLKHAN] == DONE)
@@ -77,17 +78,21 @@ void instance_halls_of_lightning::OnObjectCreate(GameObject* pGo)
 
 void instance_halls_of_lightning::SetData(uint32 uiType, uint32 uiData)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_BJARNGRIM:
+            if (uiData == SPECIAL)
+                m_bLightningStruck = true;
+            else if (uiData == FAIL)
+                m_bLightningStruck = false;
             m_auiEncounter[uiType] = uiData;
             break;
         case TYPE_VOLKHAN:
             if (uiData == DONE)
                 DoUseDoorOrButton(GO_VOLKHAN_DOOR);
-            if (uiData == IN_PROGRESS)
+            else if (uiData == IN_PROGRESS)
                 m_bIsShatterResistant = true;
-            if (uiData == SPECIAL)
+            else if (uiData == SPECIAL)
                 m_bIsShatterResistant = false;
             m_auiEncounter[uiType] = uiData;
             break;
@@ -99,9 +104,9 @@ void instance_halls_of_lightning::SetData(uint32 uiType, uint32 uiData)
         case TYPE_LOKEN:
             if (uiData == IN_PROGRESS)
                 DoStartTimedAchievement(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, ACHIEV_START_LOKEN_ID);
-            if (uiData == DONE)
+            else if (uiData == DONE)
             {
-                //Appears to be type 5 GO with animation. Need to figure out how this work, code below only placeholder
+                // Appears to be type 5 GO with animation. Need to figure out how this work, code below only placeholder
                 if (GameObject* pGlobe = GetSingleGameObjectFromStorage(GO_LOKEN_THRONE))
                     pGlobe->SetGoState(GO_STATE_ACTIVE);
             }
@@ -131,10 +136,15 @@ uint32 instance_halls_of_lightning::GetData(uint32 uiType) const
     return 0;
 }
 
-bool instance_halls_of_lightning::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const
+bool instance_halls_of_lightning::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* /*pSource*/, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const
 {
-    if (uiCriteriaId == ACHIEV_CRIT_RESISTANT)
-        return m_bIsShatterResistant;
+    switch (uiCriteriaId)
+    {
+        case ACHIEV_CRIT_LIGHTNING:
+            return m_bLightningStruck;
+        case ACHIEV_CRIT_RESISTANT:
+            return m_bIsShatterResistant;
+    }
 
     return false;
 }
@@ -152,7 +162,7 @@ void instance_halls_of_lightning::Load(const char* chrIn)
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3];
 
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             m_auiEncounter[i] = NOT_STARTED;
