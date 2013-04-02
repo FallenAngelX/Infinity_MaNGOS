@@ -118,11 +118,6 @@ void instance_utgarde_keep::SetData(uint32 uiType, uint32 uiData)
                 DoUseDoorOrButton(GO_PORTCULLIS_EXIT_2);
             }
             m_auiEncounter[uiType] = uiData;
-            if (uiData == DONE)
-            {
-                DoUseDoorOrButton(GO_EXITDOOR_1);
-                DoUseDoorOrButton(GO_EXITDOOR_2);
-            }
             break;
         case TYPE_BELLOW_1:
             m_auiEncounter[uiType] = uiData;

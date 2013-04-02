@@ -525,7 +525,6 @@ CreatureAI* GetAI_boss_ysondre(Creature* pCreature)
 
 void AddSC_bosses_emerald_dragons()
 {
-<<<<<<< HEAD
     AutoScript s;
 
     s.newScript("boss_emeriss");
