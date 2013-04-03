@@ -758,9 +758,7 @@ bool BSWScriptedAI::_doAura(uint32 SpellID, Unit* pTarget, SpellEffectIndex inde
             if (aura && addedToExisting)
             {
                 pTarget->AddAuraToModList(aura);
-                holder->SetInUse(true);
                 aura->ApplyModifier(true,true);
-                holder->SetInUse(false);
             }
             else if (holder)
                 pTarget->AddSpellAuraHolder(holder);
