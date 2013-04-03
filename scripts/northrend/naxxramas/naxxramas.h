@@ -279,6 +279,7 @@ class MANGOS_DLL_DECL instance_naxxramas : public ScriptedInstance
         float m_fChamberCenterZ;
 
         uint32 m_uiTauntTimer;
+        uint32 m_uiHorsemenAchievTimer;
         uint8 m_uiHorseMenKilled;
 
         DialogueHelper m_dialogueHelper;

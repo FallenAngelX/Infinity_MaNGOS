@@ -49,6 +49,7 @@ instance_naxxramas::instance_naxxramas(Map* pMap) : ScriptedInstance(pMap),
     m_fChamberCenterY(0.0f),
     m_fChamberCenterZ(0.0f),
     m_uiTauntTimer(0),
+    m_uiHorsemenAchievTimer(0),
     m_uiHorseMenKilled(0),
     m_dialogueHelper(aNaxxDialogue)
 {
@@ -373,13 +374,17 @@ void instance_naxxramas::SetData(uint32 uiType, uint32 uiData)
 
             if (uiData == SPECIAL)
             {
+                // Start the achiev countdown
+                if (!m_uiHorseMenKilled)
+                    m_uiHorsemenAchievTimer = 15000;
+
                 ++m_uiHorseMenKilled;
 
                 if (m_uiHorseMenKilled == 4)
                     SetData(TYPE_FOUR_HORSEMEN, DONE);
 
                 // Don't store special data
-                break;
+                return;
             }
             else if (uiData == FAIL)
                 m_uiHorseMenKilled = 0;
@@ -545,6 +550,9 @@ bool instance_naxxramas::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Playe
         case ACHIEV_CRIT_GET_ENOUGH_N:
         case ACHIEV_CRIT_GET_ENOUGH_H:
             return m_abAchievCriteria[TYPE_ACHIEV_GET_ENOUGH];
+        case ACHIEV_CRIT_TOGETHER_N:
+        case ACHIEV_CRIT_TOGETHER_H:
+            return m_uiHorsemenAchievTimer > 0;
             // 'The Immortal'(25m) or 'Undying'(10m) - (achievs 2186, 2187)
         case ACHIEV_CRIT_IMMORTAL_KEL:
         case ACHIEV_CRIT_IMMOORTAL_LOA:
@@ -581,6 +589,14 @@ void instance_naxxramas::Update(uint32 uiDiff)
         }
         else
             m_uiTauntTimer -= uiDiff;
+    }
+
+    if (m_uiHorsemenAchievTimer)
+    {
+        if (m_uiHorsemenAchievTimer <= uiDiff)
+            m_uiHorsemenAchievTimer = 0;
+        else
+            m_uiHorsemenAchievTimer -= uiDiff;
     }
 
     m_dialogueHelper.DialogueUpdate(uiDiff);
