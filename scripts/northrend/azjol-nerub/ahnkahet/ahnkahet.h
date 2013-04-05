@@ -58,6 +58,8 @@ enum
 
     ACHIEV_CRIT_RESPECT_ELDERS  = 7317,             // Nadox, achiev 2038
     ACHIEV_CRIT_VOLUNTEER_WORK  = 7359,             // Jedoga, achiev 2056
+
+    ACHIEV_CRIT_VOLAZJS_QUICK_DEMISE  = 7133,       // Herald Volazj, achiev 1862
 };
 
 static const float aTaldaramLandingLoc[4] = {528.734f, -845.998f, 11.54f, 0.68f};
@@ -102,6 +104,7 @@ class MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
 
         bool m_bRespectElders;
         bool m_bVolunteerWork;
+        time_t m_tVolazjsQuickDemise;
 
         uint8 m_uiDevicesActivated;
         uint8 m_uiInitiatesKilled;

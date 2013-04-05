@@ -28,6 +28,7 @@ EndScriptData */
 instance_ahnkahet::instance_ahnkahet(Map* pMap) : ScriptedInstance(pMap),
     m_bRespectElders(false),
     m_bVolunteerWork(false),
+    m_tVolazjsQuickDemise(0),
     m_uiDevicesActivated(0),
     m_uiInitiatesKilled(0),
     m_uiTwistedVisageCount(0)
@@ -167,6 +168,7 @@ void instance_ahnkahet::SetData(uint32 uiType, uint32 uiData)
             {
                 m_uiTwistedVisageCount = 0;
                 m_lInsanityPlayersGuidList.clear();
+                m_tVolazjsQuickDemise = time(NULL);
             }
             break;
 
@@ -381,6 +383,8 @@ bool instance_ahnkahet::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player
             return m_bRespectElders;
         case ACHIEV_CRIT_VOLUNTEER_WORK:
             return m_bVolunteerWork;
+        case ACHIEV_CRIT_VOLAZJS_QUICK_DEMISE:
+            return uint32(time(NULL) - m_tVolazjsQuickDemise) < 120 && !instance->IsRegularDifficulty();
 
         default:
             return false;
