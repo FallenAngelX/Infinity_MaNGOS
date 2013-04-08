@@ -3,7 +3,7 @@
 --
 
 DELETE FROM sd2_db_version;
-INSERT INTO sd2_db_version (version) VALUES ('ScriptDev2 (for MangosR2 2754+ / C-MaNGOS 12409+) ');
+INSERT INTO sd2_db_version (version) VALUES ('ScriptDev2 (for MangosR2 2776+ / for C-MaNGOS 12451+) ');
 
 --
 -- Below contains data for table `script_texts` mainly used in C++ parts.
