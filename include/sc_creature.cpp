@@ -510,11 +510,6 @@ void ScriptedAI::SetEquipmentSlots(bool bLoadDefault, int32 iMainHand, int32 iOf
         m_creature->SetVirtualItem(VIRTUAL_ITEM_SLOT_2, iRanged);
 }
 
-void ScriptedAI::SetCombatMovement(bool bCombatMove)
-{
-    m_bCombatMovement = bCombatMove;
-}
-
 // Hacklike storage used for misc creatures that are expected to evade of outside of a certain area.
 // It is assumed the information is found elswehere and can be handled by mangos. So far no luck finding such information/way to extract it.
 enum
