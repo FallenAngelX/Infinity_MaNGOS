@@ -49,6 +49,11 @@ enum
     GO_THIRD_GATE               = 187765,           // door after muru; why another?
     GO_ORB_OF_THE_BLUE_FLIGHT   = 188415,
 
+    GO_ORB_BLUE_FLIGHT_1        = 187869,           // orbs used in the Kil'jaeden fight
+    GO_ORB_BLUE_FLIGHT_2        = 188114,
+    GO_ORB_BLUE_FLIGHT_3        = 188115,
+    GO_ORB_BLUE_FLIGHT_4        = 188116,
+
     SAY_KALECGOS_OUTRO          = -1580043,
     SAY_TWINS_INTRO             = -1580044,
 
