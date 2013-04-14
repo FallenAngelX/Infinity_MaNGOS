@@ -356,8 +356,7 @@ struct MANGOS_DLL_DECL mob_big_oozeAI : public ScriptedAI
 
     void Aggro(Unit* pWho)
     {
-        m_creature->FixateTarget(pWho);
-        m_creature->SetInCombatWithZone();
+        m_creature->AddThreat(pWho, 500000.0f);
         m_creature->SetSpeedRate(MOVE_RUN, 0.5f);
         DoCastSpellIfCan(m_creature, SPELL_RADIATING_OOZE, CAST_TRIGGERED);
         DoCastSpellIfCan(m_creature, SPELL_BIG_OOZE_COMBINE, CAST_TRIGGERED);
@@ -374,9 +373,6 @@ struct MANGOS_DLL_DECL mob_big_oozeAI : public ScriptedAI
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
-
-        if (!m_creature->GetFixatedTarget())
-            m_creature->FixateTarget(m_creature->getVictim());
 
         // Unstable Ooze
         if (!m_bHasSaid)
