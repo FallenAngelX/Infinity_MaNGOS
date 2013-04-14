@@ -356,6 +356,7 @@ struct MANGOS_DLL_DECL mob_big_oozeAI : public ScriptedAI
 
     void Aggro(Unit* pWho)
     {
+        m_creature->SetInCombatWithZone();
         m_creature->AddThreat(pWho, 500000.0f);
         m_creature->SetSpeedRate(MOVE_RUN, 0.5f);
         DoCastSpellIfCan(m_creature, SPELL_RADIATING_OOZE, CAST_TRIGGERED);
@@ -435,14 +436,12 @@ CreatureAI* GetAI_mob_ooze_explosion_stalker(Creature* pCreature)
 
 struct MANGOS_DLL_DECL mob_sticky_oozeAI : public ScriptedAI
 {
-    uint32 m_uiDespawnTimer;
-
     mob_sticky_oozeAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         SetCombatMovement(false);
         pCreature->CastSpell(pCreature, SPELL_STICKY_AURA, true);
-        m_uiDespawnTimer = 30000;
+        pCreature->ForcedDespawn(30000);
     }
 
     ScriptedInstance* m_pInstance;
@@ -454,11 +453,6 @@ struct MANGOS_DLL_DECL mob_sticky_oozeAI : public ScriptedAI
     }
     void UpdateAI(const uint32 uiDiff)
     {
-        if (uiDiff > m_uiDespawnTimer)
-            m_creature->ForcedDespawn();
-        else
-            m_uiDespawnTimer -= uiDiff;
-
         if (m_pInstance && m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
         {
             m_creature->ForcedDespawn();
