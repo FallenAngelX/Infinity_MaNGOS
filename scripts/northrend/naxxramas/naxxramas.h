@@ -214,6 +214,8 @@ struct GothTrigger
     bool bIsAnchorHigh;
 };
 
+static const float aSapphPositions[4] = {3521.48f, -5234.87f, 137.626f, 4.53329f};
+
 class MANGOS_DLL_DECL instance_naxxramas : public ScriptedInstance
 {
     public:
@@ -224,6 +226,7 @@ class MANGOS_DLL_DECL instance_naxxramas : public ScriptedInstance
 
         bool IsEncounterInProgress() const override;
 
+        void OnPlayerEnter(Player* pPlayer) override;
         void OnCreatureCreate(Creature* pCreature) override;
         void OnObjectCreate(GameObject* pGo) override;
 
@@ -278,6 +281,7 @@ class MANGOS_DLL_DECL instance_naxxramas : public ScriptedInstance
         float m_fChamberCenterY;
         float m_fChamberCenterZ;
 
+        uint32 m_uiSapphSpawnTimer;
         uint32 m_uiTauntTimer;
         uint32 m_uiHorsemenAchievTimer;
         uint8 m_uiHorseMenKilled;
