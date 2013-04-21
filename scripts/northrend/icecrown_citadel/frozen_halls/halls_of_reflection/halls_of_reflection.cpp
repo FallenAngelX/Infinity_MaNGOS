@@ -163,6 +163,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
       m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
       m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
       Small = false;
+      pUther = NULL;
    }
 
    void Event()
@@ -240,21 +241,20 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                     m_pInstance->SetNextEvent(9,m_creature->GetEntry(),8000);
                 break;
             case 9:
-                if(Creature* Uther = m_creature->SummonCreature(NPC_UTHER,5308.228f,2003.641f,709.341f,4.17f,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,360000))
+                if (pUther = m_creature->SummonCreature(NPC_UTHER,5308.228f,2003.641f,709.341f,4.17f,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,360000))
                 {
-                    pUther = Uther;
-                    Uther->SetCreatorGuid(ObjectGuid());
-                    Uther->SetRespawnDelay(DAY);
-                    Uther->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
-                    m_creature->SetGuidValue(UNIT_FIELD_TARGET, Uther->GetObjectGuid());
-                    if (m_creature->GetEntry() == NPC_JAINA)
+                    pUther->SetCreatorGuid(ObjectGuid());
+                    pUther->SetRespawnDelay(DAY);
+                    pUther->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
+                    m_creature->SetGuidValue(UNIT_FIELD_TARGET, pUther->GetObjectGuid());
+                    if (m_creature->GetEntry() == NPC_JAINA && pUther)
                     {
-                        DoScriptText(SAY_UTHER_A_01, Uther);
+                        DoScriptText(SAY_UTHER_A_01, pUther);
                         m_pInstance->SetNextEvent(10,m_creature->GetEntry(),3000);
                     }
                     else if (m_creature->GetEntry() == NPC_SYLVANA)
                     {
-                        DoScriptText(SAY_UTHER_H_01, Uther);
+                        DoScriptText(SAY_UTHER_H_01, pUther);
                         m_pInstance->SetNextEvent(10,m_creature->GetEntry(),10000);
                     }
                 }
@@ -272,12 +272,12 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                 }
                 break;
             case 11:
-                if (m_creature->GetEntry() == NPC_JAINA && pUther)
+                if ((m_creature->GetEntry() == NPC_JAINA) && pUther)
                 {
                     DoScriptText(SAY_UTHER_A_03, pUther);
                     m_pInstance->SetNextEvent(Small ? 24 : 12, m_creature->GetEntry(),7000);
                 }
-                else if (m_creature->GetEntry() == NPC_SYLVANA && pUther)
+                else if ((m_creature->GetEntry() == NPC_SYLVANA) && pUther)
                 {
                     DoScriptText(SAY_UTHER_H_03, pUther);
                     m_pInstance->SetNextEvent(Small ? 24 : 12, m_creature->GetEntry(),6000);
@@ -296,12 +296,12 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                 }
                 break;
             case 13:
-                if (m_creature->GetEntry() == NPC_JAINA && pUther)
+                if ((m_creature->GetEntry() == NPC_JAINA) && pUther)
                 {
                     DoScriptText(SAY_UTHER_A_05, pUther);
                     m_pInstance->SetNextEvent(14,m_creature->GetEntry(),10000);
                 }
-                else if (m_creature->GetEntry() == NPC_SYLVANA && pUther)
+                else if ((m_creature->GetEntry() == NPC_SYLVANA) && pUther)
                 {
                     DoScriptText(SAY_UTHER_H_05, pUther);
                     m_pInstance->SetNextEvent(14,m_creature->GetEntry(),19000);
@@ -320,12 +320,12 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                 }
                 break;
             case 15:
-                if (m_creature->GetEntry() == NPC_JAINA && pUther)
+                if ((m_creature->GetEntry() == NPC_JAINA) && pUther)
                 {
                     DoScriptText(SAY_UTHER_A_07, pUther);
                     m_pInstance->SetNextEvent(16,m_creature->GetEntry(),12000);
                 }
-                else if (m_creature->GetEntry() == NPC_SYLVANA && pUther)
+                else if ((m_creature->GetEntry() == NPC_SYLVANA) && pUther)
                 {
                     DoScriptText(SAY_UTHER_H_07, pUther);
                     m_pInstance->SetNextEvent(16,m_creature->GetEntry(),6000);
@@ -344,12 +344,12 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                 }
                 break;
             case 17:
-                if (m_creature->GetEntry() == NPC_JAINA && pUther)
+                if ((m_creature->GetEntry() == NPC_JAINA) && pUther)
                 {
                     DoScriptText(SAY_UTHER_A_09, pUther);
                     m_pInstance->SetNextEvent(18,m_creature->GetEntry(),12000);
                 }
-                else if (m_creature->GetEntry() == NPC_SYLVANA && pUther)
+                else if ((m_creature->GetEntry() == NPC_SYLVANA) && pUther)
                 {
                     DoScriptText(SAY_UTHER_H_09, pUther);
                     m_pInstance->SetNextEvent(18,m_creature->GetEntry(),11000);
@@ -367,12 +367,12 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                 }
                 break;
             case 19:
-                if (m_creature->GetEntry() == NPC_JAINA && pUther)
+                if ((m_creature->GetEntry() == NPC_JAINA) && pUther)
                 {
                     DoScriptText(SAY_UTHER_A_11, pUther);
                     m_pInstance->SetNextEvent(20,m_creature->GetEntry(),24000);
                 }
-                else if (m_creature->GetEntry() == NPC_SYLVANA && pUther)
+                else if ((m_creature->GetEntry() == NPC_SYLVANA) && pUther)
                 {
                     DoScriptText(SAY_UTHER_H_11, pUther);
                     m_pInstance->SetNextEvent(20,m_creature->GetEntry(),9000);
@@ -391,7 +391,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                 }
                 break;
             case 21:
-                if (m_creature->GetEntry() == NPC_JAINA && pUther)
+                if ((m_creature->GetEntry() == NPC_JAINA) && pUther)
                 {
                     DoScriptText(SAY_UTHER_A_13, pUther);
                     m_pInstance->SetNextEvent(22,m_creature->GetEntry(),5000);
@@ -402,7 +402,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                 }
                 break;
             case 22:
-                if (m_creature->GetEntry() == NPC_JAINA && pUther)
+                if ((m_creature->GetEntry() == NPC_JAINA) && pUther)
                 {
                     DoScriptText(SAY_UTHER_A_14, pUther);
                     m_pInstance->SetNextEvent(23,m_creature->GetEntry(),12000);
@@ -424,9 +424,9 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                 }
                 break;
             case 24:
-                if (m_creature->GetEntry() == NPC_JAINA && pUther)
+                if ((m_creature->GetEntry() == NPC_JAINA) && pUther)
                    DoScriptText(SAY_UTHER_A_16, pUther);
-                else if (m_creature->GetEntry() == NPC_SYLVANA && pUther)
+                else if ((m_creature->GetEntry() == NPC_SYLVANA) && pUther)
                    DoScriptText(SAY_UTHER_H_16, pUther);
                 if(Creature* LichKing = m_creature->SummonCreature(NPC_LICH_KING,5362.469f,2062.342f,707.695f,3.97f,TEMPSUMMON_MANUAL_DESPAWN,0,true))
                 {
@@ -454,7 +454,9 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                 break;
             case 39:
                 m_pInstance->SetNextEvent(40,NPC_LICH_KING,1000);
-                m_creature->ForcedDespawn();
+                m_creature->ForcedDespawn(1000);
+                if (pUther)
+                    pUther->ForcedDespawn(1000);
                 break;
             default:
                 break;
