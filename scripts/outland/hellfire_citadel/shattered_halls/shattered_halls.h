@@ -81,11 +81,13 @@ class MANGOS_DLL_DECL instance_shattered_halls : public ScriptedInstance
         const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
-        void Update(uint32 uiDiff);
+        bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const override;
 
-        void DoCastGroupDebuff(uint32 uiSpellId);
+        void Update(uint32 uiDiff) override;
 
     private:
+        void DoCastGroupDebuff(uint32 uiSpellId);
+
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
 
