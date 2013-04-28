@@ -27,6 +27,9 @@ enum
     NPC_SEZZZIZ                     = 7275,
     NPC_CHIEF_SANDSCALP             = 7267,
 
+    GO_SHALLOW_GRAVE                = 128403,
+    GO_END_DOOR                     = 146084,
+
     AREATRIGGER_ANTUSUL             = 1447,
 };
 
@@ -42,17 +45,22 @@ class MANGOS_DLL_DECL instance_zulfarrak : public ScriptedInstance
         void OnCreatureEvade(Creature* pCreature);
         void OnCreatureDeath(Creature* pCreature);
 
-        void OnCreatureCreate(Creature* pCreature);
+        void OnCreatureCreate(Creature* pCreature) override;
+        void OnObjectCreate(GameObject* pGo) override;
 
         void SetData(uint32 uiType, uint32 uiData);
         uint32 GetData(uint32 uiType) const;
 
-        const char* Save() const { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+        void GetShallowGravesGuidList(GuidList& lList) { lList = m_lShallowGravesGuidList; }
+
+        const char* Save() const override { return m_strInstData.c_str(); }
+        void Load(const char* chrIn) override;
 
     protected:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
+
+        GuidList m_lShallowGravesGuidList;
 };
 
 #endif
