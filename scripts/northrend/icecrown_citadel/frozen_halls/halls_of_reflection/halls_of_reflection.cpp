@@ -241,7 +241,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                     m_pInstance->SetNextEvent(9,m_creature->GetEntry(),8000);
                 break;
             case 9:
-                if (pUther = m_creature->SummonCreature(NPC_UTHER,5308.228f,2003.641f,709.341f,4.17f,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,360000))
+                if (pUther = m_creature->SummonCreature(NPC_UTHER,5308.228f,2003.641f,709.341f,4.17f,TEMPSUMMON_MANUAL_DESPAWN,360000))
                 {
                     pUther->SetCreatorGuid(ObjectGuid());
                     pUther->SetRespawnDelay(DAY);
