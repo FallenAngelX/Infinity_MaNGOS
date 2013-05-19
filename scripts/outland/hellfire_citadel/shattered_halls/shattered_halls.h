@@ -81,7 +81,7 @@ class MANGOS_DLL_DECL instance_shattered_halls : public ScriptedInstance
         const char* Save() const { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
-        bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const override;
+        bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) const override;
 
         void Update(uint32 uiDiff) override;
 

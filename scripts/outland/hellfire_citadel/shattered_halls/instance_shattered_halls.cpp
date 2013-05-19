@@ -217,7 +217,7 @@ void instance_shattered_halls::OnCreatureEvade(Creature* pCreature)
         SetData(TYPE_EXECUTION, IN_PROGRESS);
 }
 
-bool instance_shattered_halls::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const
+bool instance_shattered_halls::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) const
 {
     switch (uiInstanceConditionId)
     {
