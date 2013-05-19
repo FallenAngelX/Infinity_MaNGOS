@@ -385,7 +385,7 @@ void instance_dire_maul::Load(const char* chrIn)
     OUT_LOAD_INST_DATA_COMPLETE;
 }
 
-bool instance_dire_maul::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const
+bool instance_dire_maul::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) const
 {
     switch (uiInstanceConditionId)
     {
