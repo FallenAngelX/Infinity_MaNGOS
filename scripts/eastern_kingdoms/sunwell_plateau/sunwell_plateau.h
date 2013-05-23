@@ -22,7 +22,8 @@ enum
     NPC_SATHROVARR              = 24892,
     NPC_MADRIGOSA               = 24895,
     NPC_FLIGHT_TRIGGER_LEFT     = 25357,            // Related to Felmyst flight path. Also the anchor to summon Madrigosa
-    // NPC_FLIGHT_TRIGGER_RIGHT = 25358,            // related to Felmyst flight path
+    NPC_FLIGHT_TRIGGER_RIGHT    = 25358,            // related to Felmyst flight path
+    NPC_WORLD_TRIGGER           = 22515,
     NPC_BRUTALLUS               = 24882,
     NPC_FELMYST                 = 25038,
     NPC_ALYTHESS                = 25166,
@@ -101,11 +102,14 @@ class MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance, privat
 
         void Update(uint32 uiDiff) override;
 
+        ObjectGuid SelectFelmystFlightTrigger(bool bLeftSide, uint8 uiIndex);
+
         const char* Save() const override { return m_strInstData.c_str(); }
         void Load(const char* chrIn) override;
 
     protected:
         void JustDidDialogueStep(int32 iEntry);
+        void DoSortFlightTriggers();
 
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
@@ -117,6 +121,9 @@ class MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance, privat
         uint32 m_uiMuruBerserkTimer;
         uint32 m_uiKiljaedenYellTimer;
 
+        GuidVector m_vRightFlightTriggersVect;
+        GuidVector m_vLeftFlightTriggersVect;
+        GuidList m_lAllFlightTriggersList;
         GuidList m_lDeceiversGuidList;
 };
 #endif
