@@ -470,7 +470,7 @@ struct MANGOS_DLL_DECL mob_taste_testAI : public ScriptedAI
     }
 };
 
-bool EffectDummyNPC_mob_taste_test(Unit *pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature *pCreatureTarget)
+bool EffectDummyNPC_mob_taste_test(Unit *pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pCreatureTarget, ObjectGuid originalCasterGuid)
 {
     if (spellId == SPELL_OFFER_JUNGLE_PUNCH && effIndex == EFFECT_INDEX_1 && pCaster->GetTypeId() == TYPEID_PLAYER && pCreatureTarget)
     {
@@ -592,13 +592,13 @@ struct MANGOS_DLL_DECL npc_tipsy_mcmanusAI : public ScriptedAI
                                     DoScriptText(GoogJobText[urand(0,3)] , m_creature);
                                     uiObjectToClick = urand(1,3); 
                                     SayEventText(uiObjectToClick);
-                                    
+
                                     uiPhaseCounter++;
                                     if(uiPhaseCounter == 3){ uiPhase++; uiPhaseCounter=0;}
                                 }
                                 else {Reset(); DoScriptText(SAY_FAIL, m_creature);}
                                 break;
-                               
+
                              case 2: 
                                 if(CheckClickedObject(uiObjectToClick))
                                 {

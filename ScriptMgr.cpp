@@ -654,7 +654,7 @@ bool ItemUse(Player* pPlayer, Item* pItem, SpellCastTargets const& targets)
 }
 
 MANGOS_DLL_EXPORT
-bool EffectDummyCreature(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pTarget)
+bool EffectDummyCreature(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pTarget, ObjectGuid originalCasterGuid)
 {
     if (!pTarget)
         return false;
@@ -664,11 +664,11 @@ bool EffectDummyCreature(Unit* pCaster, uint32 spellId, SpellEffectIndex effInde
     if (!pTempScript || !pTempScript->pEffectDummyNPC)
         return false;
 
-    return pTempScript->pEffectDummyNPC(pCaster, spellId, effIndex, pTarget);
+    return pTempScript->pEffectDummyNPC(pCaster, spellId, effIndex, pTarget, originalCasterGuid);
 }
 
 MANGOS_DLL_EXPORT
-bool EffectDummyGameObject(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, GameObject* pTarget)
+bool EffectDummyGameObject(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, GameObject* pTarget, ObjectGuid originalCasterGuid)
 {
     if (!pTarget)
         return false;
@@ -678,11 +678,11 @@ bool EffectDummyGameObject(Unit* pCaster, uint32 spellId, SpellEffectIndex effIn
     if (!pTempScript || !pTempScript->pEffectDummyGO)
         return false;
 
-    return pTempScript->pEffectDummyGO(pCaster, spellId, effIndex, pTarget);
+    return pTempScript->pEffectDummyGO(pCaster, spellId, effIndex, pTarget, originalCasterGuid);
 }
 
 MANGOS_DLL_EXPORT
-bool EffectDummyItem(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Item* pTarget)
+bool EffectDummyItem(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Item* pTarget, ObjectGuid originalCasterGuid)
 {
     if (!pTarget)
         return false;
@@ -692,18 +692,18 @@ bool EffectDummyItem(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, I
     if (!pTempScript || !pTempScript->pEffectDummyItem)
         return false;
 
-    return pTempScript->pEffectDummyItem(pCaster, spellId, effIndex, pTarget);
+    return pTempScript->pEffectDummyItem(pCaster, spellId, effIndex, pTarget, originalCasterGuid);
 }
 
 MANGOS_DLL_EXPORT
-bool EffectScriptEffectCreature(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pTarget)
+bool EffectScriptEffectCreature(Unit* pCaster, uint32 spellId, SpellEffectIndex effIndex, Creature* pTarget, ObjectGuid originalCasterGuid)
 {
     Script* pTempScript = m_scripts->at(pTarget->GetScriptId());
 
     if (!pTempScript || !pTempScript->pEffectScriptEffectNPC)
         return false;
 
-    return pTempScript->pEffectScriptEffectNPC(pCaster, spellId, effIndex, pTarget);
+    return pTempScript->pEffectScriptEffectNPC(pCaster, spellId, effIndex, pTarget, originalCasterGuid);
 }
 
 MANGOS_DLL_EXPORT
