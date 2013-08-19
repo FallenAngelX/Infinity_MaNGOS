@@ -641,7 +641,7 @@ struct MANGOS_DLL_DECL mob_pool_of_tarAI : public ScriptedAI
 
     void SpellHit(Unit* caster, const SpellEntry* spell)
     {
-        if (spell->SchoolMask & SPELL_SCHOOL_MASK_FIRE && !m_creature->HasAura(SPELL_BLAZE))
+        if (spell->GetSchoolMask() & SPELL_SCHOOL_MASK_FIRE && !m_creature->HasAura(SPELL_BLAZE))
             DoCast(m_creature, SPELL_BLAZE, true);
     }
     void DamageTaken(Unit* killer, uint32 &uidamage)
