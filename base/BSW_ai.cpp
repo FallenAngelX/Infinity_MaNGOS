@@ -280,7 +280,7 @@ CanCastResult BSWScriptedAI::_BSWSpellSelector(uint8 m_uiSpellIdx, Unit* pTarget
                          }
 
                          if (SpellEntry const *spell = (SpellEntry *)GetSpellStore()->LookupEntry(pSpell->m_uiSpellEntry[currentDifficulty]))
-                           if (SpellRangeEntry const *pSpellRange = GetSpellRangeStore()->LookupEntry(spell->rangeIndex))
+                           if (SpellRangeEntry const *pSpellRange = GetSpellRangeStore()->LookupEntry(spell->GetRangeIndex()))
                               if (m_creature->GetDistance(fPosX, fPosY, fPosZ) <= pSpellRange->maxRange)
                               {
                                    m_creature->CastSpell(fPosX, fPosY, fPosZ, pSpell->m_uiSpellEntry[currentDifficulty], false);
