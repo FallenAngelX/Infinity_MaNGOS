@@ -55,13 +55,13 @@ enum BossSpells
  // SPELL_PRESENCE_OF_DARKFALLEN        = 71952, // on heroic
 
     // phase air
-    SPELL_INCITE_HORROR                 = 73070,
+    SPELL_INCITE_TERROR                 = 73070,
     SPELL_BLOODBOLT_WHIRL               = 71772,
 
     // others
-    NPC_SWARMING_SHADOWS                = 38163,
+//  NPC_SWARMING_SHADOWS                = 38163,
 
-    THIRST_QUENCHED_AURA                    = 72154
+//  THIRST_QUENCHED_AURA                = 72154
 };
 
 // talks
@@ -84,13 +84,19 @@ static LOCATION QueenLocs[]=
     {4595.904785f, 2769.315918f, 421.838623f},  // 1 Fly
 };
 
-#define PHASE_GROUND 1
-#define PHASE_RUNNING 2
-#define PHASE_AIR 3
-#define PHASE_FLYING 4
+enum
+{
+    PHASE_GROUND,
+    PHASE_RUNNING,
+    PHASE_AIR,
+    PHASE_FLYING
+};
 
-#define POINT_CENTER_GROUND 1
-#define POINT_CENTER_AIR 2
+enum
+{
+    POINT_CENTER_GROUND,
+    POINT_CENTER_AIR
+};
 
 /**
  * Queen Lana'thel
@@ -129,6 +135,10 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
         m_uiBloodboltTimer      = urand(15000, 20000);
         m_uiPactTimer           = urand(20000, 25000);
         m_uiSwarmingShadowsTimer= urand(30000, 35000);
+
+        m_creature->SetWalk(false);
+        m_creature->SetLevitate(false);
+        m_creature->RemoveByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_UNK_2);
     }
 
     void JustReachedHome()
@@ -137,9 +147,6 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
         {
             m_pInstance->SetData(TYPE_LANATHEL, FAIL);
             RemoveAurasFromAllPlayers();
-            m_creature->SetWalk(false);
-            m_creature->SetLevitate(false);
-            m_creature->RemoveByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_UNK_2);
         }
     }
 
@@ -159,13 +166,13 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
         DoCastSpellIfCan(m_creature, SPELL_SHROUD_OF_SORROW, CAST_TRIGGERED);
     }
 
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller)
     {
         if(m_pInstance)
-	    {
+        {
             m_pInstance->SetData(TYPE_LANATHEL, DONE);
-	        RemoveAurasFromAllPlayers();
-	    }
+            RemoveAurasFromAllPlayers();
+        }
 
         DoScriptText(SAY_DEATH, m_creature);
     }
@@ -181,15 +188,13 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
             {
                 m_uiPhase = PHASE_AIR; // start counting timer for Bloodbolt Whirl immediately
 
-                if (DoCastSpellIfCan(m_creature, SPELL_INCITE_HORROR) == CAST_OK)
-                {
-                    // fly up
-                    m_creature->SetWalk(true);
-                    m_creature->SetLevitate(true);
-                    m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_UNK_2);
+                DoCastSpellIfCan(m_creature, SPELL_INCITE_TERROR);
+                // fly up
+                m_creature->SetWalk(true);
+                m_creature->SetLevitate(true);
+                m_creature->SetByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_UNK_2);
 
-                    m_creature->GetMotionMaster()->MovePoint(POINT_CENTER_AIR, QueenLocs[1].x, QueenLocs[1].y, QueenLocs[1].z, false);
-                }
+                m_creature->GetMotionMaster()->MovePoint(POINT_CENTER_AIR, QueenLocs[1].x, QueenLocs[1].y, QueenLocs[1].z, false);
             }
             else
             {
@@ -200,31 +205,27 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
                 m_creature->SetLevitate(false);
                 m_creature->RemoveByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_UNK_2);
 
-                SetCombatMovement(true);
-                if (m_creature->getVictim())
-                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                SetCombatMovement(true, true);
             }
         }
         else if (uiData == POINT_CENTER_AIR)
         {
             // Bloodbolt Whirl
-            if (DoCastSpellIfCan(m_creature, SPELL_BLOODBOLT_WHIRL) == CAST_OK)
-            {
-                m_uiPhase = PHASE_AIR;
-                m_uiPhaseTimer = 7000;
-                DoScriptText(SAY_AIR_PHASE, m_creature);
-            }
+            DoCastSpellIfCan(m_creature, SPELL_BLOODBOLT_WHIRL);
+            m_uiPhase = PHASE_AIR;
+            m_uiPhaseTimer = 7000;
+            DoScriptText(SAY_AIR_PHASE, m_creature);
         }
     }
 
-    Unit* SelectClosestFriendlyTarget(Unit *pVictim)
+    Unit* SelectClosestFriendlyTarget(Unit* pVictim)
     {
-        Unit *pResult = NULL;
+        Unit* pResult = NULL;
 
         if (m_pInstance)
         {
             float lastDist = 500.0f;
-            const Map::PlayerList &players = m_pInstance->instance->GetPlayers();
+            const Map::PlayerList& players = m_pInstance->instance->GetPlayers();
             for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
             {
                 if (!(*itr).getSource()->IsInWorld() ||                              // don't target not in world players
@@ -247,12 +248,12 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
 
     Unit* SelectVampiricBiteTarget()
     {
-        const ThreatList &threatList = m_creature->getThreatManager().getThreatList();
+        const ThreatList& threatList = m_creature->getThreatManager().getThreatList();
         ThreatList::const_iterator itr = threatList.begin();
         std::advance(itr, 1); // don't target the main tank
         for (;itr != threatList.end(); ++itr)
         {
-            if (Unit *pVictim = m_creature->GetMap()->GetUnit((*itr)->getUnitGuid()))
+            if (Unit* pVictim = m_creature->GetMap()->GetUnit((*itr)->getUnitGuid()))
             {
                 if (!pVictim->HasAuraOfDifficulty(70867) && // Essence of the Blood Queen
                     !pVictim->HasAuraOfDifficulty(70877) && // Frenzied Bloodthirst
@@ -269,7 +270,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
 
     void RemoveAurasFromAllPlayers()
     {
-         Map::PlayerList const &PlayerList = m_creature->GetMap()->GetPlayers();
+         Map::PlayerList const& PlayerList = m_creature->GetMap()->GetPlayers();
 
          if (PlayerList.isEmpty())
             return;
@@ -299,6 +300,16 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
          }
     }
 
+    void EnterEvadeMode()
+    {
+        if (!IsCombatMovement())
+        {
+            SetCombatMovement(true);
+            m_creature->GetMotionMaster()->Clear();
+        }
+        ScriptedAI::EnterEvadeMode();
+    }
+
     void UpdateAI(const uint32 uiDiff)
     {
 
@@ -325,7 +336,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
                 if (m_uiPhaseTimer <= uiDiff)
                 {
                     m_uiPhase = PHASE_RUNNING;
-                    SetCombatMovement(false);
+                    SetCombatMovement(false, true);
                     m_creature->GetMotionMaster()->MovePoint(POINT_CENTER_GROUND, QueenLocs[0].x, QueenLocs[0].y, QueenLocs[0].z);
                     m_uiPhaseTimer = 13000;
                 }
@@ -335,7 +346,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
                 // Blood Mirror
                 if (m_uiBloodMirrorTimer <= uiDiff)
                 {
-                    if (Unit *pVictim = SelectClosestFriendlyTarget(m_creature->getVictim()))
+                    if (Unit* pVictim = SelectClosestFriendlyTarget(m_creature->getVictim()))
                     {
                         pVictim->CastSpell(m_creature->getVictim(), SPELL_BLOOD_MIRROR, true);
                         pVictim->CastSpell(pVictim, SPELL_BLOOD_MIRROR_LINKED, true);
@@ -354,7 +365,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
                          * Spell that handles targeting - we can do this here.
                          * if (DoCastSpellIfCan(m_creature, SPELL_DELIRIOUS_SLASH) == CAST_OK)
                          */
-                        if (Unit *pTarget = SelectClosestFriendlyTarget(m_creature->getVictim()))
+                        if (Unit* pTarget = SelectClosestFriendlyTarget(m_creature->getVictim()))
                         {
                             uint32 spell = SPELL_DELIRIOUS_SLASH_1;
 
@@ -379,7 +390,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
                          * Spell handles targeting, but we can do this here.
                          * if (DoCastSpellIfCan(m_creature, SPELL_VAMPIRIC_BITE) == CAST_OK)
                          */
-                        if (Unit *pTarget = SelectVampiricBiteTarget())
+                        if (Unit* pTarget = SelectVampiricBiteTarget())
                         {
                             if (DoCastSpellIfCan(pTarget, SPELL_VAMPIRIC_BITE_TRIGGERED) == CAST_OK)
                             {
@@ -421,7 +432,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
                      * but we can use SelectAttackingTarget() here
                      * if (DoCastSpellIfCan(m_creature, SPELL_SWARMING_SHADOWS) == CAST_OK)
                      */
-                    if (Unit *pTarget = SelectRandomRangedTarget(m_creature))
+                    if (Unit* pTarget = SelectRandomRangedTarget(m_creature))
                     {
                         if (DoCastSpellIfCan(pTarget, SPELL_SWARMING_SHADOWS_TRIGGERED) == CAST_OK)
                         {
@@ -472,16 +483,27 @@ CreatureAI* GetAI_boss_blood_queen_lanathel(Creature* pCreature)
  */
 struct MANGOS_DLL_DECL mob_swarming_shadowsAI : public ScriptedAI
 {
-    mob_swarming_shadowsAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_swarming_shadowsAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_creature->SetDisplayId(11686);
-        SetCombatMovement(false);
+        SetCombatMovement(false, true);
         m_creature->SetInCombatWithZone();
         DoCastSpellIfCan(m_creature, SPELL_SWARMING_SHADOWS_AURA, CAST_TRIGGERED);
     }
 
+    ScriptedInstance* m_pInstance;
+
     void Reset(){}
-    void UpdateAI(const uint32 uiDiff){}
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (m_pInstance)
+        {
+            if (m_pInstance->GetData(TYPE_LANATHEL) != IN_PROGRESS)
+                m_creature->ForcedDespawn();
+        }
+    }
 };
 
 CreatureAI* GetAI_mob_swarming_shadows(Creature* pCreature)
@@ -491,15 +513,15 @@ CreatureAI* GetAI_mob_swarming_shadows(Creature* pCreature)
 
 void AddSC_boss_blood_queen_lanathel()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_blood_queen_lanathel";
-    newscript->GetAI = &GetAI_boss_blood_queen_lanathel;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_blood_queen_lanathel";
+    pNewScript->GetAI = &GetAI_boss_blood_queen_lanathel;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_swarming_shadows";
-    newscript->GetAI = &GetAI_mob_swarming_shadows;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_swarming_shadows";
+    pNewScript->GetAI = &GetAI_mob_swarming_shadows;
+    pNewScript->RegisterSelf();
 }
