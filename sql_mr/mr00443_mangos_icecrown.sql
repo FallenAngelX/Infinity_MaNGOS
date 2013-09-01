@@ -366,6 +366,7 @@ UPDATE `gameobject_template` SET `type`='0', `flags`='32', `faction`='114' WHERE
 -- ---------------------
 -- Valithria dreamwalker
 -- ---------------------
+DELETE FROM `creature` WHERE `id` = 36789; -- Summon by script
 UPDATE `creature_template` SET `ScriptName` = 'mob_valithria_combat_trigger', `flags_extra` = `flags_extra` &~2 WHERE `entry` = 38752;
 UPDATE `creature` SET `phaseMask` = `phaseMask` | 16 WHERE `id` = 38752; -- phaseMask for Combat Trigger
 UPDATE `creature_template` SET `unit_flags` = `unit_flags` &~ 33554432, `AIName` = '', `ScriptName` = 'mob_valithria_dream_phase' WHERE `entry` = 37950; -- Valithria in dream phase

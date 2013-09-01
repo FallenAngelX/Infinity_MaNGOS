@@ -30,15 +30,10 @@ EndScriptData */
 
 static LOCATION SpawnLoc[]=
 {
-    {4203.470215f, 2484.500000f, 364.872009f},  // 0 Valithria
-    {4240.688477f, 2405.794678f, 364.868591f},  // 1 Valithria Room 1
-    {4239.579102f, 2566.753418f, 364.868439f},  // 2 Valithria Room 2
-    {4166.216797f, 2564.197266f, 364.873047f},  // 3 Valithria Room 3
-    {4165.112305f, 2405.872559f, 364.872925f},  // 4 Valithria Room 4
-    {4228.589844f, 2469.110107f, 364.868988f},  // 5 Mob 1
-    {4236.000000f, 2479.500000f, 364.869995f},  // 6 Mob 2
-    {4235.410156f, 2489.300049f, 364.872009f},  // 7 Mob 3
-    {4228.509766f, 2500.310059f, 364.876007f},  // 8 Mob 4
+    {4240.688477f, 2405.794678f, 364.868591f},  // 0 Valithria Room 1
+    {4239.579102f, 2566.753418f, 364.868439f},  // 1 Valithria Room 2
+    {4166.216797f, 2564.197266f, 364.873047f},  // 2 Valithria Room 3
+    {4165.112305f, 2405.872559f, 364.872925f},  // 3 Valithria Room 4
 };
 
 enum BossSpells
@@ -46,7 +41,7 @@ enum BossSpells
     SPELL_NIGHTMARE_PORTAL_PRE      = 71977,
     SPELL_NIGHTMARE_PORTAL          = 71987,
     SPELL_TWISTED_NIGHTMARES        = 71941,
-    SPELL_TWISTED_NIGHTMARES_DOT    = 71940,
+ // SPELL_TWISTED_NIGHTMARES_DOT    = 71940,
     SPELL_NIGHTMARE_CLOUD           = 71970, // Nightmare Clouds cast this on dreaming Valithria - she deals this dmg to Real Valithria
     SPELL_NIGHTMARE_CLOUD_VISUAL    = 71939,
 
@@ -60,20 +55,20 @@ enum BossSpells
     SPELL_DREAMWALKER_RAGE          = 71189,
     SPELL_IMMUNITY                  = 72724,
     SPELL_CORRUPTION                = 70904,
-    SPELL_DREAM_SLIP                = 71196,
-    SPELL_ICE_SPIKE                 = 70702,
+ // SPELL_DREAM_SLIP                = 71196,
+ // SPELL_ICE_SPIKE                 = 70702,
 
-    SPELL_CLEAR_DREAMS_NIGHTMARES   = 75863, // script effect removes Emerald Vigor and Nightmare auras
+ // SPELL_CLEAR_DREAMS_NIGHTMARES   = 75863, // script effect removes Emerald Vigor and Nightmare auras
 
     // summons
     // these spells should be applied to dummy npcs in gates
     // they should apply these auras once the encounter has started
     // but how to apply this, which spell on which npc and when? ;/
-    SPELL_SUMMON_TIMER_SUPPRESSER   = 70912,
-    SPELL_SUMMON_TIMER_SKELETON     = 70913,
-    SPELL_SUMMON_TIMER_ZOMBIE       = 70914,
-    SPELL_SUMMON_TIMER_ABOMIN       = 70915,
-    SPELL_SUMMON_TIMER_ARCHMAGE     = 70916,
+ // SPELL_SUMMON_TIMER_SUPPRESSER   = 70912,
+ // SPELL_SUMMON_TIMER_SKELETON     = 70913,
+ // SPELL_SUMMON_TIMER_ZOMBIE       = 70914,
+ // SPELL_SUMMON_TIMER_ABOMIN       = 70915,
+ // SPELL_SUMMON_TIMER_ARCHMAGE     = 70916,
 
     // Risen Archmage
     SPELL_FROSTBOLT_VOLLEY          = 70759,
@@ -100,8 +95,8 @@ enum BossSpells
     SPELL_ROT_WORM                  = 72962,
 
     NPC_RISEN_ARCHMAGE              = 37868,
-    NPC_COLUMN_OF_FROST             = 37918,
-    NPC_MANA_VOID                   = 38068,
+ // NPC_COLUMN_OF_FROST             = 37918,
+ // NPC_MANA_VOID                   = 38068,
     NPC_SUPPRESSER                  = 37863,
     NPC_BLAZING_SKELETON            = 36791,
     NPC_BLISTERING_ZOMBIE           = 37934,
@@ -110,12 +105,12 @@ enum BossSpells
 
     SUMMON_TYPES_NUMBER             = 4,
 
-    NPC_NIGHTMARE_PORTAL_PRE        = 38429,
-    NPC_NIGHTMARE_PORTAL            = 38430,
-    NPC_NIGHTMARE_CLOUD             = 38421,
-    NPC_DREAM_PORTAL_PRE            = 38186,
-    NPC_DREAM_PORTAL                = 37945,
-    NPC_DREAM_CLOUD                 = 37985,
+ // NPC_NIGHTMARE_PORTAL_PRE        = 38429,
+ // NPC_NIGHTMARE_PORTAL            = 38430,
+ // NPC_NIGHTMARE_CLOUD             = 38421,
+ // NPC_DREAM_PORTAL_PRE            = 38186,
+ // NPC_DREAM_PORTAL                = 37945,
+ // NPC_DREAM_CLOUD                 = 37985,
 
     // Achievements
     SPELL_ACHIEVEMENT_CREDIT        = 72706,
@@ -128,17 +123,9 @@ enum
     SAY_75_HEALTH               = -1631142,
     SAY_25_HEALTH               = -1631143,
     SAY_0_HEALTH                = -1631144,
-    SAY_PLAYER_DIES             = -1631145,
+ // SAY_PLAYER_DIES             = -1631145,
     SAY_BERSERK                 = -1631146,
     SAY_VICTORY                 = -1631147,
-};
-
-static uint32 m_uiSummonedAddsEntries[SUMMON_TYPES_NUMBER] =
-{
-    NPC_GLUTTONOUS_ABOMINATION,
-    NPC_RISEN_ARCHMAGE,
-    NPC_BLISTERING_ZOMBIE,
-    NPC_BLAZING_SKELETON
 };
 
 struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
@@ -156,12 +143,11 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
         Reset();
     }
 
-    ScriptedInstance *m_pInstance;
+    ScriptedInstance* m_pInstance;
     Difficulty m_uiMapDifficulty;
     bool m_bIsHeroic;
     bool m_bIs25Man;
 
-    bool m_bCombatStarted;
     bool m_bIsEnrage;
     bool m_bSaidOver25;
     bool m_bSaidOver75;
@@ -178,14 +164,15 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
     uint32 m_uiSummonSkeletonTimer;
     uint32 m_uiSummonArchmageTimer;
 
-    uint32 m_uiSummonSuppresserCounter;
-    uint32 m_uiSummonSkeletonCounter;
+    uint8 m_uiSummonSuppresserCounter;
+    uint8 m_uiSummonSkeletonCounter;
 
     GuidList m_lSummonedAddsGuids;
 
+    void AttackStart(Unit* pWho){}
+
     void Reset()
     {
-        m_bCombatStarted            = false;
         m_bIsEnrage                 = false;
         m_bSaidOver25               = false;
         m_bSaidOver75               = false;
@@ -208,84 +195,23 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
         m_lSummonedAddsGuids.clear();
 
         m_creature->SetHealth(m_creature->GetMaxHealth() / 2.0f);
-        DoCastSpellIfCan(m_creature, SPELL_CORRUPTION, CAST_TRIGGERED);
     }
 
-    void JustReachedHome()
-    {
-        DoRemoveAdds();
-        DoCastSpellIfCan(m_creature, SPELL_CORRUPTION, CAST_TRIGGERED);
-
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_VALITHRIA, FAIL);
-
-        m_creature->SetHealth(m_creature->GetMaxHealth() / 2.0f);
-    }
-
-    void MoveInLineOfSight(Unit* pWho)
-    {
-        if (m_bCombatStarted)
-            return;
-
-        if (pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() &&
-            m_creature->GetDistance(pWho) < 50.0f)
-        {
-            DoScriptText(SAY_AGGRO, m_creature);
-            DoCastSpellIfCan(m_creature, SPELL_IMMUNITY, CAST_TRIGGERED);
-
-            if (m_pInstance)
-            {
-                m_pInstance->SetData(TYPE_VALITHRIA, IN_PROGRESS);
-
-                if (Creature *pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_GREEN_DRAGON_COMBAT_TRIGGER))
-                {
-                    pTmp->SetInCombatWithZone();
-                    m_bCombatStarted = true;
-                }
-            }
-        }
-    }
-
-    // be passive
-    void AttackStart(Unit *pWho)
-    {
-        // prevent non-removed adds from killing Valithria - may sometimes get bugged
-        if (!m_bCombatStarted)
-            EnterEvadeMode();
-    }
-
-    void EnterEvadeMode()
-    {
-        m_bCombatStarted = false;
-        ScriptedAI::EnterEvadeMode();
-    }
-
-    void KilledUnit(Unit* pVictim)
-    {
-        if (pVictim->GetTypeId() == TYPEID_PLAYER)
-            DoScriptText(SAY_PLAYER_DIES, m_creature, pVictim);
-    }
-
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller)
     {
         DoScriptText(SAY_0_HEALTH, m_creature);
 
         if (m_pInstance)
         {
+            DoRemoveAdds();
             m_pInstance->SetData(TYPE_VALITHRIA, FAIL);
-
-            if (Creature *pTrigger = m_pInstance->GetSingleCreatureFromStorage(NPC_GREEN_DRAGON_COMBAT_TRIGGER))
-                pTrigger->AI()->EnterEvadeMode();
         }
-
-        m_creature->SetRespawnDelay(60);
     }
 
     void DoSummonAdd(uint32 uiEntry)
     {
-        uint32 loc = urand(1, 2 + (m_bIs25Man ? 2 : 0));
-        if (Creature *pTmp = m_creature->SummonCreature(uiEntry, SpawnLoc[loc].x, SpawnLoc[loc].y, SpawnLoc[loc].z, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000))
-            m_lSummonedAddsGuids.push_back(pTmp->GetObjectGuid());
+        uint32 loc = urand(0, m_bIs25Man ? 3 : 1);
+        m_creature->SummonCreature(uiEntry, SpawnLoc[loc].x, SpawnLoc[loc].y, SpawnLoc[loc].z, 0.0f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 10000);
 
         // some additional control of summoning adds (anti flood system)
         if (!m_bIsEnrage)
@@ -304,27 +230,22 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
 
     void DoRemoveAdds()
     {
-        for(GuidList::iterator i = m_lSummonedAddsGuids.begin(); i != m_lSummonedAddsGuids.end(); ++i)
+        for (GuidList::iterator i = m_lSummonedAddsGuids.begin(); i != m_lSummonedAddsGuids.end(); ++i)
         {
-            if (Creature *pTmp = m_creature->GetMap()->GetCreature(*i))
-            {
-                if (pTmp->isAlive())
-                    pTmp->ForcedDespawn();
-            }
+            if (Creature* pTmp = m_creature->GetMap()->GetCreature(*i))
+                pTmp->ForcedDespawn();
         }
+
         std::list<Creature*> lWorms;
         GetCreatureListWithEntryInGrid(lWorms, m_creature, NPC_ROT_WORM, 100.0f);
-        for(std::list<Creature*>::iterator i = lWorms.begin(); i != lWorms.end(); ++i)
-        {
-            if ((*i)->isAlive())
-                (*i)->ForcedDespawn();
-        }
+        for (std::list<Creature*>::iterator i = lWorms.begin(); i != lWorms.end(); ++i)
+            (*i)->ForcedDespawn();
     }
 
     Unit* SelectRandomPlayer(float range)
     {
         Map* pMap = m_creature->GetMap();
-        Map::PlayerList const &playerlist = pMap->GetPlayers();
+        Map::PlayerList const& playerlist = pMap->GetPlayers();
         if (playerlist.isEmpty())
             return NULL;
 
@@ -352,16 +273,22 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
             return list[urand(0, list.size() - 1)];
     }
 
-    void JustSummoned(Creature *pCreature)
+    void JustSummoned(Creature* pCreature)
     {
+        m_lSummonedAddsGuids.push_back(pCreature->GetObjectGuid());
+        if (pCreature->GetEntry() == NPC_SUPPRESSER)
+            pCreature->FixateTarget(m_creature);
+        else
+        {
+            pCreature->AddThreat(m_creature, 5000);
+            pCreature->AI()->AttackStart(m_creature);
+        }
         pCreature->SetInCombatWithZone();
-        pCreature->AddThreat(m_creature, pCreature->GetEntry() == NPC_SUPPRESSER ? 1000000 : 5000);
-        pCreature->AI()->AttackStart(m_creature);
     }
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!m_bCombatStarted)
+        if (!m_pInstance || m_pInstance->GetData(TYPE_VALITHRIA) != IN_PROGRESS)
             return;
 
         // Outro
@@ -373,11 +300,10 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
                 {
                     m_pInstance->SetData(TYPE_VALITHRIA, DONE);
 
-                    if (Creature *pDummy = m_pInstance->GetSingleCreatureFromStorage(NPC_GREEN_DRAGON_COMBAT_TRIGGER))
+                    if (Creature* pDummy = m_pInstance->GetSingleCreatureFromStorage(NPC_GREEN_DRAGON_COMBAT_TRIGGER))
                     {
                         // Set Valithria credit
                         pDummy->CastSpell(pDummy, SPELL_ACHIEVEMENT_CREDIT, true);
-                        pDummy->ForcedDespawn(1000);
                     }
                 }
 
@@ -439,6 +365,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
         {
             if (m_uiEnrageTimer <= uiDiff)
             {
+                DoScriptText(SAY_BERSERK, m_creature);
                 m_bIsEnrage = true;
             }
             else
@@ -448,11 +375,11 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
         // Summon Portals
         if (m_uiSummonPortalsTimer <= uiDiff)
         {
-            uint32 max = m_bIs25Man ? 12 : 6;
+            uint8 uiMaxPortals = m_bIs25Man ? 8 : 4;
 
             // this way makes sure that spell is cast
             // this should be done via ScriptEffect spell, but we don't need it in SD2
-            for (uint32 i = 0; i < max; ++i)
+            for (uint8 i = 0; i < uiMaxPortals; ++i)
                 m_creature->CastSpell(m_creature, m_bIsHeroic ? SPELL_NIGHTMARE_PORTAL_PRE : SPELL_DREAM_PORTAL_PRE, true);
 
             if (!m_bIsHeroic)
@@ -468,15 +395,13 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
         // Summon Suppresser
         if (m_uiSummonSuppresserTimer <= uiDiff)
         {
-            uint32 uiReduction;
-
             for (uint32 i = 0; i < urand(1, m_bIs25Man ? 3 : 2) + m_uiSummonSuppresserCounter; ++i)
                 DoSummonAdd(NPC_SUPPRESSER);
 
             // 5s faster each summoning
-            uiReduction = m_uiSummonSuppresserCounter >= 10 ? 50000 : (m_uiSummonSuppresserCounter * 5000);
-            m_uiSummonSuppresserTimer = 60000 - uiReduction; 
-            ++m_uiSummonSuppresserCounter;
+            m_uiSummonSuppresserTimer = 60000 - (m_uiSummonSuppresserCounter * 5000); 
+            if (m_uiSummonSuppresserCounter < 10)
+                ++m_uiSummonSuppresserCounter;
         }
         else
             m_uiSummonSuppresserTimer -= uiDiff;
@@ -484,13 +409,11 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
         // Summon Blazing Skeleton
         if (m_uiSummonSkeletonTimer <= uiDiff)
         {
-            uint32 uiReduction;
-
             DoSummonAdd(NPC_BLAZING_SKELETON);
             // 5s faster each summoning
-            uiReduction = m_uiSummonSkeletonCounter >= 10 ? 50000 : (m_uiSummonSkeletonCounter * 5000);
-            m_uiSummonSkeletonTimer = 60000 - uiReduction;
-            ++m_uiSummonSkeletonCounter;
+            m_uiSummonSkeletonTimer = 60000 - (m_uiSummonSkeletonCounter * 5000);
+            if (m_uiSummonSkeletonCounter < 10)
+                ++m_uiSummonSkeletonCounter;
         }
         else
             m_uiSummonSkeletonTimer -= uiDiff;
@@ -531,27 +454,25 @@ CreatureAI* GetAI_boss_valithria_dreamwalker(Creature* pCreature)
 
 struct MANGOS_DLL_DECL mob_valithria_dream_phaseAI : public ScriptedAI
 {
-    mob_valithria_dream_phaseAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_valithria_dream_phaseAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_creature->HandleEmoteState(EMOTE_STATE_FLYGRABCLOSED);
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
     }
+
+    ScriptedInstance* m_pInstance;
+
     void Reset(){}
     void UpdateAI(const uint32 uiDiff){}
-    void AttackStart(Unit *pWho){}
-    void DamageTaken(Unit *pDealer, uint32 &uiDamage)
+    void AttackStart(Unit* pWho){}
+    void DamageTaken(Unit* pDealer, uint32& uiDamage)
     {
-        if (ScriptedInstance *pInstance = (ScriptedInstance*)m_creature->GetInstanceData())
+        if (m_pInstance && m_pInstance->GetData(TYPE_VALITHRIA) == IN_PROGRESS)
         {
-            if (Creature *pValithria = pInstance->GetSingleCreatureFromStorage(NPC_VALITHRIA))
+            Creature* pValithria = m_pInstance->GetSingleCreatureFromStorage(NPC_VALITHRIA);
+            if (pValithria && pValithria->isAlive())
             {
-                if (pValithria->isAlive())
-                {
-                    if (boss_valithria_dreamwalkerAI *pValAI = dynamic_cast<boss_valithria_dreamwalkerAI*>(pValithria->AI()))
-                    {
-                        if (pValAI->m_bCombatStarted)
-                            pValithria->DealDamage(pValithria, uiDamage, NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
-                    }
-                }
+                pValithria->DealDamage(pValithria, uiDamage, NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
             }
         }
 
@@ -566,32 +487,53 @@ CreatureAI* GetAI_mob_valithria_dream_phase(Creature* pCreature)
 
 struct MANGOS_DLL_DECL mob_valithria_combat_triggerAI : public ScriptedAI
 {
-    mob_valithria_combat_triggerAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_valithria_combat_triggerAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         SetCombatMovement(false);
         Reset();
     }
 
-    ScriptedInstance *m_pInstance;
+    ScriptedInstance* m_pInstance;
     uint32 m_uiCheckTimer;
+    uint32 m_uiResetTimer;
 
     void Reset()
     {
-        m_uiCheckTimer = 2000;
+        m_uiCheckTimer     = 2000;
+        m_uiResetTimer     = 0;
+
+        if (m_pInstance && m_pInstance->GetData(TYPE_VALITHRIA) != DONE)
+        {
+            m_creature->SummonCreature(NPC_VALITHRIA, TEMPSUMMON_MANUAL_DESPAWN, 0);
+        }
     }
 
-    void AttackStart(Unit *pWho){}
+    void AttackStart(Unit* pWho){}
+    void EnterEvadeMode() {}
 
-    void EnterEvadeMode()
+
+    void MoveInLineOfSight(Unit* pWho)
     {
-        if (m_pInstance)
-        {
-            if (Creature *pVal = m_pInstance->GetSingleCreatureFromStorage(NPC_VALITHRIA))
-                pVal->AI()->EnterEvadeMode();
-        }
+        if (!m_pInstance)
+            return;
 
-        ScriptedAI::EnterEvadeMode();
+        uint32 uiState = m_pInstance->GetData(TYPE_VALITHRIA);
+        if (uiState == IN_PROGRESS || uiState == DONE)
+            return;
+
+        if (pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() &&
+            m_creature->GetDistance(pWho) < 50.0f)
+        {
+            Creature* pGreenDragon = m_pInstance->GetSingleCreatureFromStorage(NPC_VALITHRIA);
+            if (pGreenDragon && pGreenDragon->isAlive())
+            {
+                DoScriptText(SAY_AGGRO, pGreenDragon);
+                DoCastSpellIfCan(pGreenDragon, SPELL_IMMUNITY, CAST_TRIGGERED);
+                m_pInstance->SetData(TYPE_VALITHRIA, IN_PROGRESS);
+                m_creature->SetInCombatWithZone();
+            }
+        }
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -599,18 +541,30 @@ struct MANGOS_DLL_DECL mob_valithria_combat_triggerAI : public ScriptedAI
         if (!m_pInstance)
             return;
 
-        if (m_uiCheckTimer <= uiDiff)
+        if (m_uiResetTimer)
         {
-            if (Creature *pValithria = m_pInstance->GetSingleCreatureFromStorage(NPC_VALITHRIA))
+            if (m_uiResetTimer <= uiDiff)
             {
-                if (boss_valithria_dreamwalkerAI *pValAI = dynamic_cast<boss_valithria_dreamwalkerAI*>(pValithria->AI()))
+                if (Creature* pGreenDragon = m_pInstance->GetSingleCreatureFromStorage(NPC_VALITHRIA))
                 {
-                    if (pValAI->m_bCombatStarted && !m_creature->SelectHostileTarget())
-                        EnterEvadeMode();
+                    pGreenDragon->ForcedDespawn();
+                    Reset();
                 }
+                m_uiResetTimer = 0;
             }
             else
-                EnterEvadeMode();
+                m_uiResetTimer -= uiDiff;
+
+            return;
+        }
+
+        if (m_uiCheckTimer <= uiDiff)
+        {
+            if (Creature* pGreenDragon = m_pInstance->GetSingleCreatureFromStorage(NPC_VALITHRIA))
+            {
+                if (!pGreenDragon->isAlive())
+                    m_uiResetTimer = 60000;
+            }
 
             m_uiCheckTimer = 2000;
         }
@@ -619,7 +573,7 @@ struct MANGOS_DLL_DECL mob_valithria_combat_triggerAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_mob_valithria_combat_trigger(Creature *pCreature)
+CreatureAI* GetAI_mob_valithria_combat_trigger(Creature* pCreature)
 {
     return new mob_valithria_combat_triggerAI(pCreature);
 };
@@ -627,7 +581,7 @@ CreatureAI* GetAI_mob_valithria_combat_trigger(Creature *pCreature)
 // Gluttonous Abomination
 struct MANGOS_DLL_DECL mob_gluttonous_abominationAI : public ScriptedAI
 {
-    mob_gluttonous_abominationAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_gluttonous_abominationAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         Reset();
     }
@@ -639,12 +593,12 @@ struct MANGOS_DLL_DECL mob_gluttonous_abominationAI : public ScriptedAI
         m_uiGutSprayTimer = urand(3000, 5000);
     }
 
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller)
     {
         DoCastSpellIfCan(m_creature, SPELL_ROT_WORM_SPAWNER, CAST_TRIGGERED);
     }
 
-    void JustSummoned(Creature *pCreature)
+    void JustSummoned(Creature* pCreature)
     {
         pCreature->SetInCombatWithZone();
         pCreature->CastSpell(pCreature, SPELL_ROT_WORM, true);
@@ -668,7 +622,7 @@ struct MANGOS_DLL_DECL mob_gluttonous_abominationAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_mob_gluttonous_abomination(Creature *pCreature)
+CreatureAI* GetAI_mob_gluttonous_abomination(Creature* pCreature)
 {
     return new mob_gluttonous_abominationAI(pCreature);
 };
@@ -676,7 +630,10 @@ CreatureAI* GetAI_mob_gluttonous_abomination(Creature *pCreature)
 // Blistering Zombie
 struct MANGOS_DLL_DECL mob_blistering_zombieAI : public ScriptedAI
 {
-    mob_blistering_zombieAI(Creature *pCreature) : ScriptedAI(pCreature){}
+    mob_blistering_zombieAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        Reset();
+    }
 
     bool m_bHasDied;
 
@@ -685,23 +642,23 @@ struct MANGOS_DLL_DECL mob_blistering_zombieAI : public ScriptedAI
         m_bHasDied = false;
     }
 
-    void Aggro(Unit *pWho)
+    void Aggro(Unit* pWho)
     {
         DoCastSpellIfCan(m_creature, SPELL_CORROSION, CAST_TRIGGERED);
     }
 
-    void DamageTaken(Unit *pDealer, uint32 &uiDamage)
+    void DamageTaken(Unit* pDealer, uint32& uiDamage)
     {
         if (uiDamage > m_creature->GetHealth())
         {
             uiDamage = 0;
-            SetCombatMovement(false);
+            SetCombatMovement(false, true);
             if (!m_bHasDied)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_ACID_BURST) == CAST_OK)
                 {
                     m_bHasDied = true;
-                    m_creature->ForcedDespawn(2000);
+                    m_creature->ForcedDespawn(1000); // 750ms need for cast spell
                 }
             }
         }
@@ -719,7 +676,7 @@ struct MANGOS_DLL_DECL mob_blistering_zombieAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_mob_blistering_zombie(Creature *pCreature)
+CreatureAI* GetAI_mob_blistering_zombie(Creature* pCreature)
 {
     return new mob_blistering_zombieAI(pCreature);
 };
@@ -727,7 +684,7 @@ CreatureAI* GetAI_mob_blistering_zombie(Creature *pCreature)
 // Risen Archmage
 struct MANGOS_DLL_DECL mob_risen_archmageAI : public ScriptedAI
 {
-    mob_risen_archmageAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_risen_archmageAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         Reset();
     }
@@ -739,8 +696,8 @@ struct MANGOS_DLL_DECL mob_risen_archmageAI : public ScriptedAI
     void Reset()
     {
         m_uiFrostboltVolleyTimer = urand(3000, 5000);
-        m_uiColumnOfFrostTimer = urand(3000, 5000);
-        m_uiManaVoidTimer = urand(5000, 10000);
+        m_uiColumnOfFrostTimer   = urand(3000, 5000);
+        m_uiManaVoidTimer        = urand(5000, 10000);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -760,7 +717,7 @@ struct MANGOS_DLL_DECL mob_risen_archmageAI : public ScriptedAI
         // Column of Frost
         if (m_uiColumnOfFrostTimer <= uiDiff)
         {
-            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER))
             {
                 if (DoCastSpellIfCan(pTarget, SPELL_COLUMN_OF_FROST) == CAST_OK)
                     m_uiColumnOfFrostTimer = urand(10000, 15000);
@@ -772,7 +729,7 @@ struct MANGOS_DLL_DECL mob_risen_archmageAI : public ScriptedAI
         // Mana Void
         if (m_uiManaVoidTimer <= uiDiff)
         {
-            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER))
             {
                 if (DoCastSpellIfCan(pTarget, SPELL_MANA_VOID) == CAST_OK)
                     m_uiManaVoidTimer = urand(10000, 15000);
@@ -785,7 +742,7 @@ struct MANGOS_DLL_DECL mob_risen_archmageAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_mob_risen_archmage(Creature *pCreature)
+CreatureAI* GetAI_mob_risen_archmage(Creature* pCreature)
 {
     return new mob_risen_archmageAI(pCreature);
 };
@@ -793,7 +750,7 @@ CreatureAI* GetAI_mob_risen_archmage(Creature *pCreature)
 // Blazing Skeleton
 struct MANGOS_DLL_DECL mob_blazing_skeletonAI : public ScriptedAI
 {
-    mob_blazing_skeletonAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_blazing_skeletonAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         Reset();
     }
@@ -815,7 +772,7 @@ struct MANGOS_DLL_DECL mob_blazing_skeletonAI : public ScriptedAI
         // Fireball
         if (m_uiFireballTimer <= uiDiff)
         {
-            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER))
             {
                 if (DoCastSpellIfCan(pTarget, SPELL_FIREBALL) == CAST_OK)
                     m_uiFireballTimer = urand(3000, 5000);
@@ -837,7 +794,7 @@ struct MANGOS_DLL_DECL mob_blazing_skeletonAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_mob_blazing_skeleton(Creature *pCreature)
+CreatureAI* GetAI_mob_blazing_skeleton(Creature* pCreature)
 {
     return new mob_blazing_skeletonAI(pCreature);
 };
@@ -845,45 +802,43 @@ CreatureAI* GetAI_mob_blazing_skeleton(Creature *pCreature)
 // Suppresser
 struct MANGOS_DLL_DECL mob_suppresserAI : public ScriptedAI
 {
-    mob_suppresserAI(Creature *pCreature) : ScriptedAI(pCreature)
-    {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-    }
-
-    ScriptedInstance *m_pInstance;
+    mob_suppresserAI(Creature* pCreature) : ScriptedAI(pCreature){}
 
     void Reset(){}
 
+    void AttackStart(Unit* pWho)
+    {
+        if (m_creature->Attack(pWho, false))
+        {
+            m_creature->AddThreat(pWho);
+            m_creature->SetInCombatWith(pWho);
+            pWho->SetInCombatWith(m_creature);
+
+            m_creature->GetMotionMaster()->MoveChase(pWho, 20.0f, m_creature->GetAngle(pWho));
+        }
+    }
+
     void UpdateAI(const uint32 uiDiff)
     {
-        if (m_pInstance)
-        {
-            if (m_pInstance->GetData(TYPE_VALITHRIA) == FAIL)
-            {
-                m_creature->ForcedDespawn();
-                return;
-            }
-        }
-
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (m_creature->getVictim()->GetEntry() == NPC_VALITHRIA)
-        {
-            if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
-                DoCastSpellIfCan(m_creature->getVictim(), SPELL_SUPPRESSION);
-        }
+        if (m_creature->IsNonMeleeSpellCasted(false))
+            return;
+
+        if (m_creature->GetDistance2d(m_creature->getVictim()) < 21.0f)
+            DoCastSpellIfCan(m_creature->getVictim(), SPELL_SUPPRESSION);
     }
 };
 
-CreatureAI* GetAI_mob_suppresser(Creature *pCreature)
+CreatureAI* GetAI_mob_suppresser(Creature* pCreature)
 {
     return new mob_suppresserAI(pCreature);
 };
 
 struct MANGOS_DLL_DECL mob_dream_portal_preAI : public ScriptedAI
 {
-    mob_dream_portal_preAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_dream_portal_preAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_uiSummonTimer = 10000;
     }
@@ -891,7 +846,7 @@ struct MANGOS_DLL_DECL mob_dream_portal_preAI : public ScriptedAI
     uint32 m_uiSummonTimer;
 
     void Reset(){}
-    void AttackStart(Unit *pWho){}
+    void AttackStart(Unit* pWho){}
     void UpdateAI(const uint32 uiDiff)
     {
         if (m_uiSummonTimer <= uiDiff)
@@ -907,7 +862,7 @@ struct MANGOS_DLL_DECL mob_dream_portal_preAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_mob_dream_portal_pre(Creature *pCreature)
+CreatureAI* GetAI_mob_dream_portal_pre(Creature* pCreature)
 {
     return new mob_dream_portal_preAI(pCreature);
 };
@@ -921,7 +876,7 @@ bool GossipHello_mob_dream_portal(Player* pPlayer, Creature* pCreature)
 
 struct MANGOS_DLL_DECL mob_dream_cloudAI : public ScriptedAI
 {
-    mob_dream_cloudAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_dream_cloudAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_creature->SetRespawnDelay(15);
         Reset();
@@ -936,9 +891,9 @@ struct MANGOS_DLL_DECL mob_dream_cloudAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_DREAM_CLOUD_VISUAL, CAST_TRIGGERED);
     }
 
-    void AttackStart(Unit *pWho){}
+    void AttackStart(Unit* pWho){}
 
-    void MoveInLineOfSight(Unit *pWho)
+    void MoveInLineOfSight(Unit* pWho)
     {
         if (m_bHasCast)
             return;
@@ -971,14 +926,14 @@ struct MANGOS_DLL_DECL mob_dream_cloudAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_mob_dream_cloud(Creature *pCreature)
+CreatureAI* GetAI_mob_dream_cloud(Creature* pCreature)
 {
     return new mob_dream_cloudAI(pCreature);
 };
 
 struct MANGOS_DLL_DECL mob_nightmare_portal_preAI : public ScriptedAI
 {
-    mob_nightmare_portal_preAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_nightmare_portal_preAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_uiSummonTimer = 15000;
     }
@@ -986,7 +941,7 @@ struct MANGOS_DLL_DECL mob_nightmare_portal_preAI : public ScriptedAI
     uint32 m_uiSummonTimer;
 
     void Reset(){}
-    void AttackStart(Unit *pWho){}
+    void AttackStart(Unit* pWho){}
     void UpdateAI(const uint32 uiDiff)
     {
         if (m_uiSummonTimer <= uiDiff)
@@ -1002,7 +957,7 @@ struct MANGOS_DLL_DECL mob_nightmare_portal_preAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_mob_nightmare_portal_pre(Creature *pCreature)
+CreatureAI* GetAI_mob_nightmare_portal_pre(Creature* pCreature)
 {
     return new mob_nightmare_portal_preAI(pCreature);
 };
@@ -1016,7 +971,7 @@ bool GossipHello_mob_nightmare_portal(Player* pPlayer, Creature* pCreature)
 
 struct MANGOS_DLL_DECL mob_nightmare_cloudAI : public ScriptedAI
 {
-    mob_nightmare_cloudAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_nightmare_cloudAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         Reset();
     }
@@ -1031,9 +986,9 @@ struct MANGOS_DLL_DECL mob_nightmare_cloudAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_NIGHTMARE_CLOUD, CAST_TRIGGERED);
     }
 
-    void AttackStart(Unit *pWho){}
+    void AttackStart(Unit* pWho){}
 
-    void MoveInLineOfSight(Unit *pWho)
+    void MoveInLineOfSight(Unit* pWho)
     {
         if (m_bHasCast)
             return;
@@ -1066,31 +1021,31 @@ struct MANGOS_DLL_DECL mob_nightmare_cloudAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_mob_nightmare_cloud(Creature *pCreature)
+CreatureAI* GetAI_mob_nightmare_cloud(Creature* pCreature)
 {
     return new mob_nightmare_cloudAI(pCreature);
 };
 
 struct MANGOS_DLL_DECL mob_mana_voidAI : public ScriptedAI
 {
-    mob_mana_voidAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_mana_voidAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         DoCastSpellIfCan(m_creature, SPELL_VOID_BUFF, CAST_TRIGGERED);
         m_creature->ForcedDespawn(30000);
     }
     void Reset(){}
-    void AttackStart(Unit *pWho){}
+    void AttackStart(Unit* pWho){}
     void UpdateAI(const uint32 uiDiff){}
 };
 
-CreatureAI* GetAI_mob_mana_void(Creature *pCreature)
+CreatureAI* GetAI_mob_mana_void(Creature* pCreature)
 {
     return new mob_mana_voidAI(pCreature);
 };
 
 struct MANGOS_DLL_DECL mob_column_of_frostAI : public ScriptedAI
 {
-    mob_column_of_frostAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_column_of_frostAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_uiColumnOfFrostTimer = 3000;
         DoCastSpellIfCan(m_creature, SPELL_COLUMN_OF_FROST_VISUAL, CAST_TRIGGERED);
@@ -1099,7 +1054,7 @@ struct MANGOS_DLL_DECL mob_column_of_frostAI : public ScriptedAI
     uint32 m_uiColumnOfFrostTimer;
 
     void Reset(){}
-    void AttackStart(Unit *pWho){}
+    void AttackStart(Unit* pWho){}
     void UpdateAI(const uint32 uiDiff)
     {
         // Column of Frost
@@ -1116,92 +1071,92 @@ struct MANGOS_DLL_DECL mob_column_of_frostAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_mob_column_of_frost(Creature *pCreature)
+CreatureAI* GetAI_mob_column_of_frost(Creature* pCreature)
 {
     return new mob_column_of_frostAI(pCreature);
 };
 
 void AddSC_boss_valithria_dreamwalker()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_valithria_dreamwalker";
-    newscript->GetAI = &GetAI_boss_valithria_dreamwalker;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_valithria_dreamwalker";
+    pNewScript->GetAI = &GetAI_boss_valithria_dreamwalker;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_valithria_dream_phase";
-    newscript->GetAI = &GetAI_mob_valithria_dream_phase;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_valithria_dream_phase";
+    pNewScript->GetAI = &GetAI_mob_valithria_dream_phase;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_valithria_combat_trigger";
-    newscript->GetAI = &GetAI_mob_valithria_combat_trigger;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_valithria_combat_trigger";
+    pNewScript->GetAI = &GetAI_mob_valithria_combat_trigger;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_gluttonous_abomination";
-    newscript->GetAI = &GetAI_mob_gluttonous_abomination;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_gluttonous_abomination";
+    pNewScript->GetAI = &GetAI_mob_gluttonous_abomination;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_blistering_zombie";
-    newscript->GetAI = &GetAI_mob_blistering_zombie;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_blistering_zombie";
+    pNewScript->GetAI = &GetAI_mob_blistering_zombie;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_risen_archmage";
-    newscript->GetAI = &GetAI_mob_risen_archmage;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_risen_archmage";
+    pNewScript->GetAI = &GetAI_mob_risen_archmage;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_blazing_skeleton";
-    newscript->GetAI = &GetAI_mob_blazing_skeleton;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_blazing_skeleton";
+    pNewScript->GetAI = &GetAI_mob_blazing_skeleton;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_suppresser";
-    newscript->GetAI = &GetAI_mob_suppresser;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_suppresser";
+    pNewScript->GetAI = &GetAI_mob_suppresser;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_nightmare_portal_pre";
-    newscript->GetAI = &GetAI_mob_nightmare_portal_pre;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_nightmare_portal_pre";
+    pNewScript->GetAI = &GetAI_mob_nightmare_portal_pre;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_nightmare_portal";
-    newscript->pGossipHello = &GossipHello_mob_nightmare_portal;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_nightmare_portal";
+    pNewScript->pGossipHello = &GossipHello_mob_nightmare_portal;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_nightmare_cloud";
-    newscript->GetAI = &GetAI_mob_nightmare_cloud;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_nightmare_cloud";
+    pNewScript->GetAI = &GetAI_mob_nightmare_cloud;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_dream_portal_pre";
-    newscript->GetAI = &GetAI_mob_dream_portal_pre;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_dream_portal_pre";
+    pNewScript->GetAI = &GetAI_mob_dream_portal_pre;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_dream_portal";
-    newscript->pGossipHello = &GossipHello_mob_dream_portal;
+    pNewScript = new Script;
+    pNewScript->Name = "mob_dream_portal";
+    pNewScript->pGossipHello = &GossipHello_mob_dream_portal;
 
-    newscript->RegisterSelf();
-    newscript = new Script;
-    newscript->Name = "mob_dream_cloud";
-    newscript->GetAI = &GetAI_mob_dream_cloud;
-    newscript->RegisterSelf();
+    pNewScript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_dream_cloud";
+    pNewScript->GetAI = &GetAI_mob_dream_cloud;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_mana_void";
-    newscript->GetAI = &GetAI_mob_mana_void;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_mana_void";
+    pNewScript->GetAI = &GetAI_mob_mana_void;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_column_of_frost";
-    newscript->GetAI = &GetAI_mob_column_of_frost;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_column_of_frost";
+    pNewScript->GetAI = &GetAI_mob_column_of_frost;
+    pNewScript->RegisterSelf();
 }
