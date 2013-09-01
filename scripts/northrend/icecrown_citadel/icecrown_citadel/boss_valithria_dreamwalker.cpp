@@ -167,6 +167,8 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
     uint8 m_uiSummonSuppresserCounter;
     uint8 m_uiSummonSkeletonCounter;
 
+    float m_fHP;
+
     GuidList m_lSummonedAddsGuids;
 
     void AttackStart(Unit* pWho){}
@@ -195,6 +197,8 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
         m_lSummonedAddsGuids.clear();
 
         m_creature->SetHealth(m_creature->GetMaxHealth() / 2.0f);
+        m_fHP = 50.0f;
+
     }
 
     void JustDied(Unit* pKiller)
@@ -206,6 +210,12 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
             DoRemoveAdds();
             m_pInstance->SetData(TYPE_VALITHRIA, FAIL);
         }
+    }
+
+    void DamageTaken(Unit* pDealer, uint32& uiDamage)
+    {
+        if (m_fHP > 98.0f && m_creature->GetHealthPercent() == 100.0f)
+            uiDamage = 0;
     }
 
     void DoSummonAdd(uint32 uiEntry)
@@ -320,12 +330,12 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
         // Health Check
         if (m_uiHealthCheckTimer <= uiDiff)
         {
-            float fHP = m_creature->GetHealthPercent();
+            m_fHP = m_creature->GetHealthPercent();
 
             // when reached 75% health
             if (!m_bSaidOver75)
             {
-                if (fHP > 75.0f)
+                if (m_fHP > 75.0f)
                 {
                     DoScriptText(SAY_75_HEALTH, m_creature);
                     m_bSaidOver75 = true;
@@ -335,7 +345,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
             // when reached 25% health
             if (!m_bSaidOver25)
             {
-                if (fHP < 25.0f)
+                if (m_fHP < 25.0f)
                 {
                     DoScriptText(SAY_25_HEALTH, m_creature);
                     m_bSaidOver25 = true;
@@ -343,7 +353,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
             }
 
             // check if encounter is completed
-            if (fHP > 95.0f)
+            if (m_fHP == 100.0f)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_DREAMWALKER_RAGE) == CAST_OK)
                 {
