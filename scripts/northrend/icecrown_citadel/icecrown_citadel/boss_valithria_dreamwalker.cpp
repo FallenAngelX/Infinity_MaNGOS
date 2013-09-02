@@ -353,7 +353,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
             }
 
             // check if encounter is completed
-            if (m_fHP == 100.0f)
+            if (m_fHP > 99.0f && m_creature->GetHealth() == m_creature->GetMaxHealth())
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_DREAMWALKER_RAGE) == CAST_OK)
                 {
