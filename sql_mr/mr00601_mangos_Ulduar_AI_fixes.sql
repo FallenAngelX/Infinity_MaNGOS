@@ -25,5 +25,29 @@ INSERT INTO dbscripts_on_creature_death VALUES
 (33988,0,18,1000,0,0,0,0,0,0,0,0,0,0,0,0,'');
 
 -- Summon Yogg-Saron guardian
-INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
+REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
 ('62978', '1', '33292'); 
+
+-- Linked creatures (from Ulduar)
+DELETE FROM `creature_linking_template` WHERE `map` = 603 AND `master_entry` = 32845;
+INSERT INTO `creature_linking_template` (`entry`, `map`, `master_entry`, `flag`, `search_range`) VALUES
+('32893','603','32845','5140','0'),
+('32897','603','32845','5140','0'),
+('32900','603','32845','5140','0'),
+('32901','603','32845','5140','0'),
+('32941','603','32845','5140','0'),
+('32946','603','32845','5140','0'),
+('32948','603','32845','5140','0'),
+('32950','603','32845','5140','0'),
+('33325','603','32845','5140','0'),
+('33326','603','32845','5140','0'),
+('33327','603','32845','5140','0'),
+('33328','603','32845','5140','0'),
+('33330','603','32845','5140','0'),
+('33331','603','32845','5140','0'),
+('33332','603','32845','5140','0'),
+('33333','603','32845','5140','0');
+
+DELETE FROM `creature_linking_template` WHERE `map` = 603 AND `master_entry` = 33288;
+INSERT INTO `creature_linking_template` (`entry`, `map`, `master_entry`, `flag`, `search_range`) VALUES
+('33988','603','33288','4112','0');
