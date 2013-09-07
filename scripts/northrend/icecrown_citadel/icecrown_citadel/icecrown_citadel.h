@@ -260,6 +260,7 @@ public:
 
     void Initialize();
 
+    void OnPlayerEnter(Player* pPlayer) override;
     void OnObjectCreate(GameObject* pGo);
     void OnCreatureCreate(Creature* pCreature);
 

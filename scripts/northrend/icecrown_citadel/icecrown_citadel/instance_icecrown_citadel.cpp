@@ -98,6 +98,22 @@ bool instance_icecrown_citadel::IsEncounterInProgress()
     return false;
 }
 
+void instance_icecrown_citadel::OnPlayerEnter(Player* pPlayer)
+{
+    // Summon Sindragosa in reload case
+    if ((GetData(TYPE_SINDRAGOSA) == NOT_STARTED || GetData(TYPE_SINDRAGOSA) == FAIL)
+        && !GetSingleCreatureFromStorage(NPC_SINDRAGOSA))
+    {
+        Creature* pBrother = GetSingleCreatureFromStorage(NPC_RIMEFANG);
+        if (pBrother && !pBrother->isAlive())
+        {
+            pBrother = GetSingleCreatureFromStorage(NPC_SPINESTALKER);
+            if (pBrother && !pBrother->isAlive())
+                pPlayer->SummonCreature(NPC_SINDRAGOSA, 4505.0f, 2484.243896f, 231.0f, 3.17f, TEMPSUMMON_DEAD_DESPAWN, 0, true);
+        }
+    }
+}
+
 void instance_icecrown_citadel::OnCreatureCreate(Creature* pCreature)
 {
     switch(pCreature->GetEntry())
