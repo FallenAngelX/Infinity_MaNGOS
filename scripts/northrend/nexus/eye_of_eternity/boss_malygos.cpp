@@ -1161,7 +1161,7 @@ struct MANGOS_DLL_DECL npc_hover_diskAI : public ScriptedAI
         {
             m_creature->GetMotionMaster()->MoveFall();
             m_creature->setFaction(35);
-            m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+            m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
             m_creature->CastSpell(m_creature, SPELL_FLIGHT, true);
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         }
@@ -1191,7 +1191,7 @@ struct MANGOS_DLL_DECL npc_alexstraszaAI : public ScriptedAI
     {
         m_uiTimer = 9500;
         m_uiCount = 0;
-        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
         m_creature->SetLevitate(true);
         if (m_pInstance)
             if (Creature* pMalygos = m_pInstance->GetSingleCreatureFromStorage(NPC_MALYGOS))
@@ -1313,7 +1313,7 @@ struct MANGOS_DLL_DECL npc_whyrmrest_skytalonAI : public ScriptedAI
         StartTimer = 500;
         SeatTimer = 2000;
         ownerGUID = m_creature->GetCreatorGuid();
-        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
         m_creature->SetLevitate(true);
     }
 

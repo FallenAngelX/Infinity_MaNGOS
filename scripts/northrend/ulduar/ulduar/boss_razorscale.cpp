@@ -489,12 +489,12 @@ struct MANGOS_DLL_DECL mob_mole_machineAI : public ScriptedAI
             // summon 2 dwarfes
             if (!m_bIsSentinel)
             {
-                m_creature->SummonCreature(NPC_DARK_RUNE_WATCHER, m_creature->GetPositionX() + 5.0f, m_creature->GetPositionY() + 5, m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
-                m_creature->SummonCreature(NPC_DARK_RUNE_GUARDIAN, m_creature->GetPositionX() - 5.0f, m_creature->GetPositionY() - 5, m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
+                m_creature->SummonCreature(NPC_DARK_RUNE_WATCHER, m_creature->GetPositionX() + 5.0f, m_creature->GetPositionY() + 5, m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_OOC_DESPAWN, 10000);
+                m_creature->SummonCreature(NPC_DARK_RUNE_GUARDIAN, m_creature->GetPositionX() - 5.0f, m_creature->GetPositionY() - 5, m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_OOC_DESPAWN, 10000);
             }
             // summon 1 sentinel
             else
-                m_creature->SummonCreature(NPC_DARK_RUNE_SENTINEL, m_creature->GetPositionX() - 5.0f, m_creature->GetPositionY() - 5, m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
+                m_creature->SummonCreature(NPC_DARK_RUNE_SENTINEL, m_creature->GetPositionX() - 5.0f, m_creature->GetPositionY() - 5, m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_OOC_DESPAWN, 10000);
 
             m_uiSummonTimer = 60000;
         }
@@ -566,7 +566,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
         SetCombatMovement(false);
         //  make boss fly
         m_creature->SetLevitate(true);
-        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
 
         m_creature->GetMotionMaster()->MoveIdle();
 
@@ -734,7 +734,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
             DoScriptText(SAY_FIRES_EXTINGUISH, pCommander);
         //  make boss fly
         m_creature->SetLevitate(true);
-        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
         m_Phase                     = PHASE_AIR;
         m_uiFireballTimer           = 10000;
         m_uiDevouringFlameTimer     = 18000;

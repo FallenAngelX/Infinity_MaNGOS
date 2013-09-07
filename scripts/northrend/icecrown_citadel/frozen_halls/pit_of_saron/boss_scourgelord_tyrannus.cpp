@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL boss_rimefangAI : public ScriptedAI
         m_uiIcyBlastTimer       = 35000;
         m_uiIcyBlastSlowTimer   = 30000;
         m_uiMainTargetGUID.Clear();
-        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
     }
 
     void SetMainTarget(ObjectGuid m_uiTargetGUID)

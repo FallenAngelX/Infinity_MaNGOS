@@ -104,7 +104,7 @@ void guardAI::SummonGuardsHelpers()
         entry = NPC_EXODAR_PEACEKEEPER;
     if (m_creature->getFaction() == F_SILVERMOON)
         entry = NPC_SILVERMOON_CITYGUARD;
-    DoSpawnCreature(entry, (float) (X - x), (float) (Y - y), (float) (Z - z), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000);
+    DoSpawnCreature(entry, (float) (X - x), (float) (Y - y), (float) (Z - z), 0, TEMPSUMMON_TIMED_OOC_DESPAWN, 5000);
 }
 
 void guardAI::UpdateAI(const uint32 uiDiff)

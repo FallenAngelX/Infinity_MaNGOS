@@ -372,7 +372,7 @@ struct boss_skadi_graufAI : public ScriptedAI
         {
             isInFlight = true;
             m_creature->SetLevitate(true);
-            m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+            m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
             m_creature->SetWalk(false);
             uiWaypointId = 1;
             uiMovementTimer = 1000;
@@ -392,11 +392,11 @@ struct boss_skadi_graufAI : public ScriptedAI
 
             if (m_uiSummon < uiDiff)
             {
-                if (Creature* pTemp = m_creature->SummonCreature(NPC_YMIRJAR_WARRIOR, 471.0f +irand(-5,5), -506.0f+irand(-5,5), 105.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT_OR_DEAD_DESPAWN, 120000))
+                if (Creature* pTemp = m_creature->SummonCreature(NPC_YMIRJAR_WARRIOR, 471.0f +irand(-5,5), -506.0f+irand(-5,5), 105.0f, 0.0f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 120000))
                     pTemp->SetInCombatWithZone();
-                if (Creature* pTemp = m_creature->SummonCreature(NPC_YMIRJAR_HARPOONER, 471.0f+irand(-5,5), -506.0f+irand(-5,5), 105.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT_OR_DEAD_DESPAWN, 120000))
+                if (Creature* pTemp = m_creature->SummonCreature(NPC_YMIRJAR_HARPOONER, 471.0f+irand(-5,5), -506.0f+irand(-5,5), 105.0f, 0.0f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 120000))
                     pTemp->SetInCombatWithZone();
-                if (Creature* pTemp = m_creature->SummonCreature(NPC_YMIRJAR_WITCH_DOCTOR, 471.0f+irand(-5,5), -506.0f+irand(-5,5), 105.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT_OR_DEAD_DESPAWN, 120000))
+                if (Creature* pTemp = m_creature->SummonCreature(NPC_YMIRJAR_WITCH_DOCTOR, 471.0f+irand(-5,5), -506.0f+irand(-5,5), 105.0f, 0.0f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 120000))
                     pTemp->SetInCombatWithZone();
                 m_uiSummon = m_bIsRegularMode ? 30000 : 25000;
             }

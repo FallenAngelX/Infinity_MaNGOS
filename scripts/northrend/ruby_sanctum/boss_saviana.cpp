@@ -120,7 +120,7 @@ struct MANGOS_DLL_DECL boss_savianaAI : public ScriptedAI
             m_uiPhase = PHASE_GROUND;
             SetCombatMovement(true);
             m_creature->SetLevitate(false);
-            m_creature->RemoveByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_UNK_2);
+            m_creature->RemoveByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_HOVER);
 
             if (m_creature->getVictim())
                 m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
@@ -140,7 +140,7 @@ struct MANGOS_DLL_DECL boss_savianaAI : public ScriptedAI
 
         SetCombatMovement(true);
         m_creature->SetLevitate(false);
-        m_creature->RemoveByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_UNK_2);
+        m_creature->RemoveByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_HOVER);
     }
 
     void Aggro(Unit *who) 
@@ -199,7 +199,7 @@ struct MANGOS_DLL_DECL boss_savianaAI : public ScriptedAI
                 m_uiPhase = PHASE_FLYING;
                 SetCombatMovement(false);
                 m_creature->SetLevitate(true);
-                m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+                m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
                 m_creature->GetMotionMaster()->Clear();
                 m_creature->GetMotionMaster()->MovePoint(POINT_AIR, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
             }

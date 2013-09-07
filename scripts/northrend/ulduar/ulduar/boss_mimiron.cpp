@@ -971,7 +971,7 @@ struct MANGOS_DLL_DECL boss_aerial_command_unitAI : public ScriptedAI
     void MakeBossFly()
     {
         m_creature->SetLevitate(true);
-        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
     }
 
     void DamageTaken(Unit *done_by, uint32 &uiDamage)
@@ -1376,7 +1376,7 @@ struct MANGOS_DLL_DECL boss_mimironAI : public ScriptedAI
                 if(m_uiPhaseDelayTimer < uiDiff)
                 {
                     DoScriptText(SAY_TORSO_ACTIVE, m_creature);
-                    if(/*Creature* pTorso = */m_creature->SummonCreature(NPC_VX001, CENTER_X, CENTER_Y, CENTER_Z, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 180000))
+                    if(/*Creature* pTorso = */m_creature->SummonCreature(NPC_VX001, CENTER_X, CENTER_Y, CENTER_Z, 0, TEMPSUMMON_TIMED_OOC_DESPAWN, 180000))
                     {
                         if(m_pInstance->GetData(TYPE_MIMIRON_HARD) == IN_PROGRESS)
                         {

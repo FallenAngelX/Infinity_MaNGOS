@@ -1778,7 +1778,7 @@ struct MANGOS_DLL_DECL mob_valkyr_shadowguardAI : public base_icc_bossAI
         DoCastSpellIfCan(m_creature, SPELL_WINGS_OF_THE_DAMNED, CAST_TRIGGERED);
         SetCombatMovement(false);
         m_creature->SetLevitate(true);
-        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
         m_creature->NearTeleportTo(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 15.0f, 0.0f);
     }
 
@@ -2016,7 +2016,7 @@ struct MANGOS_DLL_DECL  mob_vile_spiritAI : public base_icc_bossAI
     {
         SetCombatMovement(false);
         m_creature->SetLevitate(true);
-        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
         m_creature->SetInCombatWithZone();
         m_creature->GetMotionMaster()->Clear();
         m_creature->NearTeleportTo(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 15.0f, 0.0f);
@@ -2528,7 +2528,7 @@ struct MANGOS_DLL_DECL mob_spirit_bombAI : public base_icc_bossAI
         m_creature->ForcedDespawn(41000);
         SetCombatMovement(false);
         m_creature->SetLevitate(true);
-        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+        m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
         m_creature->SetInCombatWithZone();
         m_creature->GetMotionMaster()->Clear();
 

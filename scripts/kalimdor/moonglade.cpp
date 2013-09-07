@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL npc_clintar_dw_spiritAI : public npc_escortAI
                 DoScriptText(SAY_RELIC2, m_creature, pPlayer);
                 break;
             case 31:
-                m_creature->SummonCreature(NPC_ASPECT_OF_RAVEN, 7465.321f, -3088.515f, 429.006f, 5.550f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
+                m_creature->SummonCreature(NPC_ASPECT_OF_RAVEN, 7465.321f, -3088.515f, 429.006f, 5.550f, TEMPSUMMON_TIMED_OOC_DESPAWN, 10000);
                 break;
             case 35:
                 m_creature->HandleEmote(EMOTE_STATE_USESTANDING_NOSHEATHE);
@@ -339,7 +339,7 @@ struct MANGOS_DLL_DECL npc_keeper_remulosAI : public npc_escortAI, private Dialo
                 m_eranikusGuid = pSummoned->GetObjectGuid();
                 // Make Eranikus unattackable first
                 // ToDo: uncomment the fly effect when it will be possible to cancel it properly
-                // pSummoned->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
+                // pSummoned->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
                 pSummoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 pSummoned->SetLevitate(true);
                 break;
