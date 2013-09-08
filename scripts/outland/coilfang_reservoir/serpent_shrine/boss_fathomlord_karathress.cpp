@@ -99,7 +99,7 @@ struct MANGOS_DLL_DECL boss_fathomlord_karathressAI : public ScriptedAI
 
     bool m_bBlessingOfTides;
 
-    void Reset()
+    void Reset() override
     {
         m_uiCataclysmicBoltTimer    = 10000;
         m_uiSearingNovaTimer        = urand(20000, 30000);
@@ -107,7 +107,7 @@ struct MANGOS_DLL_DECL boss_fathomlord_karathressAI : public ScriptedAI
         m_bBlessingOfTides          = false;
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
         switch (pSpell->Id)
         {
@@ -123,7 +123,7 @@ struct MANGOS_DLL_DECL boss_fathomlord_karathressAI : public ScriptedAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_KARATHRESS_EVENT, IN_PROGRESS);
@@ -131,7 +131,7 @@ struct MANGOS_DLL_DECL boss_fathomlord_karathressAI : public ScriptedAI
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         switch (urand(0, 2))
         {
@@ -141,7 +141,7 @@ struct MANGOS_DLL_DECL boss_fathomlord_karathressAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -240,7 +240,7 @@ struct MANGOS_DLL_DECL boss_fathomguard_sharkkisAI : public ScriptedAI
     uint32 m_uiMultiTossTimer;
     uint32 m_uiPetTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiHurlTridentTimer    = 2500;
         m_uiLeechingThrowTimer  = 20000;
@@ -250,7 +250,7 @@ struct MANGOS_DLL_DECL boss_fathomguard_sharkkisAI : public ScriptedAI
             m_uiPetTimer        = 10000;
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoCastSpellIfCan(m_creature, SPELL_POWER_OF_SHARKKIS, CAST_TRIGGERED);
     }
@@ -261,7 +261,7 @@ struct MANGOS_DLL_DECL boss_fathomguard_sharkkisAI : public ScriptedAI
             pSummoned->AI()->AttackStart(m_creature->getVictim());
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         // resummon the pet in 10 secs
         if (pSummoned->IsPet())
@@ -338,14 +338,14 @@ struct MANGOS_DLL_DECL boss_fathomguard_tidalvessAI : public ScriptedAI
     uint32 m_uiWindfuryTimer;
     uint32 m_uiTotemTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiFrostShockTimer = 25000;
         m_uiWindfuryTimer   = 0;
         m_uiTotemTimer      = urand(2000, 5000);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoCastSpellIfCan(m_creature, SPELL_POWER_OF_TIDALVESS, CAST_TRIGGERED);
     }
@@ -404,7 +404,7 @@ struct MANGOS_DLL_DECL boss_fathomguard_caribdisAI : public ScriptedAI
     uint32 m_uiHealTimer;
     uint32 m_uiCycloneTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiWaterBoltVolleyTimer = 35000;
         m_uiTidalSurgeTimer      = urand(15000, 20000);
@@ -412,7 +412,7 @@ struct MANGOS_DLL_DECL boss_fathomguard_caribdisAI : public ScriptedAI
         m_uiCycloneTimer         = urand(10000, 15000);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoCastSpellIfCan(m_creature, SPELL_POWER_OF_CARIBDIS, CAST_TRIGGERED);
     }

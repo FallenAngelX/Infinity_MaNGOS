@@ -57,7 +57,7 @@ struct MANGOS_DLL_DECL boss_void_reaverAI : public ScriptedAI
     uint32 m_uiKnockAwayTimer;
     uint32 m_uiBerserkTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPoundingTimer   = 13000;
         m_uiArcaneOrbTimer  = 3000;
@@ -78,7 +78,7 @@ struct MANGOS_DLL_DECL boss_void_reaverAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -86,7 +86,7 @@ struct MANGOS_DLL_DECL boss_void_reaverAI : public ScriptedAI
             m_pInstance->SetData(TYPE_VOIDREAVER, DONE);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 

@@ -71,7 +71,7 @@ struct MANGOS_DLL_DECL mobs_nether_drakeAI : public ScriptedAI
     uint32 m_uiManaBurnTimer;
     uint32 m_uiIntangiblePresenceTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_bIsNihil                  = false;
         m_uiNihilSpeechTimer        = 3000;
@@ -91,7 +91,7 @@ struct MANGOS_DLL_DECL mobs_nether_drakeAI : public ScriptedAI
     }
 
     // in case creature was not summoned (not expected)
-    void MovementInform(uint32 uiMoveType, uint32 uiPointId)
+    void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
     {
         if (uiMoveType != POINT_MOTION_TYPE)
             return;
@@ -226,7 +226,7 @@ struct MANGOS_DLL_DECL npc_daranelleAI : public ScriptedAI
 {
     npc_daranelleAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    void Reset() { }
+    void Reset() override { }
 
     void MoveInLineOfSight(Unit* pWho) override
     {
@@ -276,7 +276,7 @@ struct MANGOS_DLL_DECL npc_bloodmaul_stout_triggerAI : public ScriptedAI
 
     ObjectGuid m_selectedOgreGuid;
 
-    void Reset()
+    void Reset() override
     {
         m_uiStartTimer = 1000;
         m_bHasValidOgre = false;
@@ -506,7 +506,7 @@ struct MANGOS_DLL_DECL npc_simon_game_bunnyAI : public ScriptedAI
 
     ObjectGuid m_masterPlayerGuid;
 
-    void Reset()
+    void Reset() override
     {
         m_uiGamePhase  = PHASE_LEVEL_PREPARE;
         m_bIsEventStarted = false;

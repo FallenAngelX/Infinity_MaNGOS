@@ -99,7 +99,7 @@ class MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance, privat
         void SetData(uint32 uiType, uint32 uiData) override;
         uint32 GetData(uint32 uiType) const override;
 
-        void Update(uint32 uiDiff);
+        void Update(uint32 uiDiff) override;
 
         const char* Save() const override { return m_strInstData.c_str(); }
         void Load(const char* chrIn) override;

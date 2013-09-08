@@ -91,10 +91,10 @@ class MANGOS_DLL_DECL instance_arcatraz : public ScriptedInstance, private Dialo
         const char* Save() const override { return m_strInstData.c_str(); }
         void Load(const char* chrIn) override;
 
-        void Update(uint32 uiDiff);
+        void Update(uint32 uiDiff) override;
 
     private:
-        void JustDidDialogueStep(int32 iEntry);
+        void JustDidDialogueStep(int32 iEntry) override;
 
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;

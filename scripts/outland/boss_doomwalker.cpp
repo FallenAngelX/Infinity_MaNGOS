@@ -55,7 +55,7 @@ struct MANGOS_DLL_DECL boss_doomwalkerAI : public ScriptedAI
 
     bool m_bHasEnrage;
 
-    void Reset()
+    void Reset() override
     {
         m_uiArmorTimer     = urand(5000, 13000);
         m_uiChainTimer     = urand(10000, 30000);
@@ -83,12 +83,12 @@ struct MANGOS_DLL_DECL boss_doomwalkerAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoCastSpellIfCan(m_creature, SPELL_MARK_OF_DEATH_AURA, CAST_TRIGGERED);
         DoScriptText(SAY_AGGRO, m_creature);

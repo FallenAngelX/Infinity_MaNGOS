@@ -85,7 +85,7 @@ struct MANGOS_DLL_DECL boss_the_lurker_belowAI : public Scripted_NoMovementAI
     uint32 m_uiSpoutTimer;
     uint32 m_uiSpoutEndTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPhase           = PHASE_NORMAL;
         m_uiPhaseChangeTimer = 90000;
@@ -109,7 +109,7 @@ struct MANGOS_DLL_DECL boss_the_lurker_belowAI : public Scripted_NoMovementAI
         m_creature->ForcedDespawn();
     }
 
-    void JustDied(Unit* pVictim)
+    void JustDied(Unit* /*pVictim*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_THELURKER_EVENT, DONE);

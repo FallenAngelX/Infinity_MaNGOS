@@ -58,7 +58,7 @@ struct MANGOS_DLL_DECL mob_lumpAI : public ScriptedAI
     uint32 m_uiSpearThrowTimer;
     bool m_bReset;
 
-    void Reset()
+    void Reset() override
     {
         m_uiResetTimer = MINUTE * IN_MILLISECONDS;
         m_uiSpearThrowTimer = 2000;
@@ -75,7 +75,7 @@ struct MANGOS_DLL_DECL mob_lumpAI : public ScriptedAI
         AttackStart(pAttacker);
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage)
+    void DamageTaken(Unit* /*pDealer*/, uint32& uiDamage) override
     {
         if (m_creature->GetHealth() < uiDamage || (m_creature->GetHealth() - uiDamage) * 100 / m_creature->GetMaxHealth() < 30)
         {
@@ -95,7 +95,7 @@ struct MANGOS_DLL_DECL mob_lumpAI : public ScriptedAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         if (m_creature->HasAura(SPELL_VISUAL_SLEEP, EFFECT_INDEX_0))
             m_creature->RemoveAurasDueToSpell(SPELL_VISUAL_SLEEP);
@@ -180,14 +180,14 @@ struct MANGOS_DLL_DECL npc_maghar_captiveAI : public npc_escortAI
     uint32 m_uiHealTimer;
     uint32 m_uiFrostShockTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiChainLightningTimer = 1000;
         m_uiHealTimer = 0;
         m_uiFrostShockTimer = 6000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         m_creature->CastSpell(m_creature, SPELL_EARTHBIND_TOTEM, false);
     }
@@ -230,7 +230,7 @@ struct MANGOS_DLL_DECL npc_maghar_captiveAI : public npc_escortAI
         pSummoned->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
     }
 
-    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
+    void SpellHitTarget(Unit* /*pTarget*/, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_CHAIN_LIGHTNING)
         {
@@ -241,7 +241,7 @@ struct MANGOS_DLL_DECL npc_maghar_captiveAI : public npc_escortAI
         }
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -316,7 +316,7 @@ struct MANGOS_DLL_DECL npc_creditmarker_visit_with_ancestorsAI : public Scripted
 {
     npc_creditmarker_visit_with_ancestorsAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    void Reset() {}
+    void Reset() override {}
 
     void MoveInLineOfSight(Unit* pWho) override
     {

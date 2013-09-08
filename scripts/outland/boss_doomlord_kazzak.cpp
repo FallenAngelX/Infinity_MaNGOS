@@ -62,7 +62,7 @@ struct MANGOS_DLL_DECL boss_doomlordkazzakAI : public ScriptedAI
     uint32 m_uiGreatEnrageTimer;
     uint32 m_uiTwistedReflectionTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiShadowVolleyTimer       = urand(6000, 10000);
         m_uiCleaveTimer             = 7000;
@@ -79,7 +79,7 @@ struct MANGOS_DLL_DECL boss_doomlordkazzakAI : public ScriptedAI
         DoScriptText(SAY_INTRO, m_creature);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_AGGRO1 : SAY_AGGRO2, m_creature);
         DoCastSpellIfCan(m_creature, SPELL_CAPTURE_SOUL, CAST_TRIGGERED);
@@ -99,7 +99,7 @@ struct MANGOS_DLL_DECL boss_doomlordkazzakAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
     }

@@ -88,7 +88,7 @@ struct MANGOS_DLL_DECL boss_morogrim_tidewalkerAI : public ScriptedAI
 
     bool m_bIsPhase2;
 
-    void Reset()
+    void Reset() override
     {
         m_uiTidalWaveTimer      = 10000;
         m_uiWateryGraveTimer    = 30000;
@@ -101,7 +101,7 @@ struct MANGOS_DLL_DECL boss_morogrim_tidewalkerAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_DOUBLE_ATTACK);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -109,7 +109,7 @@ struct MANGOS_DLL_DECL boss_morogrim_tidewalkerAI : public ScriptedAI
             m_pInstance->SetData(TYPE_MOROGRIM_EVENT, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         switch (urand(0, 2))
         {
@@ -119,7 +119,7 @@ struct MANGOS_DLL_DECL boss_morogrim_tidewalkerAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -246,12 +246,12 @@ struct MANGOS_DLL_DECL mob_water_globuleAI : public ScriptedAI
 
     uint32 m_uiTargetTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiTargetTimer = 10000;
     }
 
-    void MoveInLineOfSight(Unit* pWho) override
+    void MoveInLineOfSight(Unit* /*pWho*/) override
     {
         // ToDo: cast damage spell here, after proper checks are done
     }

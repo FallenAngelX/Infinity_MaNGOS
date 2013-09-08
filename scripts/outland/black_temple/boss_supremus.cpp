@@ -64,10 +64,10 @@ struct MANGOS_DLL_DECL molten_flameAI : public Scripted_NoMovementAI
 {
     molten_flameAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
-    void Reset() {}
-    void AttackStart(Unit* pWho) override {}
-    void MoveInLineOfSight(Unit* pWho) override { }
-    void UpdateAI(const uint32 uiDiff) override {}
+    void Reset() override {}
+    void AttackStart(Unit* /*pWho*/) override {}
+    void MoveInLineOfSight(Unit* /*pWho*/) override {}
+    void UpdateAI(const uint32 /*uiDiff*/) override {}
 };
 
 // TODO Remove this 'script' when combat movement can be proper prevented from core-side
@@ -75,10 +75,10 @@ struct MANGOS_DLL_DECL npc_volcanoAI : public Scripted_NoMovementAI
 {
     npc_volcanoAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
-    void Reset() {}
-    void AttackStart(Unit* pWho) override {}
-    void MoveInLineOfSight(Unit* pWho) override { }
-    void UpdateAI(const uint32 uiDiff) override {}
+    void Reset() override {}
+    void AttackStart(Unit* /*pWho*/) override {}
+    void MoveInLineOfSight(Unit* /*pWho*/) override {}
+    void UpdateAI(const uint32 /*uiDiff*/) override {}
 };
 
 struct MANGOS_DLL_DECL boss_supremusAI : public ScriptedAI
@@ -103,7 +103,7 @@ struct MANGOS_DLL_DECL boss_supremusAI : public ScriptedAI
 
     GuidList m_lSummonedGUIDs;
 
-    void Reset()
+    void Reset() override
     {
         m_uiHatefulStrikeTimer = 5000;
         m_uiSummonFlameTimer   = 20000;
@@ -120,13 +120,13 @@ struct MANGOS_DLL_DECL boss_supremusAI : public ScriptedAI
             m_pInstance->SetData(TYPE_SUPREMUS, NOT_STARTED);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_SUPREMUS, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_SUPREMUS, DONE);
@@ -181,7 +181,7 @@ struct MANGOS_DLL_DECL boss_supremusAI : public ScriptedAI
         return pTarget;
     }
 
-    void KilledUnit(Unit* pKilled)
+    void KilledUnit(Unit* pKilled) override
     {
         // The current target is the fixated target - repick a new one
         if (!m_bTankPhase && pKilled == m_creature->getVictim())

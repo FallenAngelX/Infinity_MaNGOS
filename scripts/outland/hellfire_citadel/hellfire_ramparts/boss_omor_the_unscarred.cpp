@@ -64,7 +64,7 @@ struct MANGOS_DLL_DECL boss_omor_the_unscarredAI : public ScriptedAI
     ObjectGuid m_playerGuid;
     bool m_bCanPullBack;
 
-    void Reset()
+    void Reset() override
     {
         DoScriptText(SAY_WIPE, m_creature);
 
@@ -78,7 +78,7 @@ struct MANGOS_DLL_DECL boss_omor_the_unscarredAI : public ScriptedAI
         m_bCanPullBack = false;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         switch (urand(0, 2))
         {
@@ -88,7 +88,7 @@ struct MANGOS_DLL_DECL boss_omor_the_unscarredAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         if (urand(0, 1))
             return;
@@ -104,7 +104,7 @@ struct MANGOS_DLL_DECL boss_omor_the_unscarredAI : public ScriptedAI
             pSummoned->AI()->AttackStart(pTarget);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DIE, m_creature);
     }

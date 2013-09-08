@@ -105,7 +105,7 @@ struct MANGOS_DLL_DECL boss_high_astromancer_solarianAI : public ScriptedAI
 
     GuidVector m_vSpotLightsGuidVector;
 
-    void Reset()
+    void Reset() override
     {
         m_uiArcaneMissilesTimer        = 0;
         m_uiWrathOfTheAstromancerTimer = urand(15000, 25000);
@@ -141,7 +141,7 @@ struct MANGOS_DLL_DECL boss_high_astromancer_solarianAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -149,7 +149,7 @@ struct MANGOS_DLL_DECL boss_high_astromancer_solarianAI : public ScriptedAI
             m_pInstance->SetData(TYPE_SOLARIAN, DONE);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -412,7 +412,7 @@ struct MANGOS_DLL_DECL mob_solarium_priestAI : public ScriptedAI
     uint32 m_uiHolySmiteTimer;
     uint32 m_uiAoESilenceTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiHealTimer = 9000;
         m_uiHolySmiteTimer = 1;

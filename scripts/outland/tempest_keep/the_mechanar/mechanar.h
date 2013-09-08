@@ -97,7 +97,7 @@ class MANGOS_DLL_DECL instance_mechanar : public ScriptedInstance
         const char* Save() const override { return m_strInstData.c_str(); }
         void Load(const char* chrIn) override;
 
-        void Update(uint32 uiDiff);
+        void Update(uint32 uiDiff) override;
 
     private:
         void DoSpawnBridgeWave();

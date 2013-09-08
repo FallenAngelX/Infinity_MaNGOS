@@ -57,7 +57,7 @@ struct MANGOS_DLL_DECL boss_ambassador_hellmawAI : public ScriptedAI
     uint32 m_uiEnrageTimer;
     bool m_bIsEnraged;
 
-    void Reset()
+    void Reset() override
     {
         m_uiBanishTimer         = 2000;
         m_uiCorrosiveAcidTimer  = urand(20000, 23000);
@@ -72,7 +72,7 @@ struct MANGOS_DLL_DECL boss_ambassador_hellmawAI : public ScriptedAI
             m_pInstance->SetData(TYPE_HELLMAW, FAIL);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         switch (urand(0, 2))
         {
@@ -85,12 +85,12 @@ struct MANGOS_DLL_DECL boss_ambassador_hellmawAI : public ScriptedAI
             m_pInstance->SetData(TYPE_HELLMAW, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 

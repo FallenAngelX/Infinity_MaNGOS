@@ -68,7 +68,7 @@ struct MANGOS_DLL_DECL boss_anzuAI : public ScriptedAI
 
     GuidList m_lBirdsGuidList;
 
-    void Reset()
+    void Reset() override
     {
         m_uiFleshRipTimer   = urand(9000, 10000);
         m_uiScreechTimer    = 23000;
@@ -77,7 +77,7 @@ struct MANGOS_DLL_DECL boss_anzuAI : public ScriptedAI
         m_fHealthCheck      = 75.0f;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         // Note: this should be moved to the intro event when implemented!
         DoSummonBirdHelpers();
@@ -86,7 +86,7 @@ struct MANGOS_DLL_DECL boss_anzuAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ANZU, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DespawnBirdHelpers();
 
@@ -129,7 +129,7 @@ struct MANGOS_DLL_DECL boss_anzuAI : public ScriptedAI
             for (uint8 i = 0; i < MAX_BROODS; ++i)
             {
                 m_creature->GetRandomPoint(pClaw->GetPositionX(), pClaw->GetPositionY(), pClaw->GetPositionZ(), 7.0f, fX, fY, fZ);
-                m_creature->SummonCreature(NPC_BROOD_OF_ANZU, fX, fY, fZ, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 30000);
+                m_creature->SummonCreature(NPC_BROOD_OF_ANZU, fX, fY, fZ, 0, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
             }
         }
     }

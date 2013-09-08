@@ -40,7 +40,7 @@ enum
     SPELL_ARCANE_CHARGES    = 45072
 };
 
-bool ItemUse_item_arcane_charges(Player* pPlayer, Item* pItem, const SpellCastTargets& pTargets)
+bool ItemUse_item_arcane_charges(Player* pPlayer, Item* pItem, const SpellCastTargets& /*pTargets*/)
 {
     if (pPlayer->IsTaxiFlying())
         return false;
@@ -57,7 +57,7 @@ bool ItemUse_item_arcane_charges(Player* pPlayer, Item* pItem, const SpellCastTa
 # item_flying_machine
 #####*/
 
-bool ItemUse_item_flying_machine(Player* pPlayer, Item* pItem, const SpellCastTargets& pTargets)
+bool ItemUse_item_flying_machine(Player* pPlayer, Item* pItem, const SpellCastTargets& /*pTargets*/)
 {
     uint32 itemId = pItem->GetEntry();
 
@@ -110,7 +110,7 @@ enum
     ZONE_ID_HOWLING             = 495
 };
 
-bool ItemUse_item_petrov_cluster_bombs(Player* pPlayer, Item* pItem, const SpellCastTargets& pTargets)
+bool ItemUse_item_petrov_cluster_bombs(Player* pPlayer, Item* pItem, const SpellCastTargets& /*pTargets*/)
 {
     if (pPlayer->GetZoneId() != ZONE_ID_HOWLING)
         return false;

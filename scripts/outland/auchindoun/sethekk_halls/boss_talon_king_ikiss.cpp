@@ -73,7 +73,7 @@ struct MANGOS_DLL_DECL boss_talon_king_ikissAI : public ScriptedAI
     bool m_bBlink;
     bool m_bIntro;
 
-    void Reset()
+    void Reset() override
     {
         m_uiArcaneVolleyTimer = urand(5000, 12000);
         m_uiSheepTimer = 8000;
@@ -99,7 +99,7 @@ struct MANGOS_DLL_DECL boss_talon_king_ikissAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         switch (urand(0, 2))
         {
@@ -112,7 +112,7 @@ struct MANGOS_DLL_DECL boss_talon_king_ikissAI : public ScriptedAI
             m_pInstance->SetData(TYPE_IKISS, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -126,7 +126,7 @@ struct MANGOS_DLL_DECL boss_talon_king_ikissAI : public ScriptedAI
             m_pInstance->SetData(TYPE_IKISS, FAIL);
     }
 
-    void KilledUnit(Unit* pVctim)
+    void KilledUnit(Unit* /*pVctim*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }

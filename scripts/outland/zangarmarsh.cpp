@@ -50,7 +50,7 @@ struct MANGOS_DLL_DECL npc_cooshcooshAI : public ScriptedAI
     uint32 m_uiNormFaction;
     uint32 m_uiLightningBolt_Timer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiLightningBolt_Timer = 2000;
 
@@ -131,7 +131,7 @@ struct MANGOS_DLL_DECL npc_kayra_longmaneAI : public npc_escortAI
         }
     }
 
-    void Reset() { }
+    void Reset() override { }
 };
 
 bool QuestAccept_npc_kayra_longmane(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
@@ -161,7 +161,7 @@ enum
     EVENT_ID_STORMCROW      = 11225,
 };
 
-bool ProcessEventId_event_taxi_stormcrow(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
+bool ProcessEventId_event_taxi_stormcrow(uint32 uiEventId, Object* pSource, Object* /*pTarget*/, bool bIsStart)
 {
     if (uiEventId == EVENT_ID_STORMCROW && !bIsStart && pSource->GetTypeId() == TYPEID_PLAYER)
     {

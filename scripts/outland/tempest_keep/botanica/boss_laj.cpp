@@ -57,7 +57,7 @@ struct MANGOS_DLL_DECL boss_lajAI : public ScriptedAI
     uint32 m_uiAllergicTimer;
     uint32 m_uiTrashTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_creature->SetDisplayId(MODEL_ID_DEFAULT);
         m_creature->ApplySpellImmune(0, IMMUNITY_SCHOOL, SPELL_SCHOOL_MASK_SHADOW, true);

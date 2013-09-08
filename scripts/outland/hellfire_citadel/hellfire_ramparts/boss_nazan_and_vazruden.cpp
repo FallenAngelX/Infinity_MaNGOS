@@ -93,7 +93,7 @@ struct MANGOS_DLL_DECL boss_vazruden_heraldAI : public ScriptedAI
     ObjectGuid m_lastSeenPlayerGuid;
     ObjectGuid m_vazrudenGuid;
 
-    void Reset()
+    void Reset() override
     {
         if (m_creature->GetEntry() != NPC_VAZRUDEN_HERALD)
             m_creature->UpdateEntry(NPC_VAZRUDEN_HERALD);
@@ -247,7 +247,7 @@ struct MANGOS_DLL_DECL boss_vazruden_heraldAI : public ScriptedAI
             m_pInstance->SetData(TYPE_VAZRUDEN, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_NAZAN, DONE);
@@ -373,13 +373,13 @@ struct MANGOS_DLL_DECL boss_vazrudenAI : public ScriptedAI
     uint32 m_uiRevengeTimer;
     bool m_bHealthBelow;
 
-    void Reset()
+    void Reset() override
     {
         m_bHealthBelow = false;
         m_uiRevengeTimer = urand(5500, 8400);
     }
 
-    void Aggro(Unit* pWho) override
+    void Aggro(Unit* /*pWho*/) override
     {
         switch (urand(0, 2))
         {
@@ -408,7 +408,7 @@ struct MANGOS_DLL_DECL boss_vazrudenAI : public ScriptedAI
         DoScriptText(urand(0, 1) ? SAY_KILL1 : SAY_KILL2, m_creature);
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDealer*/, uint32& uiDamage) override
     {
         if (!m_bHealthBelow && m_pInstance && (float(m_creature->GetHealth() - uiDamage) / m_creature->GetMaxHealth()) < 0.30f)
         {

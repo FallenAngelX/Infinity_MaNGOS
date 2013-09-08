@@ -80,7 +80,7 @@ struct MANGOS_DLL_DECL boss_mekgineer_steamriggerAI : public ScriptedAI
     uint32 m_uiMechanicTimer;
     uint8 m_uiMechanicPhaseCount;
 
-    void Reset()
+    void Reset() override
     {
         m_uiShrinkTimer         = 20000;
         m_uiSawBladeTimer       = 15000;
@@ -95,7 +95,7 @@ struct MANGOS_DLL_DECL boss_mekgineer_steamriggerAI : public ScriptedAI
             m_pInstance->SetData(TYPE_MEKGINEER_STEAMRIGGER, FAIL);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -103,7 +103,7 @@ struct MANGOS_DLL_DECL boss_mekgineer_steamriggerAI : public ScriptedAI
             m_pInstance->SetData(TYPE_MEKGINEER_STEAMRIGGER, DONE);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         switch (urand(0, 2))
         {
@@ -113,7 +113,7 @@ struct MANGOS_DLL_DECL boss_mekgineer_steamriggerAI : public ScriptedAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         switch (urand(0, 2))
         {
@@ -138,7 +138,7 @@ struct MANGOS_DLL_DECL boss_mekgineer_steamriggerAI : public ScriptedAI
         DoScriptText(SAY_MECHANICS, m_creature);
 
         for (uint8 i = 0; i < 3; ++i)
-            m_creature->SummonCreature(NPC_STEAMRIGGER_MECHANIC, aSteamriggerSpawnLocs[i].m_fX, aSteamriggerSpawnLocs[i].m_fY, aSteamriggerSpawnLocs[i].m_fZ, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 240000);
+            m_creature->SummonCreature(NPC_STEAMRIGGER_MECHANIC, aSteamriggerSpawnLocs[i].m_fX, aSteamriggerSpawnLocs[i].m_fY, aSteamriggerSpawnLocs[i].m_fZ, 0, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 240000);
     }
 
     void UpdateAI(const uint32 uiDiff) override
@@ -185,7 +185,7 @@ struct MANGOS_DLL_DECL boss_mekgineer_steamriggerAI : public ScriptedAI
         {
             if (m_uiMechanicTimer < uiDiff)
             {
-                m_creature->SummonCreature(NPC_STEAMRIGGER_MECHANIC, aSteamriggerSpawnLocs[2].m_fX, aSteamriggerSpawnLocs[2].m_fY, aSteamriggerSpawnLocs[2].m_fZ, 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 240000);
+                m_creature->SummonCreature(NPC_STEAMRIGGER_MECHANIC, aSteamriggerSpawnLocs[2].m_fX, aSteamriggerSpawnLocs[2].m_fY, aSteamriggerSpawnLocs[2].m_fZ, 0, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 240000);
                 m_uiMechanicTimer = 20000;
             }
             else
@@ -221,7 +221,7 @@ struct MANGOS_DLL_DECL mob_steamrigger_mechanicAI : public ScriptedAI
 
     bool m_bCanStartAttack;
 
-    void Reset()
+    void Reset() override
     {
         m_bCanStartAttack = false;
     }
@@ -256,7 +256,7 @@ struct MANGOS_DLL_DECL mob_steamrigger_mechanicAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff) override
+    void UpdateAI(const uint32 /*uiDiff*/) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

@@ -105,7 +105,7 @@ struct MANGOS_DLL_DECL mob_omrogg_headsAI : public ScriptedAI
     uint32 m_uiDeathTimer;
     bool m_bDeathYell;
 
-    void Reset()
+    void Reset() override
     {
         m_uiDeathTimer = 2000;
         m_bDeathYell = false;
@@ -164,7 +164,7 @@ struct MANGOS_DLL_DECL boss_warbringer_omroggAI : public ScriptedAI
     uint32 m_uiThunderClapTimer;
     uint32 m_uiResetThreatTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_bAggroYell         = false;
         m_bThreatYell        = false;
@@ -198,7 +198,7 @@ struct MANGOS_DLL_DECL boss_warbringer_omroggAI : public ScriptedAI
         m_bThreatYell = true;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         m_creature->SummonCreature(NPC_LEFT_HEAD, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
         m_creature->SummonCreature(NPC_RIGHT_HEAD, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_DEAD_DESPAWN, 0);
@@ -225,7 +225,7 @@ struct MANGOS_DLL_DECL boss_warbringer_omroggAI : public ScriptedAI
             m_rightHeadGuid = pSummoned->GetObjectGuid();
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         Creature* pLeftHead  = m_creature->GetMap()->GetCreature(m_leftHeadGuid);
         Creature* pRightHead = m_creature->GetMap()->GetCreature(m_rightHeadGuid);
@@ -251,7 +251,7 @@ struct MANGOS_DLL_DECL boss_warbringer_omroggAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         Creature* pLeftHead  = m_creature->GetMap()->GetCreature(m_leftHeadGuid);
         Creature* pRightHead = m_creature->GetMap()->GetCreature(m_rightHeadGuid);

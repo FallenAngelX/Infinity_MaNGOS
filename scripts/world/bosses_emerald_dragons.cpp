@@ -60,7 +60,7 @@ struct MANGOS_DLL_DECL boss_emerald_dragonAI : public ScriptedAI
     uint32 m_uiNoxiousBreathTimer;
     uint32 m_uiTailsweepTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiEventCounter = 1;
 
@@ -96,7 +96,7 @@ struct MANGOS_DLL_DECL boss_emerald_dragonAI : public ScriptedAI
     virtual bool DoSpecialDragonAbility() = 0;
 
     // Return true to handle shared timers and MeleeAttack
-    virtual bool UpdateDragonAI(const uint32 uiDiff) { return true; }
+    virtual bool UpdateDragonAI(const uint32 /*uiDiff*/) { return true; }
 
     void UpdateAI(const uint32 uiDiff) override
     {
@@ -161,14 +161,14 @@ struct MANGOS_DLL_DECL boss_emerissAI : public boss_emerald_dragonAI
 
     uint32 m_uiVolatileInfectionTimer;
 
-    void Reset()
+    void Reset() override
     {
         boss_emerald_dragonAI::Reset();
 
         m_uiVolatileInfectionTimer = 12000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_EMERISS_AGGRO, m_creature);
     }
@@ -240,7 +240,7 @@ struct MANGOS_DLL_DECL boss_lethonAI : public boss_emerald_dragonAI
 {
     boss_lethonAI(Creature* pCreature) : boss_emerald_dragonAI(pCreature) {}
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_LETHON_AGGRO, m_creature);
         // Shadow bolt wirl is a periodic aura which triggers a set of shadowbolts every 2 secs; may need some core tunning
@@ -289,7 +289,7 @@ struct MANGOS_DLL_DECL npc_spirit_shadeAI : public ScriptedAI
 
     bool m_bHasHealed;
 
-    void Reset()
+    void Reset() override
     {
         m_bHasHealed = false;
     }
@@ -306,9 +306,9 @@ struct MANGOS_DLL_DECL npc_spirit_shadeAI : public ScriptedAI
         }
     }
 
-    void AttackStart(Unit* pWho) override { }
+    void AttackStart(Unit* /*pWho*/) override { }
 
-    void UpdateAI(const uint32 uiDiff) override { }
+    void UpdateAI(const uint32 /*uiDiff*/) override { }
 };
 
 CreatureAI* GetAI_boss_lethon(Creature* pCreature)
@@ -352,7 +352,7 @@ struct MANGOS_DLL_DECL boss_taerarAI : public boss_emerald_dragonAI
     uint32 m_uiShadesTimeoutTimer;
     uint8 m_uiShadesDead;
 
-    void Reset()
+    void Reset() override
     {
         boss_emerald_dragonAI::Reset();
 
@@ -366,7 +366,7 @@ struct MANGOS_DLL_DECL boss_taerarAI : public boss_emerald_dragonAI
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_TAERAR_AGGRO, m_creature);
     }
@@ -393,7 +393,7 @@ struct MANGOS_DLL_DECL boss_taerarAI : public boss_emerald_dragonAI
         return false;
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_SHADE_OF_TAERAR)
         {
@@ -479,14 +479,14 @@ struct MANGOS_DLL_DECL boss_ysondreAI : public boss_emerald_dragonAI
 
     uint32 m_uiLightningWaveTimer;
 
-    void Reset()
+    void Reset() override
     {
         boss_emerald_dragonAI::Reset();
 
         m_uiLightningWaveTimer = 12000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_YSONDRE_AGGRO, m_creature);
     }

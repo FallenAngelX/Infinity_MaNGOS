@@ -70,7 +70,7 @@ class MANGOS_DLL_DECL instance_blood_furnace : public ScriptedInstance
         void SetData(uint32 uiType, uint32 uiData) override;
         uint32 GetData(uint32 uiType) const override;
 
-        void Update(uint32 uiDiff);
+        void Update(uint32 uiDiff) override;
 
         void Load(const char* chrIn) override;
         const char* Save() const override { return m_strInstData.c_str(); }

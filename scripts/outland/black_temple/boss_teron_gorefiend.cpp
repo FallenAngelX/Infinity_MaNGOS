@@ -80,7 +80,7 @@ struct MANGOS_DLL_DECL boss_teron_gorefiendAI : public ScriptedAI
 
     bool m_bIntroDone;
 
-    void Reset()
+    void Reset() override
     {
         m_uiIncinerateTimer         = urand(20000, 30000);
         m_uiSummonDoomBlossomTimer  = urand(5000, 10000);
@@ -95,7 +95,7 @@ struct MANGOS_DLL_DECL boss_teron_gorefiendAI : public ScriptedAI
             m_pInstance->SetData(TYPE_GOREFIEND, FAIL);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -122,7 +122,7 @@ struct MANGOS_DLL_DECL boss_teron_gorefiendAI : public ScriptedAI
         DoScriptText(urand(0, 1) ? SAY_SLAY1 : SAY_SLAY2, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_GOREFIEND, DONE);

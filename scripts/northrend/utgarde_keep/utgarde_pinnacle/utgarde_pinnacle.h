@@ -84,7 +84,7 @@ class MANGOS_DLL_DECL instance_pinnacle : public ScriptedInstance
 
         void OnCreatureDeath(Creature* pCreature) override;
         void OnCreatureEvade(Creature* pCreature) override;
-        void Update(uint32 uiDiff);
+        void Update(uint32 uiDiff) override;
 
         const char* Save() const override { return m_strInstData.c_str(); }
         void Load(const char* chrIn) override;

@@ -63,7 +63,7 @@ struct MANGOS_DLL_DECL boss_murmurAI : public Scripted_NoMovementAI
     uint32 m_uiSonicShockTimer;
     uint32 m_uiThunderingStormTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiSonicBoomTimer          = urand(21000, 35000);
         m_uiMurmursTouchTimer       = urand(9000, 18000);

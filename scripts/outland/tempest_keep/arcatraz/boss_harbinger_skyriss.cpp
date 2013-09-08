@@ -63,7 +63,7 @@ struct MANGOS_DLL_DECL boss_harbinger_skyrissAI : public ScriptedAI
     uint32 m_uiDominationTimer;
     uint32 m_uiManaBurnTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiSplitPhase      = 1;
         m_uiMindRendTimer   = 3000;
@@ -72,7 +72,7 @@ struct MANGOS_DLL_DECL boss_harbinger_skyrissAI : public ScriptedAI
         m_uiManaBurnTimer   = 25000;
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 

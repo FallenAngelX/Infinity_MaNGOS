@@ -257,7 +257,7 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
         return 0;
     }
 
-    void Update(uint32 uiDiff)
+    void Update(uint32 uiDiff) override
     {
        if(m_auiEncounter[5] == IN_PROGRESS)
        {

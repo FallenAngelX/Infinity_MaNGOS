@@ -90,7 +90,7 @@ struct MANGOS_DLL_DECL npc_manaforge_control_consoleAI : public ScriptedAI
     uint32 m_uiPhase;
     bool   m_bWave;
 
-    void Reset()
+    void Reset() override
     {
         m_playerGuid.Clear();
         m_consoleGuid.Clear();
@@ -108,7 +108,7 @@ struct MANGOS_DLL_DECL npc_manaforge_control_consoleAI : public ScriptedAI
             ...
     }*/
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(EMOTE_ABORT, m_creature);
 
@@ -326,25 +326,25 @@ bool GOUse_go_manaforge_control_console(Player* pPlayer, GameObject* pGo)
             if ((pPlayer->GetQuestStatus(QUEST_SHUTDOWN_BNAAR_ALDOR) == QUEST_STATUS_INCOMPLETE
                     || pPlayer->GetQuestStatus(QUEST_SHUTDOWN_BNAAR_SCRYERS) == QUEST_STATUS_INCOMPLETE)
                     && pPlayer->HasItemCount(ITEM_BNAAR_ACESS_CRYSTAL, 1))
-                pManaforge = pPlayer->SummonCreature(NPC_BNAAR_C_CONSOLE, 2918.95f, 4189.98f, 161.88f, 0.34f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 125000);
+                pManaforge = pPlayer->SummonCreature(NPC_BNAAR_C_CONSOLE, 2918.95f, 4189.98f, 161.88f, 0.34f, TEMPSUMMON_TIMED_OOC_OR_CORPSE_DESPAWN, 125000);
             break;
         case 3730:                                          // coruu
             if ((pPlayer->GetQuestStatus(QUEST_SHUTDOWN_CORUU_ALDOR) == QUEST_STATUS_INCOMPLETE
                     || pPlayer->GetQuestStatus(QUEST_SHUTDOWN_CORUU_SCRYERS) == QUEST_STATUS_INCOMPLETE)
                     && pPlayer->HasItemCount(ITEM_CORUU_ACESS_CRYSTAL, 1))
-                pManaforge = pPlayer->SummonCreature(NPC_CORUU_C_CONSOLE, 2426.77f, 2750.38f, 133.24f, 2.14f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 125000);
+                pManaforge = pPlayer->SummonCreature(NPC_CORUU_C_CONSOLE, 2426.77f, 2750.38f, 133.24f, 2.14f, TEMPSUMMON_TIMED_OOC_OR_CORPSE_DESPAWN, 125000);
             break;
         case 3734:                                          // duro
             if ((pPlayer->GetQuestStatus(QUEST_SHUTDOWN_DURO_ALDOR) == QUEST_STATUS_INCOMPLETE
                     || pPlayer->GetQuestStatus(QUEST_SHUTDOWN_DURO_SCRYERS) == QUEST_STATUS_INCOMPLETE)
                     && pPlayer->HasItemCount(ITEM_DURO_ACESS_CRYSTAL, 1))
-                pManaforge = pPlayer->SummonCreature(NPC_DURO_C_CONSOLE, 2976.48f, 2183.29f, 163.20f, 1.85f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 125000);
+                pManaforge = pPlayer->SummonCreature(NPC_DURO_C_CONSOLE, 2976.48f, 2183.29f, 163.20f, 1.85f, TEMPSUMMON_TIMED_OOC_OR_CORPSE_DESPAWN, 125000);
             break;
         case 3722:                                          // ara
             if ((pPlayer->GetQuestStatus(QUEST_SHUTDOWN_ARA_ALDOR) == QUEST_STATUS_INCOMPLETE
                     || pPlayer->GetQuestStatus(QUEST_SHUTDOWN_ARA_SCRYERS) == QUEST_STATUS_INCOMPLETE)
                     && pPlayer->HasItemCount(ITEM_ARA_ACESS_CRYSTAL, 1))
-                pManaforge = pPlayer->SummonCreature(NPC_ARA_C_CONSOLE, 4013.71f, 4028.76f, 192.10f, 1.25f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 125000);
+                pManaforge = pPlayer->SummonCreature(NPC_ARA_C_CONSOLE, 4013.71f, 4028.76f, 192.10f, 1.25f, TEMPSUMMON_TIMED_OOC_OR_CORPSE_DESPAWN, 125000);
             break;
     }
 
@@ -401,7 +401,7 @@ struct MANGOS_DLL_DECL npc_commander_dawnforgeAI : public ScriptedAI
     uint32 m_uiPhaseTimer;
     bool   m_bIsEvent;
 
-    void Reset()
+    void Reset() override
     {
         m_playerGuid.Clear();
         m_ardonisGuid.Clear();
@@ -598,7 +598,7 @@ CreatureAI* GetAI_npc_commander_dawnforge(Creature* pCreature)
     return new npc_commander_dawnforgeAI(pCreature);
 }
 
-bool AreaTrigger_at_commander_dawnforge(Player* pPlayer, AreaTriggerEntry const* pAt)
+bool AreaTrigger_at_commander_dawnforge(Player* pPlayer, AreaTriggerEntry const* /*pAt*/)
 {
     // if player lost aura or not have at all, we should not try start event.
     if (!pPlayer->HasAura(SPELL_SUNFURY_DISGUISE, EFFECT_INDEX_0))
@@ -662,7 +662,7 @@ struct MANGOS_DLL_DECL npc_bessyAI : public npc_escortAI
         pSummoned->AI()->AttackStart(m_creature);
     }
 
-    void Reset() {}
+    void Reset() override {}
 };
 
 bool QuestAccept_npc_bessy(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
@@ -707,7 +707,7 @@ struct MANGOS_DLL_DECL npc_maxx_a_million_escortAI : public npc_escortAI
     ObjectGuid m_alleyGuid;
     ObjectGuid m_lastDraeneiMachineGuid;
 
-    void Reset()
+    void Reset() override
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
         {
@@ -757,7 +757,7 @@ struct MANGOS_DLL_DECL npc_maxx_a_million_escortAI : public npc_escortAI
         }
     }
 
-    void WaypointStart(uint32 uiPoint)
+    void WaypointStart(uint32 uiPoint) override
     {
         switch (uiPoint)
         {
@@ -769,7 +769,7 @@ struct MANGOS_DLL_DECL npc_maxx_a_million_escortAI : public npc_escortAI
         }
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() ||  !m_creature->getVictim())
         {
@@ -852,7 +852,7 @@ struct MANGOS_DLL_DECL npc_zeppitAI : public ScriptedPetAI
 {
     npc_zeppitAI(Creature* pCreature) : ScriptedPetAI(pCreature) { Reset(); }
 
-    void Reset() { }
+    void Reset() override { }
 
     void OwnerKilledUnit(Unit* pVictim) override
     {
@@ -908,7 +908,7 @@ struct MANGOS_DLL_DECL npc_protectorate_demolitionistAI : public npc_escortAI
     uint32 m_uiEventTimer;
     uint8 m_uiEventStage;
 
-    void Reset()
+    void Reset() override
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
         {
@@ -917,13 +917,13 @@ struct MANGOS_DLL_DECL npc_protectorate_demolitionistAI : public npc_escortAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_ATTACKED_1 : SAY_ATTACKED_2, m_creature);
     }
 
     // No attack done by this npc
-    void AttackStart(Unit* pWho) override { }
+    void AttackStart(Unit* /*pWho*/) override { }
 
     void MoveInLineOfSight(Unit* pWho) override
     {
@@ -988,7 +988,7 @@ struct MANGOS_DLL_DECL npc_protectorate_demolitionistAI : public npc_escortAI
         }
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 uiDiff) override
     {
         if (m_uiEventTimer)
         {
@@ -997,12 +997,12 @@ struct MANGOS_DLL_DECL npc_protectorate_demolitionistAI : public npc_escortAI
                 switch (m_uiEventStage)
                 {
                     case 0:
-                        m_creature->SummonCreature(NPC_ARCHON, 3875.69f, 2308.72f, 115.80f, 1.48f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 30000);
+                        m_creature->SummonCreature(NPC_ARCHON, 3875.69f, 2308.72f, 115.80f, 1.48f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
                         m_uiEventTimer = 4000;
                         break;
                     case 1:
-                        m_creature->SummonCreature(NPC_NEXUS_STALKER, 3884.06f, 2325.22f, 111.37f, 3.45f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 30000);
-                        m_creature->SummonCreature(NPC_NEXUS_STALKER, 3861.54f, 2320.44f, 111.48f, 0.32f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 30000);
+                        m_creature->SummonCreature(NPC_NEXUS_STALKER, 3884.06f, 2325.22f, 111.37f, 3.45f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
+                        m_creature->SummonCreature(NPC_NEXUS_STALKER, 3861.54f, 2320.44f, 111.48f, 0.32f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
                         m_uiEventTimer = 9000;
                         break;
                     case 2:
@@ -1058,7 +1058,7 @@ struct MANGOS_DLL_DECL npc_captured_vanguardAI : public npc_escortAI
     uint32 m_uiGlaiveTimer;
     uint32 m_uiHamstringTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiGlaiveTimer = urand(4000, 8000);
         m_uiHamstringTimer = urand(8000, 13000);
@@ -1093,7 +1093,7 @@ struct MANGOS_DLL_DECL npc_captured_vanguardAI : public npc_escortAI
         }
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

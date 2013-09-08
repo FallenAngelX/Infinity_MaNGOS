@@ -57,7 +57,7 @@ struct MANGOS_DLL_DECL npc_aeranasAI : public ScriptedAI
     uint32 m_uiEnvelopingWindsTimer;
     uint32 m_uiShockTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiFactionTimer         = 8000;
         m_uiEnvelopingWindsTimer = 9000;
@@ -146,7 +146,7 @@ struct MANGOS_DLL_DECL npc_ancestral_wolfAI : public npc_escortAI
         Reset();
     }
 
-    void Reset()
+    void Reset() override
     {
         m_creature->CastSpell(m_creature, SPELL_ANCESTRAL_WOLF_BUFF, true);
     }
@@ -220,11 +220,11 @@ struct MANGOS_DLL_DECL npc_demoniac_scryerAI : public ScriptedAI
     uint32 m_uiSpawnButtressTimer;
     uint32 m_uiButtressCount;
 
-    void Reset() {}
+    void Reset() override {}
 
     // we don't want anything to happen when attacked
-    void AttackedBy(Unit* pEnemy) {}
-    void AttackStart(Unit* pEnemy) {}
+    void AttackedBy(Unit* /*pEnemy*/) override {}
+    void AttackStart(Unit* /*pEnemy*/) override {}
 
     void DoSpawnButtress()
     {
@@ -338,7 +338,7 @@ bool GossipHello_npc_demoniac_scryer(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_demoniac_scryer(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_demoniac_scryer(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
@@ -407,9 +407,9 @@ struct MANGOS_DLL_DECL npc_wounded_blood_elfAI : public npc_escortAI
         }
     }
 
-    void Reset() { }
+    void Reset() override { }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (HasEscortState(STATE_ESCORT_ESCORTING))
             DoScriptText(SAY_ELF_AGGRO, m_creature);
@@ -461,13 +461,13 @@ struct MANGOS_DLL_DECL npc_fel_guard_houndAI : public ScriptedPetAI
 
     bool m_bIsPooActive;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPoodadTimer = 0;
         m_bIsPooActive  = false;
     }
 
-    void MovementInform(uint32 uiMoveType, uint32 uiPointId)
+    void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
     {
         if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
             return;

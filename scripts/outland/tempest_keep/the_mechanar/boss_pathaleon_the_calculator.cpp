@@ -76,7 +76,7 @@ struct MANGOS_DLL_DECL boss_pathaleon_the_calculatorAI : public ScriptedAI
     uint32 m_uiArcaneExplosionTimer;
     bool m_bIsEnraged;
 
-    void Reset()
+    void Reset() override
     {
         m_uiSummonTimer          = urand(12000, 23000);
         m_uiAngerTimer           = urand(31000, 42000);
@@ -87,17 +87,17 @@ struct MANGOS_DLL_DECL boss_pathaleon_the_calculatorAI : public ScriptedAI
         m_bIsEnraged             = false;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -206,7 +206,7 @@ struct MANGOS_DLL_DECL mob_nether_wraithAI : public ScriptedAI
     uint32 m_uiArcaneMissilesTimer;
     bool m_bHasDetonated;
 
-    void Reset()
+    void Reset() override
     {
         m_uiArcaneMissilesTimer = urand(1000, 4000);
         m_bHasDetonated         = false;

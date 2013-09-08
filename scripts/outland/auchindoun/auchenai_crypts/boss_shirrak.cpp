@@ -54,7 +54,7 @@ struct MANGOS_DLL_DECL boss_shirrakAI : public ScriptedAI
 
     ObjectGuid m_focusTargetGuid;
 
-    void Reset()
+    void Reset() override
     {
         m_uiCarnivorousBiteTimer    = urand(4000, 7000);
         m_uiFocusFireTimer          = 15000;

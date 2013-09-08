@@ -92,7 +92,7 @@ struct MANGOS_DLL_DECL boss_grandmaster_vorpilAI : public ScriptedAI
     uint32 m_uiBanishTimer;
     bool m_bHasDoneIntro;
 
-    void Reset()
+    void Reset() override
     {
         m_uiShadowBoltVolleyTimer   = urand(13000, 19000);
         m_uiDrawShadowsTimer        = urand(38000, 44000);
@@ -113,7 +113,7 @@ struct MANGOS_DLL_DECL boss_grandmaster_vorpilAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         switch (urand(0, 2))
         {
@@ -138,7 +138,7 @@ struct MANGOS_DLL_DECL boss_grandmaster_vorpilAI : public ScriptedAI
             m_pInstance->SetData(TYPE_VORPIL, FAIL);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
@@ -152,7 +152,7 @@ struct MANGOS_DLL_DECL boss_grandmaster_vorpilAI : public ScriptedAI
             pSummoned->CastSpell(pSummoned, SPELL_VOID_PORTAL_VISUAL, true);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -271,7 +271,7 @@ struct MANGOS_DLL_DECL npc_void_travelerAI : public ScriptedAI
 
     uint32 m_uiDeathTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiDeathTimer = 0;
         m_bHasExploded = false;
@@ -289,7 +289,7 @@ struct MANGOS_DLL_DECL npc_void_travelerAI : public ScriptedAI
         }
     }
 
-    void AttackStart(Unit* pWho) override { }
+    void AttackStart(Unit* /*pWho*/) override { }
 
     void UpdateAI(const uint32 uiDiff) override
     {

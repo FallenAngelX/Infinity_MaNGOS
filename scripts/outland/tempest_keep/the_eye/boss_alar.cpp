@@ -98,7 +98,7 @@ struct MANGOS_DLL_DECL boss_alarAI : public ScriptedAI
 
     bool m_bCanSummonEmber;
 
-    void Reset()
+    void Reset() override
     {
         // Start phase one and move to the closest platform
         m_uiPhase = PHASE_ONE;
@@ -119,7 +119,7 @@ struct MANGOS_DLL_DECL boss_alarAI : public ScriptedAI
         m_bCanSummonEmber       = true;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ALAR, IN_PROGRESS);
@@ -135,7 +135,7 @@ struct MANGOS_DLL_DECL boss_alarAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ALAR, FAIL);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ALAR, DONE);
@@ -152,7 +152,7 @@ struct MANGOS_DLL_DECL boss_alarAI : public ScriptedAI
         }
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         // drain 3% of boss health when the ember dies
         if (pSummoned->GetEntry() == NPC_EMBER_OF_ALAR)
@@ -224,7 +224,7 @@ struct MANGOS_DLL_DECL boss_alarAI : public ScriptedAI
         }
     }
 
-    void DamageTaken(Unit* pKiller, uint32& uiDamage)
+    void DamageTaken(Unit* /*pKiller*/, uint32& uiDamage) override
     {
         // Only init fake in phase one
         if (m_uiPhase != PHASE_ONE)

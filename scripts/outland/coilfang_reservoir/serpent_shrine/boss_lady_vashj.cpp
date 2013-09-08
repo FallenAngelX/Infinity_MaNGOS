@@ -132,7 +132,7 @@ struct MANGOS_DLL_DECL boss_lady_vashjAI : public ScriptedAI
 
     bool m_bEntangle;
 
-    void Reset()
+    void Reset() override
     {
         SetCombatMovement(true);
 
@@ -155,7 +155,7 @@ struct MANGOS_DLL_DECL boss_lady_vashjAI : public ScriptedAI
         m_uiSummonSporebatStaticTimer = 30000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         switch (urand(0, 3))
         {
@@ -209,7 +209,7 @@ struct MANGOS_DLL_DECL boss_lady_vashjAI : public ScriptedAI
         }
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         // Set the timer when summoned killed
         if (pSummoned->GetEntry() == NPC_TAINTED_ELEMENTAL)
@@ -226,7 +226,7 @@ struct MANGOS_DLL_DECL boss_lady_vashjAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         switch (urand(0, 2))
         {
@@ -236,7 +236,7 @@ struct MANGOS_DLL_DECL boss_lady_vashjAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -454,7 +454,7 @@ struct MANGOS_DLL_DECL mob_enchanted_elementalAI : public ScriptedAI
         Reset();
     }
 
-    void Reset() { }
+    void Reset() override { }
 
     void MoveInLineOfSight(Unit* pWho) override
     {
@@ -463,11 +463,11 @@ struct MANGOS_DLL_DECL mob_enchanted_elementalAI : public ScriptedAI
             DoCastSpellIfCan(m_creature, SPELL_SURGE, CAST_TRIGGERED);
     }
 
-    void AttackStart(Unit* pWho) override { }
-    void UpdateAI(const uint32 uiDiff) override { }
+    void AttackStart(Unit* /*pWho*/) override { }
+    void UpdateAI(const uint32 /*uiDiff*/) override { }
 };
 
-bool GOUse_go_shield_generator(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_shield_generator(Player* /*pPlayer*/, GameObject* pGo)
 {
     // Interrupt Magic barrier spell casting, inform the boss and make the GO unusable
     if (ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData())
