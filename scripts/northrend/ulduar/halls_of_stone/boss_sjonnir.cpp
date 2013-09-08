@@ -119,7 +119,7 @@ struct MANGOS_DLL_DECL boss_sjonnirAI : public ScriptedAI
             m_pInstance->SetData(TYPE_SJONNIR, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -127,13 +127,13 @@ struct MANGOS_DLL_DECL boss_sjonnirAI : public ScriptedAI
             m_pInstance->SetData(TYPE_SJONNIR, DONE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_SJONNIR, FAIL);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch (pSummoned->GetEntry())
         {
@@ -174,7 +174,7 @@ struct MANGOS_DLL_DECL boss_sjonnirAI : public ScriptedAI
         pSummoned->GetMotionMaster()->MoveRandomAroundPoint(pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 10.0f);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         switch(urand(0, 2))
         {
@@ -200,7 +200,7 @@ struct MANGOS_DLL_DECL boss_sjonnirAI : public ScriptedAI
         return false;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

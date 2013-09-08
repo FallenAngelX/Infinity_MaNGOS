@@ -49,7 +49,7 @@ struct MANGOS_DLL_DECL npc_depleted_war_golemAI : public ScriptedPetAI
 
     void Reset() { }
 
-    void OwnerKilledUnit(Unit* pVictim)
+    void OwnerKilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() == TYPEID_UNIT && pVictim->GetEntry() == NPC_LIGHTNING_SENTRY)
         {

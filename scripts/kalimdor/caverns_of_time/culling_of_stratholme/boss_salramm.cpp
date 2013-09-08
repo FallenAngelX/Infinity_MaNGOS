@@ -83,14 +83,14 @@ struct MANGOS_DLL_DECL boss_salrammAI : public ScriptedAI
         DoScriptText(SAY_SALRAMM_AGGRO, m_creature);
     }
 
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_SALRAMM_DEATH, m_creature);
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ENCOUNTER, DONE);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
          switch(rand()%3)
          {
@@ -107,7 +107,7 @@ struct MANGOS_DLL_DECL boss_salrammAI : public ScriptedAI
                 pTarget->SetDisplayId(GNOUL_IMAGE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -184,7 +184,7 @@ struct MANGOS_DLL_DECL npc_salramm_gnoulAI : public ScriptedAI
         m_uiBlowTimer = (urand(3000, 15000));
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!pWho)
            return;
@@ -212,7 +212,7 @@ struct MANGOS_DLL_DECL npc_salramm_gnoulAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

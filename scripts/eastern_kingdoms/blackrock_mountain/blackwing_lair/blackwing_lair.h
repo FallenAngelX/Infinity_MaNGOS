@@ -69,8 +69,8 @@ class MANGOS_DLL_DECL instance_blackwing_lair : public ScriptedInstance
         instance_blackwing_lair(Map* pMap);
         ~instance_blackwing_lair() {}
 
-        void Initialize();
-        bool IsEncounterInProgress() const;
+        void Initialize() override;
+        bool IsEncounterInProgress() const override;
 
         void OnCreatureCreate(Creature* pCreature) override;
         void OnObjectCreate(GameObject* pGo) override;
@@ -78,8 +78,8 @@ class MANGOS_DLL_DECL instance_blackwing_lair : public ScriptedInstance
         void OnCreatureEnterCombat(Creature* pCreature) override;
         void OnCreatureDeath(Creature* pCreature) override;
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType) const;
+        void SetData(uint32 uiType, uint32 uiData) override;
+        uint32 GetData(uint32 uiType) const override;
 
         void SetData64(uint32 uiData, uint64 uiGuid) override;
 

@@ -106,7 +106,7 @@ struct MANGOS_DLL_DECL mob_iron_constructAI : public ScriptedAI
         m_uiBrittleCheckTimer = 500;
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (!m_bIsActive)
         {
@@ -129,7 +129,7 @@ struct MANGOS_DLL_DECL mob_iron_constructAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         m_bIsActive = false;
     }
@@ -169,7 +169,7 @@ struct MANGOS_DLL_DECL mob_iron_constructAI : public ScriptedAI
         return false;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_bIsActive && !m_creature->HasAura(SPELL_STONED))
             DoCast(m_creature, SPELL_STONED, true);
@@ -258,7 +258,7 @@ struct MANGOS_DLL_DECL boss_ignisAI : public ScriptedAI
             m_pInstance->SetData(TYPE_IGNIS, IN_PROGRESS);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_IGNIS, FAIL);
@@ -266,13 +266,13 @@ struct MANGOS_DLL_DECL boss_ignisAI : public ScriptedAI
             pVehKit->RemoveAllPassengers();
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
             DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -302,13 +302,13 @@ struct MANGOS_DLL_DECL boss_ignisAI : public ScriptedAI
         pCreature->CastSpell(pCreature, m_bIsRegularMode ? SPELL_SCORCH_AURA : SPELL_SCORCH_AURA_H, true, 0, 0, m_creature->GetObjectGuid());
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (pDoneBy->HasAura(SPELL_SLAG_POT_AURA) || pDoneBy->HasAura(SPELL_SLAG_POT_AURA_H))
             uiDamage = 0;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

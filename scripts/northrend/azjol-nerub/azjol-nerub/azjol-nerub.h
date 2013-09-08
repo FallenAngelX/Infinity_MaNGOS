@@ -46,16 +46,16 @@ class MANGOS_DLL_DECL instance_azjol_nerub : public ScriptedInstance
     public:
         instance_azjol_nerub(Map* pMap);
 
-        void Initialize();
+        void Initialize() override;
 
-        void OnObjectCreate(GameObject* pGo);
-        void OnCreatureCreate(Creature* pCreature);
+        void OnObjectCreate(GameObject* pGo) override;
+        void OnCreatureCreate(Creature* pCreature) override;
 
-        void OnCreatureEnterCombat(Creature* pCreature);
-        void OnCreatureEvade(Creature* pCreature);
-        void OnCreatureDeath(Creature* pCreature);
+        void OnCreatureEnterCombat(Creature* pCreature) override;
+        void OnCreatureEvade(Creature* pCreature) override;
+        void OnCreatureDeath(Creature* pCreature) override;
 
-        void SetData(uint32 uiType, uint32 uiData);
+        void SetData(uint32 uiType, uint32 uiData) override;
 
         bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
 
@@ -64,8 +64,8 @@ class MANGOS_DLL_DECL instance_azjol_nerub : public ScriptedInstance
         ObjectGuid GetDarterTrigger() { return m_darterSummonTarget; }
         ObjectGuid GetAnubTrigger() { return m_anubSummonTarget; }
 
-        const char* Save() const { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+        const char* Save() const override { return m_strInstData.c_str(); }
+        void Load(const char* chrIn) override;
 
         void Update(uint32 uiDiff);
 

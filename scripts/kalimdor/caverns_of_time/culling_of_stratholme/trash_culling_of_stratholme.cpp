@@ -66,7 +66,7 @@ struct MANGOS_DLL_DECL npc_cs_gnoulAI : public ScriptedAI
        m_creature->GetMotionMaster()->MovePoint(0, X, Y, Z);
    }
 
-   void AttackStart(Unit* pWho)
+   void AttackStart(Unit* pWho) override
    {
       if (!pWho)
           return;
@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL npc_cs_gnoulAI : public ScriptedAI
       }
    }
 
-   void EnterEvadeMode()
+   void EnterEvadeMode() override
    {
       m_creature->RemoveAllAuras();
       m_creature->DeleteThreatList();
@@ -93,7 +93,7 @@ struct MANGOS_DLL_DECL npc_cs_gnoulAI : public ScriptedAI
       m_creature->SetLootRecipient(NULL);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!pWho)
             return;
@@ -127,7 +127,7 @@ struct MANGOS_DLL_DECL npc_cs_gnoulAI : public ScriptedAI
      WaypointId++;
    }
 
-   void UpdateAI(const uint32 uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
    {
         if ((!m_creature->SelectHostileTarget() || !m_creature->getVictim()) && m_creature->IsTemporarySummon())
         {
@@ -254,7 +254,7 @@ struct MANGOS_DLL_DECL npc_cs_necromancerAI : public ScriptedAI
        m_creature->GetMotionMaster()->MovePoint(0, X, Y, Z);
    }
 
-   void AttackStart(Unit* pWho)
+   void AttackStart(Unit* pWho) override
    {
       if (!pWho)
           return;
@@ -268,7 +268,7 @@ struct MANGOS_DLL_DECL npc_cs_necromancerAI : public ScriptedAI
       m_creature->GetMotionMaster()->MovementExpired(false);
    }
 
-   void EnterEvadeMode()
+   void EnterEvadeMode() override
    {
       m_creature->RemoveAllAuras();
       m_creature->DeleteThreatList();
@@ -280,7 +280,7 @@ struct MANGOS_DLL_DECL npc_cs_necromancerAI : public ScriptedAI
       m_creature->SetLootRecipient(NULL);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!pWho)
             return;
@@ -314,7 +314,7 @@ struct MANGOS_DLL_DECL npc_cs_necromancerAI : public ScriptedAI
      WaypointId++;
    }
 
-   void UpdateAI(const uint32 uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
    {
         if ((!m_creature->SelectHostileTarget() || !m_creature->getVictim()) && m_creature->IsTemporarySummon())
         {
@@ -442,7 +442,7 @@ struct MANGOS_DLL_DECL npc_cs_fieldAI : public ScriptedAI
        m_creature->GetMotionMaster()->MovePoint(0, X, Y, Z);
    }
 
-   void AttackStart(Unit* pWho)
+   void AttackStart(Unit* pWho) override
    {
       if (!pWho)
           return;
@@ -458,7 +458,7 @@ struct MANGOS_DLL_DECL npc_cs_fieldAI : public ScriptedAI
       }
    }
 
-   void EnterEvadeMode()
+   void EnterEvadeMode() override
    {
       m_creature->RemoveAllAuras();
       m_creature->DeleteThreatList();
@@ -470,7 +470,7 @@ struct MANGOS_DLL_DECL npc_cs_fieldAI : public ScriptedAI
       m_creature->SetLootRecipient(NULL);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!pWho)
             return;
@@ -504,7 +504,7 @@ struct MANGOS_DLL_DECL npc_cs_fieldAI : public ScriptedAI
      WaypointId++;
    }
 
-   void UpdateAI(const uint32 uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
    {
         if ((!m_creature->SelectHostileTarget() || !m_creature->getVictim()) && m_creature->IsTemporarySummon())
         {
@@ -646,7 +646,7 @@ struct MANGOS_DLL_DECL npc_cs_acolyteAI : public ScriptedAI
      m_creature->StopMoving();
    }
 
-   void AttackStart(Unit* pWho)
+   void AttackStart(Unit* pWho) override
    {
       if (!pWho)
           return;
@@ -660,7 +660,7 @@ struct MANGOS_DLL_DECL npc_cs_acolyteAI : public ScriptedAI
       m_creature->GetMotionMaster()->MovementExpired(false);
    }
 
-   void EnterEvadeMode()
+   void EnterEvadeMode() override
    {
       m_creature->RemoveAllAuras();
       m_creature->DeleteThreatList();
@@ -674,7 +674,7 @@ struct MANGOS_DLL_DECL npc_cs_acolyteAI : public ScriptedAI
       m_creature->SetLootRecipient(NULL);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!pWho)
             return;
@@ -708,7 +708,7 @@ struct MANGOS_DLL_DECL npc_cs_acolyteAI : public ScriptedAI
      WaypointId++;
    }
 
-   void UpdateAI(const uint32 uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
    {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim() && m_creature->IsTemporarySummon())
         {
@@ -846,7 +846,7 @@ struct MANGOS_DLL_DECL npc_cs_butcherAI : public ScriptedAI
        m_creature->GetMotionMaster()->MovePoint(0, X, Y, Z);
    }
 
-   void AttackStart(Unit* pWho)
+   void AttackStart(Unit* pWho) override
    {
       if (!pWho)
           return;
@@ -862,7 +862,7 @@ struct MANGOS_DLL_DECL npc_cs_butcherAI : public ScriptedAI
       }
    }
 
-   void EnterEvadeMode()
+   void EnterEvadeMode() override
    {
       m_creature->RemoveAllAuras();
       m_creature->DeleteThreatList();
@@ -873,7 +873,7 @@ struct MANGOS_DLL_DECL npc_cs_butcherAI : public ScriptedAI
       DoCast(m_creature, SPELL_CLOUD);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!pWho)
             return;
@@ -907,7 +907,7 @@ struct MANGOS_DLL_DECL npc_cs_butcherAI : public ScriptedAI
      WaypointId++;
    }
 
-   void UpdateAI(const uint32 uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
    {
         if ((!m_creature->SelectHostileTarget() || !m_creature->getVictim()) && m_creature->IsTemporarySummon())
         {
@@ -1000,7 +1000,7 @@ struct MANGOS_DLL_DECL npc_time_riftCSAI : public ScriptedAI
       Step = 1;
    }
 
-   void UpdateAI(const uint32 uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
    {
        if (m_uiStepTimer < uiDiff)
        {

@@ -57,13 +57,13 @@ struct MANGOS_DLL_DECL boss_infinite_corruptorAI : public ScriptedAI
             m_pInstance->SetData(TYPE_BONUS, SPECIAL);
     }
 
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_BONUS, DONE);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         //switch(rand()%3)
        // {
@@ -73,7 +73,7 @@ struct MANGOS_DLL_DECL boss_infinite_corruptorAI : public ScriptedAI
        // }
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         if (!m_pInstance)
             return;
@@ -94,7 +94,7 @@ struct MANGOS_DLL_DECL boss_infinite_corruptorAI : public ScriptedAI
         Reset();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
          if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
              return;

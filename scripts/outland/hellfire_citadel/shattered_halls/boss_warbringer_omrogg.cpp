@@ -116,7 +116,7 @@ struct MANGOS_DLL_DECL mob_omrogg_headsAI : public ScriptedAI
         m_bDeathYell = true;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_bDeathYell)
             return;
@@ -217,7 +217,7 @@ struct MANGOS_DLL_DECL boss_warbringer_omroggAI : public ScriptedAI
             m_pInstance->SetData(TYPE_OMROGG, IN_PROGRESS);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_LEFT_HEAD)
             m_leftHeadGuid = pSummoned->GetObjectGuid();
@@ -225,7 +225,7 @@ struct MANGOS_DLL_DECL boss_warbringer_omroggAI : public ScriptedAI
             m_rightHeadGuid = pSummoned->GetObjectGuid();
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         Creature* pLeftHead  = m_creature->GetMap()->GetCreature(m_leftHeadGuid);
         Creature* pRightHead = m_creature->GetMap()->GetCreature(m_rightHeadGuid);
@@ -251,7 +251,7 @@ struct MANGOS_DLL_DECL boss_warbringer_omroggAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         Creature* pLeftHead  = m_creature->GetMap()->GetCreature(m_leftHeadGuid);
         Creature* pRightHead = m_creature->GetMap()->GetCreature(m_rightHeadGuid);
@@ -269,7 +269,7 @@ struct MANGOS_DLL_DECL boss_warbringer_omroggAI : public ScriptedAI
             m_pInstance->SetData(TYPE_OMROGG, DONE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (Creature* pLeftHead = m_creature->GetMap()->GetCreature(m_leftHeadGuid))
         {
@@ -287,7 +287,7 @@ struct MANGOS_DLL_DECL boss_warbringer_omroggAI : public ScriptedAI
             m_pInstance->SetData(TYPE_OMROGG, FAIL);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiDelayTimer < uiDiff)
         {

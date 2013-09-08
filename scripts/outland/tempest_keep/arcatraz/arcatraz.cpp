@@ -115,7 +115,7 @@ struct MANGOS_DLL_DECL npc_millhouse_manastormAI : public ScriptedAI, private Di
         StartNextDialogueText(NPC_MILLHOUSE);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (m_creature->Attack(pWho, true))
         {
@@ -126,7 +126,7 @@ struct MANGOS_DLL_DECL npc_millhouse_manastormAI : public ScriptedAI, private Di
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_KILL_1 : SAY_KILL_2, m_creature);
     }
@@ -140,7 +140,7 @@ struct MANGOS_DLL_DECL npc_millhouse_manastormAI : public ScriptedAI, private Di
             ->FailQuest();*/
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         m_creature->RemoveAllAuras();
         m_creature->DeleteThreatList();
@@ -183,7 +183,7 @@ struct MANGOS_DLL_DECL npc_millhouse_manastormAI : public ScriptedAI, private Di
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         DialogueUpdate(uiDiff);
 
@@ -285,7 +285,7 @@ struct MANGOS_DLL_DECL npc_warden_mellicharAI : public ScriptedAI
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
     }
 
-    void AttackStart(Unit* pWho) {}
+    void AttackStart(Unit* pWho) override {}
 
     void Aggro(Unit* pWho)
     {
@@ -302,7 +302,7 @@ struct MANGOS_DLL_DECL npc_warden_mellicharAI : public ScriptedAI
             m_pInstance->SetData(TYPE_HARBINGERSKYRISS, IN_PROGRESS);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->CastSpell(pSummoned, SPELL_SIMPLE_TELEPORT, false);
 
@@ -313,7 +313,7 @@ struct MANGOS_DLL_DECL npc_warden_mellicharAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
         {
@@ -325,7 +325,7 @@ struct MANGOS_DLL_DECL npc_warden_mellicharAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Set the visual intro on OOC timer
         if (m_uiIntroTimer)

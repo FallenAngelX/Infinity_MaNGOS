@@ -246,7 +246,7 @@ struct MANGOS_DLL_DECL boss_leviathan_mkAI : public ScriptedAI
         }
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if(!m_bStartAttack)
             return;
@@ -287,7 +287,7 @@ struct MANGOS_DLL_DECL boss_leviathan_mkAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (Creature* pMimiron = m_pInstance->GetSingleCreatureFromStorage(NPC_MIMIRON))
         {
@@ -302,7 +302,7 @@ struct MANGOS_DLL_DECL boss_leviathan_mkAI : public ScriptedAI
         }
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_SELF_REPAIR)
         {
@@ -397,7 +397,7 @@ struct MANGOS_DLL_DECL boss_leviathan_mkAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(!m_bIsOutro)
         {
@@ -570,7 +570,7 @@ struct MANGOS_DLL_DECL boss_vx001AI : public ScriptedAI
 
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if(!m_bStartAttack && m_pInstance->GetData(TYPE_MIMIRON_PHASE) != PHASE_ROBOT)
             return;
@@ -584,7 +584,7 @@ struct MANGOS_DLL_DECL boss_vx001AI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (Creature* pMimiron = m_pInstance->GetSingleCreatureFromStorage(NPC_MIMIRON))
         {
@@ -599,7 +599,7 @@ struct MANGOS_DLL_DECL boss_vx001AI : public ScriptedAI
         }
     }
 
-    void DamageTaken(Unit *done_by, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (m_pInstance)
         {
@@ -627,7 +627,7 @@ struct MANGOS_DLL_DECL boss_vx001AI : public ScriptedAI
         }
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_SELF_REPAIR)
         {
@@ -691,7 +691,7 @@ struct MANGOS_DLL_DECL boss_vx001AI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiAttackStartTimer < uiDiff && !m_bStartAttack)
         {
@@ -940,7 +940,7 @@ struct MANGOS_DLL_DECL boss_aerial_command_unitAI : public ScriptedAI
             m_pInstance->SetData(TYPE_AERIAL_UNIT, NOT_STARTED);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if(!m_bStartAttack && m_pInstance->GetData(TYPE_MIMIRON_PHASE) != PHASE_ROBOT)
             return;
@@ -974,7 +974,7 @@ struct MANGOS_DLL_DECL boss_aerial_command_unitAI : public ScriptedAI
         m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_HOVER);
     }
 
-    void DamageTaken(Unit *done_by, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if(m_pInstance)
         {
@@ -1002,7 +1002,7 @@ struct MANGOS_DLL_DECL boss_aerial_command_unitAI : public ScriptedAI
         }
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_SELF_REPAIR)
         {
@@ -1017,7 +1017,7 @@ struct MANGOS_DLL_DECL boss_aerial_command_unitAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (Creature* pMimiron = m_pInstance->GetSingleCreatureFromStorage(NPC_MIMIRON))
         {
@@ -1046,7 +1046,7 @@ struct MANGOS_DLL_DECL boss_aerial_command_unitAI : public ScriptedAI
         pSummon->SetInCombatWithZone();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiAttackStartTimer < uiDiff && !m_bStartAttack)
         {
@@ -1240,7 +1240,7 @@ struct MANGOS_DLL_DECL boss_mimironAI : public ScriptedAI
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if(m_pInstance) 
         {
@@ -1280,7 +1280,7 @@ struct MANGOS_DLL_DECL boss_mimironAI : public ScriptedAI
     }
 
     // for debug only
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
        if(m_pInstance) 
         {
@@ -1290,7 +1290,7 @@ struct MANGOS_DLL_DECL boss_mimironAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1570,7 +1570,7 @@ struct MANGOS_DLL_DECL leviathan_turretAI : public ScriptedAI
         m_uiNapalmShellTimer = 10000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance->GetData(TYPE_MIMIRON_PHASE) == PHASE_LEVIATHAN)
         {
@@ -1628,7 +1628,7 @@ struct MANGOS_DLL_DECL mob_proximity_mineAI : public ScriptedAI
         m_uiRangeCheckTimer = 1000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_MIMIRON) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -1681,7 +1681,7 @@ struct MANGOS_DLL_DECL mob_bomb_botAI : public ScriptedAI
         m_uiDieTimer        = 600000;
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if(uiDamage > m_creature->GetHealth())
         {
@@ -1692,7 +1692,7 @@ struct MANGOS_DLL_DECL mob_bomb_botAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1733,7 +1733,7 @@ struct MANGOS_DLL_DECL mob_assault_botAI : public ScriptedAI
         m_uiMagneticFieldTimer = 5000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1783,7 +1783,7 @@ struct MANGOS_DLL_DECL mob_emergency_botAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1840,7 +1840,7 @@ struct MANGOS_DLL_DECL mob_frost_bomb_ulduarAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiDieTimer < uiDiff)
             m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
@@ -1881,7 +1881,7 @@ struct MANGOS_DLL_DECL mob_mimiron_flamesAI : public ScriptedAI
         m_uiFlamesSpreadTimer = 5000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_MIMIRON) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -1919,7 +1919,7 @@ struct MANGOS_DLL_DECL mob_mimiron_infernoAI : public ScriptedAI
         m_uiFlamesTimer = 2000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_MIMIRON) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -1954,7 +1954,7 @@ struct MANGOS_DLL_DECL mob_magnetic_coreAI : public ScriptedAI
         m_uiDieTimer = 23000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(m_uiSpellTimer < uiDiff)
         {

@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL mobs_nether_drakeAI : public ScriptedAI
         m_uiIntangiblePresenceTimer = 15000;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
             return;
@@ -100,7 +100,7 @@ struct MANGOS_DLL_DECL mobs_nether_drakeAI : public ScriptedAI
             m_creature->ForcedDespawn();
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_T_PHASE_MODULATOR && pCaster->GetTypeId() == TYPEID_PLAYER)
         {
@@ -134,7 +134,7 @@ struct MANGOS_DLL_DECL mobs_nether_drakeAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bIsNihil)
         {
@@ -228,7 +228,7 @@ struct MANGOS_DLL_DECL npc_daranelleAI : public ScriptedAI
 
     void Reset() { }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (pWho->GetTypeId() == TYPEID_PLAYER)
         {

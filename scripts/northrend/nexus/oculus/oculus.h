@@ -88,10 +88,10 @@ struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
 {
     public:
         instance_oculus(Map* pMap);
-        void Initialize();
+        void Initialize() override;
 
-        void OnObjectCreate(GameObject* pGo);
-        void OnCreatureCreate(Creature* pCreature);
+        void OnObjectCreate(GameObject* pGo) override;
+        void OnCreatureCreate(Creature* pCreature) override;
 
         bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
         void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
@@ -99,8 +99,8 @@ struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
         void SetData(uint32 type, uint32 data);
         uint32 GetData(uint32 type) const;
 
-        const char* Save() const;
-        void Load(const char* chrIn);
+        const char* Save() const override;
+        void Load(const char* chrIn) override;
 
     private:
         uint32 m_auiEncounter[MAX_ENCOUNTERS+1];

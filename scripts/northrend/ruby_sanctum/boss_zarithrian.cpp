@@ -84,7 +84,7 @@ struct MANGOS_DLL_DECL boss_zarithrianAI : public BSWScriptedAI
         }
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (getStage())
             ScriptedAI::MoveInLineOfSight(pWho);
@@ -99,7 +99,7 @@ struct MANGOS_DLL_DECL boss_zarithrianAI : public BSWScriptedAI
              };
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
     switch (urand(0,1)) {
         case 0:
@@ -111,7 +111,7 @@ struct MANGOS_DLL_DECL boss_zarithrianAI : public BSWScriptedAI
         };
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!pInstance) return;
         pInstance->SetData(TYPE_ZARITHRIAN, FAIL);

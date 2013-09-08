@@ -141,7 +141,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
         m_creature->RemoveByteFlag(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_HOVER);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if(m_pInstance)
         {
@@ -150,7 +150,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         // entry missing in sd2 database
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
@@ -166,7 +166,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
         DoCastSpellIfCan(m_creature, SPELL_SHROUD_OF_SORROW, CAST_TRIGGERED);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if(m_pInstance)
         {
@@ -300,7 +300,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
          }
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         if (!IsCombatMovement())
         {
@@ -310,7 +310,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
         ScriptedAI::EnterEvadeMode();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -496,7 +496,7 @@ struct MANGOS_DLL_DECL mob_swarming_shadowsAI : public ScriptedAI
 
     void Reset(){}
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance)
         {

@@ -158,7 +158,7 @@ struct MANGOS_DLL_DECL npc_expedition_commanderAI : public ScriptedAI
         m_uiIntroPhase      = 0;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_bHasPlayerNear && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() &&
             m_creature->IsWithinDistInMap(pWho, 40.0) && m_creature->IsWithinLOSInMap(pWho))
@@ -190,7 +190,7 @@ struct MANGOS_DLL_DECL npc_expedition_commanderAI : public ScriptedAI
         m_uiIntroPhase      = 0;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bIsIntro)
         {
@@ -293,7 +293,7 @@ struct MANGOS_DLL_DECL mob_devouring_flame_targetAI : public ScriptedAI
         DoCast(m_creature, m_bIsRegularMode ? AURA_DEVOURING_FLAME : AURA_DEVOURING_FLAME_H);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -574,7 +574,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
             pCommander->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_RAZORSCALE, DONE);
@@ -599,7 +599,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
         m_creature->MonsterMoveWithSpeed(Point[POSITION_AIR].x, Point[POSITION_AIR].y, Point[POSITION_AIR].z, 28.0f);
     }
 
-    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell)
+    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_FLAME_BREATH || pSpell->Id == SPELL_FLAME_BREATH_H)
         {
@@ -616,7 +616,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
         }
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_RAZORSCALE, FAIL);
@@ -772,7 +772,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
             m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {

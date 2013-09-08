@@ -154,12 +154,12 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(SAY_SLAY, m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
     }
@@ -188,7 +188,7 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
             DoCast(m_creature,SPELL_WHIRLWIND,true);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (!pSpell)
             return;
@@ -200,7 +200,7 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!pEntered) // should also be in phase zero
         {
@@ -389,11 +389,11 @@ struct MANGOS_DLL_DECL npc_horsemans_headAI : public ScriptedAI
         //m_creature->SetInCombatWithZone();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (!pSpell)
             return;
@@ -408,7 +408,7 @@ struct MANGOS_DLL_DECL npc_horsemans_headAI : public ScriptedAI
             m_creature->RemoveAurasDueToSpell(SPELL_HEAD_INVIS);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance)
             return;
@@ -471,7 +471,7 @@ struct MANGOS_DLL_DECL mob_pulsing_pumpkinAI : public ScriptedAI
 
     void Reset() {}
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance)
             return;

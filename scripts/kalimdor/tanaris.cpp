@@ -96,7 +96,7 @@ struct MANGOS_DLL_DECL mob_aquementasAI : public ScriptedAI
             SendItem(pInvokedPlayer);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiSwitchFactionTimer)
         {
@@ -168,7 +168,7 @@ struct MANGOS_DLL_DECL npc_custodian_of_timeAI : public npc_escortAI
 {
     npc_custodian_of_timeAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         Player* pPlayer = GetPlayerForEscort();
 
@@ -201,7 +201,7 @@ struct MANGOS_DLL_DECL npc_custodian_of_timeAI : public npc_escortAI
         }
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (HasEscortState(STATE_ESCORT_ESCORTING))
             return;
@@ -426,7 +426,7 @@ struct MANGOS_DLL_DECL npc_toogaAI : public FollowerAI
         pTorta = NULL;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         FollowerAI::MoveInLineOfSight(pWho);
 
@@ -446,7 +446,7 @@ struct MANGOS_DLL_DECL npc_toogaAI : public FollowerAI
         }
     }
 
-    void MovementInform(uint32 uiMotionType, uint32 uiPointId)
+    void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
     {
         FollowerAI::MovementInform(uiMotionType, uiPointId);
 

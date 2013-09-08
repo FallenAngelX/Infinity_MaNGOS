@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL boss_jaraxxusAI : public ScriptedAI
         mistressEntryList.clear();
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_pInstance) 
             return;
@@ -142,7 +142,7 @@ struct MANGOS_DLL_DECL boss_jaraxxusAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance) 
             return;
@@ -173,7 +173,7 @@ struct MANGOS_DLL_DECL boss_jaraxxusAI : public ScriptedAI
         m_pInstance->SetData(TYPE_JARAXXUS, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() != TYPEID_PLAYER)
             return;
@@ -182,7 +182,7 @@ struct MANGOS_DLL_DECL boss_jaraxxusAI : public ScriptedAI
     }
 
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -301,7 +301,7 @@ struct MANGOS_DLL_DECL mob_legion_flameAI : public ScriptedAI
         m_creature->SetRespawnDelay(DAY);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -355,12 +355,12 @@ struct MANGOS_DLL_DECL mob_infernal_volcanoAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void AttackStart(Unit *pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance->GetData(TYPE_JARAXXUS) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -402,7 +402,7 @@ struct MANGOS_DLL_DECL mob_fel_infernalAI : public ScriptedAI
         m_creature->SetRespawnDelay(DAY);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() != TYPEID_PLAYER) 
             return;
@@ -419,7 +419,7 @@ struct MANGOS_DLL_DECL mob_fel_infernalAI : public ScriptedAI
             return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance->GetData(TYPE_JARAXXUS) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -488,12 +488,12 @@ struct MANGOS_DLL_DECL mob_nether_portalAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_SUMMON_MISTRESS_PERIODIC, CAST_TRIGGERED);
     }
 
-    void AttackStart(Unit *pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance->GetData(TYPE_JARAXXUS) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -543,7 +543,7 @@ struct MANGOS_DLL_DECL mob_mistress_of_painAI : public ScriptedAI
         m_uiMistressKissTimer      = 8000;
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() != TYPEID_PLAYER) 
             return;
@@ -561,7 +561,7 @@ struct MANGOS_DLL_DECL mob_mistress_of_painAI : public ScriptedAI
     }
 
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance) 
             return;

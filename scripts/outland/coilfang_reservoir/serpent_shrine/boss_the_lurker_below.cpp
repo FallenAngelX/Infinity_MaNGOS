@@ -101,7 +101,7 @@ struct MANGOS_DLL_DECL boss_the_lurker_belowAI : public Scripted_NoMovementAI
         m_uiSpoutEndTimer   = 23000;
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_THELURKER_EVENT, FAIL);
@@ -115,7 +115,7 @@ struct MANGOS_DLL_DECL boss_the_lurker_belowAI : public Scripted_NoMovementAI
             m_pInstance->SetData(TYPE_THELURKER_EVENT, DONE);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         // Allow the adds to attack
         pSummoned->SetInCombatWithZone();
@@ -156,7 +156,7 @@ struct MANGOS_DLL_DECL boss_the_lurker_belowAI : public Scripted_NoMovementAI
         return m_creature->SelectHostileTarget();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!SelectHostileTarget())
             return;

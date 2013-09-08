@@ -115,7 +115,7 @@ struct MANGOS_DLL_DECL mob_toc5_warriorAI : public ScriptedAI
 //      m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -248,7 +248,7 @@ struct MANGOS_DLL_DECL mob_toc5_mageAI : public ScriptedAI
 //      m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -381,7 +381,7 @@ struct MANGOS_DLL_DECL mob_toc5_shamanAI : public ScriptedAI
 //      m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -573,7 +573,7 @@ struct MANGOS_DLL_DECL mob_toc5_hunterAI : public ScriptedAI
 //      m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -722,7 +722,7 @@ struct MANGOS_DLL_DECL mob_toc5_rogueAI : public ScriptedAI
 //      m_pInstance->SetData(TYPE_GRAND_CHAMPIONS, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;

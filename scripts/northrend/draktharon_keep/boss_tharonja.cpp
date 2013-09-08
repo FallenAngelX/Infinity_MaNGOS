@@ -116,12 +116,12 @@ struct MANGOS_DLL_DECL boss_tharonjaAI : public ScriptedAI
             m_pInstance->SetData(TYPE_THARONJA, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_KILL_1 : SAY_KILL_2, m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -135,7 +135,7 @@ struct MANGOS_DLL_DECL boss_tharonjaAI : public ScriptedAI
             m_pInstance->SetData(TYPE_THARONJA, DONE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         // Reset Display ID
         if (CreatureInfo const* pCreatureInfo = GetCreatureTemplateStore(NPC_THARONJA_SKELETAL))
@@ -149,7 +149,7 @@ struct MANGOS_DLL_DECL boss_tharonjaAI : public ScriptedAI
             m_pInstance->SetData(TYPE_THARONJA, FAIL);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

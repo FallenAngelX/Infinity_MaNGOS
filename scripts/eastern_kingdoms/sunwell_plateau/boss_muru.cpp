@@ -105,13 +105,13 @@ struct MANGOS_DLL_DECL boss_muruAI : public Scripted_NoMovementAI
         DoCastSpellIfCan(m_creature, SPELL_OPEN_PORTAL_PERIODIC, CAST_TRIGGERED);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MURU, FAIL);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (uiDamage > m_creature->GetHealth())
         {
@@ -131,7 +131,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public Scripted_NoMovementAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch (pSummoned->GetEntry())
         {
@@ -173,7 +173,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public Scripted_NoMovementAI
         DoCastSpellIfCan(m_creature, SPELL_SUMMON_DARK_FIEND_8, CAST_TRIGGERED);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -240,7 +240,7 @@ struct MANGOS_DLL_DECL boss_entropiusAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_NEGATIVE_ENERGY_ENT);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MURU, DONE);
@@ -249,7 +249,7 @@ struct MANGOS_DLL_DECL boss_entropiusAI : public ScriptedAI
         DespawnSummonedCreatures();
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         // Add the Darkness and Singularity into the list
         m_lSummonedCreaturesList.push_back(pSummoned->GetObjectGuid());
@@ -265,7 +265,7 @@ struct MANGOS_DLL_DECL boss_entropiusAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -281,7 +281,7 @@ struct MANGOS_DLL_DECL boss_entropiusAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -333,14 +333,14 @@ struct MANGOS_DLL_DECL npc_portal_targetAI : public Scripted_NoMovementAI
         m_uiSentinelTimer  = 0;
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         // Cast a visual ball on the summoner
         if (pSummoned->GetEntry() == NPC_VOID_SENTINEL_SUMMONER)
             DoCastSpellIfCan(pSummoned, SPELL_SENTINEL_SUMMONER_VISUAL, CAST_TRIGGERED);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         // These spells are dummies, but are used only to init the timers
         // They could use the EffectDummyCreature to handle this, but this makes code easier
@@ -357,7 +357,7 @@ struct MANGOS_DLL_DECL npc_portal_targetAI : public Scripted_NoMovementAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiSentinelTimer)
         {
@@ -412,7 +412,7 @@ struct MANGOS_DLL_DECL npc_void_sentinel_summonerAI : public Scripted_NoMovement
 
     void Reset() { }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_VOID_SENTINEL)
         {
@@ -425,7 +425,7 @@ struct MANGOS_DLL_DECL npc_void_sentinel_summonerAI : public Scripted_NoMovement
         }
     }
 
-    void UpdateAI(const uint32 uiDiff) { }
+    void UpdateAI(const uint32 uiDiff) override { }
 };
 
 CreatureAI* GetAI_boss_muru(Creature* pCreature)
@@ -469,7 +469,7 @@ struct MANGOS_DLL_DECL mob_dark_fiendAI : public ScriptedAI
             AttackStart(pTarget);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         // dispell & and should be purge -- will cause them to despawn
         switch(pSpell->Id)
@@ -485,7 +485,7 @@ struct MANGOS_DLL_DECL mob_dark_fiendAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {
@@ -525,10 +525,10 @@ struct MANGOS_DLL_DECL mob_singularityAI : public ScriptedAI
 
     //nullAI
     void Aggro(Unit* pWho)           {}
-    void JustDied(Unit* pKiller)     {}
-    void KilledUnit(Unit* pVictim)   {}
+    void JustDied(Unit* pKiller) override     {}
+    void KilledUnit(Unit* pVictim) override   {}
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiLifeTime < uiDiff)
         {

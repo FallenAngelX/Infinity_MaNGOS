@@ -89,7 +89,7 @@ struct MANGOS_DLL_DECL boss_arlokkAI : public ScriptedAI
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ARLOKK, FAIL);
@@ -98,7 +98,7 @@ struct MANGOS_DLL_DECL boss_arlokkAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
         // Restore visibility in case of killed by dots
@@ -109,14 +109,14 @@ struct MANGOS_DLL_DECL boss_arlokkAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ARLOKK, DONE);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         // Just attack a random target. The Marked player will attract them automatically
         if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             pSummoned->AI()->AttackStart(pTarget);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

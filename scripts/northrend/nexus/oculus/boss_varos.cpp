@@ -171,7 +171,7 @@ struct MANGOS_DLL_DECL boss_varosAI : public ScriptedAI
         }
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if(m_pInstance)
            if(m_pInstance->GetData(TYPE_ROBOTS) != 0)
@@ -194,7 +194,7 @@ struct MANGOS_DLL_DECL boss_varosAI : public ScriptedAI
         DoScriptText(urand(0,1) ? SAY_KILL_1 : SAY_KILL_2, m_creature);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if(pSummoned->GetEntry() == NPC_BEAM)
         {
@@ -298,7 +298,7 @@ struct MANGOS_DLL_DECL boss_varosAI : public ScriptedAI
         }
     }*/
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -375,7 +375,7 @@ struct MANGOS_DLL_DECL npc_varos_orbAI : public ScriptedAI
         DoCast(m_creature, SPELL_CORE_VISUAL, true);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
     }
 

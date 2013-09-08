@@ -69,7 +69,7 @@ struct MANGOS_DLL_DECL mob_oculus_dragonAI : public ScriptedAI
     }
 
     void AttackStart(Unit *) {}
-    void MoveInLineOfSight(Unit*) {}
+    void MoveInLineOfSight(Unit*) override { }
 
     void JustSummoned(){}
 
@@ -91,7 +91,7 @@ struct MANGOS_DLL_DECL mob_oculus_dragonAI : public ScriptedAI
         m_creature->SetCreatorGuid(ObjectGuid());
     }
 
-    void MovementInform(uint32 uiType, uint32 uiPointId)
+    void MovementInform(uint32 uiType, uint32 uiPointId) override
     {
         if (uiType != POINT_MOTION_TYPE && uiPointId == 0)
             return;
@@ -104,7 +104,7 @@ struct MANGOS_DLL_DECL mob_oculus_dragonAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
 
         if (ownerGUID.IsEmpty())
@@ -152,7 +152,7 @@ struct MANGOS_DLL_DECL npc_oculus_robotAI : public ScriptedAI
 
     void Reset(){}
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if(m_pInstance)
             m_pInstance->SetData(TYPE_ROBOTS, 1);

@@ -22,19 +22,19 @@ class MANGOS_DLL_DECL FollowerAI : public ScriptedAI
         explicit FollowerAI(Creature* pCreature);
         ~FollowerAI() {}
 
-        // virtual void WaypointReached(uint32 uiPointId) = 0;
+        // virtual void WaypointReached(uint32 uiPointId) = 0 override;
 
-        void MovementInform(uint32 uiMotionType, uint32 uiPointId);
+        void MovementInform(uint32 uiMotionType, uint32 uiPointId) override;
 
         void AttackStart(Unit*);
 
-        void MoveInLineOfSight(Unit*);
+        void MoveInLineOfSight(Unit*) override;
 
-        void EnterEvadeMode();
+        void EnterEvadeMode() override;
 
         void JustDied(Unit*);
 
-        void JustRespawned();
+        void JustRespawned() override;
 
         void UpdateAI(const uint32);                        // the "internal" update, calls UpdateFollowerAI()
         virtual void UpdateFollowerAI(const uint32);        // used when it's needed to add code in update (abilities, scripted events, etc)

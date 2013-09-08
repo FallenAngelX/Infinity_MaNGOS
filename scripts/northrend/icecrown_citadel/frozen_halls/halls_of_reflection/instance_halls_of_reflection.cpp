@@ -47,14 +47,14 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
     ObjectGuid m_uiCaptainsChestHordeGUID;
     ObjectGuid m_uiCaptainsChestAllianceGUID;
 
-    void Initialize()
+    void Initialize() override
     {
         for (uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
             m_auiEncounter[i] = NOT_STARTED;
         m_waveCount = 0;
     }
 
-    void OnCreatureCreate(Creature* pCreature)
+    void OnCreatureCreate(Creature* pCreature) override
     {
         switch(pCreature->GetEntry())
         {
@@ -75,7 +75,7 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
         }
     }
 
-    void OnObjectCreate(GameObject* pGo)
+    void OnObjectCreate(GameObject* pGo) override
     {
         switch(pGo->GetEntry())
         {
@@ -112,7 +112,7 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
         m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
     }
 
-    void SetData(uint32 uiType, uint32 uiData)
+    void SetData(uint32 uiType, uint32 uiData) override
     {
         switch(uiType)
         {
@@ -201,12 +201,12 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
         }
     }
 
-    const char* Save() const
+    const char* Save() const override
     {
         return strSaveData.c_str();
     }
 
-    uint32 GetData(uint32 uiType) const
+    uint32 GetData(uint32 uiType) const override
     {
         switch(uiType)
         {
@@ -224,7 +224,7 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
         return 0;
     }
 
-    void Load(const char* chrIn)
+    void Load(const char* chrIn) override
     {
         if (!chrIn)
         {

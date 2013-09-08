@@ -146,12 +146,12 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -164,7 +164,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
         DoCastSpellIfCan(m_creature, SPELL_REMOVE_INOCULENT, CAST_TRIGGERED);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
         {
@@ -178,7 +178,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
         DoCastSpellIfCan(m_creature, SPELL_REMOVE_INOCULENT, CAST_TRIGGERED);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -314,14 +314,14 @@ struct MANGOS_DLL_DECL mob_vile_gas_malleable_gooAI : public ScriptedAI
         SetCombatMovement(false);
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage)
+    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
     {
         uiDamage = 0;
     }
 
     void Reset(){}
-    void AttackStart(Unit* pWho){}
-    void UpdateAI(const uint32 uiDiff){}
+    void AttackStart(Unit* pWho) override{}
+    void UpdateAI(const uint32 uiDiff) override{}
 };
 
 CreatureAI* GetAI_mob_vile_gas_malleable_goo(Creature* pCreature)

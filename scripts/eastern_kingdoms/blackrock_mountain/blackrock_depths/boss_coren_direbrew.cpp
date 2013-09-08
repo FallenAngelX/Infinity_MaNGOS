@@ -81,7 +81,7 @@ struct MANGOS_DLL_DECL boss_coren_direbrewAI : public ScriptedAI
             DoCastSpellIfCan(m_creature, SPELL_SUMMON_DIREBREW_MINION, CAST_TRIGGERED);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch (pSummoned->GetEntry())
         {
@@ -95,7 +95,7 @@ struct MANGOS_DLL_DECL boss_coren_direbrewAI : public ScriptedAI
             pSummoned->AI()->AttackStart(m_creature->getVictim());
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

@@ -72,7 +72,7 @@ struct MANGOS_DLL_DECL npc_kittenAI : public FollowerAI
 
     void Reset() { }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         // should not have npcflag by default, so set when expected
         if (!m_creature->getVictim() && !m_creature->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP) && HasFollowState(STATE_FOLLOW_INPROGRESS) && pWho->GetEntry() == NPC_WINNA)
@@ -202,7 +202,7 @@ struct MANGOS_DLL_DECL npc_niby_the_almightyAI : public ScriptedAI
         m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bEventStarted)
         {
@@ -322,12 +322,12 @@ struct MANGOS_DLL_DECL npc_kroshiusAI : public ScriptedAI
         // TODO: A visual Flame Circle around the mob still missing
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         m_uiPhase = 0;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_uiPhase)
             return;

@@ -34,10 +34,10 @@ class MANGOS_DLL_DECL instance_shadow_labyrinth : public ScriptedInstance
     public:
         instance_shadow_labyrinth(Map* pMap);
 
-        void Initialize();
+        void Initialize() override;
 
-        void OnObjectCreate(GameObject* pGo);
-        void OnCreatureCreate(Creature* pCreature);
+        void OnObjectCreate(GameObject* pGo) override;
+        void OnCreatureCreate(Creature* pCreature) override;
 
         void OnCreatureDeath(Creature* pCreature) override;
 

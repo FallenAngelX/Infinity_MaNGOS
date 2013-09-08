@@ -400,20 +400,20 @@ class MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
         instance_ulduar(Map* pMap);
         ~instance_ulduar() {}
 
-        void Initialize();
-        bool IsEncounterInProgress() const;
+        void Initialize() override;
+        bool IsEncounterInProgress() const override;
 
-        void OnCreatureCreate(Creature* pCreature);
-        void OnCreatureDeath(Creature* pCreature);
-        void OnObjectCreate(GameObject* pGo);
+        void OnCreatureCreate(Creature* pCreature) override;
+        void OnCreatureDeath(Creature* pCreature) override;
+        void OnObjectCreate(GameObject* pGo) override;
 
-        void OnPlayerEnterArea(Player* Player, uint32 uiNewAreaId, uint32 uiOldAreaId);
+        void OnPlayerEnterArea(Player* Player, uint32 uiNewAreaId, uint32 uiOldAreaId) override;
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType) const;
+        void SetData(uint32 uiType, uint32 uiData) override;
+        uint32 GetData(uint32 uiType) const override;
 
-        const char* Save() const;
-        void Load(const char* chrIn);
+        const char* Save() const override;
+        void Load(const char* chrIn) override;
 
         void Update(uint32 uiDiff);
 

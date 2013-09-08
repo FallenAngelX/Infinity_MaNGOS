@@ -79,23 +79,23 @@ class MANGOS_DLL_DECL instance_scholomance : public ScriptedInstance
         instance_scholomance(Map* pMap);
         ~instance_scholomance() {}
 
-        void Initialize();
+        void Initialize() override;
 
-        void OnCreatureEnterCombat(Creature* pCreature);
-        void OnCreatureEvade(Creature* pCreature);
-        void OnCreatureDeath(Creature* pCreature);
+        void OnCreatureEnterCombat(Creature* pCreature) override;
+        void OnCreatureEvade(Creature* pCreature) override;
+        void OnCreatureDeath(Creature* pCreature) override;
 
-        void OnCreatureCreate(Creature* pCreature);
-        void OnObjectCreate(GameObject* pGo);
-        void OnPlayerEnter(Player* pPlayer);
+        void OnCreatureCreate(Creature* pCreature) override;
+        void OnObjectCreate(GameObject* pGo) override;
+        void OnPlayerEnter(Player* pPlayer) override;
 
         void HandlePortalEvent(uint32 uiEventId, uint32 uiData);
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType) const;
+        void SetData(uint32 uiType, uint32 uiData) override;
+        uint32 GetData(uint32 uiType) const override;
 
-        const char* Save() const { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+        const char* Save() const override { return m_strInstData.c_str(); }
+        void Load(const char* chrIn) override;
 
     private:
         void DoSpawnGandlingIfCan(bool bByPlayerEnter);

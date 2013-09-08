@@ -195,7 +195,7 @@ struct MANGOS_DLL_DECL boss_brundirAI : public ScriptedAI
         m_uiLightningWhirlTimer = urand(12000, 15000);
     }
 
-    void SpellHit(Unit* caster, const SpellEntry* spell)
+    void SpellHit(Unit* caster, const SpellEntry* spell) override
     {
         if (spell->Id == SPELL_SUPERCHARGE)
         {
@@ -206,7 +206,7 @@ struct MANGOS_DLL_DECL boss_brundirAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_uiSuperchargeStack > 1)
         {
@@ -243,7 +243,7 @@ struct MANGOS_DLL_DECL boss_brundirAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ASSEMBLY, IN_PROGRESS);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -257,7 +257,7 @@ struct MANGOS_DLL_DECL boss_brundirAI : public ScriptedAI
         DoScriptText(urand(0, 1) ? SAY_BRUNDIR_SLAY1 : SAY_BRUNDIR_SLAY2, m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -448,7 +448,7 @@ struct MANGOS_DLL_DECL boss_molgeimAI : public ScriptedAI
         m_uiRuneOfSummoningTimer = urand(10000, 20000);
     }
 
-    void SpellHit(Unit* caster, const SpellEntry* spell)
+    void SpellHit(Unit* caster, const SpellEntry* spell) override
     {
         if (spell->Id == SPELL_SUPERCHARGE)
         {
@@ -457,7 +457,7 @@ struct MANGOS_DLL_DECL boss_molgeimAI : public ScriptedAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch(pSummoned->GetEntry())
         {
@@ -489,7 +489,7 @@ struct MANGOS_DLL_DECL boss_molgeimAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_uiSuperchargeStack > 1)
         {
@@ -527,7 +527,7 @@ struct MANGOS_DLL_DECL boss_molgeimAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ASSEMBLY, IN_PROGRESS);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -566,7 +566,7 @@ struct MANGOS_DLL_DECL boss_molgeimAI : public ScriptedAI
             m_creature->CastSpell(m_creature, SPELL_RUNE_OF_POWER, true);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -675,7 +675,7 @@ struct MANGOS_DLL_DECL boss_steelbreakerAI : public ScriptedAI
         m_uiStaticDisruptionTimer  = 12000;
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (m_uiSuperchargeStack > 1)
             DoCast(m_creature, SPELL_ELECTRICAL_CHARGE);
@@ -683,7 +683,7 @@ struct MANGOS_DLL_DECL boss_steelbreakerAI : public ScriptedAI
         DoScriptText(urand(0, 1) ? SAY_STEEL_SLAY1 : SAY_STEEL_SLAY2, m_creature);
     }
 
-    void SpellHit(Unit* caster, const SpellEntry* spell)
+    void SpellHit(Unit* caster, const SpellEntry* spell) override
     {
         if (spell->Id == SPELL_SUPERCHARGE)
         {
@@ -694,7 +694,7 @@ struct MANGOS_DLL_DECL boss_steelbreakerAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_uiSuperchargeStack > 1)
         {
@@ -730,7 +730,7 @@ struct MANGOS_DLL_DECL boss_steelbreakerAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ASSEMBLY, IN_PROGRESS);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -739,7 +739,7 @@ struct MANGOS_DLL_DECL boss_steelbreakerAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

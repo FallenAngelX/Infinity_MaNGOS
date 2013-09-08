@@ -83,7 +83,7 @@ struct MANGOS_DLL_DECL boss_dalliahAI : public ScriptedAI
             m_pInstance->SetData(TYPE_DALLIAH, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_KILL_1 : SAY_KILL_2, m_creature);
     }
@@ -96,7 +96,7 @@ struct MANGOS_DLL_DECL boss_dalliahAI : public ScriptedAI
             m_pInstance->SetData(TYPE_DALLIAH, DONE);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         m_creature->RemoveAllAuras();
         m_creature->DeleteThreatList();
@@ -125,7 +125,7 @@ struct MANGOS_DLL_DECL boss_dalliahAI : public ScriptedAI
             m_creature->SetFacingTo(aDalliahStartPos[3]);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

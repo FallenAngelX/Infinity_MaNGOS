@@ -144,7 +144,7 @@ struct MANGOS_DLL_DECL npc_kelerun_bloodmournAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bIsEventInProgress)
         {
@@ -277,7 +277,7 @@ struct MANGOS_DLL_DECL npc_prospector_anvilwardAI : public npc_escortAI
     void Reset() { }
 
     // Pure Virtual Functions
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         Player* pPlayer = GetPlayerForEscort();
 
@@ -362,7 +362,7 @@ struct MANGOS_DLL_DECL npc_apprentice_mirvedaAI : public ScriptedAI
         m_uiFireballTimer = 0;
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid);
 
@@ -370,7 +370,7 @@ struct MANGOS_DLL_DECL npc_apprentice_mirvedaAI : public ScriptedAI
             pPlayer->SendQuestFailed(QUEST_UNEXPECTED_RESULT);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->AI()->AttackStart(m_creature);
         ++m_uiMobCount;
@@ -402,7 +402,7 @@ struct MANGOS_DLL_DECL npc_apprentice_mirvedaAI : public ScriptedAI
         m_creature->SummonCreature(NPC_ANGERSHADE, 8745.0f, -7134.32f, 35.22f, 0.0f, TEMPSUMMON_CORPSE_DESPAWN, 4000);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -473,7 +473,7 @@ struct MANGOS_DLL_DECL npc_infused_crystalAI : public ScriptedAI
         bCompleted = false;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (pWho->GetTypeId() != TYPEID_PLAYER)
             return;
@@ -494,7 +494,7 @@ struct MANGOS_DLL_DECL npc_infused_crystalAI : public ScriptedAI
                 pPlayer->FailQuest(QUEST_POWERING_OUR_DEFENSES);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (bCompleted) 
             return;

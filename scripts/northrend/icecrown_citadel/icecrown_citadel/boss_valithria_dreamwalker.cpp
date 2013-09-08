@@ -171,7 +171,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
 
     GuidList m_lSummonedAddsGuids;
 
-    void AttackStart(Unit* pWho){}
+    void AttackStart(Unit* pWho) override{}
 
     void Reset()
     {
@@ -201,7 +201,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
 
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_0_HEALTH, m_creature);
 
@@ -296,7 +296,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public ScriptedAI
         pCreature->SetInCombatWithZone();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_VALITHRIA) != IN_PROGRESS)
             return;
@@ -473,8 +473,8 @@ struct MANGOS_DLL_DECL mob_valithria_dream_phaseAI : public ScriptedAI
     ScriptedInstance* m_pInstance;
 
     void Reset(){}
-    void UpdateAI(const uint32 uiDiff){}
-    void AttackStart(Unit* pWho){}
+    void UpdateAI(const uint32 uiDiff) override{}
+    void AttackStart(Unit* pWho) override{}
     void DamageTaken(Unit* pDealer, uint32& uiDamage)
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_VALITHRIA) == IN_PROGRESS)
@@ -519,11 +519,11 @@ struct MANGOS_DLL_DECL mob_valithria_combat_triggerAI : public ScriptedAI
         }
     }
 
-    void AttackStart(Unit* pWho){}
-    void EnterEvadeMode() {}
+    void AttackStart(Unit* pWho) override{}
+    void EnterEvadeMode() override {}
 
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_pInstance)
             return;
@@ -546,7 +546,7 @@ struct MANGOS_DLL_DECL mob_valithria_combat_triggerAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance)
             return;
@@ -603,7 +603,7 @@ struct MANGOS_DLL_DECL mob_gluttonous_abominationAI : public ScriptedAI
         m_uiGutSprayTimer = urand(3000, 5000);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoCastSpellIfCan(m_creature, SPELL_ROT_WORM_SPAWNER, CAST_TRIGGERED);
     }
@@ -614,7 +614,7 @@ struct MANGOS_DLL_DECL mob_gluttonous_abominationAI : public ScriptedAI
         pCreature->CastSpell(pCreature, SPELL_ROT_WORM, true);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -674,7 +674,7 @@ struct MANGOS_DLL_DECL mob_blistering_zombieAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bHasDied)
             return;
@@ -710,7 +710,7 @@ struct MANGOS_DLL_DECL mob_risen_archmageAI : public ScriptedAI
         m_uiManaVoidTimer        = urand(5000, 10000);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -774,7 +774,7 @@ struct MANGOS_DLL_DECL mob_blazing_skeletonAI : public ScriptedAI
         m_uiLayWasteTimer = urand(15000, 30000);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -816,7 +816,7 @@ struct MANGOS_DLL_DECL mob_suppresserAI : public ScriptedAI
 
     void Reset(){}
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (m_creature->Attack(pWho, false))
         {
@@ -828,7 +828,7 @@ struct MANGOS_DLL_DECL mob_suppresserAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -856,8 +856,8 @@ struct MANGOS_DLL_DECL mob_dream_portal_preAI : public ScriptedAI
     uint32 m_uiSummonTimer;
 
     void Reset(){}
-    void AttackStart(Unit* pWho){}
-    void UpdateAI(const uint32 uiDiff)
+    void AttackStart(Unit* pWho) override{}
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiSummonTimer <= uiDiff)
         {
@@ -901,9 +901,9 @@ struct MANGOS_DLL_DECL mob_dream_cloudAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_DREAM_CLOUD_VISUAL, CAST_TRIGGERED);
     }
 
-    void AttackStart(Unit* pWho){}
+    void AttackStart(Unit* pWho) override{}
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (m_bHasCast)
             return;
@@ -922,7 +922,7 @@ struct MANGOS_DLL_DECL mob_dream_cloudAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bHasCast)
         {
@@ -951,8 +951,8 @@ struct MANGOS_DLL_DECL mob_nightmare_portal_preAI : public ScriptedAI
     uint32 m_uiSummonTimer;
 
     void Reset(){}
-    void AttackStart(Unit* pWho){}
-    void UpdateAI(const uint32 uiDiff)
+    void AttackStart(Unit* pWho) override{}
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiSummonTimer <= uiDiff)
         {
@@ -996,9 +996,9 @@ struct MANGOS_DLL_DECL mob_nightmare_cloudAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_NIGHTMARE_CLOUD, CAST_TRIGGERED);
     }
 
-    void AttackStart(Unit* pWho){}
+    void AttackStart(Unit* pWho) override{}
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (m_bHasCast)
             return;
@@ -1017,7 +1017,7 @@ struct MANGOS_DLL_DECL mob_nightmare_cloudAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bHasCast)
         {
@@ -1044,8 +1044,8 @@ struct MANGOS_DLL_DECL mob_mana_voidAI : public ScriptedAI
         m_creature->ForcedDespawn(30000);
     }
     void Reset(){}
-    void AttackStart(Unit* pWho){}
-    void UpdateAI(const uint32 uiDiff){}
+    void AttackStart(Unit* pWho) override{}
+    void UpdateAI(const uint32 uiDiff) override{}
 };
 
 CreatureAI* GetAI_mob_mana_void(Creature* pCreature)
@@ -1064,8 +1064,8 @@ struct MANGOS_DLL_DECL mob_column_of_frostAI : public ScriptedAI
     uint32 m_uiColumnOfFrostTimer;
 
     void Reset(){}
-    void AttackStart(Unit* pWho){}
-    void UpdateAI(const uint32 uiDiff)
+    void AttackStart(Unit* pWho) override{}
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Column of Frost
         if (m_uiColumnOfFrostTimer <= uiDiff)

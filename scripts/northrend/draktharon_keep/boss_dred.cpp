@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL boss_dredAI : public ScriptedAI
         m_uiCallForRaptorSpawn = 1000;
         m_uiCallForRaptorSpawn = true;
     }
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

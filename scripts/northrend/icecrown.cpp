@@ -50,14 +50,14 @@ struct MANGOS_DLL_DECL npc_melee_targetAI : public ScriptedAI
         SetCombatMovement(false);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (uiDamage > m_creature->GetHealth())
             uiDamage = 0;
         m_uiEvade_Timer = 5000;
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == 62544)
         {
@@ -67,7 +67,7 @@ struct MANGOS_DLL_DECL npc_melee_targetAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -107,14 +107,14 @@ struct MANGOS_DLL_DECL npc_ranged_targetAI : public ScriptedAI
         SetCombatMovement(false);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (uiDamage > m_creature->GetHealth())
             uiDamage = 0;
         m_uiEvade_Timer = 5000;
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         switch(pSpell->Id)
         {
@@ -136,7 +136,7 @@ struct MANGOS_DLL_DECL npc_ranged_targetAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiDefend_Timer < uiDiff)
         {
@@ -188,14 +188,14 @@ struct MANGOS_DLL_DECL npc_charge_targetAI : public ScriptedAI
         SetCombatMovement(false);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (uiDamage > m_creature->GetHealth())
             uiDamage = 0;
         m_uiEvade_Timer = 5000;
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         switch(pSpell->Id)
         {
@@ -216,7 +216,7 @@ struct MANGOS_DLL_DECL npc_charge_targetAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiDefend_Timer < uiDiff)
         {
@@ -256,7 +256,7 @@ struct MANGOS_DLL_DECL npc_black_knights_gryphonAI : public npc_escortAI
  
     void Reset() { }
  
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (m_creature->IsTemporarySummon())
             if (Player* pPlayer = m_creature->GetMap()->GetPlayer(((TemporarySummon*)m_creature)->GetSummonerGuid()))
@@ -267,7 +267,7 @@ struct MANGOS_DLL_DECL npc_black_knights_gryphonAI : public npc_escortAI
         Start(true, ((Player*)pCaster));
     }
  
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch(uiPointId)
         {
@@ -335,7 +335,7 @@ struct MANGOS_DLL_DECL npc_scourge_conventorAI : public ScriptedAI
         //m_uiGrip_Timer = 10000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -403,7 +403,7 @@ struct MANGOS_DLL_DECL npc_fallen_hero_spiritAI : public ScriptedAI
         m_uiStrike_Timer = 10000;
     }
 
-    void SpellHit(Unit *pCaster, const SpellEntry *pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         // if (m_creature->HasAura(GRIP_OF_THE_SCOURGE_AURA))
         //     return fasle;
@@ -426,7 +426,7 @@ struct MANGOS_DLL_DECL npc_fallen_hero_spiritAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -475,7 +475,7 @@ struct MANGOS_DLL_DECL npc_valiantsAI : public ScriptedAI
        //m_uiVSHIELDBREAKER_Timer   = 5000;  need correct timers
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (uiDamage > m_creature->GetHealth())
         {
@@ -489,7 +489,7 @@ struct MANGOS_DLL_DECL npc_valiantsAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -528,7 +528,7 @@ struct MANGOS_DLL_DECL npc_championsAI : public ScriptedAI
        //m_uiVSHIELDBREAKER_Timer   = 5000;  need correct timers
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (uiDamage > m_creature->GetHealth())
         {
@@ -542,7 +542,7 @@ struct MANGOS_DLL_DECL npc_championsAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

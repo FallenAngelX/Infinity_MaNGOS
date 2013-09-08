@@ -68,7 +68,7 @@ struct MANGOS_DLL_DECL npc_heliceAI : public npc_escortAI
     {
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch(uiPointId)
         {
@@ -233,7 +233,7 @@ struct MANGOS_DLL_DECL npc_injured_rainspeakerAI : public npc_escortAI
         }
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch(uiPointId)
         {

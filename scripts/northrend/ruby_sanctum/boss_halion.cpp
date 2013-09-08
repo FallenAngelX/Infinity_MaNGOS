@@ -166,7 +166,7 @@ struct MANGOS_DLL_DECL boss_halion_realAI : public ScriptedAI
                pGoPortal->Delete();
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_pInstance)
             return;
@@ -190,7 +190,7 @@ struct MANGOS_DLL_DECL boss_halion_realAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_pInstance)
             return;
@@ -205,7 +205,7 @@ struct MANGOS_DLL_DECL boss_halion_realAI : public ScriptedAI
         m_creature->SetActiveObjectState(false);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
 
         if (!m_pInstance)
@@ -259,7 +259,7 @@ struct MANGOS_DLL_DECL boss_halion_realAI : public ScriptedAI
             pGoPortal->Delete();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -284,7 +284,7 @@ struct MANGOS_DLL_DECL boss_halion_realAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
             DoScriptText(SAY_HALION_SLAY_1 - urand(0,1), m_creature, pVictim);
@@ -329,7 +329,7 @@ struct MANGOS_DLL_DECL boss_halion_realAI : public ScriptedAI
         m_bMovementStarted = true;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance)
             return;
@@ -647,7 +647,7 @@ struct MANGOS_DLL_DECL boss_halion_twilightAI : public ScriptedAI
              m_creature->CastSpell(m_creature, SPELL_TWILIGHT_ENTER, true);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_pInstance)
             return;
@@ -658,7 +658,7 @@ struct MANGOS_DLL_DECL boss_halion_twilightAI : public ScriptedAI
         ScriptedAI::JustReachedHome();
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         if (!m_pInstance)
             return;
@@ -669,7 +669,7 @@ struct MANGOS_DLL_DECL boss_halion_twilightAI : public ScriptedAI
         ScriptedAI::EnterEvadeMode();
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_pInstance)
             return;
@@ -734,7 +734,7 @@ struct MANGOS_DLL_DECL boss_halion_twilightAI : public ScriptedAI
             pGoPortal->Delete();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -755,7 +755,7 @@ struct MANGOS_DLL_DECL boss_halion_twilightAI : public ScriptedAI
         m_creature->SetVisibility(VISIBILITY_OFF);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
             DoScriptText(SAY_HALION_SLAY_1 - urand(0,1), m_creature, pVictim);
@@ -767,7 +767,7 @@ struct MANGOS_DLL_DECL boss_halion_twilightAI : public ScriptedAI
             return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
 
         if (!m_creature->HasAura(SPELL_TWILIGHT_ENTER))
@@ -945,7 +945,7 @@ struct MANGOS_DLL_DECL mob_halion_meteorAI : public ScriptedAI
         m_bStrike = false;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiWaitTimer < uiDiff && !m_bStrike)
         {
@@ -1017,7 +1017,7 @@ struct MANGOS_DLL_DECL mob_halion_flameAI : public ScriptedAI
         m_creature->SetInCombatWithZone();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_HALION) != IN_PROGRESS)
               m_creature->ForcedDespawn();
@@ -1061,7 +1061,7 @@ struct MANGOS_DLL_DECL mob_living_emberAI : public ScriptedAI
         m_creature->SetInCombatWithZone();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_HALION) != IN_PROGRESS)
               m_creature->ForcedDespawn();
@@ -1114,7 +1114,7 @@ struct MANGOS_DLL_DECL mob_living_infernoAI : public ScriptedAI
         m_creature->CastSpell(m_creature, SPELL_BLAZING_AURA, true);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_HALION) != IN_PROGRESS)
               m_creature->ForcedDespawn();
@@ -1219,7 +1219,7 @@ struct MANGOS_DLL_DECL mob_halion_controlAI : public ScriptedAI
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_HALION) != IN_PROGRESS)
               m_creature->ForcedDespawn();
@@ -1446,7 +1446,7 @@ struct MANGOS_DLL_DECL mob_orb_rotation_focusAI : public ScriptedAI
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_HALION) != IN_PROGRESS)
               m_creature->ForcedDespawn();
@@ -1599,7 +1599,7 @@ struct MANGOS_DLL_DECL mob_halion_orbAI : public ScriptedAI
         m_creature->GetMotionMaster()->MovePoint(id, x, y,  m_creature->GetPositionZ());
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_HALION) != IN_PROGRESS)
               m_creature->ForcedDespawn();
@@ -1640,7 +1640,7 @@ struct MANGOS_DLL_DECL mob_orb_carrierAI : public ScriptedAI
         m_creature->SetSpeedRate(MOVE_RUN, 6.0f);
     }
 
-    void AttackStart(Unit *pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
@@ -1659,7 +1659,7 @@ struct MANGOS_DLL_DECL mob_orb_carrierAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_HALION) != IN_PROGRESS)
               m_creature->ForcedDespawn();
@@ -1720,12 +1720,12 @@ struct MANGOS_DLL_DECL mob_soul_consumptionAI : public ScriptedAI
         m_creature->CastSpell(m_creature, SPELL_CONSUMPTION_AURA, true);
     }
 
-    void AttackStart(Unit *pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(m_pInstance && m_pInstance->GetData(TYPE_HALION) != IN_PROGRESS)
             m_creature->ForcedDespawn();
@@ -1769,12 +1769,12 @@ struct MANGOS_DLL_DECL mob_fiery_combustionAI : public ScriptedAI
         m_creature->CastSpell(m_creature, SPELL_COMBUSTION_AURA, true);
     }
 
-    void AttackStart(Unit *pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(m_pInstance && m_pInstance->GetData(TYPE_HALION) != IN_PROGRESS)
             m_creature->ForcedDespawn();

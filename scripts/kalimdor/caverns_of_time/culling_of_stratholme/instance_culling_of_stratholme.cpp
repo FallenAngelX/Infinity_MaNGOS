@@ -37,7 +37,7 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
     ObjectGuid m_uiMalChestGUID;
     ObjectGuid m_uiExitGUID;
 
-    void Initialize()
+    void Initialize() override
     {
         memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
@@ -53,7 +53,7 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
         m_uiCratesCount = 0;
     }
 
-    void OnCreatureCreate(Creature* pCreature)
+    void OnCreatureCreate(Creature* pCreature) override
     {
         switch(pCreature->GetEntry())
         {
@@ -130,7 +130,7 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
         m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
     }
 
-    void OnObjectCreate(GameObject* pGo)
+    void OnObjectCreate(GameObject* pGo) override
     {
          switch(pGo->GetEntry())
          {
@@ -183,7 +183,7 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
         }
     }
 
-    void SetData(uint32 uiType, uint32 uiData)
+    void SetData(uint32 uiType, uint32 uiData) override
     {
         switch(uiType)
         {
@@ -235,7 +235,7 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
         }
     }
 
-    uint32 GetData(uint32 uiType) const
+    uint32 GetData(uint32 uiType) const override
     {
         switch(uiType)
         {

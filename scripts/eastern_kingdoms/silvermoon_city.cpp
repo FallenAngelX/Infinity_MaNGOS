@@ -56,7 +56,7 @@ struct MANGOS_DLL_DECL boss_lorthemar_theronAI : public ScriptedAI
         m_uiMassCharmTimer      = 16000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

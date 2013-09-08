@@ -297,7 +297,7 @@ struct MANGOS_DLL_DECL boss_sartharionAI : public ScriptedAI
         m_bVesperonHelpedInFight = false;
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_pInstance)
             return;
@@ -338,7 +338,7 @@ struct MANGOS_DLL_DECL boss_sartharionAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_SARTHARION_DEATH, m_creature);
 
@@ -363,7 +363,7 @@ struct MANGOS_DLL_DECL boss_sartharionAI : public ScriptedAI
         m_pInstance->SetData(TYPE_SARTHARION_EVENT, DONE);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(SAY_SARTHARION_SLAY_1 - urand(0, 2), m_creature);
     }
@@ -516,7 +516,7 @@ struct MANGOS_DLL_DECL boss_sartharionAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -761,7 +761,7 @@ struct MANGOS_DLL_DECL dummy_dragonAI : public ScriptedAI
         m_bCanMoveFree = false;
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (!pWho || m_creature->GetMotionMaster()->GetCurrentMovementGeneratorType() == POINT_MOTION_TYPE)
             return;
@@ -777,13 +777,13 @@ struct MANGOS_DLL_DECL dummy_dragonAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
     }
 
-    void MovementInform(uint32 uiType, uint32 uiPointId)
+    void MovementInform(uint32 uiType, uint32 uiPointId) override
     {
         if (!m_pInstance || uiType != POINT_MOTION_TYPE)
             return;
@@ -993,7 +993,7 @@ struct MANGOS_DLL_DECL dummy_dragonAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -1055,7 +1055,7 @@ struct MANGOS_DLL_DECL dummy_dragonAI : public ScriptedAI
             m_creature->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bCanMoveFree && m_uiMoveNextTimer)
         {
@@ -1140,12 +1140,12 @@ struct MANGOS_DLL_DECL mob_tenebronAI : public dummy_dragonAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(SAY_TENEBRON_SLAY_1 - urand(0, 1), m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         //if no target, update dummy and return
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -1270,12 +1270,12 @@ struct MANGOS_DLL_DECL mob_shadronAI : public dummy_dragonAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(SAY_SHADRON_SLAY_1 - urand(0, 1), m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         //if no target, update dummy and return
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -1380,12 +1380,12 @@ struct MANGOS_DLL_DECL mob_vesperonAI : public dummy_dragonAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(SAY_VESPERON_SLAY_1 - urand(0, 1), m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         //if no target, update dummy and return
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -1455,7 +1455,7 @@ struct MANGOS_DLL_DECL mob_acolyte_of_shadronAI : public ScriptedAI
     instance_obsidian_sanctum* m_pInstance;
 
     void Reset(){}
-    void MoveInLineOfSight(Unit *pWho){}
+    void MoveInLineOfSight(Unit* pWho) override { }
 
     void JustDied(Unit* killer)
     {
@@ -1490,7 +1490,7 @@ struct MANGOS_DLL_DECL mob_acolyte_of_shadronAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1520,9 +1520,9 @@ struct MANGOS_DLL_DECL mob_acolyte_of_vesperonAI : public ScriptedAI
 
     void Reset(){}
 
-    void MoveInLineOfSight(Unit *pWho){}
+    void MoveInLineOfSight(Unit* pWho) override { }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_creature->SelectHostileTarget() && m_creature->getVictim())
             DoMeleeAttackIfReady();
@@ -1549,9 +1549,9 @@ struct MANGOS_DLL_DECL mob_twilight_eggsAI : public ScriptedAI
     instance_obsidian_sanctum *m_pInstance;
 
     void Reset(){}
-    void AttackStart(Unit* pWho){}
-    void MoveInLineOfSight(Unit* pWho){}
-    void UpdateAI(const uint32 uiDiff){}
+    void AttackStart(Unit* pWho) override{}
+    void MoveInLineOfSight(Unit* pWho) override { }
+    void UpdateAI(const uint32 uiDiff) override{}
 
     void JustSummoned(Creature *pCreature)
     {
@@ -1608,11 +1608,11 @@ struct MANGOS_DLL_DECL mob_twilight_egg_controllerAI : public ScriptedAI
             }
         }
     }
-    void AttackStart(Unit* pWho){}
-    void MoveInLineOfSight(Unit* pWho){}
-    void UpdateAI(const uint32 uiDiff){}
+    void AttackStart(Unit* pWho) override{}
+    void MoveInLineOfSight(Unit* pWho) override { }
+    void UpdateAI(const uint32 uiDiff) override{}
 
-    void SpellHit(Unit *pCaster, const SpellEntry *spellInfo)
+    void SpellHit(Unit* pCaster, const SpellEntry* spellInfo) override
     {
         if (!m_pInstance)
             return;
@@ -1663,7 +1663,7 @@ struct MANGOS_DLL_DECL mob_twilight_whelpAI : public ScriptedAI
         m_uiFadeArmorTimer = 1000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -1718,13 +1718,13 @@ struct MANGOS_DLL_DECL mob_fire_cycloneAI : public ScriptedAI
         m_uiRefreshTimer = (urand(1000, 60000));
     }
 
-    void DamageTaken(Unit *pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         uiDamage = 0;
     }
 
-    void AttackStart(Unit* pWho){}
-    void MoveInLineOfSight(Unit* pWho){}
+    void AttackStart(Unit* pWho) override{}
+    void MoveInLineOfSight(Unit* pWho) override { }
 
     void SpellHitTarget(Unit *pVictim, const SpellEntry *spellInfo)
     {
@@ -1733,7 +1733,7 @@ struct MANGOS_DLL_DECL mob_fire_cycloneAI : public ScriptedAI
                 m_pInstance->m_lHitByVolcanoGuidList.push_back(pVictim->GetObjectGuid());
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (!m_pInstance || !pSummoned || pSummoned->GetEntry() != NPC_LAVA_BLAZE)
             return;
@@ -1763,7 +1763,7 @@ struct MANGOS_DLL_DECL mob_fire_cycloneAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(m_pInstance && m_pInstance->GetData(TYPE_SARTHARION_EVENT) != IN_PROGRESS)
             return;
@@ -1843,10 +1843,10 @@ struct MANGOS_DLL_DECL mob_flame_tsunamiAI : public ScriptedAI
         m_uiMovementStartTimer = 4000;
     }
 
-    void AttackStart(Unit* pWho){}
-    void MoveInLineOfSight(Unit* pWho){}
+    void AttackStart(Unit* pWho) override{}
+    void MoveInLineOfSight(Unit* pWho) override { }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiMovementStartTimer < uiDiff)
         {

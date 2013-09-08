@@ -61,7 +61,7 @@ struct MANGOS_DLL_DECL boss_azuregosAI : public ScriptedAI
         m_bEnraged          = false;
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         // Mark killed players with Mark of Frost
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
@@ -74,7 +74,7 @@ struct MANGOS_DLL_DECL boss_azuregosAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_MARK_OF_FROST_AURA);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())

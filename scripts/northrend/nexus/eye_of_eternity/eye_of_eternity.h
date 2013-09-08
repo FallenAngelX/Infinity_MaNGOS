@@ -57,17 +57,17 @@ struct MANGOS_DLL_DECL instance_eye_of_eternity : public ScriptedInstance
     public:
         instance_eye_of_eternity(Map* pMap);
 
-        void Initialize();
+        void Initialize() override;
 
-        void OnCreatureCreate(Creature* pCreature);
-        void OnObjectCreate(GameObject* pGo);
-        bool IsEncounterInProgress() const;
+        void OnCreatureCreate(Creature* pCreature) override;
+        void OnObjectCreate(GameObject* pGo) override;
+        bool IsEncounterInProgress() const override;
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType) const;
+        void SetData(uint32 uiType, uint32 uiData) override;
+        uint32 GetData(uint32 uiType) const override;
 
-        const char* Save() const {   return strInstData.c_str();}
-        void Load(const char* chrIn);
+        const char* Save() const override {   return strInstData.c_str();}
+        void Load(const char* chrIn) override;
 
         void DespawnCreatures(uint32 uiEntry);
 

@@ -33,13 +33,13 @@ struct MANGOS_DLL_DECL instance_vault_of_archavon : public ScriptedInstance
 
     uint8 m_uiMinion;
 
-    void Initialize()
+    void Initialize() override
     {
         memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
         m_uiMinion = 0;
     }
 
-    void OnCreatureCreate(Creature* pCreature)
+    void OnCreatureCreate(Creature* pCreature) override
     {
         switch (pCreature->GetEntry())
         {
@@ -68,7 +68,7 @@ struct MANGOS_DLL_DECL instance_vault_of_archavon : public ScriptedInstance
         }
     }
 
-    void SetData(uint32 uiType, uint32 uiData)
+    void SetData(uint32 uiType, uint32 uiData) override
     {
         switch (uiType)
         {
@@ -100,7 +100,7 @@ struct MANGOS_DLL_DECL instance_vault_of_archavon : public ScriptedInstance
         }
     }
 
-    uint32 GetData(uint32 uiType) const
+    uint32 GetData(uint32 uiType) const override
     {
         switch (uiType)
         {
@@ -117,7 +117,7 @@ struct MANGOS_DLL_DECL instance_vault_of_archavon : public ScriptedInstance
     }
 
 
-    const char* Save() const
+    const char* Save() const override
     {
         return strInstData.c_str();
     }
@@ -144,7 +144,7 @@ struct MANGOS_DLL_DECL instance_vault_of_archavon : public ScriptedInstance
         OUT_LOAD_INST_DATA_COMPLETE;
     }
 
-    bool IsEncounterInProgress() const
+    bool IsEncounterInProgress() const override
     {
         for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             if (m_auiEncounter[i] == IN_PROGRESS)

@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL npc_draenei_survivorAI : public ScriptedAI
         m_creature->SetStandState(UNIT_STAND_STATE_SLEEP);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (m_bCanSayHelp && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsFriendlyTo(pWho) &&
                 m_creature->IsWithinDistInMap(pWho, 25.0f))
@@ -101,7 +101,7 @@ struct MANGOS_DLL_DECL npc_draenei_survivorAI : public ScriptedAI
         }
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (pSpell->GetSpellFamilyFlags().test<CF_ALL_GIFT_OF_THE_NAARU>())
         {
@@ -116,7 +116,7 @@ struct MANGOS_DLL_DECL npc_draenei_survivorAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiSayThanksTimer)
         {
@@ -303,9 +303,9 @@ struct MANGOS_DLL_DECL npc_injured_draeneiAI : public ScriptedAI
         }
     }
 
-    void MoveInLineOfSight(Unit* pWho) {}          // ignore everyone around them (won't aggro anything)
+    void MoveInLineOfSight(Unit* pWho) override { }          // ignore everyone around them (won't aggro anything)
 
-    void UpdateAI(const uint32 uiDiff) {}
+    void UpdateAI(const uint32 uiDiff) override {}
 };
 
 CreatureAI* GetAI_npc_injured_draenei(Creature* pCreature)
@@ -333,7 +333,7 @@ struct MANGOS_DLL_DECL npc_magwinAI : public npc_escortAI
 {
     npc_magwinAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         Player* pPlayer = GetPlayerForEscort();
 
@@ -416,7 +416,7 @@ struct MANGOS_DLL_DECL boss_prophet_velenAI : public ScriptedAI
        //m_uiPrayerOfHealingTimer= 10000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

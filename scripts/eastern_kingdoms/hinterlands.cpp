@@ -53,7 +53,7 @@ struct MANGOS_DLL_DECL npc_00x09hlAI : public npc_escortAI
 
     void Reset() { }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {
@@ -104,7 +104,7 @@ struct MANGOS_DLL_DECL npc_00x09hlAI : public npc_escortAI
         DoScriptText(urand(0, 1) ? SAY_OOX_AGGRO1 : SAY_OOX_AGGRO2, m_creature);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
     }
@@ -182,7 +182,7 @@ struct MANGOS_DLL_DECL npc_rinjiAI : public npc_escortAI
         m_uiPostEventTimer = 3000;
     }
 
-    void JustRespawned()
+    void JustRespawned() override
     {
         m_bIsByOutrunner = false;
         m_iSpawnId = 0;
@@ -225,13 +225,13 @@ struct MANGOS_DLL_DECL npc_rinjiAI : public npc_escortAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         m_creature->SetWalk(false);
         pSummoned->GetMotionMaster()->MovePoint(0, m_afAmbushMoveTo[m_iSpawnId].x, m_afAmbushMoveTo[m_iSpawnId].y, m_afAmbushMoveTo[m_iSpawnId].z);
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         Player* pPlayer = GetPlayerForEscort();
 

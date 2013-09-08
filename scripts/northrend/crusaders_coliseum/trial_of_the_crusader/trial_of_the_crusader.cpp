@@ -418,7 +418,7 @@ struct MANGOS_DLL_DECL boss_lich_king_tocAI : public ScriptedAI
         return;
     }
 
-    void JustRespawned()
+    void JustRespawned() override
     {
         Reset();
     }
@@ -606,7 +606,7 @@ struct MANGOS_DLL_DECL npc_fizzlebang_tocAI : public ScriptedAI
         return NULL;
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         m_pInstance->SetData(TYPE_EVENT, 1179);
 

@@ -93,7 +93,7 @@ struct MANGOS_DLL_DECL boss_silver_hand_bossesAI : public ScriptedAI
             itr->second = m_aSilverHandAbility[itr->first].m_uiInitialTimer;
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
         {
@@ -141,7 +141,7 @@ struct MANGOS_DLL_DECL boss_silver_hand_bossesAI : public ScriptedAI
         return false;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())

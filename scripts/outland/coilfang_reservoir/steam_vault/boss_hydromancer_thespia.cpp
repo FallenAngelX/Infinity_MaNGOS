@@ -69,13 +69,13 @@ struct MANGOS_DLL_DECL boss_thespiaAI : public ScriptedAI
         m_uiEnvelopingWindsTimer = urand(20000, 25000);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_HYDROMANCER_THESPIA, FAIL);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEAD, m_creature);
 
@@ -83,7 +83,7 @@ struct MANGOS_DLL_DECL boss_thespiaAI : public ScriptedAI
             m_pInstance->SetData(TYPE_HYDROMANCER_THESPIA, DONE);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
@@ -101,7 +101,7 @@ struct MANGOS_DLL_DECL boss_thespiaAI : public ScriptedAI
             m_pInstance->SetData(TYPE_HYDROMANCER_THESPIA, IN_PROGRESS);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

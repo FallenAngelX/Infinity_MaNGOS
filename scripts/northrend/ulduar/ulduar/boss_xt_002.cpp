@@ -159,18 +159,18 @@ struct MANGOS_DLL_DECL mob_lifesparkAI : public ScriptedAI
         m_uiShockTimer = 1000;
     }
 
-    void UpdateAI(const uint32 uidiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (m_uiShockTimer <= uidiff)
+        if (m_uiShockTimer <= uiDiff)
         {
             DoCast(m_creature->getVictim(), SPELL_SHOCK);
             m_uiShockTimer = urand(4000, 7000);
         }
         else
-            m_uiShockTimer -= uidiff;
+            m_uiShockTimer -= uiDiff;
     }
 };
 
@@ -252,7 +252,7 @@ struct MANGOS_DLL_DECL mob_boombotAI : public ScriptedAI
         }
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (m_creature->GetHealth() - uiDamage > m_creature->GetMaxHealth() * 0.5f)
             return;
@@ -260,7 +260,7 @@ struct MANGOS_DLL_DECL mob_boombotAI : public ScriptedAI
         uiDamage = 0;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         // If we are within range melee the target
         if (pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 5.0f) && m_creature->IsWithinLOSInMap(pWho))
@@ -356,12 +356,12 @@ struct MANGOS_DLL_DECL mob_xtheartAI : public ScriptedAI
         m_uiTotalDamage     = 0;
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         m_uiTotalDamage += uiDamage;
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_XT002_HARD, IN_PROGRESS);
@@ -473,7 +473,7 @@ struct MANGOS_DLL_DECL boss_xt_002AI : public ScriptedAI
         m_bIsHardMode           = false;
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
         {
@@ -512,7 +512,7 @@ struct MANGOS_DLL_DECL boss_xt_002AI : public ScriptedAI
         m_creature->SetInCombatWithZone();
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -528,7 +528,7 @@ struct MANGOS_DLL_DECL boss_xt_002AI : public ScriptedAI
             pHeart->ForcedDespawn();
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_01 : SAY_SLAY_02, m_creature);
     }
@@ -584,7 +584,7 @@ struct MANGOS_DLL_DECL boss_xt_002AI : public ScriptedAI
         m_uiTanctrumTimer   = 38000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {

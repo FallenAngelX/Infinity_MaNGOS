@@ -156,7 +156,7 @@ struct MANGOS_DLL_DECL npc_akamaAI : public ScriptedAI, private DialogueHelper
         m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
     }
 
-    void AttackedBy(Unit* pAttacker)
+    void AttackedBy(Unit* pAttacker) override
     {
         // When the Shade starts to attack Akama, switch to melee phase
         if (m_uiPhase == PHASE_CHANNEL && pAttacker->GetEntry() == NPC_SHADE_OF_AKAMA)
@@ -174,7 +174,7 @@ struct MANGOS_DLL_DECL npc_akamaAI : public ScriptedAI, private DialogueHelper
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         // Note: this is called from the Shade, Channeler and Sorcerer script
         // If the function is changed in the future, please review this.
@@ -211,7 +211,7 @@ struct MANGOS_DLL_DECL npc_akamaAI : public ScriptedAI, private DialogueHelper
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
         m_creature->SetCorpseDelay(30);
@@ -224,13 +224,13 @@ struct MANGOS_DLL_DECL npc_akamaAI : public ScriptedAI, private DialogueHelper
         }
     }
 
-    void CorpseRemoved(uint32& uiRespawnDelay)
+    void CorpseRemoved(uint32& uiRespawnDelay) override
     {
         // Resapwn after 5 min
         uiRespawnDelay = 5 * MINUTE;
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch (pSummoned->GetEntry())
         {
@@ -410,7 +410,7 @@ struct MANGOS_DLL_DECL npc_akamaAI : public ScriptedAI, private DialogueHelper
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         switch (m_uiPhase)
         {
@@ -526,19 +526,19 @@ struct MANGOS_DLL_DECL boss_shade_of_akamaAI : public ScriptedAI
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_SHADE, FAIL);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetEntry() == NPC_AKAMA)
             EnterEvadeMode();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoCastSpellIfCan(m_creature, SPELL_SUMMON_SHADE_TRIGGER, CAST_TRIGGERED);
 
@@ -571,7 +571,7 @@ struct MANGOS_DLL_DECL boss_shade_of_akamaAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -603,7 +603,7 @@ struct MANGOS_DLL_DECL mob_ashtongue_channelerAI : public ScriptedAI
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -613,10 +613,10 @@ struct MANGOS_DLL_DECL mob_ashtongue_channelerAI : public ScriptedAI
             pAkama->AI()->KilledUnit(m_creature);
     }
 
-    void AttackStart(Unit* pWho) {}
-    void MoveInLineOfSight(Unit* pWho) {}
+    void AttackStart(Unit* pWho) override {}
+    void MoveInLineOfSight(Unit* pWho) override { }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiBanishTimer)
         {
@@ -647,10 +647,10 @@ struct MANGOS_DLL_DECL mob_ashtongue_sorcererAI : public ScriptedAI
 
     void Reset() {}
 
-    void AttackStart(Unit* pWho) {}
-    void MoveInLineOfSight(Unit* pWho) {}
+    void AttackStart(Unit* pWho) override {}
+    void MoveInLineOfSight(Unit* pWho) override { }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -673,7 +673,7 @@ struct MANGOS_DLL_DECL mob_ashtongue_sorcererAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff) {}
+    void UpdateAI(const uint32 uiDiff) override {}
 };
 
 CreatureAI* GetAI_npc_akama_shade(Creature* pCreature)

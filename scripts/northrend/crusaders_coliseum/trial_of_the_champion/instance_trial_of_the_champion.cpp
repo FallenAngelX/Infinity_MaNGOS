@@ -46,7 +46,7 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
     uint32 m_uiAnnouncerID;
     bool   m_bIsRegularMode;
 
-    void Initialize()
+    void Initialize() override
     {
         m_uiBlackKnightMinionID    = 0;
         m_uiChampionId1            = 0;
@@ -60,7 +60,7 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
             m_auiEncounter[i] = NOT_STARTED;
     }
 
-    void OnPlayerEnter(Player *pPlayer)
+    void OnPlayerEnter(Player* pPlayer) override
     {
 
         enum PhaseControl
@@ -93,7 +93,7 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
         }
     }
 
-    void OnCreatureCreate(Creature* pCreature)
+    void OnCreatureCreate(Creature* pCreature) override
     {
         switch(pCreature->GetEntry())
         {
@@ -162,7 +162,7 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
         m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
     }
 
-    void OnObjectCreate(GameObject *pGo)
+    void OnObjectCreate(GameObject* pGo) override
     {
         switch(pGo->GetEntry())
         {
@@ -179,7 +179,7 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
         }
     }
 
-    void SetData(uint32 uiType, uint32 uiData)
+    void SetData(uint32 uiType, uint32 uiData) override
     {
         switch(uiType)
         {
@@ -261,7 +261,7 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
         }
     }
 
-    uint32 GetData(uint32 uiType) const
+    uint32 GetData(uint32 uiType) const override
     {
         switch(uiType)
         {
@@ -290,7 +290,7 @@ struct MANGOS_DLL_DECL instance_trial_of_the_champion : public ScriptedInstance
         return 0;
     }
 
-    const char* Save() const
+    const char* Save() const override
     {
         return m_strInstData.c_str();
     }

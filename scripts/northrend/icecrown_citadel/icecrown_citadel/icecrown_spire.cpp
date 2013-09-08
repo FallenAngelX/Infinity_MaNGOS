@@ -119,7 +119,7 @@ struct MANGOS_DLL_DECL mob_frost_giantAI : public BSWScriptedAI
         m_creature->CastSpell(m_creature, SPELL_ACHIEVEMENT_CREDIT, false);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (pInstance) pInstance->SetData(TYPE_FLIGHT_WAR, FAIL);
     }

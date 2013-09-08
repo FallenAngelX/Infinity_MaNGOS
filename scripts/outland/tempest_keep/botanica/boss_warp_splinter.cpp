@@ -79,17 +79,17 @@ struct MANGOS_DLL_DECL boss_warp_splinterAI : public ScriptedAI
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_SAPLING)
             pSummoned->GetMotionMaster()->MoveFollow(m_creature, 0, 0);
@@ -107,7 +107,7 @@ struct MANGOS_DLL_DECL boss_warp_splinterAI : public ScriptedAI
         DoScriptText(urand(0, 1) ? SAY_SUMMON_1 : SAY_SUMMON_2, m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -156,8 +156,8 @@ struct MANGOS_DLL_DECL npc_saplingAI  : public ScriptedAI
         // m_creature->SetSpeedRate(MOVE_RUN, 0.5f);
     }
 
-    void MoveInLineOfSight(Unit* pWho) { }
-    void UpdateAI(const uint32 uiDiff)
+    void MoveInLineOfSight(Unit* pWho) override { }
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

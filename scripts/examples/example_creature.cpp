@@ -110,7 +110,7 @@ struct MANGOS_DLL_DECL example_creatureAI : public ScriptedAI
 
     // *** HANDLED FUNCTION ***
     // Our Recive emote function
-    void ReceiveEmote(Player* pPlayer, uint32 uiTextEmote)
+    void ReceiveEmote(Player* pPlayer, uint32 uiTextEmote) override
     {
         m_creature->HandleEmote(uiTextEmote);
 
@@ -127,7 +127,7 @@ struct MANGOS_DLL_DECL example_creatureAI : public ScriptedAI
 
     // *** HANDLED FUNCTION ***
     // Update AI is called Every single map update (roughly once every 100ms if a player is within the grid)
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Out of combat timers
         if (!m_creature->getVictim())

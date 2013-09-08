@@ -261,7 +261,7 @@ struct MANGOS_DLL_DECL boss_commander_kolurgAI : public ScriptedAI // triggers s
             //m_pInstance->SetData(TYPE_COMMANDER_KOLURG, NOT_STARTED);
     }
 
-    void EnterCombat(Unit* who)
+    void EnterCombat(Unit* who) override
     {
        /* DoScriptText(SAY_AGGRO, m_creature);
 
@@ -271,7 +271,7 @@ struct MANGOS_DLL_DECL boss_commander_kolurgAI : public ScriptedAI // triggers s
 
     //void AttackStart(Unit* who) {}
 
-    //void MoveInLineOfSight(Unit* who) {}
+    //void MoveInLineOfSight(Unit* who) override { }
 
     void KilledUnit(Unit *victim)
     {
@@ -359,7 +359,7 @@ struct MANGOS_DLL_DECL boss_commander_stoutbeardAI : public ScriptedAI
             //m_pInstance->SetData(TYPE_COMMANDER_STOUTBEARD, NOT_STARTED);
     }
 
-    void EnterCombat(Unit* who)
+    void EnterCombat(Unit* who) override
     {
        /* DoScriptText(SAY_AGGRO, m_creature);
 
@@ -369,7 +369,7 @@ struct MANGOS_DLL_DECL boss_commander_stoutbeardAI : public ScriptedAI
 
     //void AttackStart(Unit* who) {}
 
-    //void MoveInLineOfSight(Unit* who) {}
+    //void MoveInLineOfSight(Unit* who) override { }
 
     void KilledUnit(Unit *victim)
     {

@@ -81,13 +81,13 @@ struct MANGOS_DLL_DECL boss_grobbulusAI : public ScriptedAI
             m_pInstance->SetData(TYPE_GROBBULUS, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_GROBBULUS, DONE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_GROBBULUS, FAIL);
@@ -125,13 +125,13 @@ struct MANGOS_DLL_DECL boss_grobbulusAI : public ScriptedAI
             return false;
     }
 
-    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell)
+    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
     {
         if ((pSpell->Id == SPELL_SLIME_SPRAY || pSpell->Id == SPELL_SLIME_SPRAY_H) && pTarget->GetTypeId() == TYPEID_PLAYER)
             m_creature->SummonCreature(NPC_FALLOUT_SLIME, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 10*IN_MILLISECONDS);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

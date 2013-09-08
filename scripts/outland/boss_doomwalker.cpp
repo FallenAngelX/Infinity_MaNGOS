@@ -65,7 +65,7 @@ struct MANGOS_DLL_DECL boss_doomwalkerAI : public ScriptedAI
         m_bHasEnrage       = false;
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() != TYPEID_PLAYER)
             return;
@@ -83,7 +83,7 @@ struct MANGOS_DLL_DECL boss_doomwalkerAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
     }
@@ -94,7 +94,7 @@ struct MANGOS_DLL_DECL boss_doomwalkerAI : public ScriptedAI
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

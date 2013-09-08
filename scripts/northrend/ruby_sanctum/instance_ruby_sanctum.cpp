@@ -73,7 +73,7 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
     uint64 m_uiFlameWallsGUID;
     uint64 m_uiFlameRingGUID;
 
-    void Initialize()
+    void Initialize() override
     {
         for (uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
             m_auiEncounter[i] = NOT_STARTED;
@@ -103,7 +103,7 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
 
     }
 
-    bool IsEncounterInProgress() const
+    bool IsEncounterInProgress() const override
     {
         for(uint8 i = 1; i < MAX_ENCOUNTERS ; ++i)
             if (m_auiEncounter[i] == IN_PROGRESS)
@@ -163,7 +163,7 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
             DoCloseDoor(GO_FLAME_WALLS);
     }
 
-    void OnCreatureCreate(Creature* pCreature)
+    void OnCreatureCreate(Creature* pCreature) override
     {
         switch(pCreature->GetEntry())
         {
@@ -185,7 +185,7 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
         }
     }
 
-    void OnObjectCreate(GameObject* pGo)
+    void OnObjectCreate(GameObject* pGo) override
     {
         switch(pGo->GetEntry())
         {
@@ -201,7 +201,7 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
         OpenAllDoors();
     }
 
-    void SetData(uint32 uiType, uint32 uiData)
+    void SetData(uint32 uiType, uint32 uiData) override
     {
         switch(uiType)
         {
@@ -283,12 +283,12 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
         }
     }
 
-    const char* Save() const
+    const char* Save() const override
     {
         return strSaveData.c_str();
     }
 
-    uint32 GetData(uint32 uiType) const
+    uint32 GetData(uint32 uiType) const override
     {
         switch(uiType)
         {
@@ -333,7 +333,7 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
         return 0;
     }
 
-    void Load(const char* chrIn)
+    void Load(const char* chrIn) override
     {
         if (!chrIn)
         {

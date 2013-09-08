@@ -233,12 +233,12 @@ struct MANGOS_DLL_DECL mob_iron_rootsAI : public ScriptedAI
 
     void Reset(){}
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         m_creature->ForcedDespawn(500);
     }
 
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -295,7 +295,7 @@ struct MANGOS_DLL_DECL boss_elder_brightleafAI : public ScriptedAI
         DoScriptText(SAY_BRIGHTLEAF_AGGRO, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0,1) ? SAY_BRIGHTLEAF_SLAY1 : SAY_BRIGHTLEAF_SLAY2, m_creature);
     }
@@ -305,7 +305,7 @@ struct MANGOS_DLL_DECL boss_elder_brightleafAI : public ScriptedAI
         DoScriptText(SAY_BRIGHTLEAF_DEATH, m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -380,12 +380,12 @@ struct MANGOS_DLL_DECL boss_elder_ironbranchAI : public ScriptedAI
         DoScriptText(SAY_IRONBRANCH_DEATH, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0,1) ? SAY_IRONBRANCH_SLAY1 : SAY_IRONBRANCH_SLAY2, m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -461,12 +461,12 @@ struct MANGOS_DLL_DECL boss_elder_stonebarkAI : public ScriptedAI
         DoScriptText(SAY_STONEBARK_DEATH, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0,1) ? SAY_STONEBARK_SLAY1 : SAY_STONEBARK_SLAY2, m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -657,7 +657,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
             DoScriptText(SAY_AGGRO_HARD, m_creature);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -688,7 +688,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
     }
 
     // for debug only!
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if(m_pInstance) 
         {
@@ -708,7 +708,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
         DoCast(m_creature, SPELL_FREYA_CREDIT, true);
     }
 
-    void DamageTaken(Unit *done_by, uint32 &uiDamage)
+    void DamageTaken(Unit* done_by, uint32& uiDamage) override
     {
         if(m_creature->GetHealth() < uiDamage || m_creature->GetHealthPercent() < 1.0f)
         {
@@ -717,7 +717,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0,1) ? SAY_SLAY1 : SAY_SLAY2, m_creature);
     }
@@ -795,7 +795,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
         m_uiSummonTimer = 60000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(!m_bIsOutro)
         {
@@ -1139,18 +1139,18 @@ struct MANGOS_DLL_DECL mob_freya_groundAI : public ScriptedAI
         m_creature->SetRespawnDelay(DAY);           
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
     
-    void DamageTaken(Unit *pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (m_creature->GetEntry() == NPC_HEALTHY_SPORE)
             uiDamage = 0;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_FREYA) != IN_PROGRESS) 
         {
@@ -1340,7 +1340,7 @@ struct MANGOS_DLL_DECL mob_freya_spawnedAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_FREYA) != IN_PROGRESS) 
             m_creature->ForcedDespawn();

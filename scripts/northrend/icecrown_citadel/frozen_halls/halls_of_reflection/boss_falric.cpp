@@ -77,7 +77,7 @@ struct MANGOS_DLL_DECL boss_falricAI : public BSWScriptedAI
       DoCast(m_creature, SPELL_HOPELESSNESS);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         switch(urand(0,1))
         {
@@ -86,7 +86,7 @@ struct MANGOS_DLL_DECL boss_falricAI : public BSWScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if(!m_pInstance)
             return;
@@ -170,7 +170,7 @@ struct MANGOS_DLL_DECL boss_falricAI : public BSWScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance)
             return;

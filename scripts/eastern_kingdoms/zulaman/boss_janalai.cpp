@@ -151,13 +151,13 @@ struct MANGOS_DLL_DECL boss_janalaiAI : public ScriptedAI
         m_bIsFlameWall      = false;
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_JANALAI, FAIL);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -165,7 +165,7 @@ struct MANGOS_DLL_DECL boss_janalaiAI : public ScriptedAI
             m_pInstance->SetData(TYPE_JANALAI, DONE);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
@@ -178,7 +178,7 @@ struct MANGOS_DLL_DECL boss_janalaiAI : public ScriptedAI
             m_pInstance->SetData(TYPE_JANALAI, IN_PROGRESS);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch (pSummoned->GetEntry())
         {
@@ -239,7 +239,7 @@ struct MANGOS_DLL_DECL boss_janalaiAI : public ScriptedAI
         m_bIsFlameWall = false;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -401,10 +401,10 @@ struct MANGOS_DLL_DECL npc_amanishi_hatcherAI : public ScriptedAI
         m_creature->SetWalk(false);
     }
 
-    void MoveInLineOfSight(Unit* pWho) { }
-    void AttackStart(Unit* pWho) { }
+    void MoveInLineOfSight(Unit* pWho) override { }
+    void AttackStart(Unit* pWho) override { }
 
-    void MovementInform(uint32 uiType, uint32 uiPointId)
+    void MovementInform(uint32 uiType, uint32 uiPointId) override
     {
         if (uiType != POINT_MOTION_TYPE)
             return;
@@ -455,7 +455,7 @@ struct MANGOS_DLL_DECL npc_amanishi_hatcherAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_bWaypointEnd)
             return;
@@ -490,9 +490,9 @@ struct MANGOS_DLL_DECL npc_dragonhawk_eggAI : public Scripted_NoMovementAI
 
     void Reset() {}
 
-    void AttackStart(Unit* pWho) {}
-    void MoveInLineOfSight(Unit* pWho) {}
-    void UpdateAI(const uint32 uiDiff) {}
+    void AttackStart(Unit* pWho) override {}
+    void MoveInLineOfSight(Unit* pWho) override { }
+    void UpdateAI(const uint32 uiDiff) override {}
 };
 
 CreatureAI* GetAI_npc_dragonhawk_eggAI(Creature* pCreature)
@@ -507,9 +507,9 @@ struct MANGOS_DLL_DECL npc_janalai_firebombAI : public Scripted_NoMovementAI
 
     void Reset() {}
 
-    void AttackStart(Unit* pWho) {}
-    void MoveInLineOfSight(Unit* pWho) {}
-    void UpdateAI(const uint32 uiDiff) {}
+    void AttackStart(Unit* pWho) override {}
+    void MoveInLineOfSight(Unit* pWho) override { }
+    void UpdateAI(const uint32 uiDiff) override {}
 };
 
 CreatureAI* GetAI_npc_janalai_firebombAI(Creature* pCreature)

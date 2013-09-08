@@ -69,21 +69,21 @@ struct MANGOS_DLL_DECL boss_emerald_dragonAI : public ScriptedAI
         m_uiTailsweepTimer = 4000;
     }
 
-    void EnterCombat(Unit* pEnemy)
+    void EnterCombat(Unit* pEnemy) override
     {
         DoCastSpellIfCan(m_creature, SPELL_MARK_OF_NATURE_AURA, CAST_TRIGGERED);
 
         ScriptedAI::EnterCombat(pEnemy);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         // Mark killed players with Mark of Nature
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
             pVictim->CastSpell(pVictim, SPELL_MARK_OF_NATURE_PLAYER, true, NULL, NULL, m_creature->GetObjectGuid());
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             pSummoned->AI()->AttackStart(pTarget);
@@ -98,7 +98,7 @@ struct MANGOS_DLL_DECL boss_emerald_dragonAI : public ScriptedAI
     // Return true to handle shared timers and MeleeAttack
     virtual bool UpdateDragonAI(const uint32 uiDiff) { return true; }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -173,7 +173,7 @@ struct MANGOS_DLL_DECL boss_emerissAI : public boss_emerald_dragonAI
         DoScriptText(SAY_EMERISS_AGGRO, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         // summon a mushroom on the spot the player dies
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
@@ -260,7 +260,7 @@ struct MANGOS_DLL_DECL boss_lethonAI : public boss_emerald_dragonAI
     }
 
     // Need this code here, as SPELL_DRAW_SPIRIT has no Script- or Dummyeffect
-    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell)
+    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
     {
         // Summon a shade for each player hit
         if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpell->Id == SPELL_DRAW_SPIRIT)
@@ -273,7 +273,7 @@ struct MANGOS_DLL_DECL boss_lethonAI : public boss_emerald_dragonAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         // Move the shade to lethon
         if (pSummoned->GetEntry() == NPC_SPIRIT_SHADE)
@@ -294,7 +294,7 @@ struct MANGOS_DLL_DECL npc_spirit_shadeAI : public ScriptedAI
         m_bHasHealed = false;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_bHasHealed && pWho->GetEntry() == NPC_LETHON && pWho->IsWithinDistInMap(m_creature, 3.0f))
         {
@@ -306,9 +306,9 @@ struct MANGOS_DLL_DECL npc_spirit_shadeAI : public ScriptedAI
         }
     }
 
-    void AttackStart(Unit* pWho) { }
+    void AttackStart(Unit* pWho) override { }
 
-    void UpdateAI(const uint32 uiDiff) { }
+    void UpdateAI(const uint32 uiDiff) override { }
 };
 
 CreatureAI* GetAI_boss_lethon(Creature* pCreature)

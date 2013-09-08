@@ -261,7 +261,7 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
         DoCast(m_creature, SPELL_ARTHAS_AURA);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         if (!m_pInstance)
             return;
@@ -286,7 +286,7 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
         }
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (!pWho || pWho == m_creature)
             return;
@@ -296,7 +296,7 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
         npc_escortAI::AttackStart(pWho);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!pWho)
             return;
@@ -324,7 +324,7 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
         }
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch(uiPointId)
         {
@@ -922,7 +922,7 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
          }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
        npc_escortAI::UpdateAI(uiDiff);
 
@@ -1090,7 +1090,7 @@ struct MANGOS_DLL_DECL npc_utherAI : public npc_escortAI
            }
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch(uiPointId)
         {
@@ -1115,7 +1115,7 @@ struct MANGOS_DLL_DECL npc_utherAI : public npc_escortAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
        npc_escortAI::UpdateAI(uiDiff);
 
@@ -1213,7 +1213,7 @@ struct MANGOS_DLL_DECL npc_chromi_middleAI : public ScriptedAI
         m_bUtherHere = false;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_bUtherHere && m_pInstance && pWho && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->GetDistance2d(pWho) <= 15 && ((Player*)pWho)->GetQuestStatus(QUEST_A_ROYAL_ESCORT) == QUEST_STATUS_INCOMPLETE)
         {
@@ -1335,7 +1335,7 @@ struct MANGOS_DLL_DECL npc_arthas_priestAI : public ScriptedAI
      m_uiHealTimer = 1000;
    }
 
-   void AttackStart(Unit* pWho)
+   void AttackStart(Unit* pWho) override
    {
       if (!pWho)
           return;
@@ -1348,7 +1348,7 @@ struct MANGOS_DLL_DECL npc_arthas_priestAI : public ScriptedAI
       }
    }
 
-   void EnterEvadeMode()
+   void EnterEvadeMode() override
    {
       m_creature->RemoveAllAuras();
       m_creature->DeleteThreatList();
@@ -1360,7 +1360,7 @@ struct MANGOS_DLL_DECL npc_arthas_priestAI : public ScriptedAI
       Reset();
    }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!pWho)
             return;
@@ -1388,7 +1388,7 @@ struct MANGOS_DLL_DECL npc_arthas_priestAI : public ScriptedAI
         }
    }
 
-   void UpdateAI(const uint32 uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
    {
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -1444,7 +1444,7 @@ struct MANGOS_DLL_DECL npc_arthas_marineAI : public ScriptedAI
    {
    }
 
-   void AttackStart(Unit* pWho)
+   void AttackStart(Unit* pWho) override
    {
       if (!pWho)
           return;
@@ -1460,7 +1460,7 @@ struct MANGOS_DLL_DECL npc_arthas_marineAI : public ScriptedAI
       }
    }
 
-   void EnterEvadeMode()
+   void EnterEvadeMode() override
    {
       m_creature->RemoveAllAuras();
       m_creature->DeleteThreatList();
@@ -1481,7 +1481,7 @@ struct MANGOS_DLL_DECL npc_arthas_marineAI : public ScriptedAI
       Reset();
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!pWho)
             return;
@@ -1509,7 +1509,7 @@ struct MANGOS_DLL_DECL npc_arthas_marineAI : public ScriptedAI
         }
     }
 
-   void UpdateAI(const uint32 uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
    {
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -1640,7 +1640,7 @@ uint32 m_uiStepTimer;
         }
    }
 
-   void UpdateAI(const uint32 uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
     {
        if (!m_pInstance) return;
 

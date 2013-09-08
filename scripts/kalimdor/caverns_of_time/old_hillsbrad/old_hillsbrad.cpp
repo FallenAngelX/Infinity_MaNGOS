@@ -303,7 +303,7 @@ struct MANGOS_DLL_DECL npc_thrall_old_hillsbradAI : public npc_escortAI, private
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         switch (urand(0, 2))
         {
@@ -313,7 +313,7 @@ struct MANGOS_DLL_DECL npc_thrall_old_hillsbradAI : public npc_escortAI, private
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         // fail, and relocation handled in instance script
         if (m_pInstance)
@@ -335,7 +335,7 @@ struct MANGOS_DLL_DECL npc_thrall_old_hillsbradAI : public npc_escortAI, private
         }
     }
 
-    void CorpseRemoved(uint32& uiRespawnDelay)
+    void CorpseRemoved(uint32& uiRespawnDelay) override
     {
         uiRespawnDelay = 0;
 
@@ -344,7 +344,7 @@ struct MANGOS_DLL_DECL npc_thrall_old_hillsbradAI : public npc_escortAI, private
             uiRespawnDelay = 12 * HOUR;
     }
 
-    void JustRespawned()
+    void JustRespawned() override
     {
         npc_escortAI::JustRespawned();
 
@@ -417,7 +417,7 @@ struct MANGOS_DLL_DECL npc_thrall_old_hillsbradAI : public npc_escortAI, private
         }
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         if (HasEscortState(STATE_ESCORT_ESCORTING))
         {
@@ -432,7 +432,7 @@ struct MANGOS_DLL_DECL npc_thrall_old_hillsbradAI : public npc_escortAI, private
         npc_escortAI::EnterEvadeMode();
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch (pSummoned->GetEntry())
         {
@@ -689,7 +689,7 @@ struct MANGOS_DLL_DECL npc_thrall_old_hillsbradAI : public npc_escortAI, private
         }
     }
 
-    void WaypointReached(uint32 uiPoint)
+    void WaypointReached(uint32 uiPoint) override
     {
         if (!m_pInstance)
             return;
@@ -1175,7 +1175,7 @@ struct MANGOS_DLL_DECL npc_tarethaAI : public npc_escortAI, private DialogueHelp
         m_bHasStartedEpilogue = false;
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         // Remove flags from the npc - the quest will be handled by the entrance version
         if (pSummoned->GetEntry() == NPC_EROZION)
@@ -1186,7 +1186,7 @@ struct MANGOS_DLL_DECL npc_tarethaAI : public npc_escortAI, private DialogueHelp
         }
     }
 
-    void WaypointReached(uint32 uiPoint)
+    void WaypointReached(uint32 uiPoint) override
     {
         if (uiPoint == 7)
         {

@@ -99,7 +99,7 @@ struct MANGOS_DLL_DECL boss_bronjahmAI : public BSWScriptedAI
                DoScriptText(-1632004,m_creature,killer);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
     switch (urand(0,1)) {
         case 0:
@@ -199,12 +199,12 @@ struct MANGOS_DLL_DECL npc_corrupted_soul_fragmentAI : public ScriptedAI
         m_creature->SetRespawnDelay(DAY);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_BRONJAHM) != IN_PROGRESS ) m_creature->ForcedDespawn();
 

@@ -200,7 +200,7 @@ struct MANGOS_DLL_DECL mob_vh_dragonsAI : public ScriptedAI
         IsWalking = true;
         MovementStarted = true;
     }
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -213,7 +213,7 @@ struct MANGOS_DLL_DECL mob_vh_dragonsAI : public ScriptedAI
         WayPoints DWP(id, x, y, z);
         WayPointList.push_back(DWP);
     }
-    void MovementInform(uint32 uiType, uint32 uiPointId)
+    void MovementInform(uint32 uiType, uint32 uiPointId) override
     {
         if(uiType != POINT_MOTION_TYPE || creatureEntry == NPC_GUARDIAN || creatureEntry == NPC_KEEPER)
             return;
@@ -224,7 +224,7 @@ struct MANGOS_DLL_DECL mob_vh_dragonsAI : public ScriptedAI
         ++WayPoint;
         WalkTimer = 200;
     }
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         switch(creatureEntry)
         {
@@ -275,7 +275,7 @@ struct MANGOS_DLL_DECL mob_vh_dragonsAI : public ScriptedAI
                 break;
         }
     }
-    void UpdateAI(const uint32 uiDiff){
+    void UpdateAI(const uint32 uiDiff) override{
         if(portalLoc != -1)
             StartMovement();
 
@@ -451,7 +451,7 @@ struct MANGOS_DLL_DECL npc_teleportation_portalAI : public ScriptedAI
         m_creature->SetRespawnDelay(DAY);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch(pSummoned->GetEntry())
         {
@@ -703,7 +703,7 @@ struct MANGOS_DLL_DECL npc_sinclariAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(start)
         {
@@ -901,7 +901,7 @@ struct MANGOS_DLL_DECL npc_door_sealAI : public ScriptedAI
         SpellCorrupt_Timer = 0;
         lastPortal = 0;
 }
-    void SpellHit(Unit* caster, const SpellEntry* spell)
+    void SpellHit(Unit* caster, const SpellEntry* spell) override
     {
         if (SpellCorrupt_Timer)
             return;
@@ -910,7 +910,7 @@ struct MANGOS_DLL_DECL npc_door_sealAI : public ScriptedAI
             SpellCorrupt_Timer = 1000;
             }
     }
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         m_creature->Respawn();
     }
@@ -952,7 +952,7 @@ struct MANGOS_DLL_DECL npc_azure_saboteurAI : public ScriptedAI
     uint32 m_uiBossType;
     uint32 m_uiDoorGUID;
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
@@ -1008,7 +1008,7 @@ struct MANGOS_DLL_DECL npc_azure_saboteurAI : public ScriptedAI
         }
     }
 
-    void MovementInform(uint32 uiType, uint32 uiPointId)
+    void MovementInform(uint32 uiType, uint32 uiPointId) override
     {
         if(uiType != POINT_MOTION_TYPE)
                 return;
@@ -1021,7 +1021,7 @@ struct MANGOS_DLL_DECL npc_azure_saboteurAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bIsActiving)
             if (m_uiDisruption_Timer < uiDiff)

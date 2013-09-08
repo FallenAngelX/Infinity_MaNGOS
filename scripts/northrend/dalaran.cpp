@@ -46,7 +46,7 @@ struct MANGOS_DLL_DECL npc_dalaran_guardian_mageAI : public ScriptedAI
 {
     npc_dalaran_guardian_mageAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
             return;

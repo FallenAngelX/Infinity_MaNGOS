@@ -84,7 +84,7 @@ struct MANGOS_DLL_DECL boss_malganisAI : public ScriptedAI
         m_uiVampire_Timer = 30000;
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (m_pInstance->GetData(TYPE_PHASE) > 9) return;
 
@@ -96,7 +96,7 @@ struct MANGOS_DLL_DECL boss_malganisAI : public ScriptedAI
         ScriptedAI::AttackStart(pWho);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         m_creature->ForcedDespawn();
     }
@@ -106,7 +106,7 @@ struct MANGOS_DLL_DECL boss_malganisAI : public ScriptedAI
         DoScriptText(SAY_MALGANIS_AGGRO, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         switch(rand()%7)
         {
@@ -120,7 +120,7 @@ struct MANGOS_DLL_DECL boss_malganisAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

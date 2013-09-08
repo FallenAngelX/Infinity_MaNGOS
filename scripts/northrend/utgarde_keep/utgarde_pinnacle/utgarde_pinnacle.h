@@ -71,23 +71,23 @@ class MANGOS_DLL_DECL instance_pinnacle : public ScriptedInstance
     public:
         instance_pinnacle(Map* pMap);
 
-        void Initialize();
+        void Initialize() override;
 
-        void OnObjectCreate(GameObject* pGo);
-        void OnCreatureCreate(Creature* pCreature);
+        void OnObjectCreate(GameObject* pGo) override;
+        void OnCreatureCreate(Creature* pCreature) override;
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType) const;
+        void SetData(uint32 uiType, uint32 uiData) override;
+        uint32 GetData(uint32 uiType) const override;
 
         void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
         bool CheckAchievementCriteriaMeet(uint32 criteria_id, Player const* source, Unit const* target = NULL, uint32 miscvalue1 = 0) const override;
 
-        void OnCreatureDeath(Creature * pCreature);
-        void OnCreatureEvade(Creature * pCreature);
+        void OnCreatureDeath(Creature* pCreature) override;
+        void OnCreatureEvade(Creature* pCreature) override;
         void Update(uint32 uiDiff);
 
-        const char* Save() const { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+        const char* Save() const override { return m_strInstData.c_str(); }
+        void Load(const char* chrIn) override;
 
         void DoProcessCallFlamesEvent();
         void DoMakeFreezingCloud();

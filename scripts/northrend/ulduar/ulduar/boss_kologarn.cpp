@@ -113,7 +113,7 @@ struct MANGOS_DLL_DECL mob_ulduar_rubbleAI : public ScriptedAI
         m_creature->SetInCombatWithZone();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         m_creature->ForcedDespawn(1000);
     }
@@ -191,14 +191,14 @@ struct MANGOS_DLL_DECL boss_kologarnAI : public ScriptedAI
         m_uiRubbleCount = 0;
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_KOLOGARN, FAIL);
         ScriptedAI::EnterEvadeMode();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
         // kill Arms
@@ -219,7 +219,7 @@ struct MANGOS_DLL_DECL boss_kologarnAI : public ScriptedAI
 
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch(pSummoned->GetEntry())
         {
@@ -240,7 +240,7 @@ struct MANGOS_DLL_DECL boss_kologarnAI : public ScriptedAI
         }
     }
 
-    void SummonedCreatureDespawn(Creature* pSummoned)
+    void SummonedCreatureDespawn(Creature* pSummoned) override
     {
         if (m_uiRubbleCount && pSummoned->GetEntry() == NPC_RUBBLE)
             --m_uiRubbleCount;
@@ -290,7 +290,7 @@ struct MANGOS_DLL_DECL boss_kologarnAI : public ScriptedAI
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY1 : SAY_SLAY2, m_creature);
     }
@@ -320,7 +320,7 @@ struct MANGOS_DLL_DECL boss_kologarnAI : public ScriptedAI
         m_pVehicleKit->InstallAccessory(iSeat);
     }
     
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -432,7 +432,7 @@ struct MANGOS_DLL_DECL boss_left_armAI : public ScriptedAI
         m_uiShockwaveTimer = urand(10000, 25000);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -445,7 +445,7 @@ struct MANGOS_DLL_DECL boss_left_armAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -499,7 +499,7 @@ struct MANGOS_DLL_DECL boss_right_armAI : public ScriptedAI
         m_uiMaxDamage           = m_bIsRegularMode ? 80000 : 380000;
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (m_bIsDead)
             return;
@@ -517,7 +517,7 @@ struct MANGOS_DLL_DECL boss_right_armAI : public ScriptedAI
         }
     }
 
-    void PassengerBoarded(Unit* pWho, int8 seatId, bool apply)
+    void PassengerBoarded(Unit* pWho, int8 seatId, bool apply) override
     {
         if (!apply)
         {
@@ -529,7 +529,7 @@ struct MANGOS_DLL_DECL boss_right_armAI : public ScriptedAI
             m_uiTeleportTimer = 16000; // After 15sec kill players
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -542,7 +542,7 @@ struct MANGOS_DLL_DECL boss_right_armAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiTeleportTimer)
         {
@@ -629,7 +629,7 @@ struct MANGOS_DLL_DECL mob_eyebeam_triggerAI : public ScriptedAI
             m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_IF_LOOKS_COULD_KILL, false);
     }
 
-    void MovementInform(uint32 uiMotionType, uint32 uiPointId)
+    void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
     {
         if (uiMotionType != POINT_MOTION_TYPE)
             return;
@@ -637,7 +637,7 @@ struct MANGOS_DLL_DECL mob_eyebeam_triggerAI : public ScriptedAI
         m_uiStartMoveTimer = 0;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiStartMoveTimer <= uiDiff)
         {
@@ -668,9 +668,9 @@ struct MANGOS_DLL_DECL mob_kologarn_pit_kill_bunnyAI : public ScriptedAI
     float m_fPositionZ;
     bool m_bBridgeLocked;
     void Reset(){}
-    void UpdateAI(const uint32 uiDiff){}
+    void UpdateAI(const uint32 uiDiff) override{}
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (pWho->GetTypeId() == TYPEID_PLAYER && !pWho->GetVehicle() && !((Player*)pWho)->isGameMaster())
         {

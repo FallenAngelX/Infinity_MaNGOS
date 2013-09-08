@@ -75,7 +75,7 @@ struct MANGOS_DLL_DECL npc_kerlonianAI : public FollowerAI
         m_uiFallAsleepTimer = urand(10000, 45000);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         FollowerAI::MoveInLineOfSight(pWho);
 
@@ -96,7 +96,7 @@ struct MANGOS_DLL_DECL npc_kerlonianAI : public FollowerAI
         }
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (HasFollowState(STATE_FOLLOW_INPROGRESS | STATE_FOLLOW_PAUSED) && pSpell->Id == SPELL_AWAKEN)
             ClearSleeping();
@@ -210,7 +210,7 @@ struct MANGOS_DLL_DECL npc_prospector_remtravelAI : public npc_escortAI
 {
     npc_prospector_remtravelAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         Player* pPlayer = GetPlayerForEscort();
 
@@ -281,7 +281,7 @@ struct MANGOS_DLL_DECL npc_prospector_remtravelAI : public npc_escortAI
             DoScriptText(SAY_REM_AGGRO, m_creature, pWho);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         // unsure if it should be any
         // pSummoned->AI()->AttackStart(m_creature);
@@ -327,7 +327,7 @@ struct MANGOS_DLL_DECL npc_threshwackonatorAI : public FollowerAI
 
     void Reset() {}
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         FollowerAI::MoveInLineOfSight(pWho);
 
@@ -443,7 +443,7 @@ struct MANGOS_DLL_DECL npc_volcorAI : public npc_escortAI
         }
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         // No combat for this quest
         if (m_uiQuestId == QUEST_ESCAPE_THROUGH_STEALTH)
@@ -452,7 +452,7 @@ struct MANGOS_DLL_DECL npc_volcorAI : public npc_escortAI
         npc_escortAI::MoveInLineOfSight(pWho);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->AI()->AttackStart(m_creature);
     }
@@ -478,7 +478,7 @@ struct MANGOS_DLL_DECL npc_volcorAI : public npc_escortAI
             Start(false, pPlayer, pQuest);
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {

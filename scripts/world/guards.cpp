@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL guard_shattrath_aldorAI : public guardAI
         m_bCanTeleport = false;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -200,7 +200,7 @@ struct MANGOS_DLL_DECL guard_shattrath_scryerAI : public guardAI
         m_bCanTeleport = false;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 50331648);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_bHasTransformed)
         {
@@ -149,7 +149,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         m_creature->RemoveAllAuras();
         m_creature->DeleteThreatList();
@@ -182,7 +182,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
         m_creature->GetMotionMaster()->MovePoint(2, pWho->GetPositionX(), pWho->GetPositionY(), pWho->GetPositionZ() + 5.0f);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         // Won't say killing pet/other unit
         if (pVictim->GetTypeId() != TYPEID_PLAYER)
@@ -190,7 +190,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
         DoScriptText(urand(0, 1) ? SAY_KILL_1 : SAY_KILL_2, m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -198,7 +198,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
             m_pInstance->SetData(TYPE_FELMYST, DONE);
     }
 
-    void MovementInform(uint32 uiType, uint32 uiPointId)
+    void MovementInform(uint32 uiType, uint32 uiPointId) override
     {
         if (uiType != POINT_MOTION_TYPE)
             return;
@@ -223,20 +223,20 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
 
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_FELMYST, FAIL);
         m_creature->SetLevitate(true);
     }
 
-    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell)
+    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
     {
         if (pTarget->GetTypeId() == TYPEID_PLAYER && pSpell->Id == SPELL_ENCAPSULATE_CHANNEL)
             pTarget->CastSpell(pTarget, SPELL_ENCAPSULATE, true, NULL, NULL, m_creature->GetObjectGuid());
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (!pSummoned)
             return;
@@ -245,7 +245,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
             m_creature->CastSpell(pSummoned, SPELL_VAPOR_BEAM_VISUAL, true);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {
@@ -428,7 +428,7 @@ struct MANGOS_DLL_DECL npc_felmyst_vaporAI : public ScriptedAI
             AttackStart(pPlayer);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // ignore threat list
         if (!m_creature->getVictim())
@@ -477,9 +477,9 @@ struct MANGOS_DLL_DECL npc_felmyst_vapor_cloudAI : public ScriptedAI
     // CreatureNullAI
     void AttackStart(Unit *) {}
     void AttackedBy( Unit *) {}
-    void EnterEvadeMode() {}
+    void EnterEvadeMode() override {}
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (!pSummoned)
             return;
@@ -488,7 +488,7 @@ struct MANGOS_DLL_DECL npc_felmyst_vapor_cloudAI : public ScriptedAI
             pSummoned->SetInCombatWithZone();
     }
 
-    void MoveInLineOfSight(Unit* pWho)    // change this and use void update INTERACTION_DISTANCE to player from Vapor cloud to spawn skellys
+    void MoveInLineOfSight(Unit* pWho) override    // change this and use void update INTERACTION_DISTANCE to player from Vapor cloud to spawn skellys
     {
         // summon skeleton if unit is close
         if (!m_summonTimer && m_creature->IsHostileTo(pWho) && m_creature->IsWithinDistInMap(pWho, 3))
@@ -500,7 +500,7 @@ struct MANGOS_DLL_DECL npc_felmyst_vapor_cloudAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // on-create summon
         if (m_createSkeletonTimer)

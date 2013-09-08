@@ -109,12 +109,12 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
             m_pInstance->SetData(TYPE_GALDARAH , IN_PROGRESS);
     }
 
-     void JustReachedHome()
+     void JustReachedHome() override
     {
         if(m_pInstance)
             m_pInstance->SetData(TYPE_GALDARAH, NOT_STARTED);
     }
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         switch(urand(0, 2))
         {
@@ -124,7 +124,7 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -135,7 +135,7 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
             m_pInstance->DoCompleteAchievement(ACHIEVEMENT_WHAT_THE_ECK);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->setFaction(m_creature->getFaction());
 
@@ -170,7 +170,7 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
         m_uiSpecialAbilityTimer = 12000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

@@ -181,7 +181,7 @@ struct MANGOS_DLL_DECL npc_a_special_surpriseAI : public ScriptedAI
         return false;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (m_playerGuid || pWho->GetTypeId() != TYPEID_PLAYER || !pWho->IsWithinDist(m_creature, INTERACTION_DISTANCE))
             return;
@@ -190,7 +190,7 @@ struct MANGOS_DLL_DECL npc_a_special_surpriseAI : public ScriptedAI
             m_playerGuid = pWho->GetObjectGuid();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_playerGuid && !m_creature->getVictim() && m_creature->isAlive())
         {
@@ -571,7 +571,7 @@ struct MANGOS_DLL_DECL npc_death_knight_initiateAI : public ScriptedAI
         m_uiPlagueStrike_Timer = 5000;
     }
 
-    void AttackedBy(Unit* pAttacker)
+    void AttackedBy(Unit* pAttacker) override
     {
         if (m_creature->getVictim())
             return;
@@ -582,7 +582,7 @@ struct MANGOS_DLL_DECL npc_death_knight_initiateAI : public ScriptedAI
         AttackStart(pAttacker);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (!m_bIsDuelInProgress && pSpell->Id == SPELL_DUEL_TRIGGERED && pCaster->GetTypeId() == TYPEID_PLAYER)
         {
@@ -591,7 +591,7 @@ struct MANGOS_DLL_DECL npc_death_knight_initiateAI : public ScriptedAI
         }
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (m_bIsDuelInProgress && uiDamage > m_creature->GetHealth())
         {
@@ -605,7 +605,7 @@ struct MANGOS_DLL_DECL npc_death_knight_initiateAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {
@@ -747,7 +747,7 @@ struct MANGOS_DLL_DECL npc_koltira_deathweaverAI : public npc_escortAI
         }
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {
@@ -780,7 +780,7 @@ struct MANGOS_DLL_DECL npc_koltira_deathweaverAI : public npc_escortAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (Player* pPlayer = GetPlayerForEscort())
             pSummoned->AI()->AttackStart(pPlayer);
@@ -990,7 +990,7 @@ struct MANGOS_DLL_DECL npc_unworthy_initiateAI : public ScriptedAI
         m_uiPlagueStrike_Timer = 5000;
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         SetAnchor();
 
@@ -1001,7 +1001,7 @@ struct MANGOS_DLL_DECL npc_unworthy_initiateAI : public ScriptedAI
         }
     }
 
-    void JustRespawned()
+    void JustRespawned() override
     {
         if (Creature* pAnchor = GetAnchor())
         {
@@ -1042,7 +1042,7 @@ struct MANGOS_DLL_DECL npc_unworthy_initiateAI : public ScriptedAI
         m_uiAnchorCheckTimer = 5000;
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_CHAINED_PESANT_BREATH)
         {
@@ -1056,7 +1056,7 @@ struct MANGOS_DLL_DECL npc_unworthy_initiateAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiAnchorCheckTimer)
         {
@@ -1190,17 +1190,17 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
         m_isActive = false;
     }
 
-    void AttackStart(Unit* pWho){}
+    void AttackStart(Unit* pWho) override{}
 
-    void MoveInLineOfSight(Unit* pWho){}
+    void MoveInLineOfSight(Unit* pWho) override{}
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (Unit* pCharmer = m_creature->GetCharmer())
             pCharmer->RemoveAurasDueToSpell(SPELL_EYE_CONTROL);
     }
 
-    void MovementInform(uint32 uiType, uint32 uiPointId)
+    void MovementInform(uint32 uiType, uint32 uiPointId) override
     {
         if (uiType != POINT_MOTION_TYPE || uiPointId != 0)
             return;
@@ -1210,7 +1210,7 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
         m_creature->CastSpell(m_creature, SPELL_EYE_FL_BOOST_FLY, true);
     }
 
-    void AttackedBy(Unit* pAttacker)
+    void AttackedBy(Unit* pAttacker) override
     {
         // called on remove SPELL_AURA_MOD_POSSESS
         if (!m_creature->isCharmed() && pAttacker->GetTypeId() == TYPEID_PLAYER)
@@ -1220,7 +1220,7 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_creature->isCharmed())
         {
@@ -1785,7 +1785,7 @@ struct MANGOS_DLL_DECL npc_highlord_darion_mograineAI : public npc_escortAI
         }
     }
 
-    void MovementInform(uint32 uiMotionType, uint32 uiPointId)
+    void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
     {
         if (uiPointId < POINT_MOVE_CHAPEL || uiPointId > 10 * POINT_MOVE_RETURN_BATTLE)
         {
@@ -2893,13 +2893,13 @@ struct MANGOS_DLL_DECL npc_minibosses_dawn_of_lightAI : public ScriptedAI
        m_creature->GetMotionMaster()->MoveIdle();
        return false;
    }
-   void EnterEvadeMode()
+   void EnterEvadeMode() override
    {
        m_creature->GetMotionMaster()->MoveIdle();
        return;
    }
 
-   void UpdateAI(const uint32 uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
    {
        if (!m_creature->getVictim() || !m_creature->SelectHostileTarget() )
            return;
@@ -2962,7 +2962,7 @@ struct MANGOS_DLL_DECL mob_acherus_ghoulAI : public ScriptedAI
        m_uiGhoulplosionTimer = 30000;
    }
 
-   void MoveInLineOfSight(Unit *pWho)
+   void MoveInLineOfSight(Unit* pWho) override
    {
        if (!m_bIsReady)
            return;
@@ -2970,7 +2970,7 @@ struct MANGOS_DLL_DECL mob_acherus_ghoulAI : public ScriptedAI
        ScriptedAI::MoveInLineOfSight(pWho);
    }
 
-   void AttackStart(Unit *pWho)
+   void AttackStart(Unit* pWho) override
    {
        if (!m_bIsReady)
            return;
@@ -2978,7 +2978,7 @@ struct MANGOS_DLL_DECL mob_acherus_ghoulAI : public ScriptedAI
        ScriptedAI::AttackStart(pWho);
    }
 
-   void UpdateAI(uint32 const uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
    {
        if (!m_bIsReady)
        {
@@ -3059,7 +3059,7 @@ struct MANGOS_DLL_DECL npc_valkyr_battle_maidenAI : ScriptedAI
         m_uiPhaseTimer = 0;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         Player* pPlayer = NULL;
         if (!(pPlayer = (Player*)m_creature->GetMap()->GetUnit(m_summonerGuid)))
@@ -3133,7 +3133,7 @@ struct MANGOS_DLL_DECL mob_warrior_of_the_frozen_wastesAI : public ScriptedAI
        m_uiCleaveTimer = urand(3000, 5000);
    }
 
-   void AttackStart(Unit *pWho)
+   void AttackStart(Unit* pWho) override
    {
        if (!m_bIsReady)
            return;
@@ -3141,7 +3141,7 @@ struct MANGOS_DLL_DECL mob_warrior_of_the_frozen_wastesAI : public ScriptedAI
        ScriptedAI::AttackStart(pWho);
    }
 
-   void MoveInLineOfSight(Unit *pWho)
+   void MoveInLineOfSight(Unit* pWho) override
    {
        if (!m_bIsReady)
            return;
@@ -3149,7 +3149,7 @@ struct MANGOS_DLL_DECL mob_warrior_of_the_frozen_wastesAI : public ScriptedAI
        CreatureAI::MoveInLineOfSight(pWho);
    }
 
-   void UpdateAI(uint32 const uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
    {
        if (!m_bIsReady)
        {
@@ -3204,12 +3204,12 @@ struct MANGOS_DLL_DECL npc_mine_carAI : public ScriptedAI
         m_scarletMinerGuid.Clear();
     }
 
-    void MoveInLineOfSight(Unit* /*pUnit*/)
+    void MoveInLineOfSight(Unit* /*pUnit*/) override
     {
         return;
     }
 
-    void EnterCombat(Unit* /*pUnit*/)
+    void EnterCombat(Unit* /*pUnit*/) override
     {
         return;
     }
@@ -3243,7 +3243,7 @@ struct MANGOS_DLL_DECL npc_mine_carAI : public ScriptedAI
             pMiner->ForcedDespawn();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->GetVehicleKit() || m_creature->GetVehicleKit()->HasEmptySeat(0))
         {
@@ -3304,7 +3304,7 @@ struct MANGOS_DLL_DECL npc_scarlet_minerAI : public npc_escortAI
         }
     }
 
-    void WaypointReached(uint32 uiWp)
+    void WaypointReached(uint32 uiWp) override
     {
         switch(uiWp)
         {
@@ -3324,7 +3324,7 @@ struct MANGOS_DLL_DECL npc_scarlet_minerAI : public npc_escortAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiMonoPhase)
         {
@@ -3451,7 +3451,7 @@ struct MANGOS_DLL_DECL npc_scourge_gryphonAI : public npc_escortAI
     {
     }
 
-    void SpellHit(Unit* pUnit, const SpellEntry* pSpell)
+    void SpellHit(Unit* pUnit, const SpellEntry* pSpell) override
     {
         if (pUnit && pUnit->GetTypeId() == TYPEID_PLAYER)
         {
@@ -3474,7 +3474,7 @@ struct MANGOS_DLL_DECL npc_scourge_gryphonAI : public npc_escortAI
         Start(true, pPlayer);
     }
 
-    void WaypointReached(uint32 uiWp)
+    void WaypointReached(uint32 uiWp) override
     {
         switch(uiWp)
         {
@@ -3492,7 +3492,7 @@ struct MANGOS_DLL_DECL npc_scourge_gryphonAI : public npc_escortAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         npc_escortAI::UpdateAI(uiDiff);
     }
@@ -3564,7 +3564,7 @@ struct MANGOS_DLL_DECL npc_crusade_persuadedAI : public ScriptedAI
         m_uiRATORSTRIKETimer  = 4500;
     }
 
-    void SpellHit(Unit *caster, const SpellEntry *spell)
+    void SpellHit(Unit* caster, const SpellEntry* spell) override
     {
         if (caster->GetTypeId() == TYPEID_PLAYER && m_creature->isAlive() && spell->Id == SPELL_PERSUASIVE_STRIKE && m_uiSpeech_counter == 0)
         {
@@ -3703,14 +3703,14 @@ struct MANGOS_DLL_DECL mob_scarlet_courierAI : ScriptedAI
         m_uiStageTimer = 3*IN_MILLISECONDS;
     }
 
-    void EnterCombat(Unit* pWho)
+    void EnterCombat(Unit* pWho) override
     {
         DoScriptText(SAY_TREE2, m_creature);
         m_creature->Unmount();
         m_uiStage = 0;
     }
 
-    void MovementInform(uint32 m_uiType, uint32 m_uiId)
+    void MovementInform(uint32 m_uiType, uint32 m_uiId) override
     {
         if (m_uiType != POINT_MOTION_TYPE)
             return;
@@ -3719,7 +3719,7 @@ struct MANGOS_DLL_DECL mob_scarlet_courierAI : ScriptedAI
             m_uiStage = 2;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiStage && !m_creature->isInCombat())
         {

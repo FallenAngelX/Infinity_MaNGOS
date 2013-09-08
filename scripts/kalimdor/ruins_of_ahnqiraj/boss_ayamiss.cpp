@@ -95,7 +95,7 @@ struct MANGOS_DLL_DECL boss_ayamissAI : public ScriptedAI
         m_creature->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 15.0f);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         // store the swarmers for a future attack
         if (pSummoned->GetEntry() == NPC_SWARMER)
@@ -113,7 +113,7 @@ struct MANGOS_DLL_DECL boss_ayamissAI : public ScriptedAI
         }
     }
 
-    void SummonedMovementInform(Creature* pSummoned, uint32 uiMotionType, uint32 uiPointId)
+    void SummonedMovementInform(Creature* pSummoned, uint32 uiMotionType, uint32 uiPointId) override
     {
         if (uiPointId != 1 || pSummoned->GetEntry() != NPC_LARVA)
             return;
@@ -123,7 +123,7 @@ struct MANGOS_DLL_DECL boss_ayamissAI : public ScriptedAI
             pSummoned->CastSpell(pTarget, SPELL_FEED, true, NULL, NULL, m_creature->GetObjectGuid());
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -263,7 +263,7 @@ struct MANGOS_DLL_DECL npc_hive_zara_larvaAI : public ScriptedAI
 
     void Reset() { }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         // don't attack anything during the Ayamiss encounter
         if (m_pInstance)
@@ -275,7 +275,7 @@ struct MANGOS_DLL_DECL npc_hive_zara_larvaAI : public ScriptedAI
         ScriptedAI::AttackStart(pWho);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         // don't attack anything during the Ayamiss encounter
         if (m_pInstance)
@@ -287,7 +287,7 @@ struct MANGOS_DLL_DECL npc_hive_zara_larvaAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance)
         {

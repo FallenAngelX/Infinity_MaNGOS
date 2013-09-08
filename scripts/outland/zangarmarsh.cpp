@@ -58,7 +58,7 @@ struct MANGOS_DLL_DECL npc_cooshcooshAI : public ScriptedAI
             m_creature->setFaction(m_uiNormFaction);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -99,7 +99,7 @@ struct MANGOS_DLL_DECL npc_kayra_longmaneAI : public npc_escortAI
 {
     npc_kayra_longmaneAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
 
-    void WaypointReached(uint32 i)
+    void WaypointReached(uint32 i) override
     {
         Player* pPlayer = GetPlayerForEscort();
 

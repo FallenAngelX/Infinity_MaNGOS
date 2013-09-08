@@ -72,7 +72,7 @@ struct MANGOS_DLL_DECL npc_ancient_male_vrykulAI : public ScriptedAI
         m_bEventInProgress = true;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_bEventInProgress)
             return;
@@ -206,7 +206,7 @@ struct MANGOS_DLL_DECL npc_daegarnAI : public ScriptedAI
         m_creature->SummonCreature(uiEntry, afSummon[0], afSummon[1], afSummon[2], 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 20*IN_MILLISECONDS);
     }
 
-    void SummonedMovementInform(Creature* pSummoned, uint32 uiMotionType, uint32 uiPointId)
+    void SummonedMovementInform(Creature* pSummoned, uint32 uiMotionType, uint32 uiPointId) override
     {
         Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid);
 
@@ -221,7 +221,7 @@ struct MANGOS_DLL_DECL npc_daegarnAI : public ScriptedAI
             pSummoned->AI()->AttackStart(pPlayer);
     }
 
-    void SummonedCreatureDespawn(Creature* pSummoned)
+    void SummonedCreatureDespawn(Creature* pSummoned) override
     {
         uint32 uiEntry = 0;
 
@@ -295,7 +295,7 @@ struct MANGOS_DLL_DECL npc_silvermoon_harryAI : public ScriptedAI
         m_uiResetBeatenTimer = MINUTE * IN_MILLISECONDS;
     }
 
-    void AttackedBy(Unit* pAttacker)
+    void AttackedBy(Unit* pAttacker) override
     {
         if (m_creature->getVictim())
             return;
@@ -304,7 +304,7 @@ struct MANGOS_DLL_DECL npc_silvermoon_harryAI : public ScriptedAI
             AttackStart(pAttacker);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (uiDamage > m_creature->GetHealth() || (m_creature->GetHealth() - uiDamage)*100 / m_creature->GetMaxHealth() < 20)
         {
@@ -330,7 +330,7 @@ struct MANGOS_DLL_DECL npc_silvermoon_harryAI : public ScriptedAI
         return m_bHarryBeaten;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bHarryBeaten)
         {
@@ -478,7 +478,7 @@ struct MANGOS_DLL_DECL npc_olgaAI : public ScriptedAI
         m_creature->SetUInt32Value(UNIT_NPC_FLAGS, m_creature->GetCreatureInfo()->npcflag);
     }
 
-    void MovementInform(uint32 uiType, uint32 uiPointId)
+    void MovementInform(uint32 uiType, uint32 uiPointId) override
     {
         if (uiType != POINT_MOTION_TYPE)
             return;
@@ -487,7 +487,7 @@ struct MANGOS_DLL_DECL npc_olgaAI : public ScriptedAI
             bInRightPoint = true;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // if not event in progress and Jack is unconscous lets awake him after certain amount of time
         if (!bEventInProgress)

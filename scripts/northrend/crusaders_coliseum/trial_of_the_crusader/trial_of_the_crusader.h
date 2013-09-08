@@ -265,27 +265,27 @@ public:
     instance_trial_of_the_crusader(Map* pMap);
     ~instance_trial_of_the_crusader() {}
 
-    void Initialize();
+    void Initialize() override;
 
-    bool IsEncounterInProgress() const;
+    bool IsEncounterInProgress() const override;
     void OnPlayerEnter(Player *m_player);
     void OnPlayerDeath(Player *m_player);
 
     bool IsRaidWiped();
     void UpdateWorldState();
 
-    void OnCreatureCreate(Creature* pCreature);
-    void OnObjectCreate(GameObject *pGo);
+    void OnCreatureCreate(Creature* pCreature) override;
+    void OnObjectCreate(GameObject* pGo) override;
 
     bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
     void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
 
-    void SetData(uint32 uiType, uint32 uiData);
+    void SetData(uint32 uiType, uint32 uiData) override;
     uint32 GetData(uint32 uiType);
 
-    const char* Save() const { return m_strInstData.c_str(); }
+    const char* Save() const override { return m_strInstData.c_str(); }
 
-    void Load(const char* chrIn);
+    void Load(const char* chrIn) override;
 
 private:
 

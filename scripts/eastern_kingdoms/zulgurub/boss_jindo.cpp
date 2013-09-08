@@ -85,7 +85,7 @@ struct MANGOS_DLL_DECL boss_jindoAI : public ScriptedAI
             m_uiHealingWardTimer = 15000;                   // how long delay?
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -179,10 +179,10 @@ struct MANGOS_DLL_DECL mob_healing_wardAI : public ScriptedAI
         m_uiHealTimer = 3000;                               // Timer unknown, sources go over 1s, per tick to 3s, keep 3s as in original script
     }
 
-    void AttackStart(Unit* pWho) {}
-    void MoveInLineOfSight(Unit* pWho) {}
+    void AttackStart(Unit* pWho) override {}
+    void MoveInLineOfSight(Unit* pWho) override { }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Heal Timer
         if (m_uiHealTimer < uiDiff)

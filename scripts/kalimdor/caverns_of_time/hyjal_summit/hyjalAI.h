@@ -68,19 +68,19 @@ struct MANGOS_DLL_DECL hyjalAI : public ScriptedAI
         void Reset();
 
         // Send creature back to spawn location and evade.
-        void EnterEvadeMode();
+        void EnterEvadeMode() override;
 
         // Called when creature reached home location after evade.
-        void JustReachedHome();
+        void JustReachedHome() override;
 
         // Used to reset cooldowns for our spells and to inform the raid that we're under attack
         void Aggro(Unit* pWho);
 
         // Called to summon waves, check for boss deaths and to cast our spells.
-        void UpdateAI(const uint32 uiDiff);
+        void UpdateAI(const uint32 uiDiff) override;
 
         // Called on death, informs the raid that they have failed.
-        void JustDied(Unit* pKiller);
+        void JustDied(Unit* pKiller) override;
 
         void JustRespawned() override;
 

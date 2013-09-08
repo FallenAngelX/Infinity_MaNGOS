@@ -202,13 +202,13 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
         m_uiUnboundPlagueTimer      = 10000;
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage)
+    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
     {
         if (m_bIsAssistingOnly)
             uiDamage = 0;
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature);
     }
@@ -232,7 +232,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
             pGOTable->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_PUTRICIDE, DONE);
@@ -293,7 +293,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance && !m_bIsAssistingOnly)
             m_pInstance->SetData(TYPE_PUTRICIDE, FAIL);
@@ -369,7 +369,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() != NPC_GREEN_ORANGE_OOZE_STALKER)
             pSummoned->SetInCombatWithZone();
@@ -493,7 +493,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
             m_uiChokingGasBombTimer -= uiDiff;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bIsAssistingOnly)
             return;
@@ -623,7 +623,7 @@ struct MANGOS_DLL_DECL mob_icc_gas_cloudAI : public base_icc_bossAI
         m_creature->SetInCombatWithZone();
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage)
+    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
     {
         if (!m_bIsVariable)
             return;
@@ -671,7 +671,7 @@ struct MANGOS_DLL_DECL mob_icc_gas_cloudAI : public base_icc_bossAI
         m_uiMoveTimer = 3000; // 3 sec cast
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance)
         {
@@ -746,7 +746,7 @@ struct MANGOS_DLL_DECL mob_icc_volatile_oozeAI : public base_icc_bossAI
         m_creature->SetInCombatWithZone();
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage)
+    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
     {
         if (!m_bIsVariable)
             return;
@@ -796,7 +796,7 @@ struct MANGOS_DLL_DECL mob_icc_volatile_oozeAI : public base_icc_bossAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance)
         {
@@ -851,9 +851,9 @@ struct MANGOS_DLL_DECL mob_choking_gas_bombAI : public ScriptedAI
     }
 
     void Reset(){}
-    void AttackStart(Unit* pWho){}
+    void AttackStart(Unit* pWho) override{}
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage)
+    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
     {
         uiDamage = 0;
     }
@@ -880,9 +880,9 @@ struct MANGOS_DLL_DECL mob_ooze_puddleAI : public ScriptedAI
     ScriptedInstance* m_pInstance;
 
     void Reset(){}
-    void AttackStart(Unit* pWho){}
+    void AttackStart(Unit* pWho) override{}
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance)
         {
@@ -921,7 +921,7 @@ struct MANGOS_DLL_DECL mob_mutated_amobinationAI : public ScriptedAI
         m_creature->SetPower(POWER_ENERGY, 0);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_PUTRICIDE) != DONE)
         {

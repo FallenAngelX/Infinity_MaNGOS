@@ -181,7 +181,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
         m_creature->SetLevitate(bLevitate);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         if (m_pInstance)
         {
@@ -192,7 +192,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
         m_creature->ForcedDespawn();
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_creature->isInCombat())
         {
@@ -221,13 +221,13 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
         m_uiPhase = PHASE_FLYING;
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
             DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
         {
@@ -458,7 +458,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
             m_uiFrostBombTimer -= uiDiff;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -587,7 +587,7 @@ struct MANGOS_DLL_DECL mob_ice_tombAI : public ScriptedAI
     ObjectGuid m_IceBlockGUID;
 
     void Reset(){}
-    void AttackStart(Unit* pWho){}
+    void AttackStart(Unit* pWho) override{}
 
     void JustDied(Unit* Killer)
     {
@@ -601,7 +601,7 @@ struct MANGOS_DLL_DECL mob_ice_tombAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiCheckTimer <= uiDiff)
         {
@@ -640,9 +640,9 @@ struct MANGOS_DLL_DECL mob_frost_bombAI : public ScriptedAI
 
     void Reset(){}
 
-    void AttackStart(Unit* pWho){}
+    void AttackStart(Unit* pWho) override{}
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Frost Bomb (dmg)
         if (m_uiFrostBombTimer <= uiDiff)
@@ -697,7 +697,7 @@ struct MANGOS_DLL_DECL mob_rimefangAI : public ScriptedAI
         m_creature->SetLevitate(bLevitate);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         SetLevitate(true);
         if (Creature* pBrother = m_pInstance->GetSingleCreatureFromStorage(NPC_SPINESTALKER))
@@ -708,7 +708,7 @@ struct MANGOS_DLL_DECL mob_rimefangAI : public ScriptedAI
         ScriptedAI::EnterEvadeMode();
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_creature->isInCombat())
         {
@@ -756,7 +756,7 @@ struct MANGOS_DLL_DECL mob_rimefangAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -774,7 +774,7 @@ struct MANGOS_DLL_DECL mob_rimefangAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bIsFlying || !m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -846,7 +846,7 @@ struct MANGOS_DLL_DECL mob_spinestalkerAI : public ScriptedAI
         m_creature->SetLevitate(bLevitate);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         SetLevitate(true);
         if (Creature* pBrother = m_pInstance->GetSingleCreatureFromStorage(NPC_RIMEFANG))
@@ -857,7 +857,7 @@ struct MANGOS_DLL_DECL mob_spinestalkerAI : public ScriptedAI
         ScriptedAI::EnterEvadeMode();
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_creature->isInCombat())
         {
@@ -904,7 +904,7 @@ struct MANGOS_DLL_DECL mob_spinestalkerAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -922,7 +922,7 @@ struct MANGOS_DLL_DECL mob_spinestalkerAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bIsFlying || !m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

@@ -136,7 +136,7 @@ struct MANGOS_DLL_DECL boss_eye_of_cthunAI : public Scripted_NoMovementAI
             m_pInstance->SetData(TYPE_CTHUN, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         // Allow the body to begin the transition
         if (m_pInstance)
@@ -148,7 +148,7 @@ struct MANGOS_DLL_DECL boss_eye_of_cthunAI : public Scripted_NoMovementAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         // Despawn Eye tentacles on evade
         DoDespawnEyeTentacles();
@@ -157,7 +157,7 @@ struct MANGOS_DLL_DECL boss_eye_of_cthunAI : public Scripted_NoMovementAI
             m_pInstance->SetData(TYPE_CTHUN, FAIL);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch (pSummoned->GetEntry())
         {
@@ -180,7 +180,7 @@ struct MANGOS_DLL_DECL boss_eye_of_cthunAI : public Scripted_NoMovementAI
             pPortal->ForcedDespawn();
     }
 
-    void SummonedCreatureDespawn(Creature* pSummoned)
+    void SummonedCreatureDespawn(Creature* pSummoned) override
     {
         // Used only after evade
         if (SelectHostileTarget())
@@ -231,7 +231,7 @@ struct MANGOS_DLL_DECL boss_eye_of_cthunAI : public Scripted_NoMovementAI
         return m_creature->SelectHostileTarget();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!SelectHostileTarget())
             return;
@@ -381,7 +381,7 @@ struct MANGOS_DLL_DECL boss_cthunAI : public Scripted_NoMovementAI
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage)
+    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
     {
         // Ignore damage reduction when vulnerable
         if (m_Phase == PHASE_CTHUN_WEAKENED)
@@ -398,7 +398,7 @@ struct MANGOS_DLL_DECL boss_cthunAI : public Scripted_NoMovementAI
             uiDamage = 0;
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         // Kill any player from the stomach on evade - this is becuase C'thun cannot be soloed.
         for (GuidList::const_iterator itr = m_lPlayersInStomachList.begin(); itr != m_lPlayersInStomachList.end(); ++itr)
@@ -411,13 +411,13 @@ struct MANGOS_DLL_DECL boss_cthunAI : public Scripted_NoMovementAI
         Scripted_NoMovementAI::EnterEvadeMode();
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_CTHUN, FAIL);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         m_creature->SetActiveObjectState(false);
 
@@ -425,7 +425,7 @@ struct MANGOS_DLL_DECL boss_cthunAI : public Scripted_NoMovementAI
             m_pInstance->SetData(TYPE_CTHUN, DONE);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch (pSummoned->GetEntry())
         {
@@ -533,7 +533,7 @@ struct MANGOS_DLL_DECL boss_cthunAI : public Scripted_NoMovementAI
         return m_creature->SelectHostileTarget();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!SelectHostileTarget())
             return;
@@ -697,7 +697,7 @@ struct MANGOS_DLL_DECL npc_giant_claw_tentacleAI : public Scripted_NoMovementAI
         DoCastSpellIfCan(m_creature, SPELL_GIANT_GROUND_RUPTURE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Check if we have a target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())

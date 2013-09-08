@@ -100,7 +100,7 @@ struct MANGOS_DLL_DECL boss_erekemAI : public ScriptedAI
 
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -120,7 +120,7 @@ struct MANGOS_DLL_DECL boss_erekemAI : public ScriptedAI
         SetCombatMovement(true);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (!m_pInstance)
             return;
@@ -173,7 +173,7 @@ struct MANGOS_DLL_DECL boss_erekemAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance->GetData(TYPE_EREKEM) == SPECIAL && !MovementStarted)
            StartMovement(0);
@@ -238,7 +238,7 @@ struct MANGOS_DLL_DECL boss_erekemAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -250,7 +250,7 @@ struct MANGOS_DLL_DECL boss_erekemAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         switch(urand(0, 2))
         {
@@ -297,7 +297,7 @@ struct MANGOS_DLL_DECL npc_erekem_guardAI : public ScriptedAI
         SetCombatMovement(true);
     }
 
-   /* void AttackStart(Unit* pWho)
+   /* void AttackStart(Unit* pWho) override
     {
         if (!m_pInstance)
             return;
@@ -341,7 +341,7 @@ struct MANGOS_DLL_DECL npc_erekem_guardAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance) return;
 
@@ -389,7 +389,7 @@ struct MANGOS_DLL_DECL npc_erekem_guardAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             if (Creature* pErekem = m_pInstance->GetSingleCreatureFromStorage(DATA_EREKEM))

@@ -144,7 +144,7 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public base_icc_bossAI
         DoCastSpellIfCan(m_creature, SPELL_OOZE_FLOOD_PERIODIC, CAST_TRIGGERED);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -157,13 +157,13 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public base_icc_bossAI
         DoCastSpellIfCan(m_creature, SPELL_OOZE_FLOOD_REMOVE, CAST_TRIGGERED);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
             DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature, pVictim);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
         {
@@ -176,7 +176,7 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public base_icc_bossAI
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -265,12 +265,12 @@ struct MANGOS_DLL_DECL mob_rotface_ooze_dummyAI : public ScriptedAI
             pCreature->ForcedDespawn(10000);
     }
     void Reset(){}
-    void AttackStart(Unit* pWho){}
+    void AttackStart(Unit* pWho) override{}
     void DamageTaken(Unit* pDealer, uint32& uiDamage)
     {
         uiDamage = 0;
     }
-    void UpdateAI(const uint32 uiDiff){}
+    void UpdateAI(const uint32 uiDiff) override{}
 };
 
 CreatureAI* GetAI_mob_rotface_ooze_dummy(Creature* pCreature)
@@ -303,7 +303,7 @@ struct MANGOS_DLL_DECL mob_little_oozeAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_LITTLE_OOZE_COMBINE, CAST_TRIGGERED);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
         {
@@ -364,7 +364,7 @@ struct MANGOS_DLL_DECL mob_big_oozeAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_BIG_OOZE_BUFF_COMB, CAST_TRIGGERED);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
         {
@@ -426,7 +426,7 @@ struct MANGOS_DLL_DECL mob_ooze_explosion_stalkerAI : public ScriptedAI
         pCreature->ForcedDespawn(10000);
     }
     void Reset(){}
-    void UpdateAI(const uint32 uiDiff){}
+    void UpdateAI(const uint32 uiDiff) override{}
 };
 
 CreatureAI* GetAI_mob_ooze_explosion_stalker(Creature* pCreature)
@@ -451,7 +451,7 @@ struct MANGOS_DLL_DECL mob_sticky_oozeAI : public ScriptedAI
     {
         uiDamage = 0;
     }
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
         {

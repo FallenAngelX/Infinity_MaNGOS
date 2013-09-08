@@ -118,7 +118,7 @@ struct MANGOS_DLL_DECL boss_king_magni_bronzebreardAI : public ScriptedAI
         m_creature->CallForHelp(100);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -193,7 +193,7 @@ struct MANGOS_DLL_DECL boss_high_tinker_mekkatorqueAI : public ScriptedAI
         m_creature->CallForHelp(100);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

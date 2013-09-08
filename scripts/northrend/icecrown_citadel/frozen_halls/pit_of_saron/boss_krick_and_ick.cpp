@@ -148,7 +148,7 @@ struct MANGOS_DLL_DECL boss_IckAI : public ScriptedAI
             m_pInstance->SetData(TYPE_KRICK, DONE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -288,7 +288,7 @@ struct MANGOS_DLL_DECL boss_KrickAI : public ScriptedAI
             pKrickTwo->ForcedDespawn();*/ // Unnecesary
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(!m_bIsOutro)
         {
@@ -553,7 +553,7 @@ struct MANGOS_DLL_DECL boss_krick_eventAI : public ScriptedAI
         return faction;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(m_bIsOutro)
         {
@@ -704,7 +704,7 @@ struct MANGOS_DLL_DECL mob_explosive_orbAI : public ScriptedAI
         m_uiExplosiveBarrageTimer = 3000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
 
         if (m_uiExplosiveBarrageTimer < uiDiff)

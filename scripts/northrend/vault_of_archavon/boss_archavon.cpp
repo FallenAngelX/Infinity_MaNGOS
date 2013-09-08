@@ -99,13 +99,13 @@ struct MANGOS_DLL_DECL boss_archavonAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ARCHAVON, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if(m_pInstance)
             m_pInstance->SetData(TYPE_ARCHAVON, DONE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

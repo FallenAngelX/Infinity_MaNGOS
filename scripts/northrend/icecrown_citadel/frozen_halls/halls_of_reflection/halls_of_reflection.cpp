@@ -578,7 +578,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
 
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if(!m_pInstance)
             return;
@@ -625,7 +625,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
         m_wallNum = 0;
     }
 
-    void WaypointReached(uint32 i)
+    void WaypointReached(uint32 i) override
     {
         switch(i)
         {
@@ -1047,7 +1047,7 @@ struct MANGOS_DLL_DECL npc_frostworn_generalAI : public ScriptedAI
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
    }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -1055,7 +1055,7 @@ struct MANGOS_DLL_DECL npc_frostworn_generalAI : public ScriptedAI
         m_pInstance->SetData(TYPE_FROST_GENERAL, DONE);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_pInstance)
             return;
@@ -1103,7 +1103,7 @@ struct MANGOS_DLL_DECL npc_frostworn_generalAI : public ScriptedAI
 
     }
 
-   void UpdateAI(const uint32 uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
    {
         if(!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1168,7 +1168,7 @@ struct MANGOS_DLL_DECL npc_spiritual_reflectionAI : public BSWScriptedAI
         DoStartMovement(pVictim);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (!m_pInstance || !m_creature )
             return;
@@ -1177,7 +1177,7 @@ struct MANGOS_DLL_DECL npc_spiritual_reflectionAI : public BSWScriptedAI
             doCast(SPELL_SPIRIT_BURST);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_FROST_GENERAL) != IN_PROGRESS)
             m_creature->ForcedDespawn();
@@ -1234,7 +1234,7 @@ struct MANGOS_DLL_DECL npc_queldelar_horAI : public ScriptedAI
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_pInstance || intro)
             return;

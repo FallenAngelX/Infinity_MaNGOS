@@ -89,7 +89,7 @@ struct MANGOS_DLL_DECL mob_anubisath_guardianAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, m_uiSpell3);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->AI()->AttackStart(m_creature->getVictim());
         ++m_uiSummonCount;
@@ -100,7 +100,7 @@ struct MANGOS_DLL_DECL mob_anubisath_guardianAI : public ScriptedAI
         --m_uiSummonCount;
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         // when we reach 10% of HP explode or enrage
         if (!m_bIsEnraged && m_creature->GetHealthPercent() < 10.0f)
@@ -116,7 +116,7 @@ struct MANGOS_DLL_DECL mob_anubisath_guardianAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

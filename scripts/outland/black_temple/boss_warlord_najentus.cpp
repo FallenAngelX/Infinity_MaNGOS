@@ -78,18 +78,18 @@ struct MANGOS_DLL_DECL boss_najentusAI : public ScriptedAI
         SetCombatMovement(true);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_NAJENTUS, NOT_STARTED);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY1 : SAY_SLAY2, m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_NAJENTUS, DONE);
@@ -97,7 +97,7 @@ struct MANGOS_DLL_DECL boss_najentusAI : public ScriptedAI
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (m_bIsShielded && pSpell->Id == SPELL_HURL_SPINE)
         {
@@ -121,7 +121,7 @@ struct MANGOS_DLL_DECL boss_najentusAI : public ScriptedAI
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

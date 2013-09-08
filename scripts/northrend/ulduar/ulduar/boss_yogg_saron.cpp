@@ -557,13 +557,13 @@ struct MANGOS_DLL_DECL boss_yogg_saronAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_YOGGSARON, FAIL);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0,1) ? SAY_SLAY1 : SAY_SLAY2, m_creature);
     }
@@ -657,7 +657,7 @@ struct MANGOS_DLL_DECL boss_yogg_saronAI : public ScriptedAI
             pTemp->SetInCombatWithZone();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -790,7 +790,7 @@ struct MANGOS_DLL_DECL mob_madness_portalAI : public ScriptedAI
         m_creature->SetRespawnDelay(DAY);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(m_creature->GetPositionZ() < LAYERCUT)
             m_uiDestination = PHASE_VISION_RETURN;
@@ -930,7 +930,7 @@ struct MANGOS_DLL_DECL boss_brain_of_yogg_saronAI : public ScriptedAI
         //m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), 255.011f, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
     }
 
-    void DamageTaken(Unit *done_by, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if(uiDamage > 0 && !m_bHasShattered)
         {
@@ -1000,7 +1000,7 @@ struct MANGOS_DLL_DECL boss_brain_of_yogg_saronAI : public ScriptedAI
         return false;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         switch(m_pInstance->GetData(TYPE_VISION_PHASE))
         {
@@ -1395,12 +1395,12 @@ struct MANGOS_DLL_DECL boss_saraAI : public ScriptedAI
         m_creature->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), 329.397f);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand (0,1) ? SAY_KILL1 : SAY_KILL2, m_creature);
     }
 
-    void DamageTaken(Unit *done_by, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if(uiDamage > m_creature->GetHealth())
         {
@@ -1410,7 +1410,7 @@ struct MANGOS_DLL_DECL boss_saraAI : public ScriptedAI
         }
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         // start intro speech
         if(m_pInstance->GetData(TYPE_YOGG_PHASE) == PHASE_IDLE)
@@ -1509,7 +1509,7 @@ struct MANGOS_DLL_DECL boss_saraAI : public ScriptedAI
         m_uiAllVisions += 1;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         switch(m_pInstance->GetData(TYPE_YOGG_PHASE))
         {
@@ -1785,7 +1785,7 @@ struct MANGOS_DLL_DECL keeper_hodirAI : public ScriptedAI
         DoCast(m_creature, SPELL_FORTITUDE_OF_FROST);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance->GetData(TYPE_YOGGSARON) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -1824,7 +1824,7 @@ struct MANGOS_DLL_DECL keeper_freyaAI : public ScriptedAI
             m_creature->SummonCreature(MOB_SANITY_WELL, SanityWellLoc[i].x, SanityWellLoc[i].y, SanityWellLoc[i].z, 0, TEMPSUMMON_MANUAL_DESPAWN, 30000);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance->GetData(TYPE_YOGGSARON) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -1850,7 +1850,7 @@ struct MANGOS_DLL_DECL keeper_thorimAI : public ScriptedAI
         DoCast(m_creature, SPELL_FURY_OF_THE_STORM);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance->GetData(TYPE_YOGGSARON) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -1900,7 +1900,7 @@ struct MANGOS_DLL_DECL keeper_mimironAI : public ScriptedAI
         return *iter;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance->GetData(TYPE_YOGGSARON) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -1944,7 +1944,7 @@ struct MANGOS_DLL_DECL mob_immortal_guardianAI : public ScriptedAI
         DoCast(m_creature, SPELL_EMPOWERED_AURA, true);
     }
 
-    void DamageTaken(Unit *done_by, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if(m_creature->GetHealth() < uiDamage)
         {
@@ -1952,7 +1952,7 @@ struct MANGOS_DLL_DECL mob_immortal_guardianAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         //if (m_pInstance && m_pInstance->GetData(TYPE_YOGGSARON) != IN_PROGRESS) 
             //m_creature->ForcedDespawn();
@@ -1999,7 +1999,7 @@ struct MANGOS_DLL_DECL mob_guardian_of_yogg_saronAI : public ScriptedAI
         m_creature->SetRespawnDelay(DAY);
     }
 
-    void DamageTaken(Unit *done_by, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if(uiDamage > m_creature->GetHealth())
         {
@@ -2014,7 +2014,7 @@ struct MANGOS_DLL_DECL mob_guardian_of_yogg_saronAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_YOGGSARON) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -2084,7 +2084,7 @@ struct MANGOS_DLL_DECL mob_corruptor_tentacleAI : public ScriptedAI
         m_creature->SetRespawnDelay(DAY);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_YOGGSARON) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -2156,7 +2156,7 @@ struct MANGOS_DLL_DECL mob_constrictor_tentacleAI : public ScriptedAI
         m_creature->SetRespawnDelay(DAY);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (uiDamage > m_creature->GetHealth())
         {
@@ -2168,7 +2168,7 @@ struct MANGOS_DLL_DECL mob_constrictor_tentacleAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (Unit* pVictim = m_creature->GetMap()->GetUnit( m_uiVictimGUID))
             pVictim->RemoveAurasDueToSpell(m_bIsRegularMode ? SPELL_SQUEEZE : SPELL_SQUEEZE_H);
@@ -2177,13 +2177,13 @@ struct MANGOS_DLL_DECL mob_constrictor_tentacleAI : public ScriptedAI
             pKiller->RemoveAurasDueToSpell(m_bIsRegularMode ? SPELL_SQUEEZE : SPELL_SQUEEZE_H);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim) 
             pVictim->RemoveAurasDueToSpell(m_bIsRegularMode ? SPELL_SQUEEZE : SPELL_SQUEEZE_H);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         /*if (m_pInstance && m_pInstance->GetData(TYPE_YOGGSARON) != IN_PROGRESS)
         {
@@ -2241,7 +2241,7 @@ struct MANGOS_DLL_DECL mob_crusher_tentacleAI : public ScriptedAI
         DoCast(m_creature, SPELL_FOCUSED_ANGER_TRIGG);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_YOGGSARON) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -2286,13 +2286,13 @@ struct MANGOS_DLL_DECL mob_vision_tentacleAI : public ScriptedAI
         DoCast(m_creature, SPELL_GRIM_REPRISAL);
     }
 
-    void DamageTaken(Unit *done_by, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if(uiDamage > 0 && m_creature->GetDisplayId() != 28813)
             m_creature->SetDisplayId(28813);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -2334,7 +2334,7 @@ struct MANGOS_DLL_DECL mob_death_orbAI : public ScriptedAI
         m_uiDamageTime      = 5000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiDamageTime < uiDiff)
         {
@@ -2389,12 +2389,12 @@ struct MANGOS_DLL_DECL mob_sanity_wellAI : public ScriptedAI
         m_creature->SetRespawnDelay(DAY);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_YOGGSARON) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -2428,12 +2428,12 @@ struct MANGOS_DLL_DECL mob_laughing_skullAI : public ScriptedAI
         DoCast(m_creature, SPELL_LUNATIC_GAZE);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
     }
 };
@@ -2458,12 +2458,12 @@ struct MANGOS_DLL_DECL mob_ominous_cloudAI : public ScriptedAI
         m_creature->GetMotionMaster()->MoveConfused();
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (m_creature->IsWithinDist(pWho, 5.0f, true))
             if (pWho->GetTypeId() == TYPEID_PLAYER && pWho->isAlive())
@@ -2476,7 +2476,7 @@ struct MANGOS_DLL_DECL mob_ominous_cloudAI : public ScriptedAI
         pSummon->SetInCombatWithZone();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
     }
 };

@@ -114,7 +114,7 @@ struct MANGOS_DLL_DECL npc_disciple_of_naralexAI : public npc_escortAI
         }
     }
 
-    void JustRespawned()
+    void JustRespawned() override
     {
         npc_escortAI::JustRespawned();
 
@@ -123,7 +123,7 @@ struct MANGOS_DLL_DECL npc_disciple_of_naralexAI : public npc_escortAI
             m_pInstance->SetData(TYPE_DISCIPLE, FAIL);
     }
 
-    void AttackedBy(Unit* pAttacker)
+    void AttackedBy(Unit* pAttacker) override
     {
         if (!m_bIsFirstHit)
         {
@@ -141,7 +141,7 @@ struct MANGOS_DLL_DECL npc_disciple_of_naralexAI : public npc_escortAI
     }
 
     // Overwrite the evade function, to change the combat stop function (keep casting some spells)
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         // Do not stop casting at these points
         if (m_uiPoint == 15 || m_uiPoint == 32)
@@ -166,7 +166,7 @@ struct MANGOS_DLL_DECL npc_disciple_of_naralexAI : public npc_escortAI
             m_pInstance->SetData(TYPE_DISCIPLE, IN_PROGRESS);
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {
@@ -199,7 +199,7 @@ struct MANGOS_DLL_DECL npc_disciple_of_naralexAI : public npc_escortAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         // Attack the disciple
         pSummoned->AI()->AttackStart(m_creature);

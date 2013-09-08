@@ -64,7 +64,7 @@ struct MANGOS_DLL_DECL mob_lumpAI : public ScriptedAI
         m_uiSpearThrowTimer = 2000;
     }
 
-    void AttackedBy(Unit* pAttacker)
+    void AttackedBy(Unit* pAttacker) override
     {
         if (m_creature->getVictim())
             return;
@@ -106,7 +106,7 @@ struct MANGOS_DLL_DECL mob_lumpAI : public ScriptedAI
         DoScriptText(urand(0, 1) ? SAY_LUMP_AGGRO_1 : SAY_LUMP_AGGRO_2, m_creature, pWho);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Check if we waiting for a reset
         if (m_bReset)
@@ -192,7 +192,7 @@ struct MANGOS_DLL_DECL npc_maghar_captiveAI : public npc_escortAI
         m_creature->CastSpell(m_creature, SPELL_EARTHBIND_TOTEM, false);
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {
@@ -218,7 +218,7 @@ struct MANGOS_DLL_DECL npc_maghar_captiveAI : public npc_escortAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_MURK_BRUTE)
             DoScriptText(SAY_MAG_NO_ESCAPE, pSummoned);
@@ -230,7 +230,7 @@ struct MANGOS_DLL_DECL npc_maghar_captiveAI : public npc_escortAI
         pSummoned->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
     }
 
-    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell)
+    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_CHAIN_LIGHTNING)
         {
@@ -318,7 +318,7 @@ struct MANGOS_DLL_DECL npc_creditmarker_visit_with_ancestorsAI : public Scripted
 
     void Reset() {}
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 30.0f))
         {

@@ -159,7 +159,7 @@ struct MANGOS_DLL_DECL npc_air_force_botsAI : public ScriptedAI
         return NULL;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_pSpawnAssoc)
             return;
@@ -273,7 +273,7 @@ struct MANGOS_DLL_DECL npc_chicken_cluckAI : public ScriptedAI
         m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
     }
 
-    void ReceiveEmote(Player* pPlayer, uint32 uiEmote)
+    void ReceiveEmote(Player* pPlayer, uint32 uiEmote) override
     {
         if (uiEmote == TEXTEMOTE_CHICKEN)
         {
@@ -307,7 +307,7 @@ struct MANGOS_DLL_DECL npc_chicken_cluckAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Reset flags after a certain time has passed so that the next player has to start the 'event' again
         if (m_creature->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER))
@@ -365,7 +365,7 @@ struct MANGOS_DLL_DECL npc_dancing_flamesAI : public ScriptedAI
 
     void Reset() {}
 
-    void ReceiveEmote(Player* pPlayer, uint32 uiEmote)
+    void ReceiveEmote(Player* pPlayer, uint32 uiEmote) override
     {
         m_creature->SetFacingToObject(pPlayer);
 
@@ -823,7 +823,7 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
         m_creature->SetHealth(int(m_creature->GetMaxHealth() * 0.7));
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_LESSER_HEAL_R2 || pSpell->Id == SPELL_FORTITUDE_R1)
         {
@@ -933,7 +933,7 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
         }
     }
 
-    void WaypointReached(uint32 uiPointId) {}
+    void WaypointReached(uint32 uiPointId) override {}
 
     void UpdateEscortAI(const uint32 uiDiff)
     {
@@ -1097,7 +1097,7 @@ struct MANGOS_DLL_DECL npc_snake_trap_serpentsAI : public ScriptedAI
         m_creature->setFaction(Owner->getFaction());
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
       if (!pWho) return;
 
@@ -1246,7 +1246,7 @@ struct MANGOS_DLL_DECL npc_risen_allyAI : public ScriptedAI
         }
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (!pWho) return;
 
@@ -1259,7 +1259,7 @@ struct MANGOS_DLL_DECL npc_risen_allyAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(StartTimer > uiDiff)
         {
@@ -1299,7 +1299,7 @@ struct MANGOS_DLL_DECL npc_explosive_decoyAI : public ScriptedAI
         SetCombatMovement(false);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (!m_creature || !m_creature->isAlive())
             return;
@@ -1319,7 +1319,7 @@ struct MANGOS_DLL_DECL npc_explosive_decoyAI : public ScriptedAI
             p_owner->SendCooldownEvent(createSpell);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (p_owner)
             return;
@@ -1424,7 +1424,7 @@ struct MANGOS_DLL_DECL npc_horseman_fire_bunnyAI : public Scripted_NoMovementAI
             m_creature->Respawn();
     }
 
-    void SpellHit(Unit* pWho, const SpellEntry* pSpell)
+    void SpellHit(Unit* pWho, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_THROW_BUCKET)
         {
@@ -1438,7 +1438,7 @@ struct MANGOS_DLL_DECL npc_horseman_fire_bunnyAI : public Scripted_NoMovementAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_creature->SelectHostileTarget() || m_creature->getVictim())
             EnterEvadeMode(); // Dunno how to prevent them from entering combat while hit by SPELL_EXTINGUISH_VISUAL (spelleffect 2)
@@ -1484,7 +1484,7 @@ struct MANGOS_DLL_DECL npc_shade_of_horsemanAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_HORSMAN_SHADE_VIS);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (uiPhase == PHASE_INITIAL)
         {
@@ -1627,12 +1627,12 @@ struct MANGOS_DLL_DECL npc_wild_turkeyAI : public ScriptedAI
 
     void Reset(){}
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         DoMeleeAttackIfReady();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (pKiller && pKiller->GetTypeId() == TYPEID_PLAYER)
         {
@@ -1797,7 +1797,7 @@ struct MANGOS_DLL_DECL npc_spring_rabbitAI : public ScriptedPetAI
     }
 
     // Event Starts when two rabbits see each other
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (m_creature->getVictim())
             return;
@@ -1855,7 +1855,7 @@ struct MANGOS_DLL_DECL npc_spring_rabbitAI : public ScriptedPetAI
     }
 
     // Overwrite ScriptedPetAI::UpdateAI, to prevent re-following while the event is active!
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_partnerGuid || !m_uiStepTimer)
         {
@@ -1958,7 +1958,7 @@ struct MANGOS_DLL_DECL npc_redemption_targetAI : public ScriptedAI
         m_uiHealTimer = 2000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiHealTimer)
         {

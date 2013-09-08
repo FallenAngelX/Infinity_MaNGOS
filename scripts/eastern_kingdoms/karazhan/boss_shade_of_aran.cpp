@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL boss_aranAI : public ScriptedAI
         SetCombatMovement(true);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_KILL1 : SAY_KILL2, m_creature);
     }
@@ -162,7 +162,7 @@ struct MANGOS_DLL_DECL boss_aranAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ARAN, IN_PROGRESS);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ARAN, FAIL);
@@ -171,7 +171,7 @@ struct MANGOS_DLL_DECL boss_aranAI : public ScriptedAI
         m_creature->RemoveGuardians();
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (!m_bDrinkInturrupted && m_bIsDrinking && uiDamage > 0)
         {
@@ -189,7 +189,7 @@ struct MANGOS_DLL_DECL boss_aranAI : public ScriptedAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch (pSummoned->GetEntry())
         {
@@ -200,7 +200,7 @@ struct MANGOS_DLL_DECL boss_aranAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -404,9 +404,9 @@ struct MANGOS_DLL_DECL npc_shade_of_aran_blizzardAI : public ScriptedAI
     npc_shade_of_aran_blizzardAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
     void Reset() { }
-    void MoveInLineOfSight(Unit* pWho) { }
-    void AttackStart(Unit* pWho) { }
-    void UpdateAI(const uint32 uiDiff) { }
+    void MoveInLineOfSight(Unit* pWho) override { }
+    void AttackStart(Unit* pWho) override { }
+    void UpdateAI(const uint32 uiDiff) override { }
 };
 
 CreatureAI* GetAI_npc_shade_of_aran_blizzard(Creature* pCreature)

@@ -80,7 +80,7 @@ struct MANGOS_DLL_DECL boss_krystallusAI : public ScriptedAI
             m_pInstance->SetData(TYPE_KRYSTALLUS, NOT_STARTED);
     }
 
-    void EnterCombat(Unit* pWho)
+    void EnterCombat(Unit* pWho) override
     {
         DoScriptText(SAY_AGGRO,m_creature);
 
@@ -88,12 +88,12 @@ struct MANGOS_DLL_DECL boss_krystallusAI : public ScriptedAI
             m_pInstance->SetData(TYPE_KRYSTALLUS, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(SAY_KILL, m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -101,7 +101,7 @@ struct MANGOS_DLL_DECL boss_krystallusAI : public ScriptedAI
             m_pInstance->SetData(TYPE_KRYSTALLUS, DONE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())

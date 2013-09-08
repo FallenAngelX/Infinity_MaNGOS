@@ -79,7 +79,7 @@ struct MANGOS_DLL_DECL boss_cyanigosaAI : public ScriptedAI
         m_creature->SetInCombatWithZone();
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -96,7 +96,7 @@ struct MANGOS_DLL_DECL boss_cyanigosaAI : public ScriptedAI
         m_pInstance->SetData(TYPE_CYANIGOSA, IN_PROGRESS);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -157,7 +157,7 @@ struct MANGOS_DLL_DECL boss_cyanigosaAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -169,7 +169,7 @@ struct MANGOS_DLL_DECL boss_cyanigosaAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         switch(urand(0, 2))
         {

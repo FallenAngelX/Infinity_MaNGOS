@@ -65,9 +65,9 @@ struct MANGOS_DLL_DECL molten_flameAI : public Scripted_NoMovementAI
     molten_flameAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
     void Reset() {}
-    void AttackStart(Unit* pWho) {}
-    void MoveInLineOfSight(Unit* pWho) {}
-    void UpdateAI(const uint32 uiDiff) {}
+    void AttackStart(Unit* pWho) override {}
+    void MoveInLineOfSight(Unit* pWho) override { }
+    void UpdateAI(const uint32 uiDiff) override {}
 };
 
 // TODO Remove this 'script' when combat movement can be proper prevented from core-side
@@ -76,9 +76,9 @@ struct MANGOS_DLL_DECL npc_volcanoAI : public Scripted_NoMovementAI
     npc_volcanoAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
     void Reset() {}
-    void AttackStart(Unit* pWho) {}
-    void MoveInLineOfSight(Unit* pWho) {}
-    void UpdateAI(const uint32 uiDiff) {}
+    void AttackStart(Unit* pWho) override {}
+    void MoveInLineOfSight(Unit* pWho) override { }
+    void UpdateAI(const uint32 uiDiff) override {}
 };
 
 struct MANGOS_DLL_DECL boss_supremusAI : public ScriptedAI
@@ -114,7 +114,7 @@ struct MANGOS_DLL_DECL boss_supremusAI : public ScriptedAI
         m_bTankPhase = true;
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_SUPREMUS, NOT_STARTED);
@@ -126,7 +126,7 @@ struct MANGOS_DLL_DECL boss_supremusAI : public ScriptedAI
             m_pInstance->SetData(TYPE_SUPREMUS, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_SUPREMUS, DONE);
@@ -138,7 +138,7 @@ struct MANGOS_DLL_DECL boss_supremusAI : public ScriptedAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_STALKER)
         {
@@ -188,7 +188,7 @@ struct MANGOS_DLL_DECL boss_supremusAI : public ScriptedAI
             m_uiSwitchTargetTimer = 0;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

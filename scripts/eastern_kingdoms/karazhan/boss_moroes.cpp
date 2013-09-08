@@ -101,7 +101,7 @@ struct MANGOS_DLL_DECL boss_moroesAI : public ScriptedAI
             m_pInstance->SetData(TYPE_MOROES, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         switch (urand(0, 2))
         {
@@ -111,7 +111,7 @@ struct MANGOS_DLL_DECL boss_moroesAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         DoRemoveGarroteAura();
 
@@ -128,7 +128,7 @@ struct MANGOS_DLL_DECL boss_moroesAI : public ScriptedAI
             m_pInstance->SetData(TYPE_MOROES, DONE);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         // Don't evade during vanish phase
         if (m_uiWaitTimer)
@@ -196,7 +196,7 @@ struct MANGOS_DLL_DECL boss_moroesAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

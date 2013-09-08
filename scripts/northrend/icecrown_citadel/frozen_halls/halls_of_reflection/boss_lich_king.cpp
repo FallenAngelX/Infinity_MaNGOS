@@ -117,11 +117,11 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
             m_creature->SetVisibility(VISIBILITY_OFF);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
     }
 
-    void MoveInLineOfSight(Unit* who)
+    void MoveInLineOfSight(Unit* who) override
     {
         if (!who || !m_pInstance)
             return;
@@ -173,7 +173,7 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
         m_pInstance->SetNextEvent(100,GetLeader(),500);
    }
 
-   void WaypointReached(uint32 i)
+   void WaypointReached(uint32 i) override
    {
         switch(i)
         {
@@ -479,7 +479,7 @@ struct MANGOS_DLL_DECL boss_lich_king_intro_horAI : public ScriptedAI
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
     }
 
@@ -630,7 +630,7 @@ struct MANGOS_DLL_DECL npc_undead_horAI : public BSWScriptedAI
     {
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         if (!m_pInstance)
             return;
@@ -638,7 +638,7 @@ struct MANGOS_DLL_DECL npc_undead_horAI : public BSWScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS)
             m_creature->ForcedDespawn();

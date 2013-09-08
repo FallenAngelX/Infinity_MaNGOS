@@ -76,7 +76,7 @@ struct MANGOS_DLL_DECL boss_buruAI : public ScriptedAI
         m_creature->FixateTarget(pWho);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         // Attack a new random target when a player is killed
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
@@ -102,7 +102,7 @@ struct MANGOS_DLL_DECL boss_buruAI : public ScriptedAI
         m_uiGatheringSpeedTimer = 9000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -186,7 +186,7 @@ struct MANGOS_DLL_DECL npc_buru_eggAI : public Scripted_NoMovementAI
     void Reset()
     { }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         // The purpose of this is unk for the moment
         if (pSummoned->GetEntry() == NPC_BURU_EGG_TRIGGER)
@@ -205,7 +205,7 @@ struct MANGOS_DLL_DECL npc_buru_eggAI : public Scripted_NoMovementAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         // Explode and Summon hatchling
         DoCastSpellIfCan(m_creature, SPELL_EXPLODE, CAST_TRIGGERED);
@@ -222,7 +222,7 @@ struct MANGOS_DLL_DECL npc_buru_eggAI : public Scripted_NoMovementAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff) { }
+    void UpdateAI(const uint32 uiDiff) override { }
 };
 
 CreatureAI* GetAI_npc_buru_egg(Creature* pCreature)

@@ -146,7 +146,7 @@ struct MANGOS_DLL_DECL mob_npc_flashFreezeAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (Unit* pCreator = m_creature->GetCreator())
         {
@@ -161,7 +161,7 @@ struct MANGOS_DLL_DECL mob_npc_flashFreezeAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiFreezeNPCTimer < uiDiff)
         {
@@ -253,7 +253,7 @@ struct MANGOS_DLL_DECL boss_hodirAI : public ScriptedAI
 
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if(m_pInstance)
         {
@@ -293,7 +293,7 @@ struct MANGOS_DLL_DECL boss_hodirAI : public ScriptedAI
     }
 
     // for debug only
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if(m_pInstance)
         {
@@ -308,7 +308,7 @@ struct MANGOS_DLL_DECL boss_hodirAI : public ScriptedAI
         DoCast(m_creature, SPELL_HODIR_CREDIT, true);
     }
 
-    void DamageTaken(Unit *done_by, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if(m_creature->GetHealth() < uiDamage)
         {
@@ -341,7 +341,7 @@ struct MANGOS_DLL_DECL boss_hodirAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(!m_bIsOutro)
         {
@@ -499,9 +499,9 @@ struct MANGOS_DLL_DECL mob_icicleAI : public ScriptedAI
     uint32 m_uiSpellId;
 
     void Reset() {}
-    void AttackStart(Unit* pWho) {}
+    void AttackStart(Unit* pWho) override {}
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiActionTimer <= uiDiff)
         {
@@ -545,7 +545,7 @@ struct MANGOS_DLL_DECL mob_flashFreezeAI : public ScriptedAI
             pVictim->RemoveAurasDueToSpell(SPELL_FLASH_FREEZE_DEBUFF);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_bIsFrozen && m_pInstance)
         {
@@ -598,13 +598,13 @@ struct MANGOS_DLL_DECL npc_hodir_helperAI : public ScriptedAI
             DoCastSpellIfCan(m_creature, SPELL_FLASH_FREEZE_SUMMON_NPC);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_FLASH_FREEZE && !m_creature->HasAura(SPELL_SAFE_AREA_BUFF) && m_creature->isAlive() && !m_creature->HasAura(SPELL_FLASH_FREEZE_NPC_STUN))
             DoCast(m_creature, SPELL_FLASH_FREEZE_SUMMON_NPC, true);
     }
 
-    void DamageTaken(Unit* pDoneby, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (m_creature->HasAura(SPELL_FLASH_FREEZE_NPC_STUN))
             uiDamage = 0;
@@ -616,11 +616,11 @@ struct MANGOS_DLL_DECL npc_hodir_helperAI : public ScriptedAI
             m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_COOLEST_FRIEND, false);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         DoCastSpellIfCan(m_creature, SPELL_FLASH_FREEZE_SUMMON_NPC);
     }
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

@@ -136,7 +136,7 @@ struct MANGOS_DLL_DECL npc_valentine_boss_managerAI : public ScriptedAI, private
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NCP_CRAZED_APOTHECARY)
         {
@@ -213,7 +213,7 @@ struct MANGOS_DLL_DECL npc_valentine_boss_managerAI : public ScriptedAI, private
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         DialogueUpdate(uiDiff);
 

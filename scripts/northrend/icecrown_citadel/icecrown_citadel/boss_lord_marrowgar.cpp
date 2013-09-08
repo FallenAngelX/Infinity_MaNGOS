@@ -139,7 +139,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
             m_pInstance->SetSpecialAchievementCriteria(ACHIEVE_BONED, true);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         ScriptedAI::MoveInLineOfSight(pWho);
 
@@ -150,7 +150,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
         m_bSaidIntro = true;
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -169,7 +169,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature, pVictim);
     }
@@ -182,7 +182,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_COLDFLAME)
         {
@@ -195,7 +195,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
         }
     }
 
-    void MovementInform(uint32 uiType, uint32 uiPointId)
+    void MovementInform(uint32 uiType, uint32 uiPointId) override
     {
         if (uiType != POINT_MOTION_TYPE)
             return;
@@ -207,7 +207,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -344,7 +344,7 @@ struct MANGOS_DLL_DECL mob_coldflameAI : public ScriptedAI
     mob_coldflameAI(Creature* pCreature) : ScriptedAI(pCreature){}
     void Reset(){}
     void AttackStart(Unit* who){}
-    void UpdateAI(const uint32 uiDiff){}
+    void UpdateAI(const uint32 uiDiff) override{}
 };
 
 /*####
@@ -369,7 +369,7 @@ struct MANGOS_DLL_DECL mob_bone_spikeAI : public ScriptedAI
     {
         m_uiEmpaledTime = 0;
     }
-    void AttackStart(Unit* pWho){}
+    void AttackStart(Unit* pWho) override{}
 
     void JustDied(Unit* Killer)
     {
@@ -383,7 +383,7 @@ struct MANGOS_DLL_DECL mob_bone_spikeAI : public ScriptedAI
             m_pInstance->SetSpecialAchievementCriteria(ACHIEVE_BONED, false);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         m_uiEmpaledTime += uiDiff;
 

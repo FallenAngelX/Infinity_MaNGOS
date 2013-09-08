@@ -92,7 +92,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_HATCH_EGGS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -100,13 +100,13 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
             m_pInstance->SetData(TYPE_MARLI, DONE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MARLI, FAIL);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

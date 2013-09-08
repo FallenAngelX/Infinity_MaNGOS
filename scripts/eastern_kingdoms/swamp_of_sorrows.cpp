@@ -90,7 +90,7 @@ struct MANGOS_DLL_DECL npc_galen_goodwardAI : public npc_escortAI
         }
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {

@@ -50,7 +50,7 @@ struct MANGOS_DLL_DECL npc_chromi_startAI : public ScriptedAI
         m_bCounterHere = false;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_bCounterHere && m_pInstance && pWho && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->GetDistance2d(pWho) <= 15 && ((Player*)pWho)->GetQuestStatus(QUEST_DISPELLING_ILLUSIONS) == QUEST_STATUS_INCOMPLETE)
         {
@@ -110,7 +110,7 @@ struct MANGOS_DLL_DECL npc_mikeAI : public ScriptedAI
        }
     }
 
-    void MoveInLineOfSight(Unit* who)
+    void MoveInLineOfSight(Unit* who) override
     {
       if (!who)
           return;
@@ -210,7 +210,7 @@ struct MANGOS_DLL_DECL npc_mikeAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
        if (m_uiPhase == 1)
        {
@@ -340,7 +340,7 @@ struct MANGOS_DLL_DECL npc_rogerAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
        if (m_uiPhase == 1)
        {
@@ -483,7 +483,7 @@ struct MANGOS_DLL_DECL npc_moriganAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
        if(m_uiPhase == 1)
        {
@@ -656,7 +656,7 @@ struct MANGOS_DLL_DECL npc_jenaAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
        if (m_uiPhase == 1)
        {
@@ -839,7 +839,7 @@ struct MANGOS_DLL_DECL npc_malcolmAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
        if (m_uiPhase == 1)
        {
@@ -893,7 +893,7 @@ struct MANGOS_DLL_DECL npc_bartleby_csAI : public ScriptedAI
        }
     }
 
-    void MoveInLineOfSight(Unit* who)
+    void MoveInLineOfSight(Unit* who) override
     {
       if (!who)
           return;
@@ -980,7 +980,7 @@ struct MANGOS_DLL_DECL npc_bartleby_csAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
        if (m_uiPhase == 3)
        {
@@ -1033,7 +1033,7 @@ struct MANGOS_DLL_DECL npc_stratholme_cratesAI : public ScriptedAI
         Active = false;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
        if (!m_pInstance) return;
 

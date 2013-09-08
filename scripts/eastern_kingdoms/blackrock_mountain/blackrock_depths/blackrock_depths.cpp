@@ -204,7 +204,7 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
         m_uiPhase = PHASE_MOBS;
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (!m_pInstance)
             return;
@@ -271,7 +271,7 @@ struct MANGOS_DLL_DECL npc_grimstoneAI : public npc_escortAI
         m_creature->SummonCreature(uiEntry, fX, fY, fZ, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {
@@ -579,7 +579,7 @@ struct MANGOS_DLL_DECL npc_rocknotAI : public npc_escortAI
             pGo->SetGoState(GOState(state));
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         if (!m_pInstance)
             return;
@@ -753,7 +753,7 @@ struct MANGOS_DLL_DECL npc_marshal_windsorAI : public npc_escortAI
         }
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {

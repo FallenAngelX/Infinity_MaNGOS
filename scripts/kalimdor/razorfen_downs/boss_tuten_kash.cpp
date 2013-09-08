@@ -84,18 +84,18 @@ struct MANGOS_DLL_DECL boss_tuten_kashAI : public ScriptedAI
         m_uiWebSpray_Timer          = 8500;
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         m_uiGongPhase = PHASE_TWOB;
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         m_creature->ForcedDespawn();
         m_uiGongPhase = PHASE_ZERO;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -154,7 +154,7 @@ struct MANGOS_DLL_DECL npc_tomb_fiendAI : public ScriptedAI
         m_uiPoison_Timer   = 5500;
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (++m_uiFiendDead == 4)
         {
@@ -162,7 +162,7 @@ struct MANGOS_DLL_DECL npc_tomb_fiendAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         m_creature->ForcedDespawn();
         m_uiGongPhase = PHASE_ZERO;
@@ -182,7 +182,7 @@ struct MANGOS_DLL_DECL npc_tomb_fiendAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -241,7 +241,7 @@ struct MANGOS_DLL_DECL npc_tomb_reaverAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (++m_uiReaverDead == 2)
         {
@@ -249,13 +249,13 @@ struct MANGOS_DLL_DECL npc_tomb_reaverAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         m_creature->ForcedDespawn();
         m_uiGongPhase = PHASE_ZERO;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

@@ -132,7 +132,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAI : public Scripted_NoMovementAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -154,7 +154,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAI : public Scripted_NoMovementAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() != TYPEID_PLAYER)
             return;
@@ -162,7 +162,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAI : public Scripted_NoMovementAI
         DoScriptText(SAY_SLAY, m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -181,7 +181,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAI : public Scripted_NoMovementAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance)
             return;
@@ -296,7 +296,7 @@ struct MANGOS_DLL_DECL npc_tesla_coilAI : public Scripted_NoMovementAI
     uint32 m_uiOverloadTimer;
 
     void Reset() {}
-    void MoveInLineOfSight(Unit* pWho) {}
+    void MoveInLineOfSight(Unit* pWho) override { }
 
     void Aggro(Unit* pWho)
     {
@@ -306,7 +306,7 @@ struct MANGOS_DLL_DECL npc_tesla_coilAI : public Scripted_NoMovementAI
     // Overwrite this function here to
     // * Keep Chain spells casted when evading after useless EnterCombat caused by 'buffing' the add
     // * To not remove the Passive spells when evading after ie killed a player
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         m_creature->DeleteThreatList();
         m_creature->CombatStop();
@@ -361,7 +361,7 @@ struct MANGOS_DLL_DECL npc_tesla_coilAI : public Scripted_NoMovementAI
         m_uiOverloadTimer = 14*IN_MILLISECONDS;             // it takes some time to overload and activate Thaddius
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         m_creature->SelectHostileTarget();
 
@@ -469,7 +469,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
         }
     }
 
-    void JustRespawned()
+    void JustRespawned() override
     {
         Reset();                                            // Needed to reset the flags properly
 
@@ -491,7 +491,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_pInstance)
             return;
@@ -535,7 +535,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
 
     virtual void UpdateAddAI(const uint32 uiDiff) {}        // Used for Add-specific spells
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bBothDead)                                    // This is the case while fighting Thaddius
             return;
@@ -662,12 +662,12 @@ struct MANGOS_DLL_DECL boss_stalaggAI : public boss_thaddiusAddsAI
         boss_thaddiusAddsAI::Aggro(pWho);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
        DoScriptText(SAY_STAL_DEATH, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
             DoScriptText(SAY_STAL_SLAY, m_creature);
@@ -714,12 +714,12 @@ struct MANGOS_DLL_DECL boss_feugenAI : public boss_thaddiusAddsAI
         boss_thaddiusAddsAI::Aggro(pWho);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_FEUG_DEATH, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
             DoScriptText(SAY_FEUG_SLAY, m_creature);

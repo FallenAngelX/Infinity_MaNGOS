@@ -134,7 +134,7 @@ struct MANGOS_DLL_DECL boss_drakosAI : public ScriptedAI
                 DoSpawnCreature(NPC_UNSTABLE_SPHERE, 0, 0, 0, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
     }*/
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -255,11 +255,11 @@ struct MANGOS_DLL_DECL npc_unstable_sphereAI : public ScriptedAI
         m_creature->ForcedDespawn(19000);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_DRAKOS) != IN_PROGRESS)
             m_creature->ForcedDespawn();

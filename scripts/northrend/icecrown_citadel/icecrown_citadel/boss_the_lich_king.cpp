@@ -269,7 +269,7 @@ struct MANGOS_DLL_DECL boss_tirion_iccAI : public base_icc_bossAI
 
     void Reset(){}
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         if (m_pInstance)
         {
@@ -344,7 +344,7 @@ struct MANGOS_DLL_DECL boss_tirion_iccAI : public base_icc_bossAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_bIsEventStarted)
             return;
@@ -791,7 +791,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public base_icc_bossAI
             DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature);
     }
 
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_LICH_KING, DONE);
@@ -809,7 +809,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public base_icc_bossAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -826,7 +826,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public base_icc_bossAI
         m_bIsFirstAttempt = false;
     }
 
-    void JustSummoned(Creature *pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_ICE_SPHERE)
         {
@@ -1054,7 +1054,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public base_icc_bossAI
             m_pInstance->SetData(TYPE_FROSTMOURNE_ROOM, IN_PROGRESS);
     }
 
-    void SpellHit(Unit *pCaster, const SpellEntry *pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_HARVESTED_SOUL_1 ||
             pSpell->Id == SPELL_HARVESTED_SOUL_2 ||
@@ -1065,7 +1065,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public base_icc_bossAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiPhase != PHASE_INTRO && m_uiPhase != PHASE_DEATH_AWAITS)
         {
@@ -1467,12 +1467,12 @@ struct MANGOS_DLL_DECL mob_drudge_ghoulAI : public base_icc_bossAI
         m_uiReadyTimer      = 5000;
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         m_creature->ForcedDespawn();
     }
 
-    void AttackStart(Unit *pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (!m_bIsReady)
             return;
@@ -1480,7 +1480,7 @@ struct MANGOS_DLL_DECL mob_drudge_ghoulAI : public base_icc_bossAI
             base_icc_bossAI::AttackStart(pWho);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_bIsReady)
         {
@@ -1547,12 +1547,12 @@ struct MANGOS_DLL_DECL mob_shambling_horrorAI : public base_icc_bossAI
         m_bHasCastFrenzy    = false;
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         m_creature->ForcedDespawn();
     }
 
-    void AttackStart(Unit *pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (!m_bIsReady)
             return;
@@ -1560,7 +1560,7 @@ struct MANGOS_DLL_DECL mob_shambling_horrorAI : public base_icc_bossAI
             base_icc_bossAI::AttackStart(pWho);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_bIsReady)
         {
@@ -1656,7 +1656,7 @@ struct MANGOS_DLL_DECL mob_shadow_trapAI : public base_icc_bossAI
         uiDamage = 0;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS)
             m_creature->ForcedDespawn();
@@ -1696,12 +1696,12 @@ struct MANGOS_DLL_DECL mob_ice_sphere_iccAI : public base_icc_bossAI
 
     void Reset(){}
 
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller) override
     {
         m_creature->ForcedDespawn();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS)
             m_creature->ForcedDespawn();
@@ -1732,7 +1732,7 @@ struct MANGOS_DLL_DECL mob_raging_spiritAI : public base_icc_bossAI
         m_bHasCloned = false;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS)
             m_creature->ForcedDespawn();
@@ -1797,7 +1797,7 @@ struct MANGOS_DLL_DECL mob_valkyr_shadowguardAI : public base_icc_bossAI
         m_uiLifeSiphonTimer = 2000;
     }
 
-    void AttackStart(Unit *pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (m_bIsCastingLifeSiphon)
             base_icc_bossAI::AttackStart(pWho);
@@ -1928,7 +1928,7 @@ struct MANGOS_DLL_DECL mob_valkyr_shadowguardAI : public base_icc_bossAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // on heroic start casting Life Siphon at 50% HP
         if (m_bIsHeroic && !m_bIsCastingLifeSiphon)
@@ -1998,8 +1998,8 @@ struct MANGOS_DLL_DECL mob_defiler_iccAI : public base_icc_bossAI
     }
 
     void Reset(){}
-    void AttackStart(Unit *pWho){}
-    void UpdateAI(const uint32 uiDiff){}
+    void AttackStart(Unit* pWho) override{}
+    void UpdateAI(const uint32 uiDiff) override{}
 };
 
 CreatureAI* GetAI_mob_defiler_icc(Creature* pCreature)
@@ -2096,7 +2096,7 @@ struct MANGOS_DLL_DECL  mob_vile_spiritAI : public base_icc_bossAI
         return NULL;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS)
         {
@@ -2178,9 +2178,9 @@ struct MANGOS_DLL_DECL mob_strangulate_vehicleAI : public base_icc_bossAI
     uint32 m_uiTeleportTimer;
 
     void Reset(){}
-    void AttackStart(Unit *pWho){}
+    void AttackStart(Unit* pWho) override{}
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS)
             m_creature->ForcedDespawn();
@@ -2313,7 +2313,7 @@ struct MANGOS_DLL_DECL npc_terenas_fmAI : public base_icc_bossAI
         m_creature->SetHealthPercent(50.0f);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         if (!m_bHasReleasedPlayer)
         {
@@ -2324,7 +2324,7 @@ struct MANGOS_DLL_DECL npc_terenas_fmAI : public base_icc_bossAI
         }
     }
 
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (pKiller->GetEntry() == NPC_SPIRIT_WARDEN)
         {
@@ -2358,7 +2358,7 @@ struct MANGOS_DLL_DECL npc_terenas_fmAI : public base_icc_bossAI
             uiDamage = 0;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiSayTimer < uiDiff)
         {
@@ -2481,7 +2481,7 @@ struct MANGOS_DLL_DECL mob_spirit_wardenAI : public base_icc_bossAI
         m_uiHarvestedSoulTimer = 61000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -2554,7 +2554,7 @@ struct MANGOS_DLL_DECL mob_spirit_bombAI : public base_icc_bossAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS)
             m_creature->ForcedDespawn();

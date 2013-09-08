@@ -132,19 +132,19 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
             m_pInstance->SetData(TYPE_OHGAN, IN_PROGRESS);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_OHGAN, FAIL);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_OHGAN, DONE);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         m_creature->RemoveAllAuras();
         m_creature->DeleteThreatList();
@@ -160,7 +160,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
         Reset();
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
         {
@@ -191,7 +191,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_OHGAN)
         {
@@ -209,7 +209,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
         }
     }
 
-    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell)
+    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_WATCH)
         {
@@ -238,7 +238,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -346,7 +346,7 @@ struct MANGOS_DLL_DECL mob_ohganAI : public ScriptedAI
         m_uiSunderArmorTimer = 5000;
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
         {
@@ -358,7 +358,7 @@ struct MANGOS_DLL_DECL mob_ohganAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

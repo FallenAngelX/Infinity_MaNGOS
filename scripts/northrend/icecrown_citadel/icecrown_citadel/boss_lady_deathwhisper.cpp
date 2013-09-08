@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisper_eventAI : public base_icc_bossAI
         ++m_uiStep;
     }
 
-    void MoveInLineOfSight(Unit *pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_bIsEventStarted)
         {
@@ -151,7 +151,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisper_eventAI : public base_icc_bossAI
     // for the fight handler
     virtual void UpdateFightAI(const uint32 uiDiff){}
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         UpdateFightAI(uiDiff);
 
@@ -298,7 +298,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public boss_lady_deathwhisper_
         DoCastSpellIfCan(m_creature, SPELL_MANA_BARRIER, CAST_TRIGGERED);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -307,7 +307,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public boss_lady_deathwhisper_
         }
     }
 
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
         {
@@ -349,7 +349,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public boss_lady_deathwhisper_
         DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature);
     }
 
-    void JustSummoned(Creature *pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->SetInCombatWithZone();
     }
@@ -590,12 +590,12 @@ struct MANGOS_DLL_DECL mob_cult_fanaticAI : public ScriptedAI
         m_uiVampiricMightTimer = urand(20000, 60000);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         m_creature->ForcedDespawn();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -672,12 +672,12 @@ struct MANGOS_DLL_DECL mob_cult_adherentAI : public ScriptedAI
         m_uiShroudTimer         = urand(15000, 30000);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         m_creature->ForcedDespawn();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

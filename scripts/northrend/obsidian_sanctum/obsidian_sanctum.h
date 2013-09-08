@@ -66,8 +66,8 @@ class MANGOS_DLL_DECL instance_obsidian_sanctum : public ScriptedInstance
     ObjectGuid m_uiShadronGUID;
     ObjectGuid m_uiVesperonGUID;
 
-    void Initialize();
-    void OnCreatureCreate(Creature* pCreature);
+    void Initialize() override;
+    void OnCreatureCreate(Creature* pCreature) override;
 
  public:
     instance_obsidian_sanctum(Map* pMap);
@@ -80,10 +80,10 @@ class MANGOS_DLL_DECL instance_obsidian_sanctum : public ScriptedInstance
     ObjectGuid m_uiAcolyteShadronGUID;
     ObjectGuid m_uiAcolyteVesperonGUID;
 
-    void SetData(uint32 uiType, uint32 uiData);
+    void SetData(uint32 uiType, uint32 uiData) override;
     void SetAcolyteGuid(uint32 uiEntry, ObjectGuid guid);
-    uint32 GetData(uint32 uiType) const;
-    bool IsEncounterInProgress() const;
+    uint32 GetData(uint32 uiType) const override;
+    bool IsEncounterInProgress() const override;
 
     bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
     bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) const override;

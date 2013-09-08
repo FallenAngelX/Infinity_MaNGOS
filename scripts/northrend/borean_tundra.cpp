@@ -112,7 +112,7 @@ struct MANGOS_DLL_DECL npc_nesingwary_trapperAI : public ScriptedAI
         m_uiPhaseTimer = 2000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->getVictim() && m_uiPhaseTimer)
         {
@@ -198,7 +198,7 @@ struct MANGOS_DLL_DECL npc_oil_stained_wolfAI : public ScriptedAI
         m_uiPooTimer = 0;
     }
 
-    void MovementInform(uint32 uiType, uint32 uiPointId)
+    void MovementInform(uint32 uiType, uint32 uiPointId) override
     {
         if (uiType != POINT_MOTION_TYPE)
             return;
@@ -210,7 +210,7 @@ struct MANGOS_DLL_DECL npc_oil_stained_wolfAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {
@@ -320,12 +320,12 @@ struct MANGOS_DLL_DECL npc_sinkhole_kill_creditAI : public ScriptedAI
         m_uiCartPhase = 0;
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         m_wormGuid = pSummoned->GetObjectGuid();
     }
 
-    void JustSummoned(GameObject* pGo)
+    void JustSummoned(GameObject* pGo) override
     {
         // Go is not really needed, but ok to use as a check point so only one "event" can be processed at a time
         if (m_cartGuid)
@@ -335,7 +335,7 @@ struct MANGOS_DLL_DECL npc_sinkhole_kill_creditAI : public ScriptedAI
         m_cartGuid = pGo->GetObjectGuid();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_cartGuid)
         {
@@ -445,7 +445,7 @@ struct MANGOS_DLL_DECL npc_lurgglbrAI : public npc_escortAI
         }
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch(uiPointId)
         {
@@ -567,12 +567,12 @@ struct MANGOS_DLL_DECL npc_nexus_drakeAI : public FollowerAI
          SPELL_NETHERBREATH_Timer = 4600;
      }
 
-     void EnterCombat(Unit* pWho)
+     void EnterCombat(Unit* pWho) override
      {
          AttackStart(pWho);
      }
 
-     void SpellHit(Unit* pCaster, SpellEntry const* pSpell)
+     void SpellHit(Unit* pCaster, SpellEntry const* pSpell) override
      {
             if (pSpell->Id == SPELL_DRAKE_HARPOON && pCaster->GetTypeId() == TYPEID_PLAYER)
             {
@@ -583,7 +583,7 @@ struct MANGOS_DLL_DECL npc_nexus_drakeAI : public FollowerAI
             bWithRedDragonBlood = true;
      }
 
-     void MoveInLineOfSight(Unit *pWho)
+     void MoveInLineOfSight(Unit* pWho) override
      {
          FollowerAI::MoveInLineOfSight(pWho);
 
@@ -603,7 +603,7 @@ struct MANGOS_DLL_DECL npc_nexus_drakeAI : public FollowerAI
           }
       }
 
-     void UpdateAI(const uint32 uidiff)
+     void UpdateAI(const uint32 uiDiff) override
         {
             if (bWithRedDragonBlood && uiHarpoonerGUID && !m_creature->HasAura(SPELL_RED_DRAGONBLOOD))
             {
@@ -628,21 +628,21 @@ struct MANGOS_DLL_DECL npc_nexus_drakeAI : public FollowerAI
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
                 return;
 
-            if (SPELL_NETHERBREATH_Timer < uidiff)
+            if (SPELL_NETHERBREATH_Timer < uiDiff)
             {
                 DoCastSpellIfCan(m_creature->getVictim(),SPELL_NETHERBREATH);
                 SPELL_NETHERBREATH_Timer = 4600;
             }
             else
-                SPELL_NETHERBREATH_Timer -= uidiff;
+                SPELL_NETHERBREATH_Timer -= uiDiff;
 
-            if (SPELL_INTANGIBLE_PRESENCE_Timer < uidiff)
+            if (SPELL_INTANGIBLE_PRESENCE_Timer < uiDiff)
             {
                 DoCastSpellIfCan(m_creature,SPELL_INTANGIBLE_PRESENCE);
                 SPELL_INTANGIBLE_PRESENCE_Timer = 16600;
              }
              else
-                 SPELL_INTANGIBLE_PRESENCE_Timer -= uidiff;
+                 SPELL_INTANGIBLE_PRESENCE_Timer -= uiDiff;
 
             DoMeleeAttackIfReady();
         }
@@ -715,12 +715,12 @@ struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
          SPELL_FROST_BOLT_Timer = 5400;
          SPELL_BLINK_Timer = 15000;
     }
-    void EnterCombat(Unit* pWho)
+    void EnterCombat(Unit* pWho) override
     {
             AttackStart(pWho);
     }
 
-    void SpellHit(Unit* pCaster, SpellEntry const* pSpell)
+    void SpellHit(Unit* pCaster, SpellEntry const* pSpell) override
     {
         if (pSpell->Id == SPELL_ARCANE_CHAINS && pCaster->GetTypeId() == TYPEID_PLAYER && !bEnslaved)
             {
@@ -737,7 +737,7 @@ struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
             }
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
             FollowerAI::MoveInLineOfSight(pWho);
 
@@ -751,7 +751,7 @@ struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
                 }
             }
      }
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -798,7 +798,7 @@ struct npc_seaforium_depth_chargeAI : public ScriptedAI
     {
         uiExplosionTimer = urand(5000,10000);
     }
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (uiExplosionTimer < uiDiff)
         {

@@ -132,12 +132,12 @@ struct MANGOS_DLL_DECL boss_magtheridonAI : public ScriptedAI
         m_creature->RemoveAurasDueToSpell(SPELL_SHADOW_CAGE_DUMMY);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(SAY_PLAYER_KILLED, m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MAGTHERIDON_EVENT, DONE);
@@ -145,20 +145,20 @@ struct MANGOS_DLL_DECL boss_magtheridonAI : public ScriptedAI
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MAGTHERIDON_EVENT, FAIL);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         // When banished by the cubes
         if (pSpell->Id == SPELL_SHADOW_CAGE)
             DoScriptText(SAY_BANISH, m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -336,32 +336,32 @@ struct MANGOS_DLL_DECL mob_hellfire_channelerAI : public ScriptedAI
     }
 
     // Don't attack on LoS check
-    void MoveInLineOfSight(Unit* pWho) { }
+    void MoveInLineOfSight(Unit* pWho) override { }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoCastSpellIfCan(m_creature, SPELL_SOUL_TRANSFER, CAST_TRIGGERED);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_CHANNELER_EVENT, FAIL);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (m_creature->getVictim())
             pSummoned->AI()->AttackStart(m_creature->getVictim());
     }
 
-    void SummonedCreatureDespawn(Creature* pSummoned)
+    void SummonedCreatureDespawn(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_BURNING_ABYSS)
             m_uiInfernalTimer = urand(10000, 15000);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Channel spell on Magtheridon, on OOC timer
         if (m_uiShadowGraspTimer)
@@ -470,10 +470,10 @@ struct MANGOS_DLL_DECL npc_target_triggerAI : public Scripted_NoMovementAI
         m_uiDebrisTimer = 0;
     }
 
-    void AttackStart(Unit* pWho) {}
-    void MoveInLineOfSight(Unit* pWho) {}
+    void AttackStart(Unit* pWho) override {}
+    void MoveInLineOfSight(Unit* pWho) override { }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         // Workaround for missing core support for this type of dummy aura
         if (pSpell->Id == SPELL_QUAKE_EFFECT)
@@ -483,7 +483,7 @@ struct MANGOS_DLL_DECL npc_target_triggerAI : public Scripted_NoMovementAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Cast debris damage after 5 seconds (on visual removal)
         if (m_uiDebrisTimer)
@@ -513,7 +513,7 @@ struct MANGOS_DLL_DECL mob_abyssalAI : public ScriptedAI
         m_uiFireBlastTimer = 6000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

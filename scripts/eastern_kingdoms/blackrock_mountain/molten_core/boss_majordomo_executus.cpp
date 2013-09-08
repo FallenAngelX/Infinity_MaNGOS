@@ -100,7 +100,7 @@ struct MANGOS_DLL_DECL boss_majordomoAI : public ScriptedAI
         m_uiSpeech = 0;
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (urand(0, 4))
             return;
@@ -119,7 +119,7 @@ struct MANGOS_DLL_DECL boss_majordomoAI : public ScriptedAI
             m_pInstance->SetData(TYPE_MAJORDOMO, IN_PROGRESS);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_bHasEncounterFinished)                       // Normal reached home, FAIL
         {
@@ -163,7 +163,7 @@ struct MANGOS_DLL_DECL boss_majordomoAI : public ScriptedAI
         m_uiSpeech = 10;
     }
 
-    void JustRespawned()
+    void JustRespawned() override
     {
         // Encounter finished, need special treatment
         if (m_bHasEncounterFinished)
@@ -178,7 +178,7 @@ struct MANGOS_DLL_DECL boss_majordomoAI : public ScriptedAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_FLAMEWAKER_HEALER || pSummoned->GetEntry() == NPC_FLAMEWAKER_ELITE)
         {
@@ -192,13 +192,13 @@ struct MANGOS_DLL_DECL boss_majordomoAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (pKiller->GetTypeId() == TYPEID_UNIT && pKiller->GetEntry() == NPC_RAGNAROS)
             DoScriptText(SAY_ARRIVAL4_MAJ, m_creature);
     }
 
-    void CorpseRemoved(uint32& uiRespawnDelay)
+    void CorpseRemoved(uint32& uiRespawnDelay) override
     {
         uiRespawnDelay = urand(2 * HOUR, 3 * HOUR);
 
@@ -242,7 +242,7 @@ struct MANGOS_DLL_DECL boss_majordomoAI : public ScriptedAI
         m_luiMajordomoAddsGUIDs.clear();
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage)
+    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
     {
         if (uiDamage > m_creature->GetHealth())
         {
@@ -251,7 +251,7 @@ struct MANGOS_DLL_DECL boss_majordomoAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Handling of his combat-end speech and Ragnaros summoning
         if (m_uiSpeech)

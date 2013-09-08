@@ -76,12 +76,12 @@ struct MANGOS_DLL_DECL npc_destructive_wardAI : public Scripted_NoMovementAI
 
     void Reset() { }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->AI()->AttackStart(m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bCanPulse)
         {
@@ -193,12 +193,12 @@ struct MANGOS_DLL_DECL npc_hourglassAI : public ScriptedAI
         uiWaveCounter = 0; 
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     { 
         pSummoned->AI()->AttackStart(m_creature); 
     }
 
-    void JustDied(Unit* pKiller) 
+    void JustDied(Unit* pKiller) override 
     { 
        if(Player *pPlayer = m_creature->GetMap()->GetPlayer(m_creature->GetOwnerGuid())) 
        { 
@@ -228,7 +228,7 @@ struct MANGOS_DLL_DECL npc_hourglassAI : public ScriptedAI
         } 
     }
 
-    void UpdateAI(const uint32 uiDiff) 
+    void UpdateAI(const uint32 uiDiff) override 
     { 
            if (uiWaveTimer <= uiDiff) 
            { 

@@ -118,7 +118,7 @@ struct MANGOS_DLL_DECL boss_bg_iocAI : public ScriptedAI
         m_uiDaggerThrowTimer = urand(15000, 20000);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

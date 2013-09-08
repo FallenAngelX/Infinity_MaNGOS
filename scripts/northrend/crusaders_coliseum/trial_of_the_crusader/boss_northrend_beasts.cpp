@@ -201,7 +201,7 @@ struct MANGOS_DLL_DECL boss_gormokAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance) 
             return;
@@ -209,7 +209,7 @@ struct MANGOS_DLL_DECL boss_gormokAI : public ScriptedAI
         m_pInstance->SetData(TYPE_NORTHREND_BEASTS, GORMOK_DONE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_pInstance) 
             return;
@@ -228,7 +228,7 @@ struct MANGOS_DLL_DECL boss_gormokAI : public ScriptedAI
         SummonAdds();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -305,7 +305,7 @@ struct MANGOS_DLL_DECL mob_snobold_vassalAI : public ScriptedAI
         pFocus = pWho;
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_pInstance) 
             return;
@@ -313,7 +313,7 @@ struct MANGOS_DLL_DECL mob_snobold_vassalAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (pFocus && pFocus->isAlive())
             pFocus->RemoveAurasDueToSpell(SPELL_SNOBOLLED);
@@ -321,7 +321,7 @@ struct MANGOS_DLL_DECL mob_snobold_vassalAI : public ScriptedAI
         m_creature->ForcedDespawn(5000);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -385,7 +385,7 @@ struct MANGOS_DLL_DECL mob_fire_bombAI : public ScriptedAI
         SetCombatMovement(false);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -447,7 +447,7 @@ struct MANGOS_DLL_DECL boss_acidmawAI : public ScriptedAI
         m_creature->SetSpeedRate(MOVE_RUN, 0);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance) 
             return;
@@ -464,7 +464,7 @@ struct MANGOS_DLL_DECL boss_acidmawAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_pInstance) 
             return;
@@ -475,7 +475,7 @@ struct MANGOS_DLL_DECL boss_acidmawAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -648,7 +648,7 @@ struct MANGOS_DLL_DECL boss_dreadscaleAI : public ScriptedAI
         m_creature->SetSpeedRate(MOVE_RUN, 1);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance) 
             return;
@@ -665,7 +665,7 @@ struct MANGOS_DLL_DECL boss_dreadscaleAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_pInstance) 
             return;
@@ -676,7 +676,7 @@ struct MANGOS_DLL_DECL boss_dreadscaleAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -841,7 +841,7 @@ struct MANGOS_DLL_DECL mob_slime_poolAI : public ScriptedAI
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance->GetData(TYPE_NORTHREND_BEASTS) == SNAKES_DONE)
             m_creature->ForcedDespawn();
@@ -957,7 +957,7 @@ struct MANGOS_DLL_DECL boss_icehowlAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -979,7 +979,7 @@ struct MANGOS_DLL_DECL boss_icehowlAI : public ScriptedAI
         m_pInstance->SetData(TYPE_NORTHREND_BEASTS, ICEHOWL_DONE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_pInstance) 
             return;
@@ -995,7 +995,7 @@ struct MANGOS_DLL_DECL boss_icehowlAI : public ScriptedAI
         m_pInstance->SetData(TYPE_NORTHREND_BEASTS, ICEHOWL_IN_PROGRESS);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

@@ -118,7 +118,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
         DoDespawnBombRiders();
@@ -127,7 +127,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
             m_pInstance->SetData(TYPE_JEKLIK, DONE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         DoDespawnBombRiders();
 
@@ -135,7 +135,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
             m_pInstance->SetData(TYPE_JEKLIK, FAIL);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_FRENZIED_BAT)
         {
@@ -183,7 +183,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -338,7 +338,7 @@ struct MANGOS_DLL_DECL npc_gurubashi_bat_riderAI : public ScriptedAI
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         // Don't attack if is summoned by Jeklik
         if (m_bIsSummon)
@@ -347,7 +347,7 @@ struct MANGOS_DLL_DECL npc_gurubashi_bat_riderAI : public ScriptedAI
         ScriptedAI::AttackStart(pWho);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         // Don't attack if is summoned by Jeklik
         if (m_bIsSummon)
@@ -356,7 +356,7 @@ struct MANGOS_DLL_DECL npc_gurubashi_bat_riderAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

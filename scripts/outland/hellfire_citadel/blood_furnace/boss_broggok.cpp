@@ -70,7 +70,7 @@ struct MANGOS_DLL_DECL boss_broggokAI : public ScriptedAI
             m_pInstance->SetData(TYPE_BROGGOK_EVENT, IN_PROGRESS);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         // ToDo: set correct flags and data in DB!!!
         pSummoned->setFaction(16);
@@ -85,7 +85,7 @@ struct MANGOS_DLL_DECL boss_broggokAI : public ScriptedAI
             m_pInstance->SetData(TYPE_BROGGOK_EVENT, DONE);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         m_creature->RemoveAllAuras();
         m_creature->DeleteThreatList();
@@ -112,7 +112,7 @@ struct MANGOS_DLL_DECL boss_broggokAI : public ScriptedAI
     }
 
     // Reset Orientation
-    void MovementInform(uint32 uiMotionType, uint32 uiPointId)
+    void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
     {
         if (uiMotionType != POINT_MOTION_TYPE || uiPointId != POINT_EVENT_COMBAT)
             return;
@@ -121,7 +121,7 @@ struct MANGOS_DLL_DECL boss_broggokAI : public ScriptedAI
             m_creature->SetFacingToObject(pFrontDoor);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -159,7 +159,7 @@ struct MANGOS_DLL_DECL mob_broggok_poisoncloudAI : public ScriptedAI
     mob_broggok_poisoncloudAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
     void Reset() { }
-    void MoveInLineOfSight(Unit* who) { }
+    void MoveInLineOfSight(Unit* who) override { }
     void AttackStart(Unit* who) { }
 };
 

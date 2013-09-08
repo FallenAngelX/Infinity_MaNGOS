@@ -106,7 +106,7 @@ struct MANGOS_DLL_DECL mob_xerestraszaAI : public ScriptedAI
         return;
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* who) override
     {
         if (!pInstance || !who || who->GetTypeId() != TYPEID_PLAYER)
             return;

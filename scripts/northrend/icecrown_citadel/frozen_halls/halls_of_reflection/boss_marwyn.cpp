@@ -141,7 +141,7 @@ struct MANGOS_DLL_DECL boss_marwynAI : public BSWScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
       if(m_pInstance)
       {
@@ -152,7 +152,7 @@ struct MANGOS_DLL_DECL boss_marwynAI : public BSWScriptedAI
       DoScriptText(SAY_MARWYN_DEATH, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         switch(urand(0,1))
         {
@@ -178,7 +178,7 @@ struct MANGOS_DLL_DECL boss_marwynAI : public BSWScriptedAI
         ScriptedAI::AttackStart(who);
     }
 
-   void UpdateAI(const uint32 uiDiff)
+   void UpdateAI(const uint32 uiDiff) override
     {
         if(!m_pInstance) return;
 

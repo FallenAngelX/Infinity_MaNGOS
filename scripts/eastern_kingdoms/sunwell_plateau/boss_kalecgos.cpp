@@ -112,7 +112,7 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
         m_bIsEnraged            = false;
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         // Eject all players and set event to fail
         DoCastSpellIfCan(m_creature, SPELL_SPECTRAL_REALM_EJECT, CAST_TRIGGERED);
@@ -121,7 +121,7 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
             m_pInstance->SetData(TYPE_KALECGOS, FAIL);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         // Check if the boss is uncorrupted when evading
         if (m_bIsUncorrupted)
@@ -151,7 +151,7 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
             m_pInstance->SetData(TYPE_KALECGOS, IN_PROGRESS);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (uiDamage > m_creature->GetHealth())
         {
@@ -166,7 +166,7 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_EVIL_SLAY_1 : SAY_EVIL_SLAY_2, m_creature);
     }
@@ -194,7 +194,7 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
         m_uiExitTimer = 10000;
     }
 
-    void MovementInform(uint32 uiMotionType, uint32 uiPointId)
+    void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
     {
         if (uiMotionType != POINT_MOTION_TYPE)
             return;
@@ -208,7 +208,7 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiExitTimer)
         {
@@ -362,7 +362,7 @@ struct MANGOS_DLL_DECL boss_sathrovarrAI : public ScriptedAI
             pKalec->AI()->AttackStart(m_creature);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (uiDamage > m_creature->GetHealth())
         {
@@ -385,7 +385,7 @@ struct MANGOS_DLL_DECL boss_sathrovarrAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_SATH_SLAY_1 : SAY_SATH_SLAY_2, m_creature);
 
@@ -397,18 +397,18 @@ struct MANGOS_DLL_DECL boss_sathrovarrAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         //TODO: must be invisible in reset() but not work!!!
         DoCastSpellIfCan(m_creature, SPELL_SPECTRAL_INVISIBILITY);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_SATH_DEATH, m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -508,7 +508,7 @@ struct MANGOS_DLL_DECL boss_kalecgos_humanoidAI : public ScriptedAI
         DoScriptText(SAY_GOOD_AGGRO, m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
         {
@@ -540,13 +540,13 @@ struct MANGOS_DLL_DECL boss_kalecgos_humanoidAI : public ScriptedAI
 
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         //TODO: must be invisible in reset() but not work!!!
         DoCastSpellIfCan(m_creature, SPELL_SPECTRAL_INVISIBILITY);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiUpdateRealmTimer < uiDiff)
         {

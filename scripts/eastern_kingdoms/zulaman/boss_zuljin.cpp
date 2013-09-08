@@ -184,7 +184,7 @@ struct MANGOS_DLL_DECL boss_zuljinAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ZULJIN, IN_PROGRESS);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ZULJIN, FAIL);
@@ -203,12 +203,12 @@ struct MANGOS_DLL_DECL boss_zuljinAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_KILL1 : SAY_KILL2, m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -218,7 +218,7 @@ struct MANGOS_DLL_DECL boss_zuljinAI : public ScriptedAI
         m_pInstance->SetData(TYPE_ZULJIN, DONE);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_bHasTaunted && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 60.0f))
         {
@@ -239,7 +239,7 @@ struct MANGOS_DLL_DECL boss_zuljinAI : public ScriptedAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch (pSummoned->GetEntry())
         {
@@ -258,7 +258,7 @@ struct MANGOS_DLL_DECL boss_zuljinAI : public ScriptedAI
         }
     }
 
-    void MovementInform(uint32 uiMotionType, uint32 uiPointId)
+    void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
     {
         if (uiMotionType != POINT_MOTION_TYPE || uiPointId != POINT_ID_CENTER)
             return;
@@ -274,7 +274,7 @@ struct MANGOS_DLL_DECL boss_zuljinAI : public ScriptedAI
             pSpirit->CastSpell(m_creature, SPELL_SPIRIT_DRAIN, false);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_SPIRIT_DRAIN)
         {

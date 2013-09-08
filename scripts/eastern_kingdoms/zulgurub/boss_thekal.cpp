@@ -71,7 +71,7 @@ struct MANGOS_DLL_DECL boss_thekalBaseAI : public ScriptedAI
     virtual void OnFakeingDeath() {}
     virtual void OnRevive() {}
 
-    void DamageTaken(Unit* pKiller, uint32& uiDamage)
+    void DamageTaken(Unit* pKiller, uint32& uiDamage) override
     {
         if (uiDamage < m_creature->GetHealth())
             return;
@@ -181,7 +181,7 @@ struct MANGOS_DLL_DECL boss_thekalAI : public boss_thekalBaseAI
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -197,7 +197,7 @@ struct MANGOS_DLL_DECL boss_thekalAI : public boss_thekalBaseAI
             pLorkhan->ForcedDespawn();
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_THEKAL, FAIL);
@@ -252,7 +252,7 @@ struct MANGOS_DLL_DECL boss_thekalAI : public boss_thekalBaseAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -401,7 +401,7 @@ struct MANGOS_DLL_DECL mob_zealot_lorkhanAI : public boss_thekalBaseAI
             m_pInstance->SetData(TYPE_LORKHAN, SPECIAL);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -542,7 +542,7 @@ struct MANGOS_DLL_DECL mob_zealot_zathAI : public boss_thekalBaseAI
             m_pInstance->SetData(TYPE_ZATH, SPECIAL);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

@@ -65,7 +65,7 @@ struct MANGOS_DLL_DECL npc_aged_dying_ancient_kodoAI : public ScriptedAI
         m_uiDespawnTimer = 0;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (pWho->GetEntry() == NPC_SMEED)
         {
@@ -188,7 +188,7 @@ struct MANGOS_DLL_DECL npc_dalinda_malemAI : public npc_escortAI
         m_creature->SetStandState(UNIT_STAND_STATE_STAND);
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         if (uiPointId == 18)
         {
@@ -293,7 +293,7 @@ struct MANGOS_DLL_DECL npc_melizza_brimbuzzleAI : public npc_escortAI, private D
         return NULL;
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {

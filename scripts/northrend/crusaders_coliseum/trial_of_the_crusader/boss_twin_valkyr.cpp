@@ -160,7 +160,7 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
         m_creature->SetHealth(m_creature->GetMaxHealth());
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_pInstance) 
             return;
@@ -170,7 +170,7 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance) 
             return;
@@ -187,7 +187,7 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
         m_pInstance->SetData(DATA_HEALTH_FJOLA, 0);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() != TYPEID_PLAYER)
             return;
@@ -214,7 +214,7 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (!m_pInstance) 
             return;
@@ -236,7 +236,7 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public ScriptedAI
         m_pInstance->SetData(DATA_HEALTH_FJOLA, m_creature->GetHealth() >= uiDamage ? m_creature->GetHealth() - uiDamage : 0);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance) 
             return;
@@ -420,7 +420,7 @@ struct MANGOS_DLL_DECL boss_eydisAI : public ScriptedAI
         m_creature->SetHealth(m_creature->GetMaxHealth());
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_pInstance) 
             return;
@@ -430,7 +430,7 @@ struct MANGOS_DLL_DECL boss_eydisAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance) 
             return;
@@ -447,7 +447,7 @@ struct MANGOS_DLL_DECL boss_eydisAI : public ScriptedAI
         m_pInstance->SetData(DATA_HEALTH_EYDIS, 0);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() != TYPEID_PLAYER)
             return;
@@ -474,7 +474,7 @@ struct MANGOS_DLL_DECL boss_eydisAI : public ScriptedAI
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (!m_pInstance) 
             return;
@@ -496,7 +496,7 @@ struct MANGOS_DLL_DECL boss_eydisAI : public ScriptedAI
         m_pInstance->SetData(DATA_HEALTH_EYDIS, m_creature->GetHealth() >= uiDamage ? m_creature->GetHealth() - uiDamage : 0);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance) 
             return;
@@ -649,7 +649,7 @@ struct MANGOS_DLL_DECL mob_light_essenceAI : public ScriptedAI
         SetCombatMovement(false);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance) 
             m_creature->ForcedDespawn();
@@ -709,7 +709,7 @@ struct MANGOS_DLL_DECL mob_dark_essenceAI : public ScriptedAI
         SetCombatMovement(false);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance) 
              m_creature->ForcedDespawn();
@@ -774,12 +774,12 @@ struct MANGOS_DLL_DECL mob_unleashed_darkAI : public ScriptedAI
         m_uiCheckTimer = 1000;
     }
 
-    void AttackStart(Unit *pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_VALKIRIES) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -847,12 +847,12 @@ struct MANGOS_DLL_DECL mob_unleashed_lightAI : public ScriptedAI
         m_uiCheckTimer = 1000;
     }
 
-    void AttackStart(Unit *pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_VALKIRIES) != IN_PROGRESS) 
             m_creature->ForcedDespawn();

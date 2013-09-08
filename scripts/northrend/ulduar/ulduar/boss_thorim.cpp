@@ -235,7 +235,7 @@ struct MANGOS_DLL_DECL mob_thorim_trap_bunnyAI : public ScriptedAI
        m_bHasStunAura = false;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (pWho->isTargetableForAttack() && pWho->isInAccessablePlaceFor(m_creature) && !m_bHasStunAura &&
             pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 12) && m_creature->IsWithinLOSInMap(pWho))
@@ -246,12 +246,12 @@ struct MANGOS_DLL_DECL mob_thorim_trap_bunnyAI : public ScriptedAI
         }
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(m_uiAuraExpireTimer < uiDiff && m_bHasStunAura)
             m_bHasStunAura = false;
@@ -281,7 +281,7 @@ struct MANGOS_DLL_DECL mob_dark_rune_acolyteAI : public ScriptedAI
         m_uiSpell_Timer = urand(3000, 6000);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -332,7 +332,7 @@ struct MANGOS_DLL_DECL mob_dark_rune_championAI : public ScriptedAI
         m_uiSpell_Timer = urand(3000, 6000);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -378,7 +378,7 @@ struct MANGOS_DLL_DECL mob_dark_rune_commonerAI : public ScriptedAI
         m_uiSpell_Timer = urand(3000, 6000);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -423,7 +423,7 @@ struct MANGOS_DLL_DECL mob_dark_rune_evokerAI : public ScriptedAI
         m_uiSpell_Timer = urand(3000, 6000);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -474,7 +474,7 @@ struct MANGOS_DLL_DECL mob_dark_rune_warbringerAI : public ScriptedAI
         DoCast(m_creature, SPELL_AURA_CELERITY);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -511,7 +511,7 @@ struct MANGOS_DLL_DECL mob_dark_rune_ring_guardAI : public ScriptedAI
         m_uiSpell_Timer = urand(3000, 6000);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -556,7 +556,7 @@ struct MANGOS_DLL_DECL mob_dark_rune_honor_guardAI : public ScriptedAI
         m_uiSpell_Timer = urand(3000, 6000);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -692,7 +692,7 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if(m_pInstance)
         {
@@ -702,12 +702,12 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
 
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0,1) ? SAY_SLAY1 : SAY_SLAY2, m_creature);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_LIGHTNING_ORB_CHARGER)
         {
@@ -732,7 +732,7 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
     }
 
     // for debug only
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if(m_pInstance) 
         {
@@ -744,7 +744,7 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
     }
 
     // start outro
-    void DamageTaken(Unit *done_by, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         // outro
         if((m_creature->GetHealthPercent() < 1.0f || m_creature->GetHealth() <= uiDamage) && m_uiPhase == PHASE_ARENA)
@@ -845,7 +845,7 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
         return *iter;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         switch(m_uiPhase)
         {
@@ -1314,7 +1314,7 @@ struct MANGOS_DLL_DECL boss_runic_colossusAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(m_uiSmashTimer < uiDiff && m_bIsSmash)
         {
@@ -1426,7 +1426,7 @@ struct MANGOS_DLL_DECL boss_ancient_rune_giantAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if ((m_pInstance->GetData(TYPE_RUNIC_COLOSSUS) == DONE) && m_bIsSummoning)
         {
@@ -1511,7 +1511,7 @@ struct MANGOS_DLL_DECL mob_thorim_preaddsAI : public ScriptedAI
         m_uiWingClipTimer        = urand(10000, 15000);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (m_creature->Attack(pWho, true)) 
         {
@@ -1535,7 +1535,7 @@ struct MANGOS_DLL_DECL mob_thorim_preaddsAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1642,7 +1642,7 @@ struct MANGOS_DLL_DECL npc_sifAI : public ScriptedAI
         m_creature->SetRespawnDelay(DAY);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (!pWho) 
             return;
@@ -1656,7 +1656,7 @@ struct MANGOS_DLL_DECL npc_sifAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_THORIM) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -1728,12 +1728,12 @@ struct MANGOS_DLL_DECL npc_lightning_orbAI : public ScriptedAI
         // find the correct aura for raid wipe!!!
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_THORIM) != IN_PROGRESS) 
             m_creature->ForcedDespawn();

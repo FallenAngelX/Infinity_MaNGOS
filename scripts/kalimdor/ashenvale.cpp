@@ -117,7 +117,7 @@ struct MANGOS_DLL_DECL npc_muglashAI : public npc_escortAI
         }
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {
@@ -175,7 +175,7 @@ struct MANGOS_DLL_DECL npc_muglashAI : public npc_escortAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->AI()->AttackStart(m_creature);
     }
@@ -258,7 +258,7 @@ struct MANGOS_DLL_DECL npc_ruul_snowhoofAI : public npc_escortAI
 
     void Reset() {}
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {
@@ -339,7 +339,7 @@ struct MANGOS_DLL_DECL npc_torekAI : public npc_escortAI
         m_uiThunderclap_Timer = 8000;
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         Player* pPlayer = GetPlayerForEscort();
 
@@ -370,7 +370,7 @@ struct MANGOS_DLL_DECL npc_torekAI : public npc_escortAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->AI()->AttackStart(m_creature);
     }
@@ -485,7 +485,7 @@ struct MANGOS_DLL_DECL npc_feero_ironhandAI : public npc_escortAI
         }
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {
@@ -561,7 +561,7 @@ struct MANGOS_DLL_DECL npc_feero_ironhandAI : public npc_escortAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_FORSAKEN_SCOUT)
         {

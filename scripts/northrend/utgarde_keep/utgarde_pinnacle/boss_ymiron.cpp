@@ -139,7 +139,7 @@ struct MANGOS_DLL_DECL boss_ymironAI: public ScriptedAI
             m_fPrecentLifeNextBoat = 80.0f;
         }
 
-        void JustSummoned(Creature* pSummoned)
+        void JustSummoned(Creature* pSummoned) override
         {
             addsList.push_back(pSummoned->GetObjectGuid());
         }
@@ -170,7 +170,7 @@ struct MANGOS_DLL_DECL boss_ymironAI: public ScriptedAI
             DoScriptText(SAY_AGGRO, m_creature);
         }
 
-        void KilledUnit(Unit* pVictim)
+        void KilledUnit(Unit* pVictim) override
         {
             switch (urand(0, 3))
             {
@@ -189,7 +189,7 @@ struct MANGOS_DLL_DECL boss_ymironAI: public ScriptedAI
             }
         }
 
-        void EnterEvadeMode()
+        void EnterEvadeMode() override
         {
             ScriptedAI::EnterEvadeMode();
             if (m_pInstance)
@@ -205,7 +205,7 @@ struct MANGOS_DLL_DECL boss_ymironAI: public ScriptedAI
             }
         }
 
-        void JustDied(Unit* pKiller)
+        void JustDied(Unit* pKiller) override
         {
             if (m_pInstance)
             {
@@ -244,7 +244,7 @@ struct MANGOS_DLL_DECL boss_ymironAI: public ScriptedAI
 
         }
 
-        void UpdateAI(const uint32 uiDiff)
+        void UpdateAI(const uint32 uiDiff) override
         {
             if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
                 return;
@@ -358,7 +358,7 @@ struct MANGOS_DLL_DECL npc_spirit_fountAI: public ScriptedAI
             m_creature->SetSpeedRate(MOVE_RUN, 0.4f);
         }
 
-        void EnterEvadeMode()
+        void EnterEvadeMode() override
         {
             ScriptedAI::EnterEvadeMode();
             m_creature->ForcedDespawn();

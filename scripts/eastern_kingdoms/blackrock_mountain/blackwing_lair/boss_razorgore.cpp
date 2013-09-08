@@ -70,7 +70,7 @@ struct MANGOS_DLL_DECL boss_razorgoreAI : public ScriptedAI
         m_uiFireballVolleyTimer = urand(15000, 20000);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
         {

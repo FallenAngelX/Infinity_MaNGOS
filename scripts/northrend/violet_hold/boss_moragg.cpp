@@ -60,7 +60,7 @@ struct MANGOS_DLL_DECL boss_moraggAI : public ScriptedAI
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
     }
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -80,7 +80,7 @@ struct MANGOS_DLL_DECL boss_moraggAI : public ScriptedAI
         SetCombatMovement(true);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (!m_pInstance)
             return;
@@ -122,7 +122,7 @@ struct MANGOS_DLL_DECL boss_moraggAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance->GetData(TYPE_MORAGG) == SPECIAL && !MovementStarted)
             StartMovement(0);
@@ -157,7 +157,7 @@ struct MANGOS_DLL_DECL boss_moraggAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance){
             m_pInstance->SetData(TYPE_MORAGG, DONE);

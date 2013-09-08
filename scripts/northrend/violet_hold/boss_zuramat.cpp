@@ -79,7 +79,7 @@ struct MANGOS_DLL_DECL boss_zuramatAI : public ScriptedAI
 
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -103,7 +103,7 @@ struct MANGOS_DLL_DECL boss_zuramatAI : public ScriptedAI
         SetCombatMovement(true);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (!m_pInstance)
             return;
@@ -123,7 +123,7 @@ struct MANGOS_DLL_DECL boss_zuramatAI : public ScriptedAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         m_lSentryGuidList.push_back(pSummoned->GetObjectGuid());
         //pSummoned->AddThreat(m_creature);
@@ -170,7 +170,7 @@ struct MANGOS_DLL_DECL boss_zuramatAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff) 
+    void UpdateAI(const uint32 uiDiff) override 
     {
         if (m_pInstance->GetData(TYPE_ZURAMAT) == SPECIAL && !MovementStarted)
             StartMovement(0);
@@ -207,7 +207,7 @@ struct MANGOS_DLL_DECL boss_zuramatAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
         DespawnSentry();
@@ -219,7 +219,7 @@ struct MANGOS_DLL_DECL boss_zuramatAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         switch(urand(0, 2))
         {
@@ -257,7 +257,7 @@ struct MANGOS_DLL_DECL mob_zuramat_sentryAI : public ScriptedAI
             damage=0;
     }
 
-    void UpdateAI(const uint32 uiDiff) 
+    void UpdateAI(const uint32 uiDiff) override 
     {
         if (m_uiShadowBoltVolley_Timer < uiDiff)
         {

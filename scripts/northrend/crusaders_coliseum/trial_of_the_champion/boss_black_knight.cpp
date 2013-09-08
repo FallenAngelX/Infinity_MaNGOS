@@ -173,7 +173,7 @@ struct MANGOS_DLL_DECL boss_black_knightAI : public ScriptedAI
             m_pInstance->SetData(TYPE_BLACK_KNIGHT, IN_PROGRESS);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if ((uiDamage > m_creature->GetHealth() || m_creature->GetHealth()/m_creature->GetHealth() <= 0.1 )  && !phase3)
         {
@@ -187,7 +187,7 @@ struct MANGOS_DLL_DECL boss_black_knightAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;

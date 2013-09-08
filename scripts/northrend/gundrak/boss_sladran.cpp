@@ -79,7 +79,7 @@ struct MANGOS_DLL_DECL mob_sladran_constrictorAI : public ScriptedAI
         m_uiWrapTimer = 5000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -120,10 +120,10 @@ struct MANGOS_DLL_DECL mob_sladran_snake_wrapAI : public ScriptedAI
         m_creature->setFaction(14);
         SetCombatMovement(false);
     }
-    void MoveInLineOfSight(Unit* pWho) {}
-    void AttackStart(Unit* pWho) {}
+    void MoveInLineOfSight(Unit* pWho) override { }
+    void AttackStart(Unit* pWho) override {}
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -157,10 +157,10 @@ struct MANGOS_DLL_DECL mob_sladran_summon_targetAI : public ScriptedAI
     instance_gundrak* m_pInstance;
 
     void Reset() {}
-    void MoveInLineOfSight(Unit* pWho) {}
-    void AttackStart(Unit* pWho) {}
+    void MoveInLineOfSight(Unit* pWho) override { }
+    void AttackStart(Unit* pWho) override {}
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (!m_pInstance)
             return;
@@ -216,12 +216,12 @@ struct MANGOS_DLL_DECL boss_sladranAI : public ScriptedAI
         if (m_pInstance)
             m_pInstance->SetData(TYPE_SLADRAN, IN_PROGRESS);
     }
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if(m_pInstance)
             m_pInstance->SetData(TYPE_SLADRAN, NOT_STARTED);
     }
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         switch(urand(0, 2))
         {
@@ -231,7 +231,7 @@ struct MANGOS_DLL_DECL boss_sladranAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -253,7 +253,7 @@ struct MANGOS_DLL_DECL boss_sladranAI : public ScriptedAI
         return *iter;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

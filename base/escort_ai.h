@@ -39,26 +39,26 @@ struct MANGOS_DLL_DECL npc_escortAI : public ScriptedAI
         explicit npc_escortAI(Creature* pCreature);
         ~npc_escortAI() {}
 
-        void GetAIInformation(ChatHandler& reader);
+        void GetAIInformation(ChatHandler& reader) override;
 
         virtual void Aggro(Unit*);
 
         virtual void Reset() = 0;
 
         // CreatureAI functions
-        bool IsVisible(Unit*) const;
+        bool IsVisible(Unit*) const override;
 
-        void AttackStart(Unit*);
+        void AttackStart(Unit*) override;
 
-        void EnterCombat(Unit*);
+        void EnterCombat(Unit*) override;
 
-        void MoveInLineOfSight(Unit*);
+        void MoveInLineOfSight(Unit*) override;
 
         void JustDied(Unit*);
 
-        void JustRespawned();
+        void JustRespawned() override;
 
-        void EnterEvadeMode();
+        void EnterEvadeMode() override;
 
         void UpdateAI(const uint32);                        // the "internal" update, calls UpdateEscortAI()
         virtual void UpdateEscortAI(const uint32);          // used when it's needed to add code in update (abilities, scripted events, etc)

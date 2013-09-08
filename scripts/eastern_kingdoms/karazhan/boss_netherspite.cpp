@@ -150,13 +150,13 @@ struct MANGOS_DLL_DECL boss_netherspiteAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_NETHERBURN);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_NETHERSPITE, DONE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_NETHERSPITE, FAIL);
@@ -208,7 +208,7 @@ struct MANGOS_DLL_DECL boss_netherspiteAI : public ScriptedAI
         std::random_shuffle(m_vPortalEntryList.begin(), m_vPortalEntryList.end());
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch (pSummoned->GetEntry())
         {
@@ -227,7 +227,7 @@ struct MANGOS_DLL_DECL boss_netherspiteAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

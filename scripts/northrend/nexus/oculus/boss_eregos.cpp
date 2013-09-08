@@ -104,7 +104,7 @@ struct MANGOS_DLL_DECL boss_eregosAI : public ScriptedAI
         DragonsEntryList.clear();
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if(pWho->GetTypeId() == TYPEID_PLAYER
            && m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE)
@@ -118,7 +118,7 @@ struct MANGOS_DLL_DECL boss_eregosAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_EREGOS, FAIL);
@@ -176,7 +176,7 @@ struct MANGOS_DLL_DECL boss_eregosAI : public ScriptedAI
            damage = 0;
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if(pSummoned->GetEntry() == NPC_PLANAR_ANOMALY)
         {

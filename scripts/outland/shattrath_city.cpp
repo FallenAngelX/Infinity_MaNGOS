@@ -174,7 +174,7 @@ struct MANGOS_DLL_DECL npc_dirty_larryAI : public ScriptedAI
         }
     }
 
-    void AttackedBy(Unit* pAttacker)
+    void AttackedBy(Unit* pAttacker) override
     {
         if (m_creature->getVictim())
             return;
@@ -185,7 +185,7 @@ struct MANGOS_DLL_DECL npc_dirty_larryAI : public ScriptedAI
         AttackStart(pAttacker);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (uiDamage < m_creature->GetHealth())
             return;
@@ -333,7 +333,7 @@ struct MANGOS_DLL_DECL npc_khadgars_servantAI : public npc_escortAI
         m_uiRandomTalkCooldown = 0;
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_uiRandomTalkCooldown && pWho->GetTypeId() == TYPEID_UNIT && m_creature->IsWithinDistInMap(pWho, 10.0f))
         {
@@ -364,7 +364,7 @@ struct MANGOS_DLL_DECL npc_khadgars_servantAI : public npc_escortAI
             DoScriptText(SAY_KHAD_SERV_0, m_creature);
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         m_uiPointId = uiPointId;
 
@@ -568,7 +568,7 @@ struct MANGOS_DLL_DECL npc_salsalabimAI : public ScriptedAI
         m_uiMagneticPullTimer = 15000;
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (pDoneBy->GetTypeId() == TYPEID_PLAYER)
         {
@@ -581,7 +581,7 @@ struct MANGOS_DLL_DECL npc_salsalabimAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

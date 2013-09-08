@@ -52,7 +52,7 @@ struct MANGOS_DLL_DECL instance_violet_hold : public ScriptedInstance
     uint32 m_uiDisruptions;
     int8 m_uiPortalTime;
 
-    void Initialize()
+    void Initialize() override
     {
         for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             m_auiEncounter[i] = NOT_STARTED;
@@ -76,13 +76,13 @@ struct MANGOS_DLL_DECL instance_violet_hold : public ScriptedInstance
         DoUpdateWorldState(WORLD_STATE_VH_PORTALS,0);
     }
 
-    void OnPlayerEnter(Player* pPlayer)
+    void OnPlayerEnter(Player* pPlayer) override
     {
         if(m_auiEncounter[0] != NOT_STARTED)
             pPlayer->SendUpdateWorldState(WORLD_STATE_VH,1);
     }
 
-    bool IsEncounterInProgress() const
+    bool IsEncounterInProgress() const override
     {
         for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             if (m_auiEncounter[i] == IN_PROGRESS)
@@ -91,7 +91,7 @@ struct MANGOS_DLL_DECL instance_violet_hold : public ScriptedInstance
         return false;
     }
 
-    void OnCreatureCreate(Creature* pCreature)
+    void OnCreatureCreate(Creature* pCreature) override
     {
         switch(pCreature->GetEntry())
         {
@@ -108,12 +108,12 @@ struct MANGOS_DLL_DECL instance_violet_hold : public ScriptedInstance
         }
     }
 
-    void OnObjectCreate(GameObject* pGo)
+    void OnObjectCreate(GameObject* pGo) override
     {
         m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
     }
 
-    void SetData(uint32 uiType, uint32 uiData)
+    void SetData(uint32 uiType, uint32 uiData) override
     {
         switch(uiType)
         {
@@ -269,7 +269,7 @@ struct MANGOS_DLL_DECL instance_violet_hold : public ScriptedInstance
         return 0;
     }
 
-const char* Save() const
+const char* Save() const override
     {
         return m_strInstData.c_str();
     }

@@ -141,13 +141,13 @@ struct MANGOS_DLL_DECL boss_rimefangAI : public ScriptedAI
         m_uiMainTargetGUID = m_uiTargetGUID;
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if(pSummoned->GetEntry() == NPC_ICY_BLAST)
             pSummoned->CastSpell(pSummoned, SPELL_ICY_BLAST_AURA, false);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -237,7 +237,7 @@ struct MANGOS_DLL_DECL boss_tyrannusAI : public ScriptedAI
         TeamInInstance = GetFaction();
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_TYRANNUS, FAIL);
@@ -251,12 +251,12 @@ struct MANGOS_DLL_DECL boss_tyrannusAI : public ScriptedAI
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -287,7 +287,7 @@ struct MANGOS_DLL_DECL boss_tyrannusAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -368,7 +368,7 @@ struct MANGOS_DLL_DECL npc_colapsing_icicleAI: public ScriptedAI
         m_uiDamageTimer = 500;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if(m_uiDamageTimer < uiDiff)
         {
@@ -541,7 +541,7 @@ struct MANGOS_DLL_DECL npc_sylvanas_jaina_pos_endAI: public ScriptedAI
             pKelira->GetMotionMaster()->MovePoint(0, MoveLoc[4].x, MoveLoc[4].y, MoveLoc[4].z);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_bIsOutro)
         {

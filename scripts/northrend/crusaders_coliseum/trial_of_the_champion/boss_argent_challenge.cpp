@@ -96,7 +96,7 @@ struct MANGOS_DLL_DECL boss_eadricAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ARGENT_CHALLENGE, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -222,7 +222,7 @@ struct MANGOS_DLL_DECL boss_paletressAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ARGENT_CHALLENGE, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -433,7 +433,7 @@ struct MANGOS_DLL_DECL mob_toc5_memoryAI : public ScriptedAI
         Fear_Timer = 13000;
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;

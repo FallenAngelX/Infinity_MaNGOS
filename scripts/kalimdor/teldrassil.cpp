@@ -50,7 +50,7 @@ struct MANGOS_DLL_DECL npc_mistAI : public FollowerAI
 
     void Reset() { }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         FollowerAI::MoveInLineOfSight(pWho);
 
@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL boss_tyrande_whisperwindAI : public ScriptedAI
         m_uiSearingArrowTimer   = 8000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -212,7 +212,7 @@ struct MANGOS_DLL_DECL boss_fandral_staghelmAI : public ScriptedAI
         //m_uiRejuvinationTimer   = 10000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL boss_uromAI : public BSWScriptedAI
           m_creature->SummonCreature(Entry05, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 15000);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if(pSpell->Id == SPELL_SUMMON_MENAGERIE) //|| pSpell->Id == SPELL_SUMMON_MENAGERIE_2 || pSpell->Id == SPELL_SUMMON_MENAGERIE_3)
             m_bIsTalk = false;
@@ -150,7 +150,7 @@ struct MANGOS_DLL_DECL boss_uromAI : public BSWScriptedAI
         m_creature->Relocate(X, Y, Z, O);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (!m_pInstance)
             return;
@@ -164,7 +164,7 @@ struct MANGOS_DLL_DECL boss_uromAI : public BSWScriptedAI
         ScriptedAI::AttackStart(pWho);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_pInstance)
             return;
@@ -235,7 +235,7 @@ struct MANGOS_DLL_DECL boss_uromAI : public BSWScriptedAI
         }
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
 
        if (!m_pInstance)
@@ -289,7 +289,7 @@ struct MANGOS_DLL_DECL boss_uromAI : public BSWScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

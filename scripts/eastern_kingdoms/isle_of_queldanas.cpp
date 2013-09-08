@@ -51,9 +51,9 @@ struct MANGOS_DLL_DECL npc_converted_sentryAI : public ScriptedAI
         m_uiCreditTimer = 2500;
     }
 
-    void MoveInLineOfSight(Unit* pWho) {}
+    void MoveInLineOfSight(Unit* pWho) override { }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiCreditTimer)
         {

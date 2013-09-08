@@ -117,7 +117,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
             m_creature->SetGuidValue(UNIT_FIELD_TARGET, pTarget->GetObjectGuid());
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (!m_pInstance)
             return;
@@ -125,7 +125,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
         m_pInstance->SetData(TYPE_BALTHARUS, FAIL);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         ScriptedAI::MoveInLineOfSight(pWho);
 
@@ -137,7 +137,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
         m_bIntro = true;
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -146,12 +146,12 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
         m_pInstance->SetData(TYPE_BALTHARUS, DONE);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(SAY_BALTHARUS_SLAY_1 - urand(0,1),m_creature,pVictim);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (!m_pInstance || !pSummoned)
             return;
@@ -194,7 +194,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
         DoScriptText(SAY_BALTHARUS_AGGRO,m_creature);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         if (!m_pInstance)
             return;
@@ -206,7 +206,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
             uiDamage = 0;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance)
             return;
@@ -356,12 +356,12 @@ struct MANGOS_DLL_DECL mob_baltharus_cloneAI : public ScriptedAI
         m_uiSaberLashTimer = 5000;
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(SAY_BALTHARUS_SLAY_1 - urand(0,1),m_creature,pVictim);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (!m_pInstance)
             return;
@@ -377,7 +377,7 @@ struct MANGOS_DLL_DECL mob_baltharus_cloneAI : public ScriptedAI
         m_creature->SetInCombatWithZone();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance)
             return;

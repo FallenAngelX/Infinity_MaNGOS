@@ -57,17 +57,17 @@ struct MANGOS_DLL_DECL boss_hungarfenAI : public ScriptedAI
         m_uiAcidGeyserTimer = 10000;
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoCastSpellIfCan(m_creature, SPELL_DESPAWN_MUSHROOMS, CAST_TRIGGERED);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         DoCastSpellIfCan(m_creature, SPELL_DESPAWN_MUSHROOMS, CAST_TRIGGERED);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -126,10 +126,10 @@ struct MANGOS_DLL_DECL mob_underbog_mushroomAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_PUTRID_MUSHROOM);
     }
 
-    void MoveInLineOfSight(Unit* pWho) { return; }
-    void AttackStart(Unit* pWho) { return; }
+    void MoveInLineOfSight(Unit* pWho) override { return; }
+    void AttackStart(Unit* pWho) override { return; }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiSporeTimer)
         {

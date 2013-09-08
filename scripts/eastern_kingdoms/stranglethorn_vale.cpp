@@ -58,7 +58,7 @@ struct MANGOS_DLL_DECL mob_yennikuAI : public ScriptedAI
 
     void Reset() { m_uiResetTimer = 0; }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_YENNIKUS_RELEASE && pCaster->GetTypeId() == TYPEID_PLAYER)
         {
@@ -70,7 +70,7 @@ struct MANGOS_DLL_DECL mob_yennikuAI : public ScriptedAI
         }
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         if (m_uiResetTimer)
         {
@@ -88,7 +88,7 @@ struct MANGOS_DLL_DECL mob_yennikuAI : public ScriptedAI
             ScriptedAI::EnterEvadeMode();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiResetTimer)
         {

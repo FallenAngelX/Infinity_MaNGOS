@@ -86,7 +86,7 @@ struct MANGOS_DLL_DECL boss_anzuAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ANZU, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DespawnBirdHelpers();
 
@@ -94,7 +94,7 @@ struct MANGOS_DLL_DECL boss_anzuAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ANZU, DONE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         DespawnBirdHelpers();
         m_creature->ForcedDespawn();
@@ -103,7 +103,7 @@ struct MANGOS_DLL_DECL boss_anzuAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ANZU, FAIL);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_BROOD_OF_ANZU)
         {
@@ -154,7 +154,7 @@ struct MANGOS_DLL_DECL boss_anzuAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;

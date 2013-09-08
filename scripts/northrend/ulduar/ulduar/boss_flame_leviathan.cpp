@@ -333,7 +333,7 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void EnterEvadeMode()
+    void EnterEvadeMode() override
     {
         VehicleKitPtr pVehicleKit = m_creature->GetVehicleKit();
         if (pVehicleKit)
@@ -377,7 +377,7 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
         }
     }
 
-    void SpellHit(Unit* caster, const SpellEntry* spell)
+    void SpellHit(Unit* caster, const SpellEntry* spell) override
     {
         /*if (spell->Id == 62472)
             vehicle->InstallAllAccessories();
@@ -386,7 +386,7 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
                 m_creature->InterruptSpell(CURRENT_CHANNELED_SPELL);*/
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
     {
         uiDamage *= 4;
         if (m_creature->HasAura(SPELL_SYSTEMS_SHUTDOWN, EFFECT_INDEX_0))
@@ -487,7 +487,7 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
         return true;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && (m_pInstance->GetData(TYPE_LEVIATHAN) == NOT_STARTED || m_pInstance->GetData(TYPE_LEVIATHAN) == FAIL) && m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) != NONE_DIFFICULTY)
         {
@@ -607,13 +607,13 @@ struct MANGOS_DLL_DECL mob_defense_turretAI : public ScriptedAI
         m_uiSpell_Timer = urand(10000, 15000);
     }
 
-    void SpellHit(Unit* caster, const SpellEntry* spell)
+    void SpellHit(Unit* caster, const SpellEntry* spell) override
     {
         if (spell->Id == SPELL_SYSTEMS_SHUTDOWN)
             m_creature->ForcedDespawn();
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -639,7 +639,7 @@ struct MANGOS_DLL_DECL mob_pool_of_tarAI : public ScriptedAI
         SetCombatMovement(false);        
     }
 
-    void SpellHit(Unit* caster, const SpellEntry* spell)
+    void SpellHit(Unit* caster, const SpellEntry* spell) override
     {
         if (spell->GetSchoolMask() & SPELL_SCHOOL_MASK_FIRE && !m_creature->HasAura(SPELL_BLAZE))
             DoCast(m_creature, SPELL_BLAZE, true);
@@ -656,7 +656,7 @@ struct MANGOS_DLL_DECL mob_mechanoliftAI : public ScriptedAI
 
     void Reset(){}
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoSpawnCreature(MOB_LIQUID, 0.0f, 0.0f, -0.5f, 0.0f, TEMPSUMMON_MANUAL_DESPAWN, 0);
         m_creature->ForcedDespawn(1000);
@@ -680,13 +680,13 @@ struct MANGOS_DLL_DECL mob_freyas_wardAI : public ScriptedAI
         m_uiTimer = urand(20000, 30000);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_FREYA_WARD_TARGETTING)
             pSummoned->CastSpell(pSummoned, SPELL_FREYA_WARD, true);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiTimer <= uiDiff)
         {
@@ -737,7 +737,7 @@ struct MANGOS_DLL_DECL mob_hodirs_furyAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiHodirFuryTimer <= uiDiff)
         {
@@ -800,7 +800,7 @@ struct MANGOS_DLL_DECL mob_mimirons_infernoAI : public ScriptedAI
         m_creature->GetMotionMaster()->MovePoint(m_uiWayPoint, WayMimironInferno[m_uiWayPoint].x, WayMimironInferno[m_uiWayPoint].y, WayMimironInferno[m_uiWayPoint].z);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiStartTimer > uiDiff)
         {
@@ -863,7 +863,7 @@ struct MANGOS_DLL_DECL mob_thorims_hammerAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiThorimsHammerTimer <= uiDiff)
         {
@@ -974,7 +974,7 @@ struct MANGOS_DLL_DECL mob_lorekeeperAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_pInstance || m_pInstance->GetData(TYPE_LEVIATHAN) == IN_PROGRESS)
             return;

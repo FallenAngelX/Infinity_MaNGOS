@@ -97,7 +97,7 @@ struct MANGOS_DLL_DECL boss_ichoronAI : public ScriptedAI
         DespawnWaterElements();
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
         {
@@ -117,7 +117,7 @@ struct MANGOS_DLL_DECL boss_ichoronAI : public ScriptedAI
         SetCombatMovement(true);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (!m_pInstance)
             return;
@@ -159,7 +159,7 @@ struct MANGOS_DLL_DECL boss_ichoronAI : public ScriptedAI
        }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->SetSpeedRate(MOVE_RUN, 0.2f);
         pSummoned->GetMotionMaster()->MoveFollow(m_creature, 0, 0);
@@ -206,7 +206,7 @@ struct MANGOS_DLL_DECL boss_ichoronAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance->GetData(TYPE_ICHORON) == SPECIAL && !MovementStarted)
            StartMovement(0);
@@ -283,7 +283,7 @@ struct MANGOS_DLL_DECL boss_ichoronAI : public ScriptedAI
         DoMeleeAttackIfReady();
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoScriptText(SAY_DEATH, m_creature);
         DespawnWaterElements();
@@ -298,7 +298,7 @@ struct MANGOS_DLL_DECL boss_ichoronAI : public ScriptedAI
             m_creature->SetVisibility(VISIBILITY_ON);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         switch(urand(0, 2))
         {
@@ -326,12 +326,12 @@ struct MANGOS_DLL_DECL mob_ichor_globuleAI : public ScriptedAI
         m_uiRangeCheck_Timer = 1000;
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         return;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_uiRangeCheck_Timer < uiDiff)
         {
@@ -353,7 +353,7 @@ struct MANGOS_DLL_DECL mob_ichor_globuleAI : public ScriptedAI
         else m_uiRangeCheck_Timer -= uiDiff;
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         DoCast(m_creature, SPELL_SPLASH);
         DoCast(m_creature, SPELL_WATER_GLOBULE_2);

@@ -116,7 +116,7 @@ struct MANGOS_DLL_DECL boss_vazruden_heraldAI : public ScriptedAI
         m_creature->SetLevitate(true);
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (m_bIsEventInProgress && !m_lastSeenPlayerGuid && pWho->GetTypeId() == TYPEID_PLAYER && pWho->isAlive() && !((Player*)pWho)->isGameMaster())
         {
@@ -233,7 +233,7 @@ struct MANGOS_DLL_DECL boss_vazruden_heraldAI : public ScriptedAI
         DoScriptText(EMOTE_DESCEND, m_creature);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() != NPC_VAZRUDEN)
             return;
@@ -247,19 +247,19 @@ struct MANGOS_DLL_DECL boss_vazruden_heraldAI : public ScriptedAI
             m_pInstance->SetData(TYPE_VAZRUDEN, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_NAZAN, DONE);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_NAZAN, FAIL);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {

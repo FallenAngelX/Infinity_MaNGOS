@@ -76,7 +76,7 @@ struct MANGOS_DLL_DECL boss_murmurAI : public Scripted_NoMovementAI
         m_creature->SetHealth(uint32(m_creature->GetMaxHealth()*.4));
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())

@@ -219,24 +219,24 @@ class MANGOS_DLL_DECL instance_naxxramas : public ScriptedInstance
         instance_naxxramas(Map* pMap);
         ~instance_naxxramas() {}
 
-        void Initialize();
+        void Initialize() override;
 
-        bool IsEncounterInProgress() const;
+        bool IsEncounterInProgress() const override;
 
-        void OnCreatureCreate(Creature* pCreature);
-        void OnObjectCreate(GameObject* pGo);
+        void OnCreatureCreate(Creature* pCreature) override;
+        void OnObjectCreate(GameObject* pGo) override;
 
-        void OnPlayerDeath(Player* pPlayer);
-        void OnCreatureDeath(Creature* pCreature);
+        void OnPlayerDeath(Player* pPlayer) override;
+        void OnCreatureDeath(Creature* pCreature) override;
 
-        void SetData(uint32 uiType, uint32 uiData);
-        uint32 GetData(uint32 uiType) const;
+        void SetData(uint32 uiType, uint32 uiData) override;
+        uint32 GetData(uint32 uiType) const override;
 
         void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
         bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
 
-        const char* Save() const { return m_strInstData.c_str(); }
-        void Load(const char* chrIn);
+        const char* Save() const override { return m_strInstData.c_str(); }
+        void Load(const char* chrIn) override;
 
         void Update(uint32 uiDiff);
 

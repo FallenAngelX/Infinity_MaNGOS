@@ -106,13 +106,13 @@ struct MANGOS_DLL_DECL boss_general_vezaxAI : public ScriptedAI
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_VEZAX, FAIL);
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_VEZAX, DONE);
@@ -120,12 +120,12 @@ struct MANGOS_DLL_DECL boss_general_vezaxAI : public ScriptedAI
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_SARONITE_VAPOR)
         {
@@ -161,7 +161,7 @@ struct MANGOS_DLL_DECL boss_general_vezaxAI : public ScriptedAI
         }
     }
 
-    void SummonedMovementInform(Creature* pSummoned, uint32 uiMoveType, uint32 uiPointId)
+    void SummonedMovementInform(Creature* pSummoned, uint32 uiMoveType, uint32 uiPointId) override
     {
         if (uiMoveType != POINT_MOTION_TYPE || uiPointId != 0 || pSummoned->GetEntry() != NPC_SARONITE_VAPOR)
             return;
@@ -197,7 +197,7 @@ struct MANGOS_DLL_DECL boss_general_vezaxAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -331,7 +331,7 @@ struct MANGOS_DLL_DECL mob_saronite_animusAI : public ScriptedAI
         m_creature->SetRespawnDelay(DAY);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_VEZAX) != IN_PROGRESS) 
             m_creature->ForcedDespawn();

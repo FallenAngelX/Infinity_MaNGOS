@@ -65,7 +65,7 @@ struct MANGOS_DLL_DECL example_escortAI : public npc_escortAI
         m_uiChatTimer = 4000;
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->AI()->AttackStart(m_creature);
     }
@@ -106,7 +106,7 @@ struct MANGOS_DLL_DECL example_escortAI : public npc_escortAI
     }
 
     // Only overwrite if there is something special
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (HasEscortState(STATE_ESCORT_ESCORTING))
         {

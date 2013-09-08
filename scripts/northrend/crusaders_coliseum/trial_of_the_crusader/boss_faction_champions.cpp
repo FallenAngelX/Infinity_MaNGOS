@@ -279,7 +279,7 @@ struct MANGOS_DLL_DECL boss_faction_championsAI : public BSWScriptedAI
                     m_creature->AddThreat(player, 100.0f);
     }
 
-    void AttackStart(Unit* pWho)
+    void AttackStart(Unit* pWho) override
     {
         if (!pWho)
             return;
@@ -304,7 +304,7 @@ struct MANGOS_DLL_DECL boss_faction_championsAI : public BSWScriptedAI
         }
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_CRUSADERS, FAIL);
@@ -411,7 +411,7 @@ struct MANGOS_DLL_DECL boss_faction_championsAI : public BSWScriptedAI
         return NULL;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_CRUSADERS) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -484,7 +484,7 @@ struct MANGOS_DLL_DECL mob_toc_druidAI : public boss_faction_championsAI
         SetEquipmentSlots(false, 51799, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -605,7 +605,7 @@ struct MANGOS_DLL_DECL mob_toc_shamanAI : public boss_faction_championsAI
         SetEquipmentSlots(false, 49992, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -811,7 +811,7 @@ struct MANGOS_DLL_DECL mob_toc_paladinAI : public boss_faction_championsAI
         SetEquipmentSlots(false, 50771, 47079, EQUIP_NO_CHANGE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -929,7 +929,7 @@ struct MANGOS_DLL_DECL mob_toc_priestAI : public boss_faction_championsAI
         SetEquipmentSlots(false, 49992, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1044,7 +1044,7 @@ struct MANGOS_DLL_DECL mob_toc_shadow_priestAI : public boss_faction_championsAI
         SetEquipmentSlots(false, 50040, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1184,7 +1184,7 @@ struct MANGOS_DLL_DECL mob_toc_warlockAI : public boss_faction_championsAI
     }
 
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1298,7 +1298,7 @@ struct MANGOS_DLL_DECL mob_toc_mageAI : public boss_faction_championsAI
         SetEquipmentSlots(false, 47524, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1445,7 +1445,7 @@ struct MANGOS_DLL_DECL mob_toc_hunterAI : public boss_faction_championsAI
         SetEquipmentSlots(false, 47156, EQUIP_NO_CHANGE, 48711);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1581,7 +1581,7 @@ struct MANGOS_DLL_DECL mob_toc_boomkinAI : public boss_faction_championsAI
         SetEquipmentSlots(false, 50966, EQUIP_NO_CHANGE, EQUIP_NO_CHANGE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1747,7 +1747,7 @@ struct MANGOS_DLL_DECL mob_toc_warriorAI : public boss_faction_championsAI
         return NULL;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -1910,7 +1910,7 @@ struct MANGOS_DLL_DECL  mob_toc_dkAI : public boss_faction_championsAI
         SetEquipmentSlots(false, 47518, 51021, EQUIP_NO_CHANGE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -2040,7 +2040,7 @@ struct MANGOS_DLL_DECL  mob_toc_rogueAI : public boss_faction_championsAI
         SetEquipmentSlots(false, 47422, 49982, EQUIP_NO_CHANGE);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -2193,7 +2193,7 @@ struct MANGOS_DLL_DECL  mob_toc_enh_shamanAI : public boss_faction_championsAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -2328,7 +2328,7 @@ struct MANGOS_DLL_DECL  mob_toc_retro_paladinAI : public boss_faction_championsA
         DoCastSpellIfCan(m_creature, SPELL_SEAL_COMAND);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -2447,7 +2447,7 @@ struct MANGOS_DLL_DECL  mob_toc_pet_warlockAI : public boss_faction_championsAI
         m_uiSpellLockTimer   = urand(15*IN_MILLISECONDS, 30*IN_MILLISECONDS);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_CRUSADERS) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
@@ -2495,7 +2495,7 @@ struct MANGOS_DLL_DECL  mob_toc_pet_hunterAI : public boss_faction_championsAI
         m_uiClawTimer = urand(5*IN_MILLISECONDS, 10*IN_MILLISECONDS);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_CRUSADERS) != IN_PROGRESS) 
             m_creature->ForcedDespawn();

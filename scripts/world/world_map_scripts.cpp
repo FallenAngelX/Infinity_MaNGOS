@@ -31,7 +31,7 @@ struct MANGOS_DLL_DECL world_map_eastern_kingdoms : public ScriptedMap
 {
     world_map_eastern_kingdoms(Map* pMap) : ScriptedMap(pMap) {}
 
-    void OnCreatureCreate(Creature* pCreature)
+    void OnCreatureCreate(Creature* pCreature) override
     {
         switch (pCreature->GetEntry())
         {
@@ -44,7 +44,7 @@ struct MANGOS_DLL_DECL world_map_eastern_kingdoms : public ScriptedMap
         }
     }
 
-    void SetData(uint32 uiType, uint32 uiData) {}
+    void SetData(uint32 uiType, uint32 uiData) override {}
 };
 
 InstanceData* GetInstanceData_world_map_eastern_kingdoms(Map* pMap)
@@ -61,18 +61,18 @@ struct MANGOS_DLL_DECL world_map_kalimdor : public ScriptedMap
 
     uint8 m_uiMurkdeepAdds_KilledAddCount;
 
-    void Initialize()
+    void Initialize() override
     {
         m_uiMurkdeepAdds_KilledAddCount = 0;
     }
 
-    void OnCreatureCreate(Creature* pCreature)
+    void OnCreatureCreate(Creature* pCreature) override
     {
         if (pCreature->GetEntry() == NPC_MURKDEEP)
             m_mNpcEntryGuidStore[NPC_MURKDEEP] = pCreature->GetObjectGuid();
     }
 
-    void OnCreatureDeath(Creature* pCreature)
+    void OnCreatureDeath(Creature* pCreature) override
     {
         switch (pCreature->GetEntry())
         {
@@ -129,7 +129,7 @@ struct MANGOS_DLL_DECL world_map_kalimdor : public ScriptedMap
         }
     }
 
-    void SetData(uint32 uiType, uint32 uiData) {}
+    void SetData(uint32 uiType, uint32 uiData) override {}
 };
 
 InstanceData* GetInstanceData_world_map_kalimdor(Map* pMap)
@@ -146,18 +146,18 @@ struct MANGOS_DLL_DECL world_map_outland : public ScriptedMap
 
     uint8 m_uiEmissaryOfHate_KilledAddCount;
 
-    void Initialize()
+    void Initialize() override
     {
         m_uiEmissaryOfHate_KilledAddCount = 0;
     }
 
-    void OnCreatureCreate(Creature* pCreature)
+    void OnCreatureCreate(Creature* pCreature) override
     {
         if (pCreature->GetEntry() == NPC_EMISSARY_OF_HATE)
             m_mNpcEntryGuidStore[NPC_EMISSARY_OF_HATE] = pCreature->GetObjectGuid();
     }
 
-    void OnCreatureDeath(Creature* pCreature)
+    void OnCreatureDeath(Creature* pCreature) override
     {
         switch (pCreature->GetEntry())
         {
@@ -176,7 +176,7 @@ struct MANGOS_DLL_DECL world_map_outland : public ScriptedMap
         }
     }
 
-    void SetData(uint32 uiType, uint32 uiData) {}
+    void SetData(uint32 uiType, uint32 uiData) override {}
 };
 
 InstanceData* GetInstanceData_world_map_outland(Map* pMap)
@@ -191,7 +191,7 @@ struct MANGOS_DLL_DECL world_map_northrend : public ScriptedMap
 {
     world_map_northrend(Map* pMap) : ScriptedMap(pMap) {}
 
-    void SetData(uint32 uiType, uint32 uiData) {}
+    void SetData(uint32 uiType, uint32 uiData) override {}
 };
 
 InstanceData* GetInstanceData_world_map_northrend(Map* pMap)

@@ -118,7 +118,7 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
             m_lSummonedGuidList.push_back(pSummoned->GetObjectGuid());
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* pVictim) override
     {
         // Force the player to spawn corpse scarabs via spell
         if (pVictim->GetTypeId() == TYPEID_PLAYER)
@@ -139,7 +139,7 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
             pSummoned->CastSpell(pSummoned, SPELL_SELF_SPAWN_10, true, NULL, NULL, m_creature->GetObjectGuid());
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         switch(pSummoned->GetEntry())
         {
@@ -173,7 +173,7 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ANUB_REKHAN, DONE);
@@ -181,7 +181,7 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
         m_lSummonedGuidList.clear();
     }
 
-    void JustReachedHome()
+    void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ANUB_REKHAN, FAIL);
@@ -190,7 +190,7 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
         SummonCryptGuards();
     }
 
-    void MoveInLineOfSight(Unit* pWho)
+    void MoveInLineOfSight(Unit* pWho) override
     {
         if (!m_bHasTaunted && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, 110.0f) && m_creature->IsWithinLOSInMap(pWho))
         {
@@ -201,7 +201,7 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         m_introDialogue.DialogueUpdate(uiDiff);
 

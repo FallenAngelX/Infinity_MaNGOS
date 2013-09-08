@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL mob_unkor_the_ruthlessAI : public ScriptedAI
         m_uiUnfriendlyTimer = 60000;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         // Reset npc on timer
         if (m_uiUnfriendlyTimer)
@@ -158,9 +158,9 @@ struct MANGOS_DLL_DECL mob_netherweb_victimAI : public ScriptedAI
     }
 
     void Reset() { }
-    void MoveInLineOfSight(Unit* pWho) { }
+    void MoveInLineOfSight(Unit* pWho) override { }
 
-    void JustDied(Unit* pKiller)
+    void JustDied(Unit* pKiller) override
     {
         if (Player* pPlayer = pKiller->GetCharmerOrOwnerPlayerOrPlayerItself())
         {
@@ -215,7 +215,7 @@ struct MANGOS_DLL_DECL npc_akunoAI : public npc_escortAI
         m_uiChainLightningTimer = 1000;
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {
@@ -244,7 +244,7 @@ struct MANGOS_DLL_DECL npc_akunoAI : public npc_escortAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->AI()->AttackStart(m_creature);
     }
@@ -304,7 +304,7 @@ struct MANGOS_DLL_DECL npc_hungry_nether_rayAI : public ScriptedPetAI
 
     void Reset() { }
 
-    void OwnerKilledUnit(Unit* pVictim)
+    void OwnerKilledUnit(Unit* pVictim) override
     {
         if (pVictim->GetTypeId() == TYPEID_UNIT && pVictim->GetEntry() == NPC_BLACK_WARP_CHASER)
         {
@@ -427,7 +427,7 @@ struct MANGOS_DLL_DECL npc_letollAI : public npc_escortAI
             SetFormation();
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {
@@ -457,7 +457,7 @@ struct MANGOS_DLL_DECL npc_letollAI : public npc_escortAI
             DoScriptText(SAY_LE_HELP_HIM, m_creature);
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         Player* pPlayer = GetPlayerForEscort();
 
@@ -622,7 +622,7 @@ struct MANGOS_DLL_DECL npc_mana_bomb_exp_triggerAI : public ScriptedAI
         pManaBomb = pGo;
     }
 
-    void UpdateAI(const uint32 uiDiff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_bIsActivated)
             return;
@@ -736,7 +736,7 @@ struct MANGOS_DLL_DECL npc_captive_child : public ScriptedAI
 
     void Reset() {}
 
-    void MovementInform(uint32 uiMotionType, uint32 uiPointId)
+    void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
     {
         if (uiMotionType == POINT_MOTION_TYPE)
             m_creature->ForcedDespawn();                    // we only have one waypoint
@@ -814,7 +814,7 @@ struct MANGOS_DLL_DECL npc_isla_starmaneAI : public npc_escortAI
         }
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {
@@ -939,7 +939,7 @@ struct MANGOS_DLL_DECL npc_skywingAI : public npc_escortAI
         }
     }
 
-    void WaypointReached(uint32 uiPointId)
+    void WaypointReached(uint32 uiPointId) override
     {
         switch (uiPointId)
         {
@@ -972,7 +972,7 @@ struct MANGOS_DLL_DECL npc_skywingAI : public npc_escortAI
         }
     }
 
-    void JustSummoned(Creature* pSummoned)
+    void JustSummoned(Creature* pSummoned) override
     {
         pSummoned->AI()->AttackStart(m_creature);
     }
