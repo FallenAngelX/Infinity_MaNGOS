@@ -16,8 +16,8 @@
 
 /* ScriptData
 SDName: boss_krick_and_ick
-SD%Complete: 0%
-SDComment:
+SD%Complete: 95
+SDComment: Timers may need adjustments.
 SDCategory: Pit of Saron
 EndScriptData */
 
@@ -26,737 +26,395 @@ EndScriptData */
 
 enum
 {
-    // ick
-    SPELL_POISON_NOVA             = 68989,
-    SPELL_POISON_NOVA_H           = 70434,
-    SPELL_MIGHTY_KICK             = 69021,
-    SPELL_PURSUED                 = 68987,
-    SPELL_CONFUSION               = 69029,
-    // krick
-    SPELL_TOXIC_WASTE             = 69024,
-    SPELL_TOXIC_WASTE_H           = 70436,
-    SPELL_STRANGULATING           = 69413,
-    SPELL_SHADOW_BOLT             = 69028,
-    SPELL_EXPLOSIVE_BARRAGE       = 69263,
-    NPC_EXPLOSIVE_ORB             = 36610,
-    SPELL_EXPLOSIVE_BARRAGE_ORB   = 69019,
-    SPELL_EXPLOSIVE_BARRAGE_ORB_H = 70433,
+    SAY_AGGRO                           = -1658024,
+    SAY_SLAY_1                          = -1658025,
+    SAY_SLAY_2                          = -1658026,
+    SAY_ORDER_STOP                      = -1658027,
+    SAY_ORDER_BLOW                      = -1658028,
+    SAY_TARGET_1                        = -1658029,
+    SAY_TARGET_2                        = -1658030,
+    SAY_TARGET_3                        = -1658031,
+    SAY_OUTRO_1                         = -1658035,
 
-    SAY_KRICK_CHASE_1             = -1658029,
-    SAY_KRICK_CHASE_2             = -1658030,
-    SAY_KRICK_CHASE_3             = -1658031,
-    SAY_ICK_CHASE                 = -1658034,
-    SAY_KRICK_POISON              = -1658028,
-    SAY_ICK_POISON                = -1658033,
+    EMOTE_KRICK_MINES                   = -1658032,
+    EMOTE_ICK_POISON                    = -1658033,
+    EMOTE_ICK_CHASING                   = -1658034,
 
-    SAY_KRICK_BARRAGE             = -1658027,
-    SAY_KRICK_BARRAGE_EMOTE       = -1658032,
-    SAY_AGGRO                     = -1658024,
-    SAY_SLAY1                     = -1658025,
-    SAY_SLAY2                     = -1658026,
-    SAY_STOP                      = -1658035,
+    // ick spells
+    SPELL_POISON_NOVA                   = 68989,
+    SPELL_MIGHTY_KICK                   = 69021,
+    SPELL_PURSUIT                       = 68987,
+    SPELL_EXPLOSIVE_BARRAGE_ICK         = 69263,
 
-    SAY_OUTRO1              = -1658035,
-    SAY_OUTRO2_ALY          = -1658036,
-    SAY_OUTRO2_HORDE        = -1658037,
-    SAY_OUTRO3              = -1658038,
-    SAY_OUTRO4_ALY          = -1658039,
-    SAY_OUTRO4_HORDE        = -1658040,
-    SAY_OUTRO5              = -1658041,
-    SAY_OUTRO6_TYRANNUS     = -1658042,
-    SAY_OUTRO7              = -1658043,
-    SAY_OUTRO8_TYRANNUS     = -1658044,
-    SAY_OUTRO9_ALY          = -1658045,
-    SAY_OUTRO9_HORDE        = -1658046,
+    // krick spells
+    SPELL_TOXIC_WASTE                   = 69024,
+    SPELL_SHADOW_BOLT                   = 69028,
+    SPELL_EXPLOSIVE_BARRAGE_KRICK       = 69012,                // Triggers 69015 every 2 sec
+
+    NPC_EXPLODING_ORB                   = 36610,
+
+    // exploding orb spells
+    // SPELL_EXPLOSIVE_BARRAGE_SUMMON   = 69015,
+    SPELL_EXPLODING_ORB_VISUAL          = 69017,
+    SPELL_AUTO_GROW_AND_SPEED_BOOST     = 69020,
+    SPELL_EXPLOSIVE_BARRAGE_DMG         = 69019,
+    SPELL_HASTY_GROW                    = 44851,                // Orb explodes after the 15th stack
+
+    MAX_HASTY_GROW_STACKS               = 15,
 };
 
-const float KrickPos[4] = {856.237f, 120.484f, 510.01f, 3.48f};
+static const float afOutroNpcSpawnLoc[4] = {777.2274f, 119.5521f, 510.0363f, 6.05f};
+static const float afTyrannusTeleLoc[4] = {841.01f, 196.245f, 573.964f, 4.46f};
 
-#define HOME_X                      852.322f
-#define HOME_Y                      127.969f
+/*######
+## boss_ick
+######*/
 
-struct MANGOS_DLL_DECL boss_IckAI : public ScriptedAI
+struct MANGOS_DLL_DECL boss_ickAI : public ScriptedAI
 {
-    boss_IckAI(Creature *pCreature) : ScriptedAI(pCreature)
+    boss_ickAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        m_uiKrickGUID.Clear();
+        m_pInstance = (instance_pit_of_saron*)pCreature->GetInstanceData();
+        m_uiMountTimer = 1000;
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
-    bool m_bIsRegularMode;
-
-    ObjectGuid m_uiKrickGUID;
+    instance_pit_of_saron* m_pInstance;
+    uint32 m_uiMountTimer;
 
     uint32 m_uiPoisonNovaTimer;
     uint32 m_uiPursueTimer;
-    uint32 m_uiPursueDelayTimer;
     uint32 m_uiMightKickTimer;
+    uint32 m_uiToxicWasteTimer;
+    uint32 m_uiShadowboltTimer;
+    uint32 m_uiExplosivBarrageTimer;
+    uint32 m_uiCooldownTimer;
 
-    void Reset()
+    void Reset() override
     {
-        m_uiKrickGUID.Clear();
-        m_uiPoisonNovaTimer = 30000;
-        m_uiPursueTimer     = 10000;
-        m_uiPursueDelayTimer= 30000;
-        m_uiMightKickTimer  = 20000;
+        m_uiPoisonNovaTimer      = urand(20000, 25000);
+        m_uiPursueTimer          = 20000;
+        m_uiMightKickTimer       = 1000;
+        m_uiToxicWasteTimer      = urand(3000, 5000);
+        m_uiShadowboltTimer      = urand(5000, 7000);
+        m_uiExplosivBarrageTimer = urand(30000, 35000);
+        m_uiCooldownTimer        = 0;
     }
 
-    void KilledUnit(Unit *victim)
-    {
-        if(Creature* pKrick = m_pInstance->instance->GetCreature(m_uiKrickGUID))
-        {
-            if(irand(0,1))
-                DoScriptText(SAY_SLAY1, pKrick);
-            else
-                DoScriptText(SAY_SLAY2, pKrick);
-        }
-    }
-
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         if (m_pInstance)
+        {
             m_pInstance->SetData(TYPE_KRICK, IN_PROGRESS);
 
-        if(!GetClosestCreatureWithEntry(m_creature, NPC_KRICK, 50.0f))
-        {
-            if(Creature* pKrick = m_creature->SummonCreature(NPC_KRICK, KrickPos[0], KrickPos[1], KrickPos[2], KrickPos[3], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000))
+            // Say aggro and also put Krick in combat
+            if (Creature* pKrick = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
             {
-                if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    pKrick->AddThreat(pTarget, 0.0f);
                 DoScriptText(SAY_AGGRO, pKrick);
-                m_uiKrickGUID = pKrick->GetObjectGuid();
-            }
-        }
-        else
-        {
-            if(Creature* pKrick = GetClosestCreatureWithEntry(m_creature, NPC_KRICK, 80.0f))
-            {
-                if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    pKrick->AddThreat(pTarget, 0.0f);
-                DoScriptText(SAY_AGGRO, pKrick);
-                m_uiKrickGUID = pKrick->GetObjectGuid();
+                pKrick->AI()->AttackStart(pWho);
             }
         }
     }
 
-    void JustDied(Unit *victim)
+    void KilledUnit(Unit* pVictim)
     {
         if (m_pInstance)
+        {
+            if (Creature* pKrick = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
+                DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, pKrick);
+        }
+    }
+
+    void JustDied(Unit* pKiller) override
+    {
+        if (m_pInstance)
+        {
             m_pInstance->SetData(TYPE_KRICK, DONE);
+
+            if (Creature* pKrick = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
+            {
+                DoScriptText(SAY_OUTRO_1, pKrick);
+                pKrick->AI()->EnterEvadeMode();
+
+                // Summon Jaina or Sylvanas for epilogue
+                pKrick->SummonCreature(m_pInstance->GetPlayerTeam() == HORDE ? NPC_SYLVANAS_PART1 : NPC_JAINA_PART1,
+                    afOutroNpcSpawnLoc[0], afOutroNpcSpawnLoc[1], afOutroNpcSpawnLoc[2], afOutroNpcSpawnLoc[3], TEMPSUMMON_TIMED_DESPAWN, 2 * MINUTE * IN_MILLISECONDS);
+            }
+
+            if (Creature* pTyrannus = m_pInstance->GetSingleCreatureFromStorage(NPC_TYRANNUS_INTRO))
+                pTyrannus->NearTeleportTo(afTyrannusTeleLoc[0], afTyrannusTeleLoc[1], afTyrannusTeleLoc[2], afTyrannusTeleLoc[3]);
+        }
+    }
+
+    void JustReachedHome() override
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_KRICK, FAIL);
     }
 
     void UpdateAI(const uint32 uiDiff) override
     {
+        if (!m_pInstance)
+            return;
+
+        // He needs to be mounted manually, not by vehicle_accessories
+        if (m_uiMountTimer)
+        {
+            if (m_uiMountTimer <= uiDiff)
+            {
+                if (Creature* pKrick = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
+                    pKrick->CastSpell(m_creature, SPELL_RIDE_VEHICLE_HARDCODED, true);
+
+                m_uiMountTimer = 0;
+            }
+            else
+                m_uiMountTimer -= uiDiff;
+        }
+
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
+        // Cooldown timer - we need to block all Krick spell during some events
+        if (m_uiCooldownTimer)
+        {
+            if (m_uiCooldownTimer <= uiDiff)
+                m_uiCooldownTimer = 0;
+            else
+                m_uiCooldownTimer -= uiDiff;
+
+            return;
+        }
+
         if (m_uiPoisonNovaTimer < uiDiff)
         {
-            if (Creature* pKrick = m_pInstance->instance->GetCreature(m_uiKrickGUID))
-                DoScriptText(SAY_KRICK_POISON, pKrick);
-            DoCast(m_creature, m_bIsRegularMode ? SPELL_POISON_NOVA : SPELL_POISON_NOVA_H);
-            m_uiPoisonNovaTimer = 30000;
+            if (DoCastSpellIfCan(m_creature, SPELL_POISON_NOVA) == CAST_OK)
+            {
+                if (Creature* pKrick = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
+                {
+                    DoScriptText(SAY_ORDER_BLOW, pKrick);
+                    DoScriptText(EMOTE_ICK_POISON, pKrick);
+                }
+
+                m_uiCooldownTimer = 5000;
+                m_uiPoisonNovaTimer = urand(20000, 25000);
+            }
         }
         else
             m_uiPoisonNovaTimer -= uiDiff;
 
         if (m_uiPursueTimer < uiDiff)
         {
-            if (Creature* pKrick = m_pInstance->instance->GetCreature(m_uiKrickGUID))
+            if (DoCastSpellIfCan(m_creature, SPELL_PURSUIT) == CAST_OK)
             {
-                switch (urand(0, 2))
+                if (Creature* pKrick = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
                 {
-                case 0: 
-                    DoScriptText(SAY_KRICK_CHASE_1, pKrick);
-                    break;
-                case 1: 
-                    DoScriptText(SAY_KRICK_CHASE_2, pKrick);
-                    break;
-                case 2: 
-                    DoScriptText(SAY_KRICK_CHASE_3, pKrick);
-                    break;
+                    switch (urand(0, 2))
+                    {
+                        case 0: DoScriptText(SAY_TARGET_1, pKrick); break;
+                        case 1: DoScriptText(SAY_TARGET_2, pKrick); break;
+                        case 2: DoScriptText(SAY_TARGET_3, pKrick); break;
+                    }
                 }
-            }
 
-            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                DoCast(pTarget, SPELL_PURSUED);
-            
-            m_uiPursueTimer = 13000;
-            m_uiPursueDelayTimer = 1000;
+                m_uiCooldownTimer = 17000;
+                m_uiPursueTimer = urand(50000, 70000);
+            }
         }
         else
             m_uiPursueTimer -= uiDiff;
 
-        if(m_uiPursueDelayTimer < uiDiff)
-        {
-            //DoCast(m_creature, SPELL_CONFUSION);
-            m_uiPursueDelayTimer = 30000;
-        }
-        else m_uiPursueDelayTimer -= uiDiff;
-
         if (m_uiMightKickTimer < uiDiff)
         {
-            DoCast(m_creature->getVictim(), SPELL_MIGHTY_KICK);
-            m_uiMightKickTimer = 25000;
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_MIGHTY_KICK) == CAST_OK)
+                m_uiMightKickTimer = 10000;
         }
         else
             m_uiMightKickTimer -= uiDiff;
+
+        if (m_uiToxicWasteTimer < uiDiff)
+        {
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            {
+                if (Creature* pKrick = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
+                    pKrick->CastSpell(pTarget, SPELL_TOXIC_WASTE, true);
+
+                m_uiToxicWasteTimer = urand(3000, 5000);
+            }
+        }
+        else
+            m_uiToxicWasteTimer -= uiDiff;
+
+        if (m_uiShadowboltTimer < uiDiff)
+        {
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            {
+                if (Creature* pKrick = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
+                    pKrick->CastSpell(pTarget, SPELL_SHADOW_BOLT, true);
+
+                m_uiShadowboltTimer = urand(4000, 8000);
+            }
+        }
+        else
+            m_uiShadowboltTimer -= uiDiff;
+
+        if (m_uiExplosivBarrageTimer < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature, SPELL_EXPLOSIVE_BARRAGE_ICK) == CAST_OK)
+            {
+                if (Creature* pKrick = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
+                {
+                    pKrick->CastSpell(pKrick, SPELL_EXPLOSIVE_BARRAGE_KRICK, true);
+
+                    DoScriptText(SAY_ORDER_STOP, pKrick);
+                    DoScriptText(EMOTE_KRICK_MINES, pKrick);
+                }
+
+                m_uiCooldownTimer = 20000;
+                m_uiExplosivBarrageTimer = urand(25000, 30000);
+            }
+        }
+        else
+            m_uiExplosivBarrageTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
 };
 
-struct MANGOS_DLL_DECL boss_KrickAI : public ScriptedAI
+CreatureAI* GetAI_boss_ick(Creature* pCreature)
 {
-    boss_KrickAI(Creature *pCreature) : ScriptedAI(pCreature)
+    return new boss_ickAI (pCreature);
+}
+
+/*######
+## boss_krick
+######*/
+
+struct MANGOS_DLL_DECL boss_krickAI : public ScriptedAI
+{
+    boss_krickAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-        m_uiJainaGuid.Clear();
-        m_uiSylvanasGuid.Clear();
-        m_uiTyrannusGuid.Clear();
         Reset();
     }
 
     ScriptedInstance* m_pInstance;
-    bool m_bIsRegularMode;
 
-    uint32 m_uiToxicWasteTimer;
-    uint32 m_uiShadowboltTimer;
-    uint32 m_uiExplosivBarrageTimer;
+    void Reset() override { }
 
-    uint32 m_uiSummonOrbsTimer;
-    uint32 m_uiSummonOverTimer;
-    bool m_bIsSummoning;
-
-    bool m_bIsOutro;
-    uint32 OutroTimer;
-    uint32 Step;
-
-    uint32 TeamInInstance;
-
-    ObjectGuid m_uiJainaGuid;
-    ObjectGuid m_uiSylvanasGuid;
-    ObjectGuid m_uiTyrannusGuid;
-
-    void Reset()
+    void EnterEvadeMode() override
     {
-        m_uiJainaGuid.Clear();
-        m_uiSylvanasGuid.Clear();
-        m_uiTyrannusGuid.Clear();
+        m_creature->RemoveAllAuras();
+        m_creature->DeleteThreatList();
+        m_creature->CombatStop(true);
+        m_creature->LoadCreatureAddon(true);
 
-        m_uiToxicWasteTimer      = 5000;
-        m_uiShadowboltTimer      = 15000;
-        m_uiExplosivBarrageTimer = 35000;
-        m_uiSummonOrbsTimer     = 600000;
-        m_uiSummonOverTimer     = 600000;
-        m_bIsSummoning          = false;
+        m_creature->SetLootRecipient(NULL);
 
-        TeamInInstance = GetFaction();
-
-        m_bIsOutro = false;
-        OutroTimer = 10000;
-        Step       = 1;
-    }
-
-    uint32 GetFaction()
-    {
-        uint32 faction = 0;
-        Map *map = m_creature->GetMap();
-        if (map->IsDungeon())
-        {
-            Map::PlayerList const &PlayerList = map->GetPlayers();
-
-            if (!PlayerList.isEmpty())
-            {
-                if (Player* pPlayer = PlayerList.begin()->getSource())
-                    faction = pPlayer->GetTeam();
-            }
-        }
-        return faction;
-    }
-
-    void JustDied(Unit *victim)
-    {
-        //m_creature->SummonCreature(NPC_KRICK_EVENT, m_creature->GetPositionX() - 5, m_creature->GetPositionY() - 5, m_creature->GetPositionZ(), KrickPos[3], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
-
-        /*if (Creature *pKrickTwo = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
-            pKrickTwo->ForcedDespawn();*/ // Unnecesary
-    }
-
-    void UpdateAI(const uint32 uiDiff) override
-    {
-        if(!m_bIsOutro)
-        {
-            if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-                return;
-
-            if (m_uiToxicWasteTimer < uiDiff)
-            {
-                if(Creature* pIck = GetClosestCreatureWithEntry(m_creature, NPC_ICK, 100.0f))
-                {
-                    if (Unit* pTarget = pIck->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                        DoCast(pTarget, m_bIsRegularMode ? SPELL_TOXIC_WASTE : SPELL_TOXIC_WASTE_H);
-                }
-                m_uiToxicWasteTimer = 10000;
-            }
-            else
-                m_uiToxicWasteTimer -= uiDiff;
-
-            if (m_uiShadowboltTimer < uiDiff)
-            {
-                if(Creature* pIck = GetClosestCreatureWithEntry(m_creature, NPC_ICK, 100.0f))
-                {
-                    if (Unit* pTarget = pIck->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                        DoCast(pTarget, SPELL_SHADOW_BOLT);
-                }
-                m_uiShadowboltTimer = 15000;
-            }
-            else
-                m_uiShadowboltTimer -= uiDiff;
-
-            if (m_uiExplosivBarrageTimer < uiDiff)
-            {
-                DoScriptText(SAY_KRICK_BARRAGE, m_creature);
-                DoScriptText(SAY_KRICK_BARRAGE_EMOTE, m_creature);
-
-                DoCast(m_creature, SPELL_EXPLOSIVE_BARRAGE);
-                m_uiSummonOrbsTimer = 3000;
-                m_uiSummonOverTimer = 18000;
-                m_bIsSummoning = true;
-                m_uiExplosivBarrageTimer = 45000;
-            }
-            else
-                m_uiExplosivBarrageTimer -= uiDiff;
-
-            if (m_uiSummonOrbsTimer < uiDiff && m_bIsSummoning)
-            {
-                for(uint8 i = 0; i < 4; ++i)
-                {
-                    if(Creature* pIck = GetClosestCreatureWithEntry(m_creature, NPC_ICK, 100.0f))
-                    {
-                        if (Unit* pTarget = pIck->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                            m_creature->SummonCreature(NPC_EXPLOSIVE_ORB, pTarget->GetPositionX() + urand(0, 3), pTarget->GetPositionY() + urand(0, 3), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 4000);
-                    }
-                }
-                m_uiSummonOrbsTimer = 1500;
-            }
-            else
-                m_uiSummonOrbsTimer -= uiDiff;
-
-            if (m_uiSummonOverTimer < uiDiff && m_bIsSummoning)
-            {
-                m_bIsSummoning = false;
-                m_uiSummonOverTimer = 60000;
-            }
-            else
-                m_uiSummonOverTimer -= uiDiff;
-
-        }
-
-        if(m_bIsOutro)
-        {
-            switch(Step)
-            {
-            case 1:
-                m_creature->RemoveAllAuras();
-                m_creature->DeleteThreatList();
-                m_creature->CombatStop(true);
-                m_creature->InterruptNonMeleeSpells(false);
-                m_creature->GetMotionMaster()->MoveIdle();
-                DoScriptText(SAY_OUTRO1, m_creature);
-
-                if(TeamInInstance == ALLIANCE)
-                {
-                    if(Creature* pJaina = m_creature->SummonCreature(NPC_JAINA_PART1, 783.565f, 112.559f, 509.461f, 0, TEMPSUMMON_TIMED_DESPAWN, 80000))
-                    {
-                        pJaina->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX() - 15, m_creature->GetPositionY(), m_creature->GetPositionZ());
-                        m_uiJainaGuid = pJaina->GetObjectGuid();
-                    }
-                }
-
-                if(TeamInInstance == HORDE)
-                {
-                    if(Creature* pSylvanas = m_creature->SummonCreature(NPC_SYLVANAS_PART1, 783.565f, 112.559f, 509.461f, 0, TEMPSUMMON_TIMED_DESPAWN, 80000))
-                    {
-                        pSylvanas->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX() - 15, m_creature->GetPositionY(), m_creature->GetPositionZ());
-                        m_uiSylvanasGuid = pSylvanas->GetObjectGuid();
-                    }
-                }
-                ++Step;
-                OutroTimer = 15000;
-                break;
-            case 3:
-                if(TeamInInstance == ALLIANCE)
-                {
-                    if(Creature* pJaina = m_pInstance->instance->GetCreature(m_uiJainaGuid))
-                    {
-                        DoScriptText(SAY_OUTRO2_ALY, pJaina);
-                        pJaina->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
-                    }
-                }
-                if(TeamInInstance == HORDE)
-                {
-                    if(Creature* pSylvanas = m_pInstance->instance->GetCreature(m_uiSylvanasGuid))
-                    {
-                        DoScriptText(SAY_OUTRO2_HORDE, pSylvanas);
-                        pSylvanas->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
-                    }
-                }
-                ++Step;
-                OutroTimer = 5000;
-                break;
-            case 5:
-                DoScriptText(SAY_OUTRO3, m_creature);
-                ++Step;
-                OutroTimer = 15000;
-                break;
-            case 7:
-                if(TeamInInstance == ALLIANCE)
-                    if(Creature* pJaina = m_pInstance->instance->GetCreature(m_uiJainaGuid))
-                        DoScriptText(SAY_OUTRO4_ALY, pJaina);
-                if(TeamInInstance == HORDE)
-                    if(Creature* pSylvanas = m_pInstance->instance->GetCreature(m_uiSylvanasGuid))
-                        DoScriptText(SAY_OUTRO4_HORDE, pSylvanas);
-                ++Step;
-                OutroTimer = 5000;
-                break;
-            case 9:
-                DoScriptText(SAY_OUTRO5, m_creature);
-                if(Creature* pTyrannus = m_creature->SummonCreature(NPC_TYRANNUS_INTRO, 860.649f, 124.863f, 536.019f, 3.43f, TEMPSUMMON_TIMED_DESPAWN, 20000))
-                {
-                    pTyrannus->GetMotionMaster()->MoveIdle();
-                    pTyrannus->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
-                    pTyrannus->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                    pTyrannus->SetUInt32Value(UNIT_FIELD_BYTES_0, 50331648);
-                    pTyrannus->SetUInt32Value(UNIT_FIELD_BYTES_1, 50331648);
-                    pTyrannus->GetMotionMaster()->MoveIdle();
-                    pTyrannus->GetMap()->CreatureRelocation(pTyrannus, 860.649f, 124.863f, 536.019f, 3.43f);
-                    pTyrannus->GetMotionMaster()->MovePoint(860.649f, 124.863f, 536.019f, 1);
-                    m_uiTyrannusGuid = pTyrannus->GetObjectGuid();
-                }
-                ++Step;
-                OutroTimer = 4000;
-                break;
-            case 11:
-                if(Creature* pTyrannus = m_pInstance->instance->GetCreature(m_uiTyrannusGuid))
-                    DoScriptText(SAY_OUTRO6_TYRANNUS, pTyrannus);
-                ++Step;
-                OutroTimer = 4000;
-                break;
-            case 13:
-                DoScriptText(SAY_OUTRO7, m_creature);
-                ++Step;
-                OutroTimer = 3000;
-                break;
-            case 15:
-                m_creature->SetHealth(0);
-                m_creature->SetStandFlags(UNIT_STAND_STATE_DEAD);
-                if(Creature* pTyrannus = m_pInstance->instance->GetCreature(m_uiTyrannusGuid))
-                    DoScriptText(SAY_OUTRO8_TYRANNUS, pTyrannus);
-                ++Step;
-                OutroTimer = 10000;
-                break;
-            case 17:
-                if(TeamInInstance == ALLIANCE)
-                    if(Creature* pJaina = m_pInstance->instance->GetCreature(m_uiJainaGuid))
-                        DoScriptText(SAY_OUTRO9_ALY, pJaina);
-                if(TeamInInstance == HORDE)
-                    if(Creature* pSylvanas = m_pInstance->instance->GetCreature(m_uiSylvanasGuid))
-                        DoScriptText(SAY_OUTRO9_HORDE, pSylvanas);
-                m_creature->DealDamage(m_creature, m_creature->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
-                ++Step;
-                OutroTimer = 3000;
-                break;
-            }
-            if (OutroTimer <= uiDiff)
-            {
-                ++Step;
-                OutroTimer = 330000;
-            } OutroTimer -= uiDiff;
-        }
-    }
-};
-
-struct MANGOS_DLL_DECL boss_krick_eventAI : public ScriptedAI
-{
-    boss_krick_eventAI(Creature *pCreature) : ScriptedAI(pCreature)
-    {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-        m_uiJainaGuid.Clear();
-        m_uiSylvanasGuid.Clear();
-        m_uiTyrannusGuid.Clear();
         Reset();
+
+        // Don't handle movement. Boss is on vehicle so he doesn't have to go anywhere. On epilogue he needs to stay in place
     }
 
-    ScriptedInstance* m_pInstance;
-    bool m_bIsRegularMode;
-
-    uint32 m_uiToxicWasteTimer;
-    uint32 m_uiShadowboltTimer;
-    uint32 m_uiExplosivBarrageTimer;
-
-    uint32 m_uiSummonOrbsTimer;
-    uint32 m_uiSummonOverTimer;
-    bool m_bIsSummoning;
-
-    bool m_bIsOutro;
-    uint32 OutroTimer;
-    uint32 Step;
-
-    uint32 TeamInInstance;
-
-    ObjectGuid m_uiJainaGuid;
-    ObjectGuid m_uiSylvanasGuid;
-    ObjectGuid m_uiTyrannusGuid;
-
-    void Reset()
+    void JustSummoned(Creature* pSummoned) override
     {
-        m_uiJainaGuid.Clear();
-        m_uiSylvanasGuid.Clear();
-        m_uiTyrannusGuid.Clear();
-
-        m_uiToxicWasteTimer      = 5000;
-        m_uiShadowboltTimer      = 15000;
-        m_uiExplosivBarrageTimer = 35000;
-        m_uiSummonOrbsTimer     = 600000;
-        m_uiSummonOverTimer     = 600000;
-        m_bIsSummoning          = false;
-
-        TeamInInstance = GetFaction();
-
-        m_bIsOutro = true;
-        OutroTimer = 10000;
-        Step       = 1;
-    }
-
-    uint32 GetFaction()
-    {
-        uint32 faction = 0;
-        Map *map = m_creature->GetMap();
-        if (map->IsDungeon())
+        switch (pSummoned->GetEntry())
         {
-            Map::PlayerList const &PlayerList = map->GetPlayers();
-
-            if (!PlayerList.isEmpty())
+            case NPC_SYLVANAS_PART1:
+            case NPC_JAINA_PART1:
             {
-                if (Player* pPlayer = PlayerList.begin()->getSource())
-                    faction = pPlayer->GetTeam();
+                float fX, fY, fZ;
+                pSummoned->SetWalk(false);
+                m_creature->GetContactPoint(pSummoned, fX, fY, fZ, 2 * INTERACTION_DISTANCE);
+                pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
+                break;
             }
+            case NPC_EXPLODING_ORB:
+                pSummoned->CastSpell(pSummoned, SPELL_EXPLODING_ORB_VISUAL, true);
+                pSummoned->CastSpell(pSummoned, SPELL_AUTO_GROW_AND_SPEED_BOOST, true);
+                break;
         }
-        return faction;
+    }
+
+    void SummonedMovementInform(Creature* pSummoned, uint32 uiMotionType, uint32 uiPointId) override
+    {
+        if (uiMotionType != POINT_MOTION_TYPE || !uiPointId)
+            return;
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_KRICK, SPECIAL);
     }
 
     void UpdateAI(const uint32 uiDiff) override
     {
-        if(m_bIsOutro)
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+    }
+};
+
+CreatureAI* GetAI_boss_krick(Creature* pCreature)
+{
+    return new boss_krickAI(pCreature);
+}
+
+/*######
+## npc_exploding_orb
+######*/
+
+struct MANGOS_DLL_DECL npc_exploding_orbAI : public Scripted_NoMovementAI
+{
+    npc_exploding_orbAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+
+    uint8 m_uiGrowCount;
+
+    void Reset() override
+    {
+        m_uiGrowCount = 0;
+    }
+
+    void AttackStart(Unit* pWho) override { }
+    void MoveInLineOfSight(Unit* pWho) override { }
+
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    {
+        if (pSpell->Id == SPELL_HASTY_GROW)
         {
-            switch(Step)
+            ++m_uiGrowCount;
+
+            if (m_uiGrowCount == MAX_HASTY_GROW_STACKS)
             {
-            case 1:
-                m_pInstance->SetData(TYPE_KRICK, DONE);
-                m_creature->RemoveAllAuras();
-                m_creature->DeleteThreatList();
-                m_creature->CombatStop(true);
-                m_creature->InterruptNonMeleeSpells(false);
-                m_creature->GetMotionMaster()->MoveIdle();
-                DoScriptText(SAY_OUTRO1, m_creature);
-
-                if(TeamInInstance == ALLIANCE)
+                if (DoCastSpellIfCan(m_creature, SPELL_EXPLOSIVE_BARRAGE_DMG) == CAST_OK)
                 {
-                    if(Creature* pJaina = m_creature->SummonCreature(NPC_JAINA_PART1, 783.565f, 112.559f, 509.461f, 0, TEMPSUMMON_TIMED_DESPAWN, 80000))
-                    {
-                        pJaina->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                        pJaina->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX() - 15, m_creature->GetPositionY(), m_creature->GetPositionZ());
-                        m_uiJainaGuid = pJaina->GetObjectGuid();
-                    }
+                    m_creature->RemoveAllAuras();
+                    m_creature->ForcedDespawn(1000);
                 }
-
-                if(TeamInInstance == HORDE)
-                {
-                    if(Creature* pSylvanas = m_creature->SummonCreature(NPC_SYLVANAS_PART1, 783.565f, 112.559f, 509.461f, 0, TEMPSUMMON_TIMED_DESPAWN, 80000))
-                    {
-                        pSylvanas->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                        pSylvanas->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX() - 15, m_creature->GetPositionY(), m_creature->GetPositionZ());
-                        m_uiSylvanasGuid = pSylvanas->GetObjectGuid();
-                    }
-                }
-                ++Step;
-                OutroTimer = 15000;
-                break;
-            case 3:
-                if(TeamInInstance == ALLIANCE)
-                {
-                    if(Creature* pJaina = m_pInstance->instance->GetCreature(m_uiJainaGuid))
-                    {
-                        DoScriptText(SAY_OUTRO2_ALY, pJaina);
-                        pJaina->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
-                    }
-                }
-                if(TeamInInstance == HORDE)
-                {
-                    if(Creature* pSylvanas = m_pInstance->instance->GetCreature(m_uiSylvanasGuid))
-                    {
-                        DoScriptText(SAY_OUTRO2_HORDE, pSylvanas);
-                        pSylvanas->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
-                    }
-                }
-                ++Step;
-                OutroTimer = 5000;
-                break;
-            case 5:
-                DoScriptText(SAY_OUTRO3, m_creature);
-                ++Step;
-                OutroTimer = 15000;
-                break;
-            case 7:
-                if(TeamInInstance == ALLIANCE)
-                    if(Creature* pJaina = m_pInstance->instance->GetCreature(m_uiJainaGuid))
-                        DoScriptText(SAY_OUTRO4_ALY, pJaina);
-                if(TeamInInstance == HORDE)
-                    if(Creature* pSylvanas = m_pInstance->instance->GetCreature(m_uiSylvanasGuid))
-                        DoScriptText(SAY_OUTRO4_HORDE, pSylvanas);
-                ++Step;
-                OutroTimer = 5000;
-                break;
-            case 9:
-                DoScriptText(SAY_OUTRO5, m_creature);
-                if(Creature* pTyrannus = m_creature->SummonCreature(NPC_TYRANNUS_INTRO, 860.649f, 124.863f, 536.019f, 3.43f, TEMPSUMMON_TIMED_DESPAWN, 20000))
-                {
-                    pTyrannus->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
-                    pTyrannus->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                    m_uiTyrannusGuid = pTyrannus->GetObjectGuid();
-                }
-                ++Step;
-                OutroTimer = 4000;
-                break;
-            case 11:
-                if(Creature* pTyrannus = m_pInstance->instance->GetCreature(m_uiTyrannusGuid))
-                    DoScriptText(SAY_OUTRO6_TYRANNUS, pTyrannus);
-                m_creature->_AddAura(69413);
-                ++Step;
-                OutroTimer = 4000;
-                break;
-            case 13:
-                DoScriptText(SAY_OUTRO7, m_creature);
-                ++Step;
-                OutroTimer = 3000;
-                break;
-            case 15:
-                if(Creature* pTyrannus = m_pInstance->instance->GetCreature(m_uiTyrannusGuid))
-                {
-                    pTyrannus->CastSpell(m_creature, 70521, false);
-                    DoScriptText(SAY_OUTRO8_TYRANNUS, pTyrannus);
-                }
-                m_creature->SetHealth(0);
-                m_creature->SetStandFlags(UNIT_STAND_STATE_DEAD);
-                ++Step;
-                OutroTimer = 10000;
-                break;
-            case 17:
-                if(TeamInInstance == ALLIANCE)
-                    if(Creature* pJaina = m_pInstance->instance->GetCreature(m_uiJainaGuid))
-                        DoScriptText(SAY_OUTRO9_ALY, pJaina);
-                if(TeamInInstance == HORDE)
-                    if(Creature* pSylvanas = m_pInstance->instance->GetCreature(m_uiSylvanasGuid))
-                        DoScriptText(SAY_OUTRO9_HORDE, pSylvanas);
-                m_creature->ForcedDespawn();
-                ++Step;
-                OutroTimer = 3000;
-                break;
             }
-            if (OutroTimer <= uiDiff)
-            {
-                ++Step;
-                OutroTimer = 330000;
-            } OutroTimer -= uiDiff;
         }
     }
+
+    void UpdateAI(const uint32 uiDiff) override { }
 };
 
-struct MANGOS_DLL_DECL mob_explosive_orbAI : public ScriptedAI
+CreatureAI* GetAI_npc_exploding_orb(Creature* pCreature)
 {
-    mob_explosive_orbAI(Creature *pCreature) : ScriptedAI(pCreature)
-    {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-        pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-        pCreature->setFaction(14);
-        pCreature->SetDisplayId(11686);
-        SetCombatMovement(false);
-        Reset();
-    }
-
-    ScriptedInstance* m_pInstance;
-    bool m_bIsRegularMode;
-
-    uint32 m_uiExplosiveBarrageTimer;
-
-    void Reset()
-    {
-        m_uiExplosiveBarrageTimer = 3000;
-    }
-
-    void UpdateAI(const uint32 uiDiff) override
-    {
-
-        if (m_uiExplosiveBarrageTimer < uiDiff)
-        {
-            DoCast(m_creature, m_bIsRegularMode ? SPELL_EXPLOSIVE_BARRAGE_ORB : SPELL_EXPLOSIVE_BARRAGE_ORB_H);
-            m_uiExplosiveBarrageTimer = 10000;
-        }
-        else
-            m_uiExplosiveBarrageTimer -= uiDiff;
-    }
-};
-
-CreatureAI* GetAI_mob_explosive_orb(Creature* pCreature)
-{
-    return new mob_explosive_orbAI (pCreature);
-}
-
-CreatureAI* GetAI_boss_Ick(Creature* pCreature)
-{
-    return new boss_IckAI (pCreature);
-}
-
-CreatureAI* GetAI_boss_Krick(Creature* pCreature)
-{
-    return new boss_KrickAI (pCreature);
-}
-
-CreatureAI* GetAI_boss_krick_event(Creature* pCreature)
-{
-    return new boss_krick_eventAI (pCreature);
+    return new npc_exploding_orbAI(pCreature);
 }
 
 void AddSC_boss_krick_and_ick()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_ick";
-    newscript->GetAI = &GetAI_boss_Ick;
-    newscript->RegisterSelf();
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_krick";
-    newscript->GetAI = &GetAI_boss_Krick;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_ick";
+    pNewScript->GetAI = &GetAI_boss_ick;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "boss_krick_event";
-    newscript->GetAI = &GetAI_boss_krick_event;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_krick";
+    pNewScript->GetAI = &GetAI_boss_krick;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_explosive_orb";
-    newscript->GetAI = &GetAI_mob_explosive_orb;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_exploding_orb";
+    pNewScript->GetAI = &GetAI_npc_exploding_orb;
+    pNewScript->RegisterSelf();
 }

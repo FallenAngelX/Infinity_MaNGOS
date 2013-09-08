@@ -24,49 +24,33 @@ EndScriptData */
 #include "precompiled.h"
 #include "pit_of_saron.h"
 
-enum saysSD2
+enum
 {
     SAY_AGGRO                           = -1658014,
     SAY_SLAY_1                          = -1658015,
-    SAY_SLAY_2                          = -1658019,
-    SAY_BOULDER_HIT                     = -1658022,         // TODO How must this be handled?
+    SAY_BOULDER_HIT                     = -1658016,         // TODO How must this be handled?
     SAY_DEATH                           = -1658017,
-
     SAY_FORGE_1                         = -1658018,
-    SAY_FORGE_2                         = -1658071,
-    SAY_TYRANNUS_GARFROST               = -1658020,
+    SAY_FORGE_2                         = -1658019,
 
     EMOTE_THROW_SARONITE                = -1658022,
     EMOTE_DEEP_FREEZE                   = -1658023,
 
     SPELL_PERMAFROST                    = 70326,
-    SPELL_PERMAFROST_AURA               = 68786,
+    SPELL_PERMAFROST_AURA_H             = 70336,
     SPELL_THROW_SARONITE                = 68788,
     SPELL_THUNDERING_STOMP              = 68771,
     SPELL_FORGE_FROZEN_BLADE            = 68774,
     SPELL_CHILLING_WAVE                 = 68778,
-    SPELL_CHILLING_WAVE_H               = 70333,
     SPELL_FORGE_FROSTBORN_MACE          = 68785,
     SPELL_DEEP_FREEZE                   = 70381,
-    SPELL_DEEP_FREEZE_H                 = 72930,
-    SPELL_FORGE_MACE                    = 68785,
-    SPELL_FORGE_MACE_H                  = 70335,
-    SPELL_FORGE_BLADE                   = 68774,
-    SPELL_FORGE_BLADE_H                 = 70334,
 
-    SAY_FREE_SLAVE_HORDE                = -1658051,
-    SAY_FREE_SLAVE_ALLY                 = -1658021,
-    SAY_TYRANNUS_OUTRO                  = -1658020,
+    MAX_PERMAFROST_STACK                = 10,               // the max allowed stacks for the achiev to pass
 
     PHASE_NO_ENCHANTMENT                = 1,
     PHASE_BLADE_ENCHANTMENT             = 2,
     PHASE_MACE_ENCHANTMENT              = 3,
     PHASE_MOVEMENT                      = 4,
-
-    EQUIP_ID_SWORD                      = 49345,
-    EQUIP_ID_MACE                       = 49344,
-
-    ACHIEV_DOESNT_GO_TO_ELEVEN          = 4524,
 };
 
 static const float aGarfrostMoveLocs[2][3] =
@@ -75,236 +59,86 @@ static const float aGarfrostMoveLocs[2][3] =
     {719.785f, -230.227f, 527.033f},
 };
 
-//Positional defines 
-static LOCATION SummonLoc[]=
-{
-    {719.812f, -167.183f, 526.721f,},
-    {698.703f, -165.497f, 527.464f,},
-    {671.455f, -167.968f, 526.741f,},
-};
-
-static LOCATION MoveLoc[]=
-{
-    {677.445f, -186.521f, 526.702f},
-    {708.190f, -194.619f, 526.805f},
-    {687.257f, -193.644f, 526.717f},
-};
-
-#define HOME_X                      712.927f
-#define HOME_Y                      -231.605f
-
-struct MANGOS_DLL_DECL npc_martin_gorkunAI: public ScriptedAI
-{
-    npc_martin_gorkunAI(Creature *pCreature) : ScriptedAI(pCreature)
-    {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_uiTyrannusGuid.Clear();
-        Reset();
-    }
-
-    ScriptedInstance* m_pInstance;
-
-    uint32 m_uiSpeech_Timer;
-    uint8 m_uiOutro_Phase;
-    bool m_bIsOutro;
-    uint32 creatureEntry;
-
-    ObjectGuid m_uiTyrannusGuid;
-
-    void Reset()
-    {
-        m_uiOutro_Phase     = 0;
-        m_uiSpeech_Timer    = 1000;
-        m_bIsOutro          = true;
-        m_uiTyrannusGuid.Clear();
-        creatureEntry = m_creature->GetEntry();
-    }
-
-    void SummonHordeSlaves()
-    {
-        for (uint8 i = 0; i < 5; i++)
-        {
-            Creature *pTemp = m_creature->SummonCreature(NPC_SLAVE_HORDE_1, SummonLoc[0].x + urand(0, 20), SummonLoc[0].y + urand(0, 20), SummonLoc[0].z, SummonLoc[0].o, TEMPSUMMON_DEAD_DESPAWN, 0);
-            if (pTemp)
-                pTemp->GetMotionMaster()->MovePoint(0, MoveLoc[0].x + urand(0, 20), MoveLoc[0].y + urand(0, 20), MoveLoc[0].z);
-        }
-
-        for (uint8 i = 5; i < 10; i++)
-        {
-            Creature *pTemp = m_creature->SummonCreature(NPC_SLAVE_HORDE_2, SummonLoc[1].x + urand(0, 10), SummonLoc[1].y - urand(0, 10), SummonLoc[1].z, SummonLoc[1].o, TEMPSUMMON_DEAD_DESPAWN, 0);
-            if (pTemp)
-                pTemp->GetMotionMaster()->MovePoint(0, MoveLoc[2].x + urand(0, 20), MoveLoc[2].y - urand(0, 20), MoveLoc[2].z);
-        }
-
-        for (uint8 i = 10; i < 15; i++)
-        {
-            Creature *pTemp = m_creature->SummonCreature(NPC_SLAVE_HORDE_3, SummonLoc[2].x - urand(0, 20), SummonLoc[2].y - urand(0, 20), SummonLoc[2].z, SummonLoc[2].o, TEMPSUMMON_DEAD_DESPAWN, 0);
-            if (pTemp)
-                pTemp->GetMotionMaster()->MovePoint(0, MoveLoc[1].x - urand(0, 20), MoveLoc[1].y - urand(0, 20), MoveLoc[1].z);
-        }
-    }
-
-    void SummonAlySlaves()
-    {
-        for (uint8 i = 0; i < 5; i++)
-        {
-            Creature *pTemp = m_creature->SummonCreature(NPC_SLAVE_ALY_1, SummonLoc[0].x + urand(0, 20), SummonLoc[0].y + urand(0, 20), SummonLoc[0].z, SummonLoc[0].o, TEMPSUMMON_DEAD_DESPAWN, 0);
-            if (pTemp)
-                pTemp->GetMotionMaster()->MovePoint(0, MoveLoc[0].x + urand(0, 20), MoveLoc[0].y + urand(0, 20), MoveLoc[0].z);
-        }
-
-        for (uint8 i = 5; i < 10; i++)
-        {
-            Creature *pTemp = m_creature->SummonCreature(NPC_SLAVE_ALY_2, SummonLoc[1].x + urand(0, 10), SummonLoc[1].y - urand(0, 10), SummonLoc[1].z, SummonLoc[1].o, TEMPSUMMON_DEAD_DESPAWN, 0);
-            if (pTemp)
-                pTemp->GetMotionMaster()->MovePoint(0, MoveLoc[2].x + urand(0, 20), MoveLoc[2].y - urand(0, 20), MoveLoc[2].z);
-        }
-
-        for (uint8 i = 10; i < 15; i++)
-        {
-            Creature *pTemp = m_creature->SummonCreature(NPC_SLAVE_ALY_3, SummonLoc[2].x - urand(0, 20), SummonLoc[2].y - urand(0, 20), SummonLoc[2].z, SummonLoc[2].o, TEMPSUMMON_DEAD_DESPAWN, 0);
-            if (pTemp)
-                pTemp->GetMotionMaster()->MovePoint(0, MoveLoc[1].x - urand(0, 20), MoveLoc[1].y - urand(0, 20), MoveLoc[1].z);
-        }
-    }
-
-    void UpdateAI(const uint32 uiDiff) override
-    {
-        if (m_bIsOutro)
-        {
-            if(m_uiSpeech_Timer < uiDiff)
-            {
-                switch(m_uiOutro_Phase)
-                {
-                case 0:
-                    switch (creatureEntry)
-                    {
-                    case NPC_MARTIN_VICTUS_SLAVE:
-                        SummonAlySlaves();
-                        break;
-                    case NPC_GORKUN_IRONSKULL_SLAVE:
-                        SummonHordeSlaves();
-                        break;
-                    }
-                    ++m_uiOutro_Phase;
-                    m_uiSpeech_Timer = 6000;
-                    break;
-                case 1:
-                    switch (creatureEntry)
-                    {
-                    case NPC_MARTIN_VICTUS_SLAVE:
-                        DoScriptText(SAY_FREE_SLAVE_ALLY,m_creature);
-                        break;
-                    case NPC_GORKUN_IRONSKULL_SLAVE:
-                        DoScriptText(SAY_FREE_SLAVE_HORDE,m_creature);
-                        break;
-                    }
-                    ++m_uiOutro_Phase;
-                    m_uiSpeech_Timer = 10000;
-                    break;
-                case 2:
-                    if(Creature* pTyrannus = m_creature->SummonCreature(NPC_TYRANNUS_INTRO, 695.46f, -156.31f, 546.061f, 4.7f, TEMPSUMMON_TIMED_DESPAWN, 10000))
-                    {
-                        //pTyrannus->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
-                        pTyrannus->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                        m_uiTyrannusGuid = pTyrannus->GetObjectGuid();
-                    }
-                    ++m_uiOutro_Phase;
-                    m_uiSpeech_Timer = 3000;
-                    break;
-                case 3:
-                    if(Creature* pTyrannus = m_pInstance->instance->GetCreature(m_uiTyrannusGuid))
-                        DoScriptText(SAY_TYRANNUS_OUTRO, pTyrannus);
-                    m_bIsOutro = false;
-                    ++m_uiOutro_Phase;
-                    m_uiSpeech_Timer = 10000;
-                    break;
-
-                default:
-                    m_uiSpeech_Timer = 100000;
-                }
-            }else m_uiSpeech_Timer -= uiDiff;
-        }
-    }
-};
+static const float afOutroNpcSpawnLoc[4] = {695.0146f, -123.7532f, 515.3067f, 4.59f};
 
 struct MANGOS_DLL_DECL boss_forgemaster_garfrostAI : public ScriptedAI
 {
     boss_forgemaster_garfrostAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_pit_of_saron*)pCreature->GetInstanceData();
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_pit_of_saron* m_pInstance;
+    bool m_bIsRegularMode;
 
     uint32 m_uiThrowSaroniteTimer;
     uint32 m_uiPhase;
-    uint32 TeamInInstance;
     uint32 m_uiChillingWaveTimer;
     uint32 m_uiDeepFreezeTimer;
+    uint32 m_uiCheckPermafrostTimer;
 
-    uint32 GetFaction()
+    void Reset() override
     {
-        uint32 faction = 0;
-        Map *map = m_creature->GetMap();
-        if (map->IsDungeon())
-        {
-            Map::PlayerList const &PlayerList = map->GetPlayers();
-
-            if (!PlayerList.isEmpty())
-            {
-                if (Player* pPlayer = PlayerList.begin()->getSource())
-                    faction = pPlayer->GetTeam();
-            }
-        }
-        return faction;
-    }
-
-    void Reset()
-    {
+        m_uiCheckPermafrostTimer = 2000;
         m_uiThrowSaroniteTimer = 13000;
         m_uiChillingWaveTimer = 10000;
         m_uiDeepFreezeTimer = 10000;
         SetCombatMovement(true);
         m_uiPhase = PHASE_NO_ENCHANTMENT;
-        TeamInInstance = GetFaction();
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_GARFROST, IN_PROGRESS);
-
         DoScriptText(SAY_AGGRO, m_creature, pWho);
         DoCastSpellIfCan(m_creature, SPELL_PERMAFROST);
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_GARFROST, IN_PROGRESS);
     }
 
     void JustDied(Unit* pKiller) override
     {
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_GARFROST, DONE);
-
         DoScriptText(SAY_DEATH, m_creature, pKiller);
 
-        if(TeamInInstance == ALLIANCE)
+        if (m_pInstance)
         {
-            Creature *pMartin = m_creature->SummonCreature(NPC_MARTIN_VICTUS_SLAVE, 695.46f, -156.31f, 528.061f, 4.77f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
-            if (pMartin)
-                pMartin->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX() + 15, m_creature->GetPositionY() - 5, m_creature->GetPositionZ());
-        }
+            m_pInstance->SetData(TYPE_GARFROST, DONE);
 
-        if(TeamInInstance == HORDE)
-        {
-            Creature *pGorkun = m_creature->SummonCreature(NPC_GORKUN_IRONSKULL_SLAVE, 695.46f, -156.31f, 528.061f, 4.77f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 60000);
-            if (pGorkun)
-                pGorkun->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX() + 15, m_creature->GetPositionY() - 5, m_creature->GetPositionZ());
+            // Summon Ironskull or Victus for outro
+            m_creature->SummonCreature(m_pInstance->GetPlayerTeam() == HORDE ? NPC_IRONSKULL_PART1 : NPC_VICTUS_PART1,
+                afOutroNpcSpawnLoc[0], afOutroNpcSpawnLoc[1], afOutroNpcSpawnLoc[2], afOutroNpcSpawnLoc[3], TEMPSUMMON_TIMED_DESPAWN, 2 * MINUTE * IN_MILLISECONDS);
+
+            // ToDo: handle the other npcs movement
         }
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
-        DoScriptText(urand(0,1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
+        DoScriptText(SAY_SLAY_1, m_creature);
+    }
+
+    void JustReachedHome() override
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_GARFROST, FAIL);
+    }
+
+    void JustSummoned(Creature* pSummoned) override
+    {
+        switch (pSummoned->GetEntry())
+        {
+            case NPC_IRONSKULL_PART1:
+            case NPC_VICTUS_PART1:
+            {
+                float fX, fY, fZ;
+                pSummoned->SetWalk(false);
+                m_creature->GetContactPoint(pSummoned, fX, fY, fZ, 4 * INTERACTION_DISTANCE);
+                pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
+                break;
+            }
+        }
     }
 
     void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
@@ -317,7 +151,6 @@ struct MANGOS_DLL_DECL boss_forgemaster_garfrostAI : public ScriptedAI
 
         // Cast and say expected spell
         DoCastSpellIfCan(m_creature, uiPointId == PHASE_BLADE_ENCHANTMENT ? SPELL_FORGE_FROZEN_BLADE : SPELL_FORGE_FROSTBORN_MACE);
-        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         DoScriptText(uiPointId == PHASE_BLADE_ENCHANTMENT ? SAY_FORGE_1 : SAY_FORGE_2, m_creature);
 
         m_uiThrowSaroniteTimer += 5000;                     // Delay next Saronit
@@ -335,6 +168,37 @@ struct MANGOS_DLL_DECL boss_forgemaster_garfrostAI : public ScriptedAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        // This needs to be checked only on heroic
+        if (!m_bIsRegularMode && m_uiCheckPermafrostTimer)
+        {
+            if (m_uiCheckPermafrostTimer <= uiDiff)
+            {
+                ThreatList playerList = m_creature->getThreatManager().getThreatList();
+                for (ThreatList::const_iterator itr = playerList.begin(); itr != playerList.end(); ++itr)
+                {
+                    if (Player* pTarget = m_creature->GetMap()->GetPlayer((*itr)->getUnitGuid()))
+                    {
+                        Aura* pAuraIntenseCold = pTarget->GetAura(SPELL_PERMAFROST_AURA_H, EFFECT_INDEX_2);
+
+                        if (pAuraIntenseCold)
+                        {
+                            if (pAuraIntenseCold->GetStackAmount() > MAX_PERMAFROST_STACK)
+                            {
+                                if (m_pInstance)
+                                    m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_DOESNT_GO_ELEVEN, false);
+
+                                m_uiCheckPermafrostTimer = 0;
+                                return;
+                            }
+                        }
+                    }
+                }
+                m_uiCheckPermafrostTimer = 1000;
+            }
+            else
+                m_uiCheckPermafrostTimer -= uiDiff;
+        }
 
         // Do nothing more while moving
         if (m_uiPhase == PHASE_MOVEMENT)
@@ -426,11 +290,6 @@ CreatureAI* GetAI_boss_forgemaster_garfrost(Creature* pCreature)
     return new boss_forgemaster_garfrostAI(pCreature);
 }
 
-CreatureAI* GetAI_npc_martin_gorkun(Creature* pCreature)
-{
-    return new npc_martin_gorkunAI (pCreature);
-}
-
 void AddSC_boss_garfrost()
 {
     Script* pNewScript;
@@ -438,10 +297,5 @@ void AddSC_boss_garfrost()
     pNewScript = new Script;
     pNewScript->Name = "boss_forgemaster_garfrost";
     pNewScript->GetAI = &GetAI_boss_forgemaster_garfrost;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name="npc_martin_gorkun";
-    pNewScript->GetAI = &GetAI_npc_martin_gorkun;
     pNewScript->RegisterSelf();
 }
