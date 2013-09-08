@@ -63,7 +63,7 @@ struct MANGOS_DLL_DECL boss_curatorAI : public ScriptedAI
 
     bool m_bIsEnraged;
 
-    void Reset()
+    void Reset() override
     {
         m_uiFlareTimer       = 10000;
         m_uiHatefulBoltTimer = 15000;                       // This time may be wrong
@@ -73,12 +73,12 @@ struct MANGOS_DLL_DECL boss_curatorAI : public ScriptedAI
         m_creature->ApplySpellImmune(0, IMMUNITY_DAMAGE, SPELL_SCHOOL_MASK_ARCANE, true);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_KILL1 : SAY_KILL2, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -86,7 +86,7 @@ struct MANGOS_DLL_DECL boss_curatorAI : public ScriptedAI
             m_pInstance->SetData(TYPE_CURATOR, DONE);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 

@@ -81,7 +81,7 @@ struct MANGOS_DLL_DECL boss_nightbaneAI : public npc_escortAI
     uint32 m_uiSmokingBlastTimer;
     uint32 m_uiFireballBarrageTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPhase                   = PHASE_GROUND;
         m_uiFlightPhase             = 1;
@@ -105,12 +105,12 @@ struct MANGOS_DLL_DECL boss_nightbaneAI : public npc_escortAI
         m_uiFireballBarrageTimer    = 10000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_NIGHTBANE, DONE);
@@ -208,7 +208,7 @@ struct MANGOS_DLL_DECL boss_nightbaneAI : public npc_escortAI
         }
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -354,7 +354,7 @@ CreatureAI* GetAI_boss_nightbane(Creature* pCreature)
     return new boss_nightbaneAI(pCreature);
 }
 
-bool ProcessEventId_event_spell_summon_nightbane(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
+bool ProcessEventId_event_spell_summon_nightbane(uint32 /*uiEventId*/, Object* pSource, Object* /*pTarget*/, bool bIsStart)
 {
     if (bIsStart && pSource->GetTypeId() == TYPEID_PLAYER)
     {

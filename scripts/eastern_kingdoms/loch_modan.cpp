@@ -46,7 +46,7 @@ bool GossipHello_npc_mountaineer_pebblebitty(Player* pPlayer, Creature* pCreatur
     return true;
 }
 
-bool GossipSelect_npc_mountaineer_pebblebitty(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_mountaineer_pebblebitty(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     switch (uiAction)
     {
@@ -112,7 +112,7 @@ struct MANGOS_DLL_DECL npc_miranAI: public npc_escortAI
 
     uint8 m_uiDwarves;
 
-    void Reset()
+    void Reset() override
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
             m_uiDwarves = 0;
@@ -135,7 +135,7 @@ struct MANGOS_DLL_DECL npc_miranAI: public npc_escortAI
         }
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_DARK_IRON_DWARF)
         {

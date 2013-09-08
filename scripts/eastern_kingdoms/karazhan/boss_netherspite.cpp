@@ -122,7 +122,7 @@ struct MANGOS_DLL_DECL boss_netherspiteAI : public ScriptedAI
 
     std::vector<uint32> m_vPortalEntryList;
 
-    void Reset()
+    void Reset() override
     {
         m_uiActivePhase       = BEAM_PHASE;
 
@@ -141,7 +141,7 @@ struct MANGOS_DLL_DECL boss_netherspiteAI : public ScriptedAI
             m_vPortalEntryList[i] = auiPortals[i];
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_NETHERSPITE, IN_PROGRESS);
@@ -150,7 +150,7 @@ struct MANGOS_DLL_DECL boss_netherspiteAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_NETHERBURN);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_NETHERSPITE, DONE);

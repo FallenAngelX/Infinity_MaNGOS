@@ -86,7 +86,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
 
     GuidList m_lBombRiderGuidsList;
 
-    void Reset()
+    void Reset() override
     {
         m_uiChargeTimer         = 20000;
         m_uiSwoopTimer          = 5000;
@@ -104,7 +104,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
         SetCombatMovement(false);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -118,7 +118,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
         DoDespawnBombRiders();
@@ -317,7 +317,7 @@ struct MANGOS_DLL_DECL npc_gurubashi_bat_riderAI : public ScriptedAI
     uint32 m_uiInfectedBiteTimer;
     uint32 m_uiBattleCommandTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiInfectedBiteTimer = 6500;
         m_uiBattleCommandTimer = 8000;
@@ -327,7 +327,7 @@ struct MANGOS_DLL_DECL npc_gurubashi_bat_riderAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_TRASH);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         // Don't attack if is summoned by Jeklik - the npc gets aggro because of the Liquid Fire
         if (m_bIsSummon)

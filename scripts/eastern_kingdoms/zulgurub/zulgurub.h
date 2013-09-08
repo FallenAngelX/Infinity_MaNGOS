@@ -50,7 +50,7 @@ class MANGOS_DLL_DECL instance_zulgurub : public ScriptedInstance
         ~instance_zulgurub() {}
 
         void Initialize() override;
-        // IsEncounterInProgress() const { return false; }  // not active in Zul'Gurub
+        // IsEncounterInProgress() const override { return false; }  // not active in Zul'Gurub
 
         void OnCreatureCreate(Creature* pCreature) override;
         void OnObjectCreate(GameObject* pGo) override;
@@ -71,9 +71,9 @@ class MANGOS_DLL_DECL instance_zulgurub : public ScriptedInstance
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
 
-        GuidList m_lRightPantherTriggerGuidList;
-        GuidList m_lLeftPantherTriggerGuidList;
-        GuidList m_lSpiderEggGuidList;
+        GuidList m_lRightPantherTriggerGUIDList;
+        GuidList m_lLeftPantherTriggerGUIDList;
+        GuidList m_lSpiderEggGUIDList;
 
         bool m_bHasIntroYelled;
         bool m_bHasAltarYelled;

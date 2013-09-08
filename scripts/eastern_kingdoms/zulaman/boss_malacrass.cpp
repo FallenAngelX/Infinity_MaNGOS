@@ -234,7 +234,7 @@ struct MANGOS_DLL_DECL boss_malacrassAI : public ScriptedAI
     std::vector<uint32> m_vAddsEntryList;
     std::vector<uint32> m_vPlayerSpellTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiSpiritBoltsTimer    = 30000;
         m_uiDrainPowerTimer     = 0;
@@ -288,7 +288,7 @@ struct MANGOS_DLL_DECL boss_malacrassAI : public ScriptedAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -304,7 +304,7 @@ struct MANGOS_DLL_DECL boss_malacrassAI : public ScriptedAI
         DoScriptText(urand(0, 1) ? SAY_KILL1 : SAY_KILL2, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -312,7 +312,7 @@ struct MANGOS_DLL_DECL boss_malacrassAI : public ScriptedAI
             m_pInstance->SetData(TYPE_MALACRASS, DONE);
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* /*pSummoned*/) override
     {
         switch (urand(0, 2))
         {

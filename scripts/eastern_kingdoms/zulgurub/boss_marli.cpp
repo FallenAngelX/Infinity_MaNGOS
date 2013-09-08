@@ -72,7 +72,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
 
     bool m_bIsInPhaseTwo;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPoisonVolleyTimer   = 15000;
         m_uiSpawnSpiderTimer    = 55000;
@@ -85,14 +85,14 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
         m_bIsInPhaseTwo         = false;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
         DoCastSpellIfCan(m_creature, SPELL_HATCH_EGGS);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 

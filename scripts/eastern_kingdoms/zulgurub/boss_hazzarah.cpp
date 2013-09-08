@@ -42,7 +42,7 @@ struct MANGOS_DLL_DECL boss_hazzarahAI : public ScriptedAI
     uint32 m_uiEarthShockTimer;
     uint32 m_uiIllusionsTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiManaBurnTimer   = urand(4000, 10000);
         m_uiSleepTimer      = urand(10000, 18000);

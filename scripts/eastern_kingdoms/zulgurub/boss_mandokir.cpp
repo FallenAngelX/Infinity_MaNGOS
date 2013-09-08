@@ -101,7 +101,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
     float m_fTargetThreat;
     ObjectGuid m_watchTargetGuid;
 
-    void Reset()
+    void Reset() override
     {
         m_uiWatchTimer          = 33000;
         m_uiCleaveTimer         = 7000;
@@ -115,7 +115,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
         m_fTargetThreat         = 0.0f;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -138,7 +138,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
             m_pInstance->SetData(TYPE_OHGAN, FAIL);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_OHGAN, DONE);
@@ -200,7 +200,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
         }
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_OHGAN)
         {
@@ -226,7 +226,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
         }
     }
 
-    void MovementInform(uint32 uiMoveType, uint32 uiPointId)
+    void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
     {
         if (uiMoveType != POINT_MOTION_TYPE || !m_pInstance)
             return;
@@ -341,7 +341,7 @@ struct MANGOS_DLL_DECL mob_ohganAI : public ScriptedAI
 
     uint32 m_uiSunderArmorTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiSunderArmorTimer = 5000;
     }

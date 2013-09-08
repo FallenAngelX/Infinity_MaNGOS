@@ -98,6 +98,10 @@ static const DialogueEntry aIntroDialogue[] =
     {0, 0, 0},
 };
 
+/*######
+## boss_brutallus
+######*/
+
 struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI, private DialogueHelper
 {
     boss_brutallusAI(Creature* pCreature) : ScriptedAI(pCreature),
@@ -121,7 +125,7 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI, private DialogueHel
     bool m_bCanDoMeleeAttack;
     bool m_bIsIntroInProgress;
 
-    void Reset()
+    void Reset() override
     {
         m_uiSlashTimer      = 11000;
         m_uiStompTimer      = 30000;
@@ -135,7 +139,7 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI, private DialogueHel
         m_bIsIntroInProgress = false;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         // Don't aggro when attacking Madrigosa
         if (pWho->GetEntry() == NPC_MADRIGOSA)
@@ -161,7 +165,7 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI, private DialogueHel
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(YELL_DEATH, m_creature);
         DoCastSpellIfCan(m_creature, SPELL_SUMMON_DEATH_CLOUD, CAST_TRIGGERED);
@@ -199,7 +203,7 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI, private DialogueHel
         }
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         // Error log if Madrigosa dies
         if (pSummoned->GetEntry() == NPC_MADRIGOSA)
@@ -225,7 +229,7 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI, private DialogueHel
             pSummoned->CastSpell(pSummoned, SPELL_BRUTALLUS_DEATH_CLOUD, true);
     }
 
-    void SummonedMovementInform(Creature* pSummoned, uint32 uiType, uint32 uiPointId)
+    void SummonedMovementInform(Creature* pSummoned, uint32 uiType, uint32 uiPointId) override
     {
         if (uiType != POINT_MOTION_TYPE || pSummoned->GetEntry() != NPC_MADRIGOSA)
             return;
@@ -262,7 +266,7 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI, private DialogueHel
         }
     }
 
-    void JustDidDialogueStep(int32 iEntry)
+    void JustDidDialogueStep(int32 iEntry) override
     {
         if (!m_pInstance)
             return;
@@ -461,6 +465,10 @@ CreatureAI* GetAI_boss_brutallus(Creature* pCreature)
     return new boss_brutallusAI(pCreature);
 }
 
+/*######
+## spell_aura_dummy_npc_brutallus_cloud
+######*/
+
 bool EffectAuraDummy_spell_aura_dummy_npc_brutallus_cloud(const Aura* pAura, bool bApply)
 {
     // On Aura removal start Felmyst summon visuals
@@ -485,7 +493,11 @@ bool EffectAuraDummy_spell_aura_dummy_npc_brutallus_cloud(const Aura* pAura, boo
     return true;
 }
 
-bool AreaTrigger_at_madrigosa(Player* pPlayer, AreaTriggerEntry const* pAt)
+/*######
+## at_madrigosa
+######*/
+
+bool AreaTrigger_at_madrigosa(Player* pPlayer, AreaTriggerEntry const* /*pAt*/)
 {
     if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
     {

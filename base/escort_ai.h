@@ -41,9 +41,9 @@ struct MANGOS_DLL_DECL npc_escortAI : public ScriptedAI
 
         void GetAIInformation(ChatHandler& reader) override;
 
-        virtual void Aggro(Unit*);
+        virtual void Aggro(Unit*) override;
 
-        virtual void Reset() = 0;
+        virtual void Reset() override = 0;
 
         // CreatureAI functions
         bool IsVisible(Unit*) const override;
@@ -54,22 +54,22 @@ struct MANGOS_DLL_DECL npc_escortAI : public ScriptedAI
 
         void MoveInLineOfSight(Unit*) override;
 
-        void JustDied(Unit*);
+        void JustDied(Unit*) override;
 
         void JustRespawned() override;
 
         void EnterEvadeMode() override;
 
-        void UpdateAI(const uint32);                        // the "internal" update, calls UpdateEscortAI()
+        void UpdateAI(const uint32) override;               // the "internal" update, calls UpdateEscortAI()
         virtual void UpdateEscortAI(const uint32);          // used when it's needed to add code in update (abilities, scripted events, etc)
 
-        void MovementInform(uint32, uint32);
+        void MovementInform(uint32, uint32) override;
 
         // EscortAI functions
         // void AddWaypoint(uint32 id, float x, float y, float z, uint32 WaitTimeMs = 0);
 
         virtual void WaypointReached(uint32 uiPointId) = 0;
-        virtual void WaypointStart(uint32 uiPointId) {}
+        virtual void WaypointStart(uint32 /*uiPointId*/) {}
 
         void Start(bool bRun = false, const Player* pPlayer = NULL, const Quest* pQuest = NULL, bool bInstantRespawn = false, bool bCanLoopPath = false);
 

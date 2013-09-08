@@ -73,6 +73,10 @@ enum
     MAX_TRANSFORM_CASTS             = 10
 };
 
+/*######
+## boss_muru
+######*/
+
 struct MANGOS_DLL_DECL boss_muruAI : public Scripted_NoMovementAI
 {
     boss_muruAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature)
@@ -88,7 +92,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public Scripted_NoMovementAI
     uint32 m_uiDarkFiendsTimer;
     bool m_bIsTransition;
 
-    void Reset()
+    void Reset() override
     {
         m_uiDarknessTimer          = 45000;
         m_uiSummonHumanoidsTimer   = 15000;
@@ -96,7 +100,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public Scripted_NoMovementAI
         m_bIsTransition            = false;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MURU, IN_PROGRESS);
@@ -111,7 +115,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public Scripted_NoMovementAI
             m_pInstance->SetData(TYPE_MURU, FAIL);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDoneBy*/, uint32& uiDamage) override
     {
         if (uiDamage > m_creature->GetHealth())
         {
@@ -214,6 +218,10 @@ struct MANGOS_DLL_DECL boss_muruAI : public Scripted_NoMovementAI
     }
 };
 
+/*######
+## boss_entropius
+######*/
+
 struct MANGOS_DLL_DECL boss_entropiusAI : public ScriptedAI
 {
     boss_entropiusAI(Creature* pCreature) : ScriptedAI(pCreature)
@@ -229,18 +237,18 @@ struct MANGOS_DLL_DECL boss_entropiusAI : public ScriptedAI
 
     GuidList m_lSummonedCreaturesList;
 
-    void Reset()
+    void Reset() override
     {
         m_uiBlackHoleTimer = 15000;
         m_uiDarknessTimer = 20000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoCastSpellIfCan(m_creature, SPELL_NEGATIVE_ENERGY_ENT);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MURU, DONE);
@@ -312,6 +320,10 @@ struct MANGOS_DLL_DECL boss_entropiusAI : public ScriptedAI
     }
 };
 
+/*######
+## npc_portal_target
+######*/
+
 struct MANGOS_DLL_DECL npc_portal_targetAI : public Scripted_NoMovementAI
 {
     npc_portal_targetAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature)
@@ -326,7 +338,7 @@ struct MANGOS_DLL_DECL npc_portal_targetAI : public Scripted_NoMovementAI
     uint32 m_uiTransformTimer;
     uint32 m_uiSentinelTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiTransformCount = 0;
         m_uiTransformTimer = 0;
@@ -340,7 +352,7 @@ struct MANGOS_DLL_DECL npc_portal_targetAI : public Scripted_NoMovementAI
             DoCastSpellIfCan(pSummoned, SPELL_SENTINEL_SUMMONER_VISUAL, CAST_TRIGGERED);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
         // These spells are dummies, but are used only to init the timers
         // They could use the EffectDummyCreature to handle this, but this makes code easier
@@ -400,6 +412,10 @@ struct MANGOS_DLL_DECL npc_portal_targetAI : public Scripted_NoMovementAI
     }
 };
 
+/*######
+## npc_void_sentinel_summoner
+######*/
+
 struct MANGOS_DLL_DECL npc_void_sentinel_summonerAI : public Scripted_NoMovementAI
 {
     npc_void_sentinel_summonerAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature)
@@ -410,7 +426,7 @@ struct MANGOS_DLL_DECL npc_void_sentinel_summonerAI : public Scripted_NoMovement
 
     instance_sunwell_plateau* m_pInstance;
 
-    void Reset() { }
+    void Reset() override { }
 
     void JustSummoned(Creature* pSummoned) override
     {
@@ -425,7 +441,7 @@ struct MANGOS_DLL_DECL npc_void_sentinel_summonerAI : public Scripted_NoMovement
         }
     }
 
-    void UpdateAI(const uint32 uiDiff) override { }
+    void UpdateAI(const uint32 /*uiDiff*/) override { }
 };
 
 CreatureAI* GetAI_boss_muru(Creature* pCreature)

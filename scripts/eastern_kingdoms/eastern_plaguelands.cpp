@@ -132,7 +132,7 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
     ObjectGuid m_playerGuid;
     GuidList m_lSummonedGuidList;
 
-    void Reset()
+    void Reset() override
     {
         m_uiEventTimer      = 0;
         m_uiSadEndTimer     = 0;
@@ -193,7 +193,7 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
         }
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_INJURED_PEASANT || pSummoned->GetEntry() == NPC_PLAGUED_PEASANT)
         {

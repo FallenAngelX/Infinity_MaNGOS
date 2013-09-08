@@ -98,7 +98,7 @@ struct MANGOS_DLL_DECL boss_halazziAI : public ScriptedAI
 
     ObjectGuid m_spiritLynxGuid;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPhase           = PHASE_SINGLE;
         m_uiPhaseCounter    = 3;
@@ -127,7 +127,7 @@ struct MANGOS_DLL_DECL boss_halazziAI : public ScriptedAI
             m_pInstance->SetData(TYPE_HALAZZI, FAIL);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -143,7 +143,7 @@ struct MANGOS_DLL_DECL boss_halazziAI : public ScriptedAI
         DoScriptText(urand(0, 1) ? SAY_KILL1 : SAY_KILL2, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -161,7 +161,7 @@ struct MANGOS_DLL_DECL boss_halazziAI : public ScriptedAI
         }
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_TRANSFIGURE_TRANSFORM)
         {
@@ -316,7 +316,7 @@ struct MANGOS_DLL_DECL boss_spirit_lynxAI : public ScriptedAI
     uint32 m_uiShredArmorTimer;
     bool m_bHasUnited;
 
-    void Reset()
+    void Reset() override
     {
         m_uiFrenzyTimer     = urand(10000, 20000);          // first frenzy after 10-20 seconds
         m_uiShredArmorTimer = 4000;

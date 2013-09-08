@@ -40,7 +40,7 @@ struct MANGOS_DLL_DECL boss_renatakiAI : public ScriptedAI
     uint32 m_uiGougeTimer;
     uint32 m_uiThousandBladesTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiVanishTimer         = urand(25000, 30000);
         m_uiAmbushTimer         = 0;

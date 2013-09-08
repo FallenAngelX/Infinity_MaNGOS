@@ -58,7 +58,7 @@ struct MANGOS_DLL_DECL boss_archaedasAI : public ScriptedAI
 
     uint8 m_uiHpPhaseCheck;
 
-    void Reset()
+    void Reset() override
     {
         m_uiAwakeningTimer  = 1000;
         m_uiSubevent        = 0;
@@ -71,18 +71,18 @@ struct MANGOS_DLL_DECL boss_archaedasAI : public ScriptedAI
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ARCHAEDAS, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_UNIT_SLAIN, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         // open door to vault (handled by instance script)
         if (m_pInstance)

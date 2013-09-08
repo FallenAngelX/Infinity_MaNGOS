@@ -64,7 +64,7 @@ struct MANGOS_DLL_DECL boss_arlokkAI : public ScriptedAI
 
     bool m_bIsPhaseTwo;
 
-    void Reset()
+    void Reset() override
     {
         m_uiShadowWordPainTimer = 8000;
         m_uiGougeTimer      = 14000;
@@ -84,7 +84,7 @@ struct MANGOS_DLL_DECL boss_arlokkAI : public ScriptedAI
             m_creature->SetVisibility(VISIBILITY_ON);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
     }
@@ -98,7 +98,7 @@ struct MANGOS_DLL_DECL boss_arlokkAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
         // Restore visibility in case of killed by dots
@@ -268,7 +268,7 @@ CreatureAI* GetAI_boss_arlokk(Creature* pCreature)
     return new boss_arlokkAI(pCreature);
 }
 
-bool GOUse_go_gong_of_bethekk(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_gong_of_bethekk(Player* /*pPlayer*/, GameObject* pGo)
 {
     if (ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData())
     {

@@ -88,7 +88,7 @@ struct MANGOS_DLL_DECL npc_kelerun_bloodmournAI : public ScriptedAI
 
     bool m_bIsEventInProgress;
 
-    void Reset()
+    void Reset() override
     {
         m_creature->SetUInt32Value(UNIT_NPC_FLAGS, m_uiNpcFlags);
 
@@ -136,7 +136,7 @@ struct MANGOS_DLL_DECL npc_kelerun_bloodmournAI : public ScriptedAI
             if (Creature* pCreature = m_creature->SummonCreature(uiChallengerId[i],
                                       fChallengerLoc[i][0], fChallengerLoc[i][1],
                                       fChallengerLoc[i][2], fChallengerLoc[i][3],
-                                      TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 600000))
+                                      TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 600000))
             {
                 m_aChallengerGuids[i] = pCreature->GetObjectGuid();
                 pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -225,7 +225,7 @@ CreatureAI* GetAI_npc_kelerun_bloodmourn(Creature* pCreature)
 }
 
 // easiest way is to expect database to respawn GO at quest accept (quest_start_script)
-bool QuestAccept_npc_kelerun_bloodmourn(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
+bool QuestAccept_npc_kelerun_bloodmourn(Player* /*pPlayer*/, Creature* pCreature, const Quest* pQuest)
 {
     if (pQuest->GetQuestId() == QUEST_SECOND_TRIAL)
     {
@@ -274,7 +274,7 @@ struct MANGOS_DLL_DECL npc_prospector_anvilwardAI : public npc_escortAI
     // CreatureAI functions
     npc_prospector_anvilwardAI(Creature* pCreature) : npc_escortAI(pCreature) {Reset();}
 
-    void Reset() { }
+    void Reset() override { }
 
     // Pure Virtual Functions
     void WaypointReached(uint32 uiPointId) override
@@ -314,7 +314,7 @@ bool GossipHello_npc_prospector_anvilward(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_prospector_anvilward(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_prospector_anvilward(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     switch (uiAction)
     {
@@ -355,14 +355,14 @@ struct MANGOS_DLL_DECL npc_apprentice_mirvedaAI : public ScriptedAI
     uint32 m_uiFireballTimer;
     ObjectGuid m_playerGuid;
 
-    void Reset()
+    void Reset() override
     {
         m_uiMobCount      = 0;
         m_playerGuid.Clear();
         m_uiFireballTimer = 0;
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid);
 
@@ -376,7 +376,7 @@ struct MANGOS_DLL_DECL npc_apprentice_mirvedaAI : public ScriptedAI
         ++m_uiMobCount;
     }
 
-    void SummonedCreatureJustDied(Creature* pKilled)
+    void SummonedCreatureJustDied(Creature* /*pKilled*/) override
     {
         --m_uiMobCount;
 

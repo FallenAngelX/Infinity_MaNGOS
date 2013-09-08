@@ -47,7 +47,7 @@ struct MANGOS_DLL_DECL boss_darkmaster_gandlingAI : public ScriptedAI
     uint32 m_uiCurseTimer;
     uint32 m_uiTeleportTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiArcaneMissilesTimer = 4500;
         m_uiShadowShieldTimer = 12000;

@@ -26,8 +26,8 @@ npc_escortAI::npc_escortAI(Creature* pCreature) : ScriptedAI(pCreature),
     m_uiWPWaitTimer(2500),
     m_uiPlayerCheckTimer(1000),
     m_uiEscortState(STATE_ESCORT_NONE),
-    m_bIsRunning(false),
     m_pQuestForEscort(NULL),
+    m_bIsRunning(false),
     m_bCanInstantRespawn(false),
     m_bCanReturnToStart(false)
 {}
@@ -91,7 +91,7 @@ void npc_escortAI::EnterCombat(Unit* pEnemy)
     Aggro(pEnemy);
 }
 
-void npc_escortAI::Aggro(Unit* pEnemy) {}
+void npc_escortAI::Aggro(Unit* /*pEnemy*/) {}
 
 // see followerAI
 bool npc_escortAI::AssistPlayerInCombat(Unit* pWho)
@@ -169,7 +169,7 @@ void npc_escortAI::MoveInLineOfSight(Unit* pWho)
     }
 }
 
-void npc_escortAI::JustDied(Unit* pKiller)
+void npc_escortAI::JustDied(Unit* /*pKiller*/)
 {
     if (!HasEscortState(STATE_ESCORT_ESCORTING) || !m_playerGuid || !m_pQuestForEscort)
         return;
@@ -346,7 +346,7 @@ void npc_escortAI::UpdateAI(const uint32 uiDiff)
     UpdateEscortAI(uiDiff);
 }
 
-void npc_escortAI::UpdateEscortAI(const uint32 uiDiff)
+void npc_escortAI::UpdateEscortAI(const uint32 /*uiDiff*/)
 {
     // Check if we have a current target
     if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())

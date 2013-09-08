@@ -30,7 +30,6 @@ extern void AddSC_npc_professions();
 extern void AddSC_npcs_special();
 extern void AddSC_spell_scripts();
 extern void AddSC_pet_scripts();
-
 extern void AddSC_world_map_scripts();
 extern void AddSC_world_map_ebon_hold();
 
@@ -47,7 +46,7 @@ extern void AddSC_boss_karsh_steelbender();
 extern void AddSC_boss_lord_obsidius();
 extern void AddSC_boss_romogg();
 extern void AddSC_instance_blackrock_caverns();
-extern void AddSC_blackrock_depths();                       // BM, blackrock_depths
+extern void AddSC_blackrock_depths();                       // blackrock_depths
 extern void AddSC_boss_ambassador_flamelash();
 extern void AddSC_boss_coren_direbrew();
 extern void AddSC_boss_draganthaurissan();
@@ -65,7 +64,7 @@ extern void AddSC_boss_maloriak();
 extern void AddSC_boss_nefarian_descent();
 extern void AddSC_instance_blackwing_descent();
 extern void AddSC_omnotron_defense();
-extern void AddSC_boss_razorgore();                         // BM, blackwing_lair
+extern void AddSC_boss_razorgore();                         // blackwing_lair
 extern void AddSC_boss_vaelastrasz();
 extern void AddSC_boss_broodlord();
 extern void AddSC_boss_firemaw();
@@ -75,18 +74,6 @@ extern void AddSC_boss_chromaggus();
 extern void AddSC_boss_nefarian();
 extern void AddSC_boss_victor_nefarius();
 extern void AddSC_instance_blackwing_lair();
-extern void AddSC_boss_lucifron();                          // BM, molten_core
-extern void AddSC_boss_magmadar();
-extern void AddSC_boss_gehennas();
-extern void AddSC_boss_garr();
-extern void AddSC_boss_baron_geddon();
-extern void AddSC_boss_shazzrah();
-extern void AddSC_boss_golemagg();
-extern void AddSC_boss_sulfuron();
-extern void AddSC_boss_majordomo();
-extern void AddSC_boss_ragnaros();
-extern void AddSC_instance_molten_core();
-extern void AddSC_molten_core();
 extern void AddSC_boss_mr_smite();                          // deadmines
 extern void AddSC_deadmines();
 extern void AddSC_instance_deadmines();
@@ -117,6 +104,18 @@ extern void AddSC_boss_vexallus();
 extern void AddSC_boss_priestess_delrissa();
 extern void AddSC_instance_magisters_terrace();
 extern void AddSC_magisters_terrace();
+extern void AddSC_boss_lucifron();                          // molten_core
+extern void AddSC_boss_magmadar();
+extern void AddSC_boss_gehennas();
+extern void AddSC_boss_garr();
+extern void AddSC_boss_baron_geddon();
+extern void AddSC_boss_shazzrah();
+extern void AddSC_boss_golemagg();
+extern void AddSC_boss_sulfuron();
+extern void AddSC_boss_majordomo();
+extern void AddSC_boss_ragnaros();
+extern void AddSC_instance_molten_core();
+extern void AddSC_molten_core();
 extern void AddSC_ebon_hold();                              // scarlet_enclave
 extern void AddSC_boss_arcanist_doan();                     // scarlet_monastery
 extern void AddSC_boss_herod();
@@ -226,7 +225,7 @@ extern void AddSC_boss_archbishop_benedictus();             // COT, hour_of_twil
 extern void AddSC_boss_arcurion();
 extern void AddSC_boss_asira_dawnslayer();
 extern void AddSC_instance_hour_of_twilight();
-extern void AddSC_hyjal();                                  // COT, hyjal_summit
+extern void AddSC_hyjal();                                  // COT, hyjal
 extern void AddSC_boss_archimonde();
 extern void AddSC_instance_mount_hyjal();
 extern void AddSC_instance_old_hillsbrad();                 // COT, old_hillsbrad
@@ -323,8 +322,8 @@ extern void AddSC_kezan();
 extern void AddSC_lost_isles();
 
 // northrend
-extern void AddSC_boss_jedoga();                            // azjol-nerub, ahnkahet
-extern void AddSC_boss_amanitar();
+extern void AddSC_boss_amanitar();                          // azjol-nerub, ahnkahet
+extern void AddSC_boss_jedoga();
 extern void AddSC_boss_nadox();
 extern void AddSC_boss_taldaram();
 extern void AddSC_boss_volazj();
@@ -408,12 +407,12 @@ extern void AddSC_boss_keristrasza();
 extern void AddSC_boss_ormorok();
 extern void AddSC_boss_telestra();
 extern void AddSC_instance_nexus();
-extern void AddSC_oculus();
 extern void AddSC_boss_drakos();                            // nexus, oculus
-extern void AddSC_boss_varos();
 extern void AddSC_boss_eregos();                            // nexus, oculus
 extern void AddSC_boss_urom();
+extern void AddSC_boss_varos();
 extern void AddSC_instance_oculus();
+extern void AddSC_oculus();
 extern void AddSC_boss_sartharion();                        // obsidian_sanctum
 extern void AddSC_instance_obsidian_sanctum();
 extern void AddSC_boss_baltharus();                         // ruby_sanctum
@@ -432,7 +431,6 @@ extern void AddSC_boss_sjonnir();
 extern void AddSC_boss_krystallus();
 extern void AddSC_halls_of_stone();
 extern void AddSC_instance_halls_of_stone();
-
 extern void AddSC_boss_iron_council();                      // ulduar, ulduar
 extern void AddSC_boss_algalon();
 extern void AddSC_boss_auriaya();
@@ -449,7 +447,6 @@ extern void AddSC_boss_xt002();
 extern void AddSC_boss_yogg_saron();
 extern void AddSC_instance_ulduar();
 extern void AddSC_ulduar();
-
 extern void AddSC_boss_ingvar();                            // utgarde_keep, utgarde_keep
 extern void AddSC_boss_keleseth();
 extern void AddSC_boss_skarvald_and_dalronn();
@@ -613,7 +610,7 @@ void AddScripts()
     AddSC_boss_lord_obsidius();
     AddSC_boss_romogg();
     AddSC_instance_blackrock_caverns();
-    AddSC_blackrock_depths();                               // BM, blackrock_depths
+    AddSC_blackrock_depths();                               // blackrock_depths
     AddSC_boss_ambassador_flamelash();
     AddSC_boss_coren_direbrew();
     AddSC_boss_draganthaurissan();
@@ -631,7 +628,7 @@ void AddScripts()
     AddSC_boss_nefarian_descent();
     AddSC_instance_blackwing_descent();
     AddSC_omnotron_defense();
-    AddSC_boss_razorgore();                                 // BM, blackwing_lair
+    AddSC_boss_razorgore();                                 // blackwing_lair
     AddSC_boss_vaelastrasz();
     AddSC_boss_broodlord();
     AddSC_boss_firemaw();
@@ -641,18 +638,6 @@ void AddScripts()
     AddSC_boss_nefarian();
     AddSC_boss_victor_nefarius();
     AddSC_instance_blackwing_lair();
-    AddSC_boss_lucifron();                                  // BM, molten_core
-    AddSC_boss_magmadar();
-    AddSC_boss_gehennas();
-    AddSC_boss_garr();
-    AddSC_boss_baron_geddon();
-    AddSC_boss_shazzrah();
-    AddSC_boss_golemagg();
-    AddSC_boss_sulfuron();
-    AddSC_boss_majordomo();
-    AddSC_boss_ragnaros();
-    AddSC_instance_molten_core();
-    AddSC_molten_core();
     AddSC_deadmines();                                      // deadmines
     AddSC_boss_mr_smite();
     AddSC_instance_deadmines();
@@ -683,6 +668,18 @@ void AddScripts()
     AddSC_boss_priestess_delrissa();
     AddSC_instance_magisters_terrace();
     AddSC_magisters_terrace();
+    AddSC_boss_lucifron();                                  // molten_core
+    AddSC_boss_magmadar();
+    AddSC_boss_gehennas();
+    AddSC_boss_garr();
+    AddSC_boss_baron_geddon();
+    AddSC_boss_shazzrah();
+    AddSC_boss_golemagg();
+    AddSC_boss_sulfuron();
+    AddSC_boss_majordomo();
+    AddSC_boss_ragnaros();
+    AddSC_instance_molten_core();
+    AddSC_molten_core();
     AddSC_ebon_hold();                                      // scarlet_enclave
     AddSC_boss_arcanist_doan();                             // scarlet_monastery
     AddSC_boss_herod();
@@ -772,7 +769,7 @@ void AddScripts()
 
     // kalimdor
     AddSC_instance_blackfathom_deeps();                     // blackfathom deeps
-    AddSC_boss_aeonus();                                    // COT, dark_portal
+    AddSC_boss_aeonus();                                    // CoT, dark_portal
     AddSC_boss_chrono_lord_deja();
     AddSC_boss_temporus();
     AddSC_dark_portal();
@@ -797,13 +794,13 @@ void AddScripts()
     AddSC_instance_mount_hyjal();
     AddSC_instance_old_hillsbrad();                         // CoT, old_hillsbrand
     AddSC_old_hillsbrad();
-    AddSC_culling_of_stratholme();                          // COT, culling_of_stratholme
     AddSC_boss_infinite_corruptor();
     AddSC_boss_lord_epoch();
     AddSC_boss_malganis();
     AddSC_boss_meathook();
     AddSC_boss_salramm();
     AddSC_culling_of_stratholmeAI();
+    AddSC_culling_of_stratholme();                          // CoT, culling_of_stratholme
     AddSC_instance_culling_of_stratholme();
     AddSC_trash_culling_of_stratholme();
     AddSC_boss_mannoroth_and_varothen();                    // CoT, well_of_eternity
@@ -889,8 +886,8 @@ void AddScripts()
     AddSC_lost_isles();
 
     // northrend
-    AddSC_boss_jedoga();                                    // azjol-nerub, ahnkahet
-    AddSC_boss_amanitar();
+    AddSC_boss_amanitar();                                  // azjol-nerub, ahnkahet
+    AddSC_boss_jedoga();
     AddSC_boss_nadox();
     AddSC_boss_taldaram();
     AddSC_boss_volazj();
@@ -931,7 +928,7 @@ void AddScripts()
     AddSC_boss_marwyn();
     AddSC_halls_of_reflection();
     AddSC_instance_halls_of_reflection();
-    AddSC_boss_garfrost();                                  // ICC, pit_of_saron
+    AddSC_boss_garfrost();                                  // ICC, FH, pit_of_saron
     AddSC_boss_krick_and_ick();
     AddSC_boss_tyrannus();
     AddSC_instance_pit_of_saron();
@@ -974,12 +971,12 @@ void AddScripts()
     AddSC_boss_ormorok();
     AddSC_boss_telestra();
     AddSC_instance_nexus();
-    AddSC_oculus();
     AddSC_boss_drakos();                                    // nexus, oculus
-    AddSC_boss_varos();
     AddSC_boss_eregos();                                    // nexus, oculus
     AddSC_boss_urom();
+    AddSC_boss_varos();
     AddSC_instance_oculus();
+    AddSC_oculus();
     AddSC_boss_sartharion();                                // obsidian_sanctum
     AddSC_instance_obsidian_sanctum();
     AddSC_boss_baltharus();                                 // ruby_sanctum
@@ -998,7 +995,6 @@ void AddScripts()
     AddSC_boss_krystallus();
     AddSC_halls_of_stone();
     AddSC_instance_halls_of_stone();
-
     AddSC_boss_iron_council();                              // ulduar, ulduar
     AddSC_boss_algalon();
     AddSC_boss_auriaya();
@@ -1015,7 +1011,6 @@ void AddScripts()
     AddSC_boss_yogg_saron();
     AddSC_instance_ulduar();
     AddSC_ulduar();
-
     AddSC_boss_ingvar();                                    // UK, utgarde_keep
     AddSC_boss_keleseth();
     AddSC_boss_skarvald_and_dalronn();
@@ -1049,7 +1044,7 @@ void AddScripts()
     AddSC_icecrown();
     AddSC_sholazar_basin();
     AddSC_storm_peaks();
-	AddSC_wintergrasp();
+    AddSC_wintergrasp();
     AddSC_zuldrak();
 
     // outland

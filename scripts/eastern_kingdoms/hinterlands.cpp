@@ -51,7 +51,7 @@ struct MANGOS_DLL_DECL npc_00x09hlAI : public npc_escortAI
 {
     npc_00x09hlAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
 
-    void Reset() { }
+    void Reset() override { }
 
     void WaypointReached(uint32 uiPointId) override
     {
@@ -71,7 +71,7 @@ struct MANGOS_DLL_DECL npc_00x09hlAI : public npc_escortAI
         }
     }
 
-    void WaypointStart(uint32 uiPointId)
+    void WaypointStart(uint32 uiPointId) override
     {
         switch (uiPointId)
         {
@@ -96,7 +96,7 @@ struct MANGOS_DLL_DECL npc_00x09hlAI : public npc_escortAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         if (pWho->GetEntry() == NPC_MARAUDING_OWL || pWho->GetEntry() == NPC_VILE_AMBUSHER)
             return;
@@ -176,7 +176,7 @@ struct MANGOS_DLL_DECL npc_rinjiAI : public npc_escortAI
     uint32 m_uiPostEventTimer;
     int m_iSpawnId;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPostEventCount = 0;
         m_uiPostEventTimer = 3000;
@@ -190,7 +190,7 @@ struct MANGOS_DLL_DECL npc_rinjiAI : public npc_escortAI
         npc_escortAI::JustRespawned();
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         if (HasEscortState(STATE_ESCORT_ESCORTING))
         {
@@ -215,13 +215,13 @@ struct MANGOS_DLL_DECL npc_rinjiAI : public npc_escortAI
 
         m_creature->SummonCreature(NPC_RANGER,
                                    m_afAmbushSpawn[m_iSpawnId].x, m_afAmbushSpawn[m_iSpawnId].y, m_afAmbushSpawn[m_iSpawnId].z, 0.0f,
-                                   TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000);
+                                   TEMPSUMMON_TIMED_OOC_OR_CORPSE_DESPAWN, 60000);
 
         for (int i = 0; i < 2; ++i)
         {
             m_creature->SummonCreature(NPC_OUTRUNNER,
                                        m_afAmbushSpawn[m_iSpawnId].x, m_afAmbushSpawn[m_iSpawnId].y, m_afAmbushSpawn[m_iSpawnId].z, 0.0f,
-                                       TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000);
+                                       TEMPSUMMON_TIMED_OOC_OR_CORPSE_DESPAWN, 60000);
         }
     }
 
@@ -258,7 +258,7 @@ struct MANGOS_DLL_DECL npc_rinjiAI : public npc_escortAI
         }
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 uiDiff) override
     {
         // Check if we have a current target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())

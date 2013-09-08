@@ -45,7 +45,7 @@ struct MANGOS_DLL_DECL boss_baroness_anastariAI : public ScriptedAI
 
     ObjectGuid m_possessedPlayer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiBansheeWailTimer    = 0;
         m_uiBansheeCurseTimer   = 10000;

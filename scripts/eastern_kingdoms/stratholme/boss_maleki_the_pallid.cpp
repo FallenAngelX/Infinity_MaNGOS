@@ -40,7 +40,7 @@ struct MANGOS_DLL_DECL boss_maleki_the_pallidAI : public ScriptedAI
     uint32 m_uiIceTombTimer;
     uint32 m_uiDrainLifeTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiDrainManaTimer  = 30000;
         m_uiFrostboltTimer  = 0;

@@ -289,8 +289,8 @@ DialogueHelper::DialogueHelper(DialogueEntry const* pDialogueArray) :
     m_pDialogueTwoSideArray(NULL),
     m_pCurrentEntryTwoSide(NULL),
     m_uiTimer(0),
-    m_bCanSimulate(false),
-    m_bIsFirstSide(true)
+    m_bIsFirstSide(true),
+    m_bCanSimulate(false)
 {}
 
 /**
@@ -299,10 +299,10 @@ DialogueHelper::DialogueHelper(DialogueEntry const* pDialogueArray) :
    @param   pDialogueTwoSideArray The static const array of DialogueEntryTwoSide holding the information about the dialogue. This array MUST be terminated by {0,0,0,0,0}
  */
 DialogueHelper::DialogueHelper(DialogueEntryTwoSide const* pDialogueTwoSideArray) :
-    m_pDialogueArray(NULL),
-    m_pDialogueTwoSideArray(pDialogueTwoSideArray),
     m_pInstance(NULL),
+    m_pDialogueArray(NULL),
     m_pCurrentEntry(NULL),
+    m_pDialogueTwoSideArray(pDialogueTwoSideArray),
     m_pCurrentEntryTwoSide(NULL),
     m_uiTimer(0),
     m_bIsFirstSide(true),

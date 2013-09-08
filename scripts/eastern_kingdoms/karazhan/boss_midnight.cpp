@@ -66,7 +66,7 @@ struct MANGOS_DLL_DECL boss_midnightAI : public ScriptedAI
     uint8 m_uiPhase;
     uint32 m_uiKnockDown;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPhase     = 0;
         m_uiKnockDown = urand(6000, 9000);
@@ -74,13 +74,13 @@ struct MANGOS_DLL_DECL boss_midnightAI : public ScriptedAI
         SetCombatMovement(true);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ATTUMEN, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         if (m_uiPhase == 1 && m_pInstance)
         {
@@ -123,7 +123,7 @@ struct MANGOS_DLL_DECL boss_midnightAI : public ScriptedAI
         }
     }
 
-    void MovementInform(uint32 uiMoveType, uint32 uiPointId)
+    void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
     {
         if (uiMoveType != POINT_MOTION_TYPE || !uiPointId || !m_pInstance)
             return;
@@ -208,7 +208,7 @@ struct MANGOS_DLL_DECL boss_attumenAI : public ScriptedAI
 
     bool m_bHasSummonRider;
 
-    void Reset()
+    void Reset() override
     {
         m_uiCleaveTimer     = urand(10000, 16000);
         m_uiCurseTimer      = 30000;
@@ -219,18 +219,18 @@ struct MANGOS_DLL_DECL boss_attumenAI : public ScriptedAI
         m_bHasSummonRider   = false;
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_KILL1 : SAY_KILL2, m_creature);
     }
 
-    void SpellHit(Unit* pSource, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pSource*/, const SpellEntry* pSpell) override
     {
         if (pSpell->GetMechanic() == MECHANIC_DISARM)
             DoScriptText(SAY_DISARMED, m_creature);
     }
 
-    void JustDied(Unit* pVictim)
+    void JustDied(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 

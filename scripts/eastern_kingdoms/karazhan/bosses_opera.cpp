@@ -104,7 +104,7 @@ struct MANGOS_DLL_DECL boss_dorotheeAI : public ScriptedAI
 
     bool m_bTitoDied;
 
-    void Reset()
+    void Reset() override
     {
         m_uiIntroTimer      = 2000;
         m_uiAggroTimer      = 12000;
@@ -124,7 +124,7 @@ struct MANGOS_DLL_DECL boss_dorotheeAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DOROTHEE_DEATH, m_creature);
     }
@@ -144,7 +144,7 @@ struct MANGOS_DLL_DECL boss_dorotheeAI : public ScriptedAI
             pSummoned->AI()->AttackStart(m_creature->getVictim());
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_TITO)
         {
@@ -232,7 +232,7 @@ struct MANGOS_DLL_DECL boss_strawmanAI : public ScriptedAI
     uint32 m_uiBrainBashTimer;
     uint32 m_uiBrainWipeTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiAggroTimer     = 27000;
         m_uiBrainBashTimer = 5000;
@@ -255,7 +255,7 @@ struct MANGOS_DLL_DECL boss_strawmanAI : public ScriptedAI
         ScriptedAI::AttackStart(pWho);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoCastSpellIfCan(m_creature, SPELL_CONFLAG_PROC);
         DoScriptText(SAY_STRAWMAN_AGGRO, m_creature);
@@ -269,12 +269,12 @@ struct MANGOS_DLL_DECL boss_strawmanAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_STRAWMAN_DEATH, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_STRAWMAN_SLAY, m_creature);
     }
@@ -333,14 +333,14 @@ struct MANGOS_DLL_DECL boss_tinheadAI : public ScriptedAI
     uint32 m_uiCleaveTimer;
     uint32 m_uiRustTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiAggroTimer  = 37000;
         m_uiCleaveTimer = 5000;
         m_uiRustTimer   = 30000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_TINHEAD_AGGRO, m_creature);
     }
@@ -369,12 +369,12 @@ struct MANGOS_DLL_DECL boss_tinheadAI : public ScriptedAI
         ScriptedAI::AttackStart(pWho);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_TINHEAD_DEATH, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_TINHEAD_SLAY, m_creature);
     }
@@ -434,7 +434,7 @@ struct MANGOS_DLL_DECL boss_roarAI : public ScriptedAI
     uint32 m_uiShredTimer;
     uint32 m_uiScreamTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiAggroTimer  = 17000;
         m_uiMangleTimer = 5000;
@@ -458,7 +458,7 @@ struct MANGOS_DLL_DECL boss_roarAI : public ScriptedAI
         ScriptedAI::AttackStart(pWho);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_ROAR_AGGRO, m_creature);
     }
@@ -471,12 +471,12 @@ struct MANGOS_DLL_DECL boss_roarAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_ROAR_DEATH, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_ROAR_SLAY, m_creature);
     }
@@ -540,7 +540,7 @@ struct MANGOS_DLL_DECL boss_croneAI : public ScriptedAI
 
     uint32 m_uiChainLightningTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiChainLightningTimer = 10000;
     }
@@ -553,7 +553,7 @@ struct MANGOS_DLL_DECL boss_croneAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_CRONE_AGGRO : SAY_CRONE_AGGRO2, m_creature);
 
@@ -561,7 +561,7 @@ struct MANGOS_DLL_DECL boss_croneAI : public ScriptedAI
         m_creature->SummonCreature(NPC_CYCLONE, afCycloneSpawnLoc[0], afCycloneSpawnLoc[1], afCycloneSpawnLoc[2], afCycloneSpawnLoc[3], TEMPSUMMON_DEAD_DESPAWN, 0);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_CRONE_DEATH, m_creature);
 
@@ -653,7 +653,7 @@ bool GossipHello_npc_grandmother(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_grandmother(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_grandmother(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF)
     {
@@ -680,14 +680,14 @@ struct MANGOS_DLL_DECL boss_bigbadwolfAI : public ScriptedAI
     uint32 m_uiFearTimer;
     uint32 m_uiSwipeTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiRedRidingHoodTimer = 30000;
         m_uiFearTimer          = urand(25000, 35000);
         m_uiSwipeTimer         = 5000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_WOLF_AGGRO, m_creature);
     }
@@ -700,7 +700,7 @@ struct MANGOS_DLL_DECL boss_bigbadwolfAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoPlaySoundToSet(m_creature, SOUND_WOLF_DEATH);
 
@@ -817,7 +817,7 @@ struct MANGOS_DLL_DECL boss_julianneAI : public ScriptedAI
 
     bool m_bIsFakingDeath;
 
-    void Reset()
+    void Reset() override
     {
         m_Phase                     = PHASE_JULIANNE;
 
@@ -831,7 +831,7 @@ struct MANGOS_DLL_DECL boss_julianneAI : public ScriptedAI
         m_bIsFakingDeath            = false;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_JULIANNE_AGGRO, m_creature);
     }
@@ -844,7 +844,7 @@ struct MANGOS_DLL_DECL boss_julianneAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDoneBy*/, uint32& uiDamage) override
     {
         if (uiDamage < m_creature->GetHealth())
             return;
@@ -873,7 +873,7 @@ struct MANGOS_DLL_DECL boss_julianneAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
@@ -1069,7 +1069,7 @@ struct MANGOS_DLL_DECL boss_romuloAI : public ScriptedAI
 
     bool m_bIsFakingDeath;
 
-    void Reset()
+    void Reset() override
     {
         m_Phase                 = PHASE_ROMULO;
 
@@ -1091,7 +1091,7 @@ struct MANGOS_DLL_DECL boss_romuloAI : public ScriptedAI
         m_creature->ForcedDespawn();
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDoneBy*/, uint32& uiDamage) override
     {
         if (uiDamage < m_creature->GetHealth())
             return;
@@ -1113,12 +1113,12 @@ struct MANGOS_DLL_DECL boss_romuloAI : public ScriptedAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_ROMULO_AGGRO, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 

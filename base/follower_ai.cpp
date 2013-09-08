@@ -119,7 +119,7 @@ void FollowerAI::MoveInLineOfSight(Unit* pWho)
     }
 }
 
-void FollowerAI::JustDied(Unit* pKiller)
+void FollowerAI::JustDied(Unit* /*pKiller*/)
 {
     if (!HasFollowState(STATE_FOLLOW_INPROGRESS) || !m_leaderGuid || !m_pQuestForFollow)
         return;
@@ -245,7 +245,7 @@ void FollowerAI::UpdateAI(const uint32 uiDiff)
     UpdateFollowerAI(uiDiff);
 }
 
-void FollowerAI::UpdateFollowerAI(const uint32 uiDiff)
+void FollowerAI::UpdateFollowerAI(const uint32 /*uiDiff*/)
 {
     if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         return;

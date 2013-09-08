@@ -37,7 +37,7 @@ struct MANGOS_DLL_DECL npc_ragged_johnAI : public ScriptedAI
 {
     npc_ragged_johnAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    void Reset() {}
+    void Reset() override {}
 
     void MoveInLineOfSight(Unit* who) override
     {
@@ -82,7 +82,7 @@ bool GossipHello_npc_ragged_john(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_ragged_john(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_ragged_john(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     switch (uiAction)
     {
@@ -209,7 +209,7 @@ struct MANGOS_DLL_DECL npc_grark_lorkrubAI : public npc_escortAI, private Dialog
     uint8 m_uiKilledCreatures;
     bool m_bIsFirstSearScale;
 
-    void Reset()
+    void Reset() override
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
         {
@@ -222,7 +222,7 @@ struct MANGOS_DLL_DECL npc_grark_lorkrubAI : public npc_escortAI, private Dialog
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
             DoScriptText(SAY_AGGRO, m_creature);
@@ -300,7 +300,7 @@ struct MANGOS_DLL_DECL npc_grark_lorkrubAI : public npc_escortAI, private Dialog
         }
     }
 
-    void JustDidDialogueStep(int32 iEntry)
+    void JustDidDialogueStep(int32 iEntry) override
     {
         switch (iEntry)
         {
@@ -363,7 +363,7 @@ struct MANGOS_DLL_DECL npc_grark_lorkrubAI : public npc_escortAI, private Dialog
         }
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* /*pSummoned*/) override
     {
         ++m_uiKilledCreatures;
 
@@ -384,7 +384,7 @@ struct MANGOS_DLL_DECL npc_grark_lorkrubAI : public npc_escortAI, private Dialog
         }
     }
 
-    Creature* GetSpeakerByEntry(uint32 uiEntry)
+    Creature* GetSpeakerByEntry(uint32 uiEntry) override
     {
         switch (uiEntry)
         {
@@ -397,7 +397,7 @@ struct MANGOS_DLL_DECL npc_grark_lorkrubAI : public npc_escortAI, private Dialog
         }
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 uiDiff) override
     {
         DialogueUpdate(uiDiff);
 

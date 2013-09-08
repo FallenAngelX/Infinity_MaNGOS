@@ -127,7 +127,7 @@ class MANGOS_DLL_DECL instance_stratholme : public ScriptedInstance
         void OnCreatureEvade(Creature* pCreature) override;
         void OnCreatureDeath(Creature* pCreature) override;
 
-        void Update(uint32 uiDiff);
+        void Update(uint32 uiDiff) override;
 
     protected:
         bool StartSlaugtherSquare();

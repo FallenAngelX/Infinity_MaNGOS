@@ -68,7 +68,7 @@ struct MANGOS_DLL_DECL boss_akilzonAI : public ScriptedAI
     uint32 m_uiSummonEagleTimer;
     uint32 m_uiBerserkTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiStaticDisruptTimer  = urand(7000, 14000);
         m_uiCallLightTimer      = urand(15000, 25000);
@@ -78,7 +78,7 @@ struct MANGOS_DLL_DECL boss_akilzonAI : public ScriptedAI
         m_uiBerserkTimer        = 10 * MINUTE * IN_MILLISECONDS;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -86,12 +86,12 @@ struct MANGOS_DLL_DECL boss_akilzonAI : public ScriptedAI
             m_pInstance->SetData(TYPE_AKILZON, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY1 : SAY_SLAY2, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -221,7 +221,7 @@ struct MANGOS_DLL_DECL mob_soaring_eagleAI : public ScriptedAI
     uint32 m_uiReturnTimer;
     bool m_bCanMoveToRandom;
 
-    void Reset()
+    void Reset() override
     {
         m_uiEagleSwoopTimer = 0;
         m_uiReturnTimer     = 800;

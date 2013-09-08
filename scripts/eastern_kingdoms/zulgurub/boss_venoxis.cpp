@@ -68,7 +68,7 @@ struct MANGOS_DLL_DECL boss_venoxisAI : public ScriptedAI
     bool m_bPhaseTwo;
     bool m_bInBerserk;
 
-    void Reset()
+    void Reset() override
     {
         m_uiHolyWrathTimer      = 40000;
         m_uiVenomSpitTimer      = 5500;
@@ -88,7 +88,7 @@ struct MANGOS_DLL_DECL boss_venoxisAI : public ScriptedAI
             m_pInstance->SetData(TYPE_VENOXIS, FAIL);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 

@@ -152,7 +152,7 @@ struct MANGOS_DLL_DECL boss_zuljinAI : public ScriptedAI
 
     GuidList m_lSummonsList;
 
-    void Reset()
+    void Reset() override
     {
         m_uiHealthCheck         = 80;
         m_uiPhase               = PHASE_TROLL;
@@ -176,7 +176,7 @@ struct MANGOS_DLL_DECL boss_zuljinAI : public ScriptedAI
         SetCombatMovement(true);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -203,12 +203,12 @@ struct MANGOS_DLL_DECL boss_zuljinAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_KILL1 : SAY_KILL2, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -274,7 +274,7 @@ struct MANGOS_DLL_DECL boss_zuljinAI : public ScriptedAI
             pSpirit->CastSpell(m_creature, SPELL_SPIRIT_DRAIN, false);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_SPIRIT_DRAIN)
         {

@@ -51,7 +51,7 @@ bool instance_zulaman::IsEncounterInProgress() const
     return false;
 }
 
-void instance_zulaman::OnPlayerEnter(Player* pPlayer)
+void instance_zulaman::OnPlayerEnter(Player* /*pPlayer*/)
 {
     if (GetData(TYPE_EVENT_RUN) == IN_PROGRESS)
     {
@@ -445,7 +445,7 @@ bool instance_zulaman::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 
     }
 
     script_error_log("instance_zulaman::CheckConditionCriteriaMeet called with unsupported Id %u. Called with param plr %s, src %s, condition source type %u",
-                        uiInstanceConditionId, pPlayer ? pPlayer->GetGuidStr().c_str() : "NULL", pConditionSource ? pConditionSource->GetGuidStr().c_str() : "NULL", conditionSourceType);
+                     uiInstanceConditionId, pPlayer ? pPlayer->GetGuidStr().c_str() : "NULL", pConditionSource ? pConditionSource->GetGuidStr().c_str() : "NULL", conditionSourceType);
     return false;
 }
 

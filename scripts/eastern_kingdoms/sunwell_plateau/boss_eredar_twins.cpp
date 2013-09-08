@@ -56,7 +56,7 @@ enum
     SPELL_DARK_FLAME                        = 45345,
 
     // Sacrolash spells
-    SPELL_DARK_TOUCHED                      = 45347,        // TODO NYI  - Player debuff; removed by shadow damage
+    SPELL_DARK_TOUCHED                      = 45347,        // Player debuff; removed by shadow damage
     SPELL_SHADOW_BLADES                     = 45248,        // 10 secs
     SPELL_DARK_STRIKE                       = 45271,
     SPELL_SHADOW_NOVA                       = 45329,        // 30-35 secs
@@ -70,7 +70,7 @@ enum
 
     // Alythess spells
     SPELL_PYROGENICS                        = 45230,        // Self buff; 15secs
-    SPELL_FLAME_TOUCHED                     = 45348,        // TODO NYI  - Player debuff; removed by shadow damage
+    SPELL_FLAME_TOUCHED                     = 45348,        // Player debuff; removed by shadow damage
     SPELL_CONFLAGRATION                     = 45342,        // 30-35 secs
     SPELL_BLAZE                             = 45235,        // On main target every 3 secs; should trigger 45236 which leaves a fire on the ground
     SPELL_BLAZE_SUMMON                      = 45236,        //187366 GO  // firepatch
@@ -92,6 +92,10 @@ static const DialogueEntry aIntroDialogue[] =
     {0, 0, 0},
 };
 
+/*######
+## boss_alythess
+######*/
+
 struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
 {
     boss_alythessAI(Creature* pCreature) : ScriptedAI(pCreature),
@@ -112,7 +116,7 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
     uint32 m_uiFlameSearTimer;
     bool m_bDidIntro;
 
-    void Reset()
+    void Reset() override
     {
         m_uiEnrageTimer = 6 * MINUTE * IN_MILLISECONDS;
         m_uiPyrogenicsTimer     = 20000;
@@ -138,7 +142,7 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
         {
@@ -160,12 +164,12 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_ALYTHESS_KILL_1 : SAY_ALYTHESS_KILL_2, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
         {
@@ -322,6 +326,10 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
     }
 };
 
+/*######
+## boss_sacrolash
+######*/
+
 struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
 {
     boss_sacrolashAI(Creature* pCreature) : ScriptedAI(pCreature)
@@ -339,7 +347,7 @@ struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
     uint32 m_uiShadowBladesTimer;
     uint32 m_uiSummonShadowImage;
 
-    void Reset()
+    void Reset() override
     {
         m_uiEnrageTimer = 6 * MINUTE * IN_MILLISECONDS;
         m_uiDarkTouchedTimer     = 30000;
@@ -365,7 +373,7 @@ struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
         {
@@ -374,12 +382,12 @@ struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_SACROLASH_KILL_1 : SAY_SACROLASH_KILL_2, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
         {
@@ -594,6 +602,10 @@ struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
     }
 };
 
+/*######
+## npc_shadow_image
+######*/
+
 struct MANGOS_DLL_DECL npc_shadow_imageAI : public ScriptedAI
 {
     npc_shadow_imageAI(Creature* pCreature) : ScriptedAI(pCreature)  { Reset(); }
@@ -603,7 +615,7 @@ struct MANGOS_DLL_DECL npc_shadow_imageAI : public ScriptedAI
     uint32 m_uiAbilityTimer;
     uint8 m_uiDarkStrikes;
 
-    void Reset()
+    void Reset() override
     {
         // Choose only one spell for attack
         m_uiChosenAbility = urand(0, 1) ? SPELL_DARK_STRIKE : SPELL_SHADOWFURY;

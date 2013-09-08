@@ -87,7 +87,7 @@ struct MANGOS_DLL_DECL boss_dathrohan_balnazzarAI : public ScriptedAI
     uint32 m_uiMindControl_Timer;
     bool m_bTransformed;
 
-    void Reset()
+    void Reset() override
     {
         m_uiCrusadersHammer_Timer = 8000;
         m_uiCrusaderStrike_Timer = 12000;
@@ -103,12 +103,12 @@ struct MANGOS_DLL_DECL boss_dathrohan_balnazzarAI : public ScriptedAI
             m_creature->UpdateEntry(NPC_DATHROHAN);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void JustDied(Unit* Victim)
+    void JustDied(Unit* /*Victim*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 

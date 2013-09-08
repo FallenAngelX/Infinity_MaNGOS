@@ -31,7 +31,7 @@ EndScriptData */
 #include "precompiled.h"
 #include "scarlet_monastery.h"
 
-enum Texts
+enum
 {
     SAY_ENTRANCE           = -1189022,
     SAY_REJOINED           = -1189023,
@@ -135,7 +135,7 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
         m_uiPumpkinSprout_Timer = 5000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         if (!pWho)
             return;
@@ -154,12 +154,12 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_SLAY, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
     }

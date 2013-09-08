@@ -21,8 +21,8 @@ struct TSpellSummary
 
 ScriptedAI::ScriptedAI(Creature* pCreature) : CreatureAI(pCreature),
     m_bCombatMovement(true),
-    m_uiEvadeCheckCooldown(2500),
-    m_events(NULL)
+    m_events(NULL),
+    m_uiEvadeCheckCooldown(2500)
 {}
 
 ScriptedAI::~ScriptedAI()
@@ -34,7 +34,7 @@ ScriptedAI::~ScriptedAI()
 /// This function shows if combat movement is enabled, overwrite for more info
 void ScriptedAI::GetAIInformation(ChatHandler& reader)
 {
-    reader.PSendSysMessage("ScriptedAI, combat movement is %s", reader.GetOnOffStr(m_bCombatMovement));
+    reader.PSendSysMessage("ScriptedAI, combat movement is %s", reader.GetOnOffStr(IsCombatMovement()));
 }
 
 /// Return if the creature can "see" pWho
@@ -91,8 +91,7 @@ void ScriptedAI::AttackStart(Unit* pWho)
         m_creature->SetInCombatWith(pWho);
         pWho->SetInCombatWith(m_creature);
 
-        if (IsCombatMovement())
-            m_creature->GetMotionMaster()->MoveChase(pWho);
+        HandleMovementOnAttackStart(pWho);
     }
 }
 
@@ -111,7 +110,7 @@ void ScriptedAI::EnterCombat(Unit* pEnemy)
  * Handle (if required) melee attack with DoMeleeAttackIfReady()
  * This is usally overwritten to support timers for ie spells
  */
-void ScriptedAI::UpdateAI(const uint32 uiDiff)
+void ScriptedAI::UpdateAI(const uint32 /*uiDiff*/)
 {
     // Check if we have a current target
     if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -240,11 +239,11 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 i
 
         // Targets and Effects checked first as most used restrictions
         // Check the spell targets if specified
-        if (selectTargets && !(SpellSummary[m_creature->GetSpell(i)].Targets & (1 << (selectTargets-1))))
+        if (selectTargets && !(SpellSummary[m_creature->GetSpell(i)].Targets & (1 << (selectTargets - 1))))
             continue;
 
         // Check the type of spell if we are looking for a specific spell type
-        if (selectEffects && !(SpellSummary[m_creature->GetSpell(i)].Effects & (1 << (selectEffects-1))))
+        if (selectEffects && !(SpellSummary[m_creature->GetSpell(i)].Effects & (1 << (selectEffects - 1))))
             continue;
 
         // Check for school if specified
@@ -351,58 +350,58 @@ void FillSpellSummary()
 
             // Spell targets a single enemy
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CHAIN_DAMAGE ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CURRENT_ENEMY_COORDINATES)
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CURRENT_ENEMY_COORDINATES)
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_SINGLE_ENEMY - 1);
 
             // Spell targets AoE at enemy
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA_INSTANT ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA_CHANNELED)
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA_INSTANT ||
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES ||
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA_CHANNELED)
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_AOE_ENEMY - 1);
 
             // Spell targets an enemy
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CHAIN_DAMAGE ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CURRENT_ENEMY_COORDINATES ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA_INSTANT ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA_CHANNELED)
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CURRENT_ENEMY_COORDINATES ||
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA ||
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA_INSTANT ||
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES ||
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_ENEMY_IN_AREA_CHANNELED)
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_ANY_ENEMY - 1);
 
             // Spell targets a single friend(or self)
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SELF ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_FRIEND ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_PARTY)
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_FRIEND ||
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_PARTY)
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_SINGLE_FRIEND - 1);
 
             // Spell targets aoe friends
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_PARTY_AROUND_CASTER ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_AREAEFFECT_PARTY ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES)
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_AREAEFFECT_PARTY ||
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES)
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_AOE_FRIEND - 1);
 
             // Spell targets any friend(or self)
             if (pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SELF ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_FRIEND ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_PARTY ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_PARTY_AROUND_CASTER ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_AREAEFFECT_PARTY ||
-                pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES)
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_FRIEND ||
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_SINGLE_PARTY ||
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_ALL_PARTY_AROUND_CASTER ||
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_AREAEFFECT_PARTY ||
+                    pTempSpell->GetEffectImplicitTargetAByIndex(SpellEffectIndex(j)) == TARGET_CASTER_COORDINATES)
                 SpellSummary[i].Targets |= 1 << (SELECT_TARGET_ANY_FRIEND - 1);
 
             // Make sure that this spell includes a damage effect
             if (pSpellEffect->Effect == SPELL_EFFECT_SCHOOL_DAMAGE ||
-                pSpellEffect->Effect == SPELL_EFFECT_INSTAKILL ||
-                pSpellEffect->Effect == SPELL_EFFECT_ENVIRONMENTAL_DAMAGE ||
-                pSpellEffect->Effect == SPELL_EFFECT_HEALTH_LEECH)
+                    pSpellEffect->Effect == SPELL_EFFECT_INSTAKILL ||
+                    pSpellEffect->Effect == SPELL_EFFECT_ENVIRONMENTAL_DAMAGE ||
+                    pSpellEffect->Effect == SPELL_EFFECT_HEALTH_LEECH)
                 SpellSummary[i].Effects |= 1 << (SELECT_EFFECT_DAMAGE - 1);
 
             // Make sure that this spell includes a healing effect (or an apply aura with a periodic heal)
             if (pSpellEffect->Effect == SPELL_EFFECT_HEAL ||
-                pSpellEffect->Effect == SPELL_EFFECT_HEAL_MAX_HEALTH ||
-                pSpellEffect->Effect == SPELL_EFFECT_HEAL_MECHANICAL ||
-                (pSpellEffect->Effect == SPELL_EFFECT_APPLY_AURA  && pTempSpell->GetEffectApplyAuraNameByIndex(SpellEffectIndex(j))== 8))
+                    pSpellEffect->Effect == SPELL_EFFECT_HEAL_MAX_HEALTH ||
+                    pSpellEffect->Effect == SPELL_EFFECT_HEAL_MECHANICAL ||
+                    (pSpellEffect->Effect == SPELL_EFFECT_APPLY_AURA  && pTempSpell->GetEffectApplyAuraNameByIndex(SpellEffectIndex(j)) == 8))
                 SpellSummary[i].Effects |= 1 << (SELECT_EFFECT_HEALING - 1);
 
             // Make sure that this spell applies an aura
@@ -521,6 +520,8 @@ enum
     NPC_TALON_KING_IKISS        = 18473,
     NPC_KARGATH_BLADEFIST       = 16808,
     NPC_ANUBARAK                = 29120,
+    NPC_SINDRAGOSA              = 36853,
+    NPC_ZARITHRIAN              = 39746,
 };
 
 bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
@@ -555,7 +556,7 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
                 return false;
             break;
         case NPC_SARTHARION:                                // sartharion (calculate box)
-            if (fX > 3203.97f && fX < 3289.40f && fY < 576.70f && fY > 484.68f)
+            if (fX > 3218.86f && fX < 3275.69f && fY < 572.40f && fY > 484.68f)
                 return false;
             break;
         case NPC_TALON_KING_IKISS:
@@ -572,6 +573,14 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
             break;
         case NPC_ANUBARAK:
             if (fY < 281.0f && fY > 228.0f)
+                return false;
+            break;
+        case NPC_SINDRAGOSA:
+            if (fX > 4314.0f)
+                return false;
+            break;
+        case NPC_ZARITHRIAN:
+            if (fZ > 87.0f)
                 return false;
             break;
         default:

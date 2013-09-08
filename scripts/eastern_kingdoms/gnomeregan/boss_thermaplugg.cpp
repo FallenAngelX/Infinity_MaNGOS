@@ -62,7 +62,7 @@ struct MANGOS_DLL_DECL boss_thermapluggAI : public ScriptedAI
     GuidList m_lSummonedBombGUIDs;
     GuidList m_lLandedBombGUIDs;
 
-    void Reset()
+    void Reset() override
     {
         m_uiKnockAwayTimer = urand(17000, 20000);
         m_uiActivateBombTimer = urand(10000, 15000);
@@ -84,12 +84,12 @@ struct MANGOS_DLL_DECL boss_thermapluggAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_SLAY, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_THERMAPLUGG, DONE);
@@ -97,7 +97,7 @@ struct MANGOS_DLL_DECL boss_thermapluggAI : public ScriptedAI
         m_lSummonedBombGUIDs.clear();
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 

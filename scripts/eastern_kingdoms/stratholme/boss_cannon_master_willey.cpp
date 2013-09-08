@@ -40,7 +40,7 @@ struct MANGOS_DLL_DECL boss_cannon_master_willeyAI : public ScriptedAI
     uint32 m_uiShootTimer;
     uint32 m_uiSummonRiflemanTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiShootTimer          = 1000;
         m_uiPummelTimer         = 7000;

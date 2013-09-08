@@ -114,7 +114,7 @@ class MANGOS_DLL_DECL instance_sunken_temple : public ScriptedInstance
         void SetData(uint32 uiType, uint32 uiData) override;
         uint32 GetData(uint32 uiType) const override;
 
-        void Update(uint32 uiDiff);
+        void Update(uint32 uiDiff) override;
 
         bool ProcessStatueEvent(uint32 uiEventId);
 
