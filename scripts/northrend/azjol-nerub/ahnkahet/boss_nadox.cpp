@@ -63,7 +63,7 @@ struct MANGOS_DLL_DECL mob_ahnkahar_eggAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset() override {}
+    void Reset() {}
     void MoveInLineOfSight(Unit* pWho) override {}
     void AttackStart(Unit* pWho) override {}
 
@@ -125,7 +125,7 @@ struct MANGOS_DLL_DECL boss_nadoxAI : public ScriptedAI
     uint32 m_uiBroodRageTimer;
     uint32 m_uiSummonTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_bBerserk = false;
         m_bGuardianSummoned = false;

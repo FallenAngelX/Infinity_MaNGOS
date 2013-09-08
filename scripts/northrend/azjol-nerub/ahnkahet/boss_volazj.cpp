@@ -94,7 +94,7 @@ struct MANGOS_DLL_DECL boss_volazjAI : public ScriptedAI
     uint8 m_uiInsanityIndex;
     bool m_bIsInsanityInProgress;
 
-    void Reset() override
+    void Reset()
     {
         m_uiCombatPhase         = 1;
         m_uiMindFlayTimer       = 10000;

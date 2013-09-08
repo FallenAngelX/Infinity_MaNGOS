@@ -930,7 +930,7 @@ struct MANGOS_DLL_DECL npc_skywingAI : public npc_escortAI
     uint32 m_uiCycloneTimer;
     uint8 m_uiCycloneCounter;
 
-    void Reset() override
+    void Reset()
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
         {

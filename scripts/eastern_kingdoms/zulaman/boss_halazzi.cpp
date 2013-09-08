@@ -98,7 +98,7 @@ struct MANGOS_DLL_DECL boss_halazziAI : public ScriptedAI
 
     ObjectGuid m_spiritLynxGuid;
 
-    void Reset() override
+    void Reset()
     {
         m_uiPhase           = PHASE_SINGLE;
         m_uiPhaseCounter    = 3;
@@ -316,7 +316,7 @@ struct MANGOS_DLL_DECL boss_spirit_lynxAI : public ScriptedAI
     uint32 m_uiShredArmorTimer;
     bool m_bHasUnited;
 
-    void Reset() override
+    void Reset()
     {
         m_uiFrenzyTimer     = urand(10000, 20000);          // first frenzy after 10-20 seconds
         m_uiShredArmorTimer = 4000;

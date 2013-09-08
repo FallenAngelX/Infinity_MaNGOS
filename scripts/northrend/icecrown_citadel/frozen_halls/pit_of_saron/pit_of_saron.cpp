@@ -49,7 +49,7 @@ struct MANGOS_DLL_DECL npc_ymirjar_deathbringerAI : public ScriptedAI
 
     uint32 m_uiShadowBoltTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiShadowBoltTimer = urand(1000, 3000);
     }
@@ -123,7 +123,7 @@ struct MANGOS_DLL_DECL npc_collapsing_icicleAI : public ScriptedAI
 
     instance_pit_of_saron* m_pInstance;
 
-    void Reset() override
+    void Reset()
     {
         DoCastSpellIfCan(m_creature, SPELL_ICICLE_DUMMY, CAST_TRIGGERED);
         DoCastSpellIfCan(m_creature, SPELL_ICICLE, CAST_TRIGGERED);

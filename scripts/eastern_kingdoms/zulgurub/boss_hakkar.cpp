@@ -65,7 +65,7 @@ struct MANGOS_DLL_DECL boss_hakkarAI : public ScriptedAI
     uint32 m_uiAspectOfThekalTimer;
     uint32 m_uiAspectOfArlokkTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiBloodSiphonTimer       = 90000;
         m_uiCorruptedBloodTimer    = 25000;

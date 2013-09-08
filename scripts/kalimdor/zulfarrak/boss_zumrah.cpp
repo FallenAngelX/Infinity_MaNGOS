@@ -64,7 +64,7 @@ struct MANGOS_DLL_DECL boss_zumrahAI : public ScriptedAI
 
     bool m_bHasTurnedHostile;
 
-    void Reset() override
+    void Reset()
     {
         m_uiShadowBoltTimer         = 1000;
         m_uiShadowBoltVolleyTimer   = urand(6000, 30000);

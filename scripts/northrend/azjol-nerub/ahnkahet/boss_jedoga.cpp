@@ -107,7 +107,7 @@ struct MANGOS_DLL_DECL boss_jedogaAI : public ScriptedAI
 
     GuidList m_lVolunteerGuidList;
 
-    void Reset() override
+    void Reset()
     {
         m_uiThundershockTimer  = 40000;
         m_uiCycloneStrikeTimer = 15000;
@@ -417,7 +417,7 @@ struct MANGOS_DLL_DECL npc_twilight_volunteerAI : public Scripted_NoMovementAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset() override { }
+    void Reset() { }
 
     void JustDied(Unit* pKiller) override
     {

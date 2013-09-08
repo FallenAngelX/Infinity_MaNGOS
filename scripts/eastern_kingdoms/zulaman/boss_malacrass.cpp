@@ -234,7 +234,7 @@ struct MANGOS_DLL_DECL boss_malacrassAI : public ScriptedAI
     std::vector<uint32> m_vAddsEntryList;
     std::vector<uint32> m_vPlayerSpellTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiSpiritBoltsTimer    = 30000;
         m_uiDrainPowerTimer     = 0;

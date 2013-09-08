@@ -1685,7 +1685,7 @@ struct MANGOS_DLL_DECL npc_domesticated_felboarAI : public ScriptedAI
     uint32 m_uiTuberTimer;
     uint8 m_uiTuberStage;
 
-    void Reset() override
+    void Reset()
     {
         m_uiTuberTimer = 0;
         m_uiTuberStage = 0;
@@ -1802,7 +1802,7 @@ struct MANGOS_DLL_DECL npc_veneratus_spawn_nodeAI : public Scripted_NoMovementAI
 {
     npc_veneratus_spawn_nodeAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
-    void Reset() override { }
+    void Reset() { }
 
     void MoveInLineOfSight(Unit* pWho) override
     {

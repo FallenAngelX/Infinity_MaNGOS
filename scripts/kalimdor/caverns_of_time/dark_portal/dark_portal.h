@@ -117,7 +117,7 @@ class MANGOS_DLL_DECL instance_dark_portal : public ScriptedInstance
 
         uint32 GetCurrentRiftId() { return m_uiWorldStateRiftCount; }
 
-        void Update(uint32 uiDiff);
+        void Update(uint32 uiDiff) override;
 
     private:
         bool IsBossTimeRift() { return m_uiWorldStateRiftCount == 6 || m_uiWorldStateRiftCount == 12; }

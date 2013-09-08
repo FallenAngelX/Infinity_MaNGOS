@@ -92,7 +92,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public Scripted_NoMovementAI
     uint32 m_uiDarkFiendsTimer;
     bool m_bIsTransition;
 
-    void Reset() override
+    void Reset()
     {
         m_uiDarknessTimer          = 45000;
         m_uiSummonHumanoidsTimer   = 15000;
@@ -237,7 +237,7 @@ struct MANGOS_DLL_DECL boss_entropiusAI : public ScriptedAI
 
     GuidList m_lSummonedCreaturesList;
 
-    void Reset() override
+    void Reset()
     {
         m_uiBlackHoleTimer = 15000;
         m_uiDarknessTimer = 20000;
@@ -338,7 +338,7 @@ struct MANGOS_DLL_DECL npc_portal_targetAI : public Scripted_NoMovementAI
     uint32 m_uiTransformTimer;
     uint32 m_uiSentinelTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiTransformCount = 0;
         m_uiTransformTimer = 0;
@@ -426,7 +426,7 @@ struct MANGOS_DLL_DECL npc_void_sentinel_summonerAI : public Scripted_NoMovement
 
     instance_sunwell_plateau* m_pInstance;
 
-    void Reset() override { }
+    void Reset() { }
 
     void JustSummoned(Creature* pSummoned) override
     {

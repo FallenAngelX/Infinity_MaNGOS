@@ -682,7 +682,7 @@ struct MANGOS_DLL_DECL npc_dark_matterAI : public ScriptedAI
 
     uint32 m_uiSummonTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiSummonTimer = 0;
     }
@@ -750,7 +750,7 @@ struct MANGOS_DLL_DECL npc_searing_gazeAI : public Scripted_NoMovementAI
 
     bool m_bIsRegularMode;
 
-    void Reset() override
+    void Reset()
     {
         DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SEARING_GAZE : SPELL_SEARING_GAZE_H);
         // despawn manually because of combat bug

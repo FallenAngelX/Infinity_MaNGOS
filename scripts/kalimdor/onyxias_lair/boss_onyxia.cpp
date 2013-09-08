@@ -145,7 +145,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
 
     uint32 m_uiPhaseTimer;
 
-    void Reset() override
+    void Reset()
     {
         if (!IsCombatMovement())
             SetCombatMovement(true);
@@ -174,7 +174,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
         m_uiPhaseTimer = 0;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -192,7 +192,7 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ONYXIA, FAIL);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ONYXIA, DONE);
@@ -225,12 +225,12 @@ struct MANGOS_DLL_DECL boss_onyxiaAI : public ScriptedAI
         pSummoned->SetInCombatWithZone();
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_KILL, m_creature);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_BREATH_EAST_TO_WEST ||
                 pSpell->Id == SPELL_BREATH_WEST_TO_EAST ||

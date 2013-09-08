@@ -81,7 +81,7 @@ struct MANGOS_DLL_DECL boss_nightbaneAI : public npc_escortAI
     uint32 m_uiSmokingBlastTimer;
     uint32 m_uiFireballBarrageTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiPhase                   = PHASE_GROUND;
         m_uiFlightPhase             = 1;

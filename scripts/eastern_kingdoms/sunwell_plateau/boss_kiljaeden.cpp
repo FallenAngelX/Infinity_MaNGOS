@@ -893,7 +893,7 @@ struct MANGOS_DLL_DECL npc_power_blue_flightAI : public ScriptedAI
 
     bool m_bHasPossessed;
 
-    void Reset() override { }
+    void Reset() { }
 
     void JustDied(Unit* /*pKiller*/) override
     {

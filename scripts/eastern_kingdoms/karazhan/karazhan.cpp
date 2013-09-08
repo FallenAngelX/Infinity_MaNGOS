@@ -108,7 +108,7 @@ struct MANGOS_DLL_DECL npc_barnesAI : public npc_escortAI, private DialogueHelpe
 
     ObjectGuid m_spotlightGuid;
 
-    void Reset() override
+    void Reset()
     {
         m_spotlightGuid.Clear();
     }
@@ -370,7 +370,7 @@ struct MANGOS_DLL_DECL npc_image_of_medivhAI : public ScriptedAI, private Dialog
 
     ObjectGuid m_eventStarterGuid;
 
-    void Reset() override { }
+    void Reset() { }
 
     void AttackStart(Unit* /*pWho*/) override { }
     void MoveInLineOfSight(Unit* /*pWho*/) override { }
@@ -459,7 +459,7 @@ struct MANGOS_DLL_DECL npc_image_arcanagosAI : public ScriptedAI
 {
     npc_image_arcanagosAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    void Reset() override { }
+    void Reset() { }
 
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {

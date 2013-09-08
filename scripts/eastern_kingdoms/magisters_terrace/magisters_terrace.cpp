@@ -51,7 +51,7 @@ struct MANGOS_DLL_DECL npc_kalecgosAI : public ScriptedAI
 
     uint32 m_uiTransformTimer;
 
-    void Reset() override
+    void Reset()
     {
         // Check the map id because the same creature entry is involved in other scripted event in other instance
         if (m_creature->GetMapId() != MAP_ID_MAGISTER)

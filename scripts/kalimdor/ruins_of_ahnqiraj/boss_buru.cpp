@@ -69,7 +69,7 @@ struct MANGOS_DLL_DECL boss_buruAI : public ScriptedAI
         m_uiPhase               = PHASE_EGG;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         DoScriptText(EMOTE_TARGET, m_creature, pWho);
         DoCastSpellIfCan(m_creature, SPELL_THORNS);
@@ -205,7 +205,7 @@ struct MANGOS_DLL_DECL npc_buru_eggAI : public Scripted_NoMovementAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         // Explode and Summon hatchling
         DoCastSpellIfCan(m_creature, SPELL_EXPLODE, CAST_TRIGGERED);
@@ -222,7 +222,7 @@ struct MANGOS_DLL_DECL npc_buru_eggAI : public Scripted_NoMovementAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff) override { }
+    void UpdateAI(const uint32 /*uiDiff*/) override { }
 };
 
 CreatureAI* GetAI_npc_buru_egg(Creature* pCreature)

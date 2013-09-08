@@ -695,7 +695,7 @@ struct MANGOS_DLL_DECL npc_lich_king_villageAI : public ScriptedAI, private Dial
     ObjectGuid m_pHeldPlayer;
     bool m_bEventInProgress;
 
-    void Reset() override
+    void Reset()
     {
         m_bEventInProgress = false;
     }
@@ -838,7 +838,7 @@ struct MANGOS_DLL_DECL npc_king_ymironAI : public ScriptedAI, private DialogueHe
 
     GuidList m_lCrowdGuidList;
 
-    void Reset() override
+    void Reset()
     {
         m_uiCrowdSpeechTimer = 0;
         m_bEventInit = false;

@@ -160,7 +160,7 @@ struct MANGOS_DLL_DECL npc_lakota_windsongAI : public npc_escortAI
         for (int i = 0; i < 2; ++i)
             m_creature->SummonCreature(NPC_GRIM_BANDIT,
                                        m_afBanditLoc[i + uiAmbushId][0], m_afBanditLoc[i + uiAmbushId][1], m_afBanditLoc[i + uiAmbushId][2], 0.0f,
-                                       TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
+                                       TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
     }
 };
 
@@ -232,7 +232,7 @@ struct MANGOS_DLL_DECL npc_paoka_swiftmountainAI : public npc_escortAI
         for (int i = 0; i < 3; ++i)
             m_creature->SummonCreature(NPC_WYVERN,
                                        m_afWyvernLoc[i][0], m_afWyvernLoc[i][1], m_afWyvernLoc[i][2], 0.0f,
-                                       TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
+                                       TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
     }
 };
 
@@ -351,7 +351,7 @@ bool GossipHello_npc_plucky_johnson(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_plucky_johnson(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_plucky_johnson(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF)
     {

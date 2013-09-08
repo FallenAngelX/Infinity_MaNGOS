@@ -66,7 +66,7 @@ struct MANGOS_DLL_DECL boss_midnightAI : public ScriptedAI
     uint8 m_uiPhase;
     uint32 m_uiKnockDown;
 
-    void Reset() override
+    void Reset()
     {
         m_uiPhase     = 0;
         m_uiKnockDown = urand(6000, 9000);
@@ -208,7 +208,7 @@ struct MANGOS_DLL_DECL boss_attumenAI : public ScriptedAI
 
     bool m_bHasSummonRider;
 
-    void Reset() override
+    void Reset()
     {
         m_uiCleaveTimer     = urand(10000, 16000);
         m_uiCurseTimer      = 30000;

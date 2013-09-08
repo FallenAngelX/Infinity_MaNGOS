@@ -95,7 +95,7 @@ struct MANGOS_DLL_DECL npc_calvin_montagueAI : public ScriptedAI
     uint32 m_uiPhaseTimer;
     ObjectGuid m_playerGuid;
 
-    void Reset() override
+    void Reset()
     {
         m_uiPhase = 0;
         m_uiPhaseTimer = 5000;

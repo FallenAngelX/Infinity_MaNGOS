@@ -58,7 +58,7 @@ struct MANGOS_DLL_DECL boss_archaedasAI : public ScriptedAI
 
     uint8 m_uiHpPhaseCheck;
 
-    void Reset() override
+    void Reset()
     {
         m_uiAwakeningTimer  = 1000;
         m_uiSubevent        = 0;

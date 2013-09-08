@@ -340,7 +340,7 @@ struct MANGOS_DLL_DECL npc_impale_targetAI : public Scripted_NoMovementAI
 
     uint32 m_uiImpaleTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiImpaleTimer = 3000;
     }

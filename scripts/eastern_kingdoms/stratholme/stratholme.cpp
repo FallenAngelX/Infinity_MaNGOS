@@ -151,7 +151,7 @@ struct MANGOS_DLL_DECL mob_restless_soulAI : public ScriptedAI
     uint32 m_uiDieTimer;
     bool m_bIsTagged;
 
-    void Reset() override
+    void Reset()
     {
         m_taggerGuid.Clear();
         m_uiDieTimer = 5000;
@@ -229,7 +229,7 @@ struct MANGOS_DLL_DECL mobs_spectral_ghostly_citizenAI : public ScriptedAI
     uint32 m_uiDieTimer;
     bool m_bIsTagged;
 
-    void Reset() override
+    void Reset()
     {
         m_uiDieTimer = 5000;
         m_bIsTagged = false;

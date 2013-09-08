@@ -71,7 +71,7 @@ struct MANGOS_DLL_DECL example_escortAI : public npc_escortAI
     }
 
     // Pure Virtual Functions (Have to be implemented)
-    void WaypointReached(uint32 uiWP)
+    void WaypointReached(uint32 uiWP) override
     {
         switch (uiWP)
         {
@@ -94,7 +94,7 @@ struct MANGOS_DLL_DECL example_escortAI : public npc_escortAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (HasEscortState(STATE_ESCORT_ESCORTING))
         {
@@ -129,7 +129,7 @@ struct MANGOS_DLL_DECL example_escortAI : public npc_escortAI
         npc_escortAI::JustDied(pKiller);
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 uiDiff) override
     {
         // Combat check
         if (m_creature->SelectHostileTarget() && m_creature->getVictim())
@@ -191,7 +191,7 @@ bool GossipHello_example_escort(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_example_escort(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_example_escort(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     example_escortAI* pEscortAI = dynamic_cast<example_escortAI*>(pCreature->AI());
 

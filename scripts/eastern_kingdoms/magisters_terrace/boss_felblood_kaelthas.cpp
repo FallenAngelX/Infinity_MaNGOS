@@ -120,7 +120,7 @@ struct MANGOS_DLL_DECL boss_felblood_kaelthasAI : public ScriptedAI, private Dia
     bool m_bFirstGravityLapse;
     bool m_bHasTaunted;
 
-    void Reset() override
+    void Reset()
     {
         m_uiFireballTimer       = 0;
         m_uiPhoenixTimer        = 10000;
@@ -445,7 +445,7 @@ struct MANGOS_DLL_DECL mob_felkael_phoenixAI : public ScriptedAI
 
     bool m_bFakeDeath;
 
-    void Reset() override
+    void Reset()
     {
         m_uiBurnTimer = 2000;
         m_bFakeDeath = false;
@@ -566,7 +566,7 @@ struct MANGOS_DLL_DECL mob_felkael_phoenix_eggAI : public Scripted_NoMovementAI
 {
     mob_felkael_phoenix_eggAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
-    void Reset() override {}
+    void Reset() {}
     void MoveInLineOfSight(Unit* /*pWho*/) override {}
     void AttackStart(Unit* /*pWho*/) override {}
     void UpdateAI(const uint32 /*uiDiff*/) override {}
@@ -589,7 +589,7 @@ struct MANGOS_DLL_DECL mob_arcane_sphereAI : public ScriptedAI
     uint32 m_uiDespawnTimer;
     uint32 m_uiChangeTargetTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiDespawnTimer      = 30000;
         m_uiChangeTargetTimer = urand(6000, 12000);

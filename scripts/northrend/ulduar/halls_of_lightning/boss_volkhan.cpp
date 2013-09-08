@@ -88,7 +88,7 @@ struct MANGOS_DLL_DECL boss_volkhanAI : public ScriptedAI
     uint32 m_uiHeatTimer;
     uint32 m_uiTemperTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_bHasShattered = false;
 
@@ -335,7 +335,7 @@ struct MANGOS_DLL_DECL mob_molten_golemAI : public ScriptedAI
     uint32 m_uiBlastTimer;
     uint32 m_uiImmolationTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiBlastTimer = 20000;
         m_uiImmolationTimer = 5000;

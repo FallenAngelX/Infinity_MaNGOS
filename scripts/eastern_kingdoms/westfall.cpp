@@ -58,7 +58,7 @@ struct MANGOS_DLL_DECL npc_daphne_stilwellAI : public npc_escortAI
     uint32 m_uiWPHolder;
     uint32 m_uiShootTimer;
 
-    void Reset() override
+    void Reset()
     {
         if (HasEscortState(STATE_ESCORT_ESCORTING))
         {
@@ -226,7 +226,7 @@ struct MANGOS_DLL_DECL npc_defias_traitorAI : public npc_escortAI
         DoScriptText(urand(0, 1) ? SAY_AGGRO_1 : SAY_AGGRO_2, m_creature, pWho);
     }
 
-    void Reset() override { }
+    void Reset() { }
 };
 
 bool QuestAccept_npc_defias_traitor(Player* pPlayer, Creature* pCreature, const Quest* pQuest)

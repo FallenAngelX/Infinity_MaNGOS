@@ -70,7 +70,7 @@ struct MANGOS_DLL_DECL boss_blackheart_the_inciterAI : public ScriptedAI
 
     GuidVector m_vTargetsGuids;
 
-    void Reset() override
+    void Reset()
     {
         m_uiInciteChaosWaitTimer = 0;
         m_uiInciteChaosTimer = 15000;

@@ -52,7 +52,7 @@ struct MANGOS_DLL_DECL boss_herodAI : public ScriptedAI
     uint32 m_uiCleaveTimer;
     uint32 m_uiWhirlwindTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_bTraineeSay = false;
         m_bEnrage     = false;
@@ -143,7 +143,7 @@ struct MANGOS_DLL_DECL mob_scarlet_traineeAI : public npc_escortAI
 
     uint32 m_uiStartTimer;
 
-    void Reset() override { }
+    void Reset() { }
     void WaypointReached(uint32 /*uiPointId*/) override {}
 
     void UpdateEscortAI(const uint32 uiDiff) override

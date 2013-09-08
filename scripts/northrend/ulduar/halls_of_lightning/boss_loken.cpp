@@ -72,7 +72,7 @@ struct MANGOS_DLL_DECL boss_lokenAI : public ScriptedAI
 
     uint32 m_uiHealthAmountModifier;
 
-    void Reset() override
+    void Reset()
     {
         m_uiArcLightningTimer = 15000;
         m_uiLightningNovaTimer = 20000;

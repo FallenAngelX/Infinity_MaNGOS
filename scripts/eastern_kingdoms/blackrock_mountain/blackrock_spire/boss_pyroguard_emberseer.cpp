@@ -66,7 +66,7 @@ struct MANGOS_DLL_DECL boss_pyroguard_emberseerAI : public ScriptedAI
     uint32 m_uiPyroBlastTimer;
     uint8 m_uiGrowingStacks;
 
-    void Reset() override
+    void Reset()
     {
         m_uiEncageTimer         = 10000;
         m_uiFireNovaTimer       = 6000;

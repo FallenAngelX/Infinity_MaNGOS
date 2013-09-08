@@ -74,7 +74,7 @@ struct MANGOS_DLL_DECL boss_nalorakkAI : public ScriptedAI
     uint8 m_uiCurrentWave;
     bool m_bIsInBearForm;
 
-    void Reset() override
+    void Reset()
     {
         m_uiChangeFormTimer         = 45000;
         m_uiBrutalSwipeTimer        = 12000;

@@ -37,7 +37,7 @@ struct MANGOS_DLL_DECL npc_ragged_johnAI : public ScriptedAI
 {
     npc_ragged_johnAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    void Reset() override {}
+    void Reset() {}
 
     void MoveInLineOfSight(Unit* who) override
     {
@@ -209,7 +209,7 @@ struct MANGOS_DLL_DECL npc_grark_lorkrubAI : public npc_escortAI, private Dialog
     uint8 m_uiKilledCreatures;
     bool m_bIsFirstSearScale;
 
-    void Reset() override
+    void Reset()
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
         {

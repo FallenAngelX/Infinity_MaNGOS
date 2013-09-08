@@ -51,7 +51,7 @@ struct MANGOS_DLL_DECL npc_00x09hlAI : public npc_escortAI
 {
     npc_00x09hlAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
 
-    void Reset() override { }
+    void Reset() { }
 
     void WaypointReached(uint32 uiPointId) override
     {
@@ -176,7 +176,7 @@ struct MANGOS_DLL_DECL npc_rinjiAI : public npc_escortAI
     uint32 m_uiPostEventTimer;
     int m_iSpawnId;
 
-    void Reset() override
+    void Reset()
     {
         m_uiPostEventCount = 0;
         m_uiPostEventTimer = 3000;

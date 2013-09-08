@@ -66,7 +66,7 @@ struct MANGOS_DLL_DECL boss_amanitarAI : public ScriptedAI
     uint32 m_uiMiniTimer;
     uint32 m_uiMushroomTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiBashTimer       = urand(7000, 10000);
         m_uiVenomBoltTimer  = urand(10000, 15000);
@@ -199,7 +199,7 @@ struct MANGOS_DLL_DECL npc_amanitar_mushroomAI : public Scripted_NoMovementAI
 {
     npc_amanitar_mushroomAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
-    void Reset() override { }
+    void Reset() { }
 
     void AttackStart(Unit* pWho) override { }
     void MoveInLineOfSight(Unit* pWho) override { }

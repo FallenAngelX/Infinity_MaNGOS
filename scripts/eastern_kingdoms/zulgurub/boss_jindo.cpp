@@ -65,7 +65,7 @@ struct MANGOS_DLL_DECL boss_jindoAI : public ScriptedAI
     uint32 m_uiDelusionsTimer;
     uint32 m_uiTeleportTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiBrainWashTotemTimer     = 20000;
         m_uiHealingWardTimer        = 16000;
@@ -174,7 +174,7 @@ struct MANGOS_DLL_DECL mob_healing_wardAI : public ScriptedAI
 
     uint32 m_uiHealTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiHealTimer = 3000;                               // Timer unknown, sources go over 1s, per tick to 3s, keep 3s as in original script
     }

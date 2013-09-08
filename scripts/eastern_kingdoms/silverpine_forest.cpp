@@ -97,7 +97,7 @@ struct MANGOS_DLL_DECL npc_deathstalker_erlandAI : public npc_escortAI
         }
     }
 
-    void Reset() override {}
+    void Reset() {}
 
     void Aggro(Unit* who) override
     {
@@ -177,7 +177,7 @@ struct MANGOS_DLL_DECL npc_deathstalker_faerleiaAI : public ScriptedAI
 {
     npc_deathstalker_faerleiaAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    void Reset() override {}
+    void Reset() {}
 
     ObjectGuid m_playerGuid;
     uint32 m_uiWaveTimer;

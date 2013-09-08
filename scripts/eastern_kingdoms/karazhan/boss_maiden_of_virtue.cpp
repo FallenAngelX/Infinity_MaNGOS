@@ -55,7 +55,7 @@ struct MANGOS_DLL_DECL boss_maiden_of_virtueAI : public ScriptedAI
     uint32 m_uiHolywrathTimer;
     uint32 m_uiHolygroundTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiRepentanceTimer    = urand(25000, 40000);
         m_uiHolyfireTimer      = urand(8000, 25000);

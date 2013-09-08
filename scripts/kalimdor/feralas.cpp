@@ -50,7 +50,7 @@ struct MANGOS_DLL_DECL npc_oox22feAI : public npc_escortAI
 {
     npc_oox22feAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
 
-    void WaypointReached(uint32 i)
+    void WaypointReached(uint32 i) override
     {
         switch (i)
         {
@@ -91,7 +91,7 @@ struct MANGOS_DLL_DECL npc_oox22feAI : public npc_escortAI
             m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
     }
 
-    void Aggro(Unit* who)
+    void Aggro(Unit* /*who*/) override
     {
         // For an small probability the npc says something when he get aggro
         switch (urand(0, 9))
@@ -101,7 +101,7 @@ struct MANGOS_DLL_DECL npc_oox22feAI : public npc_escortAI
         }
     }
 
-    void JustSummoned(Creature* summoned)
+    void JustSummoned(Creature* summoned) override
     {
         summoned->AI()->AttackStart(m_creature);
     }

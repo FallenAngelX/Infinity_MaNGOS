@@ -79,7 +79,7 @@ struct MANGOS_DLL_DECL boss_forgemaster_garfrostAI : public ScriptedAI
     uint32 m_uiDeepFreezeTimer;
     uint32 m_uiCheckPermafrostTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiCheckPermafrostTimer = 2000;
         m_uiThrowSaroniteTimer = 13000;

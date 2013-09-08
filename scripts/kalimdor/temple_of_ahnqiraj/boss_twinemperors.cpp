@@ -85,7 +85,7 @@ struct MANGOS_DLL_DECL boss_twin_emperorsAI : public ScriptedAI
     }
 
     // Workaround for the shared health pool
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDoneBy*/, uint32& uiDamage) override
     {
         if (!m_pInstance)
             return;
@@ -106,7 +106,7 @@ struct MANGOS_DLL_DECL boss_twin_emperorsAI : public ScriptedAI
     }
 
     // Workaround for the shared health pool
-    void HealedBy(Unit * pHealer, uint32& uiHealedAmount) override
+    void HealedBy(Unit* pHealer, uint32& uiHealedAmount) override
     {
         if (!m_pInstance)
             return;
@@ -126,7 +126,7 @@ struct MANGOS_DLL_DECL boss_twin_emperorsAI : public ScriptedAI
             m_pInstance->SetData(TYPE_TWINS, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_TWINS, DONE);
@@ -138,7 +138,7 @@ struct MANGOS_DLL_DECL boss_twin_emperorsAI : public ScriptedAI
             m_pInstance->SetData(TYPE_TWINS, FAIL);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_TWIN_TELEPORT)
         {
@@ -155,7 +155,7 @@ struct MANGOS_DLL_DECL boss_twin_emperorsAI : public ScriptedAI
     virtual bool DoHandleBerserk() = 0;
 
     // Return true to handle shared timers and MeleeAttack
-    virtual bool UpdateEmperorAI(const uint32 uiDiff) { return true; }
+    virtual bool UpdateEmperorAI(const uint32 /*uiDiff*/) { return true; }
 
     void UpdateAI(const uint32 uiDiff) override
     {
@@ -219,7 +219,7 @@ struct MANGOS_DLL_DECL boss_veknilashAI : public boss_twin_emperorsAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         boss_twin_emperorsAI::Aggro(pWho);
 
@@ -232,7 +232,7 @@ struct MANGOS_DLL_DECL boss_veknilashAI : public boss_twin_emperorsAI
         }
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_VEKNILASH_SLAY, m_creature);
     }
@@ -329,7 +329,7 @@ struct MANGOS_DLL_DECL boss_veklorAI : public boss_twin_emperorsAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         boss_twin_emperorsAI::Aggro(pWho);
 
@@ -342,7 +342,7 @@ struct MANGOS_DLL_DECL boss_veklorAI : public boss_twin_emperorsAI
         }
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_VEKLOR_SLAY, m_creature);
     }

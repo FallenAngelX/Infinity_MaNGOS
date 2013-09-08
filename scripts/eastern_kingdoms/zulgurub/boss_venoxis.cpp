@@ -68,7 +68,7 @@ struct MANGOS_DLL_DECL boss_venoxisAI : public ScriptedAI
     bool m_bPhaseTwo;
     bool m_bInBerserk;
 
-    void Reset() override
+    void Reset()
     {
         m_uiHolyWrathTimer      = 40000;
         m_uiVenomSpitTimer      = 5500;

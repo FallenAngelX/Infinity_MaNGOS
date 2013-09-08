@@ -125,7 +125,7 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI, private DialogueHel
     bool m_bCanDoMeleeAttack;
     bool m_bIsIntroInProgress;
 
-    void Reset() override
+    void Reset()
     {
         m_uiSlashTimer      = 11000;
         m_uiStompTimer      = 30000;

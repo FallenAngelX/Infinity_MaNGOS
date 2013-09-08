@@ -53,7 +53,7 @@ struct MANGOS_DLL_DECL npc_spirit_guideAI : public ScriptedAI
         Reset();
     }
 
-    void Reset() override {}
+    void Reset() {}
 
     void UpdateAI(const uint32 /*uiDiff*/) override
     {

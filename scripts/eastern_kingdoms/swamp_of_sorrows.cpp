@@ -54,7 +54,7 @@ struct MANGOS_DLL_DECL npc_galen_goodwardAI : public npc_escortAI
     ObjectGuid m_galensCageGuid;
     uint32 m_uiPeriodicSay;
 
-    void Reset() override
+    void Reset()
     {
         m_uiPeriodicSay = 6000;
     }

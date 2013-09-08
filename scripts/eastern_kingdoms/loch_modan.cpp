@@ -112,7 +112,7 @@ struct MANGOS_DLL_DECL npc_miranAI: public npc_escortAI
 
     uint8 m_uiDwarves;
 
-    void Reset() override
+    void Reset()
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
             m_uiDwarves = 0;

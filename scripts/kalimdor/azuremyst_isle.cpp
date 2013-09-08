@@ -222,12 +222,12 @@ struct MANGOS_DLL_DECL npc_engineer_spark_overgrindAI : public ScriptedAI
         m_bIsTreeEvent = false;
     }
 
-    void Aggro(Unit* who)
+    void Aggro(Unit* who) override
     {
         DoScriptText(SAY_ATTACK, m_creature, who);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 diff) override
     {
         if (!m_creature->isInCombat() && !m_bIsTreeEvent)
         {
@@ -273,7 +273,7 @@ bool GossipHello_npc_engineer_spark_overgrind(Player* pPlayer, Creature* pCreatu
     return true;
 }
 
-bool GossipSelect_npc_engineer_spark_overgrind(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_engineer_spark_overgrind(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF)
     {
@@ -303,9 +303,9 @@ struct MANGOS_DLL_DECL npc_injured_draeneiAI : public ScriptedAI
         }
     }
 
-    void MoveInLineOfSight(Unit* pWho) override { }          // ignore everyone around them (won't aggro anything)
+    void MoveInLineOfSight(Unit* /*pWho*/) override {}          // ignore everyone around them (won't aggro anything)
 
-    void UpdateAI(const uint32 uiDiff) override {}
+    void UpdateAI(const uint32 /*uiDiff*/) override {}
 };
 
 CreatureAI* GetAI_npc_injured_draenei(Creature* pCreature)
@@ -359,7 +359,7 @@ struct MANGOS_DLL_DECL npc_magwinAI : public npc_escortAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         DoScriptText(SAY_AGGRO, m_creature, pWho);
     }

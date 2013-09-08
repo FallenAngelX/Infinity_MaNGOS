@@ -276,7 +276,7 @@ struct MANGOS_DLL_DECL npc_bloodmaul_stout_triggerAI : public ScriptedAI
 
     ObjectGuid m_selectedOgreGuid;
 
-    void Reset() override
+    void Reset()
     {
         m_uiStartTimer = 1000;
         m_bHasValidOgre = false;
@@ -506,7 +506,7 @@ struct MANGOS_DLL_DECL npc_simon_game_bunnyAI : public ScriptedAI
 
     ObjectGuid m_masterPlayerGuid;
 
-    void Reset() override
+    void Reset()
     {
         m_uiGamePhase  = PHASE_LEVEL_PREPARE;
         m_bIsEventStarted = false;

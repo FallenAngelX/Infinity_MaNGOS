@@ -114,7 +114,7 @@ struct MANGOS_DLL_DECL boss_aranAI : public ScriptedAI
     bool m_bIsDrinking;
     bool m_bDrinkInturrupted;
 
-    void Reset() override
+    void Reset()
     {
         m_uiLastSuperSpell      = urand(SUPER_FLAME_WREATH, SUPER_ARCANE_EXPL);
         m_uiLastNormalSpell     = urand(0, 2);
@@ -403,7 +403,7 @@ struct MANGOS_DLL_DECL npc_shade_of_aran_blizzardAI : public ScriptedAI
 {
     npc_shade_of_aran_blizzardAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    void Reset() override { }
+    void Reset() { }
     void MoveInLineOfSight(Unit* /*pWho*/) override { }
     void AttackStart(Unit* /*pWho*/) override { }
     void UpdateAI(const uint32 /*uiDiff*/) override { }

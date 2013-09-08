@@ -49,7 +49,7 @@ struct MANGOS_DLL_DECL npc_tapoke_slim_jahnAI : public npc_escortAI
 
     bool m_bFriendSummoned;
 
-    void Reset() override
+    void Reset()
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
             m_bFriendSummoned = false;

@@ -81,7 +81,7 @@ struct MANGOS_DLL_DECL boss_taldaramAI : public ScriptedAI
 
     GuidList m_lFlameOrbsGuidList;
 
-    void Reset() override
+    void Reset()
     {
         // Timers seem to be very random...
         m_uiBloodthirstTimer    = urand(20000, 25000);

@@ -65,7 +65,7 @@ struct MANGOS_DLL_DECL npc_kyle_the_frenziedAI : public ScriptedAI
             m_creature->UpdateEntry(NPC_KYLE_FRENZIED);
     }
 
-    void SpellHit(Unit* pCaster, SpellEntry const* pSpell)
+    void SpellHit(Unit* pCaster, SpellEntry const* pSpell) override
     {
         if (!m_creature->getVictim() && !m_bEvent && pSpell->Id == SPELL_LUNCH)
         {
@@ -94,7 +94,7 @@ struct MANGOS_DLL_DECL npc_kyle_the_frenziedAI : public ScriptedAI
             m_bIsMovingToLunch = false;
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 diff) override
     {
         if (m_bEvent)
         {

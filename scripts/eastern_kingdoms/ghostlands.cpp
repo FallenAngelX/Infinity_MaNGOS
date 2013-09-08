@@ -126,7 +126,7 @@ struct MANGOS_DLL_DECL npc_ranger_lilathaAI : public npc_escortAI
         }
     }
 
-    void Reset() override
+    void Reset()
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
         {

@@ -152,7 +152,7 @@ struct MANGOS_DLL_DECL boss_zuljinAI : public ScriptedAI
 
     GuidList m_lSummonsList;
 
-    void Reset() override
+    void Reset()
     {
         m_uiHealthCheck         = 80;
         m_uiPhase               = PHASE_TROLL;
@@ -495,7 +495,7 @@ struct MANGOS_DLL_DECL npc_feather_vortexAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset() override { }
+    void Reset() { }
 
     void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry) override
     {

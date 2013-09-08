@@ -52,7 +52,7 @@ struct MANGOS_DLL_DECL npc_medivh_black_morassAI : public ScriptedAI
 
     void Reset() { }
 
-    void AttackStart(Unit* pWho) override { }
+    void AttackStart(Unit* /*pWho*/) override { }
 
     void JustSummoned(Creature* pSummoned) override
     {
@@ -74,7 +74,7 @@ struct MANGOS_DLL_DECL npc_medivh_black_morassAI : public ScriptedAI
         pSummoned->CastSpell(m_creature, SPELL_CORRUPT, false);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MEDIVH, FAIL);
@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL npc_medivh_black_morassAI : public ScriptedAI
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff) override { }
+    void UpdateAI(const uint32 /*uiDiff*/) override { }
 };
 
 CreatureAI* GetAI_npc_medivh_black_morass(Creature* pCreature)
@@ -279,7 +279,7 @@ struct MANGOS_DLL_DECL npc_time_riftAI : public ScriptedAI
         }
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         switch (pSummoned->GetEntry())
         {
@@ -308,7 +308,7 @@ struct MANGOS_DLL_DECL npc_time_riftAI : public ScriptedAI
         pSummoned->CastSpell(pSummoned, SPELL_CORRUPT_AEONUS, false);
     }
 
-    void UpdateAI(const uint32 uiDiff) override { }
+    void UpdateAI(const uint32 /*uiDiff*/) override { }
 };
 
 CreatureAI* GetAI_npc_time_rift(Creature* pCreature)

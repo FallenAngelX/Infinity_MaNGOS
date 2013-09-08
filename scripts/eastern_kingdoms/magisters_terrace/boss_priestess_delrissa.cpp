@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL boss_priestess_delrissaAI : public ScriptedAI
     uint32 m_uiMedallionTimer;
     uint8 m_uiPlayersKilled;
 
-    void Reset() override
+    void Reset()
     {
         m_uiHealTimer       = 15000;
         m_uiRenewTimer      = 10000;
@@ -297,7 +297,7 @@ struct MANGOS_DLL_DECL priestess_companion_commonAI : public ScriptedAI
     uint32 m_uiMedallionTimer;
     bool m_bUsedPotion;
 
-    void Reset() override
+    void Reset()
     {
         m_bUsedPotion = false;
 
@@ -395,7 +395,7 @@ struct MANGOS_DLL_DECL npc_kagani_nightstrikeAI : public priestess_companion_com
     uint32 m_uiEviscerateTimer;
     uint32 m_uiVanishEndTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiGougeTimer      = 5500;
         m_uiKickTimer       = 7000;
@@ -512,7 +512,7 @@ struct MANGOS_DLL_DECL npc_ellris_duskhallowAI : public priestess_companion_comm
     uint32 m_uiFearTimer;
     uint32 m_uiDeathCoilTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiImmolateTimer       = 6000;
         m_uiShadowBoltTimer     = 3000;
@@ -634,7 +634,7 @@ struct MANGOS_DLL_DECL npc_eramas_brightblazeAI : public priestess_companion_com
     uint32 m_uiKnockdownTimer;
     uint32 m_uiSnapKickTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiKnockdownTimer = 6000;
         m_uiSnapKickTimer  = 4500;
@@ -703,7 +703,7 @@ struct MANGOS_DLL_DECL npc_yazzaiAI : public priestess_companion_commonAI
     uint32 m_uiFrostboltTimer;
     uint32 m_uiBlinkTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_bHasIceBlocked    = false;
 
@@ -839,7 +839,7 @@ struct MANGOS_DLL_DECL npc_warlord_salarisAI : public priestess_companion_common
     uint32 m_uiHamstringTimer;
     uint32 m_uiMortalStrikeTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiInterceptStunTimer      = 500;
         m_uiDisarmTimer             = 6000;
@@ -953,7 +953,7 @@ struct MANGOS_DLL_DECL npc_garaxxasAI : public priestess_companion_commonAI
     uint32 m_uiWingClipTimer;
     uint32 m_uiFreezingTrapTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiAimedShotTimer      = 6000;
         m_uiShootTimer          = 2500;
@@ -1083,7 +1083,7 @@ struct MANGOS_DLL_DECL npc_apokoAI : public priestess_companion_commonAI
     uint32 m_uiHealingWaveTimer;
     uint32 m_uiFrostShockTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiTotemTimer       = 0;
         m_uiWarStompTimer    = 10000;
@@ -1183,7 +1183,7 @@ struct MANGOS_DLL_DECL npc_zelfanAI : public priestess_companion_commonAI
     uint32 m_uiHighExplosiveSheepTimer;
     uint32 m_uiFelIronBombTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiGoblinDragonGunTimer    = 20000;
         m_uiRocketLaunchTimer       = 7000;

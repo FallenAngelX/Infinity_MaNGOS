@@ -86,7 +86,7 @@ struct MANGOS_DLL_DECL boss_jeklikAI : public ScriptedAI
 
     GuidList m_lBombRiderGuidsList;
 
-    void Reset() override
+    void Reset()
     {
         m_uiChargeTimer         = 20000;
         m_uiSwoopTimer          = 5000;
@@ -317,7 +317,7 @@ struct MANGOS_DLL_DECL npc_gurubashi_bat_riderAI : public ScriptedAI
     uint32 m_uiInfectedBiteTimer;
     uint32 m_uiBattleCommandTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiInfectedBiteTimer = 6500;
         m_uiBattleCommandTimer = 8000;

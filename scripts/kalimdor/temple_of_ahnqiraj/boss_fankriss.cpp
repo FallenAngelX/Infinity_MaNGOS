@@ -72,7 +72,7 @@ struct MANGOS_DLL_DECL boss_fankrissAI : public ScriptedAI
         m_uiEntangleSummonTimer = 0;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_FANKRISS, IN_PROGRESS);
@@ -84,7 +84,7 @@ struct MANGOS_DLL_DECL boss_fankrissAI : public ScriptedAI
             m_pInstance->SetData(TYPE_FANKRISS, FAIL);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_FANKRISS, DONE);

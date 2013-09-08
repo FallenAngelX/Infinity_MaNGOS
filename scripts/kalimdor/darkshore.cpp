@@ -96,7 +96,7 @@ struct MANGOS_DLL_DECL npc_kerlonianAI : public FollowerAI
         }
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
         if (HasFollowState(STATE_FOLLOW_INPROGRESS | STATE_FOLLOW_PAUSED) && pSpell->Id == SPELL_AWAKEN)
             ClearSleeping();
@@ -135,7 +135,7 @@ struct MANGOS_DLL_DECL npc_kerlonianAI : public FollowerAI
         SetFollowPaused(false);
     }
 
-    void UpdateFollowerAI(const uint32 uiDiff)
+    void UpdateFollowerAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {
@@ -275,13 +275,13 @@ struct MANGOS_DLL_DECL npc_prospector_remtravelAI : public npc_escortAI
 
     void Reset() { }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         if (urand(0, 1))
             DoScriptText(SAY_REM_AGGRO, m_creature, pWho);
     }
 
-    void JustSummoned(Creature* pSummoned) override
+    void JustSummoned(Creature* /*pSummoned*/) override
     {
         // unsure if it should be any
         // pSummoned->AI()->AttackStart(m_creature);
@@ -366,7 +366,7 @@ bool GossipHello_npc_threshwackonator(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_threshwackonator(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_threshwackonator(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
@@ -432,7 +432,7 @@ struct MANGOS_DLL_DECL npc_volcorAI : public npc_escortAI
             m_uiQuestId = 0;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         // shouldn't always use text on agro
         switch (urand(0, 4))
@@ -560,11 +560,11 @@ struct MANGOS_DLL_DECL npc_theryluneAI : public npc_escortAI
     npc_theryluneAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
 
 
-    void Reset() override {}
+    void Reset() {}
 
     void WaypointReached(uint32 uiPointId) override
     {
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 17:
                 if (Player* pPlayer = GetPlayerForEscort())

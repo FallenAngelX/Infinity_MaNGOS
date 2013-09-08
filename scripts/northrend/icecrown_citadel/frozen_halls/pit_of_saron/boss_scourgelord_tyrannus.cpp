@@ -74,7 +74,7 @@ struct MANGOS_DLL_DECL boss_tyrannusAI : public ScriptedAI
     uint32 m_uiUnholyPowerTimer;
     uint32 m_uiMarkOfRimefangTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiForcefulSmashTimer  = 10000;
         m_uiOverlordsBrandTimer = 9000;
@@ -224,7 +224,7 @@ struct MANGOS_DLL_DECL boss_rimefang_posAI : public ScriptedAI
     uint32 m_uiIcyBlastTimer;
     bool m_bHasDoneIntro;
 
-    void Reset() override
+    void Reset()
     {
         m_uiIcyBlastTimer = 8000;
     }

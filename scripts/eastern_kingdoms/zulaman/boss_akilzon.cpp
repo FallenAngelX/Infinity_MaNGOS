@@ -68,7 +68,7 @@ struct MANGOS_DLL_DECL boss_akilzonAI : public ScriptedAI
     uint32 m_uiSummonEagleTimer;
     uint32 m_uiBerserkTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiStaticDisruptTimer  = urand(7000, 14000);
         m_uiCallLightTimer      = urand(15000, 25000);
@@ -221,7 +221,7 @@ struct MANGOS_DLL_DECL mob_soaring_eagleAI : public ScriptedAI
     uint32 m_uiReturnTimer;
     bool m_bCanMoveToRandom;
 
-    void Reset() override
+    void Reset()
     {
         m_uiEagleSwoopTimer = 0;
         m_uiReturnTimer     = 800;

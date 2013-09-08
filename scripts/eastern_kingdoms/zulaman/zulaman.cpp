@@ -50,7 +50,7 @@ struct MANGOS_DLL_DECL npc_forest_frogAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset() override { }
+    void Reset() { }
 
     void DoSpawnRandom()
     {
@@ -159,7 +159,7 @@ struct MANGOS_DLL_DECL npc_harrison_jones_zaAI : public npc_escortAI
         }
     }
 
-    void Reset() override { }
+    void Reset() { }
 
     void StartEvent()
     {

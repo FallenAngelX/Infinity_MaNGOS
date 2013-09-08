@@ -215,7 +215,7 @@ struct MANGOS_DLL_DECL npc_echo_of_medivhAI : public ScriptedAI
 
     uint32 m_uiCheatTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiCheatTimer = 90000;
     }
@@ -316,7 +316,7 @@ struct MANGOS_DLL_DECL npc_chess_piece_genericAI : public ScriptedAI
     bool m_bIsPrimarySpell;
     float m_fCurrentOrientation;
 
-    void Reset() override
+    void Reset()
     {
         m_uiMoveTimer = 0;
         m_uiMoveCommandTimer = 1000;

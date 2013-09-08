@@ -80,7 +80,7 @@ struct MANGOS_DLL_DECL boss_terestianAI : public ScriptedAI
 
     bool m_bSummonedPortals;
 
-    void Reset() override
+    void Reset()
     {
         m_uiSummonKilrekTimer   = 0;
         m_uiSacrificeTimer      = 30000;
@@ -233,7 +233,7 @@ struct MANGOS_DLL_DECL npc_fiendish_portalAI : public ScriptedAI
 
     uint32 m_uiSummonTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiSummonTimer = 5000;
     }
@@ -261,7 +261,7 @@ struct MANGOS_DLL_DECL mob_demon_chainAI : public Scripted_NoMovementAI
 {
     mob_demon_chainAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
-    void Reset() override { }
+    void Reset() { }
     void MoveInLineOfSight(Unit* /*pWho*/) override { }
     void AttackStart(Unit* /*pWho*/) override { }
     void UpdateAI(const uint32 /*uiDiff*/) override { }

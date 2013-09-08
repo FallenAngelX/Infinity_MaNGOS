@@ -45,7 +45,7 @@ struct MANGOS_DLL_DECL boss_arcanist_doanAI : public ScriptedAI
     uint32 m_uiDetonationTimer;
     bool bShielded;
 
-    void Reset() override
+    void Reset()
     {
         m_uiPolymorphTimer       = 15000;
         m_uiSilenceTimer         = 7500;

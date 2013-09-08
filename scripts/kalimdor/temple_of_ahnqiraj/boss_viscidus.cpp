@@ -72,7 +72,7 @@ struct MANGOS_DLL_DECL boss_viscidusAI : public ScriptedAI
         m_uiPoisonBoltVolleyTimer = urand(10000, 15000);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoCastSpellIfCan(m_creature, SPELL_TOXIN);
 
@@ -86,7 +86,7 @@ struct MANGOS_DLL_DECL boss_viscidusAI : public ScriptedAI
             m_pInstance->SetData(TYPE_VISCIDUS, FAIL);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_VISCIDUS, DONE);

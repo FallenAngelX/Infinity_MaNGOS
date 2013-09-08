@@ -88,7 +88,7 @@ struct MANGOS_DLL_DECL npc_kelerun_bloodmournAI : public ScriptedAI
 
     bool m_bIsEventInProgress;
 
-    void Reset() override
+    void Reset()
     {
         m_creature->SetUInt32Value(UNIT_NPC_FLAGS, m_uiNpcFlags);
 
@@ -274,7 +274,7 @@ struct MANGOS_DLL_DECL npc_prospector_anvilwardAI : public npc_escortAI
     // CreatureAI functions
     npc_prospector_anvilwardAI(Creature* pCreature) : npc_escortAI(pCreature) {Reset();}
 
-    void Reset() override { }
+    void Reset() { }
 
     // Pure Virtual Functions
     void WaypointReached(uint32 uiPointId) override
@@ -355,7 +355,7 @@ struct MANGOS_DLL_DECL npc_apprentice_mirvedaAI : public ScriptedAI
     uint32 m_uiFireballTimer;
     ObjectGuid m_playerGuid;
 
-    void Reset() override
+    void Reset()
     {
         m_uiMobCount      = 0;
         m_playerGuid.Clear();

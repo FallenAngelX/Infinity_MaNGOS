@@ -98,7 +98,7 @@ struct MANGOS_DLL_DECL boss_ahuneAI : public Scripted_NoMovementAI
 
     ObjectGuid m_frozenCoreGuid;
 
-    void Reset() override
+    void Reset()
     {
         m_uiPhase               = PHASE_GROUND;
         m_uiPhaseChangeTimer    = 90000;
@@ -281,7 +281,7 @@ struct MANGOS_DLL_DECL npc_frozen_coreAI : public Scripted_NoMovementAI
 
     ObjectGuid m_ahuheGuid;
 
-    void Reset() override
+    void Reset()
     {
         if (m_creature->IsTemporarySummon())
             m_ahuheGuid = ((TemporarySummon*)m_creature)->GetSummonerGuid();
@@ -329,7 +329,7 @@ struct MANGOS_DLL_DECL npc_ice_spear_bunnyAI : public Scripted_NoMovementAI
 
     uint8 m_uiEventCount;
 
-    void Reset() override
+    void Reset()
     {
         m_uiEventCount = 0;
     }

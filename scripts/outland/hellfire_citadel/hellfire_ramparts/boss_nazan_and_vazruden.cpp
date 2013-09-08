@@ -373,7 +373,7 @@ struct MANGOS_DLL_DECL boss_vazrudenAI : public ScriptedAI
     uint32 m_uiRevengeTimer;
     bool m_bHealthBelow;
 
-    void Reset() override
+    void Reset()
     {
         m_bHealthBelow = false;
         m_uiRevengeTimer = urand(5500, 8400);

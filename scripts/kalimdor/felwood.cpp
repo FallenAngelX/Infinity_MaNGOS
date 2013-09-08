@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL npc_kittenAI : public FollowerAI
         }
     }
 
-    void UpdateFollowerAI(const uint32 uiDiff)
+    void UpdateFollowerAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {
@@ -144,7 +144,7 @@ bool GossipHello_npc_corrupt_saber(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_corrupt_saber(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_corrupt_saber(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
@@ -262,7 +262,7 @@ CreatureAI* GetAI_npc_niby_the_almighty(Creature* pCreature)
     return new npc_niby_the_almightyAI(pCreature);
 }
 
-bool QuestRewarded_npc_niby_the_almighty(Player* pPlayer, Creature* pCreature, Quest const* pQuest)
+bool QuestRewarded_npc_niby_the_almighty(Player* /*pPlayer*/, Creature* pCreature, Quest const* pQuest)
 {
     if (pQuest->GetQuestId() == QUEST_KROSHIUS)
     {
@@ -322,7 +322,7 @@ struct MANGOS_DLL_DECL npc_kroshiusAI : public ScriptedAI
         // TODO: A visual Flame Circle around the mob still missing
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         m_uiPhase = 0;
     }
@@ -383,7 +383,7 @@ CreatureAI* GetAI_npc_kroshius(Creature* pCreature)
     return new npc_kroshiusAI(pCreature);
 }
 
-bool ProcessEventId_npc_kroshius(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
+bool ProcessEventId_npc_kroshius(uint32 uiEventId, Object* pSource, Object* /*pTarget*/, bool /*bIsStart*/)
 {
     if (uiEventId == EVENT_KROSHIUS_REVIVE)
     {

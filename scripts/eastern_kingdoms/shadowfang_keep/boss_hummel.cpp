@@ -70,7 +70,7 @@ struct MANGOS_DLL_DECL npc_valentine_boss_managerAI : public ScriptedAI, private
 
     ObjectGuid m_EventStarterGuid;
 
-    void Reset() override
+    void Reset()
     {
         m_uiCrazedApothecaryTimer = 30000;
     }

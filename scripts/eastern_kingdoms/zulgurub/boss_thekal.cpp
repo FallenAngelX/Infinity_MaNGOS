@@ -158,7 +158,7 @@ struct MANGOS_DLL_DECL boss_thekalAI : public boss_thekalBaseAI
 
     bool m_bEnraged;
 
-    void Reset() override
+    void Reset()
     {
         m_uiMortalCleaveTimer   = 4000;
         m_uiSilenceTimer        = 9000;
@@ -373,7 +373,7 @@ struct MANGOS_DLL_DECL mob_zealot_lorkhanAI : public boss_thekalBaseAI
     uint32 m_uiDisarmTimer;
     uint32 m_uiResurrectTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiShieldTimer         = 1000;
         m_uiBloodLustTimer      = 16000;
@@ -513,7 +513,7 @@ struct MANGOS_DLL_DECL mob_zealot_zathAI : public boss_thekalBaseAI
     uint32 m_uiBlindTimer;
     uint32 m_uiResurrectTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiSweepingStrikesTimer    = 13000;
         m_uiSinisterStrikeTimer     = 8000;

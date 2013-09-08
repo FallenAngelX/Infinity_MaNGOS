@@ -122,7 +122,7 @@ struct MANGOS_DLL_DECL npc_general_andorovAI : public ScriptedAI, private Dialog
         }
     }
 
-    void JustDidDialogueStep(int32 iEntry)
+    void JustDidDialogueStep(int32 iEntry) override
     {
         // Start the event when the dialogue is finished
         if (iEntry == SAY_ANDOROV_ATTACK_START)
@@ -280,15 +280,12 @@ bool GossipHello_npc_general_andorov(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_general_andorov(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_general_andorov(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
-        if (instance_ruins_of_ahnqiraj* pInstance = (instance_ruins_of_ahnqiraj*)pCreature->GetInstanceData())
-        {
-            if (npc_general_andorovAI* pAndorovAI = dynamic_cast<npc_general_andorovAI*>(pCreature->AI()))
-                pAndorovAI->DoMoveToEventLocation();
-        }
+        if (npc_general_andorovAI* pAndorovAI = dynamic_cast<npc_general_andorovAI*>(pCreature->AI()))
+            pAndorovAI->DoMoveToEventLocation();
 
         pPlayer->CLOSE_GOSSIP_MENU();
     }

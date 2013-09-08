@@ -101,7 +101,7 @@ struct MANGOS_DLL_DECL boss_mandokirAI : public ScriptedAI
     float m_fTargetThreat;
     ObjectGuid m_watchTargetGuid;
 
-    void Reset() override
+    void Reset()
     {
         m_uiWatchTimer          = 33000;
         m_uiCleaveTimer         = 7000;
@@ -341,7 +341,7 @@ struct MANGOS_DLL_DECL mob_ohganAI : public ScriptedAI
 
     uint32 m_uiSunderArmorTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiSunderArmorTimer = 5000;
     }

@@ -59,7 +59,7 @@ struct MANGOS_DLL_DECL boss_razorgoreAI : public ScriptedAI
 
     bool m_bEggsExploded;
 
-    void Reset() override
+    void Reset()
     {
         m_uiIntroVisualTimer    = 5000;
         m_bEggsExploded         = false;

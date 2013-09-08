@@ -105,7 +105,7 @@ struct MANGOS_DLL_DECL npc_muglashAI : public npc_escortAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (HasEscortState(STATE_ESCORT_PAUSED))
         {
@@ -180,7 +180,7 @@ struct MANGOS_DLL_DECL npc_muglashAI : public npc_escortAI
         pSummoned->AI()->AttackStart(m_creature);
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {
@@ -224,7 +224,7 @@ CreatureAI* GetAI_npc_muglash(Creature* pCreature)
     return new npc_muglashAI(pCreature);
 }
 
-bool GOUse_go_naga_brazier(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_naga_brazier(Player* /*pPlayer*/, GameObject* pGo)
 {
     if (Creature* pCreature = GetClosestCreatureWithEntry(pGo, NPC_MUGLASH, INTERACTION_DISTANCE * 2))
     {
@@ -279,7 +279,7 @@ struct MANGOS_DLL_DECL npc_ruul_snowhoofAI : public npc_escortAI
         }
     }
 
-    void JustSummoned(Creature* summoned)
+    void JustSummoned(Creature* summoned) override
     {
         summoned->AI()->AttackStart(m_creature);
     }
@@ -375,7 +375,7 @@ struct MANGOS_DLL_DECL npc_torekAI : public npc_escortAI
         pSummoned->AI()->AttackStart(m_creature);
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -516,7 +516,7 @@ struct MANGOS_DLL_DECL npc_feero_ironhandAI : public npc_escortAI
         }
     }
 
-    void AttackedBy(Unit* pWho)
+    void AttackedBy(Unit* pWho) override
     {
         // Yell only at the first attack
         if (!m_bIsAttacked)
@@ -538,7 +538,7 @@ struct MANGOS_DLL_DECL npc_feero_ironhandAI : public npc_escortAI
         m_creature->SummonCreature(uiEntry, fX, fY, fZ, 0, TEMPSUMMON_TIMED_OOC_DESPAWN, 20000);
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         --m_uiCreaturesCount;
 

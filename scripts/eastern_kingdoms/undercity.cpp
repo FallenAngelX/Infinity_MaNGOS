@@ -75,7 +75,7 @@ struct MANGOS_DLL_DECL npc_lady_sylvanas_windrunnerAI : public ScriptedAI
     uint32 m_uiShootTimer;
     uint32 m_uiSummonSkeletonTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiLamentEventTimer = 0;
         m_uiSummonTimer = 0;

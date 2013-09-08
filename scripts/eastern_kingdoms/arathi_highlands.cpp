@@ -54,7 +54,7 @@ struct MANGOS_DLL_DECL npc_professor_phizzlethorpeAI : public npc_escortAI
 {
     npc_professor_phizzlethorpeAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
 
-    void Reset() override { }
+    void Reset() { }
 
     void WaypointReached(uint32 uiPointId) override
     {
@@ -147,7 +147,7 @@ struct MANGOS_DLL_DECL npc_kineloryAI : public npc_escortAI
 
     uint32 m_uiBearFormTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiBearFormTimer = urand(1000, 5000);
     }

@@ -105,7 +105,7 @@ struct MANGOS_DLL_DECL boss_bjarngrimAI : public ScriptedAI
     uint32 m_uiMortalStrikeTimer;
     uint32 m_uiSlamTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_bIsChangingStance     = false;
 
@@ -328,7 +328,7 @@ struct MANGOS_DLL_DECL mob_stormforged_lieutenantAI : public ScriptedAI
     uint32 m_uiArcWeldTimer;
     uint32 m_uiRenewSteelTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiArcWeldTimer    = urand(20000, 21000);
         m_uiRenewSteelTimer = urand(10000, 11000);

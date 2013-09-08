@@ -56,7 +56,7 @@ struct MANGOS_DLL_DECL boss_mr_smiteAI : public ScriptedAI
     uint32 m_uiEquipTimer;
     uint32 m_uiSlamTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiPhase = PHASE_1;
         m_uiEquipTimer = 0;

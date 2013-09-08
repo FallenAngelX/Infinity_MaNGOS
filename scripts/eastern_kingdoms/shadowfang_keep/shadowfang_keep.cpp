@@ -118,7 +118,7 @@ struct MANGOS_DLL_DECL npc_shadowfang_prisonerAI : public npc_escortAI
         }
     }
 
-    void Reset() override {}
+    void Reset() {}
 
     // Let's prevent Adamant from charging into Ashcrombe's cell
     // And beating the crap out of him and vice versa XD
@@ -214,7 +214,7 @@ struct MANGOS_DLL_DECL mob_arugal_voidwalkerAI : public ScriptedAI
     ScriptedInstance* m_pInstance;
     bool m_bIsLeader, m_bReverse, m_bWPDone;
 
-    void Reset() override
+    void Reset()
     {
         m_creature->SetWalk(true);
         m_uiDarkOffering = urand(4400, 12500);
@@ -456,7 +456,7 @@ struct MANGOS_DLL_DECL boss_arugalAI : public ScriptedAI
     uint8 m_uiSpeechStep;
     bool m_bAttacking, m_bEventMode;
 
-    void Reset() override
+    void Reset()
     {
         m_uiTeleportTimer = urand(22000, 26000);
         m_uiCurseTimer = urand(20000, 30000);
@@ -734,7 +734,7 @@ struct MANGOS_DLL_DECL npc_arugalAI : public ScriptedAI
     uint8 m_uiSpeechStep;
     ScriptedInstance* m_pInstance;
 
-    void Reset() override
+    void Reset()
     {
         m_uiSpeechTimer = 0;
         m_uiSpeechStep = 0;
@@ -849,7 +849,7 @@ struct MANGOS_DLL_DECL npc_deathstalker_vincentAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset() override
+    void Reset()
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_INTRO) == DONE && !m_creature->GetByteValue(UNIT_FIELD_BYTES_1, 0))
             m_creature->SetStandState(UNIT_STAND_STATE_DEAD);

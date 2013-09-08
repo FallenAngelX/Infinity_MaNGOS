@@ -104,7 +104,7 @@ struct MANGOS_DLL_DECL boss_dorotheeAI : public ScriptedAI
 
     bool m_bTitoDied;
 
-    void Reset() override
+    void Reset()
     {
         m_uiIntroTimer      = 2000;
         m_uiAggroTimer      = 12000;
@@ -232,7 +232,7 @@ struct MANGOS_DLL_DECL boss_strawmanAI : public ScriptedAI
     uint32 m_uiBrainBashTimer;
     uint32 m_uiBrainWipeTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiAggroTimer     = 27000;
         m_uiBrainBashTimer = 5000;
@@ -333,7 +333,7 @@ struct MANGOS_DLL_DECL boss_tinheadAI : public ScriptedAI
     uint32 m_uiCleaveTimer;
     uint32 m_uiRustTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiAggroTimer  = 37000;
         m_uiCleaveTimer = 5000;
@@ -434,7 +434,7 @@ struct MANGOS_DLL_DECL boss_roarAI : public ScriptedAI
     uint32 m_uiShredTimer;
     uint32 m_uiScreamTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiAggroTimer  = 17000;
         m_uiMangleTimer = 5000;
@@ -540,7 +540,7 @@ struct MANGOS_DLL_DECL boss_croneAI : public ScriptedAI
 
     uint32 m_uiChainLightningTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiChainLightningTimer = 10000;
     }
@@ -680,7 +680,7 @@ struct MANGOS_DLL_DECL boss_bigbadwolfAI : public ScriptedAI
     uint32 m_uiFearTimer;
     uint32 m_uiSwipeTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiRedRidingHoodTimer = 30000;
         m_uiFearTimer          = urand(25000, 35000);
@@ -817,7 +817,7 @@ struct MANGOS_DLL_DECL boss_julianneAI : public ScriptedAI
 
     bool m_bIsFakingDeath;
 
-    void Reset() override
+    void Reset()
     {
         m_Phase                     = PHASE_JULIANNE;
 
@@ -1069,7 +1069,7 @@ struct MANGOS_DLL_DECL boss_romuloAI : public ScriptedAI
 
     bool m_bIsFakingDeath;
 
-    void Reset() override
+    void Reset()
     {
         m_Phase                 = PHASE_ROMULO;
 

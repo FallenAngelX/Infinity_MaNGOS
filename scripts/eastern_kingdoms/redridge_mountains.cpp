@@ -52,7 +52,7 @@ struct MANGOS_DLL_DECL npc_corporal_keeshan_escortAI : public npc_escortAI
     uint32 m_uiMockingBlowTimer;
     uint32 m_uiShieldBashTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiMockingBlowTimer = 5000;
         m_uiShieldBashTimer  = 8000;

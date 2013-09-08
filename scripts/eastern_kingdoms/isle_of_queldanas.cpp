@@ -46,7 +46,7 @@ struct MANGOS_DLL_DECL npc_converted_sentryAI : public ScriptedAI
 
     uint32 m_uiCreditTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiCreditTimer = 2500;
     }

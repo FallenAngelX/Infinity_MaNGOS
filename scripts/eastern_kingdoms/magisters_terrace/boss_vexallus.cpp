@@ -74,7 +74,7 @@ struct MANGOS_DLL_DECL boss_vexallusAI : public ScriptedAI
     uint32 m_uiIntervalHealthAmount;
     bool m_bEnraged;
 
-    void Reset() override
+    void Reset()
     {
         m_uiChainLightningTimer  = 8000;
         m_uiArcaneShockTimer     = 5000;
@@ -193,7 +193,7 @@ struct MANGOS_DLL_DECL mob_pure_energyAI : public ScriptedAI
 {
     mob_pure_energyAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    void Reset() override { }
+    void Reset() { }
 
     void JustDied(Unit* pKiller) override
     {

@@ -50,7 +50,7 @@ struct MANGOS_DLL_DECL boss_overlordwyrmthalakAI : public ScriptedAI
     uint32 m_uiKnockawayTimer;
     bool m_bSummoned;
 
-    void Reset() override
+    void Reset()
     {
         m_uiBlastWaveTimer = 20000;
         m_uiShoutTimer     = 2000;

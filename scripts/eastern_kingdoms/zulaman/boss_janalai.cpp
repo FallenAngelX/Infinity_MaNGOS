@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL boss_janalaiAI : public ScriptedAI
     ObjectGuid m_hatcherOneGuid;
     ObjectGuid m_hatcherTwoGuid;
 
-    void Reset() override
+    void Reset()
     {
         m_uiFireBreathTimer = 8000;
         m_uiEnrageTimer     = 5 * MINUTE * IN_MILLISECONDS;
@@ -390,7 +390,7 @@ struct MANGOS_DLL_DECL npc_amanishi_hatcherAI : public ScriptedAI
     uint8 m_uiEggsHatched;
     bool m_bWaypointEnd;
 
-    void Reset() override
+    void Reset()
     {
         m_uiWaypoint        = 0;
         m_uiHatchlingTimer  = 0;
@@ -488,7 +488,7 @@ struct MANGOS_DLL_DECL npc_dragonhawk_eggAI : public Scripted_NoMovementAI
 {
     npc_dragonhawk_eggAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {Reset();}
 
-    void Reset() override {}
+    void Reset() {}
 
     void AttackStart(Unit* /*pWho*/) override {}
     void MoveInLineOfSight(Unit* /*pWho*/) override {}
@@ -505,7 +505,7 @@ struct MANGOS_DLL_DECL npc_janalai_firebombAI : public Scripted_NoMovementAI
 {
     npc_janalai_firebombAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {Reset();}
 
-    void Reset() override {}
+    void Reset() {}
 
     void AttackStart(Unit* /*pWho*/) override {}
     void MoveInLineOfSight(Unit* /*pWho*/) override {}

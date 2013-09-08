@@ -60,6 +60,7 @@ void instance_blackfathom_deeps::OnObjectCreate(GameObject* pGo)
         case GO_PORTAL_DOOR:
             if (m_auiEncounter[1] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
+
             m_mGoEntryGuidStore[GO_PORTAL_DOOR] = pGo->GetObjectGuid();
             break;
         case GO_SHRINE_1:
@@ -132,8 +133,6 @@ void instance_blackfathom_deeps::SetData(uint32 uiType, uint32 uiData)
             else if (uiData == DONE)
                 DoUseDoorOrButton(GO_PORTAL_DOOR);
             break;
-        default:
-            return;
     }
 
     if (uiData == DONE)
@@ -188,18 +187,18 @@ void instance_blackfathom_deeps::Load(const char* chrIn)
 void instance_blackfathom_deeps::OnCreatureDeath(Creature* pCreature)
 {
     // Only use this function if shrine event is in progress
-    if (m_auiEncounter[1] != IN_PROGRESS)
+    if (m_auiEncounter[ENCOUNTER_SHRINE] != IN_PROGRESS)
         return;
 
     switch (pCreature->GetEntry())
     {
-        case NPC_AKUMAI_SNAPJAW:
-            if (!m_lWaveMobsGuids[0].empty())
-                m_lWaveMobsGuids[0].remove(pCreature->GetObjectGuid());
-            break;
         case NPC_AKUMAI_SERVANT:
             if (!m_lWaveMobsGuids[1].empty())
                 m_lWaveMobsGuids[1].remove(pCreature->GetObjectGuid());
+            break;
+        case NPC_AKUMAI_SNAPJAW:
+            if (!m_lWaveMobsGuids[0].empty())
+                m_lWaveMobsGuids[0].remove(pCreature->GetObjectGuid());
             break;
         case NPC_BARBED_CRUSTACEAN:
             if (!m_lWaveMobsGuids[2].empty())
@@ -260,7 +259,7 @@ InstanceData* GetInstanceData_instance_blackfathom_deeps(Map* pMap)
     return new instance_blackfathom_deeps(pMap);
 }
 
-bool GOUse_go_fire_of_akumai(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_fire_of_akumai(Player* /*pPlayer*/, GameObject* pGo)
 {
     instance_blackfathom_deeps* pInstance = (instance_blackfathom_deeps*)pGo->GetInstanceData();
 

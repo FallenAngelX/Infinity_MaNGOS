@@ -89,7 +89,7 @@ struct MANGOS_DLL_DECL boss_ayamissAI : public ScriptedAI
         SetCombatMovement(false);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         m_creature->SetLevitate(true);
         m_creature->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 15.0f);
@@ -113,7 +113,7 @@ struct MANGOS_DLL_DECL boss_ayamissAI : public ScriptedAI
         }
     }
 
-    void SummonedMovementInform(Creature* pSummoned, uint32 uiMotionType, uint32 uiPointId) override
+    void SummonedMovementInform(Creature* pSummoned, uint32 /*uiMotionType*/, uint32 uiPointId) override
     {
         if (uiPointId != 1 || pSummoned->GetEntry() != NPC_LARVA)
             return;
@@ -160,7 +160,7 @@ struct MANGOS_DLL_DECL boss_ayamissAI : public ScriptedAI
 
                 // Summon a larva
                 uint8 uiLoc = urand(0, 1);
-                m_creature->SummonCreature(NPC_LARVA, aAyamissSpawnLocs[uiLoc].m_fX, aAyamissSpawnLocs[uiLoc].m_fY, aAyamissSpawnLocs[uiLoc].m_fZ, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000);
+                m_creature->SummonCreature(NPC_LARVA, aAyamissSpawnLocs[uiLoc].m_fX, aAyamissSpawnLocs[uiLoc].m_fY, aAyamissSpawnLocs[uiLoc].m_fZ, 0, TEMPSUMMON_TIMED_OOC_OR_CORPSE_DESPAWN, 30000);
             }
         }
         else
@@ -287,7 +287,7 @@ struct MANGOS_DLL_DECL npc_hive_zara_larvaAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void UpdateAI(const uint32 uiDiff) override
+    void UpdateAI(const uint32 /*uiDiff*/) override
     {
         if (m_pInstance)
         {

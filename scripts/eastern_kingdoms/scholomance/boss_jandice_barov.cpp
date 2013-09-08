@@ -38,7 +38,7 @@ struct MANGOS_DLL_DECL boss_jandicebarovAI : public ScriptedAI
     uint32 m_uiIllusionTimer;
     uint32 m_uiBanishTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiCurseOfBloodTimer = 5000;
         m_uiIllusionTimer = 15000;

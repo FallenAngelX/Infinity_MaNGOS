@@ -116,7 +116,7 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
     uint32 m_uiFlameSearTimer;
     bool m_bDidIntro;
 
-    void Reset() override
+    void Reset()
     {
         m_uiEnrageTimer = 6 * MINUTE * IN_MILLISECONDS;
         m_uiPyrogenicsTimer     = 20000;
@@ -347,7 +347,7 @@ struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
     uint32 m_uiShadowBladesTimer;
     uint32 m_uiSummonShadowImage;
 
-    void Reset() override
+    void Reset()
     {
         m_uiEnrageTimer = 6 * MINUTE * IN_MILLISECONDS;
         m_uiDarkTouchedTimer     = 30000;
@@ -615,7 +615,7 @@ struct MANGOS_DLL_DECL npc_shadow_imageAI : public ScriptedAI
     uint32 m_uiAbilityTimer;
     uint8 m_uiDarkStrikes;
 
-    void Reset() override
+    void Reset()
     {
         // Choose only one spell for attack
         m_uiChosenAbility = urand(0, 1) ? SPELL_DARK_STRIKE : SPELL_SHADOWFURY;

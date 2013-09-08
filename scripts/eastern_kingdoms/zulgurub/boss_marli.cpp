@@ -72,7 +72,7 @@ struct MANGOS_DLL_DECL boss_marliAI : public ScriptedAI
 
     bool m_bIsInPhaseTwo;
 
-    void Reset() override
+    void Reset()
     {
         m_uiPoisonVolleyTimer   = 15000;
         m_uiSpawnSpiderTimer    = 55000;

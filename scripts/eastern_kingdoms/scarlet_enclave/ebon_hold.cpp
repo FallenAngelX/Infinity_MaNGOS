@@ -1287,7 +1287,7 @@ struct MANGOS_DLL_DECL npc_scarlet_ghoulAI : public ScriptedPetAI
     bool m_bDidInitText;
     uint32 m_uiUnsummonTimer;
 
-    void Reset() override {}
+    void Reset() {}
 
     void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
     {
@@ -1557,7 +1557,7 @@ struct MANGOS_DLL_DECL npc_highlord_darion_mograineAI : public npc_escortAI
     GuidList m_lDefendersGUIDs;                             // light of dawn defenders
     GuidList m_lAttackersGUIDs;                             // scourge attackers
 
-    void Reset() override
+    void Reset()
     {
         // reset only when event is not in progress
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
@@ -2704,7 +2704,7 @@ struct MANGOS_DLL_DECL npc_fellow_death_knightAI : public ScriptedAI
     uint32 m_uiBloodStrikeTimer;
     uint32 m_uiPlagueStrikeTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiBloodStrikeTimer    = urand(5000, 10000);
         m_uiIcyTouchTimer       = urand(5000, 10000);
@@ -2829,7 +2829,7 @@ struct MANGOS_DLL_DECL npc_lich_king_light_dawnAI : public ScriptedAI
 {
     npc_lich_king_light_dawnAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    void Reset() override { }
+    void Reset() { }
     void MoveInLineOfSight(Unit* pWho) override { }
     void AttackStart(Unit* pWho) override { }
     void UpdateAI(const uint32 uiDiff) override { }

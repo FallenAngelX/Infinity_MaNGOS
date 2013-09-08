@@ -73,7 +73,7 @@ struct MANGOS_DLL_DECL boss_selin_fireheartAI : public ScriptedAI
 
     ObjectGuid m_crystalGuid;
 
-    void Reset() override
+    void Reset()
     {
         m_uiDrainLifeTimer    = urand(3000, 7000);
         m_uiDrainManaTimer    = m_uiDrainLifeTimer + 5000;
@@ -259,7 +259,7 @@ struct MANGOS_DLL_DECL mob_fel_crystalAI : public ScriptedAI
 
     uint32 m_uiVisualTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiVisualTimer = 1000;
         m_sWretchedGuids.clear();

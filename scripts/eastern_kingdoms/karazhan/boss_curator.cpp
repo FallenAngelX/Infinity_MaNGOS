@@ -63,7 +63,7 @@ struct MANGOS_DLL_DECL boss_curatorAI : public ScriptedAI
 
     bool m_bIsEnraged;
 
-    void Reset() override
+    void Reset()
     {
         m_uiFlareTimer       = 10000;
         m_uiHatefulBoltTimer = 15000;                       // This time may be wrong

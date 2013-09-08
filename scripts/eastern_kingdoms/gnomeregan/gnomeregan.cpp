@@ -145,7 +145,7 @@ struct MANGOS_DLL_DECL npc_blastmaster_emi_shortfuseAI : public npc_escortAI
     bool m_bDidAggroText, m_bSouthernCaveInOpened, m_bNorthernCaveInOpened;
     GuidList m_luiSummonedMobGUIDs;
 
-    void Reset() override
+    void Reset()
     {
         m_bDidAggroText = false;                            // Used for 'defend' text, is triggered when the npc is attacked
 

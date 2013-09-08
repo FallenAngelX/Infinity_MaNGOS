@@ -64,7 +64,7 @@ struct MANGOS_DLL_DECL boss_arlokkAI : public ScriptedAI
 
     bool m_bIsPhaseTwo;
 
-    void Reset() override
+    void Reset()
     {
         m_uiShadowWordPainTimer = 8000;
         m_uiGougeTimer      = 14000;

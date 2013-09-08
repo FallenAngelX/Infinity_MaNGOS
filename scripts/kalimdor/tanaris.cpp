@@ -85,7 +85,7 @@ struct MANGOS_DLL_DECL mob_aquementasAI : public ScriptedAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         if (!pWho || !pWho->GetObjectGuid().IsPlayer())
             return;
@@ -250,7 +250,7 @@ struct MANGOS_DLL_DECL npc_oox17tnAI : public npc_escortAI
 {
     npc_oox17tnAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
 
-    void WaypointReached(uint32 i)
+    void WaypointReached(uint32 i) override
     {
         Player* pPlayer = GetPlayerForEscort();
 
@@ -287,7 +287,7 @@ struct MANGOS_DLL_DECL npc_oox17tnAI : public npc_escortAI
 
     void Reset() { }
 
-    void Aggro(Unit* who)
+    void Aggro(Unit* /*who*/) override
     {
         // For an small probability he say something when it aggros
         switch (urand(0, 9))
@@ -297,7 +297,7 @@ struct MANGOS_DLL_DECL npc_oox17tnAI : public npc_escortAI
         }
     }
 
-    void JustSummoned(Creature* summoned)
+    void JustSummoned(Creature* summoned) override
     {
         summoned->AI()->AttackStart(m_creature);
     }
@@ -352,7 +352,7 @@ bool GossipHello_npc_stone_watcher_of_norgannon(Player* pPlayer, Creature* pCrea
     return true;
 }
 
-bool GossipSelect_npc_stone_watcher_of_norgannon(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_stone_watcher_of_norgannon(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     switch (uiAction)
     {
@@ -457,7 +457,7 @@ struct MANGOS_DLL_DECL npc_toogaAI : public FollowerAI
             SetFollowComplete();
     }
 
-    void UpdateFollowerAI(const uint32 uiDiff)
+    void UpdateFollowerAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {

@@ -122,7 +122,7 @@ struct MANGOS_DLL_DECL boss_netherspiteAI : public ScriptedAI
 
     std::vector<uint32> m_vPortalEntryList;
 
-    void Reset() override
+    void Reset()
     {
         m_uiActivePhase       = BEAM_PHASE;
 

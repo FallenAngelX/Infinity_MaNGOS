@@ -97,7 +97,7 @@ struct MANGOS_DLL_DECL boss_ouroAI : public Scripted_NoMovementAI
         m_bSubmerged          = false;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_OURO, IN_PROGRESS);
@@ -111,7 +111,7 @@ struct MANGOS_DLL_DECL boss_ouroAI : public Scripted_NoMovementAI
         m_creature->ForcedDespawn();
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_OURO, DONE);

@@ -90,7 +90,7 @@ struct MANGOS_DLL_DECL boss_ickAI : public ScriptedAI
     uint32 m_uiExplosivBarrageTimer;
     uint32 m_uiCooldownTimer;
 
-    void Reset() override
+    void Reset()
     {
         m_uiPoisonNovaTimer      = urand(20000, 25000);
         m_uiPursueTimer          = 20000;
@@ -299,7 +299,7 @@ struct MANGOS_DLL_DECL boss_krickAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset() override { }
+    void Reset() { }
 
     void EnterEvadeMode() override
     {
@@ -366,7 +366,7 @@ struct MANGOS_DLL_DECL npc_exploding_orbAI : public Scripted_NoMovementAI
 
     uint8 m_uiGrowCount;
 
-    void Reset() override
+    void Reset()
     {
         m_uiGrowCount = 0;
     }
