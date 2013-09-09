@@ -664,7 +664,7 @@ struct MANGOS_DLL_DECL npc_rabid_bearAI : public ScriptedAI
                     // Despawn trap
                     pTrap->Use(m_creature);
                     // "Evade"
-                    m_creature->RemoveAllAurasOnEvade();
+                    m_creature->RemoveAllAuras();
                     m_creature->DeleteThreatList();
                     m_creature->CombatStop(true);
                     m_creature->SetLootRecipient(NULL);
