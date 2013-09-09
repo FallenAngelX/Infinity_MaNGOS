@@ -67,16 +67,16 @@ struct MANGOS_DLL_DECL boss_faerlinaAI : public ScriptedAI
     uint32 m_uiEnrageTimer;
     bool   m_bHasTaunted;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPoisonBoltVolleyTimer = 8000;
         m_uiRainOfFireTimer = 16000;
         m_uiEnrageTimer = 60000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
-        switch(urand(0, 3))
+        switch (urand(0, 3))
         {
             case 0: DoScriptText(SAY_AGGRO_1, m_creature); break;
             case 1: DoScriptText(SAY_AGGRO_2, m_creature); break;
@@ -99,12 +99,12 @@ struct MANGOS_DLL_DECL boss_faerlinaAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -120,7 +120,7 @@ struct MANGOS_DLL_DECL boss_faerlinaAI : public ScriptedAI
 
     // Widow's Embrace prevents frenzy and poison bolt, if it removes frenzy, next frenzy is sceduled in 60s
     // It is likely that this _should_ be handled with some dummy aura(s) - but couldn't find any
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpellEntry)
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpellEntry) override
     {
         // Check if we hit with Widow's Embrave
         if (pSpellEntry->Id == SPELL_WIDOWS_EMBRACE || pSpellEntry->Id == SPELL_WIDOWS_EMBRACE_H)

@@ -43,7 +43,7 @@ enum
 
     SPELL_SUMMON_INVADER_1          = 49456,            // summon 27709
     SPELL_SUMMON_INVADER_2          = 49457,            // summon 27753
-    //SPELL_SUMMON_INVADER_3        = 49458,            // summon 27754
+    // SPELL_SUMMON_INVADER_3        = 49458,            // summon 27754
     SPELL_INVADER_TAUNT             = 49405,            // triggers 49406
 
     MAX_CONSOME_STACKS              = 10,
@@ -75,7 +75,7 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
 
     GuidVector m_vTriggers;
 
-    void Reset()
+    void Reset() override
     {
         m_uiCorpseExplodeTimer  = 20000;
         m_uiConsumeTimer        = 15000;
@@ -85,7 +85,7 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
         m_uiConsumeStacks       = 0;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -102,7 +102,7 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
             DoScriptText(SAY_KILL, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -116,7 +116,7 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
             m_pInstance->SetData(TYPE_TROLLGORE, FAIL);
     }
 
-    void SpellHit(Unit* pTarget, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pTarget*/, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_CONSUME_BUFF || pSpell->Id == SPELL_CONSUME_BUFF_H)
         {
@@ -166,7 +166,7 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
         else
         {
             // Summon 3 trolls in the air
-            for(uint8 i = 0; i < m_vTriggers.size(); ++i)
+            for (uint8 i = 0; i < m_vTriggers.size(); ++i)
             {
                 if (Creature* pTrigger = m_creature->GetMap()->GetCreature(m_vTriggers[i]))
                     pTrigger->CastSpell(pTrigger, roll_chance_i(30) ? SPELL_SUMMON_INVADER_1 : SPELL_SUMMON_INVADER_2, true, NULL, NULL, m_creature->GetObjectGuid());

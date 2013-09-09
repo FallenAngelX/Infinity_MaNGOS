@@ -40,7 +40,7 @@ enum
     NPC_THROW_DUMMY             = 23997,                    // the axe, moving to target
     NPC_GROUND_VISUAL           = 24012,                    // has SPELL_SCOURGE_RES_BUBBLE aura
 
-    //phase 1
+    // phase 1
     SPELL_CLEAVE                = 42724,
 
     SPELL_SMASH                 = 42669,
@@ -52,7 +52,7 @@ enum
     SPELL_STAGGERING_ROAR       = 42708,
     SPELL_STAGGERING_ROAR_H     = 59708,
 
-    //phase 2
+    // phase 2
     SPELL_DARK_SMASH_H          = 42723,
 
     SPELL_DREADFUL_ROAR         = 42729,
@@ -65,7 +65,7 @@ enum
     SPELL_SHADOW_AXE_PROC       = 42750,                    // triggers 42751
     SPELL_SHADOW_AXE_PROC_H     = 59719,                    // triggers 59720
 
-    //ressurection sequenze
+    // ressurection sequenze
     SPELL_ASTRAL_TELEPORT       = 34427,                    // aura cast by Annhylde on spawn
     SPELL_SUMMON_BANSHEE        = 42912,                    // summons Annhylde and sets a glow aura
     SPELL_FEIGN_DEATH           = 42795,
@@ -102,7 +102,7 @@ struct MANGOS_DLL_DECL boss_ingvarAI : public ScriptedAI
     uint32 m_uiStaggeringRoarTimer;
     uint32 m_uiEnrageTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_bIsResurrected = false;
         m_bIsFakingDeath = false;
@@ -113,7 +113,7 @@ struct MANGOS_DLL_DECL boss_ingvarAI : public ScriptedAI
         m_uiEnrageTimer = 30000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         // don't yell for her
         if (pWho->GetEntry() == NPC_ANNHYLDE)
@@ -126,7 +126,7 @@ struct MANGOS_DLL_DECL boss_ingvarAI : public ScriptedAI
             m_pInstance->SetData(TYPE_INGVAR, IN_PROGRESS);
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage)
+    void DamageTaken(Unit* /*pDealer*/, uint32& uiDamage) override
     {
         if (m_bIsResurrected)
             return;
@@ -151,7 +151,7 @@ struct MANGOS_DLL_DECL boss_ingvarAI : public ScriptedAI
         }
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_TRANSFORM)
         {
@@ -187,7 +187,7 @@ struct MANGOS_DLL_DECL boss_ingvarAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH_SECOND, m_creature);
 
@@ -195,7 +195,7 @@ struct MANGOS_DLL_DECL boss_ingvarAI : public ScriptedAI
             m_pInstance->SetData(TYPE_INGVAR, DONE);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         if (urand(0, 1))
             DoScriptText(m_bIsResurrected ? SAY_KILL_SECOND : SAY_KILL_FIRST, m_creature);
@@ -255,7 +255,7 @@ struct MANGOS_DLL_DECL boss_ingvarAI : public ScriptedAI
         {
             if (m_uiCleaveTimer < uiDiff)
             {
-                if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode? SPELL_WOE_STRIKE : SPELL_WOE_STRIKE_H) == CAST_OK)
+                if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_WOE_STRIKE : SPELL_WOE_STRIKE_H) == CAST_OK)
                     m_uiCleaveTimer = urand(2500, 7000);
             }
             else
@@ -315,15 +315,15 @@ struct MANGOS_DLL_DECL npc_annhyldeAI : public ScriptedAI
     uint32 m_uiResurrectTimer;
     uint8 m_uiResurrectPhase;
 
-    void Reset()
+    void Reset() override
     {
         m_uiResurrectTimer = 0;
         m_uiResurrectPhase = 0;
     }
 
     // No attacking
-    void MoveInLineOfSight(Unit*) override { }
-    void AttackStart(Unit*) {}
+    void MoveInLineOfSight(Unit*) override {}
+    void AttackStart(Unit*) override {}
 
     void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
     {

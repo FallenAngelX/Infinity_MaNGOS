@@ -97,7 +97,7 @@ struct MANGOS_DLL_DECL boss_sapphironAI : public ScriptedAI
     uint32 m_uiIceboltCount;
     Phases m_Phase;
 
-    void Reset()
+    void Reset() override
     {
         m_uiCleaveTimer = 5000;
         m_uiTailSweepTimer = 12000;
@@ -113,10 +113,10 @@ struct MANGOS_DLL_DECL boss_sapphironAI : public ScriptedAI
 
         SetCombatMovement(true);
         m_creature->SetLevitate(false);
-        //m_creature->ApplySpellMod(SPELL_FROST_AURA, SPELLMOD_DURATION, -1);
+        // m_creature->ApplySpellMod(SPELL_FROST_AURA, SPELLMOD_DURATION, -1);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_FROST_AURA : SPELL_FROST_AURA_H);
 
@@ -124,7 +124,7 @@ struct MANGOS_DLL_DECL boss_sapphironAI : public ScriptedAI
             m_pInstance->SetData(TYPE_SAPPHIRON, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_SAPPHIRON, DONE);
@@ -145,7 +145,7 @@ struct MANGOS_DLL_DECL boss_sapphironAI : public ScriptedAI
         }
     }
 
-    void MovementInform(uint32 uiType, uint32 uiPointId) override
+    void MovementInform(uint32 uiType, uint32 /*uiPointId*/) override
     {
         if (uiType == POINT_MOTION_TYPE && m_Phase == PHASE_LIFT_OFF)
         {

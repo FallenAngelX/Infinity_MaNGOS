@@ -67,7 +67,7 @@ struct MANGOS_DLL_DECL boss_maiden_of_griefAI : public ScriptedAI
     uint32 m_uiPillarTimer;
     uint32 m_uiPartingSorrowTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiStormTimer = 5000;
         m_uiShockTimer = 10000;
@@ -75,23 +75,23 @@ struct MANGOS_DLL_DECL boss_maiden_of_griefAI : public ScriptedAI
         m_uiPartingSorrowTimer = 12000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
-        if(m_pInstance)
+        if (m_pInstance)
             m_pInstance->SetData(TYPE_MAIDEN, IN_PROGRESS);
     }
 
     void JustReachedHome() override
     {
-        if(m_pInstance)
+        if (m_pInstance)
             m_pInstance->SetData(TYPE_MAIDEN, FAIL);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
-        switch(urand(0, 3))
+        switch (urand(0, 3))
         {
             case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
             case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
@@ -100,7 +100,7 @@ struct MANGOS_DLL_DECL boss_maiden_of_griefAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -118,12 +118,11 @@ struct MANGOS_DLL_DECL boss_maiden_of_griefAI : public ScriptedAI
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, SPELL_PARTING_SORROW, SELECT_FLAG_PLAYER | SELECT_FLAG_POWER_MANA))
             {
                 if (DoCastSpellIfCan(pTarget, SPELL_PARTING_SORROW) == CAST_OK)
-                    m_uiPartingSorrowTimer = 12000 + rand()%5000;
+                    m_uiPartingSorrowTimer = 12000 + rand() % 5000;
             }
         }
         else
             m_uiPartingSorrowTimer -= uiDiff;
-
 
         if (m_uiStormTimer < uiDiff)
         {

@@ -94,7 +94,7 @@ struct MANGOS_DLL_DECL boss_volazjAI : public ScriptedAI
     uint8 m_uiInsanityIndex;
     bool m_bIsInsanityInProgress;
 
-    void Reset()
+    void Reset() override
     {
         m_uiCombatPhase         = 1;
         m_uiMindFlayTimer       = 10000;
@@ -108,7 +108,7 @@ struct MANGOS_DLL_DECL boss_volazjAI : public ScriptedAI
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     }
 
-    void Aggro(Unit* pWho) override
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
         DoCastSpellIfCan(m_creature, SPELL_WHISPER_AGGRO);

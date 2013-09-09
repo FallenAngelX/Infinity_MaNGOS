@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL boss_ionarAI : public ScriptedAI
 
     uint32 m_uiHealthAmountModifier;
 
-    void Reset()
+    void Reset() override
     {
         m_bIsSplitPhase = true;
         m_bIsDesperseCasting = false;
@@ -340,7 +340,7 @@ struct MANGOS_DLL_DECL mob_spark_of_ionarAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset() { }
+    void Reset() override { }
 
     void MovementInform(uint32 uiType, uint32 uiPointId) override
     {

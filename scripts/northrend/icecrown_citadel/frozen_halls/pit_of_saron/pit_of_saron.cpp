@@ -49,7 +49,7 @@ struct MANGOS_DLL_DECL npc_ymirjar_deathbringerAI : public ScriptedAI
 
     uint32 m_uiShadowBoltTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiShadowBoltTimer = urand(1000, 3000);
     }
@@ -123,7 +123,7 @@ struct MANGOS_DLL_DECL npc_collapsing_icicleAI : public ScriptedAI
 
     instance_pit_of_saron* m_pInstance;
 
-    void Reset()
+    void Reset() override
     {
         DoCastSpellIfCan(m_creature, SPELL_ICICLE_DUMMY, CAST_TRIGGERED);
         DoCastSpellIfCan(m_creature, SPELL_ICICLE, CAST_TRIGGERED);
@@ -136,9 +136,9 @@ struct MANGOS_DLL_DECL npc_collapsing_icicleAI : public ScriptedAI
             m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_DONT_LOOK_UP, false);
     }
 
-    void AttackStart(Unit* pWho) override { }
-    void MoveInLineOfSight(Unit* pWho) override { }
-    void UpdateAI(const uint32 uiDiff) override { }
+    void AttackStart(Unit* /*pWho*/) override { }
+    void MoveInLineOfSight(Unit* /*pWho*/) override { }
+    void UpdateAI(const uint32 /*uiDiff*/) override { }
 };
 
 CreatureAI* GetAI_npc_collapsing_icicle(Creature* pCreature)
@@ -162,7 +162,7 @@ bool AreaTrigger_at_pit_of_saron(Player* pPlayer, AreaTriggerEntry const* pAt)
     if (pAt->id == AREATRIGGER_ID_TUNNEL_START)
     {
         if (pInstance->GetData(TYPE_GARFROST) != DONE || pInstance->GetData(TYPE_KRICK) != DONE ||
-            pInstance->GetData(TYPE_AMBUSH) != NOT_STARTED)
+                pInstance->GetData(TYPE_AMBUSH) != NOT_STARTED)
             return false;
 
         pInstance->DoStartAmbushEvent();

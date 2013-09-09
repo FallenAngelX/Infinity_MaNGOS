@@ -24,14 +24,14 @@ EndScriptData */
 #include "precompiled.h"
 #include "gundrak.h"
 
-bool GOUse_go_gundrak_altar(Player* pPlayer, GameObject* pGo)
+bool GOUse_go_gundrak_altar(Player* /*pPlayer*/, GameObject* pGo)
 {
     ScriptedInstance* pInstance = (ScriptedInstance*)pGo->GetInstanceData();
 
     if (!pInstance)
         return false;
 
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_ALTAR_OF_SLADRAN:  pInstance->SetData(TYPE_SLADRAN, SPECIAL);  break;
         case GO_ALTAR_OF_MOORABI:  pInstance->SetData(TYPE_MOORABI, SPECIAL);  break;
@@ -57,7 +57,7 @@ void instance_gundrak::Initialize()
 
 void instance_gundrak::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_ECK:
         case NPC_SLADRAN:
@@ -104,7 +104,7 @@ void instance_gundrak::OnPlayerEnter(Player* pPlayer)
 
 void instance_gundrak::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_ECK_DOOR:
             if (m_auiEncounter[TYPE_MOORABI] == DONE && !instance->IsRegularDifficulty())
@@ -136,7 +136,7 @@ void instance_gundrak::OnObjectCreate(GameObject* pGo)
         case GO_ALTAR_OF_COLOSSUS:
             if (m_auiEncounter[TYPE_COLOSSUS] == DONE)
                 pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
-                break;
+            break;
         case GO_SNAKE_KEY:
         case GO_TROLL_KEY:
         case GO_MAMMOTH_KEY:
@@ -164,7 +164,7 @@ void instance_gundrak::Load(const char* chrIn)
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[TYPE_SLADRAN] >> m_auiEncounter[TYPE_MOORABI] >> m_auiEncounter[TYPE_COLOSSUS] >> m_auiEncounter[TYPE_GALDARAH] >> m_auiEncounter[TYPE_ECK];
 
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             m_auiEncounter[i] = NOT_STARTED;
@@ -181,7 +181,7 @@ void instance_gundrak::SetData(uint32 uiType, uint32 uiData)
 {
     debug_log("SD2: Instance Gundrak: SetData received for type %u with data %u", uiType, uiData);
 
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_SLADRAN:
             m_auiEncounter[TYPE_SLADRAN] = uiData;
@@ -248,7 +248,7 @@ void instance_gundrak::SetData(uint32 uiType, uint32 uiData)
 
         std::ostringstream saveStream;
         saveStream << m_auiEncounter[TYPE_SLADRAN] << " " << m_auiEncounter[TYPE_MOORABI] << " " << m_auiEncounter[TYPE_COLOSSUS] << " " << m_auiEncounter[TYPE_GALDARAH] << " "
-            << m_auiEncounter[TYPE_ECK];
+                   << m_auiEncounter[TYPE_ECK];
 
         m_strInstData = saveStream.str();
 
@@ -259,7 +259,7 @@ void instance_gundrak::SetData(uint32 uiType, uint32 uiData)
 
 void instance_gundrak::OnCreatureDeath(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_RUIN_DWELLER:
             for (GuidList::const_iterator itr = m_lEckDwellerGuids.begin(); itr != m_lEckDwellerGuids.end(); ++itr)
@@ -353,9 +353,9 @@ void instance_gundrak::DoAltarVisualEffect(uint8 uiType)
         lStalkerTargets.sort(sortFromEastToWest);
         lStalkerCasters.sort(sortFromEastToWest);
 
-        for (std::list<Creature*>::const_iterator itr = lStalkerTargets.begin(); itr != lStalkerTargets.end(); itr++)
+        for (std::list<Creature*>::const_iterator itr = lStalkerTargets.begin(); itr != lStalkerTargets.end(); ++itr)
             m_vStalkerTargetGuids.push_back((*itr)->GetObjectGuid());
-        for (std::list<Creature*>::const_iterator itr = lStalkerCasters.begin(); itr != lStalkerCasters.end(); itr++)
+        for (std::list<Creature*>::const_iterator itr = lStalkerCasters.begin(); itr != lStalkerCasters.end(); ++itr)
             m_vStalkerCasterGuids.push_back((*itr)->GetObjectGuid());
     }
 
@@ -367,10 +367,11 @@ void instance_gundrak::DoAltarVisualEffect(uint8 uiType)
     uint8 uiIndex = 0;
     switch (uiType)
     {
-        case TYPE_SLADRAN: uiIndex = 0; break;
+        case TYPE_SLADRAN:  uiIndex = 0; break;
         case TYPE_COLOSSUS: uiIndex = 1; break;
-        case TYPE_MOORABI: uiIndex = 2; break;
-        default: return;
+        case TYPE_MOORABI:  uiIndex = 2; break;
+        default:
+            return;
     }
 
     Creature* pTarget = instance->GetCreature(m_vStalkerTargetGuids[uiIndex]);
@@ -444,7 +445,7 @@ void instance_gundrak::Update(uint32 uiDiff)
             {
                 // Activate Bridge (and all other Keys) if we are on the last Key, and all other keys are already set
                 if (m_auiEncounter[0] == SPECIAL && m_auiEncounter[1] == SPECIAL && m_auiEncounter[2] == SPECIAL
-                    && m_mAltarInProgress.empty() && m_mBeamInProgress.empty() && m_mKeyInProgress.size() == 1)
+                        && m_mAltarInProgress.empty() && m_mBeamInProgress.empty() && m_mKeyInProgress.size() == 1)
                 {
                     DoUseDoorOrButton(GO_COLLISION);
                     DoUseDoorOrButton(GO_RHINO_KEY, 0, true);

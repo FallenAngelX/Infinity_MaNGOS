@@ -79,7 +79,7 @@ struct MANGOS_DLL_DECL boss_forgemaster_garfrostAI : public ScriptedAI
     uint32 m_uiDeepFreezeTimer;
     uint32 m_uiCheckPermafrostTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiCheckPermafrostTimer = 2000;
         m_uiThrowSaroniteTimer = 13000;
@@ -108,7 +108,7 @@ struct MANGOS_DLL_DECL boss_forgemaster_garfrostAI : public ScriptedAI
 
             // Summon Ironskull or Victus for outro
             m_creature->SummonCreature(m_pInstance->GetPlayerTeam() == HORDE ? NPC_IRONSKULL_PART1 : NPC_VICTUS_PART1,
-                afOutroNpcSpawnLoc[0], afOutroNpcSpawnLoc[1], afOutroNpcSpawnLoc[2], afOutroNpcSpawnLoc[3], TEMPSUMMON_TIMED_DESPAWN, 2 * MINUTE * IN_MILLISECONDS);
+                                       afOutroNpcSpawnLoc[0], afOutroNpcSpawnLoc[1], afOutroNpcSpawnLoc[2], afOutroNpcSpawnLoc[3], TEMPSUMMON_TIMED_DESPAWN, 2 * MINUTE * IN_MILLISECONDS);
 
             // ToDo: handle the other npcs movement
         }

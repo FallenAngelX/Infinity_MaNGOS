@@ -47,7 +47,7 @@ struct MANGOS_DLL_DECL npc_depleted_war_golemAI : public ScriptedPetAI
 {
     npc_depleted_war_golemAI(Creature* pCreature) : ScriptedPetAI(pCreature) { Reset(); }
 
-    void Reset() { }
+    void Reset() override { }
 
     void OwnerKilledUnit(Unit* pVictim) override
     {

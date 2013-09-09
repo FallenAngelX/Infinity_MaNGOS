@@ -71,7 +71,7 @@ void instance_forge_of_souls::ProcessEventNpcs(Player* pPlayer, bool bChanged)
         for (uint8 i = 0; i < countof(aEventBeginLocations); ++i)
         {
             if (Creature* pSummon = pPlayer->SummonCreature(m_uiTeam == HORDE ? aEventBeginLocations[i].uiEntryHorde : aEventBeginLocations[i].uiEntryAlliance,
-                                                            aEventBeginLocations[i].fSpawnX, aEventBeginLocations[i].fSpawnY, aEventBeginLocations[i].fSpawnZ, aEventBeginLocations[i].fSpawnO, TEMPSUMMON_DEAD_DESPAWN, 24*HOUR*IN_MILLISECONDS))
+                                    aEventBeginLocations[i].fSpawnX, aEventBeginLocations[i].fSpawnY, aEventBeginLocations[i].fSpawnZ, aEventBeginLocations[i].fSpawnO, TEMPSUMMON_DEAD_DESPAWN, 24 * HOUR * IN_MILLISECONDS))
                 m_lEventMobGUIDs.push_back(pSummon->GetObjectGuid());
         }
     }
@@ -89,23 +89,24 @@ void instance_forge_of_souls::ProcessEventNpcs(Player* pPlayer, bool bChanged)
             for (uint8 i = 0; i < countof(aEventEndLocations); ++i)
             {
                 pPlayer->SummonCreature(m_uiTeam == HORDE ? aEventEndLocations[i].uiEntryHorde : aEventEndLocations[i].uiEntryAlliance,
-                                        aEventEndLocations[i].fSpawnX, aEventEndLocations[i].fSpawnY, aEventEndLocations[i].fSpawnZ, aEventEndLocations[i].fStartO, TEMPSUMMON_DEAD_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+                                        aEventEndLocations[i].fSpawnX, aEventEndLocations[i].fSpawnY, aEventEndLocations[i].fSpawnZ, aEventEndLocations[i].fStartO, TEMPSUMMON_DEAD_DESPAWN, 24 * HOUR * IN_MILLISECONDS);
 
                 // TODO: Let the NPCs Move along their paths
             }
         }
         else
-        {   // Summon at end, without event
+        {
+            // Summon at end, without event
             for (uint8 i = 0; i < countof(aEventEndLocations); ++i)
             {
                 pPlayer->SummonCreature(m_uiTeam == HORDE ? aEventEndLocations[i].uiEntryHorde : aEventEndLocations[i].uiEntryAlliance,
-                                        aEventEndLocations[i].fEndX, aEventEndLocations[i].fEndY, aEventEndLocations[i].fEndZ, aEventEndLocations[i].fEndO, TEMPSUMMON_DEAD_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+                                        aEventEndLocations[i].fEndX, aEventEndLocations[i].fEndY, aEventEndLocations[i].fEndZ, aEventEndLocations[i].fEndO, TEMPSUMMON_DEAD_DESPAWN, 24 * HOUR * IN_MILLISECONDS);
             }
         }
     }
 }
 
-bool instance_forge_of_souls::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const
+bool instance_forge_of_souls::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* /*pSource*/, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const
 {
     switch (uiCriteriaId)
     {
@@ -120,7 +121,7 @@ bool instance_forge_of_souls::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, 
 
 void instance_forge_of_souls::SetData(uint32 uiType, uint32 uiData)
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_BRONJAHM:
             m_auiEncounter[0] = uiData;
@@ -170,7 +171,7 @@ void instance_forge_of_souls::Load(const char* chrIn)
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1];
 
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             m_auiEncounter[i] = NOT_STARTED;
@@ -181,7 +182,7 @@ void instance_forge_of_souls::Load(const char* chrIn)
 
 uint32 instance_forge_of_souls::GetData(uint32 uiType) const
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_BRONJAHM:
             return m_auiEncounter[0];

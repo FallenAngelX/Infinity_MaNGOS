@@ -74,7 +74,7 @@ struct MANGOS_DLL_DECL npc_destructive_wardAI : public Scripted_NoMovementAI
     bool m_bFirst;
     bool m_bCanPulse;
 
-    void Reset() { }
+    void Reset() override { }
 
     void JustSummoned(Creature* pSummoned) override
     {
@@ -98,7 +98,7 @@ struct MANGOS_DLL_DECL npc_destructive_wardAI : public Scripted_NoMovementAI
                 else
                     m_uiSummonTimer = 0;
 
-                switch(m_uiStack)
+                switch (m_uiStack)
                 {
                     case 0:
                         DoCastSpellIfCan(m_creature, SPELL_SUMMON_SMOLDERING_SKELETON, CAST_TRIGGERED);
@@ -187,7 +187,7 @@ struct MANGOS_DLL_DECL npc_hourglassAI : public ScriptedAI
     uint32 uiWaveTimer; 
     uint32 uiWaveCounter;
  
-    void Reset() 
+    void Reset() override
     { 
         uiWaveTimer = 5000; 
         uiWaveCounter = 0; 
@@ -208,7 +208,7 @@ struct MANGOS_DLL_DECL npc_hourglassAI : public ScriptedAI
 
     void SummonWave() 
     { 
-        switch(uiWaveCounter) 
+        switch (uiWaveCounter)
         { 
            case 0: m_creature->SummonCreature(NPC_INFINITE_CHRONO_MAGUS, m_creature->GetPositionX()+5,m_creature->GetPositionY(),m_creature->GetPositionZ(), 0, TEMPSUMMON_CORPSE_DESPAWN, 0); 
                    m_creature->SummonCreature(NPC_INFINITE_ASSAILANT, m_creature->GetPositionX()-5,m_creature->GetPositionY(),m_creature->GetPositionZ(), 0, TEMPSUMMON_CORPSE_DESPAWN, 0); 

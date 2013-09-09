@@ -60,23 +60,23 @@ struct MANGOS_DLL_DECL boss_loathebAI : public ScriptedAI
     uint32 m_uiBerserkTimer;
     uint8  m_uiNecroticAuraCount;                           // Used for emotes, 5min check
 
-    void Reset()
+    void Reset() override
     {
         m_uiDeathbloomTimer = 5000;
         m_uiNecroticAuraTimer = 12000;
-        m_uiInevitableDoomTimer = MINUTE*2*IN_MILLISECONDS;
+        m_uiInevitableDoomTimer = MINUTE * 2 * IN_MILLISECONDS;
         m_uiSummonTimer = urand(10000, 15000);              // first seen in vid after approx 12s
-        m_uiBerserkTimer = MINUTE*12*IN_MILLISECONDS;       // only in heroic, after 12min
+        m_uiBerserkTimer = MINUTE * 12 * IN_MILLISECONDS;   // only in heroic, after 12min
         m_uiNecroticAuraCount = 0;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_LOATHEB, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_LOATHEB, DONE);
@@ -97,7 +97,7 @@ struct MANGOS_DLL_DECL boss_loathebAI : public ScriptedAI
             pSummoned->AddThreat(pTarget);
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_SPORE && m_pInstance)
             m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_SPORE_LOSER, false);

@@ -72,7 +72,7 @@ struct MANGOS_DLL_DECL boss_krikthirAI : public ScriptedAI
     uint32 m_uiCurseTimer;
     uint32 m_uiMindFlayTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiSwarmTimer    = 15000;
         m_uiCurseTimer    = 20000;
@@ -82,14 +82,14 @@ struct MANGOS_DLL_DECL boss_krikthirAI : public ScriptedAI
         m_bFrenzy         = false;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_KILL_1, m_creature); break;
             case 1: DoScriptText(SAY_KILL_2, m_creature); break;
@@ -97,11 +97,11 @@ struct MANGOS_DLL_DECL boss_krikthirAI : public ScriptedAI
         }
     }
 
-    void MoveInLineOfSight (Unit* pWho) override
+    void MoveInLineOfSight(Unit* pWho) override
     {
-        if (!m_bIntroSpeech && m_creature->IsWithinDistInMap(pWho, DEFAULT_VISIBILITY_INSTANCE))
+        if (!m_bIntroSpeech && pWho->GetTypeId() == TYPEID_PLAYER && m_creature->IsWithinDistInMap(pWho, DEFAULT_VISIBILITY_INSTANCE) && m_creature->IsWithinLOSInMap(pWho))
         {
-            switch(urand(0, 2))
+            switch (urand(0, 2))
             {
                 case 0: DoScriptText(SAY_PREFIGHT_1, m_creature); break;
                 case 1: DoScriptText(SAY_PREFIGHT_2, m_creature); break;
@@ -111,7 +111,7 @@ struct MANGOS_DLL_DECL boss_krikthirAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -133,34 +133,36 @@ struct MANGOS_DLL_DECL boss_krikthirAI : public ScriptedAI
 
         if (!m_bFrenzy && m_creature->GetHealthPercent() <= 10.0f)
         {
-            DoCastSpellIfCan(m_creature, SPELL_FRENZY);
-            DoScriptText(EMOTE_BOSS_GENERIC_FRENZY, m_creature);
-            m_bFrenzy = true;
+            if (DoCastSpellIfCan(m_creature, SPELL_FRENZY) == CAST_OK)
+            {
+                DoScriptText(EMOTE_BOSS_GENERIC_FRENZY, m_creature);
+                m_bFrenzy = true;
+            }
         }
 
         if (m_uiCurseTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_CURSE_OF_FATIGUE : SPELL_CURSE_OF_FATIGUE_H);
-            m_uiCurseTimer = 20000;
-
+            if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_CURSE_OF_FATIGUE : SPELL_CURSE_OF_FATIGUE_H) == CAST_OK)
+                m_uiCurseTimer = 20000;
         }
         else
             m_uiCurseTimer -= uiDiff;
 
         if (m_uiMindFlayTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_MINDFLAY : SPELL_MINDFLAY_H);
-            m_uiMindFlayTimer = 8000;
+            if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_MINDFLAY : SPELL_MINDFLAY_H) == CAST_OK)
+                m_uiMindFlayTimer = 8000;
         }
         else
             m_uiMindFlayTimer -= uiDiff;
 
         if (m_uiSwarmTimer < uiDiff)
         {
-            DoScriptText(urand(0, 1) ? SAY_SWARM_1 : SAY_SWARM_2, m_creature);
-            DoCastSpellIfCan(m_creature, SPELL_SWARM);
-            m_uiSwarmTimer = 15000;
-
+            if (DoCastSpellIfCan(m_creature, SPELL_SWARM) == CAST_OK)
+            {
+                DoScriptText(urand(0, 1) ? SAY_SWARM_1 : SAY_SWARM_2, m_creature);
+                m_uiSwarmTimer = 15000;
+            }
         }
         else
             m_uiSwarmTimer -= uiDiff;

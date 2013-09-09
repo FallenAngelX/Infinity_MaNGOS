@@ -210,7 +210,7 @@ Creature* instance_draktharon_keep::GetSummonDummy()
     return instance->GetCreature(m_vSummonDummyGuids[urand(0, m_vSummonDummyGuids.size() - 1)]);
 }
 
-bool instance_draktharon_keep::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const
+bool instance_draktharon_keep::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* /*pSource*/, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const
 {
     switch (uiCriteriaId)
     {
@@ -312,7 +312,7 @@ void instance_draktharon_keep::Load(const char* chrIn)
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3];
 
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             m_auiEncounter[i] = NOT_STARTED;
@@ -323,7 +323,7 @@ void instance_draktharon_keep::Load(const char* chrIn)
 
 uint32 instance_draktharon_keep::GetData(uint32 uiType) const
 {
-    switch(uiType)
+    switch (uiType)
     {
         case TYPE_TROLLGORE: return m_auiEncounter[uiType];
         case TYPE_NOVOS:     return m_auiEncounter[uiType];

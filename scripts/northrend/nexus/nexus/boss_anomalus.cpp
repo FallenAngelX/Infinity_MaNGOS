@@ -75,7 +75,7 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
     uint32 m_uiCreateRiftTimer;
     uint8 m_uiChaoticRiftCount;
 
-    void Reset()
+    void Reset() override
     {
         m_bChaoticRift = false;
         m_uiSparkTimer = 5000;
@@ -83,7 +83,7 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
         m_uiChaoticRiftCount = 0;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -91,7 +91,7 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ANOMALUS, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -99,7 +99,7 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ANOMALUS, DONE);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         if (urand(0, 1))
             DoScriptText(SAY_KILL, m_creature);
@@ -118,7 +118,7 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
         }
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_CHAOTIC_RIFT)
         {
@@ -139,7 +139,7 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
     void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim() || m_creature->HasAura(SPELL_RIFT_SHIELD))
-             return;
+            return;
 
         // Create additional Chaotic Rift at 50% HP
         if (!m_bChaoticRift && m_creature->GetHealthPercent() < 50.0f)
@@ -196,12 +196,12 @@ struct MANGOS_DLL_DECL mob_chaotic_riftAI : public Scripted_NoMovementAI
 
     uint32 m_uiChargedRemoveTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiChargedRemoveTimer = 0;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         // Auras are applied on aggro because there are many npcs with this entry in the instance
         DoCastSpellIfCan(m_creature, SPELL_RIFT_AURA, CAST_TRIGGERED);
@@ -217,7 +217,7 @@ struct MANGOS_DLL_DECL mob_chaotic_riftAI : public Scripted_NoMovementAI
         }
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
         // When hit with Charge Rift cast the Charged Rift spells
         if (pSpell->Id == SPELL_CHARGE_RIFT)

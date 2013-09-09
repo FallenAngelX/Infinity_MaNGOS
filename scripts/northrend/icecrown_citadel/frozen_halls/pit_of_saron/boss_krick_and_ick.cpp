@@ -90,7 +90,7 @@ struct MANGOS_DLL_DECL boss_ickAI : public ScriptedAI
     uint32 m_uiExplosivBarrageTimer;
     uint32 m_uiCooldownTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPoisonNovaTimer      = urand(20000, 25000);
         m_uiPursueTimer          = 20000;
@@ -116,7 +116,7 @@ struct MANGOS_DLL_DECL boss_ickAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* /*pVictim*/)
     {
         if (m_pInstance)
         {
@@ -125,7 +125,7 @@ struct MANGOS_DLL_DECL boss_ickAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
         {
@@ -138,7 +138,7 @@ struct MANGOS_DLL_DECL boss_ickAI : public ScriptedAI
 
                 // Summon Jaina or Sylvanas for epilogue
                 pKrick->SummonCreature(m_pInstance->GetPlayerTeam() == HORDE ? NPC_SYLVANAS_PART1 : NPC_JAINA_PART1,
-                    afOutroNpcSpawnLoc[0], afOutroNpcSpawnLoc[1], afOutroNpcSpawnLoc[2], afOutroNpcSpawnLoc[3], TEMPSUMMON_TIMED_DESPAWN, 2 * MINUTE * IN_MILLISECONDS);
+                                       afOutroNpcSpawnLoc[0], afOutroNpcSpawnLoc[1], afOutroNpcSpawnLoc[2], afOutroNpcSpawnLoc[3], TEMPSUMMON_TIMED_DESPAWN, 2 * MINUTE * IN_MILLISECONDS);
             }
 
             if (Creature* pTyrannus = m_pInstance->GetSingleCreatureFromStorage(NPC_TYRANNUS_INTRO))
@@ -282,7 +282,7 @@ struct MANGOS_DLL_DECL boss_ickAI : public ScriptedAI
 
 CreatureAI* GetAI_boss_ick(Creature* pCreature)
 {
-    return new boss_ickAI (pCreature);
+    return new boss_ickAI(pCreature);
 }
 
 /*######
@@ -299,7 +299,7 @@ struct MANGOS_DLL_DECL boss_krickAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset() { }
+    void Reset() override { }
 
     void EnterEvadeMode() override
     {
@@ -335,7 +335,7 @@ struct MANGOS_DLL_DECL boss_krickAI : public ScriptedAI
         }
     }
 
-    void SummonedMovementInform(Creature* pSummoned, uint32 uiMotionType, uint32 uiPointId) override
+    void SummonedMovementInform(Creature* /*pSummoned*/, uint32 uiMotionType, uint32 uiPointId) override
     {
         if (uiMotionType != POINT_MOTION_TYPE || !uiPointId)
             return;
@@ -344,7 +344,7 @@ struct MANGOS_DLL_DECL boss_krickAI : public ScriptedAI
             m_pInstance->SetData(TYPE_KRICK, SPECIAL);
     }
 
-    void UpdateAI(const uint32 uiDiff) override
+    void UpdateAI(const uint32 /*uiDiff*/) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -366,15 +366,15 @@ struct MANGOS_DLL_DECL npc_exploding_orbAI : public Scripted_NoMovementAI
 
     uint8 m_uiGrowCount;
 
-    void Reset()
+    void Reset() override
     {
         m_uiGrowCount = 0;
     }
 
-    void AttackStart(Unit* pWho) override { }
-    void MoveInLineOfSight(Unit* pWho) override { }
+    void AttackStart(Unit* /*pWho*/) override { }
+    void MoveInLineOfSight(Unit* /*pWho*/) override { }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_HASTY_GROW)
         {
@@ -391,7 +391,7 @@ struct MANGOS_DLL_DECL npc_exploding_orbAI : public Scripted_NoMovementAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff) override { }
+    void UpdateAI(const uint32 /*uiDiff*/) override { }
 };
 
 CreatureAI* GetAI_npc_exploding_orb(Creature* pCreature)

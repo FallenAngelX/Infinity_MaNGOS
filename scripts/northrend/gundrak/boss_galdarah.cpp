@@ -89,7 +89,7 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
     uint32 m_uiEnrageTimer;
     uint8 m_uiAbilityCount;
 
-    void Reset()
+    void Reset() override
     {
         m_bIsTrollPhase         = true;
 
@@ -100,7 +100,7 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
         m_uiAbilityCount        = 0;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         m_creature->SetInCombatWithZone();
         DoScriptText(SAY_AGGRO, m_creature);
@@ -114,9 +114,9 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
         if(m_pInstance)
             m_pInstance->SetData(TYPE_GALDARAH, NOT_STARTED);
     }
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
             case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
@@ -195,7 +195,7 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
 
             if (m_uiStampedeTimer < uiDiff)
             {
-                switch(urand(0, 2))
+                switch (urand(0, 2))
                 {
                     case 0: DoScriptText(SAY_SUMMON_1, m_creature); break;
                     case 1: DoScriptText(SAY_SUMMON_2, m_creature); break;
@@ -217,7 +217,6 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
             }
             else
                 m_uiSpecialAbilityTimer -= uiDiff;
-
         }
         else
         {

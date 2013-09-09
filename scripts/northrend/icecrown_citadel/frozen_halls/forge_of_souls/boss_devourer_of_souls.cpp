@@ -104,7 +104,7 @@ struct MANGOS_DLL_DECL boss_devourer_of_soulsAI : public ScriptedAI
 
     GuidList m_lWellGuids;
 
-    void Reset()
+    void Reset() override
     {
         m_uiFace = FACE_NORMAL;
 
@@ -116,7 +116,7 @@ struct MANGOS_DLL_DECL boss_devourer_of_soulsAI : public ScriptedAI
         m_uiEndPhaseTimer = 0;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(aTexts[0][m_uiFace], m_creature);
         if (m_pInstance)
@@ -132,7 +132,7 @@ struct MANGOS_DLL_DECL boss_devourer_of_soulsAI : public ScriptedAI
             DoScriptText(aTexts[urand(1, 2)][m_uiFace], m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(aTexts[3][m_uiFace], m_creature);
 
@@ -171,8 +171,8 @@ struct MANGOS_DLL_DECL boss_devourer_of_soulsAI : public ScriptedAI
             m_lWellGuids.push_back(pSummoned->GetObjectGuid());
             pSummoned->CastSpell(pSummoned, SPELL_WELL_OF_SOULS_TRIGGER, true, NULL, NULL, m_creature->GetObjectGuid());
             // Commented as of not stacking auras
-            //pSummoned->CastSpell(pSummoned, SPELL_WELL_OF_SOULS_VISUAL1, true);
-            //pSummoned->CastSpell(pSummoned, SPELL_WELL_OF_SOULS_VISUAL2, true);
+            // pSummoned->CastSpell(pSummoned, SPELL_WELL_OF_SOULS_VISUAL1, true);
+            // pSummoned->CastSpell(pSummoned, SPELL_WELL_OF_SOULS_VISUAL2, true);
         }
         else if (pSummoned->GetEntry() == NPC_UNLEASHED_SOUL)
         {
@@ -186,7 +186,7 @@ struct MANGOS_DLL_DECL boss_devourer_of_soulsAI : public ScriptedAI
         }
     }
 
-    void SpellHitTarget(Unit* pTarget, SpellEntry const* pSpellEntry)
+    void SpellHitTarget(Unit* /*pTarget*/, SpellEntry const* pSpellEntry) override
     {
         switch (pSpellEntry->Id)
         {
@@ -250,11 +250,11 @@ struct MANGOS_DLL_DECL boss_devourer_of_soulsAI : public ScriptedAI
         // Phantom Blast
         if (m_uiPhantomBlastTimer < uiDiff)
         {
-           if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-           {
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            {
                 if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_PHANTOM_BLAST : SPELL_PHANTOM_BLAST_H) == CAST_OK)
                     m_uiPhantomBlastTimer = urand(5000, 10000); // TODO
-           }
+            }
         }
         else
             m_uiPhantomBlastTimer -= uiDiff;

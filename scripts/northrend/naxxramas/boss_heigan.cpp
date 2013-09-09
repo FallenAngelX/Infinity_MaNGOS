@@ -82,16 +82,16 @@ struct MANGOS_DLL_DECL boss_heiganAI : public ScriptedAI
         m_uiPhaseTimer = m_uiPhase == PHASE_GROUND ? 90000 : 45000;
     }
 
-    void Reset()
+    void Reset() override
     {
         m_uiPhase = PHASE_GROUND;
-        m_uiTauntTimer = urand(20000,60000);                // TODO, find information
+        m_uiTauntTimer = urand(20000, 60000);               // TODO, find information
         ResetPhase();
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
             case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
@@ -102,12 +102,12 @@ struct MANGOS_DLL_DECL boss_heiganAI : public ScriptedAI
             m_pInstance->SetData(TYPE_HEIGAN, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_SLAY, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -193,7 +193,7 @@ struct MANGOS_DLL_DECL boss_heiganAI : public ScriptedAI
         // Taunt
         if (m_uiTauntTimer < uiDiff)
         {
-            switch(urand(0, 3))
+            switch (urand(0, 3))
             {
                 case 0: DoScriptText(SAY_TAUNT1, m_creature); break;
                 case 1: DoScriptText(SAY_TAUNT2, m_creature); break;

@@ -74,7 +74,7 @@ struct MANGOS_DLL_DECL boss_moorabiAI : public ScriptedAI
 
     bool m_bMammothPhase;
 
-    void Reset()
+    void Reset() override
     {
         m_bMammothPhase = false;
 
@@ -85,22 +85,25 @@ struct MANGOS_DLL_DECL boss_moorabiAI : public ScriptedAI
         m_uiPreviousTimer       = 10000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
         DoCastSpellIfCan(m_creature, SPELL_MOJO_FRENZY);
         m_creature->SetInCombatWithZone();
+
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MOORABI, IN_PROGRESS);
     }
-     void JustReachedHome() override
+
+    void JustReachedHome() override
     {
         if(m_pInstance)
             m_pInstance->SetData(TYPE_MOORABI, NOT_STARTED);
     }
-    void KilledUnit(Unit* pVictim) override
+
+    void KilledUnit(Unit* /*pVictim*/) override
     {
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
             case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
@@ -108,14 +111,14 @@ struct MANGOS_DLL_DECL boss_moorabiAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MOORABI, DONE);
 
-        if  (!m_bIsRegularMode)
+        if (!m_bIsRegularMode)
         {
             if (m_bMammothPhase)
                 return;
@@ -190,10 +193,10 @@ CreatureAI* GetAI_boss_moorabi(Creature* pCreature)
 
 void AddSC_boss_moorabi()
 {
-    Script* newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_moorabi";
-    newscript->GetAI = &GetAI_boss_moorabi;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_moorabi";
+    pNewScript->GetAI = &GetAI_boss_moorabi;
+    pNewScript->RegisterSelf();
 }

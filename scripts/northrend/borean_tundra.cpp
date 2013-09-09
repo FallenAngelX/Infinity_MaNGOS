@@ -64,7 +64,7 @@ struct MANGOS_DLL_DECL npc_nesingwary_trapperAI : public ScriptedAI
     ObjectGuid m_playerGuid;
     ObjectGuid m_trapGuid;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPhase = 0;
         m_uiPhaseTimer = 0;
@@ -118,7 +118,7 @@ struct MANGOS_DLL_DECL npc_nesingwary_trapperAI : public ScriptedAI
         {
             if (m_uiPhaseTimer <= uiDiff)
             {
-                switch(m_uiPhase)
+                switch (m_uiPhase)
                 {
                     case 1:
                         if (GameObject* pTrap = m_creature->GetMap()->GetGameObject(m_trapGuid))
@@ -192,7 +192,7 @@ struct MANGOS_DLL_DECL npc_oil_stained_wolfAI : public ScriptedAI
     bool m_bCanCrapInPublic;
     uint32 m_uiPooTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_bCanCrapInPublic = false;
         m_uiPooTimer = 0;
@@ -312,7 +312,7 @@ struct MANGOS_DLL_DECL npc_sinkhole_kill_creditAI : public ScriptedAI
     uint32 m_uiCartTimer;
     uint32 m_uiCartPhase;
 
-    void Reset()
+    void Reset() override
     {
         m_cartGuid.Clear();
         m_wormGuid.Clear();
@@ -341,7 +341,7 @@ struct MANGOS_DLL_DECL npc_sinkhole_kill_creditAI : public ScriptedAI
         {
             if (m_uiCartTimer <= uiDiff)
             {
-                switch(m_uiCartPhase)
+                switch (m_uiCartPhase)
                 {
                     case 0:
                         DoCastSpellIfCan(m_creature, SPELL_SUMMON_EXPLOSIVES_CART_FIRE);
@@ -413,7 +413,7 @@ struct MANGOS_DLL_DECL npc_lurgglbrAI : public npc_escortAI
     uint32 m_uiSayTimer;
     uint8 m_uiSpeech;
 
-    void Reset()
+    void Reset() override
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
         {
@@ -422,7 +422,7 @@ struct MANGOS_DLL_DECL npc_lurgglbrAI : public npc_escortAI
         }
     }
 
-    void JustStartedEscort()
+    void JustStartedEscort() override
     {
         if (GameObject* pCage = GetClosestGameObjectWithEntry(m_creature, GO_CAGE, INTERACTION_DISTANCE))
         {
@@ -431,9 +431,9 @@ struct MANGOS_DLL_DECL npc_lurgglbrAI : public npc_escortAI
         }
     }
 
-    void WaypointStart(uint32 uiPointId)
+    void WaypointStart(uint32 uiPointId) override
     {
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 1:
                 if (Player* pPlayer = GetPlayerForEscort())
@@ -447,7 +447,7 @@ struct MANGOS_DLL_DECL npc_lurgglbrAI : public npc_escortAI
 
     void WaypointReached(uint32 uiPointId) override
     {
-        switch(uiPointId)
+        switch (uiPointId)
         {
             case 0:
                 if (Player* pPlayer = GetPlayerForEscort())
@@ -466,7 +466,7 @@ struct MANGOS_DLL_DECL npc_lurgglbrAI : public npc_escortAI
         }
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {
@@ -484,7 +484,7 @@ struct MANGOS_DLL_DECL npc_lurgglbrAI : public npc_escortAI
 
                     m_creature->SetFacingToObject(pPlayer);
 
-                    switch(m_uiSpeech)
+                    switch (m_uiSpeech)
                     {
                         case 0:
                             DoScriptText(SAY_END_2, m_creature, pPlayer);
@@ -559,7 +559,7 @@ struct MANGOS_DLL_DECL npc_nexus_drakeAI : public FollowerAI
      uint32 SPELL_INTANGIBLE_PRESENCE_Timer;
      uint32 SPELL_NETHERBREATH_Timer;
 
-     void Reset()
+     void Reset() override
      {
          bWithRedDragonBlood = false;
          bIsFollowing = false;
@@ -708,7 +708,7 @@ struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
     uint32 SPELL_FROST_BOLT_Timer;
     uint32 SPELL_BLINK_Timer;
 
-    void Reset()
+    void Reset() override
     {
          m_creature->setFaction(m_uiNormalFaction);
          bEnslaved = false;
@@ -794,7 +794,7 @@ struct npc_seaforium_depth_chargeAI : public ScriptedAI
     npc_seaforium_depth_chargeAI(Creature *pCreature) : ScriptedAI(pCreature) {}
 
     uint32 uiExplosionTimer;
-    void Reset()
+    void Reset() override
     {
         uiExplosionTimer = urand(5000,10000);
     }
@@ -881,7 +881,7 @@ struct MANGOS_DLL_DECL npc_tadpoleAI : public FollowerAI
 
     uint32 m_uiDespawnTimer;
 
-    void Reset(){ m_uiDespawnTimer = 60000; }
+    void Reset() override { m_uiDespawnTimer = 60000; }
 
     void UpdateFollowerAI(const uint32 uiDiff)
     {

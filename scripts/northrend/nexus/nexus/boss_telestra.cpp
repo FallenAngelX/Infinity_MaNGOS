@@ -93,7 +93,7 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
 
     bool m_bCanCheckAchiev;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPhase = PHASE_1;
         m_uiCloneDeadCount = 0;
@@ -123,7 +123,7 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -131,7 +131,7 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
             m_pInstance->SetData(TYPE_TELESTRA, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -139,17 +139,17 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
             m_pInstance->SetData(TYPE_TELESTRA, DONE);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         if (urand(0, 1))
             DoScriptText(SAY_KILL, m_creature);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
-        switch(pSpell->Id)
+        switch (pSpell->Id)
         {
-            // eventAi must make sure clones cast spells when each of them die
+                // eventAi must make sure clones cast spells when each of them die
             case SPELL_FIRE_DIES:
             case SPELL_ARCANE_DIES:
             case SPELL_FROST_DIES:
@@ -192,7 +192,7 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
 
     void JustSummoned(Creature* pSummoned) override
     {
-        switch(pSummoned->GetEntry())
+        switch (pSummoned->GetEntry())
         {
             case NPC_TELEST_FIRE: pSummoned->CastSpell(pSummoned, SPELL_FIRE_VISUAL, true); break;
             case NPC_TELEST_ARCANE: pSummoned->CastSpell(pSummoned, SPELL_ARCANE_VISUAL, true); break;
@@ -208,7 +208,7 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
         if (m_bCanCheckAchiev)
             m_uiPersonalityTimer += uiDiff;
 
-        switch(m_uiPhase)
+        switch (m_uiPhase)
         {
             case PHASE_1:
             case PHASE_3:

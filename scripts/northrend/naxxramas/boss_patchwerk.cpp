@@ -59,16 +59,16 @@ struct MANGOS_DLL_DECL boss_patchwerkAI : public ScriptedAI
     bool   m_bEnraged;
     bool   m_bBerserk;
 
-    void Reset()
+    void Reset() override
     {
-        m_uiHatefulStrikeTimer = 1000;                      //1 second
-        m_uiBerserkTimer = MINUTE*6*IN_MILLISECONDS;         //6 minutes
+        m_uiHatefulStrikeTimer = 1000;                      // 1 second
+        m_uiBerserkTimer = MINUTE * 6 * IN_MILLISECONDS;    // 6 minutes
         m_uiSlimeboltTimer = 10000;
         m_bEnraged = false;
         m_bBerserk = false;
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         if (urand(0, 4))
             return;
@@ -76,7 +76,7 @@ struct MANGOS_DLL_DECL boss_patchwerkAI : public ScriptedAI
         DoScriptText(SAY_SLAY, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -84,9 +84,9 @@ struct MANGOS_DLL_DECL boss_patchwerkAI : public ScriptedAI
             m_pInstance->SetData(TYPE_PATCHWERK, DONE);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
-        DoScriptText(urand(0, 1)?SAY_AGGRO1:SAY_AGGRO2, m_creature);
+        DoScriptText(urand(0, 1) ? SAY_AGGRO1 : SAY_AGGRO2, m_creature);
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_PATCHWERK, IN_PROGRESS);

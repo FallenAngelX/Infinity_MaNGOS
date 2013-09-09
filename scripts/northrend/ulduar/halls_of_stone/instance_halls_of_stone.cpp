@@ -40,8 +40,8 @@ enum
 };
 
 instance_halls_of_stone::instance_halls_of_stone(Map* pMap) : ScriptedInstance(pMap),
-    m_bIsBrannSpankin(false),
-    m_uiIronSludgeKilled(0)
+    m_uiIronSludgeKilled(0),
+    m_bIsBrannSpankin(false)
 {
     Initialize();
 }
@@ -53,7 +53,7 @@ void instance_halls_of_stone::Initialize()
 
 void instance_halls_of_stone::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_KADDRAK:          m_lKaddrakGUIDs.push_back(pCreature->GetObjectGuid());      break;
         case NPC_ABEDNEUM:         m_lAbedneumGUIDs.push_back(pCreature->GetObjectGuid());     break;
@@ -78,7 +78,7 @@ void instance_halls_of_stone::OnCreatureCreate(Creature* pCreature)
 
 void instance_halls_of_stone::OnObjectCreate(GameObject* pGo)
 {
-    switch(pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_TRIBUNAL_CHEST:
         case GO_TRIBUNAL_CHEST_H:
@@ -191,7 +191,7 @@ uint32 instance_halls_of_stone::GetData(uint32 uiType) const
     return 0;
 }
 
-bool instance_halls_of_stone::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const
+bool instance_halls_of_stone::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* /*pSource*/, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const
 {
     switch (uiCriteriaId)
     {
@@ -232,8 +232,7 @@ void instance_halls_of_stone::SortFaces()
     GameObject* pFace = NULL;
 
     // FACE_MARNAK
-    pFace = instance->GetGameObject(m_aFaces[FACE_MARNAK].m_goFaceGuid);
-    if (pFace)
+    if (pFace = instance->GetGameObject(m_aFaces[FACE_MARNAK].m_goFaceGuid))
     {
         // Find Marnak NPCs
         GetValidNPCsOfList(instance, m_lMarnakGUIDs, lPossibleEyes);
@@ -255,8 +254,7 @@ void instance_halls_of_stone::SortFaces()
     }
 
     // FACE_ABEDNEUM
-    pFace = instance->GetGameObject(m_aFaces[FACE_ABEDNEUM].m_goFaceGuid);
-    if (pFace)
+    if (pFace = instance->GetGameObject(m_aFaces[FACE_ABEDNEUM].m_goFaceGuid))
     {
         // Find Abedneum NPCs
         GetValidNPCsOfList(instance, m_lAbedneumGUIDs, lPossibleEyes);
@@ -278,8 +276,7 @@ void instance_halls_of_stone::SortFaces()
     }
 
     // FACE_KADDRAK
-    pFace = instance->GetGameObject(m_aFaces[FACE_KADDRAK].m_goFaceGuid);
-    if (pFace)
+    if (pFace = instance->GetGameObject(m_aFaces[FACE_KADDRAK].m_goFaceGuid))
     {
         // Find Marnak NPCs
         GetValidNPCsOfList(instance, m_lKaddrakGUIDs, lPossibleEyes);
@@ -368,7 +365,7 @@ void instance_halls_of_stone::Load(const char* chrIn)
     std::istringstream loadStream(chrIn);
     loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3];
 
-    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
         if (m_auiEncounter[i] == IN_PROGRESS)
             m_auiEncounter[i] = NOT_STARTED;
@@ -396,7 +393,7 @@ void instance_halls_of_stone::ProcessFace(uint8 uiFace)
             // if (Creature* pEye = instance->GetCreature(m_aFaces[uiFace].m_leftEyeGuid))
             //    pEye->CastSpell(pEye, SPELL_SUMMON_DARK_MATTER_TARGET, true);
             // One should be enough..
-            //if (Creature* pEye = instance->GetCreature(m_aFaces[uiFace].m_rightEyeGuid))
+            // if (Creature* pEye = instance->GetCreature(m_aFaces[uiFace].m_rightEyeGuid))
             //    pEye->CastSpell(pEye, SPELL_SUMMON_DARK_MATTER_TARGET, true);
             m_aFaces[uiFace].m_uiTimer = urand(21000, 30000);
             break;
@@ -404,7 +401,7 @@ void instance_halls_of_stone::ProcessFace(uint8 uiFace)
             if (Creature* pEye = instance->GetCreature(m_aFaces[uiFace].m_leftEyeGuid))
                 pEye->CastSpell(pEye, SPELL_SUMMON_SEARING_GAZE_TARGET, true);
             // One should be enough..
-            //if (Creature* pEye = instance->GetCreature(m_aFaces[uiFace].m_rightEyeGuid))
+            // if (Creature* pEye = instance->GetCreature(m_aFaces[uiFace].m_rightEyeGuid))
             //    pEye->CastSpell(pEye, SPELL_SUMMON_SEARING_GAZE_TARGET, true);
             m_aFaces[uiFace].m_uiTimer = urand(15000, 20000);
             break;

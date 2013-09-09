@@ -61,7 +61,7 @@ struct MANGOS_DLL_DECL boss_razuviousAI : public ScriptedAI
     uint32 m_uiJaggedKnifeTimer;
     uint32 m_uiCommandSoundTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiUnbalancingStrikeTimer = 30000;                 // 30 seconds
         m_uiDisruptingShoutTimer   = 15000;                 // 15 seconds
@@ -69,19 +69,19 @@ struct MANGOS_DLL_DECL boss_razuviousAI : public ScriptedAI
         m_uiCommandSoundTimer      = 40000;                 // 40 seconds
     }
 
-    void KilledUnit(Unit* Victim)
+    void KilledUnit(Unit* /*Victim*/) override
     {
         if (urand(0, 3))
             return;
 
-        switch(urand(0, 1))
+        switch (urand(0, 1))
         {
             case 0: DoScriptText(SAY_SLAY1, m_creature); break;
             case 1: DoScriptText(SAY_SLAY2, m_creature); break;
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -91,9 +91,9 @@ struct MANGOS_DLL_DECL boss_razuviousAI : public ScriptedAI
             m_pInstance->SetData(TYPE_RAZUVIOUS, DONE);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_AGGRO1, m_creature); break;
             case 1: DoScriptText(SAY_AGGRO2, m_creature); break;
@@ -148,7 +148,7 @@ struct MANGOS_DLL_DECL boss_razuviousAI : public ScriptedAI
         // Random say
         if (m_uiCommandSoundTimer < uiDiff)
         {
-            switch(urand(0, 3))
+            switch (urand(0, 3))
             {
                 case 0: DoScriptText(SAY_COMMAND1, m_creature); break;
                 case 1: DoScriptText(SAY_COMMAND2, m_creature); break;

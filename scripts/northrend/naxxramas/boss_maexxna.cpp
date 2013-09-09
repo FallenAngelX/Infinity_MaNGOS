@@ -46,9 +46,9 @@ enum
     SPELL_FRENZY                = 54123,
     SPELL_FRENZY_H              = 54124,
 
-    //SPELL_SUMMON_SPIDERLING_1 = 29434,                    // removed from dbc. Summons 10 spiderlings
-    //SPELL_SUMMON_SPIDERLING_2 = 30076,                    // removed from dbc. Summons 3 spiderlings
-    //SPELL_SUMMON_WEB_WRAP     = 28627,                    // removed from dbc. Summons one web wrap and transforms it into creature 17286
+    // SPELL_SUMMON_SPIDERLING_1 = 29434,                   // removed from dbc. Summons 10 spiderlings
+    // SPELL_SUMMON_SPIDERLING_2 = 30076,                   // removed from dbc. Summons 3 spiderlings
+    // SPELL_SUMMON_WEB_WRAP     = 28627,                   // removed from dbc. Summons one web wrap and transforms it into creature 17286
 
     NPC_WEB_WRAP                = 16486,
     NPC_SPIDERLING              = 17055,
@@ -71,13 +71,13 @@ struct MANGOS_DLL_DECL npc_web_wrapAI : public ScriptedAI
     ObjectGuid m_victimGuid;
     uint32 m_uiWebWrapTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiWebWrapTimer = 0;
     }
 
-    void MoveInLineOfSight(Unit* pWho) override { }
-    void AttackStart(Unit* pWho) override {}
+    void MoveInLineOfSight(Unit* /*pWho*/) override {}
+    void AttackStart(Unit* /*pWho*/) override {}
 
     void SetVictim(Unit* pVictim)
     {
@@ -100,7 +100,7 @@ struct MANGOS_DLL_DECL npc_web_wrapAI : public ScriptedAI
                 uiEffectMiscValue = 400;
 
             // Note: normally we should use the Knockback effect to handle this, but because this doesn't behave as expected we'll just use Jump Movement
-            //pVictim->KnockBackFrom(m_creature, -fDist, uiEffectMiscValue * 0.1f);
+            // pVictim->KnockBackFrom(m_creature, -fDist, uiEffectMiscValue * 0.1f);
 
             float fSpeed = fDist * (uiEffectMiscValue * 0.01f);
             pVictim->GetMotionMaster()->MoveJump(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), fSpeed, 0.0f);
@@ -110,7 +110,7 @@ struct MANGOS_DLL_DECL npc_web_wrapAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_victimGuid)
         {
@@ -159,7 +159,7 @@ struct MANGOS_DLL_DECL boss_maexxnaAI : public ScriptedAI
     uint32 m_uiSummonSpiderlingTimer;
     bool   m_bEnraged;
 
-    void Reset()
+    void Reset() override
     {
         m_uiWebWrapTimer            = 15000;
         m_uiWebSprayTimer           = 40000;
@@ -169,13 +169,13 @@ struct MANGOS_DLL_DECL boss_maexxnaAI : public ScriptedAI
         m_bEnraged                  = false;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MAEXXNA, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MAEXXNA, DONE);
@@ -211,13 +211,13 @@ struct MANGOS_DLL_DECL boss_maexxnaAI : public ScriptedAI
             return false;
 
         uint8 uiPos1 = urand(0, MAX_WEB_WRAP_POSITIONS - 1);
-        m_creature->SummonCreature(NPC_WEB_WRAP, aWebWrapLoc[uiPos1][0], aWebWrapLoc[uiPos1][1], aWebWrapLoc[uiPos1][2], 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
+        m_creature->SummonCreature(NPC_WEB_WRAP, aWebWrapLoc[uiPos1][0], aWebWrapLoc[uiPos1][1], aWebWrapLoc[uiPos1][2], 0, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
 
         // Summon a second web wrap on heroic
         if (!m_bIsRegularMode)
         {
             uint8 uiPos2 = (uiPos1 + urand(1, MAX_WEB_WRAP_POSITIONS - 1)) % MAX_WEB_WRAP_POSITIONS;
-            m_creature->SummonCreature(NPC_WEB_WRAP, aWebWrapLoc[uiPos2][0], aWebWrapLoc[uiPos2][1], aWebWrapLoc[uiPos2][2], 0, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
+            m_creature->SummonCreature(NPC_WEB_WRAP, aWebWrapLoc[uiPos2][0], aWebWrapLoc[uiPos2][1], aWebWrapLoc[uiPos2][2], 0, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
         }
 
         return true;
@@ -227,7 +227,7 @@ struct MANGOS_DLL_DECL boss_maexxnaAI : public ScriptedAI
     void SummonSpiderlings()
     {
         for (uint8 i = 0; i < MAX_SPIDERLINGS; ++i)
-            m_creature->SummonCreature(NPC_SPIDERLING, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 60000);
+            m_creature->SummonCreature(NPC_SPIDERLING, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 60000);
     }
 
     void UpdateAI(const uint32 uiDiff) override

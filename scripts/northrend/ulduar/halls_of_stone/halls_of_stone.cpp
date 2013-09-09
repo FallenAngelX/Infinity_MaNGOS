@@ -141,7 +141,7 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
 
     GuidList m_luiDwarfGUIDs;
 
-    void Reset()
+    void Reset() override
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
         {
@@ -154,9 +154,9 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
         }
     }
 
-    void KilledUnit(Unit* pVictim) override                          // TODO - possible better as SummonedJustDied
+    void KilledUnit(Unit* /*pVictim*/) override                          // TODO - possible better as SummonedJustDied
     {
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_KILL_1, m_creature); break;
             case 1: DoScriptText(SAY_KILL_2, m_creature); break;
@@ -164,7 +164,7 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -206,7 +206,7 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
         m_bHasContinued = true;
     }
 
-    void JustStartedEscort()
+    void JustStartedEscort() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_TRIBUNAL, IN_PROGRESS);
@@ -214,8 +214,8 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
         DoScriptText(SAY_ESCORT_START, m_creature);
     }
 
-     void WaypointReached(uint32 uiPointId) override
-     {
+    void WaypointReached(uint32 uiPointId) override
+    {
         switch (uiPointId)
         {
             case 13:                                        // Before Tribunal Event, Continue with Gossip Interaction
@@ -238,7 +238,7 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
                 m_uiPhaseTimer = 1000;
                 break;
         }
-     }
+    }
 
     void SpawnDwarf(uint32 uEntry)
     {
@@ -289,13 +289,13 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
         pSummoned->AI()->AttackStart(m_creature);
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 uiDiff) override
     {
         if (m_uiPhaseTimer && m_uiPhaseTimer <= uiDiff)
         {
             switch (m_uiStep)
             {
-                // Begin Event
+                    // Begin Event
                 case 0:
                     // TODO, this is wrong, must be "using or similar"
                     m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
@@ -316,7 +316,7 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
                     m_uiPhaseTimer = 8500;
                     break;
 
-                // Activate Kaddrak
+                    // Activate Kaddrak
                 case 4:
                     DoScriptText(SAY_EVENT_A_1, m_creature);
                     m_uiPhaseTimer = 6500;
@@ -340,7 +340,7 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
                     m_uiPhaseTimer = 20000;
                     break;
 
-                // Activate Marnak
+                    // Activate Marnak
                 case 9:
                     DoScriptText(SAY_EVENT_B_1, m_creature);
                     m_uiPhaseTimer = 6000;
@@ -378,7 +378,7 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
                     m_uiPhaseTimer = 20000;
                     break;
 
-                // Activate Abedneum
+                    // Activate Abedneum
                 case 17:
                     if (m_pInstance)
                         m_pInstance->DoFaceSpeak(FACE_ABEDNEUM, SAY_EVENT_C_2_ABED);
@@ -438,7 +438,7 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
                     m_uiPhaseTimer = 10000;
                     break;
 
-                // End Event
+                    // End Event
                 case 29:
                     DoScriptText(SAY_EVENT_END_01, m_creature);
                     m_creature->SetStandState(UNIT_STAND_STATE_STAND);// TODO TODO
@@ -585,7 +585,7 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
     }
 
     // Respawn Handling: Relocate and Set Escort to WP 13
-   void JustRespawned() override
+    void JustRespawned() override
     {
         if (!m_pInstance)
             return;
@@ -606,7 +606,7 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
 
             SetCurrentWaypoint(13);
         }
-   }
+    }
 };
 
 bool GossipHello_npc_brann_hos(Player* pPlayer, Creature* pCreature)
@@ -631,16 +631,16 @@ bool GossipHello_npc_brann_hos(Player* pPlayer, Creature* pCreature)
     return true;
 }
 
-bool GossipSelect_npc_brann_hos(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_brann_hos(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     switch (uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF + 1:
-            if (npc_brann_hosAI* pBrannAi = dynamic_cast<npc_brann_hosAI*> (pCreature->AI()))
+            if (npc_brann_hosAI* pBrannAi = dynamic_cast<npc_brann_hosAI*>(pCreature->AI()))
                 pBrannAi->Start(false, pPlayer);
             break;
         case GOSSIP_ACTION_INFO_DEF + 2:
-            if (npc_brann_hosAI* pBrannAi = dynamic_cast<npc_brann_hosAI*> (pCreature->AI()))
+            if (npc_brann_hosAI* pBrannAi = dynamic_cast<npc_brann_hosAI*>(pCreature->AI()))
                 pBrannAi->ContinueEvent();
             break;
     }
@@ -682,15 +682,15 @@ struct MANGOS_DLL_DECL npc_dark_matterAI : public ScriptedAI
 
     uint32 m_uiSummonTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiSummonTimer = 0;
     }
 
-    void AttackStart(Unit* pWho) override { }
-    void MoveInLineOfSight(Unit* pWho) override { }
+    void AttackStart(Unit* /*pWho*/) override { }
+    void MoveInLineOfSight(Unit* /*pWho*/) override { }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
         if (pSpell->Id == SPELL_DARK_MATTER_START)
             m_uiSummonTimer = 5000;
@@ -750,16 +750,16 @@ struct MANGOS_DLL_DECL npc_searing_gazeAI : public Scripted_NoMovementAI
 
     bool m_bIsRegularMode;
 
-    void Reset()
+    void Reset() override
     {
         DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SEARING_GAZE : SPELL_SEARING_GAZE_H);
         // despawn manually because of combat bug
         m_creature->ForcedDespawn(30000);
     }
 
-    void AttackStart(Unit* pWho) override { }
-    void MoveInLineOfSight(Unit* pWho) override { }
-    void UpdateAI(const uint32 uiDiff) override { }
+    void AttackStart(Unit* /*pWho*/) override { }
+    void MoveInLineOfSight(Unit* /*pWho*/) override { }
+    void UpdateAI(const uint32 /*uiDiff*/) override { }
 };
 
 CreatureAI* GetAI_npc_searing_gaze(Creature* pCreature)

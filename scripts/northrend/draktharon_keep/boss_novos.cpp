@@ -65,8 +65,8 @@ enum
 // The Crystal Handlers are summoned around the two entrances of the room
 static const float aHandlerSummonPos[2][3] =
 {
-    {-342.894836f, -727.016846f, 28.581081f},
-    {-410.644653f, -731.826904f, 28.580412f}
+    { -342.894836f, -727.016846f, 28.581081f},
+    { -410.644653f, -731.826904f, 28.580412f}
 };
 
 /*######
@@ -105,7 +105,7 @@ struct MANGOS_DLL_DECL boss_novosAI : public Scripted_NoMovementAI
     uint8 m_uiLostCrystals;
     Phases m_uiPhase;
 
-    void Reset()
+    void Reset() override
     {
         m_uiSummonHandlerTimer = 25000;
         m_uiSummonShadowcasterTimer = 3000;
@@ -148,7 +148,7 @@ struct MANGOS_DLL_DECL boss_novosAI : public Scripted_NoMovementAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -163,12 +163,12 @@ struct MANGOS_DLL_DECL boss_novosAI : public Scripted_NoMovementAI
             m_pInstance->SetData(TYPE_NOVOS, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_KILL, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -194,7 +194,7 @@ struct MANGOS_DLL_DECL boss_novosAI : public Scripted_NoMovementAI
         }
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void SummonedCreatureJustDied(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_CRYSTAL_HANDLER)
         {
@@ -329,10 +329,10 @@ struct MANGOS_DLL_DECL npc_crystal_channel_targetAI : public ScriptedAI
 
     instance_draktharon_keep* m_pInstance;
 
-    void Reset() {}
-    void MoveInLineOfSight(Unit* pWho) override { }
-    void AttackStart(Unit* pWho) override {}
-    void UpdateAI(const uint32 uiDiff) override {}
+    void Reset() override {}
+    void MoveInLineOfSight(Unit* /*pWho*/) override {}
+    void AttackStart(Unit* /*pWho*/) override {}
+    void UpdateAI(const uint32 /*uiDiff*/) override {}
 
     void JustSummoned(Creature* pSummoned) override
     {
@@ -344,7 +344,7 @@ struct MANGOS_DLL_DECL npc_crystal_channel_targetAI : public ScriptedAI
             // The end of the stairs is approximately at 1/3 of the way between summoning-position and novos, height of Novos
             if (Creature* pNovos = m_pInstance->GetSingleCreatureFromStorage(NPC_NOVOS))
             {
-                m_creature->GetRandomPoint(0.70*pNovos->GetPositionX() + 0.30*pSummoned->GetPositionX(), 0.70*pNovos->GetPositionY() + 0.30*pSummoned->GetPositionY(), pNovos->GetPositionZ() + 1.5f, 4.0f, fX, fY, fZ);
+                m_creature->GetRandomPoint(0.70 * pNovos->GetPositionX() + 0.30 * pSummoned->GetPositionX(), 0.70 * pNovos->GetPositionY() + 0.30 * pSummoned->GetPositionY(), pNovos->GetPositionZ() + 1.5f, 4.0f, fX, fY, fZ);
                 pSummoned->GetMotionMaster()->MovePoint(1, fX, fY, fZ, true, true);
             }
         }
@@ -370,7 +370,6 @@ CreatureAI* GetAI_npc_crystal_channel_target(Creature* pCreature)
 {
     return new npc_crystal_channel_targetAI(pCreature);
 }
-
 
 // Handling of the dummy auras of Crystal Handler Death spells, on remove the Crystal needs to be opened
 bool EffectAuraDummy_npc_crystal_channel_target(const Aura* pAura, bool bApply)

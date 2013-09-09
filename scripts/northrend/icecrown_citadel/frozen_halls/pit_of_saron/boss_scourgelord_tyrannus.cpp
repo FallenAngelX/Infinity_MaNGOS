@@ -49,7 +49,7 @@ enum
 
     // Icy blast
     SPELL_ICY_BLAST_AURA                = 69238,
-    NPC_ICY_BLAST                       = 36731,
+    NPC_ICY_BLAST                       = 36731,                // handled in eventAI
 };
 
 static const float afRimefangExitPos[3] = {1248.29f, 145.924f, 733.914f};
@@ -74,7 +74,7 @@ struct MANGOS_DLL_DECL boss_tyrannusAI : public ScriptedAI
     uint32 m_uiUnholyPowerTimer;
     uint32 m_uiMarkOfRimefangTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiForcefulSmashTimer  = 10000;
         m_uiOverlordsBrandTimer = 9000;
@@ -96,12 +96,12 @@ struct MANGOS_DLL_DECL boss_tyrannusAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* pVictim)
+    void KilledUnit(Unit* /*pVictim*/)
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -200,7 +200,7 @@ struct MANGOS_DLL_DECL boss_tyrannusAI : public ScriptedAI
 
 CreatureAI* GetAI_boss_tyrannus(Creature* pCreature)
 {
-    return new boss_tyrannusAI (pCreature);
+    return new boss_tyrannusAI(pCreature);
 }
 
 /*######
@@ -224,7 +224,7 @@ struct MANGOS_DLL_DECL boss_rimefang_posAI : public ScriptedAI
     uint32 m_uiIcyBlastTimer;
     bool m_bHasDoneIntro;
 
-    void Reset()
+    void Reset() override
     {
         m_uiIcyBlastTimer = 8000;
     }
@@ -245,8 +245,8 @@ struct MANGOS_DLL_DECL boss_rimefang_posAI : public ScriptedAI
 
     void AttackStart(Unit* pWho) override
     {
-        // Don't attack unless Tyrannus is in combat
-        if (m_pInstance && m_pInstance->GetData(TYPE_TYRANNUS) != IN_PROGRESS)
+        // Don't attack unless Tyrannus is in combat or Ambush is completed
+        if (m_pInstance && (m_pInstance->GetData(TYPE_AMBUSH) != DONE || m_pInstance->GetData(TYPE_TYRANNUS) != IN_PROGRESS))
             return;
 
         ScriptedAI::AttackStart(pWho);
@@ -300,9 +300,11 @@ struct MANGOS_DLL_DECL boss_rimefang_posAI : public ScriptedAI
         {
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             {
-                // ToDo: research how to summon the Icy Blast npc and apply the slow aura
                 if (DoCastSpellIfCan(pTarget, SPELL_ICY_BLAST) == CAST_OK)
+                {
+                    m_creature->SummonCreature(NPC_ICY_BLAST, pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 90000);
                     m_uiIcyBlastTimer = 8000;
+                }
             }
         }
         else

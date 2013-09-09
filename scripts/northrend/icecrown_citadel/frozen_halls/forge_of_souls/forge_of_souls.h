@@ -102,7 +102,7 @@ class MANGOS_DLL_DECL instance_forge_of_souls : public ScriptedInstance
 
         void SetData(uint32 uiType, uint32 uiData) override;
         uint32 GetData(uint32 uiType) const override;
-        void SetData64(uint32 uiType, uint64 uiData);
+        void SetData64(uint32 uiType, uint64 uiData) override;
 
         void OnPlayerEnter(Player* pPlayer) override;
         void ProcessEventNpcs(Player* pPlayer, bool bChanged);

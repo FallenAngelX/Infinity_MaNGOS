@@ -54,7 +54,7 @@ struct MANGOS_DLL_DECL boss_eckAI : public ScriptedAI
     uint32 m_uiBiteTimer;
     uint32 m_uiBerserkTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiSpitTimer = urand(10000, 20000);
         m_uiSpringTimer = urand(15000, 25000);
@@ -63,13 +63,13 @@ struct MANGOS_DLL_DECL boss_eckAI : public ScriptedAI
         m_bIsBerserk = false;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ECK, IN_PROGRESS);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ECK, DONE);
@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL boss_eckAI : public ScriptedAI
     }
 
     // As the Eck Spite spell has no dummy or similar effect, applying the residue aura has to be done with spellHitTarget
-    void SpellHitTarget (Unit* pUnit, const SpellEntry* pSpellEntry)
+    void SpellHitTarget(Unit* pUnit, const SpellEntry* pSpellEntry) override
     {
         if (pSpellEntry->Id == SPELL_ECK_SPIT && pUnit->GetTypeId() == TYPEID_PLAYER && !pUnit->HasAura(SPELL_ECK_RESIDUE))
             pUnit->CastSpell(pUnit, SPELL_ECK_RESIDUE, true);

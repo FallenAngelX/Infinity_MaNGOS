@@ -91,13 +91,14 @@ enum
     NPC_BLAUMEUX                = 16065,
     NPC_RIVENDARE               = 30549,
 
+    NPC_SAPPHIRON               = 15989,
     NPC_KELTHUZAD               = 15990,
     NPC_THE_LICHKING            = 16980,
     NPC_MR_BIGGLESWORTH         = 16998,
 
     // Gothik
     NPC_GOTHIK                  = 16060,
-    NPC_SUB_BOSS_TRIGGER        = 16137,                    //summon locations
+    NPC_SUB_BOSS_TRIGGER        = 16137,                    // summon locations
     NPC_UNREL_TRAINEE           = 16124,
     NPC_UNREL_DEATH_KNIGHT      = 16125,
     NPC_UNREL_RIDER             = 16126,
@@ -113,29 +114,29 @@ enum
     NPC_GUARDIAN                = 16441,
 
     // Arachnid Quarter
-    GO_ARAC_ANUB_DOOR           = 181126,                   //encounter door
-    GO_ARAC_ANUB_GATE           = 181195,                   //open after boss is dead
-    GO_ARAC_FAER_WEB            = 181235,                   //encounter door
-    GO_ARAC_FAER_DOOR           = 194022,                   //after faerlina, to outer ring
-    GO_ARAC_MAEX_INNER_DOOR     = 181197,                   //encounter door
-    GO_ARAC_MAEX_OUTER_DOOR     = 181209,                   //right before maex
+    GO_ARAC_ANUB_DOOR           = 181126,                   // encounter door
+    GO_ARAC_ANUB_GATE           = 181195,                   // open after boss is dead
+    GO_ARAC_FAER_WEB            = 181235,                   // encounter door
+    GO_ARAC_FAER_DOOR           = 194022,                   // after faerlina, to outer ring
+    GO_ARAC_MAEX_INNER_DOOR     = 181197,                   // encounter door
+    GO_ARAC_MAEX_OUTER_DOOR     = 181209,                   // right before maex
 
     // Plague Quarter
-    GO_PLAG_SLIME01_DOOR        = 181198,                   //not used
-    GO_PLAG_SLIME02_DOOR        = 181199,                   //not used
-    GO_PLAG_NOTH_ENTRY_DOOR     = 181200,                   //encounter door
-    GO_PLAG_NOTH_EXIT_DOOR      = 181201,                   //exit, open when boss dead
+    GO_PLAG_SLIME01_DOOR        = 181198,                   // not used
+    GO_PLAG_SLIME02_DOOR        = 181199,                   // not used
+    GO_PLAG_NOTH_ENTRY_DOOR     = 181200,                   // encounter door
+    GO_PLAG_NOTH_EXIT_DOOR      = 181201,                   // exit, open when boss dead
     GO_PLAG_HEIG_ENTRY_DOOR     = 181202,
-    GO_PLAG_HEIG_EXIT_DOOR      = 181203,                   //exit, open when boss dead
-    GO_PLAG_LOAT_DOOR           = 181241,                   //encounter door
+    GO_PLAG_HEIG_EXIT_DOOR      = 181203,                   // exit, open when boss dead
+    GO_PLAG_LOAT_DOOR           = 181241,                   // encounter door
 
     // Military Quarter
-    GO_MILI_GOTH_ENTRY_GATE     = 181124,                   //used while encounter is in progress
-    GO_MILI_GOTH_EXIT_GATE      = 181125,                   //exit, open at boss dead
-    GO_MILI_GOTH_COMBAT_GATE    = 181170,                   //used while encounter is in progress
-    GO_MILI_HORSEMEN_DOOR       = 181119,                   //encounter door
+    GO_MILI_GOTH_ENTRY_GATE     = 181124,                   // used while encounter is in progress
+    GO_MILI_GOTH_EXIT_GATE      = 181125,                   // exit, open at boss dead
+    GO_MILI_GOTH_COMBAT_GATE    = 181170,                   // used while encounter is in progress
+    GO_MILI_HORSEMEN_DOOR       = 181119,                   // encounter door
 
-    GO_CHEST_HORSEMEN_NORM      = 181366,                   //four horsemen event, DoRespawnGameObject() when event == DONE
+    GO_CHEST_HORSEMEN_NORM      = 181366,                   // four horsemen event, DoRespawnGameObject() when event == DONE
     GO_CHEST_HORSEMEN_HERO      = 193426,
 
     // Construct Quarter
@@ -171,15 +172,15 @@ enum
     AREATRIGGER_GOTHIK          = 4116,
     AREATRIGGER_THADDIUS_DOOR   = 4113,
 
-    // Achievement-related
+    // Achievement related
     ACHIEV_CRIT_SAFETY_DANCE_N  = 7264,                     // Heigan, achievs 1996, 2139
     ACHIEV_CRIT_SAFETY_DANCE_H  = 7548,
     ACHIEV_CRIT_KNOCK_YOU_OUT_N = 7265,                     // Faerlina, achievs 1997, 2140
     ACHIEV_CRIT_KNOCK_YOU_OUT_H = 7549,
     ACHIEV_CRIT_HUNDRED_CLUB_N  = 7567,                     // Sapphiron, achievs 2146, 2147
     ACHIEV_CRIT_HUNDRED_CLUB_H  = 7568,
-    ACHIEV_CRIT_AND_THEY_N      = 7600,                     // Horsemen, achieves 2176, 2177
-    ACHIEV_CRIT_AND_THEY_H      = 7601,
+    ACHIEV_CRIT_TOGETHER_N      = 7600,                     // Four Horsemen, achievs 2176, 2177
+    ACHIEV_CRIT_TOGETHER_H      = 7601,
     ACHIEV_CRIT_SHOCKING_N      = 7604,                     // Thaddius, achievs 2178, 2179
     ACHIEV_CRIT_SHOCKING_H      = 7605,
     ACHIEV_CRIT_SPORE_LOSER_N   = 7612,                     // Loatheb, achievs 2182, 2183
@@ -246,18 +247,18 @@ class MANGOS_DLL_DECL instance_naxxramas : public ScriptedInstance
         // goth
         void SetGothTriggers();
         Creature* GetClosestAnchorForGoth(Creature* pSource, bool bRightSide);
-        void GetGothSummonPointCreatures(std::list<Creature*> &lList, bool bRightSide);
+        void GetGothSummonPointCreatures(std::list<Creature*>& lList, bool bRightSide);
         bool IsInRightSideGothArea(Unit* pUnit);
 
         // Heigan
         uint64 GetHeiganTrapData64(uint8 uiAreaIndex, uint32 uiIndex);
 
         // thaddius
-        void GetThadTeslaCreatures(GuidList &lList){ lList = m_lThadTeslaCoilList; };
+        void GetThadTeslaCreatures(GuidList& lList) { lList = m_lThadTeslaCoilList; };
 
         // kel
         void SetChamberCenterCoords(float fX, float fY, float fZ);
-        void GetChamberCenterCoords(float &fX, float &fY, float &fZ) { fX = m_fChamberCenterX; fY = m_fChamberCenterY; fZ = m_fChamberCenterZ; }
+        void GetChamberCenterCoords(float& fX, float& fY, float& fZ) { fX = m_fChamberCenterX; fY = m_fChamberCenterY; fZ = m_fChamberCenterZ; }
         void DoTaunt();
 
     protected:

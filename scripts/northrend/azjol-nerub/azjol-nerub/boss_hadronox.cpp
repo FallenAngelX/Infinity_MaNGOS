@@ -74,7 +74,7 @@ struct MANGOS_DLL_DECL boss_hadronoxAI : public ScriptedAI
     uint32 m_uiPierceTimer;
     uint32 m_uiGrabTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiAcidTimer   = urand(10000, 14000);
         m_uiLeechTimer  = urand(3000, 9000);
@@ -94,7 +94,7 @@ struct MANGOS_DLL_DECL boss_hadronoxAI : public ScriptedAI
 
         if (m_uiPierceTimer < uiDiff)
         {
-            if(DoCastSpellIfCan(m_creature->getVictim(), SPELL_PIERCE_ARMOR) == CAST_OK)
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_PIERCE_ARMOR) == CAST_OK)
                 m_uiPierceTimer = 8000;
         }
         else

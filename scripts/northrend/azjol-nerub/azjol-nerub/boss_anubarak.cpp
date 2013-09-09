@@ -71,7 +71,6 @@ enum
 };
 
 
-
 /*######
 ## boss_anubarak
 ######*/
@@ -101,7 +100,7 @@ struct MANGOS_DLL_DECL boss_anubarakAI : public ScriptedAI
     bool m_bIsFirstWave;
     bool m_bDoneIntro;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPhase = PHASE_GROUND;
         m_uiSubmergePhase = 1;
@@ -111,10 +110,10 @@ struct MANGOS_DLL_DECL boss_anubarakAI : public ScriptedAI
         m_uiPoundTimer          = 15000;
         m_uiDarterTimer         = 5000;
 
-        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
+        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
@@ -122,9 +121,9 @@ struct MANGOS_DLL_DECL boss_anubarakAI : public ScriptedAI
             m_pInstance->SetData(TYPE_ANUBARAK, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
-        switch(urand(0, 2))
+        switch (urand(0, 2))
         {
             case 0: DoScriptText(SAY_KILL_1, m_creature); break;
             case 1: DoScriptText(SAY_KILL_2, m_creature); break;
@@ -132,7 +131,7 @@ struct MANGOS_DLL_DECL boss_anubarakAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -229,12 +228,12 @@ struct MANGOS_DLL_DECL boss_anubarakAI : public ScriptedAI
             else
                 m_uiPoundTimer -= uiDiff;
 
-            if (m_creature->GetHealthPercent() < 100 - 25*m_uiSubmergePhase)
+            if (m_creature->GetHealthPercent() < 100 - 25 * m_uiSubmergePhase)
             {
                 DoCastSpellIfCan(m_creature, SPELL_IMPALE_AURA, CAST_TRIGGERED);
                 DoCastSpellIfCan(m_creature, SPELL_SUBMERGE, CAST_TRIGGERED);
                 DoScriptText(urand(0, 1) ? SAY_SUBMERGE_1 : SAY_SUBMERGE_2, m_creature);
-                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
+                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
                 m_uiPhase = PHASE_SUBMERGED;
                 m_bIsFirstWave = true;
                 m_uiSummonTimer = 5000;
@@ -306,7 +305,7 @@ struct MANGOS_DLL_DECL boss_anubarakAI : public ScriptedAI
                 DoCastSpellIfCan(m_creature, SPELL_EMERGE, CAST_INTERRUPT_PREVIOUS);
                 m_creature->RemoveAurasDueToSpell(SPELL_SUBMERGE);
                 m_creature->RemoveAurasDueToSpell(SPELL_IMPALE_AURA);
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE|UNIT_FLAG_NOT_SELECTABLE);
+                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
                 m_uiPhase = PHASE_GROUND;
             }
             else
@@ -340,13 +339,13 @@ struct MANGOS_DLL_DECL npc_impale_targetAI : public Scripted_NoMovementAI
 
     uint32 m_uiImpaleTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiImpaleTimer = 3000;
     }
 
-    void AttackStart(Unit* pWho) override { }
-    void MoveInLineOfSight(Unit* pWho) override { }
+    void AttackStart(Unit* /*pWho*/) override { }
+    void MoveInLineOfSight(Unit* /*pWho*/) override { }
 
     void UpdateAI(const uint32 uiDiff) override
     {
