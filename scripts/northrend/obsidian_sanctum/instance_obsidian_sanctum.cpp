@@ -16,7 +16,7 @@
 
 /* ScriptData
 SDName: Instance_Obsidian_Sanctum
-SD%Complete: 95%
+SD%Complete: 80%
 SDComment:
 SDCategory: Obsidian Sanctum
 EndScriptData */
@@ -28,142 +28,109 @@ EndScriptData */
 0 - Sartharion
 */
 
-instance_obsidian_sanctum::instance_obsidian_sanctum(Map* pMap) : ScriptedInstance(pMap)
+instance_obsidian_sanctum::instance_obsidian_sanctum(Map* pMap) : ScriptedInstance(pMap),
+    m_uiAliveDragons(0)
 {
     Initialize();
-};
+}
 
 void instance_obsidian_sanctum::Initialize()
 {
     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-
-    m_uiAcolyteShadronGUID.Clear();
-    m_uiAcolyteVesperonGUID.Clear();
-
-    m_lTrashMobsGUIDlist.clear();
-    m_lTrashMobsGUIDlist.clear();
-    m_lEggsGuidList.clear();
-    m_lWhelpsGuidList.clear();
-    m_lBlazesGuidList.clear();
-    m_lHitByVolcanoGuidList.clear();
 }
 
 void instance_obsidian_sanctum::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
-        case NPC_SARTHARION:
-        //three dragons below set to active state once created.
-        //we must expect bigger raid to encounter main boss, and then three dragons must be active due to grid differences
+        // The three dragons below set to active state once created.
+        // We must expect bigger raid to encounter main boss, and then three dragons must be active due to grid differences
         case NPC_TENEBRON:
         case NPC_SHADRON:
         case NPC_VESPERON:
-            m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
             pCreature->SetActiveObjectState(true);
+        case NPC_SARTHARION:
+            m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
             break;
-        // trash mobs aggro when Sartharion is engaged
-        case NPC_ONYX_BROOD_GENERAL:
-        case NPC_ONYX_BLAZE_MISTRESS:
-        case NPC_ONYX_FLIGHT_CAPTAIN:
-        case NPC_ONYX_SANCTUM_GUARDIAN:
-            m_lTrashMobsGUIDlist.push_back(pCreature->GetObjectGuid());
+        case NPC_FIRE_CYCLONE:
+            m_lFireCycloneGuidList.push_back(pCreature->GetObjectGuid());
             break;
     }
-}
-
-void instance_obsidian_sanctum::SetAcolyteGuid(uint32 uiEntry, ObjectGuid guid)
-{
-    m_mNpcEntryGuidStore[uiEntry] = guid;
 }
 
 void instance_obsidian_sanctum::SetData(uint32 uiType, uint32 uiData)
 {
-    m_auiEncounter[uiType - 1] = uiData;
+    if (uiType == TYPE_SARTHARION_EVENT)
+    {
+        m_auiEncounter[0] = uiData;
+        if (uiData == IN_PROGRESS)
+            m_sVolcanoBlowFailPlayers.clear();
+    }
+    else if (uiType == TYPE_ALIVE_DRAGONS)
+        m_uiAliveDragons = uiData;
+    else if (uiType == TYPE_VOLCANO_BLOW_FAILED)
+    {
+        // Insert the players who fail the achiev and haven't been already inserted in the set
+        if (m_sVolcanoBlowFailPlayers.find(uiData) == m_sVolcanoBlowFailPlayers.end())
+            m_sVolcanoBlowFailPlayers.insert(uiData);
+    }
+
+    // No need to save anything here
 }
 
 uint32 instance_obsidian_sanctum::GetData(uint32 uiType) const
 {
-    return m_auiEncounter[uiType - 1];
+    if (uiType == TYPE_SARTHARION_EVENT)
+        return m_auiEncounter[0];
+
+    return 0;
 }
 
-bool instance_obsidian_sanctum::IsEncounterInProgress() const
+ObjectGuid instance_obsidian_sanctum::SelectRandomFireCycloneGuid()
 {
-    for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-        if (m_auiEncounter[i] == IN_PROGRESS)
-            return true;
+    if (m_lFireCycloneGuidList.empty())
+        return ObjectGuid();
 
-    return false;
+    GuidList::iterator iter = m_lFireCycloneGuidList.begin();
+    advance(iter, urand(0, m_lFireCycloneGuidList.size() - 1));
+
+    return *iter;
 }
 
-bool instance_obsidian_sanctum::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1) const
+bool instance_obsidian_sanctum::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const
 {
     switch (uiCriteriaId)
     {
-        case ACHIEV_CRIT_ASSIST_10:
-            if (instance->IsRegularDifficulty())
-                return GetData(TYPE_SARTH_HARD_ONE) == DONE;
-            break;
-        case ACHIEV_CRIT_ASSIST_25:
-            if (!instance->IsRegularDifficulty())
-                return GetData(TYPE_SARTH_HARD_ONE) == DONE;
-            break;
-        case ACHIEV_CRIT_DUO_10:
-            if (instance->IsRegularDifficulty())
-                return GetData(TYPE_SARTH_HARD_TWO) == DONE;
-            break;
-        case ACHIEV_CRIT_DUO_25:
-            if (!instance->IsRegularDifficulty())
-                return GetData(TYPE_SARTH_HARD_TWO) == DONE;
-            break;
-        case ACHIEV_CRIT_ZONE_10:
-            if (instance->IsRegularDifficulty())
-                return GetData(TYPE_SARTH_HARD_THREE) == DONE;
-            break;
-        case ACHIEV_CRIT_ZONE_25:
-            if (!instance->IsRegularDifficulty())
-                return GetData(TYPE_SARTH_HARD_THREE) == DONE;
-            break;
-        case ACHIEV_CRIT_VOLCANO_10:
-            if (instance->IsRegularDifficulty())
-            {
-                for (GuidList::const_iterator i = m_lHitByVolcanoGuidList.begin(); i != m_lHitByVolcanoGuidList.end(); i++)
-                    if (pSource->GetObjectGuid() == *i)
-                        return false;
-
-                return true;
-            }
-            break;
-        case ACHIEV_CRIT_VOLCANO_25:
-            if (!instance->IsRegularDifficulty())
-            {
-                for (GuidList::const_iterator i = m_lHitByVolcanoGuidList.begin(); i != m_lHitByVolcanoGuidList.end(); i++)
-                    if (pSource->GetObjectGuid() == *i)
-                        return false;
-
-                return true;
-            }
-            break;
+        case ACHIEV_DRAGONS_ALIVE_1_N:
+        case ACHIEV_DRAGONS_ALIVE_1_H:
+            return m_uiAliveDragons >= 1;
+        case ACHIEV_DRAGONS_ALIVE_2_N:
+        case ACHIEV_DRAGONS_ALIVE_2_H:
+            return m_uiAliveDragons >= 2;
+        case ACHIEV_DRAGONS_ALIVE_3_N:
+        case ACHIEV_DRAGONS_ALIVE_3_H:
+            return m_uiAliveDragons >= 3;
+        case ACHIEV_CRIT_VOLCANO_BLOW_N:
+        case ACHIEV_CRIT_VOLCANO_BLOW_H:
+            // Return true if not found in the set
+            return m_sVolcanoBlowFailPlayers.find(pSource->GetGUIDLow()) == m_sVolcanoBlowFailPlayers.end();
+        default:
+            return false;
     }
-
-    return false;
 }
 
-bool instance_obsidian_sanctum::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) const
+bool instance_obsidian_sanctum::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const
 {
     switch (uiInstanceConditionId)
     {
         case INSTANCE_CONDITION_ID_HARD_MODE:               // Exactly one dragon alive on event start
-            return GetData(TYPE_SARTH_HARD_ONE) == DONE;
         case INSTANCE_CONDITION_ID_HARD_MODE_2:             // Exactly two dragons alive on event start
-            return GetData(TYPE_SARTH_HARD_TWO) == DONE;
         case INSTANCE_CONDITION_ID_HARD_MODE_3:             // All three dragons alive on event start
-            return GetData(TYPE_SARTH_HARD_THREE) == DONE;
-        default:
-            break;
+            return m_uiAliveDragons == uiInstanceConditionId;
     }
 
     script_error_log("instance_obsidian_sanctum::CheckConditionCriteriaMeet called with unsupported Id %u. Called with param plr %s, src %s, condition source type %u",
-                        uiInstanceConditionId, pPlayer ? pPlayer->GetGuidStr().c_str() : "NULL", pConditionSource ? pConditionSource->GetGuidStr().c_str() : "NULL", conditionSourceType);
+                     uiInstanceConditionId, pPlayer ? pPlayer->GetGuidStr().c_str() : "NULL", pConditionSource ? pConditionSource->GetGuidStr().c_str() : "NULL", conditionSourceType);
     return false;
 }
 
@@ -174,9 +141,10 @@ InstanceData* GetInstanceData_instance_obsidian_sanctum(Map* pMap)
 
 void AddSC_instance_obsidian_sanctum()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "instance_obsidian_sanctum";
-    newscript->GetInstanceData = GetInstanceData_instance_obsidian_sanctum;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "instance_obsidian_sanctum";
+    pNewScript->GetInstanceData = GetInstanceData_instance_obsidian_sanctum;
+    pNewScript->RegisterSelf();
 }
