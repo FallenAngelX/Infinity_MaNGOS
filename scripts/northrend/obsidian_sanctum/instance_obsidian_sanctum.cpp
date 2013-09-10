@@ -119,7 +119,7 @@ bool instance_obsidian_sanctum::CheckAchievementCriteriaMeet(uint32 uiCriteriaId
     }
 }
 
-bool instance_obsidian_sanctum::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const
+bool instance_obsidian_sanctum::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) const
 {
     switch (uiInstanceConditionId)
     {
