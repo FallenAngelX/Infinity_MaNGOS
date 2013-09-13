@@ -15,7 +15,7 @@
  */
 
 /* ScriptData
-SDName: boss_mop_jandice_barov
+SDName: mop_boss_jandice_barov
 SD%Complete: 0
 SDComment: Placeholder
 SDCategory: Scholomance (MoP)
@@ -23,6 +23,6 @@ EndScriptData */
 
 #include "precompiled.h"
 
-void AddSC_boss_mop_jandice_barov()
+void AddSC_mop_boss_jandice_barov()
 {
 }

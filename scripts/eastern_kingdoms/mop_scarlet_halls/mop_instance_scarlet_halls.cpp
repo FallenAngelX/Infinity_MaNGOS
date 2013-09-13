@@ -15,14 +15,14 @@
  */
 
 /* ScriptData
-SDName: boss_the_fallen_protectors
+SDName: mop_instance_scarlet_halls
 SD%Complete: 0
 SDComment: Placeholder
-SDCategory: Siege of Orgrimmar
+SDCategory: Scarlet Halls (MoP)
 EndScriptData */
 
 #include "precompiled.h"
 
-void AddSC_boss_the_fallen_protectors()
+void AddSC_mop_instance_scarlet_halls()
 {
 }

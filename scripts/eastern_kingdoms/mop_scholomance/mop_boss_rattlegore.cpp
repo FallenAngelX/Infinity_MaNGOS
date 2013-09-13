@@ -15,7 +15,7 @@
  */
 
 /* ScriptData
-SDName: boss_mop_rattlegore
+SDName: mop_boss_rattlegore
 SD%Complete: 0
 SDComment: Placeholder
 SDCategory: Scholomance (MoP)
@@ -23,6 +23,6 @@ EndScriptData */
 
 #include "precompiled.h"
 
-void AddSC_boss_mop_rattlegore()
+void AddSC_mop_boss_rattlegore()
 {
 }

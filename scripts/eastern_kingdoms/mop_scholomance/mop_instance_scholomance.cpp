@@ -15,7 +15,7 @@
  */
 
 /* ScriptData
-SDName: instance_mop_scholomance
+SDName: mop_instance_scholomance
 SD%Complete: 0
 SDComment: Placeholder
 SDCategory: Scholomance (MoP)
@@ -23,6 +23,6 @@ EndScriptData */
 
 #include "precompiled.h"
 
-void AddSC_instance_mop_scholomance()
+void AddSC_mop_instance_scholomance()
 {
 }

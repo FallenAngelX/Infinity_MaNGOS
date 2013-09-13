@@ -2,7 +2,7 @@
  * This program is free software licensed under GPL version 2
  * Please see the included DOCS/LICENSE.TXT for more information */
 
-#ifndef DEF_MOPSCARLETMONASTERY_H
-#define DEF_MOPSCARLETMONASTERY_H
+#ifndef DEF_MOPSCARLETHALLS_H
+#define DEF_MOPSCARLETHALLS_H
 
 #endif
