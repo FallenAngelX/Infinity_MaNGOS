@@ -156,7 +156,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
     uint32 m_uiFrostBombTimer;
     uint8  m_uiFrostBombCount;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPhase                   = PHASE_OOC;
         m_uiPhaseTimer              = 53000;
@@ -206,14 +206,13 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_SINDRAGOSA, IN_PROGRESS);
 
         DoScriptText(SAY_AGGRO, m_creature);
 
-        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
         m_creature->SetWalk(false);
         m_creature->SetInCombatWithZone();
@@ -227,7 +226,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
             DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
         {
@@ -254,7 +253,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public base_icc_bossAI
         }
     }
 
-    void MovementInform(uint32 uiMovementType, uint32 uiData)
+    void MovementInform(uint32 uiMovementType, uint32 uiData) override
     {
         if (uiMovementType != POINT_MOTION_TYPE)
             return;
@@ -586,10 +585,10 @@ struct MANGOS_DLL_DECL mob_ice_tombAI : public ScriptedAI
     uint32 m_uiCheckTimer;
     ObjectGuid m_IceBlockGUID;
 
-    void Reset(){}
-    void AttackStart(Unit* pWho) override{}
+    void Reset() override {}
+    void AttackStart(Unit* /*pWho*/) override {}
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (GameObject* pIceBlock = m_creature->GetMap()->GetGameObject(m_IceBlockGUID))
             pIceBlock->Delete();
@@ -638,9 +637,9 @@ struct MANGOS_DLL_DECL mob_frost_bombAI : public ScriptedAI
 
     uint32 m_uiFrostBombTimer;
 
-    void Reset(){}
+    void Reset() override {}
 
-    void AttackStart(Unit* pWho) override{}
+    void AttackStart(Unit* /*pWho*/) override {}
 
     void UpdateAI(const uint32 uiDiff) override
     {
@@ -678,7 +677,7 @@ struct MANGOS_DLL_DECL mob_rimefangAI : public ScriptedAI
     uint32 m_uiFrostBreathTimer;
     uint32 m_uiIcyBlastTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_creature->SetRespawnDelay(7*DAY*IN_MILLISECONDS);
 
@@ -716,7 +715,6 @@ struct MANGOS_DLL_DECL mob_rimefangAI : public ScriptedAI
             {
                 if (pWho->IsWithinDistInMap(m_creature, 60.0f))
                 {
-                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
                     m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
                     AttackStart(pWho);
                 }
@@ -726,7 +724,7 @@ struct MANGOS_DLL_DECL mob_rimefangAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
         {
@@ -738,7 +736,7 @@ struct MANGOS_DLL_DECL mob_rimefangAI : public ScriptedAI
         m_creature->GetMotionMaster()->MovePoint(POINT_RIMEFANG_LAND, SindragosaLoc[4].x, SindragosaLoc[4].y, SindragosaLoc[4].z, false);
     }
 
-    void MovementInform(uint32 uiMovementType, uint32 uiData)
+    void MovementInform(uint32 uiMovementType, uint32 uiData) override
     {
         if (uiMovementType != POINT_MOTION_TYPE)
             return;
@@ -756,7 +754,7 @@ struct MANGOS_DLL_DECL mob_rimefangAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (!m_pInstance)
             return;
@@ -826,7 +824,7 @@ struct MANGOS_DLL_DECL mob_spinestalkerAI : public ScriptedAI
     uint32 m_uiTailSweepTimer;
     uint32 m_uiCleaveTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_creature->SetRespawnDelay(7*DAY*IN_MILLISECONDS);
 
@@ -865,7 +863,6 @@ struct MANGOS_DLL_DECL mob_spinestalkerAI : public ScriptedAI
             {
                 if (pWho->IsWithinDistInMap(m_creature, 60.0f))
                 {
-                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
                     m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
                     AttackStart(pWho);
                 }
@@ -875,7 +872,7 @@ struct MANGOS_DLL_DECL mob_spinestalkerAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
         {
@@ -886,7 +883,7 @@ struct MANGOS_DLL_DECL mob_spinestalkerAI : public ScriptedAI
         m_creature->GetMotionMaster()->MovePoint(POINT_SPINESTALKER_LAND, SindragosaLoc[5].x, SindragosaLoc[5].y, SindragosaLoc[5].z, false);
     }
 
-    void MovementInform(uint32 uiMovementType, uint32 uiData)
+    void MovementInform(uint32 uiMovementType, uint32 uiData) override
     {
         if (uiMovementType != POINT_MOTION_TYPE)
             return;
@@ -904,7 +901,7 @@ struct MANGOS_DLL_DECL mob_spinestalkerAI : public ScriptedAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (!m_pInstance)
             return;

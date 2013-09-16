@@ -316,8 +316,8 @@ struct MANGOS_DLL_DECL base_icc_bossAI : public ScriptedAI
     bool m_bIsHeroic;
     bool m_bIs25Man;
 
-    void Reset(){}
-    void UpdateAI(const uint32 uiDiff) override{}
+    void Reset() override {}
+    void UpdateAI(const uint32 /*uiDiff*/) override {}
 
     Unit* SelectRandomRangedTarget(Unit* pSource)
     {

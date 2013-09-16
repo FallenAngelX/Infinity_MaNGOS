@@ -121,7 +121,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
 
     bool m_bHasBitten;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPhase               = PHASE_GROUND;
 
@@ -157,7 +157,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
             m_creature->MonsterYell("Is that all you got?", 0);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance) 
             m_pInstance->SetData(TYPE_LANATHEL, IN_PROGRESS);
@@ -166,7 +166,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
         DoCastSpellIfCan(m_creature, SPELL_SHROUD_OF_SORROW, CAST_TRIGGERED);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if(m_pInstance)
         {
@@ -177,7 +177,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void MovementInform(uint32 uiMovementType, uint32 uiData)
+    void MovementInform(uint32 uiMovementType, uint32 uiData) override
     {
         if (uiMovementType != POINT_MOTION_TYPE)
             return;
@@ -494,9 +494,9 @@ struct MANGOS_DLL_DECL mob_swarming_shadowsAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset(){}
+    void Reset() override {}
 
-    void UpdateAI(const uint32 uiDiff) override
+    void UpdateAI(const uint32 /*uiDiff*/) override
     {
         if (m_pInstance)
         {
