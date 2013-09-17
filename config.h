@@ -62,9 +62,6 @@
   #define _SCRIPTDEV2_CONFIG  SYSCONFDIR"scriptdev2.conf"
 #endif
 
-#define VERSION       "${MANGOS_VERSION}"
-#define CLIENT_VERSION ${CLIENT_VERSION}
-
 #if CLIENT_VERSION >= 16057
     #define MAX_EXPANSION 4
     #define SD2_WORLD_MOP 1

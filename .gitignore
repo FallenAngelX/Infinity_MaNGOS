@@ -49,7 +49,6 @@ patches-*
 # System-internal temporary files
 #
 revision.h
-config.h
 
 #
 # VS binaries output
