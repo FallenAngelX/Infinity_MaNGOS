@@ -87,7 +87,7 @@ void instance_icecrown_citadel::Initialize()
     }
 }
 
-bool instance_icecrown_citadel::IsEncounterInProgress()
+bool instance_icecrown_citadel::IsEncounterInProgress() const
 {
     for (uint8 i = 1; i < MAX_ENCOUNTERS; ++i)
     {

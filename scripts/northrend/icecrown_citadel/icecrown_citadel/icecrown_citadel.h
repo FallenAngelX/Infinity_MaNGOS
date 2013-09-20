@@ -267,7 +267,7 @@ public:
     bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
     void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
 
-    bool IsEncounterInProgress();
+    bool IsEncounterInProgress() const override;
 
     void SetData(uint32 uiType, uint32 uiData) override;
     uint32 GetData(uint32 uiType) const override;
