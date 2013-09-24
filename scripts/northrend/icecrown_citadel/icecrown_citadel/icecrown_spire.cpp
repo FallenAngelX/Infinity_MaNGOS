@@ -46,41 +46,42 @@ struct MANGOS_DLL_DECL mob_spire_frostwyrmAI : public BSWScriptedAI
         Reset();
     }
 
-    ScriptedInstance *pInstance;
-    uint8 stage;
+    ScriptedInstance* pInstance;
+    uint8 m_uiStage;
 
-    void Reset()
+    void Reset() override
     {
         m_creature->SetRespawnDelay(DAY);
-        stage = 0;
+        m_uiStage = 0;
         resetTimers();
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        switch(stage)
+        switch (m_uiStage)
         {
             case 0:
                     break;
             case 1:
                     doCast(SPELL_BERSERK);
-                    stage = 2;
+                    m_uiStage = 2;
                     break;
             case 2:
             default:
                     break;
         }
 
-        timedCast(SPELL_CLEAVE, diff);
-        timedCast(SPELL_BLIZZARD, diff);
-        timedCast(SPELL_FROST_BREATH, diff);
+        timedCast(SPELL_CLEAVE, uiDiff);
+        timedCast(SPELL_BLIZZARD, uiDiff);
+        timedCast(SPELL_FROST_BREATH, uiDiff);
 
-        if (m_creature->GetHealthPercent() < 10.0f && stage == 0) stage = 1;
+        if (m_creature->GetHealthPercent() < 10.0f && m_uiStage == 0)
+            m_uiStage = 1;
 
-        timedCast(SPELL_BERSERK, diff);
+        timedCast(SPELL_BERSERK, uiDiff);
 
         DoMeleeAttackIfReady();
 
@@ -100,18 +101,20 @@ struct MANGOS_DLL_DECL mob_frost_giantAI : public BSWScriptedAI
         Reset();
     }
 
-    ScriptedInstance *pInstance;
-    uint8 stage;
+    ScriptedInstance* pInstance;
+    uint8 m_uiStage;
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* /*pWho*/) override
     {
-        if(pInstance) pInstance->SetData(TYPE_FLIGHT_WAR, IN_PROGRESS);
+        if (pInstance)
+            pInstance->SetData(TYPE_FLIGHT_WAR, IN_PROGRESS);
     }
 
-    void JustDied(Unit *killer)
+    void JustDied(Unit* pKiller) override
     {
-        if(!pInstance) return;
-        if (killer->GetTypeId() == TYPEID_PLAYER || killer->GetCharmerOrOwnerOrSelf()->GetTypeId() == TYPEID_PLAYER )
+        if (!pInstance)
+            return;
+        if (pKiller->GetTypeId() == TYPEID_PLAYER || pKiller->GetCharmerOrOwnerOrSelf()->GetTypeId() == TYPEID_PLAYER )
               pInstance->SetData(TYPE_FLIGHT_WAR, DONE);
 
         // Temporary
@@ -124,36 +127,37 @@ struct MANGOS_DLL_DECL mob_frost_giantAI : public BSWScriptedAI
         if (pInstance) pInstance->SetData(TYPE_FLIGHT_WAR, FAIL);
     }
 
-    void Reset()
+    void Reset() override
     {
         m_creature->SetRespawnDelay(7*DAY);
-        stage = 0;
+        m_uiStage = 0;
         resetTimers();
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        switch(stage)
+        switch (m_uiStage)
         {
             case 0:
                     break;
             case 1:
                     doCast(SPELL_BERSERK);
-                    stage = 2;
+                    m_uiStage = 2;
                     break;
             case 2:
             default:
                     break;
         }
-        timedCast(SPELL_STOMP, diff);
-        timedCast(SPELL_DEATH_PLAGUE, diff);
+        timedCast(SPELL_STOMP, uiDiff);
+        timedCast(SPELL_DEATH_PLAGUE, uiDiff);
 
-        if (m_creature->GetHealthPercent() < 2.0f && stage == 0) stage = 1;
+        if (m_creature->GetHealthPercent() < 2.0f && m_uiStage == 0)
+            m_uiStage = 1;
 
-        timedCast(SPELL_BERSERK, diff);
+        timedCast(SPELL_BERSERK, uiDiff);
 
         DoMeleeAttackIfReady();
 
@@ -167,15 +171,15 @@ CreatureAI* GetAI_mob_frost_giant(Creature* pCreature)
 
 void AddSC_icecrown_spire()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "mob_spire_frostwyrm";
-    newscript->GetAI = &GetAI_mob_spire_frostwyrm;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_spire_frostwyrm";
+    pNewScript->GetAI = &GetAI_mob_spire_frostwyrm;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_frost_giant";
-    newscript->GetAI = &GetAI_mob_frost_giant;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_frost_giant";
+    pNewScript->GetAI = &GetAI_mob_frost_giant;
+    pNewScript->RegisterSelf();
 }

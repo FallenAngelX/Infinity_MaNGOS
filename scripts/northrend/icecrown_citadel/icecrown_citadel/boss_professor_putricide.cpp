@@ -184,7 +184,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
 
     std::list<Creature*> SummonEntryList;
 
-    void Reset()
+    void Reset() override
     {
         m_uiPhase                   = PHASE_ONE;
         m_bIsAssistingOnly          = false;
@@ -202,40 +202,40 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
         m_uiUnboundPlagueTimer      = 10000;
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDealer*/, uint32& uiDamage) override
     {
         if (m_bIsAssistingOnly)
             uiDamage = 0;
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (!m_pInstance)
             return;
 
         if (m_pInstance->GetData(TYPE_FESTERGUT) == IN_PROGRESS || m_pInstance->GetData(TYPE_ROTFACE) == IN_PROGRESS)
         {
-            SetCombatMovement(false);
+            SetCombatMovement(false, true);
             m_bIsAssistingOnly = true;
             return;
         }
 
-        m_pInstance->SetData(TYPE_PUTRICIDE, IN_PROGRESS);
+        m_pInstance->SetData(TYPE_PROFESSOR_PUTRICIDE, IN_PROGRESS);
         DoScriptText(SAY_AGGRO, m_creature);
         // Make table interactable
         if (GameObject* pGOTable = m_pInstance->GetSingleGameObjectFromStorage(GO_DRINK_ME_TABLE))
             pGOTable->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
-            m_pInstance->SetData(TYPE_PUTRICIDE, DONE);
+            m_pInstance->SetData(TYPE_PROFESSOR_PUTRICIDE, DONE);
 
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -296,7 +296,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
     void JustReachedHome() override
     {
         if (m_pInstance && !m_bIsAssistingOnly)
-            m_pInstance->SetData(TYPE_PUTRICIDE, FAIL);
+            m_pInstance->SetData(TYPE_PROFESSOR_PUTRICIDE, FAIL);
 
         if (VehicleKitPtr pKit = m_creature->GetVehicleKit())
         {
@@ -309,7 +309,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
         DoRemoveBossEffects();
     }
 
-    void MovementInform(uint32 uiMovementType, uint32 uiData)
+    void MovementInform(uint32 uiMovementType, uint32 uiData) override
     {
         if (uiMovementType != POINT_MOTION_TYPE || uiData != POINT_PUTRICIDE_SPAWN)
             return;
@@ -431,9 +431,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
             float fSwitchHealthPercent = m_uiPhase == PHASE_ONE ? 80.0f : 35.0f;
             if (m_creature->GetHealthPercent() <= fSwitchHealthPercent)
             {
-                SetCombatMovement(false);
-                m_creature->StopMoving();
-                m_creature->GetMotionMaster()->Clear();
+                SetCombatMovement(false, true);
                 if (m_bIsHeroic)
                 {
                     DoCastSpellIfCan(m_creature, SPELL_VOLATILE_EXPERIMENT);
@@ -446,7 +444,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
                     DoCastSpellIfCan(m_creature, SPELL_TEAR_GAS_1, CAST_TRIGGERED);
                 }
 
-                m_pInstance->SetData(TYPE_PUTRICIDE, SPECIAL);
+                m_pInstance->SetData(TYPE_PROFESSOR_PUTRICIDE, SPECIAL);
 
                 m_uiPhase = m_uiPhase == PHASE_ONE ? PHASE_RUNNING_ONE : PHASE_RUNNING_TWO;
                 m_creature->GetMotionMaster()->MovePoint(POINT_PUTRICIDE_SPAWN, SpawnLoc[0].x, SpawnLoc[0].y, SpawnLoc[0].z);
@@ -513,7 +511,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
         else
             m_uiEnrageTimer -= uiDiff;
 
-        switch(m_uiPhase)
+        switch (m_uiPhase)
         {
             case PHASE_ONE:
             {
@@ -557,7 +555,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
                 if (m_uiTransitionTimer <= uiDiff)
                 {
                     if (m_pInstance)
-                        m_pInstance->SetData(TYPE_PUTRICIDE, IN_PROGRESS);
+                        m_pInstance->SetData(TYPE_PROFESSOR_PUTRICIDE, IN_PROGRESS);
 
                     if (m_bIsHeroic)
                     {
@@ -568,9 +566,8 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
                         DoCastSpellIfCan(m_creature, SPELL_TEAR_GAS_CANCEL, CAST_TRIGGERED);
 
                     m_uiPhase = m_uiPhase == PHASE_TRANSITION_ONE ? PHASE_TWO : PHASE_THREE;
-                    SetCombatMovement(true);
                     m_creature->GetMotionMaster()->Clear();
-                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                    SetCombatMovement(true, true);
                 }
                 else
                     m_uiTransitionTimer -= uiDiff;
@@ -601,7 +598,7 @@ struct MANGOS_DLL_DECL mob_icc_gas_cloudAI : public base_icc_bossAI
         m_bIsVariable = false;
         if (m_pInstance)
         {
-            if (m_pInstance->GetData(TYPE_PUTRICIDE) == SPECIAL)
+            if (m_pInstance->GetData(TYPE_PROFESSOR_PUTRICIDE) == SPECIAL)
             {
                 DoCastSpellIfCan(m_creature, SPELL_GAS_VARIABLE_GAS, CAST_TRIGGERED);
                 m_bIsVariable = true;
@@ -614,7 +611,7 @@ struct MANGOS_DLL_DECL mob_icc_gas_cloudAI : public base_icc_bossAI
     uint32 m_uiMoveTimer;
     bool m_bIsVariable;
 
-    void Reset()
+    void Reset() override
     {
         m_uiMoveTimer = 0;
         SetCombatMovement(false);
@@ -675,9 +672,15 @@ struct MANGOS_DLL_DECL mob_icc_gas_cloudAI : public base_icc_bossAI
     {
         if (m_pInstance)
         {
-            uint32 data = m_pInstance->GetData(TYPE_PUTRICIDE);
-            if (data != IN_PROGRESS && data != SPECIAL)
+            uint32 uiData = m_pInstance->GetData(TYPE_PROFESSOR_PUTRICIDE);
+            if (uiData != IN_PROGRESS && uiData != SPECIAL)
                 m_creature->ForcedDespawn();
+            if (!m_bIsVariable && uiData == SPECIAL)
+            {
+                if (IsCombatMovement())
+                    SetCombatMovement(false, true);
+                m_uiMoveTimer = 1;
+            }
         }
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim() || !m_creature->GetFixatedTarget())
@@ -690,9 +693,7 @@ struct MANGOS_DLL_DECL mob_icc_gas_cloudAI : public base_icc_bossAI
         {
             if (m_uiMoveTimer <= uiDiff)
             {
-                SetCombatMovement(true);
-                m_creature->GetMotionMaster()->Clear();
-                m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                SetCombatMovement(true, true);
                 m_uiMoveTimer = 0;
             }
             else
@@ -703,8 +704,7 @@ struct MANGOS_DLL_DECL mob_icc_gas_cloudAI : public base_icc_bossAI
         {
             m_creature->getVictim()->CastSpell(m_creature->getVictim(), SPELL_EXPUNGED_GAS, true);
             m_creature->InterruptSpell(CURRENT_CHANNELED_SPELL);
-            SetCombatMovement(false);
-            m_creature->GetMotionMaster()->Clear();
+            SetCombatMovement(false, true);
             DoSelectTarget();
         }
     }
@@ -725,7 +725,7 @@ struct MANGOS_DLL_DECL mob_icc_volatile_oozeAI : public base_icc_bossAI
         m_bIsVariable = false;
         if (m_pInstance)
         {
-            if (m_pInstance->GetData(TYPE_PUTRICIDE) == SPECIAL)
+            if (m_pInstance->GetData(TYPE_PROFESSOR_PUTRICIDE) == SPECIAL)
             {
                 DoCastSpellIfCan(m_creature, SPELL_OOZE_VARIABLE_OOZE, CAST_TRIGGERED);
                 m_bIsVariable = true;
@@ -738,7 +738,7 @@ struct MANGOS_DLL_DECL mob_icc_volatile_oozeAI : public base_icc_bossAI
     uint32 m_uiMoveTimer;
     bool m_bIsVariable;
 
-    void Reset()
+    void Reset() override
     {
         m_uiMoveTimer   = 0;
         SetCombatMovement(false);
@@ -800,9 +800,16 @@ struct MANGOS_DLL_DECL mob_icc_volatile_oozeAI : public base_icc_bossAI
     {
         if (m_pInstance)
         {
-            uint32 data = m_pInstance->GetData(TYPE_PUTRICIDE);
-            if (data != IN_PROGRESS && data != SPECIAL)
+            uint32 uiData = m_pInstance->GetData(TYPE_PROFESSOR_PUTRICIDE);
+            if (uiData != IN_PROGRESS && uiData != SPECIAL)
                 m_creature->ForcedDespawn();
+            if (!m_bIsVariable && uiData == SPECIAL)
+            {
+                if (IsCombatMovement())
+                    SetCombatMovement(false, true);
+                m_uiMoveTimer = 1;
+                return;
+            }
         }
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim() || !m_creature->GetFixatedTarget())
@@ -815,9 +822,7 @@ struct MANGOS_DLL_DECL mob_icc_volatile_oozeAI : public base_icc_bossAI
         {
             if (m_uiMoveTimer <= uiDiff)
             {
-                SetCombatMovement(true);
-                m_creature->GetMotionMaster()->Clear();
-                m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+                SetCombatMovement(true, true);
                 m_uiMoveTimer = 0;
             }
             else
@@ -828,8 +833,7 @@ struct MANGOS_DLL_DECL mob_icc_volatile_oozeAI : public base_icc_bossAI
         {
             m_creature->InterruptSpell(CURRENT_CHANNELED_SPELL);
             DoCastSpellIfCan(m_creature, SPELL_OOZE_ERUPTION);
-            SetCombatMovement(false);
-            m_creature->GetMotionMaster()->Clear();
+            SetCombatMovement(false, true);
             DoSelectTarget();
         }
     }
@@ -850,10 +854,10 @@ struct MANGOS_DLL_DECL mob_choking_gas_bombAI : public ScriptedAI
         pCreature->ForcedDespawn(12000);
     }
 
-    void Reset(){}
-    void AttackStart(Unit* pWho) override{}
+    void Reset() override {}
+    void AttackStart(Unit* /*pWho*/) override {}
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDealer*/, uint32& uiDamage) override
     {
         uiDamage = 0;
     }
@@ -879,14 +883,14 @@ struct MANGOS_DLL_DECL mob_ooze_puddleAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset(){}
-    void AttackStart(Unit* pWho) override{}
+    void Reset() override {}
+    void AttackStart(Unit* /*pWho*/) override {}
 
-    void UpdateAI(const uint32 uiDiff) override
+    void UpdateAI(const uint32 /*uiDiff*/) override
     {
         if (m_pInstance)
         {
-            uint32 data = m_pInstance->GetData(TYPE_PUTRICIDE);
+            uint32 data = m_pInstance->GetData(TYPE_PROFESSOR_PUTRICIDE);
             if (data == SPECIAL)
             {
                 // don't grow while Putricide is mutating between phases
@@ -916,14 +920,14 @@ struct MANGOS_DLL_DECL mob_mutated_amobinationAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset()
+    void Reset() override
     {
         m_creature->SetPower(POWER_ENERGY, 0);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
-        if (m_pInstance && m_pInstance->GetData(TYPE_PUTRICIDE) != DONE)
+        if (m_pInstance && m_pInstance->GetData(TYPE_PROFESSOR_PUTRICIDE) != DONE)
         {
             // Possibly remove GO_FLAG_NO_INTERACT when amob dies is not blizz-like
             if (GameObject* pGOTable = m_pInstance->GetSingleGameObjectFromStorage(GO_DRINK_ME_TABLE))

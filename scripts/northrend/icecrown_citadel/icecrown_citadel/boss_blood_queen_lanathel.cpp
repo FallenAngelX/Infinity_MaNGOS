@@ -145,7 +145,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
     {
         if(m_pInstance)
         {
-            m_pInstance->SetData(TYPE_LANATHEL, FAIL);
+            m_pInstance->SetData(TYPE_QUEEN_LANATHEL, FAIL);
             RemoveAurasFromAllPlayers();
         }
     }
@@ -160,7 +160,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
     void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance) 
-            m_pInstance->SetData(TYPE_LANATHEL, IN_PROGRESS);
+            m_pInstance->SetData(TYPE_QUEEN_LANATHEL, IN_PROGRESS);
 
         DoScriptText(SAY_AGGRO, m_creature);
         DoCastSpellIfCan(m_creature, SPELL_SHROUD_OF_SORROW, CAST_TRIGGERED);
@@ -170,7 +170,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
     {
         if(m_pInstance)
         {
-            m_pInstance->SetData(TYPE_LANATHEL, DONE);
+            m_pInstance->SetData(TYPE_QUEEN_LANATHEL, DONE);
             RemoveAurasFromAllPlayers();
         }
 
@@ -282,7 +282,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public base_icc_bossAI
                 if (pPlayer->isAlive())
                 {
                     // Additional checking for achiev
-                    pPlayer->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, NPC_LANATHEL, 0);
+                    pPlayer->UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, NPC_QUEEN_LANATHEL, 0);
 
                     // Uncontrollable Frenzy
                     pPlayer->RemoveAurasDueToSpell(70923);
@@ -500,7 +500,7 @@ struct MANGOS_DLL_DECL mob_swarming_shadowsAI : public ScriptedAI
     {
         if (m_pInstance)
         {
-            if (m_pInstance->GetData(TYPE_LANATHEL) != IN_PROGRESS)
+            if (m_pInstance->GetData(TYPE_QUEEN_LANATHEL) != IN_PROGRESS)
                 m_creature->ForcedDespawn();
         }
     }

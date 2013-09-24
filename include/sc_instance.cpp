@@ -41,7 +41,7 @@ void ScriptedInstance::DoUseDoorOrButton(uint32 uiEntry, uint32 uiWithRestoreTim
         debug_log("SD2: Script call DoUseDoorOrButton(by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
 }
 
-void ScriptedInstance::DoOpenDoor(ObjectGuid guid)
+void ScriptedInstance::DoOpenDoor(ObjectGuid guid, bool bUseAlternativeState /*= false*/)
 {
     if (guid.IsEmpty())
         return;
@@ -49,9 +49,21 @@ void ScriptedInstance::DoOpenDoor(ObjectGuid guid)
     GameObject* pGo = instance->GetGameObject(guid);
 
     if (pGo)
-        pGo->SetGoState(GO_STATE_ACTIVE);
+        pGo->SetGoState(bUseAlternativeState ? GO_STATE_ACTIVE_ALTERNATIVE : GO_STATE_ACTIVE);
     else
         debug_log("SD2: DoOpenDoor attempt set data to object %u, but no this object", guid.GetCounter());
+}
+
+void ScriptedInstance::DoOpenDoor(uint32 uiEntry, bool bUseAlternativeState /*= false*/)
+{
+    EntryGuidMap::iterator find = m_mGoEntryGuidStore.find(uiEntry);
+    if (find != m_mGoEntryGuidStore.end())
+    {
+        ObjectGuid guid = find->second;
+        DoOpenDoor(guid, bUseAlternativeState);
+    }
+    else
+        debug_log("SD2: Script call DoOpenDoor (by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
 }
 
 void ScriptedInstance::DoCloseDoor(ObjectGuid guid)
@@ -67,28 +79,16 @@ void ScriptedInstance::DoCloseDoor(ObjectGuid guid)
         debug_log("SD2: DoCloseDoor attempt set data to object %u, but no this object", guid.GetCounter());
 }
 
-void ScriptedInstance::DoOpenDoor(uint32 entry)
+void ScriptedInstance::DoCloseDoor(uint32 uiEntry)
 {
-    EntryGuidMap::iterator find = m_mGoEntryGuidStore.find(entry);
-    if (find != m_mGoEntryGuidStore.end())
-    {
-        ObjectGuid guid = find->second;
-        DoOpenDoor(guid);
-    }
-    else
-        debug_log("SD2: Script call DoOpenDoor (by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", entry, instance->GetId());
-}
-
-void ScriptedInstance::DoCloseDoor(uint32 entry)
-{
-    EntryGuidMap::iterator find = m_mGoEntryGuidStore.find(entry);
+    EntryGuidMap::iterator find = m_mGoEntryGuidStore.find(uiEntry);
     if (find != m_mGoEntryGuidStore.end())
     {
         ObjectGuid guid = find->second;
         DoCloseDoor(guid);
     }
     else
-        debug_log("SD2: Script call DoCloseDoor (by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", entry, instance->GetId());
+        debug_log("SD2: Script call DoCloseDoor (by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
 }
 
 /**

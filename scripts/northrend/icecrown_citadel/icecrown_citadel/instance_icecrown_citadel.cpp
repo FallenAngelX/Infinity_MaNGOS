@@ -29,34 +29,36 @@ EndScriptData */
 #include "icecrown_citadel.h"
 #include "World.h"
 
+/*
 static LOCATION SpawnLoc[]=
 {
     {-446.788971f, 2003.362915f, 191.233948f},  // 0 Horde ship enter
     {-428.140503f, 2421.336914f, 191.233078f},  // 1 Alliance ship enter
 };
+*/
 
 instance_icecrown_citadel::instance_icecrown_citadel(Map* pMap) : ScriptedInstance(pMap)
 {
-    Difficulty = pMap->GetDifficulty();
+    m_uiMapDifficulty = pMap->GetDifficulty();
     Initialize();
 }
 
 void instance_icecrown_citadel::Initialize()
 {
-    for (uint8 i = 0; i < MAX_ENCOUNTERS_2; ++i)
+    for (uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
         m_auiEncounter[i] = NOT_STARTED;
 
     for (uint8 i = 0; i < ACHIEVE_MAX_COUNT; ++i)
         m_bAchievCriteria[i] = false;
 
-    m_auiEvent = 0;
-    m_auiEventTimer = 1000;
-    m_uiCouncilInvocation = 0;
-    m_uiDirection = 0;
-    m_uiStinkystate = NOT_STARTED;
-    m_uiPreciousstate = NOT_STARTED;
+    // m_auiEvent = 0;
+    // m_auiEventTimer = 1000;
+    // m_uiCouncilInvocation = 0;
+    // m_uiDirection = 0;
+    // m_uiStinkystate = NOT_STARTED;
+    // m_uiPreciousstate = NOT_STARTED;
 
-    switch (Difficulty)
+    switch (m_uiMapDifficulty)
     {
         case RAID_DIFFICULTY_10MAN_NORMAL:
             m_uiGunshipArmoryH_ID = GO_GUNSHIP_ARMORY_H_10;
@@ -91,7 +93,7 @@ bool instance_icecrown_citadel::IsEncounterInProgress() const
 {
     for (uint8 i = 1; i < MAX_ENCOUNTERS; ++i)
     {
-        if (m_auiEncounter[i] == IN_PROGRESS)
+        if (GetData(i) == IN_PROGRESS)
             return true;
     }
 
@@ -127,8 +129,8 @@ void instance_icecrown_citadel::OnCreatureCreate(Creature* pCreature)
         case NPC_TALDARAM:
         case NPC_VALANAR:
         case NPC_KELESETH:
-        case NPC_LANATHEL:
-        case NPC_LANATHEL_INTRO:
+        case NPC_QUEEN_LANATHEL:
+        case NPC_QUEEN_LANATHEL_INTRO:
         case NPC_VALITHRIA:
         case NPC_VALITHRIA_QUEST:
         case NPC_SINDRAGOSA:
@@ -152,15 +154,15 @@ void instance_icecrown_citadel::OnObjectCreate(GameObject* pGo)
     switch(pGo->GetEntry())
     {
         case GO_ICEWALL_1:
-            if (m_auiEncounter[TYPE_MARROWGAR] == DONE)
+            if (GetData(TYPE_MARROWGAR) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_ICEWALL_2:
-            if (m_auiEncounter[TYPE_MARROWGAR] == DONE)
+            if (GetData(TYPE_MARROWGAR) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_DEATHWHISPER_ELEVATOR:
-            if (!pGo->isSpawned() && m_auiEncounter[TYPE_DEATHWHISPER] == DONE)
+            if (!pGo->isSpawned() && GetData(TYPE_LADY_DEATHWHISPER) == DONE)
             {
                 pGo->SetRespawnTime(30);
                 pGo->Refresh();
@@ -169,63 +171,64 @@ void instance_icecrown_citadel::OnObjectCreate(GameObject* pGo)
             }
             break;
         case GO_SAURFANG_DOOR:
-            if (m_auiEncounter[TYPE_SAURFANG] == DONE)
+            if (GetData(TYPE_DEATHBRINGER_SAURFANG) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_ORANGE_PLAGUE:
-            if (m_auiEncounter[TYPE_FESTERGUT] == DONE)
+            if (GetData(TYPE_FESTERGUT) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_GREEN_PLAGUE:
-            if (m_auiEncounter[TYPE_ROTFACE] == DONE)
+            if (GetData(TYPE_ROTFACE) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_SCIENTIST_DOOR_GREEN:
-            if (m_auiEncounter[TYPE_ROTFACE] == DONE)
+            if (GetData(TYPE_ROTFACE) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
             break;
         case GO_SCIENTIST_DOOR_ORANGE:
-            if (m_auiEncounter[TYPE_FESTERGUT] == DONE)
+            if (GetData(TYPE_FESTERGUT) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
             break;
         case GO_SCIENTIST_DOOR_COLLISION:
-            if (m_auiEncounter[TYPE_FESTERGUT] == DONE && m_auiEncounter[TYPE_ROTFACE] == DONE)
+            if (GetData(TYPE_FESTERGUT) == DONE && GetData(TYPE_ROTFACE) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_SCIENTIST_DOOR:
-            if (m_auiEncounter[TYPE_FESTERGUT] == DONE && m_auiEncounter[TYPE_ROTFACE] == DONE)
+            if (GetData(TYPE_FESTERGUT) == DONE && GetData(TYPE_ROTFACE) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_ORANGE_TUBES:
-            if (m_auiEncounter[TYPE_FESTERGUT] == DONE)
+            if (GetData(TYPE_FESTERGUT) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_GREEN_TUBES:
-            if (m_auiEncounter[TYPE_ROTFACE] == DONE)
+            if (GetData(TYPE_ROTFACE) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_CRIMSON_HALL_DOOR:
-            if (m_auiEncounter[TYPE_BLOOD_COUNCIL] == DONE)
+            if (GetData(TYPE_BLOOD_PRINCE_COUNCIL) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_COUNCIL_DOOR_1:
-            if (m_auiEncounter[TYPE_BLOOD_COUNCIL] == DONE)
+            if (GetData(TYPE_BLOOD_PRINCE_COUNCIL) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_COUNCIL_DOOR_2:
-            if (m_auiEncounter[TYPE_BLOOD_COUNCIL] == DONE)
+            if (GetData(TYPE_BLOOD_PRINCE_COUNCIL) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
+        case GO_GREEN_DRAGON_DOOR_1:
+            pGo->SetGoState(GO_STATE_ACTIVE);
+            break;
         case GO_GREEN_DRAGON_DOOR_2:
-            if (m_auiEncounter[TYPE_VALITHRIA] == DONE)
+            if (GetData(TYPE_VALITHRIA) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_SINDRAGOSA_DOOR_1:
-            if (m_auiEncounter[TYPE_VALITHRIA] == DONE)
-                pGo->SetGoState(GO_STATE_ACTIVE);
-            break;
         case GO_SINDRAGOSA_DOOR_2:
-            if (m_auiEncounter[TYPE_VALITHRIA] == DONE)
+        case GO_SINDRAGOSA_ENTRANCE:
+            if (GetData(TYPE_VALITHRIA) == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_DRINK_ME_TABLE:
@@ -264,13 +267,11 @@ void instance_icecrown_citadel::OnObjectCreate(GameObject* pGo)
         case GO_MARROWGAR_DOOR:
         case GO_BLOODPRINCE_DOOR:
         case GO_ICECROWN_GRATE:
-        case GO_SINDRAGOSA_ENTRANCE:
         case GO_VALITHRIA_DOOR_1:
         case GO_VALITHRIA_DOOR_2:
         case GO_VALITHRIA_DOOR_3:
         case GO_VALITHRIA_DOOR_4:
         case GO_FROSTWING_DOOR:
-        case GO_GREEN_DRAGON_DOOR_1:
         case GO_BLOODWING_DOOR:
         case GO_ORATORY_DOOR:
         case GO_SINDRAGOSA_ICE_WALL:
@@ -285,7 +286,7 @@ void instance_icecrown_citadel::OnObjectCreate(GameObject* pGo)
 void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
 {
 
-    bool bChange = bool(m_auiEncounter[uiType] != uiData);
+    bool bChange = bool(GetData(uiType) != uiData);
 
     switch(uiType)
     {
@@ -302,7 +303,7 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
                 //DoUseDoorOrButton(GO_ORATORY_DOOR);
             }
             break;
-         case TYPE_DEATHWHISPER:
+        case TYPE_LADY_DEATHWHISPER:
             DoUseDoorOrButton(GO_ORATORY_DOOR);
 
             if (uiData == DONE)
@@ -316,9 +317,9 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
                 }
             }
             break;
-         case TYPE_FLIGHT_WAR:
+        case TYPE_FLIGHT_WAR:
             break;
-         case TYPE_SAURFANG:
+        case TYPE_DEATHBRINGER_SAURFANG:
             if (uiData == DONE)
             {
                 DoUseDoorOrButton(GO_SAURFANG_DOOR);
@@ -330,36 +331,38 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
                 }
             }
             break;
-         case TYPE_FESTERGUT:
-            DoUseDoorOrButton(GO_ORANGE_PLAGUE);
-
-            if (uiData == DONE)
+        case TYPE_FESTERGUT:
+            switch (uiData)
             {
-                DoUseDoorOrButton(GO_ORANGE_TUBES);
-                if (m_auiEncounter[TYPE_ROTFACE] == DONE)
-                {                    
-                    DoUseDoorOrButton(GO_SCIENTIST_DOOR_ORANGE, 0, true);
-                    DoUseDoorOrButton(GO_SCIENTIST_DOOR_GREEN, 0, true);
-                    DoUseDoorOrButton(GO_SCIENTIST_DOOR_COLLISION);
-                }
+                case IN_PROGRESS:
+                    DoCloseDoor(GO_ORANGE_PLAGUE);
+                    break;
+                case DONE:
+                    DoOpenDoor(GO_ORANGE_TUBES);
+                    DoOpenDoor(GO_SCIENTIST_DOOR_ORANGE);
+                    // no break
+                default:
+                    DoOpenDoor(GO_ORANGE_PLAGUE);
+                    break;
             }
             break;
-         case TYPE_ROTFACE:
-            DoUseDoorOrButton(GO_GREEN_PLAGUE);
-
-            if (uiData == DONE)
+        case TYPE_ROTFACE:
+            switch (uiData)
             {
-                DoUseDoorOrButton(GO_GREEN_TUBES);
-                if (GetData(TYPE_FESTERGUT) == DONE)
-                {
-                    DoUseDoorOrButton(GO_SCIENTIST_DOOR_GREEN, 0, true);
-                    DoUseDoorOrButton(GO_SCIENTIST_DOOR_ORANGE, 0, true);
-                    DoUseDoorOrButton(GO_SCIENTIST_DOOR_COLLISION);
-                }
+                case IN_PROGRESS:
+                    DoCloseDoor(GO_GREEN_PLAGUE);
+                    break;
+                case DONE:
+                    DoOpenDoor(GO_GREEN_TUBES);
+                    DoOpenDoor(GO_SCIENTIST_DOOR_GREEN);
+                    // no break
+                default:
+                    DoOpenDoor(GO_GREEN_PLAGUE);
+                    break;
             }
             break;
-         case TYPE_PUTRICIDE:
-            if (uiData == DONE && GetData(TYPE_SINDRAGOSA) == DONE && GetData(TYPE_LANATHEL) == DONE)
+        case TYPE_PROFESSOR_PUTRICIDE:
+            if (uiData == DONE && GetData(TYPE_SINDRAGOSA) == DONE && GetData(TYPE_QUEEN_LANATHEL) == DONE)
                 m_auiEncounter[TYPE_KINGS_OF_ICC] = DONE;
 
             switch (uiData)
@@ -378,7 +381,7 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
             }
 
             break;
-         case TYPE_BLOOD_COUNCIL:
+        case TYPE_BLOOD_PRINCE_COUNCIL:
             DoUseDoorOrButton(GO_CRIMSON_HALL_DOOR);
 
             if (bChange && uiData == IN_PROGRESS)
@@ -406,18 +409,18 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
                 DoUseDoorOrButton(GO_COUNCIL_DOOR_2);
             }
             break;
-         case TYPE_LANATHEL:
+        case TYPE_QUEEN_LANATHEL:
             DoUseDoorOrButton(GO_BLOODPRINCE_DOOR);
 
             if (uiData == DONE)
             {
                 DoUseDoorOrButton(GO_ICECROWN_GRATE);
 
-                if (GetData(TYPE_PUTRICIDE) == DONE && GetData(TYPE_SINDRAGOSA) == DONE)
+                if (GetData(TYPE_PROFESSOR_PUTRICIDE) == DONE && GetData(TYPE_SINDRAGOSA) == DONE)
                     m_auiEncounter[TYPE_KINGS_OF_ICC] = DONE;
             }
             break;
-         case TYPE_VALITHRIA:
+        case TYPE_VALITHRIA:
             DoUseDoorOrButton(GO_GREEN_DRAGON_DOOR_1);
             DoUseDoorOrButton(GO_VALITHRIA_DOOR_1);
             DoUseDoorOrButton(GO_VALITHRIA_DOOR_2);
@@ -443,6 +446,7 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
 
                 DoUseDoorOrButton(GO_SINDRAGOSA_DOOR_1);
                 DoUseDoorOrButton(GO_SINDRAGOSA_DOOR_2);
+                DoUseDoorOrButton(GO_SINDRAGOSA_ENTRANCE);
 
                 if (GameObject* pChest = GetSingleGameObjectFromStorage(m_uiValithriaCache))
                 {
@@ -452,16 +456,15 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
             }
 
             break;
-         case TYPE_SINDRAGOSA:
+        case TYPE_SINDRAGOSA:
             DoUseDoorOrButton(GO_SINDRAGOSA_ENTRANCE);
             DoUseDoorOrButton(GO_SINDRAGOSA_ICE_WALL);
 
-            if (uiData == DONE && GetData(TYPE_PUTRICIDE) == DONE &&  GetData(TYPE_LANATHEL) == DONE)
+            if (uiData == DONE && GetData(TYPE_PROFESSOR_PUTRICIDE) == DONE &&  GetData(TYPE_QUEEN_LANATHEL) == DONE)
                 m_auiEncounter[TYPE_KINGS_OF_ICC] = DONE;
             break;
          case TYPE_LICH_KING:
          case TYPE_FROSTMOURNE_ROOM:
-         case TYPE_ICECROWN_QUESTS:
             break;
         default:
             script_error_log("Instance Icecrown Citadel: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
@@ -477,7 +480,7 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
         std::ostringstream saveStream;
 
         for (uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
-            saveStream << m_auiEncounter[i] << " ";
+            saveStream << GetData(i) << " ";
 
         strSaveData = saveStream.str();
 
@@ -488,29 +491,11 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
 
 uint32 instance_icecrown_citadel::GetData(uint32 uiType) const
 {
-    switch(uiType)
-    {
-         case TYPE_TELEPORT:
-         case TYPE_MARROWGAR:
-         case TYPE_DEATHWHISPER:
-         case TYPE_FLIGHT_WAR:
-         case TYPE_SAURFANG:
-         case TYPE_FESTERGUT:
-         case TYPE_ROTFACE:
-         case TYPE_PUTRICIDE:
-         case TYPE_BLOOD_COUNCIL:
-         case TYPE_LANATHEL:
-         case TYPE_VALITHRIA:
-         case TYPE_SINDRAGOSA:
-         case TYPE_KINGS_OF_ICC:
-         case TYPE_LICH_KING:
-         case TYPE_FROSTMOURNE_ROOM:
-         case TYPE_ICECROWN_QUESTS:
-             return m_auiEncounter[uiType];
-         default:
-            script_error_log("Instance Icecrown Citadel: ERROR GetData for type %u does not exist/not implemented.", uiType);
-            return 0;
-    }
+    if (uiType < MAX_ENCOUNTERS)
+        return m_auiEncounter[uiType];
+
+    script_error_log("Instance Icecrown Citadel: ERROR GetData for type %u does not exist/not implemented.", uiType);
+    return 0;
 }
 
 bool instance_icecrown_citadel::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const
@@ -599,7 +584,7 @@ void instance_icecrown_citadel::Load(const char* chrIn)
     {
         loadStream >> m_auiEncounter[i];
 
-        if (m_auiEncounter[i] == IN_PROGRESS && i >= 1)
+        if (GetData(i) == IN_PROGRESS && i >= 1)
             m_auiEncounter[i] = NOT_STARTED;
     }
 

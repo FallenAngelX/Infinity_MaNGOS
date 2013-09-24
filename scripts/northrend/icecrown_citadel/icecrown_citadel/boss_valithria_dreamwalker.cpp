@@ -548,7 +548,7 @@ struct MANGOS_DLL_DECL mob_valithria_combat_triggerAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff) override
     {
-        if (!m_pInstance)
+        if (!m_pInstance || m_pInstance->GetData(TYPE_VALITHRIA) == DONE)
             return;
 
         if (m_uiResetTimer)

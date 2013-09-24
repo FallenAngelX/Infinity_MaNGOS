@@ -52,7 +52,7 @@ enum BossSpells
     SPELL_STICKY_AURA           = 69776,
     SPELL_WEAK_RADIATING_OOZE   = 69750,
     SPELL_LITTLE_OOZE_COMBINE   = 69537, // periodic check
-    SPELL_MERGE                 = 69889,
+ // SPELL_MERGE                 = 69889,
 
     // Big Ooze
     SPELL_UNSTABLE_OOZE         = 69558, // stacking buff
@@ -61,15 +61,15 @@ enum BossSpells
     SPELL_BIG_OOZE_BUFF_COMB    = 69611, // periodic check
 
     // Vile Gas (heroic)
-    SPELL_VILE_GAS_SUMMON       = 72288,
+ // SPELL_VILE_GAS_SUMMON       = 72288,
     SPELL_VILE_GAS_SUMMON_TRIG  = 72287,
     SPELL_VILE_GAS              = 71307,
-    SPELL_VILE_GAS_TRIGGERED    = 72272,
+ // SPELL_VILE_GAS_TRIGGERED    = 72272,
 
     // others
-    NPC_PUDDLE_STALKER          = 37013,
-    NPC_LITTLE_OOZE             = 36897,
-    NPC_BIG_OOZE                = 36899,
+ // NPC_PUDDLE_STALKER          = 37013,
+ // NPC_LITTLE_OOZE             = 36897,
+ // NPC_BIG_OOZE                = 36899,
 };
 
 static uint32 uiMutatedInfections[5] =
@@ -116,7 +116,7 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public base_icc_bossAI
     uint32 m_uiVileGasTimer;
     uint32 m_uiSlimeFlowTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiSlimeSprayTimer       = urand(17000, 23000);
         m_uiVileGasTimer          = 20000;
@@ -125,7 +125,7 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public base_icc_bossAI
         m_uiSlimeFlowTimer        = 20000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
         {
@@ -163,7 +163,7 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public base_icc_bossAI
             DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature, pVictim);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
         {
@@ -264,13 +264,13 @@ struct MANGOS_DLL_DECL mob_rotface_ooze_dummyAI : public ScriptedAI
         if (pCreature->GetEntry() == 37986)
             pCreature->ForcedDespawn(10000);
     }
-    void Reset(){}
-    void AttackStart(Unit* pWho) override{}
-    void DamageTaken(Unit* pDealer, uint32& uiDamage)
+    void Reset() override {}
+    void AttackStart(Unit* /*pWho*/) override {}
+    void DamageTaken(Unit* /*pDealer*/, uint32& uiDamage) override
     {
         uiDamage = 0;
     }
-    void UpdateAI(const uint32 uiDiff) override{}
+    void UpdateAI(const uint32 /*uiDiff*/) override {}
 };
 
 CreatureAI* GetAI_mob_rotface_ooze_dummy(Creature* pCreature)
@@ -289,12 +289,12 @@ struct MANGOS_DLL_DECL mob_little_oozeAI : public ScriptedAI
     ScriptedInstance* m_pInstance;
     uint32 m_uiStickyOozeTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiStickyOozeTimer = 5000;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         m_creature->FixateTarget(pWho);
         m_creature->SetInCombatWithZone();
@@ -347,14 +347,14 @@ struct MANGOS_DLL_DECL mob_big_oozeAI : public ScriptedAI
     uint32 m_uiCheckTimer;
     bool m_bHasSaid;
 
-    void Reset()
+    void Reset() override
     {
         m_uiStickyOozeTimer = 5000;
         m_uiCheckTimer      = 1000;
         m_bHasSaid          = false;
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         m_creature->SetInCombatWithZone();
         m_creature->AddThreat(pWho, 500000.0f);
@@ -425,8 +425,8 @@ struct MANGOS_DLL_DECL mob_ooze_explosion_stalkerAI : public ScriptedAI
     {
         pCreature->ForcedDespawn(10000);
     }
-    void Reset(){}
-    void UpdateAI(const uint32 uiDiff) override{}
+    void Reset() override {}
+    void UpdateAI(const uint32 /*uiDiff*/) override {}
 };
 
 CreatureAI* GetAI_mob_ooze_explosion_stalker(Creature* pCreature)
@@ -446,12 +446,14 @@ struct MANGOS_DLL_DECL mob_sticky_oozeAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset(){}
-    void DamageTaken(Unit* pDealer, uint32& uiDamage)
+    void Reset() override {}
+
+    void DamageTaken(Unit* /*pDealer*/, uint32& uiDamage) override
     {
         uiDamage = 0;
     }
-    void UpdateAI(const uint32 uiDiff) override
+
+    void UpdateAI(const uint32 /*uiDiff*/) override
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
         {

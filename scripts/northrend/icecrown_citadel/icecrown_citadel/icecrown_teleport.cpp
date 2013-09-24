@@ -25,7 +25,7 @@ EndScriptData */
 
 enum 
 {
-PORTALS_COUNT = 7
+    PORTALS_COUNT = 7
 };
 
 struct t_Locations
@@ -41,9 +41,9 @@ static t_Locations PortalLoc[]=
 {
     {-3631600, 70781, true,  true, TYPE_TELEPORT},
     {-3631601, 70856, false, true, TYPE_MARROWGAR},
-    {-3631602, 70857, false, true, TYPE_DEATHWHISPER},
-    {-3631603, 70858, false, true, TYPE_DEATHWHISPER /*TYPE_FLIGHT_WAR*/},
-    {-3631604, 70859, false, true, TYPE_SAURFANG},
+    {-3631602, 70857, false, true, TYPE_LADY_DEATHWHISPER},
+    {-3631603, 70858, false, true, TYPE_LADY_DEATHWHISPER /*TYPE_FLIGHT_WAR*/},
+    {-3631604, 70859, false, true, TYPE_DEATHBRINGER_SAURFANG},
     {-3631606, 70861, false, true, TYPE_VALITHRIA},
     {-3631607, 70860, false, true, TYPE_KINGS_OF_ICC}
 };
@@ -92,9 +92,9 @@ bool GOHello_go_plague_sigil(Player* pPlayer, GameObject* pGo)
     if (pInstance->GetData(TYPE_FESTERGUT) == DONE &&
         pInstance->GetData(TYPE_ROTFACE) == DONE)
     {
-        pInstance->DoUseDoorOrButton(GO_SCIENTIST_DOOR_ORANGE);
-        pInstance->DoUseDoorOrButton(GO_SCIENTIST_DOOR_GREEN);
-        pInstance->DoUseDoorOrButton(GO_SCIENTIST_DOOR_COLLISION);
+        pInstance->DoOpenDoor(GO_SCIENTIST_DOOR_ORANGE, true);
+        pInstance->DoOpenDoor(GO_SCIENTIST_DOOR_GREEN, true);
+        pInstance->DoOpenDoor(GO_SCIENTIST_DOOR_COLLISION);
     }
     return true;
 }
@@ -106,8 +106,8 @@ bool GOHello_go_bloodwing_sigil(Player* player, GameObject* pGo)
     if (!pInstance)
         return false;
 
-    if (pInstance->GetData(TYPE_SAURFANG) == DONE)
-        pInstance->DoUseDoorOrButton(GO_BLOODWING_DOOR);
+    if (pInstance->GetData(TYPE_DEATHBRINGER_SAURFANG) == DONE)
+        pInstance->DoOpenDoor(GO_BLOODWING_DOOR);
 
     return true;
 }
@@ -118,8 +118,8 @@ bool GOHello_go_frostwing_sigil(Player* pPlayer, GameObject* pGo)
     if (!pInstance)
         return false;
 
-    if (pInstance->GetData(TYPE_SAURFANG) == DONE)
-        pInstance->DoUseDoorOrButton(GO_FROSTWING_DOOR);
+    if (pInstance->GetData(TYPE_DEATHBRINGER_SAURFANG) == DONE)
+        pInstance->DoOpenDoor(GO_FROSTWING_DOOR);
 
     return true;
 }

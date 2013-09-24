@@ -53,7 +53,7 @@ enum BossSpells
     SPELL_KINETIC_BOMB_DMG      = 72052,
     SPELL_KINETIC_BOMB_VISUAL   = 72054,
     SPELL_UNSTABLE              = 72059, // this proc makes the bomb teleport by 3-5? yards up and applies knockback aura
-    SPELL_KNOCKBACK_AURA        = 72087, // this stacks to 2. duration = 3 secs, maybe this makes bomb stand for 3secs per stack?
+ // SPELL_KNOCKBACK_AURA        = 72087, // this stacks to 2. duration = 3 secs, maybe this makes bomb stand for 3secs per stack?
 
     // Keleseth
     SPELL_INVOCATION_KELESETH   = 70981,
@@ -62,7 +62,7 @@ enum BossSpells
     SPELL_EMP_SHADOW_LANCE      = 71815,
 
     SPELL_SHADOW_RESONANCE      = 71943,
-    SPELL_SHADOW_RESONANCE_AURA = 71911, // blizz used this for determining the distance, probably. (not used)
+ // SPELL_SHADOW_RESONANCE_AURA = 71911, // blizz used this for determining the distance, probably. (not used)
     SPELL_SHADOW_RESONANCE_BUFF = 71822,
 
     SPELL_SHADOW_PRISON         = 73001,
@@ -77,7 +77,7 @@ enum BossSpells
     SPELL_CONJURE_EMP_FLAME     = 72040,
     SPELL_FLAMES                = 71393, // cast on the impact
     SPELL_BALL_FLAMES_PERIODIC  = 71709, // used on heroic, triggers empowered flare which reduces dmg of flames on impact
-    SPELL_BALL_FLAMES_TRIGGERED = 71708, // this spell must reduce stack of 71756
+ // SPELL_BALL_FLAMES_TRIGGERED = 71708, // this spell must reduce stack of 71756
     SPELL_FLAMES_BUFF           = 71756,
 };
 
@@ -124,7 +124,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathel_introAI : public ScriptedAI
     bool m_bEventStarted;
     bool m_bEventEnded;
 
-    void Reset()
+    void Reset() override
     {
         m_bEventStarted = false;
         m_bEventEnded = false;
@@ -132,7 +132,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathel_introAI : public ScriptedAI
         m_uiEventTimer = 0;
     }
 
-    void AttackStart(Unit* who){}
+    void AttackStart(Unit* /*pWho*/) override {}
 
     void MoveInLineOfSight(Unit* pWho) override
     {
@@ -233,7 +233,7 @@ struct MANGOS_DLL_DECL npc_blood_orb_controlAI : public ScriptedAI
     uint32 m_uiInvocationTimer;
     bool m_bIsInProgress;
 
-    void Reset()
+    void Reset() override
     {
         m_uiCheckTimer = 1000;
         m_bIsInProgress = false;
@@ -248,7 +248,7 @@ struct MANGOS_DLL_DECL npc_blood_orb_controlAI : public ScriptedAI
             {
                 if (m_pInstance)
                 {
-                    if (m_pInstance->GetData(TYPE_BLOOD_COUNCIL) == IN_PROGRESS)
+                    if (m_pInstance->GetData(TYPE_BLOOD_PRINCE_COUNCIL) == IN_PROGRESS)
                     {
                         m_bIsInProgress = true;
                         DoCastSpellIfCan(m_creature, SPELL_INVOCATION_VALANAR, CAST_TRIGGERED);
@@ -269,7 +269,7 @@ struct MANGOS_DLL_DECL npc_blood_orb_controlAI : public ScriptedAI
             {
                 if (m_pInstance)
                 {
-                    if (m_pInstance->GetData(TYPE_BLOOD_COUNCIL) == FAIL)
+                    if (m_pInstance->GetData(TYPE_BLOOD_PRINCE_COUNCIL) == FAIL)
                     {
                         Reset();
                         return;
@@ -335,7 +335,7 @@ struct MANGOS_DLL_DECL base_blood_prince_council_bossAI : public base_icc_bossAI
     uint32 m_uiBerserkTimer;
     uint32 m_uiSphereTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_bIsEmpowered = false;
         m_bIsSaidSpecial = false;
@@ -345,7 +345,7 @@ struct MANGOS_DLL_DECL base_blood_prince_council_bossAI : public base_icc_bossAI
         m_creature->SetHealth(1);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         m_creature->CallForHelp(30.0f);
     }
@@ -361,7 +361,7 @@ struct MANGOS_DLL_DECL base_blood_prince_council_bossAI : public base_icc_bossAI
 
     void JustDied(Unit* pKiller) override
     {
-        if (m_pInstance)
+        if (m_pInstance && pKiller)
         {
             if (m_creature->GetEntry() != NPC_VALANAR)
             {
@@ -370,7 +370,7 @@ struct MANGOS_DLL_DECL base_blood_prince_council_bossAI : public base_icc_bossAI
                     if (pTmp->isAlive())
                     {
                         pTmp->RemoveAurasDueToSpell(SPELL_INVOCATION_VALANAR);
-                        pTmp->DealDamage(pTmp, pTmp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                        pKiller->DealDamage(pTmp, pTmp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
                     }
                 }
             }
@@ -382,7 +382,7 @@ struct MANGOS_DLL_DECL base_blood_prince_council_bossAI : public base_icc_bossAI
                     if (pTmp->isAlive())
                     {
                         pTmp->RemoveAurasDueToSpell(SPELL_INVOCATION_KELESETH);
-                        pTmp->DealDamage(pTmp, pTmp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                        pKiller->DealDamage(pTmp, pTmp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
                     }
                 }
             }
@@ -394,12 +394,12 @@ struct MANGOS_DLL_DECL base_blood_prince_council_bossAI : public base_icc_bossAI
                     if (pTmp->isAlive())
                     {
                         pTmp->RemoveAurasDueToSpell(SPELL_INVOCATION_TALDARAM);
-                        pTmp->DealDamage(pTmp, pTmp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
+                        pKiller->DealDamage(pTmp, pTmp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
                     }
                 }
             }
 
-            if (Creature* pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_LANATHEL_INTRO))
+            if (Creature* pTmp = m_pInstance->GetSingleCreatureFromStorage(NPC_QUEEN_LANATHEL_INTRO))
             {
                 if (pTmp->isAlive())
                     pTmp->DealDamage(pTmp, pTmp->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
@@ -411,8 +411,8 @@ struct MANGOS_DLL_DECL base_blood_prince_council_bossAI : public base_icc_bossAI
     {
         if (m_pInstance)
         {
-            if (m_pInstance->GetData(TYPE_BLOOD_COUNCIL) != FAIL)
-                m_pInstance->SetData(TYPE_BLOOD_COUNCIL, FAIL);
+            if (m_pInstance->GetData(TYPE_BLOOD_PRINCE_COUNCIL) != FAIL)
+                m_pInstance->SetData(TYPE_BLOOD_PRINCE_COUNCIL, FAIL);
         }
     }
     
@@ -470,20 +470,20 @@ struct MANGOS_DLL_DECL boss_valanar_iccAI : public base_blood_prince_council_bos
 
     uint32 m_uiVortexTimer;
 
-    void Reset()
+    void Reset() override
     {
         base_blood_prince_council_bossAI::Reset();
 
         m_uiVortexTimer = urand(5000, 10000);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* pWho) override
     {
         base_blood_prince_council_bossAI::Aggro(pWho);
 
         if (m_pInstance)
         {
-            m_pInstance->SetData(TYPE_BLOOD_COUNCIL, IN_PROGRESS);
+            m_pInstance->SetData(TYPE_BLOOD_PRINCE_COUNCIL, IN_PROGRESS);
 
             if (Creature* pOrb = m_pInstance->GetSingleCreatureFromStorage(NPC_BLOOD_ORB_CONTROL))
             {
@@ -506,7 +506,7 @@ struct MANGOS_DLL_DECL boss_valanar_iccAI : public base_blood_prince_council_bos
         base_blood_prince_council_bossAI::JustDied(pKiller);
 
         if (m_pInstance)
-            m_pInstance->SetData(TYPE_BLOOD_COUNCIL, DONE);
+            m_pInstance->SetData(TYPE_BLOOD_PRINCE_COUNCIL, DONE);
 
         DoScriptText(SAY_VALANAR_DEATH, m_creature);
     }
@@ -570,7 +570,7 @@ struct MANGOS_DLL_DECL boss_keleseth_iccAI : public base_blood_prince_council_bo
     uint32 m_uiShadowLanceTimer;
     bool m_bHasCastShadowPrison;
 
-    void Reset()
+    void Reset() override
     {
         base_blood_prince_council_bossAI::Reset();
 
@@ -659,7 +659,7 @@ struct MANGOS_DLL_DECL boss_taldaram_iccAI : public base_blood_prince_council_bo
 
     uint32 m_uiSparksTimer;
 
-    void Reset()
+    void Reset() override
     {
         base_blood_prince_council_bossAI::Reset();
 
@@ -767,7 +767,7 @@ struct MANGOS_DLL_DECL mob_shock_vortexAI : public ScriptedAI
 
     uint32 m_uiCastTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_creature->SetInCombatWithZone();
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -806,24 +806,24 @@ struct MANGOS_DLL_DECL mob_dark_nucleusAI : public base_icc_bossAI
         Reset();
     }
 
-    void Reset(){}
+    void Reset() override {}
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
+    void DamageTaken(Unit* pDealer, uint32& /*uiDamage*/) override
     {
         m_creature->FixateTarget(pDealer);
         m_creature->InterruptNonMeleeSpells(true);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         m_creature->ForcedDespawn();
     }
 
-    void UpdateAI(const uint32 uiDiff) override
+    void UpdateAI(const uint32 /*uiDiff*/) override
     {
         if (m_pInstance)
         {
-            if (m_pInstance->GetData(TYPE_BLOOD_COUNCIL) != IN_PROGRESS)
+            if (m_pInstance->GetData(TYPE_BLOOD_PRINCE_COUNCIL) != IN_PROGRESS)
             {
                 m_creature->ForcedDespawn();
                 return;
@@ -854,7 +854,7 @@ struct MANGOS_DLL_DECL mob_ball_of_flamesAI : public ScriptedAI
     uint32 m_uiStartTimer;
     bool m_bIsDespawned;
 
-    void Reset()
+    void Reset() override
     {
         m_creature->SetSpeedRate(MOVE_RUN, 2.0f);
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -923,7 +923,7 @@ struct MANGOS_DLL_DECL mob_kinetic_bombAI : public ScriptedAI
     uint32 m_uiStartTimer;
     float m_fZ;
 
-    void Reset()
+    void Reset() override
     {
         float x, y;
 
@@ -945,7 +945,7 @@ struct MANGOS_DLL_DECL mob_kinetic_bombAI : public ScriptedAI
         m_creature->GetMotionMaster()->MovePoint(0, x, y, m_fZ, false);
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDealer*/, uint32& uiDamage) override
     {
         uiDamage = 0;
 
@@ -953,7 +953,7 @@ struct MANGOS_DLL_DECL mob_kinetic_bombAI : public ScriptedAI
             DoCastSpellIfCan(m_creature, SPELL_KINETIC_BOMB_VISUAL, CAST_TRIGGERED);
     }
 
-    void AttackStart(Unit* pWho) override{}
+    void AttackStart(Unit* /*pWho*/) override {}
     void EnterEvadeMode() override {}
 
     void UpdateAI(const uint32 uiDiff) override
@@ -998,7 +998,7 @@ struct MANGOS_DLL_DECL mob_kinetic_bomb_targetAI : public ScriptedAI
         Reset();
     }
 
-    void Reset()
+    void Reset() override
     {
         m_creature->SetDisplayId(31095);
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -1008,18 +1008,18 @@ struct MANGOS_DLL_DECL mob_kinetic_bomb_targetAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_KINETIC_BOMB_TARGET, CAST_TRIGGERED);
     }
 
-    void SummonedCreatureJustDied(Creature* summoned)
+    void SummonedCreatureJustDied(Creature* /*pSummoned*/) override
     {
          m_creature->ForcedDespawn();
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDealer*/, uint32& uiDamage) override
     {
         uiDamage = 0;
     }
 
-    void AttackStart(Unit* who){}
-    void UpdateAI(const uint32 uiDiff) override{}
+    void AttackStart(Unit* /*pWho*/) override {}
+    void UpdateAI(const uint32 /*uiDiff*/) override {}
 };
 
 CreatureAI* GetAI_mob_kinetic_bomb_target(Creature* pCreature)

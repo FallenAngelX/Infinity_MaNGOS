@@ -48,12 +48,12 @@ enum
     // periodic auras spells
     SPELL_GASEUS_BLIGHT_DUMMY   = 69125, // gas is spread into the room on aggro
     SPELL_GASEOUS_BLIGHT_1      = 69157,
-    SPELL_GASEOUS_BLIGHT_2      = 69162,
-    SPELL_GASEOUS_BLIGHT_3      = 69164,
+ // SPELL_GASEOUS_BLIGHT_2      = 69162,
+ // SPELL_GASEOUS_BLIGHT_3      = 69164,
     // visual gas dummy auras
-    SPELL_GASEOUS_BLIGHT_DUMMY1 = 69126,
-    SPELL_GASEOUS_BLIGHT_DUMMY2 = 69152,
-    SPELL_GASEOUS_BLIGHT_DUMMY3 = 69154,
+ // SPELL_GASEOUS_BLIGHT_DUMMY1 = 69126,
+ // SPELL_GASEOUS_BLIGHT_DUMMY2 = 69152,
+ // SPELL_GASEOUS_BLIGHT_DUMMY3 = 69154,
 
     // Inoculent
     SPELL_REMOVE_INOCULENT      = 69298,
@@ -65,17 +65,17 @@ enum
     SPELL_VILE_GAS_SUMMON       = 72288,
     SPELL_VILE_GAS_SUMMON_TRIG  = 72287,
     SPELL_VILE_GAS              = 71307,
-    SPELL_VILE_GAS_TRIGGERED    = 69240,
+ // SPELL_VILE_GAS_TRIGGERED    = 69240,
 
     // Malleable Goo
     SPELL_MALLEABLE_GOO_SUMMON  = 72299,
     SPELL_MALLEABLE_GOO         = 72295,
-    SPELL_MALLEABLE_GOO_VISUAL  = 75845,
+ // SPELL_MALLEABLE_GOO_VISUAL  = 75845,
     SPELL_MALLEABLE_GOO_MISSILE = 70852,
 
     // other
-    NPC_ORANGE_GAS_STALKER      = 36659, // has dummy auras of the orange gas
-    NPC_PUDDLE_STALKER          = 37013, // dummy npc for initial gas flowing from pipes animation
+ // NPC_ORANGE_GAS_STALKER      = 36659, // has dummy auras of the orange gas
+ // NPC_PUDDLE_STALKER          = 37013, // dummy npc for initial gas flowing from pipes animation
     NPC_MALLEABLE_GOO           = 38556,
 };
 
@@ -114,7 +114,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
     uint32 m_uiVileGasTimer;
     uint32 m_uiMalleableGooTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiBerserkTimer      = 5 * MINUTE * IN_MILLISECONDS;
         m_uiGastricBloatTimer = 10000;
@@ -124,7 +124,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
         m_uiMalleableGooTimer = urand(15000, 20000);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         // not working as intended currently
         // DoCastSpellIfCan(m_creature, SPELL_GASTRIC_BLOAT, CAST_TRIGGERED);
@@ -146,7 +146,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
         }
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature);
     }
@@ -164,7 +164,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public base_icc_bossAI
         DoCastSpellIfCan(m_creature, SPELL_REMOVE_INOCULENT, CAST_TRIGGERED);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
         {
@@ -314,14 +314,14 @@ struct MANGOS_DLL_DECL mob_vile_gas_malleable_gooAI : public ScriptedAI
         SetCombatMovement(false);
     }
 
-    void DamageTaken(Unit* pDealer, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDealer*/, uint32& uiDamage) override
     {
         uiDamage = 0;
     }
 
-    void Reset(){}
-    void AttackStart(Unit* pWho) override{}
-    void UpdateAI(const uint32 uiDiff) override{}
+    void Reset() override {}
+    void AttackStart(Unit* /*pWho*/) override {}
+    void UpdateAI(const uint32 /*uiDiff*/) override {}
 };
 
 CreatureAI* GetAI_mob_vile_gas_malleable_goo(Creature* pCreature)

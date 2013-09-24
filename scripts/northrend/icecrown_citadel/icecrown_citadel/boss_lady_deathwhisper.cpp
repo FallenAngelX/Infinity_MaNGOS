@@ -45,7 +45,7 @@ enum BossSpells
         NPC_DEFORMED_FANATIC                    = 38135,
 
         SPELL_FROST_FEVER                       = 71129,
-        SPELL_SHROUD_OF_THE_OCCULT              = 70768,
+     // SPELL_SHROUD_OF_THE_OCCULT              = 70768,
         SPELL_DEATHCHILL_BOLT                   = 70594,
         SPELL_DEATHCHILL_BLAST                  = 70906,
         SPELL_CURSE_OF_TORPOR                   = 71237,
@@ -59,15 +59,15 @@ enum BossSpells
 
         SPELL_SHADOW_CLEAVE                     = 70670,
         SPELL_NECROTIC_STRIKE                   = 70659,
-        SPELL_VAMPIRIC_MIGHT                    = 70674,
+     // SPELL_VAMPIRIC_MIGHT                    = 70674,
         SPELL_DARK_TRANSFORMATION               = 70900, // dummy spell: 70895
         //SPELL_DARK_MARTYRDOM                    = 70903,
         SPELL_FANATICS_DETERMINATION            = 71235,
 
         // Vengeful Shade
         NPC_VENGEFUL_SHADE                      = 38222,
-        SPELL_SUMMON_SPIRIT                     = 71363, // not used since trigger npc is missing (something must be the target of this spell, it can't be player)
-        SPELL_SUMMON_SPIRIT_TRIGGERED           = 71426,
+     // SPELL_SUMMON_SPIRIT                     = 71363, // not used since trigger npc is missing (something must be the target of this spell, it can't be player)
+     // SPELL_SUMMON_SPIRIT_TRIGGERED           = 71426,
         SPELL_VENGEFUL_BLAST_AURA               = 71494, // must proc on melee hit
 
         // Achievement
@@ -125,7 +125,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisper_eventAI : public base_icc_bossAI
     bool m_bIsEventStarted;
     bool m_bIsEventFinished;
 
-    void Reset(){}
+    void Reset() override {}
 
     void NextStep(uint32 uiTimer)
     {
@@ -149,7 +149,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisper_eventAI : public base_icc_bossAI
     }
 
     // for the fight handler
-    virtual void UpdateFightAI(const uint32 uiDiff){}
+    virtual void UpdateFightAI(const uint32 uiDiff) {}
 
     void UpdateAI(const uint32 uiDiff) override
     {
@@ -250,7 +250,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public boss_lady_deathwhisper_
     uint32 m_uiMindControlCount;
     std::list<Creature*> SummonsEntryList;
 
-    void Reset()
+    void Reset() override
     {
         m_bIsPhaseOne                   = true;
         m_bIsLeftSideSummon             = true;
@@ -283,11 +283,11 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public boss_lady_deathwhisper_
         }
     }
 
-    void Aggro(Unit *pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
         {
-            m_pInstance->SetData(TYPE_DEATHWHISPER, IN_PROGRESS);
+            m_pInstance->SetData(TYPE_LADY_DEATHWHISPER, IN_PROGRESS);
             m_pInstance->SetSpecialAchievementCriteria(ACHIEVE_FULL_HOUSE, true);
         }
 
@@ -302,16 +302,16 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public boss_lady_deathwhisper_
     {
         if (m_pInstance)
         {
-            m_pInstance->SetData(TYPE_DEATHWHISPER, FAIL);
+            m_pInstance->SetData(TYPE_LADY_DEATHWHISPER, FAIL);
             m_pInstance->SetSpecialAchievementCriteria(ACHIEVE_FULL_HOUSE, false);
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (m_pInstance)
         {
-            m_pInstance->SetData(TYPE_DEATHWHISPER, DONE);
+            m_pInstance->SetData(TYPE_LADY_DEATHWHISPER, DONE);
 
             // Find required NPC as achievement criteria
             SummonsEntryList.clear();
@@ -344,7 +344,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public boss_lady_deathwhisper_
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void KilledUnit(Unit *pVictim)
+    void KilledUnit(Unit* /*pVictim*/)
     {
         DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature);
     }
@@ -356,16 +356,17 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public boss_lady_deathwhisper_
 
     void DoSummonShade()
     {
-        if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, uint32(0), SELECT_FLAG_PLAYER))
+        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, uint32(0), SELECT_FLAG_PLAYER))
         {
             float x, y, z;
             pTarget->GetNearPoint(pTarget, x, y, z, pTarget->GetObjectBoundingRadius(), 10.0f, frand(-M_PI_F, M_PI_F));
 
-            if (Creature *pShade = m_creature->SummonCreature(NPC_VENGEFUL_SHADE, x, y, z, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 7000))
+            if (Creature* pShade = m_creature->SummonCreature(NPC_VENGEFUL_SHADE, x, y, z, 0.0f, TEMPSUMMON_TIMED_DESPAWN, 10000))
             {
                 pShade->SetSpeedRate(MOVE_RUN, 0.5f);
-                pShade->AddThreat(pTarget, 10000000.0f, true);
+                pShade->FixateTarget(pTarget);
                 pShade->AI()->AttackStart(pTarget);
+                pShade->CastSpell(pShade, SPELL_VENGEFUL_BLAST_AURA, true);
             }
         }
     }
@@ -412,7 +413,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public boss_lady_deathwhisper_
         }
     }
 
-    void UpdateFightAI(const uint32 uiDiff)
+    void UpdateFightAI(const uint32 uiDiff) override
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -432,7 +433,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public boss_lady_deathwhisper_
         // Death and Decay - both phases
         if (m_uiDeathAndDecayTimer <= uiDiff)
         {
-            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
             {
                 if (DoCastSpellIfCan(pTarget, SPELL_DEATH_AND_DECAY) == CAST_OK)
                     m_uiDeathAndDecayTimer = 30000;
@@ -449,7 +450,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public boss_lady_deathwhisper_
                 /* uncomment when spell implemented in core
                 for (int i = 0; i < m_uiMindControlCount; ++i)
                 {
-                    if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
                         DoCastSpellIfCan(pTarget, SPELL_DOMINATE_MIND, CAST_TRIGGERED);
                 }*/
 
@@ -495,7 +496,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public boss_lady_deathwhisper_
             // Shadow Bolt
             if (m_uiShadowBoltTimer <= uiDiff)
             {
-                if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_SHADOW_BOLT) == CAST_OK)
                         m_uiShadowBoltTimer = 2000;
@@ -531,7 +532,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public boss_lady_deathwhisper_
             // Frostbolt
             if (m_uiFrostboltTimer <= uiDiff)
             {
-                if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
                     if (DoCastSpellIfCan(pTarget, SPELL_FROSTBOLT) == CAST_OK)
                         m_uiFrostboltTimer = urand(5000, 10000);
@@ -582,7 +583,7 @@ struct MANGOS_DLL_DECL mob_cult_fanaticAI : public ScriptedAI
     uint32 m_uiTransformationTimer;
     uint32 m_uiVampiricMightTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiCleaveTimer = urand(4000, 8000);
         m_uiNecroticStrikeTimer = urand(5000, 10000);
@@ -663,7 +664,7 @@ struct MANGOS_DLL_DECL mob_cult_adherentAI : public ScriptedAI
     uint32 m_uiDeathchillTimer;
     uint32 m_uiCurseOfTorporTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiTransformationTimer = urand(20000, 60000);
         m_uiCurseOfTorporTimer  = urand(5000, 10000);
@@ -685,7 +686,7 @@ struct MANGOS_DLL_DECL mob_cult_adherentAI : public ScriptedAI
         // Frost Fever
         if (m_uiFrostFeverTimer <= uiDiff)
         {
-            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             {
                 if (DoCastSpellIfCan(pTarget, SPELL_FROST_FEVER) == CAST_OK)
                     m_uiFrostFeverTimer = urand(5000, 10000);
@@ -697,7 +698,7 @@ struct MANGOS_DLL_DECL mob_cult_adherentAI : public ScriptedAI
         // Deathchill Bolt/Blast
         if (m_uiDeathchillTimer <= uiDiff)
         {
-            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             {
                 if (DoCastSpellIfCan(pTarget, m_creature->HasAura(SPELL_DARK_EMPOWERMENT) ? SPELL_DEATHCHILL_BLAST : SPELL_DEATHCHILL_BOLT) == CAST_OK)
                     m_uiDeathchillTimer = urand(3000, 5000);
@@ -709,7 +710,7 @@ struct MANGOS_DLL_DECL mob_cult_adherentAI : public ScriptedAI
         // Curse of Torpor
         if (m_uiCurseOfTorporTimer <= uiDiff)
         {
-            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             {
                 if (DoCastSpellIfCan(pTarget, SPELL_CURSE_OF_TORPOR) == CAST_OK)
                     m_uiCurseOfTorporTimer = urand(5000, 15000);

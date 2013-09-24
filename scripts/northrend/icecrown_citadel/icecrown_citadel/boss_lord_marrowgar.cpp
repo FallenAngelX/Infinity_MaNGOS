@@ -50,12 +50,12 @@ enum
     SPELL_BERSERK                           = 47008,
 
     //summons
-    NPC_BONE_SPIKE                          = 38711,
+ // NPC_BONE_SPIKE                          = 38711,
     NPC_COLDFLAME                           = 36672,
 
     // Bone Slice
     SPELL_BONE_SLICE_10                     = 69055,
-    SPELL_BONE_SLICE_25                     = 70814,
+ // SPELL_BONE_SLICE_25                     = 70814,
 
     // Bone Storm
     SPELL_BONE_STORM                        = 69076,
@@ -66,15 +66,15 @@ enum
     SPELL_COLDFLAME_X                       = 72705,
 
     // Bone Spike
-    SPELL_BONE_SPIKE_10                     = 69057,
-    SPELL_BONE_SPIKE_10_H                   = 72088,
+ // SPELL_BONE_SPIKE_10                     = 69057,
+ // SPELL_BONE_SPIKE_10_H                   = 72088,
     SPELL_BONE_SPIKE_STORM_10               = 73144,
-    SPELL_BONE_SPIKE_25                     = 70826,
-    SPELL_BONE_SPIKE_25_H                   = 72089,
-    SPELL_BONE_SPIKE_STORM_25               = 73145,
+ // SPELL_BONE_SPIKE_25                     = 70826,
+ // SPELL_BONE_SPIKE_25_H                   = 72089,
+ // SPELL_BONE_SPIKE_STORM_25               = 73145,
 
     SPELL_IMPALED                           = 69065,
-    SPELL_VEHICLE_HARDCODED                 = 46598,
+ // SPELL_VEHICLE_HARDCODED                 = 46598,
 
     // phases
     PHASE_NORMAL                            = 1,
@@ -118,7 +118,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
     uint32 m_uiBoneStormChargeTimer;
     uint32 m_uiBoneStormColdflameTimer;
 
-    void Reset()
+    void Reset() override
     {
         SetCombatMovement(true);
 
@@ -159,7 +159,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
         }
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if(!m_pInstance)
             return;
@@ -174,7 +174,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
         DoScriptText(SAY_SLAY_1 - urand(0, 1), m_creature, pVictim);
     }
 
-    void JustDied(Unit* killer)
+    void JustDied(Unit* /*pKiller*/) override
     {
         if(m_pInstance)
             m_pInstance->SetData(TYPE_MARROWGAR, DONE);
@@ -342,9 +342,9 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public base_icc_bossAI
 struct MANGOS_DLL_DECL mob_coldflameAI : public ScriptedAI
 {
     mob_coldflameAI(Creature* pCreature) : ScriptedAI(pCreature){}
-    void Reset(){}
-    void AttackStart(Unit* who){}
-    void UpdateAI(const uint32 uiDiff) override{}
+    void Reset() override {}
+    void AttackStart(Unit* /*pWho*/) override {}
+    void UpdateAI(const uint32 /*uiDiff*/) override {}
 };
 
 /*####
@@ -365,13 +365,14 @@ struct MANGOS_DLL_DECL mob_bone_spikeAI : public ScriptedAI
     ObjectGuid m_victimGuid;
     uint32 m_uiEmpaledTime;
 
-    void Reset()
+    void Reset() override
     {
         m_uiEmpaledTime = 0;
     }
-    void AttackStart(Unit* pWho) override{}
 
-    void JustDied(Unit* Killer)
+    void AttackStart(Unit* /*pWho*/) override {}
+
+    void JustDied(Unit* /*Killer*/) override
     {
         if (Unit* pCreator = m_creature->GetCreator())
         {
