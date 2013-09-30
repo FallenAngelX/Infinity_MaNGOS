@@ -455,8 +455,8 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
             case 39:
                 m_pInstance->SetNextEvent(40,NPC_LICH_KING,1000);
                 m_creature->ForcedDespawn(1000);
-                if (pUther)
-                    pUther->ForcedDespawn(1000);
+                if (pUther && pUther->IsInWorld())
+                    pUther->ForcedDespawn();
                 break;
             default:
                 break;

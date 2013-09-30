@@ -594,7 +594,7 @@ struct MANGOS_DLL_DECL boss_lich_king_intro_horAI : public ScriptedAI
             case 40:
                 m_pInstance->SetData(TYPE_PHASE, 2);
                 m_pInstance->SetNextEvent(0,0);
-                m_creature->ForcedDespawn();
+                m_creature->ForcedDespawn(500);
                 break;
             default:
                 break;
