@@ -371,6 +371,8 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public base_icc_bossAI
 
     void JustSummoned(Creature* pSummoned) override
     {
+        if (!m_creature->isInCombat())
+            return;
         if (pSummoned->GetEntry() != NPC_GREEN_ORANGE_OOZE_STALKER)
             pSummoned->SetInCombatWithZone();
     }
