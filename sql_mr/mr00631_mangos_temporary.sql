@@ -5,7 +5,8 @@
 -- ===================================== --
 
 -- ---------- --
--- 2013-09-02 --
+-- 2013-10-10 --
 -- ---------- --
--- sd2_mr0596
-DELETE FROM `creature` WHERE `id` = 36789; -- Summon by script
+-- sd2_mr0631
+DELETE FROM `creature_template_addon` WHERE `entry` = 38285;
+UPDATE `creature_template_addon` SET `auras` = '70385 70405' WHERE `entry` IN(37672);

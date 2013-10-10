@@ -38,8 +38,8 @@ enum BossSpells
     SPELL_EAT_OOZE                  = 72527,
     SPELL_REGURGITATED_OOZE         = 70539,
     SPELL_MUTATED_SLASH             = 70542,
-    SPELL_MUTATED_AURA              = 70405,
-    SPELL_ABOMINATION_POWER_DRAIN   = 70385, // prevents normal regen of abomination's power
+ // SPELL_MUTATED_AURA              = 70405,
+ // SPELL_ABOMINATION_POWER_DRAIN   = 70385, // prevents normal regen of abomination's power
 
     SPELL_UNSTABLE_EXPERIMENT       = 70351,
     SPELL_VOLATILE_EXPERIMENT       = 72842, // heroic
@@ -914,8 +914,6 @@ struct MANGOS_DLL_DECL mob_mutated_amobinationAI : public ScriptedAI
     mob_mutated_amobinationAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         SetCombatMovement(false);
-        //DoCastSpellIfCan(m_creature, SPELL_MUTATED_AURA, CAST_TRIGGERED);
-        DoCastSpellIfCan(m_creature, SPELL_ABOMINATION_POWER_DRAIN, CAST_TRIGGERED);
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
     }
