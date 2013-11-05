@@ -1,4 +1,4 @@
--- Frozen halls (3 small instances) additions
+﻿-- Frozen halls (3 small instances) additions
 -- Forge of souls
 -- UPDATE `creature_template` SET `ScriptName`='mob_soul_storm', `AIName` ='' WHERE `entry`=; 
 
@@ -118,11 +118,14 @@ INSERT INTO `creature_ai_scripts` (`id`,`creature_id`,`event_type`,`event_invers
 (3672503,36725,14,0,100,31,50,30,8000,13000,11,36725,6,0,0,0,0,0,0,0,0,0, 'Nerubar broodkeeper - dark mending'),
 (3672504,36725,0,0,100,31,7000,11000,7000,11000,11,70980,4,0,0,0,0,0,0,0,0,0, 'Nerubar broodkeeper - web wrap');
 -- Deathbound Ward (need compare with YTDB)
-DELETE FROM `creature_ai_scripts` WHERE `id` IN (3700701, 3700702, 3700703);
-INSERT INTO `creature_ai_scripts` (`id`,`creature_id`,`event_type`,`event_inverse_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action1_type`,`action1_param1`,`action1_param2`,`action1_param3`,`action2_type`,`action2_param1`,`action2_param2`,`action2_param3`,`action3_type`,`action3_param1`,`action3_param2`,`action3_param3`,`comment`) VALUES 
-(3700701,37007,10,0,100,31,1,80,0,0,38,0,0,0,0,0,0,0,0,0,0,0, 'Deathbound ward - set aggressive'),
-(3700702,37007,0,0,100,31,5000,7000,5000,7000,11,71021,1,0,0,0,0,0,0,0,0,0, 'Deathbound ward - saber lash'),
-(3700703,37007,0,0,100,31,15000,20000,20000,30000,11,71022,0,0,0,0,0,0,0,0,0,0, 'Deathbound ward - disrupting shout');
+-- Creature id: 37007
+DELETE FROM creature_ai_scripts WHERE creature_id=37007;
+INSERT INTO creature_ai_scripts VALUES 
+('3700701','37007','0','0','100','31','15000','20000','20000','30000','11','71022','0','0','0','0','0','0','0','0','0','0','Deathbound ward - Disrupting Shout'),
+('3700702','37007','0','0','100','31','5000','7000','5000','7000','11','71021','1','0','0','0','0','0','0','0','0','0','Deathbound Ward - Saber Lash'),
+('3700703','37007','7','0','100','30','0','0','0','0','28','0','70733','0','0','0','0','0','0','0','0','0','Deathbound Ward - Remove Aura Stone Form at Evade.'),
+('3700704','37007','21','0','100','30','0','0','0','0','28','0','70733','0','0','0','0','0','0','0','0','0','Deathbound Ward - Remove Aura Stone Form at Just Reached Home.');
+
 
 -- #####################
 -- ORATORY OF THE DAMMED
@@ -545,6 +548,95 @@ INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`
 
 
 
+
+
+DELETE FROM db_script_string WHERE entry BETWEEN 2000009996 AND 2000009998;
+INSERT INTO `db_script_string` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES('2000009996','I... awaken!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Я пробудился...','16866','1','0','0','Deathbound Ward - Random Yell 1 at activate.');
+INSERT INTO `db_script_string` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES('2000009997','The master\'s sanctum has been disturbed!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'В покои господина проникли!','16865','1','0','0','Deathbound Ward - Random Yell 2 at activate.');
+INSERT INTO `db_script_string` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES('2000009998','Who... goes there...?',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Кто... идет?','16867','1','0','0','Deathbound Ward - Random Yell 3 at activate.');
+
+
+
+
+
+DELETE FROM dbscripts_on_event WHERE id=22908;
+INSERT INTO `dbscripts_on_event` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES('22908','0','14','70733','0','37007','136458','20','0','0','0','0','0','0','0','0','Remove Stone Form');
+INSERT INTO `dbscripts_on_event` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES('22908','0','0','1','0','37007','136458','20','2000009996','2000009997','2000009998','0','0','0','0','0','Random Yell at Activate.');
+INSERT INTO `dbscripts_on_event` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES('22908','0','20','2','0','37007','136458','20','0','0','0','0','0','0','0','0','Set Movement Type on Waypoint.');
+
+DELETE FROM dbscripts_on_event WHERE id=22909;
+INSERT INTO `dbscripts_on_event` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES('22909','0','14','70733','0','37007','136627','20','0','0','0','0','0','0','0','0','Remove Stone Form');
+INSERT INTO `dbscripts_on_event` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES('22909','0','0','1','0','37007','136627','20','2000009996','2000009997','2000009998','0','0','0','0','0','Random Yell at Activate.');
+INSERT INTO `dbscripts_on_event` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES('22909','0','20','2','0','37007','136627','20','0','0','0','0','0','0','0','0','Set Movement Type on Waypoint.');
+
+DELETE FROM dbscripts_on_event WHERE id=22907;
+INSERT INTO `dbscripts_on_event` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES('22907','0','14','70733','0','37007','136393','20','0','0','0','0','0','0','0','0','Remove Stone Form');
+INSERT INTO `dbscripts_on_event` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES('22907','0','0','1','0','37007','136393','20','2000009996','2000009997','2000009998','0','0','0','0','0','Random Yell at Activate.');
+INSERT INTO `dbscripts_on_event` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES('22907','0','20','2','0','37007','136393','20','0','0','0','0','0','0','0','0','Set Movement Type on Waypoint.');
+
+DELETE FROM dbscripts_on_event WHERE id=22900;
+INSERT INTO `dbscripts_on_event` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES('22900','0','14','70733','0','37007','136112','20','0','0','0','0','0','0','0','0','Remove Stone Form');
+INSERT INTO `dbscripts_on_event` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES('22900','0','0','1','0','37007','136112','20','2000009996','2000009997','2000009998','0','0','0','0','0','Random Yell at Activate.');
+INSERT INTO `dbscripts_on_event` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES('22900','0','20','2','0','37007','136112','20','0','0','0','0','0','0','0','0','Set Movement Type on Waypoint.');
+
+
+DELETE FROM `creature_movement` WHERE `id`=136458;
+
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136458','1','-195.556','2159.72','37.9852','0','0','0','0','0','0','0','0','0','0','4.84768','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136458','2','-177,204','2175,84','37,9853','0','0','0','0','0','0','0','0','0','0','0,9251','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136458','3','-173,591','2189,46','35,2335','0','0','0','0','0','0','0','0','0','0','1,51839','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136458','4','-174,655','2209,46','35,2335','0','0','0','0','0','0','0','0','0','0','1,74222','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136458','5','-177,094','2235,97','35,2338','0','0','0','0','0','0','0','0','0','0','1,58671','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136458','6','-177,294','2248,54','37,9852','0','0','0','0','0','0','0','0','0','0','1,58671','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136458','7','-194,825','2260,38','37,9852','0','0','0','0','0','0','0','0','0','0','3,03342','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136458','8','-212,611','2250,77','37,9852','0','0','0','0','0','0','0','0','0','0','3,54236','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136458','9','-230,955','2237,9','37,9852','0','0','0','0','0','0','0','0','0','0','3,88872','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136458','10','-229,738','2212,02','40,0204','0','0','0','0','0','0','0','0','0','0','4,74245','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136458','11','-228,991','2187,19','37,9851','0','0','0','0','0','0','0','0','0','0','4,74245','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136458','12','-200,224','2163,78','37,9851','0','0','0','0','0','0','0','0','0','0','5,77682','0','0');
+
+DELETE FROM `creature_movement` WHERE `id`=136627;
+
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136627','1','-193,596','2271,73','37,9852','0','0','0','0','0','0','0','0','0','0','4,62621','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136627','2','-215,129','2248,31','37,9852','0','0','0','0','0','0','0','0','0','0','3,64289','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136627','3','-234,258','2234,39','37,9852','0','0','0','0','0','0','0','0','0','0','3,86202','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136627','4','-243,419','2223,15','42,5645','0','0','0','0','0','0','0','0','0','0','4,0835','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136627','5','-251,311','2213,3','42,5645','0','0','0','0','0','0','0','0','0','0','3,56749','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136627','6','-284,737','2211,21','42,5645','0','0','0','0','0','0','0','0','0','0','3,15516','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136627','7','-262,889','2211,46','42,5645','0','0','0','0','0','0','0','0','0','0','0,175363','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136627','8','-246,708','2211,03','42,5645','0','0','0','0','0','0','0','0','0','0','0,03242','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136627','9','-241,257','2222,37','42,5645','0','0','0','0','0','0','0','0','0','0','1,12255','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136627','10','-234,768','2235,86','37,9852','0','0','0','0','0','0','0','0','0','0','1,12255','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136627','11','-228,336','2242,9','37,9852','0','0','0','0','0','0','0','0','0','0','0,582199','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136627','12','-197,483','2254,77','37,9852','0','0','0','0','0','0','0','0','0','0','0,268825','0','0');
+
+DELETE FROM `creature_movement` WHERE `id`=136112;
+
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136112','1','-301,039','2197,79','41,9719','0','0','0','0','0','0','0','0','0','0','4,82806','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136112','2','-300,855','2213,11','42,0115','0','0','0','0','0','0','0','0','0','0','6,24885','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136112','3','-277,915','2212,32','42,5645','0','0','0','0','0','0','0','0','0','0','6,24885','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136112','4','-254,976','2211,53','42,5645','0','0','0','0','0','0','0','0','0','0','6,24885','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136112','5','-241,46','2211,07','42,5645','0','0','0','0','0','0','0','0','0','0','6,24885','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136112','6','-278,073','2211,25','42,5645','0','0','0','0','0','0','0','0','0','0','3,22271','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136112','7','-301,564','2211,86','42,0141','0','0','0','0','0','0','0','0','0','0','3,09783','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136112','8','-321,138','2212,72','42,5647','0','0','0','0','0','0','0','0','0','0','3,09783','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136112','9','-346,401','2210,41','42,4983','0','0','0','0','0','0','0','0','0','0','3,06171','0','0');
+
+DELETE FROM `creature_movement` WHERE `id`=136393;
+
+
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136393','1','-300,993','2235,42','44,1816','0','0','0','0','0','0','0','0','0','0','1,46499','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136393','2','-299,781','2224,62','41,9728','0','0','0','0','0','0','0','0','0','0','1,63228','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136393','3','-298,953','2211,19','42,0133','0','0','0','0','0','0','0','0','0','0','1,63228','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136393','4','-310,497','2211,32','42,2247','0','0','0','0','0','0','0','0','0','0','3,16224','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136393','5','-329,218','2210,93','42,5644','0','0','0','0','0','0','0','0','0','0','3,16224','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136393','6','-352,145','2210,46','42,4098','0','0','0','0','0','0','0','0','0','0','3,16224','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136393','7','-313,843','2212,41','42,5646','0','0','0','0','0','0','0','0','0','0','6,2143','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136393','8','-291,802','2212,29','42,0142','0','0','0','0','0','0','0','0','0','0','6,27792','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136393','9','-244,783','2212,04','42,5645','0','0','0','0','0','0','0','0','0','0','6,27792','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136393','10','-298,511','2211,16','42,0141','0','0','0','0','0','0','0','0','0','0','3,11669','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136393','11','-300,285','2226,74','42,2408','0','0','0','0','0','0','0','0','0','0','1,68412','0','0');
+INSERT INTO `creature_movement` (`id`, `point`, `position_x`, `position_y`, `position_z`, `waittime`, `script_id`, `textid1`, `textid2`, `textid3`, `textid4`, `textid5`, `emote`, `spell`, `wpguid`, `orientation`, `model1`, `model2`) VALUES('136393','12','-300,82','2242,31','44,1815','0','0','0','0','0','0','0','0','0','0','1,52861','0','0');
 
 
 
