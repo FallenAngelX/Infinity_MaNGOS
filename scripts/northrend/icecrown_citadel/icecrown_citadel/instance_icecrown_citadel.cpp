@@ -91,7 +91,7 @@ void instance_icecrown_citadel::Initialize()
 
 bool instance_icecrown_citadel::IsEncounterInProgress() const
 {
-    for (uint8 i = 1; i < MAX_ENCOUNTERS; ++i)
+    for (uint8 i = TYPE_MARROWGAR; i < MAX_ENCOUNTERS; ++i)
     {
         if (GetData(i) == IN_PROGRESS)
             return true;
@@ -118,8 +118,13 @@ void instance_icecrown_citadel::OnPlayerEnter(Player* pPlayer)
 
 void instance_icecrown_citadel::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
+        case NPC_HIGHLORD_TIRION_FORDRING_LH:
+        case NPC_THE_LICH_KING_LH:
+        case NPC_HIGHLORD_BOLVAR_FORDRAGON_LH:
+        case NPC_SAURFANG_LH:
+        case NPC_MURADIN_LH:
         case NPC_LORD_MARROWGAR:
         case NPC_LADY_DEATHWHISPER:
         case NPC_DEATHBRINGER_SAURFANG:
@@ -291,6 +296,9 @@ void instance_icecrown_citadel::SetData(uint32 uiType, uint32 uiData)
     switch(uiType)
     {
         case TYPE_TELEPORT:
+            break;
+        case TYPE_ICC_INTRO:
+            m_auiEncounter[uiType] = uiData;
             break;
         case TYPE_MARROWGAR:
             DoUseDoorOrButton(GO_MARROWGAR_DOOR);
@@ -599,9 +607,5 @@ InstanceData* GetInstanceData_instance_icecrown_citadel(Map* pMap)
 
 void AddSC_instance_icecrown_citadel()
 {
-    Script* pNewScript;
-    pNewScript = new Script;
-    pNewScript->Name = "instance_icecrown_citadel";
-    pNewScript->GetInstanceData = &GetInstanceData_instance_icecrown_citadel;
-    pNewScript->RegisterSelf();
+    AutoScript("instance_icecrown_spire")->GetInstanceData = &GetInstanceData_instance_icecrown_spire;
 }

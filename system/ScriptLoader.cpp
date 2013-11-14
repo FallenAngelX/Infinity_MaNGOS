@@ -333,7 +333,7 @@ extern void AddSC_boss_hadronox();
 extern void AddSC_boss_krikthir();
 extern void AddSC_instance_azjol_nerub();
 extern void AddSC_trial_of_the_champion();                  // CC, trial_of_the_champion
-extern void AddSC_boss_argent_challenge(); 
+extern void AddSC_boss_argent_challenge();
 extern void AddSC_boss_black_knight();
 extern void AddSC_boss_grand_champions();
 extern void AddSC_instance_trial_of_the_champion();
@@ -384,6 +384,7 @@ extern void AddSC_gunship_battle();
 extern void AddSC_instance_icecrown_citadel();
 extern void AddSC_icecrown_spire();
 extern void AddSC_icecrown_teleporter();
+extern void AddSC_icecrown_lights_hammer();
 extern void AddSC_boss_anubrekhan();                        // naxxramas
 extern void AddSC_boss_four_horsemen();
 extern void AddSC_boss_faerlina();
@@ -899,7 +900,7 @@ void AddScripts()
     AddSC_boss_grand_champions();                           // CC, trial_of_the_champion
     AddSC_instance_trial_of_the_champion();
     AddSC_trial_of_the_champion();
-    AddSC_boss_argent_challenge(); 
+    AddSC_boss_argent_challenge();
     AddSC_boss_black_knight();
     AddSC_boss_anubarak_trial();                            // CC, trial_of_the_crusader
     AddSC_boss_faction_champions();
@@ -948,6 +949,7 @@ void AddScripts()
     AddSC_instance_icecrown_citadel();
     AddSC_icecrown_spire();
     AddSC_icecrown_teleporter();
+    AddSC_icecrown_lights_hammer();
     AddSC_boss_anubrekhan();                                // naxxramas
     AddSC_boss_four_horsemen();
     AddSC_boss_faerlina();
