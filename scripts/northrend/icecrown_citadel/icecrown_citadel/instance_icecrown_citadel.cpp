@@ -608,5 +608,5 @@ InstanceData* GetInstanceData_instance_icecrown_citadel(Map* pMap)
 
 void AddSC_instance_icecrown_citadel()
 {
-    AutoScript("instance_icecrown_spire")->GetInstanceData = &GetInstanceData_instance_icecrown_citadel;
+    AutoScript("instance_icecrown_citadel")->GetInstanceData = &GetInstanceData_instance_icecrown_citadel;
 }
