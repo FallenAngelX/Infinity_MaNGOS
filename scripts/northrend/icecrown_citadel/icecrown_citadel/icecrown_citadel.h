@@ -74,6 +74,8 @@ enum
     GO_TELEPORT_GOSSIP_MESSAGE  = 99323,
     TELEPORT_GOSSIP_MESSAGE     = 99322,
 
+    GO_INSTANCE_PORTAL          = 202347,
+
     GO_ICEWALL_1                = 201911,
     GO_ICEWALL_2                = 201910,
 

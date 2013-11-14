@@ -245,6 +245,7 @@ void instance_icecrown_citadel::OnObjectCreate(GameObject* pGo)
         case GO_ARTHAS_PRECIPICE:
             pGo->SetUInt32Value(GAMEOBJECT_PARENTROTATION, 4178312);
             break;
+        case GO_INSTANCE_PORTAL:
         case GO_SAURFANG_CACHE_10:
         case GO_SAURFANG_CACHE_25:
         case GO_SAURFANG_CACHE_10_H:
