@@ -129,7 +129,10 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
         void AttackStart(Unit* pWho) override;
 
         // Called at World update tick
-        void UpdateAI(const uint32) override;
+        void UpdateAI(uint32 const) override;
+
+        // Called to select / update victim
+        Unit* SelectVictim();
 
         // Called when an AI Event is received
         void ReceiveAIEvent(AIEventType /*eventType*/, Creature* /*pSender*/, Unit* /*pInvoker*/, uint32 /*uiMiscValue*/) override {}

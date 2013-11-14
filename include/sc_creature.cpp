@@ -105,15 +105,23 @@ void ScriptedAI::EnterCombat(Unit* pEnemy)
 }
 
 /**
+* Called to select / update victim
+ */
+Unit* ScriptedAI::SelectVictim()
+{
+    return m_creature->SelectHostileTarget() ? m_creature->getVictim() : NULL;
+}
+
+/**
  * Main update function, by default let the creature behave as expected by a mob (threat management and melee dmg)
  * Always handle here threat-management with m_creature->SelectHostileTarget()
  * Handle (if required) melee attack with DoMeleeAttackIfReady()
  * This is usally overwritten to support timers for ie spells
  */
-void ScriptedAI::UpdateAI(const uint32 /*uiDiff*/)
+void ScriptedAI::UpdateAI(uint32 const /*uiDiff*/)
 {
     // Check if we have a current target
-    if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+    if (!SelectVictim())
         return;
 
     DoMeleeAttackIfReady();
