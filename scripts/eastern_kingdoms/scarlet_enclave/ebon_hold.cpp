@@ -1177,10 +1177,7 @@ enum eEyeOfAcherus
 
 struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
 {
-    npc_eye_of_acherusAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        Reset();
-    }
+    npc_eye_of_acherusAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
     bool m_isActive;
 
@@ -1190,11 +1187,10 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
         m_isActive = false;
     }
 
-    void AttackStart(Unit* pWho) override{}
+    void AttackStart(Unit* /*pWho*/) override {}
+    void MoveInLineOfSight(Unit* /*pWho*/) override {}
 
-    void MoveInLineOfSight(Unit* pWho) override{}
-
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         if (Unit* pCharmer = m_creature->GetCharmer())
             pCharmer->RemoveAurasDueToSpell(SPELL_EYE_CONTROL);
@@ -1205,6 +1201,7 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
         if (uiType != POINT_MOTION_TYPE || uiPointId != 0)
             return;
 
+        m_creature->SetSpeedRate(MOVE_RUN, 6.5f);
         DoScriptText(TEXT_EYE_UNDER_CONTROL, m_creature);
         m_creature->SetDisplayId(DISPLAYID_EYE_SMALL);
         m_creature->CastSpell(m_creature, SPELL_EYE_FL_BOOST_FLY, true);
@@ -1220,7 +1217,7 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff) override
+    void UpdateAI(uint32 const uiDiff) override
     {
         if (m_creature->isCharmed())
         {
@@ -1229,11 +1226,15 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
                 m_creature->CastSpell(m_creature, SPELL_EYE_PHASEMASK, true);
                 m_creature->CastSpell(m_creature, SPELL_EYE_VISUAL, true);
                 //m_creature->CastSpell(m_creature, SPELL_EYE_FL_BOOST_FLY, true);
-                //m_creature->SetLevitate(true);   // will be uncommented if any troubles with flying inhabit 4
+
+                m_creature->SetLevitate(true);
                 m_creature->SetWalk(false);
-                m_creature->SetSpeedRate(MOVE_RUN, 5.0f);
+                m_creature->SetSpeedRate(MOVE_RUN, 8.0f);
+                m_creature->SetSpeedRate(MOVE_FLIGHT, 8.0f, true);
+
                 DoScriptText(TEXT_EYE_LAUNCHED, m_creature);
-                m_creature->GetMotionMaster()->MovePoint(0,1750.8276f, -5873.788f, 147.2266f);
+                m_creature->Relocate(2333.93f, -5680.04f, 430.86f, 0);
+                m_creature->GetMotionMaster()->MovePoint(0, 1750.8276f, -5873.788f, 147.2266f);
                 m_isActive = true;
             }
         }
