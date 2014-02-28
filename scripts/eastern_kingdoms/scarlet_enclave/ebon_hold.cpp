@@ -3041,16 +3041,11 @@ struct MANGOS_DLL_DECL npc_valkyr_battle_maidenAI : ScriptedAI
 
     void Reset()
     {
-        m_summonerGuid.Clear();
+        m_summonerGuid = m_creature->GetGuidValue(UNIT_FIELD_SUMMONEDBY);
         if (m_creature->IsTemporarySummon())
             m_summonerGuid = ((TemporarySummon*)m_creature)->GetSummonerGuid();
         else
             script_error_log("npc_valkyr_battle_maiden: Creature %s must be tempSummoned, but seems as regular summon. Pleas, correct DB contains!", m_creature->GetObjectGuid().GetString().c_str());
-
-        if (m_summonerGuid)
-            if(Unit* pUnit = m_creature->GetMap()->GetUnit(m_summonerGuid))
-                if(pUnit->GetTypeId() != TYPEID_PLAYER)
-                    m_summonerGuid.Clear();
 
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
@@ -3062,8 +3057,8 @@ struct MANGOS_DLL_DECL npc_valkyr_battle_maidenAI : ScriptedAI
 
     void UpdateAI(const uint32 uiDiff) override
     {
-        Player* pPlayer = NULL;
-        if (!(pPlayer = (Player*)m_creature->GetMap()->GetUnit(m_summonerGuid)))
+        Player* pPlayer = m_creature->GetMap()->GetPlayer(m_summonerGuid);
+        if (!pPlayer)
             m_uiPhase = 3;
 
         if (m_uiPhaseTimer <= uiDiff)
