@@ -437,3 +437,36 @@ void ScriptedInstance::DestroyItemFromAllPlayers(uint32 uiItemId)
     else
         error_log("SD2: DestroyItemFromAllPlayers attempt to remove item: %u but no players in map.", uiItemId);
 }
+
+void ScriptedInstance::DoCastSpellOnPlayers(uint32 spellId, int32* bp0, int32* bp1, int32* bp2)
+{
+    Map::PlayerList const &lPlayers = instance->GetPlayers();
+    if (!lPlayers.isEmpty())
+    {
+        for (Map::PlayerList::const_iterator i = lPlayers.begin(); i != lPlayers.end(); ++i)
+        {
+            if (Player* player = i->getSource())
+            {
+                if (bp0 || bp1 || bp2)
+                    player->CastCustomSpell(player, spellId, bp0, bp1, bp2, true);
+                else
+                    player->CastSpell(player, spellId, true);
+            }
+        }
+    }
+    else
+        error_log("SD2: DoCastSpellOnPlayers attempt to cast spell: %u but no players in map.", spellId);
+}
+
+void ScriptedInstance::DoRemoveAurasDueToSpellOnPlayers(uint32 spellId)
+{
+    Map::PlayerList const &lPlayers = instance->GetPlayers();
+    if (!lPlayers.isEmpty())
+    {
+        for (Map::PlayerList::const_iterator i = lPlayers.begin(); i != lPlayers.end(); ++i)
+            if (Player* player = i->getSource())
+                player->RemoveAurasDueToSpell(spellId);
+    }
+    else
+        error_log("SD2: DoRemoveAurasDueToSpellOnPlayers attempt to remove auras due to spell: %u but no players in map.", spellId);
+}
