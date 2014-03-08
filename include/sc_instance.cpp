@@ -470,3 +470,11 @@ void ScriptedInstance::DoRemoveAurasDueToSpellOnPlayers(uint32 spellId)
     else
         error_log("SD2: DoRemoveAurasDueToSpellOnPlayers attempt to remove auras due to spell: %u but no players in map.", spellId);
 }
+
+void ScriptedInstance::DoSetAlternativePowerOnPlayers(int32 amt)
+{
+    Map::PlayerList const &lPlayers = instance->GetPlayers();
+    for (Map::PlayerList::const_iterator i = lPlayers.begin(); i != lPlayers.end(); ++i)
+        if (Player* player = i->getSource())
+            player->SetPower(POWER_ALTERNATIVE, amt);
+}
