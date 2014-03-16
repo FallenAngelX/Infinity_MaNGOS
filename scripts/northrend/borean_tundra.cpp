@@ -32,6 +32,7 @@ npc_beryl_sorcerer
 npc_seaforium_depth_charge
 npc_tad_pole
 Go_tadpole_cage
+npc_captured_beryl_sorcerer
 npc_nexus_drake_hatchling
 EndContentData */
 
@@ -529,132 +530,6 @@ CreatureAI* GetAI_npc_lurgglbr(Creature* pCreature)
     return new npc_lurgglbrAI(pCreature);
 }
 
-/*######
-## npc_nexus_drake_hatchling
-######*/
-
-enum
-{
-    SPELL_DRAKE_HARPOON             = 46607,
-    SPELL_RED_DRAGONBLOOD           = 46620,
-    SPELL_DRAKE_HATCHLING_SUBDUED   = 46691,
-    SPELL_SUBDUED                   = 46675,
-
-    NPC_RAELORASZ                   = 26117,
-    DRAKE_HUNT_KILL_CREDIT          = 26175,
-
-    SPELL_INTANGIBLE_PRESENCE     = 36513,
-    SPELL_NETHERBREATH            = 36631,
-
-    QUEST_DRAKE_HUNT                = 11919,
-    QUEST_DRAKE_HUNT_D              = 11940
-
-};
-
-struct MANGOS_DLL_DECL npc_nexus_drakeAI : public FollowerAI
-{
-    npc_nexus_drakeAI(Creature* pCreature) : FollowerAI(pCreature) { Reset(); }
-
-     ObjectGuid uiHarpoonerGUID;
-     bool bWithRedDragonBlood;
-     bool bIsFollowing;
-     uint32 SPELL_INTANGIBLE_PRESENCE_Timer;
-     uint32 SPELL_NETHERBREATH_Timer;
-
-     void Reset() override
-     {
-         bWithRedDragonBlood = false;
-         bIsFollowing = false;
-         SPELL_INTANGIBLE_PRESENCE_Timer = 16600;
-         SPELL_NETHERBREATH_Timer = 4600;
-     }
-
-     void EnterCombat(Unit* pWho) override
-     {
-         AttackStart(pWho);
-     }
-
-     void SpellHit(Unit* pCaster, SpellEntry const* pSpell) override
-     {
-            if (pSpell->Id == SPELL_DRAKE_HARPOON && pCaster->GetTypeId() == TYPEID_PLAYER)
-            {
-                uiHarpoonerGUID = pCaster->GetObjectGuid();
-                DoCast(m_creature, SPELL_RED_DRAGONBLOOD, true);
-            }
-            m_creature->Attack(pCaster,true);
-            bWithRedDragonBlood = true;
-     }
-
-     void MoveInLineOfSight(Unit* pWho) override
-     {
-         FollowerAI::MoveInLineOfSight(pWho);
-
-
-         if (pWho->GetEntry() == NPC_RAELORASZ && m_creature->IsWithinDistInMap(pWho, INTERACTION_DISTANCE))
-         {
-           if (Player *pHarpooner = m_creature->GetMap()->GetPlayer(uiHarpoonerGUID))
-                 {
-
-                     pHarpooner->KilledMonsterCredit(DRAKE_HUNT_KILL_CREDIT,m_creature->GetObjectGuid());
-                     pHarpooner->RemoveAurasByCasterSpell(SPELL_DRAKE_HATCHLING_SUBDUED,uiHarpoonerGUID);
-                     SetFollowComplete();
-                     uiHarpoonerGUID.Clear();
-                     m_creature->ForcedDespawn(1000);
-                 }
-
-          }
-      }
-
-     void UpdateAI(const uint32 uiDiff) override
-        {
-            if (bWithRedDragonBlood && uiHarpoonerGUID && !m_creature->HasAura(SPELL_RED_DRAGONBLOOD))
-            {
-                if (Player *pHarpooner = m_creature->GetMap()->GetPlayer(uiHarpoonerGUID))
-                {
-                    EnterEvadeMode();
-                    StartFollow(pHarpooner, 35, NULL);
-
-                    DoCast(m_creature, SPELL_SUBDUED, true);
-                    pHarpooner->CastSpell(pHarpooner, SPELL_DRAKE_HATCHLING_SUBDUED, true);
-
-                    m_creature->AttackStop();
-                    bIsFollowing = true;
-                    bWithRedDragonBlood = false;
-                }
-            }
-            if(bIsFollowing && !m_creature->HasAura(SPELL_SUBDUED))
-            {
-                m_creature->ForcedDespawn(1000);
-            }
-
-            if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-                return;
-
-            if (SPELL_NETHERBREATH_Timer < uiDiff)
-            {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_NETHERBREATH);
-                SPELL_NETHERBREATH_Timer = 4600;
-            }
-            else
-                SPELL_NETHERBREATH_Timer -= uiDiff;
-
-            if (SPELL_INTANGIBLE_PRESENCE_Timer < uiDiff)
-            {
-                DoCastSpellIfCan(m_creature,SPELL_INTANGIBLE_PRESENCE);
-                SPELL_INTANGIBLE_PRESENCE_Timer = 16600;
-             }
-             else
-                 SPELL_INTANGIBLE_PRESENCE_Timer -= uiDiff;
-
-            DoMeleeAttackIfReady();
-        }
-};
-
-CreatureAI* GetAI_npc_nexus_drake(Creature* pCreature)
-{
-    return new npc_nexus_drakeAI(pCreature);
-}
-
 /*#####
 ## go_scourge_cage
 #####*/
@@ -685,15 +560,24 @@ bool GOHello_go_scourge_cage(Player* pPlayer, GameObject* pGo)
 
 enum eBerylSorcerer
 {
-    NPC_CAPTURED_BERLY_SORCERER         = 25474,
     NPC_LIBRARIAN_DONATHAN              = 25262,
 
     SPELL_FROST_BOLT                     = 9672,
     SPELL_BLINK                          = 50648,
 
-    SPELL_ARCANE_CHAINS                 = 45611,
     SPELL_COSMETIC_CHAINS               = 54324,
     SPELL_COSMETIC_ENSLAVE_CHAINS_SELF  = 45631
+};
+
+enum
+{
+    SPELL_ARCANE_CHAINS                 = 45611,
+    SPELL_ARCANE_CHAINS_CHANNEL         = 45630,
+    SPELL_SUMMON_CHAINS_CHARACTER       = 45625,                // triggers 45626
+    // SPELL_ENSLAVED_ARCANE_CHAINS     = 45632,                // chain visual - purpose unk, probably used on quest end
+
+    NPC_BERYL_SORCERER                  = 25316,
+    NPC_CAPTURED_BERYL_SORCERER         = 25474,
 };
 
 struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
@@ -732,7 +616,7 @@ struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
                 if(Player *pChainer = m_creature->GetMap()->GetPlayer(uiChainerGUID))
                 {
                 StartFollow(pChainer, 35, NULL);
-                m_creature->UpdateEntry(NPC_CAPTURED_BERLY_SORCERER);
+                m_creature->UpdateEntry(NPC_CAPTURED_BERYL_SORCERER);
                 DoCast(m_creature, SPELL_COSMETIC_ENSLAVE_CHAINS_SELF, true);
                 bEnslaved = true;
                 }
@@ -747,7 +631,7 @@ struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
             {
                 if(Player *pChainer = m_creature->GetMap()->GetPlayer(uiChainerGUID))
                 {
-                    pChainer->KilledMonsterCredit(NPC_CAPTURED_BERLY_SORCERER,m_creature->GetObjectGuid());
+                    pChainer->KilledMonsterCredit(NPC_CAPTURED_BERYL_SORCERER,m_creature->GetObjectGuid());
                     SetFollowComplete();
                     m_creature->ForcedDespawn(1000);
                 }
@@ -779,6 +663,31 @@ struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
 CreatureAI* GetAI_npc_beryl_sorcerer(Creature* pCreature)
 {
     return new npc_beryl_sorcererAI(pCreature);
+}
+
+/*#####
+# npc_captured_beryl_sorcerer
+#####*/
+
+bool EffectAuraDummy_npc_captured_beryl_sorcerer(const Aura* pAura, bool bApply)
+{
+    if (pAura->GetId() == SPELL_ARCANE_CHAINS_CHANNEL)
+    {
+        if (pAura->GetEffIndex() != EFFECT_INDEX_0 || !bApply)
+            return false;
+
+        Creature* pCreature = (Creature*)pAura->GetTarget();
+        Unit* pCaster = pAura->GetCaster();
+        if (!pCreature || !pCaster || pCaster->GetTypeId() != TYPEID_PLAYER || pCreature->GetEntry() != NPC_CAPTURED_BERYL_SORCERER)
+            return false;
+
+        // follow the caster
+        ((Player*)pCaster)->KilledMonsterCredit(NPC_CAPTURED_BERYL_SORCERER);
+        pCreature->GetMotionMaster()->MoveFollow(pCaster, pCreature->GetDistance(pCaster), M_PI_F - pCreature->GetAngle(pCaster));
+        return true;
+    }
+
+    return false;
 }
 
 /*######
@@ -1190,13 +1099,13 @@ void AddSC_borean_tundra()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name = "npc_nexus_drake";
-    pNewScript->GetAI = &GetAI_npc_nexus_drake;
+    pNewScript->Name = "npc_beryl_sorcerer";
+    pNewScript->GetAI = &GetAI_npc_beryl_sorcerer;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name = "npc_beryl_sorcerer";
-    pNewScript->GetAI = &GetAI_npc_beryl_sorcerer;
+    pNewScript->Name = "npc_captured_beryl_sorcerer";
+    pNewScript->pEffectAuraDummy = &EffectAuraDummy_npc_captured_beryl_sorcerer;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
