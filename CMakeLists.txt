@@ -1,5 +1,6 @@
 #
 # Copyright (C) 2005-2012 MaNGOS <http://getmangos.com/>
+# Copyright (C) 2011-2014 MangosR2 <http://github.com/MangosR2>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -16,9 +17,7 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
-## magic to include revision data in SD2 version string
-# revision.h: FORCE
-#   $(top_builddir)/src/tools/genrevision/genrevision $(srcdir)
+set(LIBRARY_NAME mangosscriptR2)
 
 file(GLOB_RECURSE mangosscript_SRCS RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *.cpp *.h)
 
@@ -55,7 +54,7 @@ if(PCH)
   )
 endif()
 
-add_library(mangosscriptR2 SHARED
+add_library(${LIBRARY_NAME} SHARED
   ${mangosscript_SRCS}
 )
 
@@ -63,22 +62,22 @@ if(WIN32)
   SET_TARGET_PROPERTIES(mangosd PROPERTIES
     ENABLE_EXPORTS TRUE)
 
-  target_link_libraries(mangosscriptR2
+  target_link_libraries(${LIBRARY_NAME}
     mangosd
     ${ACE_LIBRARIES}
 #    debug ${WIN_DEBUGLIBS}
   )
 endif()
 
-add_dependencies(mangosscriptR2 revision.h)
-add_dependencies(mangosscriptR2 shared)
+add_dependencies(${LIBRARY_NAME} revision.h)
+add_dependencies(${LIBRARY_NAME} shared)
 
 # seems as need only for linking
-#add_dependencies(mangosscriptR2 game)
+#add_dependencies(${LIBRARY_NAME} game)
 
 if(NOT ACE_USE_EXTERNAL)
-  add_dependencies(mangosscriptR2 ACE_Project)
-# add_dependencies(mangosscriptR2 ace)
+  add_dependencies(${LIBRARY_NAME} ACE_Project)
+# add_dependencies(${LIBRARY_NAME} ace)
 endif()
 
 if(UNIX)
@@ -101,7 +100,7 @@ if(UNIX)
     BUILD_WITH_INSTALL_RPATH OFF
   )
 
-  set_target_properties(mangosscriptR2 PROPERTIES
+  set_target_properties(${LIBRARY_NAME} PROPERTIES
     LINK_FLAGS ${mangosscript_LINK_FLAGS}
     ${mangosscript_PROPERTIES}
   )
@@ -109,7 +108,7 @@ endif()
 
 # Because size for linker is to big - seriously ?!
 if(WIN32)
-  set_target_properties(mangosscriptR2 PROPERTIES
+  set_target_properties(${LIBRARY_NAME} PROPERTIES
       LINK_FLAGS_DEBUG "/DEBUG /INCREMENTAL:NO"
   )
 endif()
@@ -137,14 +136,14 @@ if(PCH)
     if(MSVC)
       set(mangosscriptR2_pch "${CMAKE_CURRENT_SOURCE_DIR}/include/precompiled.cpp")
     endif()
-    add_native_precompiled_header(mangosscriptR2 ${CMAKE_CURRENT_SOURCE_DIR}/include/precompiled.h)
+    add_native_precompiled_header(${LIBRARY_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/include/precompiled.h)
   elseif(CMAKE_COMPILER_IS_GNUCXX)
-    add_precompiled_header(mangosscriptR2 ${CMAKE_CURRENT_SOURCE_DIR}/include/precompiled.h)
+    add_precompiled_header(${LIBRARY_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/include/precompiled.h)
   endif()
 endif()
 
 # LIBRARY = dyld / so, RUNTIME = dll
-install(TARGETS mangosscriptR2
+install(TARGETS ${LIBRARY_NAME}
   LIBRARY DESTINATION ${LIBS_DIR}
   RUNTIME DESTINATION ${LIBS_DIR}
 )
