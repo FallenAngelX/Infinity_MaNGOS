@@ -22,7 +22,30 @@ SDCategory: Stonecore
 EndScriptData */
 
 #include "precompiled.h"
+#include "stonecore.h"
 
-void AddSC_priestess_azil()
+struct MANGOS_DLL_DECL boss_princeless_azilAI : public ScriptedAI
 {
+public:
+    boss_princeless_azilAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+        Reset();
+    }
+}
+
+CreatureAI* GetAI_boss_priestess_azil(Creature* pCreature)
+{
+    return new boss_princeless_azilAI(pCreature);
+}
+
+void AddSC_boss_priestess_azil()
+{
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_princeless_azil";
+    pNewScript->GetAI = &GetAI_boss_priestess_azil;
+    pNewScript->RegisterSelf();
 }

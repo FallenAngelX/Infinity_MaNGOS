@@ -311,11 +311,12 @@ extern void AddSC_ungoro_crater();
 extern void AddSC_winterspring();
 
 // maelstrom
-extern void AddSC_boss_corborus();                          // stonecore
+extern void AddSC_instance_stonecore();                     // stonecore
+extern void AddSC_stonecore();
+extern void AddSC_boss_corborus();
 extern void AddSC_boss_ozruk();
-extern void AddSC_priestess_azil();
+extern void AddSC_boss_priestess_azil();
 extern void AddSC_boss_slabhide();
-extern void AddSC_instance_stonecore();
 
 extern void AddSC_deepholm();
 extern void AddSC_kezan();
@@ -876,11 +877,12 @@ void AddScripts()
     AddSC_winterspring();
 
     // maelstrom
+    AddSC_instance_stonecore();
+    AddSC_stonecore();
     AddSC_boss_corborus();                                  // stonecore
     AddSC_boss_ozruk();
-    AddSC_priestess_azil();
+    AddSC_boss_priestess_azil();
     AddSC_boss_slabhide();
-    AddSC_instance_stonecore();
 
     AddSC_deepholm();
     AddSC_kezan();

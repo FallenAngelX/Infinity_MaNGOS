@@ -22,7 +22,25 @@ SDCategory: Stonecore
 EndScriptData */
 
 #include "precompiled.h"
+#include "stonecore.h"
+
+class MANGOS_DLL_DECL instance_stonecore : public ScriptedInstance
+{
+public:
+    instance_stonecore(Map* map) : ScriptedInstance(map) { Initialize(); }
+};
+
+InstanceData* GetInstanceData_instance_stonecore(Map* pMap)
+{
+    return new instance_stonecore(pMap);
+}
 
 void AddSC_instance_stonecore()
 {
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "instance_stonecore";
+    pNewScript->GetInstanceData = &GetInstanceData_instance_stonecore;
+    pNewScript->RegisterSelf();
 }

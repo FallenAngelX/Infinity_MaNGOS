@@ -22,7 +22,48 @@ SDCategory: Stonecore
 EndScriptData */
 
 #include "precompiled.h"
+#include "stonecore.h"
+
+struct MANGOS_DLL_DECL boss_ozrukAI : public ScriptedAI
+{
+    boss_ozrukAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+        Reset();
+    }
+}
+
+struct MANGOS_DLL_DECL npc_ruptureAI : public ScriptedAI // 51422
+{
+    npc_ruptureAI(Creature* creature) : ScriptedAI(creature)
+    {
+        m_pInstance = (ScriptedInstance*)creature->GetInstanceData();
+        timerAura    = 100;
+    }
+}
+
+CreatureAI* GetAI_boss_ozruk(Creature* pCreature)
+{
+    return new boss_ozrukAI(pCreature);
+}
+
+CreatureAI* GetAI_npc_rupture(Creature* pCreature)
+{
+    return new npc_ruptureAI(pCreature);
+}
 
 void AddSC_boss_ozruk()
 {
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_ozruk";
+    pNewScript->GetAI = &GetAI_boss_ozruk;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_rupture";
+    pNewScript->GetAI = &GetAI_npc_rupture;
+    pNewScript->RegisterSelf();
 }

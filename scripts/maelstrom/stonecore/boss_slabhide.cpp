@@ -22,7 +22,46 @@ SDCategory: Stonecore
 EndScriptData */
 
 #include "precompiled.h"
+#include "stonecore.h"
+
+struct MANGOS_DLL_DECL boss_slabhideAI : public ScriptedAI
+{
+    boss_slabhideAI(Creature* creature) : ScriptedAI(creature)
+    {
+        m_pInstance = (ScriptedInstance*)creature->GetInstanceData();
+        m_bIsRegularMode = creature->GetMap()->IsRegularDifficulty();
+    }
+}
+
+CreatureAI* GetAI_boss_slabhide(Creature* pCreature)
+{
+    return new boss_slabhideAI(pCreature);
+}
+
+struct MANGOS_DLL_DECL npc_stalactiteAI : public ScriptedAI
+{
+    npc_stalactiteAI(Creature* creature) : ScriptedAI(creature)
+    {
+
+    }
+}
+
+CreatureAI* GetAI_npc_stalactite(Creature* pCreature)
+{
+    return new npc_stalactiteAI(pCreature);
+}
 
 void AddSC_boss_slabhide()
 {
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_slabhide";
+    pNewScript->GetAI = &GetAI_boss_slabhide;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_stalactite";
+    pNewScript->GetAI = &GetAI_npc_stalactite;
+    pNewScript->RegisterSelf();
 }
