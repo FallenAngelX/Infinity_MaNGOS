@@ -28,30 +28,33 @@ struct MANGOS_DLL_DECL boss_ozrukAI : public ScriptedAI
 {
     boss_ozrukAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+        //m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        //m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
-    }
-}
+    };
+
+    void Reset() {};
+};
+
+CreatureAI* GetAI_boss_ozruk(Creature* pCreature)
+{
+    return new boss_ozrukAI(pCreature);
+};
 
 struct MANGOS_DLL_DECL npc_ruptureAI : public ScriptedAI // 51422
 {
     npc_ruptureAI(Creature* creature) : ScriptedAI(creature)
     {
-        m_pInstance = (ScriptedInstance*)creature->GetInstanceData();
-        timerAura    = 100;
-    }
-}
-
-CreatureAI* GetAI_boss_ozruk(Creature* pCreature)
-{
-    return new boss_ozrukAI(pCreature);
-}
+        //m_pInstance = (ScriptedInstance*)creature->GetInstanceData();
+        //timerAura    = 100;
+    };
+    void Reset() {};
+};
 
 CreatureAI* GetAI_npc_rupture(Creature* pCreature)
 {
     return new npc_ruptureAI(pCreature);
-}
+};
 
 void AddSC_boss_ozruk()
 {

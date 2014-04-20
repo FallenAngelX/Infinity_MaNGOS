@@ -116,24 +116,28 @@ enum eEvents
 struct MANGOS_DLL_DECL mob_crystalspawn_giantAI : public ScriptedAI
 {
     mob_crystalspawn_giantAI(Creature* creature) : ScriptedAI(creature) { }
+    void Reset() {};
 };
 
 // Imp AI
 struct MANGOS_DLL_DECL mob_imppAI : public ScriptedAI
 {
     mob_imppAI(Creature* creature) : ScriptedAI(creature) {}
+    void Reset() {};
 };
 
 // Rock Borer AI
 struct MANGOS_DLL_DECL mob_rock_borerAI : public ScriptedAI
 {
     mob_rock_borerAI(Creature* creature) : ScriptedAI(creature) {}
+    void Reset() {};
 };
 
 // Millhouse Manastorm AI
 struct MANGOS_DLL_DECL mob_millhouse_manastormAI : public ScriptedAI
 {
     mob_millhouse_manastormAI(Creature* creature) : ScriptedAI(creature) {}
+    void Reset() {};
 };
 
 CreatureAI* GetAI_mob_crystalspawn_giant(Creature* pCreature)

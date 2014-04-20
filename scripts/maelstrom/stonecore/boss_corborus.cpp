@@ -28,16 +28,18 @@ struct MANGOS_DLL_DECL boss_corborusAI : public ScriptedAI
 {
     boss_corborusAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+        //m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        //m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
-    }
-}
+    };
+
+    void Reset() {};
+};
 
 CreatureAI* GetAI_boss_corborus(Creature* pCreature)
 {
     return new boss_corborusAI(pCreature);
-}
+};
 
 void AddSC_boss_corborus()
 {
@@ -47,4 +49,4 @@ void AddSC_boss_corborus()
     pNewScript->Name = "boss_corborus";
     pNewScript->GetAI = &GetAI_boss_corborus;
     pNewScript->RegisterSelf();
-}
+};
