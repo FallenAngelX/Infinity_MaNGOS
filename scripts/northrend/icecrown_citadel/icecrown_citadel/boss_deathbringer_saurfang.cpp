@@ -515,7 +515,7 @@ struct MANGOS_DLL_DECL boss_deathbringer_saurfangAI : public base_icc_bossAI
     boss_deathbringer_saurfangAI(Creature* pCreature) : base_icc_bossAI(pCreature)
     {
         m_pInstance = ((instance_icecrown_citadel*)pCreature->GetInstanceData());
-        m_powerBloodPower = m_creature->getPowerType(); // don't call this function multiple times in script
+        m_powerBloodPower = m_creature->GetPowerType(); // don't call this function multiple times in script
         m_bIsIntroStarted = false;
         m_guidEventNpcGuid.Clear();
         Reset();

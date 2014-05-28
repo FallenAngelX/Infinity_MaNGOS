@@ -198,7 +198,7 @@ struct MANGOS_DLL_DECL npc_deserter_agitatorAI : public ScriptedAI
 
     void Reset()
     {
-        m_creature->setFaction(m_creature->GetCreatureInfo()->faction_A);
+        m_creature->setFaction(m_creature->GetCreatureInfo()->FactionAlliance);
     }
 };
 

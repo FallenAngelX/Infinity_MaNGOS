@@ -341,7 +341,7 @@ struct MANGOS_DLL_DECL boss_faction_championsAI : public BSWScriptedAI
 
     void UpdatePower()
     {
-        if (m_creature->getPowerType() == POWER_MANA)
+        if (m_creature->GetPowerType() == POWER_MANA)
             m_creature->ModifyPower(POWER_MANA, m_creature->GetMaxPower(POWER_MANA) / 3);
     }
 
@@ -363,7 +363,7 @@ struct MANGOS_DLL_DECL boss_faction_championsAI : public BSWScriptedAI
         for (iter = tList.begin(); iter!=tList.end(); ++iter)
         {
             Unit* target = m_creature->GetMap()->GetUnit((*iter)->getUnitGuid());
-            if (target && target->getPowerType() == POWER_MANA)
+            if (target && target->GetPowerType() == POWER_MANA)
                 return target;
         }
         return NULL;
