@@ -478,7 +478,7 @@ struct MANGOS_DLL_DECL npc_olgaAI : public ScriptedAI
         m_uiEventTimer = 5000;
         m_uiResetJackTimer = 30000;
         // restore DB flags (GOSSIP)
-        m_creature->SetUInt32Value(UNIT_NPC_FLAGS, m_creature->GetCreatureInfo()->npcflag);
+        m_creature->SetUInt32Value(UNIT_NPC_FLAGS, m_creature->GetCreatureInfo()->NpcFlags);
     }
 
     void MovementInform(uint32 uiType, uint32 uiPointId) override
@@ -552,7 +552,7 @@ struct MANGOS_DLL_DECL npc_olgaAI : public ScriptedAI
                     case 7:
                         DoScriptText(SAY_JACK_ADAMS_5,pJack,m_creature);
                         pJack->SetByteValue(UNIT_FIELD_BYTES_1,0,UNIT_STAND_STATE_DEAD);
-                        pJack->SetUInt32Value(UNIT_NPC_FLAGS, m_creature->GetCreatureInfo()->npcflag);
+                        pJack->SetUInt32Value(UNIT_NPC_FLAGS, m_creature->GetCreatureInfo()->NpcFlags);
                         m_uiEventTimer = 3000;
                     case 8:
                         m_creature->GetMotionMaster()->MovePoint(OlgaWaypoints[0][0],OlgaWaypoints[0][1],OlgaWaypoints[0][2],OlgaWaypoints[0][3]);
