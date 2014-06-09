@@ -27,16 +27,16 @@ EndScriptData */
 
 enum Spells
 {
-    SAY_AGGRO            = -1578030,
-    SAY_KILL_1           = -1578031,
-    SAY_KILL_2           = -1578032,
-    SAY_KILL_3           = -1578033,
-    SAY_DEATH            = -1578034,
-    SAY_ARCANE_SHIELD    = -1578035,
-    SAY_FIRE_SHIELD      = -1578036,
-    SAY_NATURE_SHIELD    = -1578037,
-    SAY_FRENZY           = -1578038,
-    SAY_SPAWN            = -1578039,
+    SAY_SPAWN            = -1578010,
+    SAY_AGGRO            = -1578011,
+    SAY_ARCANE_SHIELD    = -1578012,
+    SAY_FIRE_SHIELD      = -1578013,
+    SAY_NATURE_SHIELD    = -1578014,
+    SAY_FRENZY           = -1578015,
+    SAY_KILL_1           = -1578016,
+    SAY_KILL_2           = -1578017,
+    SAY_KILL_3           = -1578018,
+    SAY_DEATH            = -1578019,
 
     SPELL_ARCANE_BARRAGE_N                        = 50804,
     SPELL_ARCANE_BARRAGE_H                        = 59381,

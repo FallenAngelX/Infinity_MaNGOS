@@ -27,13 +27,13 @@ EndScriptData */
 
 enum
 {
-    SAY_AGGRO                                     = -1578022,
-    SAY_KILL_1                                    = -1578023,
-    SAY_KILL_2                                    = -1578024,
-    SAY_DEATH                                     = -1578025,
-    SAY_STRIKE_1                                  = -1578026,
-    SAY_STRIKE_2                                  = -1578027,
-    SAY_STRIKE_3                                  = -1578028,
+    SAY_AGGRO                                     = -1578020,
+    SAY_KILL_1                                    = -1578026,
+    SAY_KILL_2                                    = -1578027,
+    SAY_DEATH                                     = -1578028,
+    SAY_STRIKE_1                                  = -1578031,
+    SAY_STRIKE_2                                  = -1578032,
+    SAY_STRIKE_3                                  = -1578033,
 
     SPELL_ARCANE_SHIELD                           = 50053,
     SPELL_ENERGIZE_CORES                          = 50785, //Damage 5938 to 6562, effec2 Triggers 54069, effect3 Triggers 56251

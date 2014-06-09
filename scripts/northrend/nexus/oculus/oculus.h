@@ -64,8 +64,8 @@ enum
     BELGAR_TEXT_2          = 13269,
 
     // Yells after Drakos dies
-    SAY_VAROS_INTRO                 = -1578020,
-    SAY_BELGARISTRASZ_GREET         = -1578021,
+    SAY_VAROS_INTRO                 = -1578047,
+    SAY_BELGARISTRASZ_GREET         = -1578048,
 
     // world states to show how many constructs are still alive
     WORLD_STATE_CONSTRUCTS          = 3524,

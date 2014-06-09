@@ -34,7 +34,7 @@ EndScriptData */
 
 enum
 {
-    SAY_VAROS_SPAWN        = -1578029,
+    SAY_VAROS_SPAWN        = -1578046,
 };
 
 instance_oculus::instance_oculus(Map* pMap) : ScriptedInstance(pMap)

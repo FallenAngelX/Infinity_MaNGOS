@@ -1,4 +1,27 @@
--- From Lanc (originally from TC)
+DELETE FROM script_texts WHERE entry BETWEEN -1578048 AND -1578031;
+INSERT INTO script_texts (entry,content_default, content_loc8, sound, type, language, emote, comment) VALUES
+-- Varos
+(-1578031, 'Blast them! Destroy them!','Взорвать их! Изничтожить!',13650,1,0,0,'SAY_STRIKE_1'),
+(-1578032, 'Take no prisoners! Attack!','Пленных не брать! В Атаку!',13651,1,0,0,'SAY_STRIKE_2'),
+(-1578033, 'Strike now! Obliterate them!','Нанесите удар! Уничтожте их!',13652,1,0,0,'SAY_STRIKE_3'),
+-- Drakos the Interrogator
+(-1578034,'The prisoners shall not go free. The word of Malygos is law!','Узники не вырвутся на волю. Слово Малигоса - закон!',13594,1,0,0,'SAY_AGGRO'),
+(-1578035,'A fitting punishment!','Заслуженное наказание!',13602,1,0,0,'SAY_KILL_1'),
+(-1578036,'Sentence: executed!','Приговор приведен в исполнение!',13603,1,0,0,'SAY_KILL_2'),
+(-1578037,'Another casualty of war!','Еще одна жертва войны!',13604,1,0,0,'SAY_KILL_3'),
+(-1578038,'The war... goes on.','Война... продолжается.',13605,1,0,0,'SAY_DEATH'),
+(-1578039,'It is too late to run!','Поздно убегать!',13598,1,0,0,'SAY_PULL_1'),
+(-1578040,'Gather \'round!','Станьте в круг!',13599,1,0,0,'SAY_PULL_2'),
+(-1578041,'None shall escape!','Не кто не уйдет живым!',13600,1,0,0,'SAY_PULL_3'),
+(-1578042,'I condemn you to death!','Я приговариваю вас к смерти!',13601,1,0,0,'SAY_PULL_4'),
+(-1578043,'Tremble, worms!','Трепещите, черви!',13595,1,0,0,'SAY_STOMP_1'),
+(-1578044,'I will crush you!','Я раздавлю вас!',13596,1,0,0,'SAY_STOMP_2'),
+(-1578045,'Can you fly?','Вы умеете летать?',13597,1,0,0,'SAY_STOMP_3'),
+(-1578046,'Intruders, your victory will be short-lived. I am Commander Varos Cloudstrider. My drakes control the skies and protest this conduit. I will see to it personally that the Oculus does not fall into your hands!','Чужаки, ваш триумф будет не долгим. Я командир Варос Заоблачный странник. Мои драконы обозревают небеса и защищают это место. Я позабочусь, чтобы Окулус не достался вам!',13648,1,0,0,'SAY_VAROS_SPAWN'),
+(-1578047,'Clearly my pets failed. Perhaps another demonstration is in order.','Моих слуг постигла неудача. Возможно потребуется еще одно предупреждение.',13636,1,0,0,'SAY_VAROS_INTRO'),
+(-1578048,'Still you fight. Still you cling to misguided principles. If you survive, you\'ll find me in the center ring.','Вы все еще сражаетесь. Все еще цепляетесь за свои ложные убеждения. Если выживите, встретимся в центральном кругу.',13637,1,0,0,'SAY_BELGARISTRASZ_GREET');
+
+/*-- From Lanc (originally from TC)
 REPLACE into `script_texts` (entry, content_default, content_loc8, sound, type, language, emote, comment) VALUES
 -- Drakos the Interrogator
 (-1578000,'The prisoners shall not go free. The word of Malygos is law!','Узники не вырвутся на волю. Слово Малигоса - закон!',13594,1,0,0,'SAY_AGGRO'),
@@ -44,3 +67,4 @@ REPLACE into `script_texts` (entry, content_default, content_loc8, sound, type, 
 (-1578037,'No magic of nature will help you now!','Никакая магия природы теперь вас не спасет!',13625,1,0,0,'SAY_NATURE_SHIELD'),
 (-1578038,'Such insolence... such arrogance... must be PUNISHED!','Какая заносчивость... какая чандливость... вы заслуживаете КАРЫ!',13624,1,0,0,'SAY_FRENZY'),
 (-1578039,'Simpletons! You cannot comprehend the forces you have set in motion. The ley line conduit will not be disrupted! Your defeat shall be absolute!','Простаки! Вам и неведомо какие силы вы привели в действие. Поток энергии не прервется! Вас ждет полный разгром!',13622,1,0,0,'SAY_SPAWN');
+*/
