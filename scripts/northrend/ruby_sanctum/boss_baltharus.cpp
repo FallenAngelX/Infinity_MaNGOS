@@ -32,11 +32,12 @@ static LOCATION SpawnLoc[]=
 
 enum Says
 {
-    SAY_BALTHARUS_AGGRO             = -1666300,
-    SAY_BALTHARUS_SLAY_1            = -1666301,
-    SAY_BALTHARUS_SLAY_2            = -1666302,
-    SAY_BALTHARUS_DEATH             = -1666303,
-    SAY_BALTHARUS_SPECIAL_1         = -1666304,
+    //SAY_BALTHARUS_INTRO             = -1724001,
+    SAY_BALTHARUS_AGGRO             = -1724010,
+    SAY_BALTHARUS_SLAY_1            = -1724011,
+    SAY_BALTHARUS_SLAY_2            = -1724012,
+    SAY_BALTHARUS_DEATH             = -1724013,
+    SAY_BALTHARUS_SPLIT             = -1724014,
     SAY_BALTHARUS_YELL              = -1666305,
 };
 
@@ -229,7 +230,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
             if (m_bIs25Man)
             {
                 m_creature->CastSpell(m_creature, SPELL_SUMMON_CLONE, true);
-                DoScriptText(SAY_BALTHARUS_SPECIAL_1,m_creature);
+                DoScriptText(SAY_BALTHARUS_SPLIT, m_creature);
             }
             m_uiStage = 2;
             break;
@@ -252,7 +253,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
             if (!m_bIs25Man)
             {
                m_creature->CastSpell(m_creature, SPELL_SUMMON_CLONE, true);
-               DoScriptText(SAY_BALTHARUS_SPECIAL_1,m_creature);
+               DoScriptText(SAY_BALTHARUS_SPLIT, m_creature);
             }
             m_uiStage = 5;
             break;
@@ -273,7 +274,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public ScriptedAI
             if (m_bIs25Man)
             {
                m_creature->CastSpell(m_creature, SPELL_SUMMON_CLONE, true);
-               DoScriptText(SAY_BALTHARUS_SPECIAL_1,m_creature);
+               DoScriptText(SAY_BALTHARUS_SPLIT, m_creature);
             }
             m_uiStage = 8;
             break;

@@ -1,6 +1,8 @@
+
+-- The following queries are INCORRECT. Must create UPDATES with ruRU locales and insert in base_scriptdev2_full entries of Ruby Sanctum
+/*
 -- sound / text
 DELETE FROM `script_texts` WHERE `entry` BETWEEN -1666405 AND -1666000;
-
 -- xerestrasza
 INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
 ('-1666000','Help! I am trapped within this tree! I require aid!','Спасите! Я под этим деревом. Мне нужна помощь!','17490','6','0','0','SAY_XERESTRASZA_YELL_1'),
@@ -51,3 +53,4 @@ INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc8`, `sound`,
 ('-1666403','<screaming>','О...','17531','6','0','0','SAY_SAVIANA_DEATH'),
 ('-1666404','Burn in the master\'s flame!','Горите в огне хозяина!','17532','6','0','0','SAY_SAVIANA_SPECIAL_1'),
 ('-1666405','<need translate>','|3-3(%s) впадает в исступление!','0','3','0','0','');
+*/

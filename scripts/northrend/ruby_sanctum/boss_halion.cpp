@@ -84,20 +84,22 @@ enum
     FR_RADIUS                                   = 45,
 
     //SAYS
-    SAY_HALION_SPAWN                = -1666100, //17499 Meddlesome insects, you're too late! The Ruby Sanctum is lost.
-    SAY_HALION_AGGRO                = -1666101, //17500 Your world teeters on the brink of annihilation. You will all bear witness to the coming of a new age of destruction!
-    SAY_HALION_SLAY_1               = -1666102, //17501 Another hero falls.
-    SAY_HALION_SLAY_2               = -1666103, //17502 Ha Ha Ha!
-    SAY_HALION_DEATH                = -1666104, //17503 Relish this victory mortals, for it will be your last. This world will burn with the Master's return!
-    SAY_HALION_BERSERK              = -1666105, //17504 Not good enough!
-    SAY_HALION_SPECIAL_1            = -1666106, //17505 The heavens burn!
-    SAY_HALION_SPECIAL_2            = -1666107, //17506 Beware the shadow!
-    SAY_HALION_PHASE_2              = -1666108, //17507 You will find only suffering within the realm of Twilight. Enter if you dare.
-    SAY_HALION_PHASE_3              = -1666109, //17508 I am the light AND the darkness! Cower mortals before the Herald of Deathwing!
-    EMOTE_WARNING                   = -1666110, // orbs charge warning
-    EMOTE_REAL                      = -1666111, // To real world message
-    EMOTE_TWILIGHT                  = -1666112, // To twilight world message
-    EMOTE_NEITRAL                   = -1666113, // Halion reveal HP message
+    SAY_HALION_SPAWN                = -1724024,
+    SAY_HALION_AGGRO                = -1724025,
+    SAY_HALION_SLAY_1               = -1724026,
+    //SAY_HALION_SLAY_2               = -1666103, //17502 Ha Ha Ha!
+    SAY_HALION_DEATH                = -1724027,
+    SAY_HALION_BERSERK              = -1724028,
+    SAY_HALION_FIREBALL             = -1724029,
+    SAY_HALION_SPHERES              = -1724030,
+    SAY_HALION_PHASE_2              = -1724031,
+    SAY_HALION_PHASE_3              = -1724032,
+    EMOTE_SPHERES                   = -1724033,
+    EMOTE_OUT_OF_TWILIGHT           = -1724034,
+    EMOTE_OUT_OF_PHYSICAL           = -1724035,
+    EMOTE_INTO_TWILLIGHT            = -1724036,
+    EMOTE_INTO_PHYSICAL             = -1724037,
+    EMOTE_REGENERATE                = -1724038,
 };
 
 static LOCATION SpawnLoc[]=
@@ -396,7 +398,7 @@ struct MANGOS_DLL_DECL boss_halion_realAI : public ScriptedAI
                         if (DoCastSpellIfCan(pTarget, SPELL_METEOR) == CAST_OK)
                         {
                             m_uiMeteorTimer = 25000;
-                            DoScriptText(SAY_HALION_SPECIAL_1, m_creature);
+                            DoScriptText(SAY_HALION_FIREBALL, m_creature);
                         }
                     }
                 }
@@ -568,7 +570,7 @@ struct MANGOS_DLL_DECL boss_halion_realAI : public ScriptedAI
                        if (DoCastSpellIfCan(pTarget, SPELL_METEOR) == CAST_OK)
                        {
                            m_uiMeteorTimer = 25000;
-                           DoScriptText(SAY_HALION_SPECIAL_1, m_creature);
+                           DoScriptText(SAY_HALION_FIREBALL, m_creature);
                         }
                     }
                 }
@@ -1338,7 +1340,7 @@ struct MANGOS_DLL_DECL mob_halion_controlAI : public ScriptedAI
                     pHalionReal->RemoveAurasDueToSpell(m_lastBuffReal);                          
                 }
             
-                if(Buff[buffnum].real > m_lastBuffReal) DoScriptText(EMOTE_TWILIGHT, pHalionTwilight);
+                if(Buff[buffnum].real > m_lastBuffReal) DoScriptText(EMOTE_OUT_OF_TWILIGHT, pHalionTwilight);
 
                 pHalionReal->CastSpell(pHalionReal, Buff[buffnum].real, true);             
                 m_lastBuffReal = Buff[buffnum].real;
@@ -1351,7 +1353,7 @@ struct MANGOS_DLL_DECL mob_halion_controlAI : public ScriptedAI
                     pHalionTwilight->RemoveAurasDueToSpell(m_lastBuffTwilight);                                 
                 }
 
-                if(Buff[buffnum].twilight > m_lastBuffTwilight) DoScriptText(EMOTE_REAL, pHalionReal);
+                if(Buff[buffnum].twilight > m_lastBuffTwilight) DoScriptText(EMOTE_OUT_OF_PHYSICAL, pHalionReal);
 
                 pHalionTwilight->CastSpell(pHalionTwilight, Buff[buffnum].twilight, true);                      
                 m_lastBuffTwilight = Buff[buffnum].twilight;
@@ -1466,7 +1468,7 @@ struct MANGOS_DLL_DECL mob_orb_rotation_focusAI : public ScriptedAI
 
         if (m_timer - 6000 <= uiDiff && !m_warning)
         {
-            DoScriptText(EMOTE_WARNING,m_creature);
+            DoScriptText(EMOTE_SPHERES, m_creature);
             m_warning = true;
         }
 
@@ -1811,16 +1813,6 @@ bool GOHello_go_halion_portal_real(Player *player, GameObject* pGo)
 
     return true;
 }
-
-enum
-{
-    EMOTE_SPHERES               = -1724033,
-    EMOTE_OUT_OF_TWILLIGHT      = -1724034,
-    EMOTE_OUT_OF_PHYSICAL       = -1724035,
-    EMOTE_INTO_TWILLIGHT        = -1724036,
-    EMOTE_INTO_PHYSICAL         = -1724037,
-    EMOTE_REGENERATE            = -1724038,
-};
 
 void AddSC_boss_halion()
 {

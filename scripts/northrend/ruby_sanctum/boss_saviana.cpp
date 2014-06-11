@@ -36,12 +36,12 @@ enum BossSpells
 
 enum Yells
 {
-    SAY_AGGRO                       = -1666400,
-    SAY_SLAY_1                      = -1666401,
-    SAY_SLAY_2                      = -1666402,
-    SAY_DEATH                       = -1666403,
-    SAY_SPECIAL                     = -1666404,
-    SAY_ENRAGE                      = -1666405,
+    SAY_AGGRO                       = -1724015,
+    SAY_SLAY_1                      = -1724016,
+    SAY_SLAY_2                      = -1724017,
+    //SAY_DEATH                       = -1666403,
+    SAY_SPECIAL                     = -1724018,
+    //SAY_ENRAGE                      = -1666405,
 };
 
 enum
@@ -159,7 +159,7 @@ struct MANGOS_DLL_DECL boss_savianaAI : public ScriptedAI
             return;
 
         m_pInstance->SetData(TYPE_RAGEFIRE, DONE);
-        DoScriptText(SAY_DEATH, m_creature, killer);
+        //DoScriptText(SAY_DEATH, m_creature, killer);
     }
 
     void UpdateAI(const uint32 uiDiff) override
@@ -185,7 +185,7 @@ struct MANGOS_DLL_DECL boss_savianaAI : public ScriptedAI
                 if(DoCastSpellIfCan(m_creature, SPELL_ENRAGE) == CAST_OK)
                 {
                     m_uiEnrageTimer = urand(20000,30000);
-                    DoScriptText(SAY_ENRAGE, m_creature);
+                    //DoScriptText(SAY_ENRAGE, m_creature);
                     if (m_uiPhaseTimer <= 10000)
                         m_uiPhaseTimer = 10000;
                 }
