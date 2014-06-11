@@ -1,4 +1,5 @@
-DELETE FROM `script_texts` WHERE `entry` BETWEEN -1615042 AND -1615000;
+-- Execute only if you want ruRu locales. The following should be converted to UPDATES
+/*DELETE FROM `script_texts` WHERE `entry` BETWEEN -1615042 AND -1615000;
 INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
 (-1615042, '%s begins to open a Twilight Portal!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '%s начинает открывать Врата Сумерек!', 0, 5, 0, 0, 'sartharion drake WHISPER_OPEN_PORTAL'),
 (-1615041, 'A Vesperon Disciple appears in the Twilight!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ученик Весперон появляется в Сумерках!', 0, 5, 0, 0, 'shadron WHISPER_VESPERON_DICIPLE'),
@@ -43,3 +44,4 @@ INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content
 (-1615002, 'Such mediocre resistance!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Какое слабое сопротивление!', 14113, 1, 0, 0, 'shadron SAY_SHADRON_SLAY_2'),
 (-1615001, 'You are insignificant!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ты ничтожество!', 14112, 1, 0, 0, 'shadron SAY_SHADRON_SLAY_1'),
 (-1615000, 'I fear nothing! Least of all you!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Я не боюсь ничего! Тем более вас!', 14111, 1, 0, 0, 'shadron SAY_SHADRON_AGGRO');
+*/
