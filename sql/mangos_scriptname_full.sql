@@ -725,6 +725,7 @@ INSERT INTO scripted_areatrigger VALUES
 (5581,'at_pit_of_saron');
 
 /* ICECROWN */
+UPDATE creature_template SET ScriptName='npc_saronite_mine_slave' WHERE entry=31397;
 
 /* IRONFORGE */
 UPDATE creature_template SET ScriptName='npc_royal_historian_archesonus' WHERE entry=8879;
