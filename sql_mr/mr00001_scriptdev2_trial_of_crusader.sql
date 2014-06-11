@@ -2,6 +2,24 @@
 -- english translation by Cristy
 -- reworked by rsa
 
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1649085 AND -1649076;
+INSERT INTO `script_texts` (`comment`,`sound`, `entry`,`content_loc8`,`type`,`language`,`emote`,`content_default`) VALUES
+-- Northrend beast emotes
+('34796','0','-1649076','Мои рабы! Уничтожьте врага!','3','0','0','My slaves! Destroy the enemy!'),
+('34799','0','-1649077','После гибели товарища %s приходит в ярость!','3','0','0','After the death of sister %s goes berserk!'),
+('34797','0','-1649078','%s глядит на |3-3($n) и испускает гортанный вой!','3','0','0','%S looks at |3-3($n) and emits a guttural howl!'),
+('34797','0','-1649079','%s врезается в стену Колизея и теряет ориентацию!','3','0','0','%S crashes into a wall of the Colosseum and lose focus!'),
+-- Jaraxxus
+('34780','0','-1649080','%s создает |cFF00FF00Вулкан инферналов!|r','3','0','0','%S creates |cFF00FF00Vulkan Infernals!|R'),
+('34780','0','-1649081','%s создает врата Пустоты!','3','0','0','%S creates the gates of the Void!'),
+('34780','0','-1649082','$n $gподвергся:подверглась; |cFF00FFFFИспепелению плоти!|r Исцелите $gего:ее;!','3','0','0','$N $gpodvergsya:been; |cFF00FFFFIspepeleniyu flesh!|R Heal $gego:it;!'), -- EMOTE_INCINERATE_FLESH
+-- Twin Valkyr
+('34497','0','-1649083','%s начинает читать заклинание|cFFFFFFFFСветлая воронка!|r Переключение к |cFFFFFFFFСветлой|r сущности!','3','0','0','%S begins to read a spell |cFFFFFFFFSvetlaya funnel!|R switch to |cFFFFFFFFSvetloy|r essence!'),
+('34497','0','-1649084','%s начинает читать заклинание Договор близнецов!','3','0','0','%S begins to read the spell Treaty twins!'),
+('34496','0','-1649085','%s начинает читать заклинание |cFF9932CDТемная воронка!|r Переключение к |cFF9932CDТемной|r сущности!','3','0','0','%S begins to read a spell |cFF9932CDTemnaya funnel!|R switch to |cFF9932CDTemnoy|r essence!');
+
+-- The following queries are now deprecated. Must be converted to UPDATES to save ruRU locale info, but using scriptdev2 script_texts ids.
+/*
 DELETE FROM `script_texts` WHERE `entry` BETWEEN -1713799 AND -1713499;
 INSERT INTO `script_texts`
 (`comment`,`sound`, `entry`,`content_loc8`,`type`,`language`,`emote`,`content_default`) VALUES
@@ -81,10 +99,10 @@ INSERT INTO `script_texts`
 ('34564','16238','-1713564','Я подвел тебя, господин...','6','0','0','I have failed you, master...'),
 ('36095','0','-1713565','Чемпионы, вы прошли испытание великого крестоносца! Знайте, что только самые сильные искатели приключений могли рассчитывать завершить это испытание.','6','0','0','Champions, you are alive! Not only have you defeated every challenge of the Trial of the Crusader, but thwarted Arthas directly! Your skill and cunning will prove to be a powerful weapon against the Scourge. Well done! Allow one of my mages to transport you back to the surface!'),
 ('36095','0','-1713566','Позвольте вручить вам эти сундуки в качестве заслуженной награды, и пусть его содержимое послужит вам верой и правдой в походе против Артаса в самом центре Цитадели Ледяной Короны!','6','0','0','Let me hand you the chests as a reward, and let its contents will serve you faithfully in the campaign against Arthas in the heart of the Icecrown Citadel!');
+*/
 
 -- Trial of the crusader spelltable
-DELETE FROM `boss_spell_table` WHERE `entry` IN 
-(34496,34497,34564,34605,34607,34780,34784,34796,34797,34799, 34800, 34813, 34815, 34826, 35144, 35176, 34606, 34660);
+DELETE FROM `boss_spell_table` WHERE `entry` IN (34496,34497,34564,34605,34607,34780,34784,34796,34797,34799, 34800, 34813, 34815, 34826, 35144, 35176, 34606, 34660);
 
 -- Eydis Darkbane
 INSERT INTO `boss_spell_table` (`entry`, `spellID_N10`, `spellID_N25`, `spellID_H10`, `spellID_H25`, `timerMin_N10`, `timerMin_N25`, `timerMin_H10`, `timerMin_H25`, `timerMax_N10`, `timerMax_N25`, `timerMax_H10`, `timerMax_H25`, `data1`, `data2`, `data3`, `data4`, `locData_x`, `locData_y`, `locData_z`, `varData`, `StageMask_N`, `StageMask_H`, `CastType`, `isVisualEffect`, `isBugged`, `textEntry`, `comment`) VALUES

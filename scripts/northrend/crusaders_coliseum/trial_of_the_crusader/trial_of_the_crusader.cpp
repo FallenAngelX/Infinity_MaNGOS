@@ -43,9 +43,55 @@ static _Messages _GossipMessage[]=
 
 enum
 {
-    NUM_MESSAGES                = 5,
-    SPELL_WILFRED_PORTAL        = 68424,
-    SPELL_JARAXXUS_CHAINS       = 67924,
+    NUM_MESSAGES                  = 5,
+    SPELL_WILFRED_PORTAL          = 68424,
+    SPELL_JARAXXUS_CHAINS         = 67924,
+
+    // Say and Yells
+    SAY_LKING_ANUB_INTRO_1        = -1649034,
+    SAY_LKING_ANUB_INTRO_2        = -1649036,
+    SAY_LKING_ANUB_INTRO_3        = -1649037,
+
+    SAY_WILFRED_JARAXXUS_INTRO_1  = -1649010,
+    SAY_WILFRED_JARAXXUS_INTRO_2  = -1649011,
+    SAY_WILFRED_JARAXXUS_INTRO_3  = -1649012,
+
+    SAY_JARAXXUS_JARAXXAS_INTRO_1 = -1649013,
+    SAY_WILFRED_DEATH             = -1649014,
+
+    SAY_TIRION_RAID_INTRO_LONG    = -1649000,
+
+    SAY_TIRION_BEAST_1            = -1649002,
+    SAY_TIRION_BEAST_2            = -1649005,
+    SAY_TIRION_BEAST_3            = -1649006,
+    SAY_TIRION_BEAST_SLAY         = -1649007,
+    SAY_TIRION_BEAST_WIPE         = -1649008,
+    SAY_TIRION_JARAXXUS_INTRO_1   = -1649009,
+    SAY_TIRION_JARAXXUS_INTRO_2   = -1649015,
+    SAY_TIRION_JARAXXUS_EXIT_1    = -1649016,
+    SAY_TIRION_JARAXXUS_EXIT_2    = -1649019,
+    SAY_TIRION_PVP_INTRO_1        = -1649020,
+    SAY_TIRION_PVP_INTRO_2        = -1649023,
+    SAY_TIRION_PVP_WIN            = -1649028,
+    SAY_TIRION_TWINS_INTRO        = -1649029,
+    SAY_TIRION_TWINS_WIN          = -1649033,
+    SAY_TIRION_ABUN_INTRO_1       = -1649035,
+    TIRION_SAY_EPILOGUE           = -1649075,
+
+    SAY_GARROSH_BEAST_1           = -1649004,
+    SAY_GARROSH_JARAXXUS_EXIT_1   = -1649017,
+    SAY_GARROSH_PVP_A_INTRO_1     = -1649021,
+    SAY_GARROSH_PVP_A_INTRO_2     = -1649025,
+    SAY_GARROSH_PVP_H_WIN         = -1649027,
+    SAY_GARROSH_TWINS_H_WIN       = -1649032,
+
+    SAY_RAID_INTRO_SHORT          = -1649030,
+
+    SAY_VARIAN_JARAXXUS_SLAY      = -1649018,
+    SAY_VARIAN_PVP_H_INTRO_1      = -1649022,
+    SAY_VARIAN_PVP_H_INTRO_2      = -1649024,
+    SAY_VARIAN_PVP_A_WIN          = -1649026,
+    SAY_VARIAN_TWINS_A_WIN        = -1649031,
 };
 
 struct MANGOS_DLL_DECL npc_toc_announcerAI : public ScriptedAI
@@ -478,12 +524,12 @@ struct MANGOS_DLL_DECL boss_lich_king_tocAI : public ScriptedAI
             switch (m_pInstance->GetData(TYPE_EVENT))
             {
             case 5010:
-                DoScriptText(-1713550,m_creature);
+                DoScriptText(SAY_LKING_ANUB_INTRO_1, m_creature);
                 UpdateTimer = 5000;
                 m_pInstance->SetData(TYPE_EVENT,5020);
                 break;
             case 5030:
-                DoScriptText(-1713552,m_creature);
+                DoScriptText(SAY_LKING_ANUB_INTRO_2, m_creature);
                 m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_TALK);
                 UpdateTimer =  10000;
                 m_pInstance->SetData(TYPE_EVENT,5040);
@@ -501,7 +547,7 @@ struct MANGOS_DLL_DECL boss_lich_king_tocAI : public ScriptedAI
             case 5060:
                 if (Event)
                 {
-                    DoScriptText(-1713553,m_creature);
+                    DoScriptText(SAY_LKING_ANUB_INTRO_3, m_creature);
                     m_creature->HandleEmoteCommand(EMOTE_ONESHOT_KNEEL);
                     UpdateTimer =  2500;
                     m_pInstance->SetData(TYPE_EVENT,5070);
@@ -642,7 +688,7 @@ struct MANGOS_DLL_DECL npc_fizzlebang_tocAI : public ScriptedAI
                     m_pInstance->SetData(TYPE_JARAXXUS,IN_PROGRESS);
                     break;
                 case 1120:
-                    DoScriptText(-1713511, m_creature);
+                    DoScriptText(SAY_WILFRED_JARAXXUS_INTRO_1, m_creature);
                     m_pInstance->SetData(TYPE_EVENT, 1130);
                     UpdateTimer = 12000;
                     break;
@@ -658,7 +704,7 @@ struct MANGOS_DLL_DECL npc_fizzlebang_tocAI : public ScriptedAI
                         m_uiPortalGuid = pPortal->GetObjectGuid();
                     }
 
-                    DoScriptText(-1713512, m_creature);
+                    DoScriptText(SAY_WILFRED_JARAXXUS_INTRO_2, m_creature);
                     m_pInstance->SetData(TYPE_EVENT, 1132);
                     UpdateTimer = 4000;
                     break;
@@ -708,7 +754,7 @@ struct MANGOS_DLL_DECL npc_fizzlebang_tocAI : public ScriptedAI
                     if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_JARAXXUS))
                         pTemp->SetFacingToObject(m_creature);
 
-                    DoScriptText(-1713513, m_creature);
+                    DoScriptText(SAY_WILFRED_JARAXXUS_INTRO_3, m_creature);
                     m_creature->HandleEmoteCommand(EMOTE_ONESHOT_POINT);
                     m_pInstance->SetData(TYPE_EVENT, 1144);
                     UpdateTimer = 3000;
@@ -723,7 +769,7 @@ struct MANGOS_DLL_DECL npc_fizzlebang_tocAI : public ScriptedAI
                case 1145:
                     if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_JARAXXUS))
                     {
-                        DoScriptText(-1713514, pTemp);
+                        DoScriptText(SAY_JARAXXUS_JARAXXAS_INTRO_1, pTemp);
                         pTemp->HandleEmoteCommand(EMOTE_ONESHOT_POINT);
                     }
 
@@ -731,7 +777,7 @@ struct MANGOS_DLL_DECL npc_fizzlebang_tocAI : public ScriptedAI
                     UpdateTimer = 5000;
                     break;
                case 1150:
-                    DoScriptText(-1713515, m_creature);
+                    DoScriptText(SAY_WILFRED_DEATH, m_creature);
                     if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_JARAXXUS))
                         pTemp->CastSpell(m_creature, 66532, false);
 
@@ -802,13 +848,13 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
             {
             case 110:
                 m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_ONESHOT_TALK);
-                DoScriptText(-1713500, m_creature);
+                DoScriptText(SAY_TIRION_RAID_INTRO_LONG, m_creature);
                 UpdateTimer = 22000;
                 m_pInstance->SetData(TYPE_EVENT,130);
                 break;
             case 140:
                 m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_ONESHOT_TALK);
-                DoScriptText(-1713501, m_creature);
+                DoScriptText(SAY_TIRION_BEAST_1, m_creature);
                 UpdateTimer = 10000;
                 m_pInstance->SetData(TYPE_EVENT,150);
                 m_pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
@@ -832,7 +878,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                 m_pInstance->SetData(TYPE_BEASTS,IN_PROGRESS);
                 break;
             case 200:
-                DoScriptText(-1713503, m_creature);
+                DoScriptText(SAY_TIRION_BEAST_2, m_creature);
                 UpdateTimer = 4000;
                 m_pInstance->SetData(TYPE_EVENT,205);
                 break;
@@ -864,7 +910,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                 m_pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                 break;
             case 300:
-                DoScriptText(-1713505, m_creature);
+                DoScriptText(SAY_TIRION_BEAST_3, m_creature);
                 UpdateTimer = 5000;
                 m_pInstance->SetData(TYPE_EVENT,305);
                 break;
@@ -889,18 +935,18 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                 m_pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                 break;
             case 400:
-                DoScriptText(-1713509, m_creature);
+                DoScriptText(SAY_TIRION_BEAST_SLAY, m_creature);
                 UpdateTimer = 5000;
                 m_pInstance->SetData(TYPE_EVENT,0);
                 break;
             case 666:
-                DoScriptText(-1713709, m_creature);
+                DoScriptText(SAY_TIRION_BEAST_WIPE, m_creature);
                 UpdateTimer = 5000;
                 m_pInstance->SetData(TYPE_EVENT,0);
                 m_pInstance->SetData(TYPE_NORTHREND_BEASTS,NOT_STARTED);
                 break;
             case 1010:
-                DoScriptText(-1713510, m_creature);
+                DoScriptText(SAY_TIRION_JARAXXUS_INTRO_1, m_creature);
                 UpdateTimer = 5000;
                 m_creature->SummonCreature(NPC_FIZZLEBANG, SpawnLoc[21].x, SpawnLoc[21].y, SpawnLoc[21].z, 2, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
                 m_pInstance->SetData(TYPE_EVENT,1110);
@@ -910,7 +956,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                 m_pInstance->SetData(TYPE_EVENT, 1180);
                 break;
             case 1180:
-                DoScriptText(-1713516, m_creature);
+                DoScriptText(SAY_TIRION_JARAXXUS_INTRO_2, m_creature);
                 UpdateTimer = 3000;
                 m_pInstance->SetData(TYPE_EVENT,0);
                 break;
@@ -920,32 +966,32 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                 m_pInstance->SetData(TYPE_EVENT,2000);
                 break;
             case 2000:
-                DoScriptText(-1713526, m_creature);
+                DoScriptText(SAY_TIRION_JARAXXUS_EXIT_1, m_creature);
                 UpdateTimer = 15000;
                 m_pInstance->SetData(TYPE_EVENT,2010);
                 break;
             case 2030:
-                DoScriptText(-1713529, m_creature);
+                DoScriptText(SAY_TIRION_JARAXXUS_EXIT_2, m_creature);
                 UpdateTimer = 5000;
                 m_pInstance->SetData(TYPE_EVENT,0);
                 break;
             case 3000:
-                DoScriptText(-1713530, m_creature);
+                DoScriptText(SAY_TIRION_PVP_INTRO_1, m_creature);
                 UpdateTimer = 8000;
                 m_pInstance->SetData(TYPE_EVENT,3050);
                 break;
             case 3001:
-                DoScriptText(-1713530, m_creature);
+                DoScriptText(SAY_TIRION_PVP_INTRO_1, m_creature);
                 UpdateTimer = 8000;
                 m_pInstance->SetData(TYPE_EVENT,3051);
                 break;
             case 3060:
-                DoScriptText(-1713532, m_creature);
+                DoScriptText(SAY_TIRION_PVP_INTRO_2, m_creature);
                 UpdateTimer = 5000;
                 m_pInstance->SetData(TYPE_EVENT,3070);
                 break;
             case 3061:
-                DoScriptText(-1713532, m_creature);
+                DoScriptText(SAY_TIRION_PVP_INTRO_2, m_creature);
                 UpdateTimer = 5000;
                 m_pInstance->SetData(TYPE_EVENT,3071);
                 break;
@@ -1325,7 +1371,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                 break;
             //Crusaders battle end
             case 3100:
-                DoScriptText(-1713535, m_creature);
+                DoScriptText(SAY_TIRION_PVP_WIN, m_creature);
                 UpdateTimer = 5000;
                 m_pInstance->SetData(TYPE_EVENT, 0);
                 break;
@@ -1342,7 +1388,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                 if (GameObject* pGO25H = m_pInstance->GetSingleGameObjectFromStorage(GO_CRUSADERS_CACHE_25_H))
                     pGO25H->Delete();
 
-                DoScriptText(-1713536, m_creature);
+                DoScriptText(SAY_TIRION_TWINS_INTRO, m_creature);
                 UpdateTimer = 3000;
                 m_pInstance->SetData(TYPE_EVENT,4010);
                 break;
@@ -1378,7 +1424,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                 m_pInstance->SetData(TYPE_EVENT,5000);
                 break;
             case 5000:
-                DoScriptText(-1713549, m_creature);
+                DoScriptText(SAY_TIRION_TWINS_WIN, m_creature);
                 UpdateTimer = 8000;
                 m_pInstance->SetData(TYPE_EVENT,5005);
                 break;
@@ -1389,7 +1435,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                 m_creature->SummonCreature(NPC_LICH_KING_1, SpawnLoc[2].x, SpawnLoc[2].y, SpawnLoc[2].z, 5, TEMPSUMMON_MANUAL_DESPAWN, 0);
                 break;
             case 5020:
-                DoScriptText(-1713551, m_creature);
+                DoScriptText(SAY_TIRION_ABUN_INTRO_1, m_creature);
                 UpdateTimer = 8000;
                 m_pInstance->SetData(TYPE_EVENT,5030);
                 break;
@@ -1399,7 +1445,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                 m_pInstance->SetData(TYPE_EVENT,6005);
                 break;
             case 6005:
-                DoScriptText(-1713565, m_creature);
+                DoScriptText(TIRION_SAY_EPILOGUE, m_creature);
                 m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_TALK);
                 m_creature->SummonGameobject(195682, 783.57f, 124.45f, 142.21f, 0, 0);
                 UpdateTimer = 20000;
@@ -1407,8 +1453,8 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                 break;
             case 6010:
                 m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_NONE);
-                if (m_pInstance->GetData(TYPE_DIFFICULTY) == RAID_DIFFICULTY_10MAN_HEROIC || m_pInstance->GetData(TYPE_DIFFICULTY) == RAID_DIFFICULTY_25MAN_HEROIC)
-                    DoScriptText(-1713566, m_creature);
+                //if (m_pInstance->GetData(TYPE_DIFFICULTY) == RAID_DIFFICULTY_10MAN_HEROIC || m_pInstance->GetData(TYPE_DIFFICULTY) == RAID_DIFFICULTY_25MAN_HEROIC)
+                //    DoScriptText(-1713566, m_creature);
 
                 UpdateTimer = 60000;
                 m_pInstance->SetData(TYPE_EVENT,6020);
@@ -1470,33 +1516,33 @@ struct MANGOS_DLL_DECL npc_garrosh_tocAI : public ScriptedAI
             {
             case 120:
                 m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_ONESHOT_TALK);
-                DoScriptText(-1713702, m_creature);
+                DoScriptText(SAY_GARROSH_BEAST_1, m_creature);
                 m_pInstance->SetData(TYPE_EVENT,121);
                 UpdateTimer = 5000;
                 break;
             case 2010:
-                DoScriptText(-1713527, m_creature);
+                DoScriptText(SAY_GARROSH_JARAXXUS_EXIT_1, m_creature);
                 UpdateTimer = 10000;
                 m_pInstance->SetData(TYPE_EVENT,2020);
                 break;
             case 3050:
-                DoScriptText(-1713531, m_creature);
+                DoScriptText(SAY_GARROSH_PVP_A_INTRO_1, m_creature);
                 UpdateTimer = 15000;
                 m_pInstance->SetData(TYPE_EVENT,3060);
                 break;
             case 3070:
-                DoScriptText(-1713533, m_creature);
+                DoScriptText(SAY_GARROSH_PVP_A_INTRO_2, m_creature);
                 UpdateTimer = 6000;
                 m_pInstance->SetData(TYPE_EVENT,3080);
                 break;
             case 3081:
-                DoScriptText(-1713734, m_creature);
+                DoScriptText(SAY_GARROSH_PVP_H_WIN, m_creature);
                 UpdateTimer = 5000;
                 m_pInstance->SetData(TYPE_EVENT,3091);
                 m_pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                 break;
             case 4030:
-                DoScriptText(-1713748, m_creature);
+                DoScriptText(SAY_GARROSH_TWINS_H_WIN, m_creature);
                 UpdateTimer = 5000;
                 m_pInstance->SetData(TYPE_EVENT,4040);
                 break;
@@ -1551,34 +1597,34 @@ struct MANGOS_DLL_DECL npc_rinn_tocAI : public ScriptedAI
             {
             case 130:
                 if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_TIRION))
-                   DoScriptText(-1713537, pTemp);
+                   DoScriptText(SAY_RAID_INTRO_SHORT, pTemp);
 
                 UpdateTimer = 3000;
                 m_pInstance->SetData(TYPE_EVENT,140);
                 break;
             case 2020:
-                DoScriptText(-1713528, m_creature);
+                DoScriptText(SAY_VARIAN_JARAXXUS_SLAY, m_creature);
                 UpdateTimer = 7000;
                 m_pInstance->SetData(TYPE_EVENT,2030);
                 break;
             case 3051:
-                DoScriptText(-1713731, m_creature);
+                DoScriptText(SAY_VARIAN_PVP_H_INTRO_1, m_creature);
                 UpdateTimer = 15000;
                 m_pInstance->SetData(TYPE_EVENT,3061);
                 break;
             case 3071:
-                DoScriptText(-1713733, m_creature);
+                DoScriptText(SAY_VARIAN_PVP_H_INTRO_2, m_creature);
                 UpdateTimer = 5000;
                 m_pInstance->SetData(TYPE_EVENT,3081);
                 break;
             case 3080:
-                DoScriptText(-1713534, m_creature);
+                DoScriptText(SAY_VARIAN_PVP_A_WIN, m_creature);
                 UpdateTimer = 5000;
                 m_pInstance->SetData(TYPE_EVENT,3090);
                 m_pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                 break;
             case 4020:
-                DoScriptText(-1713548, m_creature);
+                DoScriptText(SAY_VARIAN_TWINS_A_WIN, m_creature);
                 UpdateTimer = 7000;
                 if (Creature* pBarrent = m_pInstance->GetSingleCreatureFromStorage(NPC_BARRENT))
                     pBarrent->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);

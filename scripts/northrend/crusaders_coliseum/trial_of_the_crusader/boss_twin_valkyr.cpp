@@ -80,17 +80,17 @@ enum Summons
 
 enum Yells
 {
-    SAY_AGGRO                     = -1713541,
-    SAY_LIGHT_VORTEX              = -1713542,
-    SAY_SLAY_1                    = -1713543,
-    SAY_SLAY_2                    = -1713544,
-    SAY_PACT                      = -1713545,
-    SAY_DARK_VORTEX               = -1713546,
-    SAY_DEATH                     = -1713547,
+    SAY_AGGRO                     = -1649056,
+    SAY_DARK_VORTEX               = -1649062,
+    SAY_LIGHT_VORTEX              = -1649063,
+    SAY_SLAY_1                    = -1649060,
+    SAY_SLAY_2                    = -1649061,
+    SAY_PACT                      = -1649058,
+    SAY_DEATH                     = -1649059,
 
-    EMOTE_LIGHT_VORTEX            = -1713538,
-    EMOTE_PACT                    = -1713539,
-    EMOTE_DARK_VORTEX             = -1713540,
+    EMOTE_LIGHT_VORTEX            = -1649083,
+    EMOTE_PACT                    = -1649084,
+    EMOTE_DARK_VORTEX             = -1649085,
 };
 
 enum Phases

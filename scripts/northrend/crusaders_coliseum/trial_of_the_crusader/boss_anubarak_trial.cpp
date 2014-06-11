@@ -26,18 +26,18 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_INTRO                       = -1713554,
-    SAY_AGGRO                       = -1713555,
-    SAY_SUBMERGE                    = -1713556,
-    SAY_LOW_HEALTH                  = -1713560,
-    SAY_SLAY_1                      = -1713562,
-    SAY_SLAY_2                      = -1713563,
-    SAY_DEATH                       = -1713564,
+    SAY_INTRO                       = -1649038,
+    SAY_AGGRO                       = -1649064,
+    SAY_SUBMERGE                    = -1649069,
+    SAY_LOW_HEALTH                  = -1649070,
+    SAY_SLAY_1                      = -1649065,
+    SAY_SLAY_2                      = -1649066,
+    SAY_DEATH                       = -1649067,
 
-    EMOTE_SUBMERGE                  = -1713557,
-    EMOTE_PURSUING                  = -1713558,
-    EMOTE_OUT_OF_THE_GROUND         = -1713559,
-    EMOTE_LEECHING_SWARM            = -1713561,
+    EMOTE_SUBMERGE                  = -1649071,
+    EMOTE_PURSUING                  = -1649072,
+    EMOTE_OUT_OF_THE_GROUND         = -1649073,
+    EMOTE_LEECHING_SWARM            = -1649074,
 };
 
 enum Summons

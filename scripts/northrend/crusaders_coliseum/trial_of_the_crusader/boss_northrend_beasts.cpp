@@ -32,12 +32,13 @@ EndScriptData */
 
 enum Emotes
 {
-    EMOTE_SUMMON_SNOBOLD        = -1713601,
-    EMOTE_ENRAGE                = -1713504,
-    EMOTE_TRAMPLE               = -1713506,
-    EMOTE_STAGGERED             = -1713507,
-    EMOTE_CRASH                 = -1713508,
+    EMOTE_SUMMON_SNOBOLD        = -1649076,
+    EMOTE_ENRAGE                = -1649077,
+    EMOTE_TRAMPLE               = -1649078,
+    EMOTE_STAGGERED             = -1649079,
+    EMOTE_CRASH                 = -1649039,
 };
+
 enum Equipment
 {
     EQUIP_MAIN                  = 47505,

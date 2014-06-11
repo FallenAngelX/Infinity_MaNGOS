@@ -1,0 +1,4 @@
+Static GUID distribution policy for mangosR2 branch
+Attention! If your use new GUID's scope for some creatures/objects - first define it his here.
+# Trial of the Crusaders
+GUIDS 600000 - 600003

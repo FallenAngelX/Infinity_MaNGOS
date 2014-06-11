@@ -28,18 +28,18 @@ EndScriptData */
 
 enum Yells
 {
-    SAY_AGGRO                          = -1713517,
-    SAY_DEATH                          = -1713525,
-    SAY_SLAY_1                         = -1713567,
-    SAY_SLAY_2                         = -1713568,
-    SAY_INFERNAL_VOLCANO               = -1713520,
-    SAY_NETHER_PORTAL                  = -1713519,
-    SAY_SUMMON_MISTRESS                = -1713521,
-    SAY_SUMMON_INFERNAL                = -1713524,
-    SAY_INCINERATE_FLESH               = -1713523,
-    SAY_ENRAGE                         = -1713750,
+    SAY_AGGRO                          = -1649040,
+    SAY_DEATH                          = -1649043,
+    SAY_SLAY_1                         = -1649041,
+    SAY_SLAY_2                         = -1649042,
+    SAY_INFERNAL_VOLCANO               = -1649080,
+    SAY_NETHER_PORTAL                  = -1649081,
+    SAY_SUMMON_MISTRESS                = -1649046,
+    SAY_SUMMON_INFERNAL                = -1649047,
+    SAY_INCINERATE_FLESH               = -1649045,
+    //SAY_ENRAGE                         = -1713750, -- FixMe
 
-    EMOTE_INCINERATE_FLESH             = -1713522,
+    EMOTE_INCINERATE_FLESH             = -1649082,
 };
 
 enum Equipment
@@ -192,7 +192,7 @@ struct MANGOS_DLL_DECL boss_jaraxxusAI : public ScriptedAI
             if (DoCastSpellIfCan(m_creature, SPELL_ENRAGE) == CAST_OK)
             {
                 m_uiEnrageTimer = 600000;
-                DoScriptText(SAY_ENRAGE, m_creature);
+                //DoScriptText(SAY_ENRAGE, m_creature);
             }
         }
         else
