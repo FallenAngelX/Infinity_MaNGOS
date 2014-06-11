@@ -83,11 +83,6 @@ enum
     MAX_DECEIVERS               = 3
 };
 
-struct EventLocations
-{
-    float m_fX, m_fY, m_fZ, m_fO;
-};
-
 static const EventLocations aMadrigosaLoc[] =
 {
     {1463.82f, 661.212f, 19.79f, 4.88f},            // reload spawn loc - the place where to spawn Felmyst
@@ -132,7 +127,7 @@ class MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance, privat
         void Load(const char* chrIn) override;
 
     protected:
-        void JustDidDialogueStep(int32 iEntry);
+        void JustDidDialogueStep(int32 iEntry) override;
         void DoSortFlightTriggers();
 
         uint32 m_auiEncounter[MAX_ENCOUNTER];
