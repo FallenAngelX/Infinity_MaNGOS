@@ -31,9 +31,9 @@ enum
     SAY_KILL_1                                    = -1578026,
     SAY_KILL_2                                    = -1578027,
     SAY_DEATH                                     = -1578028,
-    SAY_STRIKE_1                                  = -1578031,
-    SAY_STRIKE_2                                  = -1578032,
-    SAY_STRIKE_3                                  = -1578033,
+    SAY_CALL_CAPTAIN_1                            = -1578021,
+    SAY_CALL_CAPTAIN_2                            = -1578022,
+    SAY_CALL_CAPTAIN_3                            = -1578023,
 
     SPELL_ARCANE_SHIELD                           = 50053,
     SPELL_ENERGIZE_CORES                          = 50785, //Damage 5938 to 6562, effec2 Triggers 54069, effect3 Triggers 56251
@@ -317,9 +317,9 @@ struct MANGOS_DLL_DECL boss_varosAI : public ScriptedAI
            uint8 uiText = urand(0, 2);
            switch (uiText)
            {
-              case 0: DoScriptText(SAY_STRIKE_1, m_creature); break;
-              case 1: DoScriptText(SAY_STRIKE_2, m_creature); break;
-              case 2: DoScriptText(SAY_STRIKE_3, m_creature); break;
+              case 0: DoScriptText(SAY_CALL_CAPTAIN_1, m_creature); break;
+              case 1: DoScriptText(SAY_CALL_CAPTAIN_2, m_creature); break;
+              case 2: DoScriptText(SAY_CALL_CAPTAIN_3, m_creature); break;
            }
         } else m_uiDragonAttackTimer -= uiDiff;
 
