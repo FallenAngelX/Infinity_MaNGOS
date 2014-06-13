@@ -38,7 +38,7 @@ instance_blackfathom_deeps::instance_blackfathom_deeps(Map* pMap) : ScriptedInst
 void instance_blackfathom_deeps::Initialize()
 {
     for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-        m_auiEncounter[i] = 0;;
+        m_auiEncounter[i] = 0;
 
     for (uint8 i = 0; i < MAX_FIRES; ++i)
     {
