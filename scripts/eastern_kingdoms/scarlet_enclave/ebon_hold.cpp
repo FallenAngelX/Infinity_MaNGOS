@@ -2827,6 +2827,22 @@ CreatureAI* GetAI_npc_fellow_death_knight(Creature* pCreature)
     return new npc_fellow_death_knightAI(pCreature);
 }
 
+// TODO Remove this 'script' when combat can be proper prevented from core-side
+struct MANGOS_DLL_DECL npc_lich_king_light_dawnAI : public ScriptedAI
+{
+    npc_lich_king_light_dawnAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+
+    void Reset() override { }
+    void MoveInLineOfSight(Unit* /*pWho*/) override { }
+    void AttackStart(Unit* /*pWho*/) override { }
+    void UpdateAI(const uint32 /*uiDiff*/) override { }
+};
+
+CreatureAI* GetAI_npc_lich_king_light_dawn(Creature* pCreature)
+{
+    return new npc_lich_king_light_dawnAI(pCreature);
+}
+
 /*######
 ## npc_acherus_deathcharger
 ######*/
@@ -2953,7 +2969,7 @@ CreatureAI* GetAI_npc_acherus_deathcharger(Creature* pCreature)
     return new npc_acherus_deathchargerAI(pCreature);
 }
 
-bool EffectDummyCreature_npc_acherus_deathcharger(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget)
+bool EffectDummyCreature_npc_acherus_deathcharger(Unit* /*pCaster*/, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget, ObjectGuid /*originalCasterGuid*/)
 {
     // always check spellid and effectindex
     if (uiSpellId == SPELL_HORSEMAN_SLAIN && uiEffIndex == EFFECT_INDEX_0)
@@ -2968,32 +2984,12 @@ bool EffectDummyCreature_npc_acherus_deathcharger(Unit* pCaster, uint32 uiSpellI
     return false;
 }
 
-// TODO Remove this 'script' when combat can be proper prevented from core-side
-struct MANGOS_DLL_DECL npc_lich_king_light_dawnAI : public ScriptedAI
-{
-    npc_lich_king_light_dawnAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
-
-    void Reset() override { }
-    void MoveInLineOfSight(Unit* /*pWho*/) override { }
-    void AttackStart(Unit* /*pWho*/) override { }
-    void UpdateAI(const uint32 /*uiDiff*/) override { }
-};
-
-CreatureAI* GetAI_npc_lich_king_light_dawn(Creature* pCreature)
-{
-    return new npc_lich_king_light_dawnAI(pCreature);
-}
-
 /*######
 ## npc the lich king in dawn of light
 ######*/
 
 enum _spells
 {
-    // Highlord Darion Mograine
-    SPELL_ANTI_MAGIC_ZONE1            = 52893,
-    SPELL_ICY_TOUCH1                  = 49723,
-
     // Koltira Deathweaver & Orbaz Bloodbane are using the same abilities
     SPELL_DEATH_GRIP                  = 49576,
     SPELL_PLAGUE_STRIKE1              = 50668,
