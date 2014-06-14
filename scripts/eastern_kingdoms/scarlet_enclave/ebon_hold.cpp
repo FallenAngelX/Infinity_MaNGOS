@@ -125,7 +125,7 @@ struct MANGOS_DLL_DECL npc_a_special_surpriseAI : public ScriptedAI
     uint32 m_uiExecuteSpeech_Counter;
     ObjectGuid m_playerGuid;
 
-    void Reset()
+    void Reset() override
     {
         m_uiExecuteSpeech_Timer = 0;
         m_uiExecuteSpeech_Counter = 0;
@@ -558,7 +558,7 @@ struct MANGOS_DLL_DECL npc_death_knight_initiateAI : public ScriptedAI
     uint32 m_uiIcyTouch_Timer;
     uint32 m_uiPlagueStrike_Timer;
 
-    void Reset()
+    void Reset() override
     {
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_15);
 
@@ -591,7 +591,7 @@ struct MANGOS_DLL_DECL npc_death_knight_initiateAI : public ScriptedAI
         }
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDoneBy*/, uint32& uiDamage) override
     {
         if (m_bIsDuelInProgress && uiDamage > m_creature->GetHealth())
         {
@@ -676,7 +676,7 @@ bool GossipHello_npc_death_knight_initiate(Player* pPlayer, Creature* pCreature)
     return false;
 }
 
-bool GossipSelect_npc_death_knight_initiate(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_death_knight_initiate(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF + 1)
     {
@@ -725,6 +725,8 @@ enum eKoltira
     NPC_KOLTIRA_ALT                 = 28447,
     NPC_KOLTIRA                     = 28912,
 
+    // not sure about this id
+    // NPC_DEATH_KNIGHT_MOUNT          = 29201,
     MODEL_DEATH_KNIGHT_MOUNT        = 25278
 };
 
@@ -736,7 +738,7 @@ struct MANGOS_DLL_DECL npc_koltira_deathweaverAI : public npc_escortAI
     uint32 m_uiWave_Timer;
     ObjectGuid m_valrothGuid;
 
-    void Reset()
+    void Reset() override
     {
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
         {
@@ -795,7 +797,7 @@ struct MANGOS_DLL_DECL npc_koltira_deathweaverAI : public npc_escortAI
             m_creature->SummonCreature(NPC_CRIMSON_ACOLYTE, 1642.329f, -6045.818f, 127.583f, 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 5000);
     }
 
-    void UpdateEscortAI(const uint32 uiDiff)
+    void UpdateEscortAI(const uint32 uiDiff) override
     {
         if (HasEscortState(STATE_ESCORT_PAUSED))
         {
@@ -830,7 +832,7 @@ struct MANGOS_DLL_DECL npc_koltira_deathweaverAI : public npc_escortAI
                         m_creature->SummonCreature(NPC_HIGH_INQUISITOR_VALROTH, 1642.329f, -6045.818f, 127.583f, 0.0f, TEMPSUMMON_TIMED_OOC_DESPAWN, 1000);
                         m_uiWave_Timer = 1000;
                         break;
-                   // missing script text 7 =  SAY_BREAKOUT7
+                        // missing script text 7 =  SAY_BREAKOUT7
                     case 4:
                     {
                         Creature* pTemp = m_creature->GetMap()->GetCreature(m_valrothGuid);
@@ -928,7 +930,7 @@ struct MANGOS_DLL_DECL npc_unworthy_initiate_anchorAI : public ScriptedAI
     ObjectGuid m_myInitiateGuid;
     ObjectGuid m_myPrisonGuid;
 
-    void Reset() {}
+    void Reset() override {}
 
     void NotifyMe(Unit* pSource, GameObject* pGo)
     {
@@ -979,7 +981,7 @@ struct MANGOS_DLL_DECL npc_unworthy_initiateAI : public ScriptedAI
     uint32 m_uiIcyTouch_Timer;
     uint32 m_uiPlagueStrike_Timer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiAnchorCheckTimer = 5000;
         m_uiPhase = PHASE_INACTIVE_OR_COMBAT;
@@ -1162,81 +1164,81 @@ bool GOUse_go_acherus_soul_prison(Player* pPlayer, GameObject* pGo)
 
 enum eEyeOfAcherus
 {
+    SPELL_EYE_CONTROL       = 51852,                        // player control aura
+    SPELL_EYE_VISUAL        = 51892,
+    SPELL_EYE_FLIGHT        = 51890,                        // player flight control
+    SPELL_EYE_FLIGHT_BOOST  = 51923,                        // flight boost to reach new avalon
+
+
     DISPLAYID_EYE_HUGE      = 26320,
     DISPLAYID_EYE_SMALL     = 25499,
 
     SPELL_EYE_PHASEMASK     = 70889,
-    SPELL_EYE_VISUAL        = 51892,
-    //SPELL_EYE_FL_BOOST_RUN  = 51923,
-    SPELL_EYE_FL_BOOST_FLY  = 51890,
-    SPELL_EYE_CONTROL       = 51852,
 
-    TEXT_EYE_UNDER_CONTROL  = -1666452,
-    TEXT_EYE_LAUNCHED       = -1666451,
+    EMOTE_DESTIANTION       = -1609089,
+    EMOTE_CONTROL           = -1609090,
+
+    POINT_EYE_DESTINATION   = 0
 };
+
+// movement destination coords
+static const float aEyeDestination[3] = {1750.8276f, -5873.788f, 147.2266f};
 
 struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
 {
-    npc_eye_of_acherusAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
-
-    bool m_isActive;
-
-    void Reset()
+    npc_eye_of_acherusAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_creature->SetDisplayId(DISPLAYID_EYE_HUGE);
-        m_isActive = false;
+        m_bIsInitialized = false;
+        m_creature->SetPhaseMask(3, true);                  // HACK as mangos cannot handle auras proberly, also HACK below
+        Reset();
     }
 
-    void AttackStart(Unit* /*pWho*/) override {}
-    void MoveInLineOfSight(Unit* /*pWho*/) override {}
+    bool m_bIsInitialized;
+
+    void Reset() override
+    {
+        m_creature->SetDisplayId(DISPLAYID_EYE_HUGE);
+    }
 
     void JustDied(Unit* /*pKiller*/) override
     {
-        if (Unit* pCharmer = m_creature->GetCharmer())
-            pCharmer->RemoveAurasDueToSpell(SPELL_EYE_CONTROL);
+        m_creature->CastSpell(m_creature, 52694, true);     // HACK - Remove this when mangos supports proper spell casting
     }
 
     void MovementInform(uint32 uiType, uint32 uiPointId) override
     {
-        if (uiType != POINT_MOTION_TYPE || uiPointId != 0)
+        if (uiType != POINT_MOTION_TYPE || uiPointId != POINT_EYE_DESTINATION)
             return;
 
-        m_creature->SetSpeedRate(MOVE_RUN, 6.5f);
-        DoScriptText(TEXT_EYE_UNDER_CONTROL, m_creature);
+        if (Player* pPlayer = m_creature->GetCharmerOrOwnerPlayerOrPlayerItself())
+            DoScriptText(EMOTE_CONTROL, m_creature, pPlayer);
+
         m_creature->SetDisplayId(DISPLAYID_EYE_SMALL);
-        m_creature->CastSpell(m_creature, SPELL_EYE_FL_BOOST_FLY, true);
+        DoCastSpellIfCan(m_creature, SPELL_EYE_FLIGHT, CAST_TRIGGERED);
     }
 
-    void AttackedBy(Unit* pAttacker) override
+    void AttackStart(Unit* /*pWho*/) override {}
+
+    void UpdateAI(const uint32 /*uiDiff*/) override
     {
-        // called on remove SPELL_AURA_MOD_POSSESS
-        if (!m_creature->isCharmed() && pAttacker->GetTypeId() == TYPEID_PLAYER)
+        if (m_bIsInitialized)
+            return;
+
+        if (Player* pPlayer = m_creature->GetCharmerOrOwnerPlayerOrPlayerItself())
         {
-            pAttacker->RemoveAurasDueToSpell(SPELL_EYE_CONTROL);
-//            m_creature->ForcedDespawn();
-        }
-    }
+            m_creature->SetPhaseMask(2, true);              // HACK remove when summon spells and auras are implemented properly in mangos
 
-    void UpdateAI(uint32 const uiDiff) override
-    {
-        if (m_creature->isCharmed())
-        {
-            if (!m_isActive)
-            {
-                m_creature->CastSpell(m_creature, SPELL_EYE_PHASEMASK, true);
-                m_creature->CastSpell(m_creature, SPELL_EYE_VISUAL, true);
-                //m_creature->CastSpell(m_creature, SPELL_EYE_FL_BOOST_FLY, true);
+            DoScriptText(EMOTE_DESTIANTION, m_creature, pPlayer);
 
-                m_creature->SetLevitate(true);
-                m_creature->SetWalk(false);
-                m_creature->SetSpeedRate(MOVE_RUN, 8.0f);
-                m_creature->SetSpeedRate(MOVE_FLIGHT, 8.0f, true);
+            DoCastSpellIfCan(m_creature, SPELL_EYE_VISUAL, CAST_TRIGGERED);
+            DoCastSpellIfCan(m_creature, SPELL_EYE_FLIGHT_BOOST, CAST_TRIGGERED);
+            // Update Speed for Eye
+            m_creature->UpdateSpeed(MOVE_FLIGHT, true, pPlayer->GetSpeed(MOVE_FLIGHT));
 
-                DoScriptText(TEXT_EYE_LAUNCHED, m_creature);
-                m_creature->Relocate(2333.93f, -5680.04f, 430.86f, 0);
-                m_creature->GetMotionMaster()->MovePoint(0, 1750.8276f, -5873.788f, 147.2266f);
-                m_isActive = true;
-            }
+            //m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+            m_creature->GetMotionMaster()->MovePoint(POINT_EYE_DESTINATION, aEyeDestination[0], aEyeDestination[1], aEyeDestination[2]);
+
+            m_bIsInitialized = true;
         }
         else
             m_creature->ForcedDespawn();
@@ -1288,7 +1290,7 @@ struct MANGOS_DLL_DECL npc_scarlet_ghoulAI : public ScriptedPetAI
     bool m_bDidInitText;
     uint32 m_uiUnsummonTimer;
 
-    void Reset() {}
+    void Reset() override {}
 
     void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
     {
@@ -1300,7 +1302,7 @@ struct MANGOS_DLL_DECL npc_scarlet_ghoulAI : public ScriptedPetAI
         }
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoCastSpellIfCan(m_creature, SPELL_GHOUL_UNSUMMON, CAST_TRIGGERED);
     }
@@ -1558,7 +1560,7 @@ struct MANGOS_DLL_DECL npc_highlord_darion_mograineAI : public npc_escortAI
     GuidList m_lDefendersGUIDs;                             // light of dawn defenders
     GuidList m_lAttackersGUIDs;                             // scourge attackers
 
-    void Reset()
+    void Reset() override
     {
         // reset only when event is not in progress
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
@@ -1595,7 +1597,7 @@ struct MANGOS_DLL_DECL npc_highlord_darion_mograineAI : public npc_escortAI
         reader.PSendSysMessage("Event-processing is %s, Fighting is %s", reader.GetOnOffStr(m_uiEventTimer), reader.GetOnOffStr(m_uiFightTimer));
     }
 
-    void Aggro(Unit* pWho) override
+    void Aggro(Unit* /*pWho*/) override
     {
         // cast aggro aura
         DoCastSpellIfCan(m_creature, SPELL_HERO_AGGRO_AURA);
@@ -1856,11 +1858,10 @@ struct MANGOS_DLL_DECL npc_highlord_darion_mograineAI : public npc_escortAI
                 // make army attack
                 for (GuidList::const_iterator itr = m_lAttackersGUIDs.begin(); itr != m_lAttackersGUIDs.end(); ++itr)
                 {
-                    if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
-                    {
-                        if (Creature* pChamp = m_pInstance->GetSingleCreatureFromStorage(aLightArmySpawnLoc[urand(0, MAX_LIGHT_CHAMPIONS - 1)].m_uiEntry))
-                            m_creature->AI()->AttackStart(pTemp);
-                    }
+                    Creature* pAttacker = m_creature->GetMap()->GetCreature(*itr);
+                    Creature* pChamp = m_pInstance->GetSingleCreatureFromStorage(aLightArmySpawnLoc[urand(0, MAX_LIGHT_CHAMPIONS - 1)].m_uiEntry);
+                    if (pAttacker && pChamp)
+                        pAttacker->AI()->AttackStart(pChamp);
                 }
 
                 // need to make sure that all defenders attack
@@ -2306,7 +2307,7 @@ struct MANGOS_DLL_DECL npc_highlord_darion_mograineAI : public npc_escortAI
                                     if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(aLightArmySpawnLoc[i].m_uiEntry))
                                     {
                                         pTemp->SetStandState(UNIT_STAND_STATE_DEAD);
-                                        pTemp->KnockBackFrom(pLichKing, 50, float(urand(44, 87))/10);
+                                        pTemp->KnockBackFrom(pLichKing, 50, float(urand(44, 87)) / 10);
                                     }
                                 }
                             }
@@ -2668,7 +2669,7 @@ bool GossipHello_npc_highlord_darion_mograine(Player* pPlayer, Creature* pCreatu
     return true;
 }
 
-bool GossipSelect_npc_highlord_darion_mograine(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+bool GossipSelect_npc_highlord_darion_mograine(Player* pPlayer, Creature* pCreature, uint32 /*uiSender*/, uint32 uiAction)
 {
     if (uiAction ==  GOSSIP_ACTION_INFO_DEF + 1)
     {
@@ -2705,14 +2706,14 @@ struct MANGOS_DLL_DECL npc_fellow_death_knightAI : public ScriptedAI
     uint32 m_uiBloodStrikeTimer;
     uint32 m_uiPlagueStrikeTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiBloodStrikeTimer    = urand(5000, 10000);
         m_uiIcyTouchTimer       = urand(5000, 10000);
         m_uiPlagueStrikeTimer   = urand(5000, 10000);
     }
 
-    void Aggro(Unit* pWho) override
+    void Aggro(Unit* /*pWho*/) override
     {
         DoCastSpellIfCan(m_creature, SPELL_HERO_AGGRO_AURA);
     }
@@ -2751,7 +2752,7 @@ struct MANGOS_DLL_DECL npc_fellow_death_knightAI : public ScriptedAI
         }
         else if (m_pInstance->GetData(TYPE_BATTLE) == DONE)
         {
-            m_creature->RemoveAllAuras();
+            m_creature->RemoveAllAurasOnEvade();
             m_creature->DeleteThreatList();
             m_creature->CombatStop(true);
             m_creature->LoadCreatureAddon(true);
@@ -2830,10 +2831,10 @@ struct MANGOS_DLL_DECL npc_lich_king_light_dawnAI : public ScriptedAI
 {
     npc_lich_king_light_dawnAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    void Reset() { }
-    void MoveInLineOfSight(Unit* pWho) override { }
-    void AttackStart(Unit* pWho) override { }
-    void UpdateAI(const uint32 uiDiff) override { }
+    void Reset() override { }
+    void MoveInLineOfSight(Unit* /*pWho*/) override { }
+    void AttackStart(Unit* /*pWho*/) override { }
+    void UpdateAI(const uint32 /*uiDiff*/) override { }
 };
 
 CreatureAI* GetAI_npc_lich_king_light_dawn(Creature* pCreature)
@@ -2844,6 +2845,7 @@ CreatureAI* GetAI_npc_lich_king_light_dawn(Creature* pCreature)
 /*######
 ## npc the lich king in dawn of light
 ######*/
+
 enum _spells
 {
     // Highlord Darion Mograine
