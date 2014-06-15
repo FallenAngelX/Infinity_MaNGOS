@@ -18,7 +18,7 @@
 /* ScriptData
 SDName: Ebon_Hold
 SD%Complete: 95
-SDComment: Quest support: 12641, 12701, 12848, 12733, 12739(and 12742 to 12750), 12720, 12727, 12698. Special Npc (npc_valkyr_battle_maiden)
+SDComment: Quest support: 12641, 12687, 12698, 12727, 12733, 12739(and 12742 to 12750), 12801, 12848, 12720, 12701. Special Npc (npc_valkyr_battle_maiden)
 SDCategory: Ebon Hold
 EndScriptData */
 
@@ -525,18 +525,26 @@ enum
     SAY_DUEL_H                  = -1609023,
     SAY_DUEL_I                  = -1609024,
 
+    EMOTE_DUEL_BEGIN            = -1001137,
+    EMOTE_DUEL_BEGIN_3          = -1001138,
+    EMOTE_DUEL_BEGIN_2          = -1001139,
+    EMOTE_DUEL_BEGIN_1          = -1001140,
+
+    GOSSIP_ITEM_ACCEPT_DUEL     = -3609000,
+    GOSSIP_TEXT_ID_DUEL         = 13433,
+
     SPELL_DUEL                  = 52996,
     SPELL_DUEL_TRIGGERED        = 52990,
     SPELL_DUEL_VICTORY          = 52994,
     SPELL_DUEL_FLAG             = 52991,
 
-    SPELL_BLOOD_STRIKE_DUEL     = 52374,
-    SPELL_DEATH_COIL_DUEL       = 52375,
-    SPELL_ICY_TOUCH_DUEL        = 52372,
-    SPELL_PLAGUE_STRIKE_DUEL    = 52373,
+    // generic DK spells. used in many scripts here
+    SPELL_BLOOD_STRIKE          = 52374,
+    SPELL_DEATH_COIL            = 52375,
+    SPELL_ICY_TOUCH             = 52372,
+    SPELL_PLAGUE_STRIKE         = 52373,
 
-    GOSSIP_ITEM_ACCEPT_DUEL     = -3609000,
-    GOSSIP_TEXT_ID_DUEL         = 13433,
+    GO_DUEL_FLAG                = 191126,
 
     QUEST_DEATH_CHALLENGE       = 12733,
     FACTION_HOSTILE             = 2068
@@ -552,110 +560,155 @@ struct MANGOS_DLL_DECL npc_death_knight_initiateAI : public ScriptedAI
     npc_death_knight_initiateAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
     ObjectGuid m_duelerGuid;
+    uint8 m_uiDuelStartStage;
     uint32 m_uiDuelTimer;
-    bool m_bIsDuelInProgress;
-    uint32 m_uiBloodStrike_Timer;
-    uint32 m_uiDeathCoil_Timer;
-    uint32 m_uiIcyTouch_Timer;
-    uint32 m_uiPlagueStrike_Timer;
+    uint32 m_uiBloodStrikeTimer;
+    uint32 m_uiDeathCoilTimer;
+    uint32 m_uiIcyTouchTimer;
+    uint32 m_uiPlagueStrikeTimer;
+
+    bool m_bIsDuelComplete;
 
     void Reset() override
     {
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_15);
-
         m_duelerGuid.Clear();
-        m_uiDuelTimer = 5000;
-        m_bIsDuelInProgress = false;
-        m_uiBloodStrike_Timer = 4000;
-        m_uiDeathCoil_Timer = 6000;
-        m_uiIcyTouch_Timer = 2000;
-        m_uiPlagueStrike_Timer = 5000;
+
+        m_uiDuelStartStage      = 0;
+        m_uiDuelTimer           = 0;
+        m_bIsDuelComplete       = false;
+
+        m_uiBloodStrikeTimer    = 4000;
+        m_uiDeathCoilTimer      = 6000;
+        m_uiIcyTouchTimer       = 2000;
+        m_uiPlagueStrikeTimer   = 5000;
     }
 
-    void AttackedBy(Unit* pAttacker) override
+    void JustReachedHome() override
     {
-        if (m_creature->getVictim())
-            return;
+        // reset encounter
+        if (GameObject* pFlag = GetClosestGameObjectWithEntry(m_creature, GO_DUEL_FLAG, 30.0f))
+            pFlag->SetLootState(GO_JUST_DEACTIVATED);
 
-        if (m_creature->IsFriendlyTo(pAttacker))
-            return;
-
-        AttackStart(pAttacker);
+        m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
+    void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 /*uiMiscValue*/) override
     {
-        if (!m_bIsDuelInProgress && pSpell->Id == SPELL_DUEL_TRIGGERED && pCaster->GetTypeId() == TYPEID_PLAYER)
+        // start duel
+        if (eventType == AI_EVENT_START_EVENT && pInvoker->GetTypeId() == TYPEID_PLAYER)
         {
-            m_duelerGuid = pCaster->GetObjectGuid();
-            m_bIsDuelInProgress = true;
+            m_duelerGuid = pInvoker->GetObjectGuid();
+            m_uiDuelStartStage = 0;
+            m_uiDuelTimer = 5000;
         }
     }
 
     void DamageTaken(Unit* /*pDoneBy*/, uint32& uiDamage) override
     {
-        if (m_bIsDuelInProgress && uiDamage > m_creature->GetHealth())
+        if (uiDamage >= m_creature->GetHealth())
         {
             uiDamage = 0;
 
-            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_duelerGuid))
-                m_creature->CastSpell(pPlayer, SPELL_DUEL_VICTORY, true);
+            if (!m_bIsDuelComplete)
+            {
+                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_duelerGuid))
+                {
+                    m_creature->CastSpell(pPlayer, SPELL_DUEL_VICTORY, true);
+                    m_creature->SetFacingToObject(pPlayer);
+                }
 
-            // possibly not evade, but instead have end sequenze
-            EnterEvadeMode();
+                // complete duel and evade (without home movemnet)
+                m_bIsDuelComplete = true;
+                m_creature->RemoveAllAurasOnEvade();
+                m_creature->DeleteThreatList();
+                m_creature->CombatStop(true);
+                m_creature->SetLootRecipient(NULL);
+
+                // remove duel flag
+                if (GameObject* pFlag = GetClosestGameObjectWithEntry(m_creature, GO_DUEL_FLAG, 30.0f))
+                    pFlag->SetLootState(GO_JUST_DEACTIVATED);
+
+                m_creature->HandleEmoteCommand(EMOTE_ONESHOT_BEG);
+                m_creature->ForcedDespawn(10000);
+            }
         }
     }
 
     void UpdateAI(const uint32 uiDiff) override
     {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        if (m_uiDuelTimer)
         {
-            if (m_bIsDuelInProgress)
+            if (m_uiDuelTimer <= uiDiff)
             {
-                if (m_uiDuelTimer < uiDiff)
+                Player* pPlayer = m_creature->GetMap()->GetPlayer(m_duelerGuid);
+                if (!pPlayer)
+                    return;
+
+                switch (m_uiDuelStartStage)
                 {
-                    m_creature->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_COMBAT_STOP | TEMPFACTION_RESTORE_RESPAWN);
-
-                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_duelerGuid))
+                    case 0:
+                        DoScriptText(EMOTE_DUEL_BEGIN, m_creature, pPlayer);
+                        m_uiDuelTimer = 1000;
+                        break;
+                    case 1:
+                        DoScriptText(EMOTE_DUEL_BEGIN_3, m_creature, pPlayer);
+                        m_uiDuelTimer = 1000;
+                        break;
+                    case 2:
+                        DoScriptText(EMOTE_DUEL_BEGIN_2, m_creature, pPlayer);
+                        m_uiDuelTimer = 1000;
+                        break;
+                    case 3:
+                        DoScriptText(EMOTE_DUEL_BEGIN_1, m_creature, pPlayer);
+                        m_uiDuelTimer = 1000;
+                        break;
+                    case 4:
+                        m_creature->SetFactionTemporary(FACTION_HOSTILE, TEMPFACTION_RESTORE_COMBAT_STOP | TEMPFACTION_RESTORE_RESPAWN);
                         AttackStart(pPlayer);
+                        m_uiDuelTimer = 0;
+                        break;
                 }
-                else
-                    m_uiDuelTimer -= uiDiff;
+                ++m_uiDuelStartStage;
             }
+            else
+                m_uiDuelTimer -= uiDiff;
+        }
+
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
-        }
 
-        if (m_uiBloodStrike_Timer < uiDiff)
+        if (m_uiBloodStrikeTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_BLOOD_STRIKE_DUEL);
-            m_uiBloodStrike_Timer = 9000;
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_BLOOD_STRIKE) == CAST_OK)
+                m_uiBloodStrikeTimer = 9000;
         }
         else
-            m_uiBloodStrike_Timer -= uiDiff;
+            m_uiBloodStrikeTimer -= uiDiff;
 
-        if (m_uiDeathCoil_Timer < uiDiff)
+        if (m_uiDeathCoilTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_DEATH_COIL_DUEL);
-            m_uiDeathCoil_Timer = 8000;
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_DEATH_COIL) == CAST_OK)
+                m_uiDeathCoilTimer = 8000;
         }
         else
-            m_uiDeathCoil_Timer -= uiDiff;
+            m_uiDeathCoilTimer -= uiDiff;
 
-        if (m_uiIcyTouch_Timer < uiDiff)
+        if (m_uiIcyTouchTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_ICY_TOUCH_DUEL);
-            m_uiIcyTouch_Timer = 8000;
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_ICY_TOUCH) == CAST_OK)
+                m_uiIcyTouchTimer = 8000;
         }
         else
-            m_uiIcyTouch_Timer -= uiDiff;
+            m_uiIcyTouchTimer -= uiDiff;
 
-        if (m_uiPlagueStrike_Timer < uiDiff)
+        if (m_uiPlagueStrikeTimer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_PLAGUE_STRIKE_DUEL);
-            m_uiPlagueStrike_Timer = 8000;
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_PLAGUE_STRIKE) == CAST_OK)
+                m_uiPlagueStrikeTimer = 8000;
         }
         else
-            m_uiPlagueStrike_Timer -= uiDiff;
+            m_uiPlagueStrikeTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
@@ -683,20 +736,27 @@ bool GossipSelect_npc_death_knight_initiate(Player* pPlayer, Creature* pCreature
     {
         pPlayer->CLOSE_GOSSIP_MENU();
 
-        if (npc_death_knight_initiateAI* pInitiateAI = dynamic_cast<npc_death_knight_initiateAI*>(pCreature->AI()))
-        {
-            if (pInitiateAI->m_bIsDuelInProgress)
-                return true;
-        }
-
+        pCreature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
         pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_15);
+        pCreature->SetFacingToObject(pPlayer);
 
         DoScriptText(m_auiRandomSay[urand(0, countof(m_auiRandomSay) - 1)], pCreature, pPlayer);
 
-        pCreature->CastSpell(pPlayer, SPELL_DUEL, false);
+        pCreature->CastSpell(pPlayer, SPELL_DUEL, true);
         pCreature->CastSpell(pPlayer, SPELL_DUEL_FLAG, true);
     }
     return true;
+}
+
+bool EffectDummyCreature_npc_death_knight_initiate(Unit* pCaster, uint32 uiSpellId, SpellEffectIndex uiEffIndex, Creature* pCreatureTarget, ObjectGuid /*originalCasterGuid*/)
+{
+    if (uiSpellId == SPELL_DUEL_TRIGGERED && uiEffIndex == EFFECT_INDEX_0)
+    {
+        pCreatureTarget->AI()->SendAIEvent(AI_EVENT_START_EVENT, pCaster, pCreatureTarget);
+        return true;
+    }
+
+    return false;
 }
 
 /*######
@@ -906,11 +966,6 @@ enum
     SPELL_CHAINED_PESANT_CHEST      = 54612,
     SPELL_CHAINED_PESANT_BREATH     = 54613,
     SPELL_INITIATE_VISUAL           = 51519,
-
-    SPELL_BLOOD_STRIKE              = 52374,
-    SPELL_DEATH_COIL                = 52375,
-    SPELL_ICY_TOUCH                 = 52372,
-    SPELL_PLAGUE_STRIKE             = 52373,
 
     NPC_ANCHOR                      = 29521,
     FACTION_MONSTER                 = 16,
@@ -1163,13 +1218,12 @@ bool GOUse_go_acherus_soul_prison(Player* pPlayer, GameObject* pGo)
 ## npc_eye_of_acherus
 ######*/
 
-enum eEyeOfAcherus
+enum
 {
     SPELL_EYE_CONTROL       = 51852,                        // player control aura
     SPELL_EYE_VISUAL        = 51892,
     SPELL_EYE_FLIGHT        = 51890,                        // player flight control
     SPELL_EYE_FLIGHT_BOOST  = 51923,                        // flight boost to reach new avalon
-
 
     DISPLAYID_EYE_HUGE      = 26320,
     DISPLAYID_EYE_SMALL     = 25499,
@@ -3947,6 +4001,7 @@ void AddSC_ebon_hold()
     pNewScript->GetAI = &GetAI_npc_death_knight_initiate;
     pNewScript->pGossipHello = &GossipHello_npc_death_knight_initiate;
     pNewScript->pGossipSelect = &GossipSelect_npc_death_knight_initiate;
+    pNewScript->pEffectDummyNPC = &EffectDummyCreature_npc_death_knight_initiate;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
@@ -4048,5 +4103,4 @@ void AddSC_ebon_hold()
     pNewScript->GetAI = &GetAI_npc_acherus_deathcharger;
     pNewScript->pEffectDummyNPC = &EffectDummyCreature_npc_acherus_deathcharger;
     pNewScript->RegisterSelf();
-
 }
