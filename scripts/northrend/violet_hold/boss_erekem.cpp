@@ -27,14 +27,14 @@ EndScriptData */
 
 enum
 {
-    SAY_AGGRO                                 = -1608010,
-    SAY_SLAY_1                                = -1608011,
-    SAY_SLAY_2                                = -1608012,
-    SAY_SLAY_3                                = -1608013,
-    SAY_DEATH                                 = -1608014,
-    SAY_SPAWN                                 = -1608015,
-    SAY_ADD_KILED                             = -1608016,
-    SAY_BOTH_ADDS_KILED                       = -1608017,
+    SAY_AGGRO                                 = -1608012,
+    SAY_SLAY_1                                = -1608066,
+    SAY_SLAY_2                                = -1608067,
+    SAY_SLAY_3                                = -1608068,
+    SAY_DEATH                                 = -1608018,
+    SAY_SPAWN                                 = -1608008,
+    SAY_ADD_KILED                             = -1608013,
+    SAY_BOTH_ADDS_KILED                       = -1608014,
 
     SPELL_BLOODLUST                           = 54516,
     SPELL_BREAK_BONDS                         = 59463,

@@ -28,16 +28,16 @@ EndScriptData */
 
 enum
 {
-    SAY_AGGRO                                 = -1608018,
-    SAY_SLAY_1                                = -1608019,
-    SAY_SLAY_2                                = -1608020,
-    SAY_SLAY_3                                = -1608021,
-    SAY_DEATH                                 = -1608022,
-    SAY_SPAWN                                 = -1608023,
-    SAY_ENRAGE                                = -1608024,
-    SAY_SHATTER                               = -1608025,
-    SAY_BUBBLE                                = -1608026,
-    EMOTE_ICHORON_PROTECTIVE_BUBBLE           = -1608008,
+    SAY_AGGRO                                 = -1608019,
+    SAY_SLAY_1                                = -1608022,
+    SAY_SLAY_2                                = -1608023,
+    SAY_SLAY_3                                = -1608024,
+    SAY_DEATH                                 = -1608026,
+    SAY_SPAWN                                 = -1608069,
+    SAY_ENRAGE                                = -1608025,
+    SAY_SHATTER                               = -1608020,
+    SAY_BUBBLE                                = -1608021,
+    EMOTE_ICHORON_PROTECTIVE_BUBBLE           = -1608028,
 
     SPELL_DRAINED                             = 59820,
     SPELL_FRENZY                              = 54312,
