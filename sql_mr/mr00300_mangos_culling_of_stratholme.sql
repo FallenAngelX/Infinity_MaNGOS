@@ -104,8 +104,9 @@ DELETE FROM `creature_ai_texts` WHERE  `entry`=-875;
 DELETE FROM `creature_ai_texts` WHERE  `entry`=-876;
 
 -- Quest fix  ( if you already had quest done should be able to do it again you can in off blizz ... soo)
-UPDATE `quest_template` SET `SpecialFlags` = 1 WHERE `entry` = 13151;
-UPDATE `quest_template` SET `SpecialFlags` = 1 WHERE `entry` = 13149;
+-- Xploitable
+-- UPDATE `quest_template` SET `SpecialFlags` = 1 WHERE `entry` = 13151;
+-- UPDATE `quest_template` SET `SpecialFlags` = 1 WHERE `entry` = 13149;
 
 -- remove already spawned third chromi for summon after mal ganis is dead
 DELETE FROM `creature` WHERE `id`=30997;

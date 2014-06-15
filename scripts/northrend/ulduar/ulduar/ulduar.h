@@ -7,7 +7,8 @@
 
 enum
 {
-    // boss types
+
+    // Main boss types
     TYPE_LEVIATHAN              = 0,
     TYPE_IGNIS                  = 1,
     TYPE_RAZORSCALE             = 2,
@@ -23,9 +24,8 @@ enum
     TYPE_YOGGSARON              = 12,
     TYPE_ALGALON                = 13,
 
-    MAX_BOSS_ENCOUNTER          = 14,
-
-    // hard mode bosses
+    // Hard mode boss types
+    // Used for hard mode bosses only
     TYPE_LEVIATHAN_DIFFICULTY   = 20,
     TYPE_XT002_HARD             = 21,
     TYPE_MIMIRON_HARD           = 23,
@@ -36,7 +36,8 @@ enum
     TYPE_YOGGSARON_HARD         = 28,
     TYPE_YOGGSARON_HARD_4       = 29,
 
-    // keepers help at Yogg
+    // Keeper types
+    // Used to store the keepers which will be used at yogg
     TYPE_KEEPER_HODIR           = 30,
     TYPE_KEEPER_FREYA           = 31,
     TYPE_KEEPER_THORIM          = 32,
@@ -63,7 +64,7 @@ enum
     NPC_KEEPER_OF_NORGANNON     = 33686,
     NPC_BRANN_BRONZEBEARD       = 33579,
 
-    /* the siege of ulduar */
+    // The siege of ulduar
     VEHICLE_SIEGE              = 33060,
     VEHICLE_CHOPPER            = 33062,
     VEHICLE_DEMOLISHER         = 33109,
@@ -82,11 +83,10 @@ enum
     NPC_XT_TOY_PILE             = 33337,
 
 
-    /* the antechamber of ulduar */
+    // The antechamber of ulduar
     NPC_STEELBREAKER            = 32867,
     NPC_RUNEMASTER_MOLGEIM      = 32927,
     NPC_STORMCALLER_BRUNDIR     = 32857,
-
     NPC_KOLOGARN                = 32930,
     NPC_RIGHT_ARM               = 32934,
     NPC_LEFT_ARM                = 32933,
@@ -95,19 +95,20 @@ enum
     NPC_AURIAYA                 = 33515,
     NPC_SANCTUM_SENTRY          = 34014,
     NPC_FERAL_DEFENDER          = 34035,
-    // Mimiron
+
+    // The keepers of ulduar
     NPC_MIMIRON                 = 33350,
     NPC_LEVIATHAN_MK            = 33432,
     NPC_VX001                   = 33651,
     NPC_AERIAL_UNIT             = 33670,
-    // Hodir
     NPC_HODIR                   = 32845,
     NPC_HELPER_DRUID            = 32941,
     NPC_HELPER_SHAMAN           = 32950,
     NPC_HELPER_MAGE             = 32946,
     NPC_HELPER_PRIEST           = 32948,
-    // Thorim
     NPC_THORIM                  = 32865,
+
+    // Thorim event npcs
     NPC_RUNIC_COLOSSUS          = 32872,
     NPC_RIGHT_HAND_TRIGGER      = 33140,
     NPC_LEFT_HAND_TRIGGER       = 33141,
@@ -119,37 +120,35 @@ enum
     NPC_MERCENARY_HORDE         = 32883,
     NPC_THUNDER_ORB             = 33378,    // npc used to cast charged orb
 
-    /* the-keepers-of-ulduar */
-    // Freya
     NPC_FREYA                   = 32906,
     NPC_BRIGHTLEAF              = 32915,
     NPC_IRONBRACH               = 32913,
     NPC_STONEBARK               = 32914,
 
-    /* the-descent-into-madness */
-    // Madness
+    // The descent into madness
     NPC_VEZAX                   = 33271,
     NPC_ANIMUS                  = 33524,
     NPC_YOGGSARON               = 33288,
 
-    /* celestial-planetarium */
+    // Celestial planetarium
     NPC_ALGALON                 = 32871,
     NPC_SARA                    = 33134,
     NPC_YOGG_BRAIN              = 33890, 
     NPC_OMINOUS_CLOUD           = 33292,
 
-    // keepers images used to start the encounter
+    // Keepers helpers spawned during Yogg Saron encounter
     THORIM_IMAGE                = 33413,
     MIMIRON_IMAGE               = 33412,
     HODIR_IMAGE                 = 33411,
     FREYA_IMAGE                 = 33410,
-    // Keepers used at yogg saron encounter
+
+    // Keepers spawned in the central hall after releaseed from Yogg's enslavement
     KEEPER_FREYA                = 33241,
     KEEPER_HODIR                = 33213,
     KEEPER_MIMIRON              = 33244,
     KEEPER_THORIM               = 33242, 
 
-    // loot chests
+    // Loot chests
     // Kologarn
     GO_CACHE_OF_LIVING_STONE    = 195046,
     GO_CACHE_OF_LIVING_STONE_H  = 195047,
@@ -180,38 +179,41 @@ enum
     GO_CACHE_OF_INOV_HARD       = 194957,
     GO_CACHE_OF_INOV_HARD_H     = 194958,
 
-    // doors
-    // the siege
+    // Doors and other Objects
+    // The siege
     GO_LIGHTNING_DOOR           = 194905,
     GO_SHIELD_WALL              = 194416,
     GO_LEVIATHAN_GATE           = 194630,
     GO_XT002_GATE               = 194631,
     GO_BROKEN_HARPOON           = 194565,
     // archivum
+    // Antechamber
     GO_KOLOGARN_BRIDGE          = 194232,
     GO_SHATTERED_DOOR           = 194553,
     GO_IRON_ENTRANCE_DOOR       = 194554,
     GO_ARCHIVUM_DOOR            = 194556,
     GO_ARCHIVUM_CONSOLE         = 194555,
-    // planetarium: algalon
+
+    // Planetarium
     GO_CELESTIAL_ACCES          = 194628,
     GO_CELESTIAL_ACCES_H        = 194752,
     GO_CELESTIAL_DOOR           = 194767,
     GO_UNIVERSE_FLOOR_ARCHIVUM  = 194715,
     GO_UNIVERSE_FLOOR_CELESTIAL = 194716,
     GO_AZEROTH_GLOBE            = 194148,
-    // the keepers
-    // hodir
+
+    // The keepers
+    // Hodir
     GO_HODIR_EXIT               = 194634,
     GO_HODIR_ICE_WALL           = 194441,
     GO_HODIR_ENTER              = 194442,
-    // mimiron
+    // Mimiron
+    GO_MIMIRON_BUTTON           = 194739,                   // Used to start hard mode
     GO_MIMIRON_TRAM             = 194675,
-    GO_MIMIRON_BUTTON           = 194739,
     GO_MIMIRON_DOOR_1           = 194774,
     GO_MIMIRON_DOOR_2           = 194775,
     GO_MIMIRON_DOOR_3           = 194776,
-    GO_MIMIRON_TEL1             = 194741,
+    GO_MIMIRON_TEL1             = 194741,                   // Used to summon mobs in phase 3
     GO_MIMIRON_TEL2             = 194742,
     GO_MIMIRON_TEL3             = 194743,
     GO_MIMIRON_TEL4             = 194744,
@@ -220,18 +222,19 @@ enum
     GO_MIMIRON_TEL7             = 194747,
     GO_MIMIRON_TEL8             = 194748,
     GO_MIMIRON_TEL9             = 194745,
-    GO_MIMIRON_ELEVATOR         = 194749,
+    GO_MIMIRON_ELEVATOR         = 194749,                   // Central elevator
     // Thorim
-    GO_DARK_IRON_PORTCULIS      = 194560,
-    GO_RUNED_STONE_DOOR         = 194557,
-    GO_THORIM_STONE_DOOR        = 194558,
-    GO_LIGHTNING_FIELD          = 194559,
-    GO_DOOR_LEVER               = 194264,
-    //Yogg
-    GO_ANCIENT_GATE             = 194255,
-    GO_VEZAX_GATE               = 194750,
-    GO_YOGG_GATE                = 194773,
-    GO_BRAIN_DOOR1              = 194635,
+    GO_DARK_IRON_PORTCULIS      = 194560,                   // Door from the arena to the hallway
+    GO_RUNED_STONE_DOOR         = 194557,                   // Door after the runic colossus
+    GO_THORIM_STONE_DOOR        = 194558,                   // Door after the ancient rune giant
+    GO_LIGHTNING_FIELD          = 194559,                   // Arena exit door
+    GO_DOOR_LEVER               = 194264,                   // In front of the door
+
+    // Descent to madness
+    GO_ANCIENT_GATE             = 194255,                   // Door upstairs before vezax, opens when all keepers are freed
+    GO_VEZAX_GATE               = 194750,                   // Door after vezax
+    GO_YOGG_GATE                = 194773,                   // Yogg-Saron chamber door
+    GO_BRAIN_DOOR1              = 194635,                   // Brain chamber doors
     GO_BRAIN_DOOR2              = 194636,
     GO_BRAIN_DOOR3              = 194637,
 
