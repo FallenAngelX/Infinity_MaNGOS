@@ -55,7 +55,6 @@ enum
     MAX_HARD_MODE_VAPORS                = 6,
 
     NPC_SARONITE_VAPOR                  = 33488,
-    NPC_SARONITE_ANIMUS                 = 33524,
     SPELL_PROFOUND_DARKNESS             = 63420,
 };
 

@@ -234,7 +234,7 @@ struct MANGOS_DLL_DECL boss_brundirAI : public ScriptedAI
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
         }
-        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_RUNEMASTER_MOLGEIM))
+        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_MOLGEIM))
         {
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
@@ -518,7 +518,7 @@ struct MANGOS_DLL_DECL boss_molgeimAI : public ScriptedAI
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
         }
-        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_STORMCALLER_BRUNDIR))
+        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_BRUNDIR))
         {
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
@@ -548,14 +548,14 @@ struct MANGOS_DLL_DECL boss_molgeimAI : public ScriptedAI
         switch(urand(0, 2))
         {
             case 0:
-                pRuneOfPowerTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_STORMCALLER_BRUNDIR);
+                pRuneOfPowerTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_BRUNDIR);
                 if (pRuneOfPowerTarget && !pRuneOfPowerTarget->isAlive() && urand(0, 1))
                     pRuneOfPowerTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_STEELBREAKER);
                 break;
             case 1:
                 pRuneOfPowerTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_STEELBREAKER);
                 if (pRuneOfPowerTarget && !pRuneOfPowerTarget->isAlive() && urand(0, 1))
-                    pRuneOfPowerTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_STORMCALLER_BRUNDIR);
+                    pRuneOfPowerTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_BRUNDIR);
                 break;
             case 2:
                 break;
@@ -716,12 +716,12 @@ struct MANGOS_DLL_DECL boss_steelbreakerAI : public ScriptedAI
         DoScriptText(SAY_STEEL_AGGRO, m_creature);
         if (!m_pInstance)
             return;
-        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_RUNEMASTER_MOLGEIM))
+        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_MOLGEIM))
         {
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();
         }
-        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_STORMCALLER_BRUNDIR))
+        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_BRUNDIR))
         {
             if (pTemp->isAlive())
                 pTemp->SetInCombatWithZone();

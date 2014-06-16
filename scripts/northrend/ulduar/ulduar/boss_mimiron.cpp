@@ -1211,7 +1211,7 @@ struct MANGOS_DLL_DECL boss_mimironAI : public ScriptedAI
         m_uiIntroStep           = 1;
 
         // reset button
-        if(GameObject* pButton = m_pInstance->GetSingleGameObjectFromStorage(GO_MIMIRON_BUTTON))
+        if(GameObject* pButton = m_pInstance->GetSingleGameObjectFromStorage(G0_MIMIRON_BUTTON))
             pButton->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
 
         // reset elevator
@@ -1309,7 +1309,7 @@ struct MANGOS_DLL_DECL boss_mimironAI : public ScriptedAI
                         m_uiIntroTimer = 10000;
                         break;
                     case 3:
-                        if(GameObject* pButton = m_pInstance->GetSingleGameObjectFromStorage(GO_MIMIRON_BUTTON))
+                        if(GameObject* pButton = m_pInstance->GetSingleGameObjectFromStorage(G0_MIMIRON_BUTTON))
                             pButton->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
                         if(m_pInstance->GetData(TYPE_MIMIRON_HARD) == IN_PROGRESS)
                         {

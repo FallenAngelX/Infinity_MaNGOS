@@ -222,28 +222,28 @@ struct MANGOS_DLL_DECL boss_hodirAI : public ScriptedAI
         m_bIsOutro              = false;
         m_bhardmode             = true;
 
-        if (Creature* pMage = m_pInstance->GetSingleCreatureFromStorage(NPC_HELPER_MAGE))
+        if (Creature* pMage = m_pInstance->GetSingleCreatureFromStorage(NPC_MAGE_HORDE_N))
         {
             if (!pMage->isAlive())
                 pMage->Respawn();
             else
                 pMage->AI()->EnterEvadeMode();
         }
-        if (Creature* pDruid = m_pInstance->GetSingleCreatureFromStorage(NPC_HELPER_DRUID))
+        if (Creature* pDruid = m_pInstance->GetSingleCreatureFromStorage(NPC_DRUID_ALLIANCE_N))
         {
             if (!pDruid->isAlive())
                 pDruid->Respawn();
             else
                 pDruid->AI()->EnterEvadeMode();
         }
-        if (Creature* pPriest = m_pInstance->GetSingleCreatureFromStorage(NPC_HELPER_PRIEST))
+        if (Creature* pPriest = m_pInstance->GetSingleCreatureFromStorage(NPC_PRIEST_HORDE_N))
         {
             if (!pPriest->isAlive())
                 pPriest->Respawn();
             else
                 pPriest->AI()->EnterEvadeMode();
         }
-        if (Creature* pShaman = m_pInstance->GetSingleCreatureFromStorage(NPC_HELPER_SHAMAN))
+        if (Creature* pShaman = m_pInstance->GetSingleCreatureFromStorage(NPC_SHAMAN_ALLIANCE_N))
         {
             if (!pShaman->isAlive())
                 pShaman->Respawn();
@@ -664,7 +664,7 @@ struct MANGOS_DLL_DECL npc_hodir_helperAI : public ScriptedAI
             CanCastResult result = CAST_FAIL_OTHER;
             switch (m_creature->GetEntry())
             {
-                case NPC_HELPER_PRIEST:                     // Priest
+                case NPC_PRIEST_HORDE_N:                     // Priest
                     switch(urand(0, 4))
                     {
                         case 0:
@@ -681,7 +681,7 @@ struct MANGOS_DLL_DECL npc_hodir_helperAI : public ScriptedAI
                             break;
                     }
                     break;
-                case NPC_HELPER_DRUID:                     // Druid
+                case NPC_DRUID_ALLIANCE_N:                     // Druid
                     if (roll_chance_i(80))
                     {
                         if(Creature *pHodir = m_pInstance->GetSingleCreatureFromStorage(NPC_HODIR))
@@ -690,7 +690,7 @@ struct MANGOS_DLL_DECL npc_hodir_helperAI : public ScriptedAI
                     else
                         result = DoCastSpellIfCan(m_creature, SPELL_STARLIGHT);
                     break;
-                case NPC_HELPER_SHAMAN:                     // Shaman
+                case NPC_SHAMAN_ALLIANCE_N:                     // Shaman
                     if (roll_chance_i(70))
                     {
                         if(Creature *pHodir = m_pInstance->GetSingleCreatureFromStorage(NPC_HODIR))
@@ -703,7 +703,7 @@ struct MANGOS_DLL_DECL npc_hodir_helperAI : public ScriptedAI
                             result = DoCastSpellIfCan(pTemp, m_bIsRegularMode ? SPELL_STORM_CLOUD : SPELL_STORM_CLOUD_H);
                     }
                     break;
-                case NPC_HELPER_MAGE:                     // Mage
+                case NPC_MAGE_HORDE_N:                     // Mage
                     switch(urand(0, 4))
                     {
                         case 0:

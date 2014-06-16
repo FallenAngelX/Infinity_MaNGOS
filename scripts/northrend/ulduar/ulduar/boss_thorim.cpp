@@ -57,8 +57,6 @@ enum
 //    EMOTE_BARRIER_1         = -1603213,
 //    EMOTE_BARRIER_2         = -1603214,
 
-    // NPC's
-    NPC_SIF                         = 33196,
     // arena
     NPC_DARK_RUNE_CHAMPION          = 32876,
     NPC_DARK_RUNE_WARBRINGER        = 32877,
@@ -1518,7 +1516,7 @@ struct MANGOS_DLL_DECL mob_thorim_preaddsAI : public ScriptedAI
             m_creature->AddThreat(pWho);
             m_creature->SetInCombatWith(pWho);
             pWho->SetInCombatWith(m_creature);
-            if(m_creature->GetEntry() == NPC_MERCENARY_ALY || m_creature->GetEntry() == NPC_MERCENARY_HORDE)
+            if(m_creature->GetEntry() == NPC_SOLDIER_ALLIANCE || m_creature->GetEntry() == NPC_SOLDIER_HORDE)
                 DoStartMovement(pWho, 20);
             else
                 DoStartMovement(pWho);
@@ -1560,7 +1558,7 @@ struct MANGOS_DLL_DECL mob_thorim_preaddsAI : public ScriptedAI
 
                 break;
             }
-            case NPC_CAPTAIN_ALY:
+            case NPC_CAPTAIN_ALLIANCE:
             case NPC_CAPTAIN_HORDE:
             {
                 if(m_uiDevastateTimer < uiDiff)
@@ -1580,8 +1578,8 @@ struct MANGOS_DLL_DECL mob_thorim_preaddsAI : public ScriptedAI
 
                 break;
             }
-            case NPC_MERCENARY_ALY:
-            case NPC_MERCENARY_HORDE:
+            case NPC_SOLDIER_ALLIANCE:
+            case NPC_SOLDIER_HORDE:
             {
                 if(m_uiShootTimer < uiDiff)
                 {

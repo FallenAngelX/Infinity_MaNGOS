@@ -273,7 +273,7 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
     {
         if (m_pInstance)
         {
-            if (m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) == HARD_DIFFICULTY)
+            if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == HARD_DIFFICULTY)
                 CheckForTowers();
             m_pInstance->SetData(TYPE_LEVIATHAN, IN_PROGRESS);
             if (m_pInstance->GetData(TYPE_LEVIATHAN_TP) != DONE)
@@ -315,16 +315,16 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
                 switch (m_uiActiveTowers)
                 {
                     case 4:
-                        m_pInstance->SetData(TYPE_LEVIATHAN_DIFFICULTY, HARD_DIFFICULTY_4_DONE);
+                        m_pInstance->SetData(TYPE_LEVIATHAN_HARD, HARD_DIFFICULTY_4_DONE);
                         break;
                     case 3:
-                        m_pInstance->SetData(TYPE_LEVIATHAN_DIFFICULTY, HARD_DIFFICULTY_3_DONE);
+                        m_pInstance->SetData(TYPE_LEVIATHAN_HARD, HARD_DIFFICULTY_3_DONE);
                         break;
                     case 2:
-                        m_pInstance->SetData(TYPE_LEVIATHAN_DIFFICULTY, HARD_DIFFICULTY_2_DONE);
+                        m_pInstance->SetData(TYPE_LEVIATHAN_HARD, HARD_DIFFICULTY_2_DONE);
                         break;
                     case 1:
-                        m_pInstance->SetData(TYPE_LEVIATHAN_DIFFICULTY, HARD_DIFFICULTY_1_DONE);
+                        m_pInstance->SetData(TYPE_LEVIATHAN_HARD, HARD_DIFFICULTY_1_DONE);
                         break;
                 }
             }
@@ -489,7 +489,7 @@ struct MANGOS_DLL_DECL boss_flame_leviathanAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff) override
     {
-        if (m_pInstance && (m_pInstance->GetData(TYPE_LEVIATHAN) == NOT_STARTED || m_pInstance->GetData(TYPE_LEVIATHAN) == FAIL) && m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) != NONE_DIFFICULTY)
+        if (m_pInstance && (m_pInstance->GetData(TYPE_LEVIATHAN) == NOT_STARTED || m_pInstance->GetData(TYPE_LEVIATHAN) == FAIL) && m_pInstance->GetData(TYPE_LEVIATHAN_HARD) != NONE_DIFFICULTY)
         {
             if (CollossusDead())
             {
@@ -966,7 +966,7 @@ struct MANGOS_DLL_DECL mob_lorekeeperAI : public ScriptedAI
             case VEHICLE_SIEGE:
             case VEHICLE_DEMOLISHER:
             case VEHICLE_CHOPPER:
-                if (m_pInstance->GetData(TYPE_LEVIATHAN) == DONE || m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) == NONE_DIFFICULTY)
+                if (m_pInstance->GetData(TYPE_LEVIATHAN) == DONE || m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == NONE_DIFFICULTY)
                     pVehicle->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                 else
                     pVehicle->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -1023,7 +1023,7 @@ bool GossipHello_mob_lorekeeper(Player* player, Creature* pCreature)
     instance_ulduar* m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
     if (!m_pInstance)
         return true;
-    if (m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) == NONE_DIFFICULTY)
+    if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == NONE_DIFFICULTY)
         player->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Activate secondary defencive systems.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
 
     player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetObjectGuid());
@@ -1038,9 +1038,9 @@ bool GossipSelect_mob_lorekeeper(Player* pPlayer, Creature* pCreature, uint32 se
         instance_ulduar* m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
         if (!m_pInstance)
             return true;
-        if (m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) == NONE_DIFFICULTY && m_pInstance->GetData(TYPE_LEVIATHAN) == NOT_STARTED)
+        if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == NONE_DIFFICULTY && m_pInstance->GetData(TYPE_LEVIATHAN) == NOT_STARTED)
         {
-            m_pInstance->SetData(TYPE_LEVIATHAN_DIFFICULTY, HARD_DIFFICULTY);
+            m_pInstance->SetData(TYPE_LEVIATHAN_HARD, HARD_DIFFICULTY);
             pCreature->SetVisibility(VISIBILITY_OFF);
             if (Creature* pBrannBronzebeard = m_pInstance->GetSingleCreatureFromStorage(NPC_BRANN_BRONZEBEARD))
                 pBrannBronzebeard->SetVisibility(VISIBILITY_OFF);
@@ -1055,7 +1055,7 @@ bool GossipHello_npc_brann_bronzebeard(Player* pPlayer, Creature* pCreature)
     if (!m_pInstance)
         return true;
 
-    if (m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) == NONE_DIFFICULTY)
+    if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == NONE_DIFFICULTY)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "We're ready. Begin the assault!", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
 
     pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetObjectGuid());
@@ -1071,9 +1071,9 @@ bool GossipSelect_npc_brann_bronzebeard(Player* pPlayer, Creature* pCreature, ui
             return true;
         pPlayer->CLOSE_GOSSIP_MENU();
 
-        if (m_pInstance->GetData(TYPE_LEVIATHAN_DIFFICULTY) == NONE_DIFFICULTY && m_pInstance->GetData(TYPE_LEVIATHAN) == NOT_STARTED)
+        if (m_pInstance->GetData(TYPE_LEVIATHAN_HARD) == NONE_DIFFICULTY && m_pInstance->GetData(TYPE_LEVIATHAN) == NOT_STARTED)
         {
-            m_pInstance->SetData(TYPE_LEVIATHAN_DIFFICULTY, EASY_DIFFICULTY);
+            m_pInstance->SetData(TYPE_LEVIATHAN_HARD, EASY_DIFFICULTY);
             pCreature->SetVisibility(VISIBILITY_OFF);
             if (Creature* pKeeperOfNorgannon = m_pInstance->GetSingleCreatureFromStorage(NPC_KEEPER_OF_NORGANNON))
                 pKeeperOfNorgannon->SetVisibility(VISIBILITY_OFF);

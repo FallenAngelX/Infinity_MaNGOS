@@ -499,7 +499,7 @@ struct MANGOS_DLL_DECL boss_yogg_saronAI : public ScriptedAI
             // summon thorim
             if(m_pInstance->GetData(TYPE_KEEPER_THORIM) == DONE)
             {
-                if (Creature* pThorim = m_creature->SummonCreature(KEEPER_THORIM, KeepersLoc[0].x, KeepersLoc[0].y, KeepersLoc[0].z, KeepersLoc[0].o, TEMPSUMMON_MANUAL_DESPAWN, 0))
+                if (Creature* pThorim = m_creature->SummonCreature(NPC_KEEPER_THORIM, KeepersLoc[0].x, KeepersLoc[0].y, KeepersLoc[0].z, KeepersLoc[0].o, TEMPSUMMON_MANUAL_DESPAWN, 0))
                 {
                     DoScriptText(SAY_THORIM_ACTIVE, pThorim);
                     m_lKeeperGUID.push_back(pThorim->GetObjectGuid());
@@ -509,7 +509,7 @@ struct MANGOS_DLL_DECL boss_yogg_saronAI : public ScriptedAI
             // summon hodir
             if(m_pInstance->GetData(TYPE_KEEPER_HODIR) == DONE)
             {
-                if (Creature* pHodir = m_creature->SummonCreature(KEEPER_HODIR, KeepersLoc[1].x, KeepersLoc[1].y, KeepersLoc[1].z, KeepersLoc[1].o, TEMPSUMMON_MANUAL_DESPAWN, 0))
+                if (Creature* pHodir = m_creature->SummonCreature(NPC_KEEPER_HODIR, KeepersLoc[1].x, KeepersLoc[1].y, KeepersLoc[1].z, KeepersLoc[1].o, TEMPSUMMON_MANUAL_DESPAWN, 0))
                 {
                     DoScriptText(SAY_HODIR_ACTIVE, pHodir);
                     m_lKeeperGUID.push_back(pHodir->GetObjectGuid());
@@ -519,7 +519,7 @@ struct MANGOS_DLL_DECL boss_yogg_saronAI : public ScriptedAI
             // summon freya
             if(m_pInstance->GetData(TYPE_KEEPER_FREYA) == DONE)
             {
-                if (Creature* pFreya = m_creature->SummonCreature(KEEPER_FREYA, KeepersLoc[2].x, KeepersLoc[2].y, KeepersLoc[2].z, KeepersLoc[2].o, TEMPSUMMON_MANUAL_DESPAWN, 0))
+                if (Creature* pFreya = m_creature->SummonCreature(NPC_KEEPER_FREYA, KeepersLoc[2].x, KeepersLoc[2].y, KeepersLoc[2].z, KeepersLoc[2].o, TEMPSUMMON_MANUAL_DESPAWN, 0))
                 {
                     DoScriptText(SAY_FREYA_ACTIVE, pFreya);
                     m_lKeeperGUID.push_back(pFreya->GetObjectGuid());
@@ -529,7 +529,7 @@ struct MANGOS_DLL_DECL boss_yogg_saronAI : public ScriptedAI
             // summon mimiron
             if(m_pInstance->GetData(TYPE_KEEPER_MIMIRON) == DONE)
             {
-                if (Creature* pMimiron = m_creature->SummonCreature(KEEPER_MIMIRON, KeepersLoc[3].x, KeepersLoc[3].y, KeepersLoc[3].z, KeepersLoc[3].o, TEMPSUMMON_MANUAL_DESPAWN, 0))
+                if (Creature* pMimiron = m_creature->SummonCreature(NPC_KEEPER_MIMIRON, KeepersLoc[3].x, KeepersLoc[3].y, KeepersLoc[3].z, KeepersLoc[3].o, TEMPSUMMON_MANUAL_DESPAWN, 0))
                 {
                     DoScriptText(SAY_MIMIRON_ACTIVE, pMimiron);
                     m_lKeeperGUID.push_back(pMimiron->GetObjectGuid());
