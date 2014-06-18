@@ -401,8 +401,6 @@ void AddSC_areatrigger_scripts()
     s.newScript("at_murkdeep");
     s->pAreaTrigger = &AreaTrigger_at_murkdeep;
 
-    pNewScript = new Script;
-    pNewScript->Name = "at_hot_on_the_trail";
-    pNewScript->pAreaTrigger = &AreaTrigger_at_hot_on_the_trail;
-    pNewScript->RegisterSelf();
+    s.newScript("at_hot_on_the_trail");
+    s->pAreaTrigger = &AreaTrigger_at_hot_on_the_trail;
 }
