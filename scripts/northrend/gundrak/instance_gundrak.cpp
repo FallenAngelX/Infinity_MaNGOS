@@ -42,7 +42,8 @@ bool GOUse_go_gundrak_altar(Player* /*pPlayer*/, GameObject* pGo)
     return true;
 }
 
-instance_gundrak::instance_gundrak(Map* pMap) : ScriptedInstance(pMap)
+instance_gundrak::instance_gundrak(Map* pMap) : ScriptedInstance(pMap),
+    m_bLessRabi(false)
 {
     Initialize();
 }
@@ -66,41 +67,33 @@ void instance_gundrak::OnCreatureCreate(Creature* pCreature)
         case NPC_MOORABI:
             m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
             break;
+
         case NPC_INVISIBLE_STALKER:
             m_luiStalkerGUIDs.push_back(pCreature->GetObjectGuid());
             break;
-        case NPC_RUIN_DWELLER:
-            if (pCreature->GetDistance(1636.49f, 931.74f, 107.75f) < 15.0f)
-                m_lEckDwellerGuids.push_back(pCreature->GetObjectGuid());
+        case NPC_SLADRAN_SUMMON_T:
+            m_lSummonTargetsGuids.push_back(pCreature->GetObjectGuid());
             break;
         case NPC_LIVING_MOJO:
-            if (pCreature->GetDistance(1672.96f, 743.488f, 143.338f) < 15.0f)
-                m_lLivingMojoGuids.push_back(pCreature->GetObjectGuid());
+            // Store only the Mojos used to activate the Colossus
+            if (pCreature->GetPositionX() > 1650.0f)
+                m_sColossusMojosGuids.insert(pCreature->GetObjectGuid());
             break;
     }
 }
 
-void instance_gundrak::OnPlayerEnter(Player* pPlayer)
-{
-    if (Creature* pEck = GetSingleCreatureFromStorage(NPC_ECK))
-        for (GuidList::const_iterator itr = m_lEckDwellerGuids.begin(); itr != m_lEckDwellerGuids.end(); ++itr)
-            if (Creature* pDweller = instance->GetCreature(*itr))
-                if (pDweller->isAlive())
-                {
-                    pEck->SetVisibility(VISIBILITY_OFF);
-                    break;
-                }
-
-    if (Creature* pColossus = GetSingleCreatureFromStorage(NPC_COLOSSUS))
-        for (GuidList::const_iterator itr = m_lLivingMojoGuids.begin(); itr != m_lLivingMojoGuids.end(); ++itr)
-            if (Creature* pMojo = instance->GetCreature(*itr))
-                if (pMojo->isAlive())
-                {
-                    pColossus->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                    pColossus->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                    break;
-                }
-}    
+/* TODO: Reload case need some love!
+*  Problem is to get the bridge/ collision work correct in relaod case.
+*  To provide correct functionality(expecting testers to activate all altars in reload case), the Keys aren't loaded, too
+*  TODO: When fixed, also remove the SPECIAL->DONE data translation in Load().
+*
+*  For the Keys should be used something like this, and for bridge and collision similar
+*
+*   if (m_auiEncounter[0] == SPECIAL && m_auiEncounter[1] == SPECIAL && m_auiEncounter[2] == SPECIAL)
+*       pGo->SetGoState(GO_STATE_ACTIVE_ALTERNATIVE);
+*   else
+*       pGo->SetGoState(GO_STATE_READY);
+*/
 
 void instance_gundrak::OnObjectCreate(GameObject* pGo)
 {
@@ -188,6 +181,8 @@ void instance_gundrak::SetData(uint32 uiType, uint32 uiData)
             if (uiData == DONE)
                 if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_ALTAR_OF_SLADRAN))
                     pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+            if (uiData == FAIL)
+                m_uisWhySnakesAchievPlayers.clear();
             if (uiData == SPECIAL)
                 m_mAltarInProgress.insert(TypeTimerPair(TYPE_SLADRAN, TIMER_VISUAL_ALTAR));
             break;
@@ -200,6 +195,8 @@ void instance_gundrak::SetData(uint32 uiType, uint32 uiData)
                 if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_ALTAR_OF_MOORABI))
                     pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
             }
+            if (uiData == IN_PROGRESS)
+                SetLessRabiAchievementCriteria(true);
             if (uiData == SPECIAL)
                 m_mAltarInProgress.insert(TypeTimerPair(TYPE_MOORABI, TIMER_VISUAL_ALTAR));
             break;
@@ -208,6 +205,14 @@ void instance_gundrak::SetData(uint32 uiType, uint32 uiData)
             if (uiData == DONE)
                 if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_ALTAR_OF_COLOSSUS))
                     pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+            if (uiData == FAIL)
+            {
+                for (GuidSet::const_iterator itr = m_sColossusMojosGuids.begin(); itr != m_sColossusMojosGuids.end(); ++itr)
+                {
+                    if (Creature* pMojo = instance->GetCreature(*itr))
+                        pMojo->Respawn();
+                }
+            }
             if (uiData == SPECIAL)
                 m_mAltarInProgress.insert(TypeTimerPair(TYPE_COLOSSUS, TIMER_VISUAL_ALTAR));
             break;
@@ -219,28 +224,28 @@ void instance_gundrak::SetData(uint32 uiType, uint32 uiData)
                 DoUseDoorOrButton(GO_EXIT_DOOR_L);
                 DoUseDoorOrButton(GO_EXIT_DOOR_R);
             }
+            if (uiData == FAIL)
+                m_uisShareLoveAchievPlayers.clear();
             break;
         case TYPE_ECK:
             m_auiEncounter[TYPE_ECK] = uiData;
             if (uiData == DONE)
                 DoUseDoorOrButton(GO_ECK_UNDERWATER_DOOR);
             break;
+        case TYPE_ACHIEV_WHY_SNAKES:
+            // insert the players who failed the achiev and haven't been already inserted in the set
+            if (m_uisWhySnakesAchievPlayers.find(uiData) == m_uisWhySnakesAchievPlayers.end())
+                m_uisWhySnakesAchievPlayers.insert(uiData);
+            break;
+        case TYPE_ACHIEV_SHARE_LOVE:
+            // insert players who got stampeled and haven't been already inserted in the set
+            if (m_uisShareLoveAchievPlayers.find(uiData) == m_uisShareLoveAchievPlayers.end())
+                m_uisShareLoveAchievPlayers.insert(uiData);
+            break;
         default:
             script_error_log("Instance Gundrak: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
             return;
     }
-/*    if (m_auiEncounter[0] == SPECIAL && m_auiEncounter[1] == SPECIAL && m_auiEncounter[2] == SPECIAL)
-    {
-        //DoUseDoorOrButton(m_uiBridgeGUID);
-       // DoUseDoorOrButton(m_uiColisionGUID);
-        if (GameObject* pCollision = instance->GetGameObject(uiCollision))
-                     pCollision->SummonGameObject(192743, pCollision->GetPositionX(), pCollision->GetPositionY(), pCollision->GetPositionZ(), pCollision->GetOrientation(), 0, 0, 0, 0, 0);
-
-        if(GameObject* pGo = instance->GetGameObject(m_uiBridgeGUID))
-        {
-            pGo->SetGoState(GO_STATE_ACTIVE);}
-        DoUseDoorOrButton(m_uiColisionGUID);
-    } */ 
 
     if (uiData == DONE || uiData == SPECIAL)                // Save activated altars, too
     {
@@ -257,39 +262,30 @@ void instance_gundrak::SetData(uint32 uiType, uint32 uiData)
     }
 }
 
-void instance_gundrak::OnCreatureDeath(Creature* pCreature)
+uint32 instance_gundrak::GetData(uint32 uiType) const
 {
-    switch (pCreature->GetEntry())
+    if (uiType < MAX_ENCOUNTER)
+        return m_auiEncounter[uiType];
+
+    return 0;
+}
+
+bool instance_gundrak::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* /*pSource*/, Unit const* /*pTarget*/, uint32 /*uiMiscValue1 = 0*/) const
+{
+    switch (uiCriteriaId)
     {
-        case NPC_RUIN_DWELLER:
-            for (GuidList::const_iterator itr = m_lEckDwellerGuids.begin(); itr != m_lEckDwellerGuids.end(); ++itr)
-                if (Creature* pDweller = instance->GetCreature(*itr))
-                    if (pDweller->isAlive())
-                        return;
+        case ACHIEV_CRIT_LESS_RABI:
+            return m_bLessRabi;
+        case ACHIEV_CRIT_SHARE_LOVE:
+            // Return true if all the players in the group got stampeled
+            return m_uisShareLoveAchievPlayers.size() == MIN_LOVE_SHARE_PLAYERS;
+            // ToDo: enable this criteria when the script will be implemented
+            // case ACHIEV_CRIT_WHY_SNAKES:
+            //    // Return true if not found in the set
+            //    return m_uisWhySnakesAchievPlayers.find(pSource->GetGUIDLow()) == m_uisWhySnakesAchievPlayers.end();
 
-            if (Creature* pEck = GetSingleCreatureFromStorage(NPC_ECK))
-            {
-                pEck->SetVisibility(VISIBILITY_ON);
-                pEck->GetMotionMaster()->MovePoint(0, 1642.53f, 934.33f, 107.23f);
-            }
-            break;
-
-        case NPC_LIVING_MOJO:
-            if (!IsValidLivingMojo(pCreature->GetObjectGuid()))
-                return;
-
-            for (GuidList::const_iterator itr = m_lLivingMojoGuids.begin(); itr != m_lLivingMojoGuids.end(); ++itr)
-                if (Creature* pMojo = instance->GetCreature(*itr))
-                    if (pMojo->isAlive())
-                        return;
-
-            if (Creature* pColossus = GetSingleCreatureFromStorage(NPC_COLOSSUS))
-            {
-                pColossus->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                pColossus->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                pColossus->RemoveAllAuras();
-            }
-            break;
+        default:
+            return false;
     }
 }
 
@@ -297,30 +293,28 @@ void instance_gundrak::OnCreatureEnterCombat(Creature* pCreature)
 {
     if (pCreature->GetEntry() == NPC_LIVING_MOJO)
     {
-        if (IsValidLivingMojo(pCreature->GetObjectGuid()))
-            // if mojo is in list move all members to merge with colossus
-            for (GuidList::const_iterator iter = m_lLivingMojoGuids.begin(); iter != m_lLivingMojoGuids.end(); ++iter)
-                if (Creature* pMojo = instance->GetCreature(*iter))
-                    pMojo->AI()->EnterEvadeMode();
+        // If not found in the set, or the event is already started, return
+        if (m_sColossusMojosGuids.find(pCreature->GetObjectGuid()) == m_sColossusMojosGuids.end())
+            return;
 
-        return;
+        // Move all 4 Mojos to evade and move to the Colossus position
+        for (GuidSet::const_iterator itr = m_sColossusMojosGuids.begin(); itr != m_sColossusMojosGuids.end(); ++itr)
+        {
+            if (Creature* pMojo = instance->GetCreature(*itr))
+                pMojo->AI()->EnterEvadeMode();
+        }
     }
 }
 
-bool instance_gundrak::IsValidLivingMojo(ObjectGuid callerGuid)
+ObjectGuid instance_gundrak::SelectRandomSladranTargetGuid()
 {
-    for (GuidList::iterator itr = m_lLivingMojoGuids.begin(); itr != m_lLivingMojoGuids.end(); ++itr)
-        if (*itr == callerGuid)
-            return true;
-    return false;
-}
+    if (m_lSummonTargetsGuids.empty())
+        return ObjectGuid();
 
-uint32 instance_gundrak::GetData(uint32 uiType) const
-{
-    if (uiType < MAX_ENCOUNTER)
-        return m_auiEncounter[uiType];
+    GuidList::iterator iter = m_lSummonTargetsGuids.begin();
+    advance(iter, urand(0, m_lSummonTargetsGuids.size() - 1));
 
-    return 0;
+    return *iter;
 }
 
 static bool sortFromEastToWest(Creature* pFirst, Creature* pSecond)
@@ -333,7 +327,7 @@ void instance_gundrak::DoAltarVisualEffect(uint8 uiType)
     // Sort the lists if not yet done
     if (!m_luiStalkerGUIDs.empty())
     {
-        float fHeight = 10.0f; // A bit higher than the altar is needed
+        float fHeight = 10.0f;                              // A bit higher than the altar is needed
         if (GameObject* pCollusAltar = GetSingleGameObjectFromStorage(GO_ALTAR_OF_COLOSSUS))
             fHeight += pCollusAltar->GetPositionZ();
 

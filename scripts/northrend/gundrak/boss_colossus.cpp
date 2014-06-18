@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2013 ScriptDev2 <http://www.scriptdev2.com/>
+/* This file is part of the ScriptDev2 Project. See AUTHORS file for Copyright information
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,8 +16,8 @@
 
 /* ScriptData
 SDName: Boss_Colossus
-SD%Complete: 80%
-SDComment: Some visual stuff missing
+SD%Complete: 95%
+SDComment: Timers; May need small adjustments
 SDCategory: Gundrak
 EndScriptData */
 
@@ -30,18 +30,18 @@ enum
     EMOTE_SEEP                  = -1604009,
     EMOTE_GLOW                  = -1604010,
 
-    // Drakkari Collosus' abilities
+    // collosus' abilities
+    SPELL_FREEZE_ANIM           = 16245,                // Colossus stun aura
     SPELL_EMERGE                = 54850,
     SPELL_MIGHTY_BLOW           = 54719,
     SPELL_MORTAL_STRIKES        = 54715,
     SPELL_MORTAL_STRIKES_H      = 59454,
-    SPELL_FREEZE_ANIM           = 16245,
 
-    // Drakkari Elemental's abilities
-    SPELL_MERGE                 = 54878, // not used
+    // elemental's abilities
+    SPELL_MERGE                 = 54878,
     SPELL_SURGE                 = 54801,
-    SPELL_MOJO_VOLLEY_H         = 59453,
-    SPELL_MOJO_VOLLEY           = 54849,
+    SPELL_MOJO_VOLLEY           = 59453,
+    SPELL_MOJO_VOLLEY_H         = 54849,
 
     // Living Mojo spells
     SPELL_MOJO_WAVE             = 55626,
@@ -49,13 +49,103 @@ enum
     SPELL_MOJO_PUDDLE           = 55627,
     SPELL_MOJO_PUDDLE_H         = 58994,
 
-    PHASE_BEFORE_1ST_SPLIT      = 0,
-    PHASE_1ST_ELEMENTAL         = 1,
-    PHASE_BEFORE_2ND_SPLIT      = 2,
-    PHASE_2ND_ELEMENTAL         = 3,
-    PHASE_BEFORE_DEATH          = 4,
-    POINT_AT_COLOSSUS_COORDS    = 0
+    MAX_COLOSSUS_MOJOS          = 5,
 };
+
+/*######
+## boss_drakkari_elemental
+######*/
+
+struct MANGOS_DLL_DECL boss_drakkari_elementalAI : public ScriptedAI
+{
+    boss_drakkari_elementalAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (instance_gundrak*)pCreature->GetInstanceData();
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+        Reset();
+    }
+
+    instance_gundrak* m_pInstance;
+    bool m_bIsRegularMode;
+    bool m_bIsFirstEmerge;
+
+    uint32 m_uiSurgeTimer;
+
+    void Reset() override
+    {
+        m_bIsFirstEmerge = true;
+        m_uiSurgeTimer   = urand(9000, 13000);
+    }
+
+    void Aggro(Unit* /*pWho*/) override
+    {
+        DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_MOJO_VOLLEY : SPELL_MOJO_VOLLEY_H);
+    }
+
+    void DamageTaken(Unit* /*pDoneBy*/, uint32& /*uiDamage*/) override
+    {
+        if (!m_bIsFirstEmerge)
+            return;
+
+        if (m_creature->GetHealthPercent() < 50.0f)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_MERGE, CAST_INTERRUPT_PREVIOUS);
+            m_bIsFirstEmerge = false;
+        }
+    }
+
+    void JustReachedHome() override
+    {
+        if (m_pInstance)
+        {
+            if (Creature* pColossus = m_pInstance->GetSingleCreatureFromStorage(NPC_COLOSSUS))
+                pColossus->AI()->EnterEvadeMode();
+        }
+
+        m_creature->ForcedDespawn();
+    }
+
+    void JustDied(Unit* /*pKiller*/) override
+    {
+        if (m_pInstance)
+        {
+            // kill colossus on death - this will finish the encounter
+            if (Creature* pColossus = m_pInstance->GetSingleCreatureFromStorage(NPC_COLOSSUS))
+                pColossus->DealDamage(pColossus, pColossus->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+        }
+    }
+
+    // Set the second emerge of the Elemental
+    void DoPrepareSecondEmerge()
+    {
+        m_bIsFirstEmerge = false;
+        m_creature->SetHealth(m_creature->GetMaxHealth()*.5);
+    }
+
+    void UpdateAI(const uint32 uiDiff) override
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+
+        if (m_uiSurgeTimer < uiDiff)
+        {
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            {
+                if (DoCastSpellIfCan(pTarget, SPELL_SURGE) == CAST_OK)
+                    m_uiSurgeTimer = urand(12000, 17000);
+            }
+        }
+        else
+            m_uiSurgeTimer -= uiDiff;
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_boss_drakkari_elemental(Creature* pCreature)
+{
+    return new boss_drakkari_elementalAI(pCreature);
+}
 
 /*######
 ## boss_drakkari_colossus
@@ -72,109 +162,127 @@ struct MANGOS_DLL_DECL boss_drakkari_colossusAI : public ScriptedAI
 
     instance_gundrak* m_pInstance;
     bool m_bIsRegularMode;
-    uint8 m_uiPhase;
-    uint32 m_uiMightyBlowTimer;
+    bool m_bFirstEmerge;
 
-    void Reset()
+    uint32 m_uiMightyBlowTimer;
+    uint32 m_uiColossusStartTimer;
+    uint8 m_uiMojosGathered;
+
+    void Reset() override
     {
-        m_uiPhase = PHASE_BEFORE_1ST_SPLIT;
+        m_bFirstEmerge      = true;
         m_uiMightyBlowTimer = 10000;
+        m_uiColossusStartTimer = 0;
+        m_uiMojosGathered   = 0;
+
+        // Reset unit flags
+        SetCombatMovement(true);
+        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
+        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_MORTAL_STRIKES : SPELL_MORTAL_STRIKES_H);
-        m_creature->SetInCombatWithZone();
-        m_creature->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_COLOSSUS, IN_PROGRESS);
+    }
+
+    void JustDied(Unit* /*pKiller*/) override
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_COLOSSUS, DONE);
     }
 
     void JustReachedHome() override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_COLOSSUS, FAIL);
-
-        SetCreature(false);
     }
 
-    void JustDied(Unit* pKiller) override
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {
-        SetCreature(false);
+        if (pSpell->Id == SPELL_MERGE)
+        {
+            // re-activate colossus here
+            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+            m_creature->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
 
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_COLOSSUS, DONE);
+            SetCombatMovement(true);
+            m_creature->GetMotionMaster()->Clear();
+            m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+            ((Creature*)pCaster)->ForcedDespawn();
+        }
     }
 
     void JustSummoned(Creature* pSummoned) override
     {
         if (pSummoned->GetEntry() == NPC_ELEMENTAL)
         {
-            DoScriptText(EMOTE_SEEP, pSummoned);
-            if (m_uiPhase == PHASE_2ND_ELEMENTAL)
-                pSummoned->SetMaxHealth(pSummoned->GetMaxHealth()/2);
-        }
-    }
-
-    void SetCreature(bool stoned)
-    {
-        m_creature->RemoveAllAuras();
-        if (stoned)
-        {
-            if (m_pInstance && m_pInstance->GetData(TYPE_COLOSSUS) == IN_PROGRESS)
-                DoCastSpellIfCan(m_creature, SPELL_EMERGE, CAST_INTERRUPT_PREVIOUS);
-            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-            SetCombatMovement(false);
-        }
-        else
-        {
-            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-            m_creature->RemoveAurasDueToSpell(m_bIsRegularMode ? SPELL_MOJO_VOLLEY : SPELL_MOJO_VOLLEY_H);
-            SetCombatMovement(true);
-        }
-    }
-
-    void SummonedCreatureJustDied(Creature* pSummoned)
-    {
-        if (pSummoned->GetEntry() == NPC_ELEMENTAL)
-        {
-            if (m_uiPhase == PHASE_1ST_ELEMENTAL)
+            // If this is the second summon, then set the health to half
+            if (!m_bFirstEmerge)
             {
-                ++m_uiPhase;
-                SetCreature(false);
+                if (boss_drakkari_elementalAI* pBossAI = dynamic_cast<boss_drakkari_elementalAI*>(pSummoned->AI()))
+                    pBossAI->DoPrepareSecondEmerge();
             }
-            else if (m_uiPhase == PHASE_2ND_ELEMENTAL)
-                m_creature->DealDamage(m_creature, m_creature->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+
+            m_bFirstEmerge = false;
+            if (m_creature->getVictim())
+                pSummoned->AI()->AttackStart(m_creature->getVictim());
         }
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDoneBy*/, uint32& uiDamage) override
     {
-        switch(m_uiPhase)
+        if (m_bFirstEmerge && m_creature->GetHealthPercent() < 50.0f)
+            DoEmergeElemental();
+        else if (uiDamage >= m_creature->GetHealth())
         {
-            case PHASE_BEFORE_2ND_SPLIT:
-                if (m_creature->GetHealth() > uiDamage)
-                    break;
-            case PHASE_BEFORE_1ST_SPLIT:
-                if (m_creature->GetHealthPercent() > 50.0f)
-                    break;
-
-                ++m_uiPhase;
-                SetCreature(true);                    
-                uiDamage = 0;
-            default: break;
+            uiDamage = 0;
+            DoEmergeElemental();
         }
+    }
+
+    void DoEmergeElemental()
+    {
+        // Avoid casting the merge spell twice
+        if (m_creature->HasAura(SPELL_FREEZE_ANIM))
+            return;
+
+        if (DoCastSpellIfCan(m_creature, SPELL_EMERGE, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
+        {
+            SetCombatMovement(false);
+            m_creature->GetMotionMaster()->MoveIdle();
+            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+            DoCastSpellIfCan(m_creature, SPELL_FREEZE_ANIM, CAST_TRIGGERED);
+        }
+    }
+
+    // Wrapper to prepare the Colossus
+    void DoPrepareColossus()
+    {
+        ++m_uiMojosGathered;
+
+        if (m_uiMojosGathered == MAX_COLOSSUS_MOJOS)
+            m_uiColossusStartTimer = 1000;
     }
 
     void UpdateAI(const uint32 uiDiff) override
     {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-            return;
+        if (m_uiColossusStartTimer)
+        {
+            if (m_uiColossusStartTimer <= uiDiff)
+            {
+                m_creature->RemoveAurasDueToSpell(SPELL_FREEZE_ANIM);
+                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
+                m_uiColossusStartTimer = 0;
+            }
+            else
+                m_uiColossusStartTimer -= uiDiff;
+        }
 
-        if (m_uiPhase == PHASE_1ST_ELEMENTAL || m_uiPhase == PHASE_2ND_ELEMENTAL)
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
         if (m_uiMightyBlowTimer < uiDiff)
@@ -184,7 +292,7 @@ struct MANGOS_DLL_DECL boss_drakkari_colossusAI : public ScriptedAI
         }
         else
             m_uiMightyBlowTimer -= uiDiff;
-        
+
         DoMeleeAttackIfReady();
     }
 };
@@ -192,105 +300,7 @@ struct MANGOS_DLL_DECL boss_drakkari_colossusAI : public ScriptedAI
 CreatureAI* GetAI_boss_drakkari_colossus(Creature* pCreature)
 {
     return new boss_drakkari_colossusAI(pCreature);
-};
-
-/*######
-## boss_drakkari_elemental
-######*/
-struct MANGOS_DLL_DECL boss_drakkari_elementalAI : public ScriptedAI
-{
-    boss_drakkari_elementalAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        m_pInstance = (instance_gundrak*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        Reset();
-    }
-
-    instance_gundrak* m_pInstance;
-    bool m_bIsRegularMode;
-
-    uint32 m_uiSurgeTimer;
-
-    void Reset()
-    {
-        m_uiSurgeTimer      = 5000;
-    }
-
-    void JustReachedHome() override
-    {
-        // reset colossus if wiped party
-        if(Creature* pColossus = m_pInstance->GetSingleCreatureFromStorage(NPC_COLOSSUS))
-            ((boss_drakkari_colossusAI*)pColossus->AI())->EnterEvadeMode();
-                m_creature->ForcedDespawn();
-    }
-
-    void JustDied(Unit* pKiller) override
-    {
-        m_creature->RemoveAurasDueToSpell(m_bIsRegularMode ? SPELL_MOJO_VOLLEY : SPELL_MOJO_VOLLEY_H);
-        DoScriptText(EMOTE_GLOW, m_creature);
-    }
-
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
-    {
-        if (Creature* pColossus = m_pInstance->GetSingleCreatureFromStorage(NPC_COLOSSUS))
-        {
-            if (boss_drakkari_colossusAI* pColossusAI = dynamic_cast<boss_drakkari_colossusAI*>(pColossus->AI()))
-                if (pColossusAI->m_uiPhase == PHASE_1ST_ELEMENTAL && m_creature->GetHealthPercent() < 50.0f)
-                {
-                    uiDamage = 0;
-                    SetCombatMovement(false);
-                    float fColoX, fColoY, fColoZ;
-                    pColossus->GetPosition(fColoX, fColoY, fColoZ);
-                    m_creature->GetMotionMaster()->MovementExpired(true);
-                    m_creature->GetMotionMaster()->MovePoint(POINT_AT_COLOSSUS_COORDS, fColoX, fColoY, fColoZ);
-                }
-        }
-    }
-
-    void MovementInform(uint32 uiType, uint32 uiPointId) override
-    {
-        if (uiType != POINT_MOTION_TYPE)
-            return;
-
-        if (uiPointId == POINT_AT_COLOSSUS_COORDS)
-        {
-            m_creature->SetVisibility(VISIBILITY_OFF);
-            m_creature->DealDamage(m_creature, m_creature->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
-        }
-    }
-
-    void Aggro(Unit* pWho)
-    {
-        DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_MOJO_VOLLEY : SPELL_MOJO_VOLLEY_H, CAST_INTERRUPT_PREVIOUS);
-    }
-
-    void UpdateAI(const uint32 uiDiff) override
-    {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-            return;
-
-        if (m_uiSurgeTimer < uiDiff)
-        {
-            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
-            {
-                DoScriptText(EMOTE_SURGE, m_creature, pTarget);
-                DoResetThreat();
-                m_creature->AddThreat(pTarget, 1000.0f);
-                m_creature->CastSpell(pTarget->GetPositionX(), pTarget->GetPositionY(), pTarget->GetPositionZ(), SPELL_SURGE, false);
-            }
-            m_uiSurgeTimer = urand(5000, 15000);
-        }
-        else
-            m_uiSurgeTimer -= uiDiff;
-        
-        DoMeleeAttackIfReady();
-    }
-};
-
-CreatureAI* GetAI_boss_drakkari_elemental(Creature* pCreature)
-{
-    return new boss_drakkari_elementalAI(pCreature);
-};
+}
 
 /*######
 ## npc_living_mojo
@@ -302,48 +312,75 @@ struct MANGOS_DLL_DECL npc_living_mojoAI : public ScriptedAI
     {
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         m_pInstance = (instance_gundrak*)pCreature->GetInstanceData();
+        m_bIsPartOfColossus = pCreature->GetPositionX() > 1650.0f ? true : false;
         Reset();
     }
 
     instance_gundrak* m_pInstance;
     bool m_bIsRegularMode;
-    uint32 m_uiMojoPuddleTimer;
+    bool m_bIsPartOfColossus;
+
     uint32 m_uiMojoWaveTimer;
 
-    void Reset()
+    void Reset() override
     {
-        m_uiMojoPuddleTimer = 2000;
-        m_uiMojoWaveTimer   = 4000;
+        m_uiMojoWaveTimer = urand(10000, 13000);
     }
- 
+
+    void AttackStart(Unit* pWho) override
+    {
+        // Don't attack if is part of the Colossus event
+        if (m_bIsPartOfColossus)
+            return;
+
+        ScriptedAI::AttackStart(pWho);
+    }
+
     void MovementInform(uint32 uiType, uint32 uiPointId) override
     {
         if (uiType != POINT_MOTION_TYPE)
             return;
 
-        if (uiPointId == POINT_AT_COLOSSUS_COORDS)
+        if (uiPointId)
         {
-            m_creature->SetVisibility(VISIBILITY_OFF);
-            m_creature->DealDamage(m_creature, m_creature->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+            m_creature->ForcedDespawn(1000);
+
+            if (m_pInstance)
+            {
+                // Prepare to set the Colossus in combat
+                if (Creature* pColossus = m_pInstance->GetSingleCreatureFromStorage(NPC_COLOSSUS))
+                {
+                    if (boss_drakkari_colossusAI* pBossAI = dynamic_cast<boss_drakkari_colossusAI*>(pColossus->AI()))
+                        pBossAI->DoPrepareColossus();
+                }
+            }
         }
     }
 
     void EnterEvadeMode() override
     {
-        ScriptedAI::EnterEvadeMode();
-        if (m_pInstance && m_pInstance->IsValidLivingMojo(m_creature->GetObjectGuid()))
+        if (!m_bIsPartOfColossus)
+            ScriptedAI::EnterEvadeMode();
+        // Force the Mojo to move to the Colossus position
+        else
         {
-            if (Creature* pColossus = m_pInstance->GetSingleCreatureFromStorage(NPC_COLOSSUS))
+            if (m_pInstance)
             {
-                float fColoX, fColoY, fColoZ;
-                pColossus->GetPosition(fColoX, fColoY, fColoZ);
-                SetCombatMovement(false);
-                m_creature->GetMotionMaster()->MovementExpired();
-                m_creature->GetMotionMaster()->MovePoint(POINT_AT_COLOSSUS_COORDS, fColoX, fColoY, fColoZ);
+                float fX, fY, fZ;
+                m_creature->GetPosition(fX, fY, fZ);
+
+                if (Creature* pColossus = m_pInstance->GetSingleCreatureFromStorage(NPC_COLOSSUS))
+                    pColossus->GetPosition(fX, fY, fZ);
+
+                m_creature->SetWalk(false);
+                m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
             }
-            else // this should not happen!
-                MovementInform(POINT_MOTION_TYPE, POINT_AT_COLOSSUS_COORDS);
         }
+    }
+
+    void JustDied(Unit* /*pKiller*/) override
+    {
+        DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_MOJO_PUDDLE : SPELL_MOJO_PUDDLE_H, CAST_TRIGGERED);
     }
 
     void UpdateAI(const uint32 uiDiff) override
@@ -351,20 +388,13 @@ struct MANGOS_DLL_DECL npc_living_mojoAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (m_uiMojoPuddleTimer < uiDiff)
-        {
-            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_MOJO_PUDDLE : SPELL_MOJO_PUDDLE_H);
-            m_uiMojoPuddleTimer = urand(4000, 8000);
-        }
-        else m_uiMojoPuddleTimer -= uiDiff;
-
         if (m_uiMojoWaveTimer < uiDiff)
         {
-            DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_MOJO_WAVE : SPELL_MOJO_WAVE_H);
-            m_uiMojoWaveTimer = urand(4000, 7000);
+            if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_MOJO_WAVE : SPELL_MOJO_WAVE_H) == CAST_OK)
+                m_uiMojoWaveTimer = urand(15000, 18000);
         }
-        else m_uiMojoWaveTimer -= uiDiff;
+        else
+            m_uiMojoWaveTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

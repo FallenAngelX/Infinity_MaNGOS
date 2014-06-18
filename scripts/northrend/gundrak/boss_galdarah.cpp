@@ -109,11 +109,6 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
             m_pInstance->SetData(TYPE_GALDARAH , IN_PROGRESS);
     }
 
-     void JustReachedHome() override
-    {
-        if(m_pInstance)
-            m_pInstance->SetData(TYPE_GALDARAH, NOT_STARTED);
-    }
     void KilledUnit(Unit* /*pVictim*/) override
     {
         switch (urand(0, 2))
@@ -122,6 +117,12 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
             case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
             case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
         }
+    }
+
+    void JustReachedHome() override
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_GALDARAH, FAIL);
     }
 
     void JustDied(Unit* pKiller) override
@@ -141,10 +142,16 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
 
         if (pSummoned->GetEntry() == NPC_RHINO_SPIRIT)
         {
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, m_bIsRegularMode ? SPELL_STAMPEDE_RHINO : SPELL_STAMPEDE_RHINO_H, SELECT_FLAG_PLAYER))
+            {
                 pSummoned->CastSpell(pTarget, m_bIsRegularMode ? SPELL_STAMPEDE_RHINO : SPELL_STAMPEDE_RHINO_H, false, NULL, NULL, m_creature->GetObjectGuid());
-            pSummoned->ForcedDespawn(1000);
+
+                // Store the player guid in order to count it for the achievement
+                if (m_pInstance)
+                    m_pInstance->SetData(TYPE_ACHIEV_SHARE_LOVE, pTarget->GetGUIDLow());
+            }
         }
+        pSummoned->ForcedDespawn(1000);
     }
 
     void DoPhaseSwitch()
@@ -155,11 +162,11 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
         m_bIsTrollPhase = !m_bIsTrollPhase;
 
         if (m_bIsTrollPhase)
-            DoCast(m_creature, SPELL_TROLL_TRANSFORM);
+            DoCastSpellIfCan(m_creature, SPELL_TROLL_TRANSFORM);
         else
         {
             DoScriptText(urand(0, 1) ? SAY_TRANSFORM_1 : SAY_TRANSFORM_2, m_creature);
-            DoCast(m_creature, SPELL_RHINO_TRANSFORM);
+            DoCastSpellIfCan(m_creature, SPELL_RHINO_TRANSFORM);
 
             m_uiEnrageTimer = 4000;
             m_uiStompTimer  = 1000;
@@ -247,9 +254,8 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
                     DoScriptText(EMOTE_IMPALED, m_creature, pTarget);
                     m_uiSpecialAbilityTimer = 12000;
 
-                    
+                    ++m_uiAbilityCount;
                 }
-                ++m_uiAbilityCount;
             }
             else
                 m_uiSpecialAbilityTimer -= uiDiff;
