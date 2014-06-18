@@ -98,26 +98,6 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
         m_uiSummonTimer      = m_bIsRegularMode ? 20000 : 0;     // spawn a guardian only after 20 seconds in normal mode; in heroic there are already 2 Guards spawned
     }
 
-    void DespawnSummonedCreatures()
-    {
-        for (GuidList::const_iterator itr = m_lSummonedGuidList.begin(); itr != m_lSummonedGuidList.end(); ++itr)
-        {
-            if (Creature* pSummoned = m_creature->GetMap()->GetCreature(*itr))
-                pSummoned->ForcedDespawn();
-        }
-        m_lSummonedGuidList.clear();
-    }
-
-    void SummonCryptGuards() // Only 25Players
-    {
-        if (m_bIsRegularMode)
-            return;
-        if (Creature* pSummoned = m_creature->SummonCreature(NPC_CRYPT_GUARD, 3301.05f, -3503.52f, 287.078f, 2.33316f, TEMPSUMMON_DEAD_DESPAWN, 0))
-            m_lSummonedGuidList.push_back(pSummoned->GetObjectGuid());
-        if (Creature* pSummoned = m_creature->SummonCreature(NPC_CRYPT_GUARD, 3301.42f, -3448.52f, 287.078f, 3.92752f, TEMPSUMMON_DEAD_DESPAWN, 0))
-            m_lSummonedGuidList.push_back(pSummoned->GetObjectGuid());
-    }
-
     void KilledUnit(Unit* pVictim) override
     {
         // Force the player to spawn corpse scarabs via spell
@@ -128,30 +108,6 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
             return;
 
         DoScriptText(SAY_SLAY, m_creature);
-    }
-
-    void SummonedCreatureJustDied(Creature* pSummoned) override
-    {
-        if (!m_pInstance || m_pInstance->GetData(TYPE_ANUB_REKHAN) != IN_PROGRESS)
-            return;
-
-        if (pSummoned->GetEntry() == NPC_CRYPT_GUARD)
-            pSummoned->CastSpell(pSummoned, SPELL_SELF_SPAWN_10, true, NULL, NULL, m_creature->GetObjectGuid());
-    }
-
-    void JustSummoned(Creature* pSummoned) override
-    {
-        switch(pSummoned->GetEntry())
-        {
-            case NPC_CRYPT_GUARD:
-                if (m_creature->isInCombat())
-                    DoScriptText(EMOTE_CRYPT_GUARD, pSummoned);
-            case NPC_CORPSE_SCARAB:
-                m_lSummonedGuidList.push_back(pSummoned->GetObjectGuid());
-                if (m_creature->isInCombat())
-                    pSummoned->SetInCombatWithZone();
-                break;
-        }
     }
 
     void Aggro(Unit* /*pWho*/) override
@@ -201,6 +157,57 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
+    void JustSummoned(Creature* pSummoned) override
+    {
+        switch(pSummoned->GetEntry())
+        {
+            case NPC_CRYPT_GUARD:
+                if (m_creature->isInCombat())
+                    DoScriptText(EMOTE_CRYPT_GUARD, pSummoned);
+            case NPC_CORPSE_SCARAB:
+                m_lSummonedGuidList.push_back(pSummoned->GetObjectGuid());
+                if (m_creature->isInCombat())
+                    pSummoned->SetInCombatWithZone();
+                break;
+        }
+
+        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            pSummoned->AI()->AttackStart(pTarget);
+    }
+
+    void DespawnSummonedCreatures()
+    {
+        for (GuidList::const_iterator itr = m_lSummonedGuidList.begin(); itr != m_lSummonedGuidList.end(); ++itr)
+        {
+            if (Creature* pSummoned = m_creature->GetMap()->GetCreature(*itr))
+                pSummoned->ForcedDespawn();
+        }
+        m_lSummonedGuidList.clear();
+    }
+
+    void SummonCryptGuards() // Only 25Players
+    {
+        if (m_bIsRegularMode)
+            return;
+        if (Creature* pSummoned = m_creature->SummonCreature(NPC_CRYPT_GUARD, 3301.05f, -3503.52f, 287.078f, 2.33316f, TEMPSUMMON_DEAD_DESPAWN, 0))
+            m_lSummonedGuidList.push_back(pSummoned->GetObjectGuid());
+        if (Creature* pSummoned = m_creature->SummonCreature(NPC_CRYPT_GUARD, 3301.42f, -3448.52f, 287.078f, 3.92752f, TEMPSUMMON_DEAD_DESPAWN, 0))
+            m_lSummonedGuidList.push_back(pSummoned->GetObjectGuid());
+    }
+
+    void SummonedCreatureDespawn(Creature* pSummoned) override
+    {
+        // If creature despawns on out of combat, skip this
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+
+        if (pSummoned->GetEntry() == NPC_CRYPT_GUARD)
+        {
+            pSummoned->CastSpell(pSummoned, SPELL_SELF_SPAWN_10, true, NULL, NULL, m_creature->GetObjectGuid());
+            DoScriptText(EMOTE_CORPSE_SCARABS, pSummoned);
+        }
+    }
+
     void UpdateAI(const uint32 uiDiff) override
     {
         m_introDialogue.DialogueUpdate(uiDiff);
@@ -245,7 +252,7 @@ struct MANGOS_DLL_DECL boss_anubrekhanAI : public ScriptedAI
             if (m_uiSummonTimer <= uiDiff)
             {
                 // Workaround for the not existing spell
-                m_creature->SummonCreature(NPC_CRYPT_GUARD, aCryptGuardLoc[0], aCryptGuardLoc[1], aCryptGuardLoc[2], aCryptGuardLoc[3], TEMPSUMMON_DEAD_DESPAWN, 0);
+                m_creature->SummonCreature(NPC_CRYPT_GUARD, aCryptGuardLoc[0], aCryptGuardLoc[1], aCryptGuardLoc[2], aCryptGuardLoc[3], TEMPSUMMON_TIMED_OOC_OR_DEAD_DESPAWN, 30000);
                 m_uiSummonTimer = 0;
             }
             else

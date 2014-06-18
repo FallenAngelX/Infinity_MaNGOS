@@ -130,6 +130,9 @@ struct MANGOS_DLL_DECL boss_thaddiusAI : public Scripted_NoMovementAI
             case 1: DoScriptText(SAY_AGGRO_2, m_creature); break;
             case 2: DoScriptText(SAY_AGGRO_3, m_creature); break;
         }
+
+        // Make Attackable
+        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     }
 
     void JustReachedHome() override
@@ -263,8 +266,8 @@ bool EffectDummyNPC_spell_thaddius_encounter(Unit* /*pCaster*/, uint32 uiSpellId
             {
                 if (instance_naxxramas* pInstance = (instance_naxxramas*)pCreatureTarget->GetInstanceData())
                 {
-                    // Make Attackable
-                    pCreatureTarget->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    if (Player* pPlayer = pInstance->GetPlayerInMap(true, false))
+                        pCreatureTarget->AI()->AttackStart(pPlayer);
                     pCreatureTarget->SetInCombatWithZone();
                 }
             }
@@ -426,6 +429,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
     bool m_bBothDead;
 
     uint32 m_uiHoldTimer;
+    // uint32 m_uiWarStompTimer;
     uint32 m_uiReviveTimer;
     uint32 m_uiMagneticPullTimer;
 
@@ -436,6 +440,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
 
         m_uiReviveTimer = 5 * IN_MILLISECONDS;
         m_uiHoldTimer = 2 * IN_MILLISECONDS;
+        // m_uiWarStompTimer = urand(8*IN_MILLISECONDS, 10*IN_MILLISECONDS);
         m_uiMagneticPullTimer = 20 * IN_MILLISECONDS;
 
         // We might Reset while faking death, so undo this
@@ -589,6 +594,15 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
                 m_uiHoldTimer -= uiDiff;
         }
 
+        /*  Doesn't happen in wotlk version any more
+        if (m_uiWarStompTimer < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature, SPELL_WARSTOMP) == CAST_OK)
+                m_uiWarStompTimer = urand(8*IN_MILLISECONDS, 10*IN_MILLISECONDS);
+        }
+        else
+            m_uiWarStompTimer -= uiDiff;*/
+
         if (m_uiMagneticPullTimer <= uiDiff)
         {
             SetCombatMovement(false);
@@ -622,7 +636,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
         m_bFakeDeath = true;
 
         m_creature->InterruptNonMeleeSpells(false);
-        m_creature->SetHealth(1);
+        m_creature->SetHealth(0);
         m_creature->StopMoving();
         m_creature->ClearComboPointHolders();
         m_creature->RemoveAllAurasOnDeath();
@@ -701,11 +715,13 @@ struct MANGOS_DLL_DECL boss_feugenAI : public boss_thaddiusAddsAI
         Reset();
     }
     uint32 m_uiStaticFieldTimer;
+    //uint32 m_uiMagneticPullTimer;                           // TODO, missing
 
     void Reset() override
     {
         boss_thaddiusAddsAI::Reset();
         m_uiStaticFieldTimer = urand(10 * IN_MILLISECONDS, 15 * IN_MILLISECONDS);
+        //m_uiMagneticPullTimer = 20 * IN_MILLISECONDS;
     }
 
     void Aggro(Unit* pWho) override

@@ -101,9 +101,8 @@ struct MANGOS_DLL_DECL boss_grobbulusAI : public ScriptedAI
 
         std::vector<Unit*> suitableTargets;
         ThreatList const& threatList = m_creature->getThreatManager().getThreatList();
-        ThreatList::const_iterator itr = threatList.begin();
 
-        for (itr; itr != threatList.end(); ++itr)
+        for (ThreatList::const_iterator itr = threatList.begin(); itr != threatList.end(); ++itr)
         {
             if (Unit* pTarget = m_creature->GetMap()->GetUnit((*itr)->getUnitGuid()))
             {

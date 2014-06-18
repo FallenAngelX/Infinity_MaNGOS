@@ -555,9 +555,6 @@ bool instance_naxxramas::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Playe
         case ACHIEV_CRIT_HUNDRED_CLUB_N:
         case ACHIEV_CRIT_HUNDRED_CLUB_H:
             return m_abAchievCriteria[TYPE_ACHIEV_HUNDRED_CLUB];
-        case ACHIEV_CRIT_TOGETHER_N:
-        case ACHIEV_CRIT_TOGETHER_H:
-            return m_abAchievCriteria[TYPE_ACHIEV_AND_THEY];
         case ACHIEV_CRIT_SHOCKING_N:
         case ACHIEV_CRIT_SHOCKING_H:
             return m_abAchievCriteria[TYPE_ACHIEV_SHOCKING];

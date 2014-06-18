@@ -40,8 +40,8 @@ enum
     SPELL_POISONSHOCK           = 28741,
     SPELL_POISONSHOCK_H         = 54122,
 
-    SPELL_NECROTICPOISON        = 54121,
-    SPELL_NECROTICPOISON_H      = 28776,
+    SPELL_NECROTICPOISON        = 28776,
+    SPELL_NECROTICPOISON_H      = 54121,
 
     SPELL_FRENZY                = 54123,
     SPELL_FRENZY_H              = 54124,
@@ -163,7 +163,7 @@ struct MANGOS_DLL_DECL boss_maexxnaAI : public ScriptedAI
     {
         m_uiWebWrapTimer            = 15000;
         m_uiWebSprayTimer           = 40000;
-        m_uiPoisonShockTimer        = 10000;
+        m_uiPoisonShockTimer        = urand(10000, 20000);
         m_uiNecroticPoisonTimer     = urand(20000, 30000);
         m_uiSummonSpiderlingTimer   = 30000;
         m_bEnraged                  = false;
@@ -262,7 +262,7 @@ struct MANGOS_DLL_DECL boss_maexxnaAI : public ScriptedAI
         if (m_uiPoisonShockTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_POISONSHOCK : SPELL_POISONSHOCK_H) == CAST_OK)
-                m_uiPoisonShockTimer = 10000;
+                m_uiPoisonShockTimer = urand(10000, 20000);
         }
         else
             m_uiPoisonShockTimer -= uiDiff;
