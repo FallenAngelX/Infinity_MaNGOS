@@ -1,0 +1,125 @@
+Classic Instances
+=================
+
+The Deadmines
+Ragefire Chasm
+Wailing Caverns
+Shadowfang Keep
+The Stockade
+Blackfathom Deeps
+Gnomeregan
+Scarlet Monastery
+Razorfen Kraul
+Maraudon
+Uldaman
+Scholomance
+Razorfen Downs
+Dire Maul
+Zul'Farrak
+Stratholme
+Sunken Temple
+Blackrock Depths
+Blackrock Spire
+Zul'Gurub
+Ruins of Ahn'Qiraj
+Temple of Ahn'Qiraj
+Blackwing Lair
+Molten Core
+
+The Burning Crusade Instances
+=============================
+
+Hellfire Citadel: Hellfire Ramparts
+Hellfire Citadel: The Blood Furnace
+Hellfire Citadel: The Shattered Halls
+Coilfang Reservoir: The Slave Pens
+Coilfang Reservoir: The Underbog
+Coilfang Reservoir: The Steamvault
+Auchindoun: Mana-Tombs
+Auchindoun: Auchenai Crypts
+Auchindoun: Sethekk Halls
+Auchindoun: Shadow Labyrinth
+Caverns of Time: Old Hillsbrad Foothills
+Caverns of Time: The Black Morass
+Tempest Keep: The Arcatraz
+Tempest Keep: The Botanica
+Tempest Keep: The Mechanar
+Zul'Aman
+Magisters' Terrace
+Gruul's Lair
+Hellfire Citadel: Magtheridon's Lair
+Coilfang Reservoir: Serpentshrine Cavern
+Tempest Keep: The Eye
+Caverns of Time: Hyjal Summit
+Karazhan
+Sunwell Plateau
+Black Temple
+
+Wrath of the Lich King Instances
+================================
+
+Utgarde Keep: Utgarde Keep
+Utgarde Keep: Utgarde Pinnacle
+The Nexus: The Nexus
+The Nexus: The Oculus
+Azjol-Nerub: Azjol-Nerub
+Azjol-Nerub: Ahn'kahet: The Old Kingdom
+Drak'Tharon Keep
+The Violet Hold
+Gundrak
+Caverns of Time: The Culling of Stratholme
+Ulduar: Halls of Stone
+Ulduar: Halls of Lightning
+Crusaders' Coliseum: Trial of the Champion
+Icecrown Citadel: The Forge of Souls
+Icecrown Citadel: Pit of Saron
+Icecrown Citadel: Halls of Reflection
+Vault of Archavon
+Crusaders' Coliseum: Trial of the Crusader  RSA version. Fully implemented.
+The Nexus: The Eye of Eternity
+Icecrown Citadel                            
+Naxxramas
+Wyrmrest Temple: The Obsidian Sanctum
+Onyxia's Lair
+Ulduar                                      SD2 instance controller +
+The Ruby Sanctum                            RSA version. Fully implemented.
+
+Cataclysm Instances
+===================
+
+Abyssal Maw: Throne of the Tides            NYI
+Blackrock Caverns                           NYI
+The Vortex Pinnacle                         NYI
+The Stonecore                               NYI
+Grim Batol                                  NYI
+Lost City of the Tol'vir                    NYI
+Zul'Aman                                    NYI
+Well of Eternity                            NYI
+Halls of Origination                        NYI
+End Time                                    NYI
+Hour of Twilight                            NYI
+Zul'Gurub                                   NYI
+Baradin Hold                                NYI
+Blackwing Descent                           NYI
+Dragon Soul                                 NYI
+Firelands                                   NYI
+Throne of the Four Winds                    NYI
+The Bastion of Twilight                     NYI
+
+Mists of Pandaria Instances
+===========================
+
+Scarlet Halls                               NYI
+Scarlet Monastery                           NYI
+Scholomance                                 NYI
+Temple of the Jade Serpent                  NYI
+Stormstout Brewery                          NYI
+Shado-Pan Monastery                         NYI
+Mogu'shan Palace                            NYI
+Siege of Niuzao Temple                      NYI
+Gate of the Setting Sun                     NYI
+Terrace of Endless Spring                   NYI
+Heart of Fear                               NYI
+Mogu'shan Vaults                            NYI
+Siege of Orgrimmar                          NYI
+Throne of Thunder                           NYI
