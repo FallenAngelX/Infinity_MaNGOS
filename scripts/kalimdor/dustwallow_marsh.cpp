@@ -61,7 +61,7 @@ struct MANGOS_DLL_DECL mobs_risen_husk_spiritAI : public ScriptedAI
 
     Player* m_pCreditPlayer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiConsumeFlesh_Timer = 10000;
         m_uiIntangiblePresence_Timer = 5000;
@@ -146,7 +146,7 @@ struct MANGOS_DLL_DECL npc_restless_apparitionAI : public ScriptedAI
 
     uint32 m_uiTalk_Timer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiTalk_Timer = 1000;
     }
@@ -245,7 +245,7 @@ struct MANGOS_DLL_DECL npc_morokkAI : public npc_escortAI
 
     bool m_bIsSuccess;
 
-    void Reset() {}
+    void Reset() override {}
 
     void WaypointReached(uint32 uiPointId) override
     {
@@ -402,7 +402,7 @@ struct MANGOS_DLL_DECL npc_ogronAI : public npc_escortAI
     uint32 m_uiPhaseCounter;
     uint32 m_uiGlobalTimer;
 
-    void Reset()
+    void Reset() override
     {
         m_uiGlobalTimer = 5000;
 
@@ -667,7 +667,7 @@ struct MANGOS_DLL_DECL npc_private_hendelAI : public ScriptedAI
 {
     npc_private_hendelAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    void Reset() {}
+    void Reset() override {}
 
     void AttackedBy(Unit* pAttacker) override
     {
@@ -736,7 +736,7 @@ struct MANGOS_DLL_DECL npc_stinky_ignatzAI : public npc_escortAI
 
     ObjectGuid m_bogbeanPlantGuid;
 
-    void Reset() {}
+    void Reset() override {}
 
     void ReceiveAIEvent(AIEventType eventType, Creature* /*pSender*/, Unit* pInvoker, uint32 uiMiscValue) override
     {

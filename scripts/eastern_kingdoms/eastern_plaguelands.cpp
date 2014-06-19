@@ -132,7 +132,7 @@ struct MANGOS_DLL_DECL npc_eris_havenfireAI : public ScriptedAI
     ObjectGuid m_playerGuid;
     GuidList m_lSummonedGuidList;
 
-    void Reset()
+    void Reset() override
     {
         m_uiEventTimer      = 0;
         m_uiSadEndTimer     = 0;

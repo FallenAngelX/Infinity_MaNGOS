@@ -51,7 +51,7 @@ struct MANGOS_DLL_DECL npc_bartlebyAI : public ScriptedAI
         Reset();
     }
 
-    void Reset() {}
+    void Reset() override {}
 
     void AttackedBy(Unit* pAttacker) override
     {
@@ -110,7 +110,7 @@ struct MANGOS_DLL_DECL npc_dashel_stonefistAI : public ScriptedAI
         Reset();
     }
 
-    void Reset() {}
+    void Reset() override {}
 
     void AttackedBy(Unit* pAttacker) override
     {
@@ -304,7 +304,7 @@ struct MANGOS_DLL_DECL npc_squire_roweAI : public npc_escortAI, private Dialogue
     ObjectGuid m_windsorGuid;
     ObjectGuid m_horseGuid;
 
-    void Reset() { }
+    void Reset() override { }
 
     void JustSummoned(Creature* pSummoned) override
     {
@@ -646,7 +646,7 @@ struct MANGOS_DLL_DECL npc_reginald_windsorAI : public npc_escortAI, private Dia
     GuidList m_lRoyalGuardsGuidList;
     GuidSet m_sGuardsSalutedGuidSet;
 
-    void Reset()
+    void Reset() override
     {
         m_uiGuardCheckTimer  = 0;
         m_bIsKeepReady       = false;

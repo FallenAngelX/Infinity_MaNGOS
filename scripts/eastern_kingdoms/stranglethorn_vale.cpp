@@ -56,7 +56,7 @@ struct MANGOS_DLL_DECL mob_yennikuAI : public ScriptedAI
 
     uint32 m_uiResetTimer;
 
-    void Reset() { m_uiResetTimer = 0; }
+    void Reset() override { m_uiResetTimer = 0; }
 
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
     {

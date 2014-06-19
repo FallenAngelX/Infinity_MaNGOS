@@ -48,7 +48,7 @@ struct MANGOS_DLL_DECL npc_shenthulAI : public ScriptedAI
 
     ObjectGuid m_playerGuid;
 
-    void Reset()
+    void Reset() override
     {
         m_uiSaluteTimer = 0;
         m_uiResetTimer = 0;
