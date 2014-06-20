@@ -52,10 +52,11 @@ DELETE FROM `creature_linking_template` WHERE `map` = 603 AND `master_entry` = 3
 INSERT INTO `creature_linking_template` (`entry`, `map`, `master_entry`, `flag`, `search_range`) VALUES
 ('33988','603','33288','4112','0');
 
-INSERT INTO `creature_linking` (`guid`, `master_guid`, `flag`) values('129539','126685','15');
-INSERT INTO `creature_linking` (`guid`, `master_guid`, `flag`) values('129540','126686','15');
-INSERT INTO `creature_linking` (`guid`, `master_guid`, `flag`) values('129541','126687','15');
-INSERT INTO `creature_linking` (`guid`, `master_guid`, `flag`) values('129538','126688','15');
+INSERT INTO `creature_linking` (`guid`, `master_guid`, `flag`) VALUES
+('129539','126685','15'),
+('129540','126686','15'),
+('129541','126687','15'),
+('129538','126688','15');
 
 -- Script id: 62940
 DELETE FROM dbscripts_on_spell WHERE id=62940;

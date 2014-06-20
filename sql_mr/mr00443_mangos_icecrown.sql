@@ -98,7 +98,7 @@ DELETE FROM `spell_area` WHERE `spell` IN
 -- --------
 
 -- vehicle_id: ytdb = 591, here some old custom = 639
-UPDATE `creature_template` SET `AIName`='', `PowerType` = 3, `ScriptName`='boss_deathbringer_saurfang' WHERE `entry`=37813;
+UPDATE `creature_template` SET `AIName`='', `ScriptName`='boss_deathbringer_saurfang' WHERE `entry`=37813;
 UPDATE `creature_template` SET `AIName`='', `ScriptName`='npc_highlord_saurfang_icc' WHERE `entry`=37187;
 UPDATE `creature_template` SET `AIName`='', `ScriptName`='npc_deathbringer_event_guards_iccAI' WHERE `entry` IN (37920, 37902);
 UPDATE `creature_template` SET `AIName`='', `ScriptName`='mob_blood_beast' WHERE `entry`= 38508;
@@ -131,8 +131,8 @@ UPDATE `creature_template` SET baseattacktime = 1000 WHERE `entry` IN (37813, 38
 -- Deathwhisper
 -- ------------
 
-UPDATE `creature_template` SET `flags_extra` = `flags_extra` | 256 WHERE `entry` IN (38296, 38297); -- can't taunt on heroic mode
-UPDATE `creature_template` SET `faction_A`=14, `faction_H`=14,`ScriptName`='', `AIName`='' WHERE `entry`= 38222;
+UPDATE `creature_template` SET `ExtraFlags` = `ExtraFlags` | 256 WHERE `entry` IN (38296, 38297); -- can't taunt on heroic mode
+UPDATE `creature_template` SET `FactionAlliance` = 14, `FactionHorde` = 14,`ScriptName` = '', `AIName` = '' WHERE `entry`= 38222;
 UPDATE `creature_template` SET `ScriptName`='mob_cult_adherent', `AIName`='' WHERE `entry`= 37949;
 UPDATE `creature_template` SET `ScriptName`='mob_cult_fanatic', `AIName`='' WHERE `entry`= 37890;
 

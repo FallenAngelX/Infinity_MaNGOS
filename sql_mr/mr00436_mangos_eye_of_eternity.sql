@@ -7,7 +7,7 @@ INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
 (56264, 1, 30090),
 (56265, 1, 30090),
 (56266, 1, 30090),
-(61071, 1, 30090),--  hero
+(61071, 1, 30090),  --  hero
 (61072, 1, 30090),
 (61073, 1, 30090),
 (61074, 1, 30090),
@@ -21,8 +21,8 @@ UPDATE `gameobject_template` SET `ScriptName`='go_focusing_iris' WHERE entry IN 
 UPDATE `creature_template` SET `ScriptName`='npc_nexus_lord' WHERE entry=30245;
 UPDATE `creature_template` SET `ScriptName`='npc_scion_of_eternity' WHERE entry=30249;
 UPDATE `creature_template` SET `ScriptName`='npc_hover_disk' WHERE entry IN (30234, 30248);
-UPDATE `creature_template` SET `PowerType` = 3, `InhabitType` = 7, `ScriptName`='npc_whyrmrest_skytalon' WHERE entry=30161;
-UPDATE `creature_template` SET `PowerType` = 3, `InhabitType` = 7 WHERE entry=31752;
+UPDATE `creature_template` SET `InhabitType` = 7, `ScriptName`='npc_whyrmrest_skytalon' WHERE entry=30161;
+UPDATE `creature_template` SET `InhabitType` = 7 WHERE entry=31752;
 UPDATE `creature_template` SET `ScriptName`='npc_alexstrasza' WHERE entry=32295;
 
 DELETE FROM `npc_spellclick_spells` WHERE npc_entry IN (30234, 30248);

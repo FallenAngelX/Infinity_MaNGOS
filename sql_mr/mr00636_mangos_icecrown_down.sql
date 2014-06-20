@@ -4,9 +4,9 @@
 
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_jaina_and_sylvana_FSintro' WHERE `entry` IN (37597, 37596);
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_jaina_and_sylvana_FSextro' WHERE `entry` IN (38160, 38161);
-UPDATE `creature_template` SET `scale` = 0.8 WHERE `entry` IN (37221, 36955, 36658, 37225, 37223, 37226, 37554);
-UPDATE `creature_template` SET `npcflag`='3' WHERE `entry` IN (38160, 38161);
-UPDATE `creature_template` SET `equipment_id` = 1290 WHERE `entry` = 37554;
+UPDATE `creature_template` SET `Scale` = 0.8 WHERE `entry` IN (37221, 36955, 36658, 37225, 37223, 37226, 37554);
+UPDATE `creature_template` SET `NpcFlags`='3' WHERE `entry` IN (38160, 38161);
+UPDATE `creature_template` SET `EquipmentTemplateId` = 1290 WHERE `entry` = 37554;
 
 UPDATE `creature` SET `position_z` = 628.157 WHERE id = 36658;
 DELETE FROM vehicle_accessory WHERE accessory_entry = 36658;
@@ -16,7 +16,7 @@ UPDATE `instance_template` SET `ScriptName` = 'instance_halls_of_reflection' WHE
 
 UPDATE `gameobject_template` SET `faction`='1375' WHERE `entry` IN (197341, 202302, 201385, 201596);
 
-UPDATE `creature_template` SET `speed_walk`='1.5', `speed_run`='2.0' WHERE `entry` IN (36954, 37226);
+UPDATE `creature_template` SET `SpeedWalk` = '1.5', `SpeedRun` = '2.0' WHERE `entry` IN (36954, 37226);
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_jaina_and_sylvana_HRintro' WHERE `entry` IN (37221, 37223);
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='boss_falric' WHERE `entry` IN (38112);
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='boss_marwyn' WHERE `entry` IN (38113);
@@ -24,11 +24,11 @@ UPDATE `creature_template` SET `AIName`='', `Scriptname`='boss_lich_king_intro_h
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='boss_lich_king_hr' WHERE `entry` IN (37226);
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_jaina_and_sylvana_HRextro' WHERE `entry` IN (36955, 37554);
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_undead_hor' WHERE `entry` IN (36940,36941,37069);
-UPDATE `creature_template` SET `scale`='0.8' WHERE `entry` IN (37221, 36955);
-UPDATE `creature_template` SET `equipment_id` = 1290 WHERE `entry` = 37554;
-UPDATE `creature_template` SET `equipment_id`='0' WHERE `entry`=36954;
-UPDATE `creature_template` SET `scale`='0.8' WHERE `entry` IN (36658, 37225, 37223, 37226, 37554);
-UPDATE `creature_template` SET `unit_flags`='768', `type_flags`='268435564' WHERE `entry` IN (38177, 38176, 38173, 38172, 38567, 38175);
+UPDATE `creature_template` SET `Scale`='0.8' WHERE `entry` IN (37221, 36955);
+UPDATE `creature_template` SET `EquipmentTemplateId` = 1290 WHERE `entry` = 37554;
+UPDATE `creature_template` SET `EquipmentTemplateId`='0' WHERE `entry`=36954;
+UPDATE `creature_template` SET `Scale`='0.8' WHERE `entry` IN (36658, 37225, 37223, 37226, 37554);
+UPDATE `creature_template` SET `UnitFlags`='768', `CreatureTypeFlags`='268435564' WHERE `entry` IN (38177, 38176, 38173, 38172, 38567, 38175);
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_frostworn_general' WHERE `entry`=36723;
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_spiritual_reflection' WHERE `entry`=37068;
 
@@ -61,7 +61,7 @@ INSERT INTO `creature` (`id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equip
 
 UPDATE `creature` SET `position_x` = 5551.29, `position_y` = 2261.33, `position_z` = 733.012, `orientation` = 4.0452 WHERE `id` = 37226;
 
-UPDATE `creature_template` SET `modelid_1` = 11686, `modelid_2` = 11686, `modelid_3` = 11686, `modelid_4` = 11686 WHERE `entry` IN (37014,37704);
+UPDATE `creature_template` SET `ModelId1` = 11686, `ModelId2` = 11686, `ModelId3` = 11686, `ModelId4` = 11686 WHERE `entry` IN (37014,37704);
 
 DELETE FROM `gameobject` WHERE `id` IN (201385, 201596, 202079);
 
@@ -420,7 +420,8 @@ DELETE FROM `spell_template` WHERE id=75001;
 INSERT INTO `spell_template` (`id`, `attr`, `attr_ex`, `attr_ex2`, `attr_ex3`, `proc_flags`, `proc_chance`, `duration_index`, `effect0`, `effect0_implicit_target_a`, `effect0_implicit_target_b`, `effect0_radius_idx`, `effect0_apply_aura_name`, `effect0_misc_value`, `effect0_misc_value_b`, `effect0_trigger_spell`, `comments`) VALUES('75001','0','0','0','0','0','101','21','28','42','0','13','0','132001','64','0','Summon Dark Matter');
 
 DELETE FROM `creature_template` WHERE (`entry`=132001);
-INSERT INTO `creature_template` (`entry`, `difficulty_entry_1`, `difficulty_entry_2`, `difficulty_entry_3`, `KillCredit1`, `KillCredit2`, `modelid_1`, `modelid_2`, `modelid_3`, `modelid_4`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `questItem5`, `questItem6`, `movementId`, `RegenHealth`, `vehicle_id`, `equipment_id`, `trainer_id`, `vendor_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (132001, 0, 0, 0, 0, 0, 18050, 0, 0, 0, 'Unleashed Dark Matter', '', '', 0, 81, 81, 290000, 290000, 0, 0, 10029, 4, 6, 0, 1, 1.14286, 1, 1, 436, 654, 0, 163, 3, 2000, 2000, 1, 32768, 0, 0, 0, 0, 0, 0, 349, 523, 130, 10, 4160, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'EventAI', 0, 3, 10, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8193, 0, '');
+INSERT INTO `creature_template` (`entry`, `difficulty_entry_1`, `difficulty_entry_2`, `difficulty_entry_3`, `KillCredit1`, `KillCredit2`, `modelid_1`, `modelid_2`, `modelid_3`, `modelid_4`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `questItem5`, `questItem6`, `movementId`, `RegenHealth`, `vehicle_id`, `equipment_id`, `trainer_id`, `vendor_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES
+(132001, 0, 0, 0, 0, 0, 18050, 0, 0, 0, 'Unleashed Dark Matter', '', '', 0, 81, 81, 290000, 290000, 0, 0, 10029, 4, 6, 0, 1, 1.14286, 1, 1, 436, 654, 0, 163, 3, 2000, 2000, 1, 32768, 0, 0, 0, 0, 0, 0, 349, 523, 130, 10, 4160, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'EventAI', 0, 3, 10, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8193, 0, '');
 
 -- Creature id: 132001
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '132001';

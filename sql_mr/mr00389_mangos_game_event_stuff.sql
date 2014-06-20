@@ -19,17 +19,17 @@ UPDATE creature_template SET ScriptName = 'npc_horsemans_head' WHERE entry = 237
 UPDATE creature_template SET ScriptName = 'mob_pulsing_pumpkin' WHERE entry = 23694;
 
 -- Pumkin fiend template fixes
-UPDATE `creature_template` SET `modelid_2` = 21822, `faction_A` = 14, `faction_H` = 14 WHERE `entry` = 23545;
+UPDATE `creature_template` SET `ModelId2` = 21822, `FactionAlliance` = 14, `FactionHorde` = 14 WHERE `entry` = 23545;
 
 -- Pulsing pumkin template fixes
-UPDATE `creature_template` SET `modelid_2` = 24720, `faction_A` = 14, `faction_H` = 14, `type` = 6, `mechanic_immune_mask` = 8388624, `flags_extra` = 0 WHERE `entry` = 23694;
+UPDATE `creature_template` SET `ModelId2` = 24720, `FactionAlliance` = 14, `FactionHorde` = 14, `type` = 6, `MechanicImmuneMask` = 8388624, `ExtraFlags` = 0 WHERE `entry` = 23694;
 
 -- head of the horseman fixes
-UPDATE `creature_template` SET `modelid_2` = 21908, `faction_A` = 7, `faction_H` = 7, `mechanic_immune_mask` = 787202047 WHERE `entry` = 23775;
+UPDATE `creature_template` SET `ModelId2` = 21908, `FactionAlliance` = 7, `FactionHorde` = 7, `MechanicImmuneMask` = 787202047 WHERE `entry` = 23775;
 
 -- Fixes to his template ( smart to wiped clean and replaced data)
 -- Headless Horseman fixes and ect
-UPDATE `creature_template` SET `rank` = 3, `type` = 6, `equipment_id` = 10400, `mechanic_immune_mask` = `mechanic_immune_mask` | 128 WHERE `entry` = 23682;
+UPDATE `creature_template` SET `Rank` = 3, `CreatureType` = 6, `EquipmentTemplateId` = 10400, `MechanicImmuneMask` = `MechanicImmuneMask` | 128 WHERE `entry` = 23682;
 
 -- Fix quest script to correct horseman summon location
 UPDATE `dbscripts_on_quest_end` SET `x` = 1766.8, `y` = 1349.54, `z` = 18.6855, `o` = 6.2786 WHERE `id` IN(11392, 11401, 11404, 11405);
@@ -38,11 +38,12 @@ UPDATE `dbscripts_on_quest_end` SET `x` = 1766.8, `y` = 1349.54, `z` = 18.6855, 
 UPDATE `quest_template` SET `PrevQuestId` = 0 WHERE `entry` = 11401;
 
 -- built new equip_template for him
-DELETE FROM `creature_equip_template` WHERE (`entry`=10400);
-INSERT INTO `creature_equip_template` (`entry`, `equipentry1`, `equipentry2`, `equipentry3`) VALUES (10400, 38175, 0, 0);
+DELETE FROM `creature_equip_template` WHERE `entry` = 10400;
+INSERT INTO `creature_equip_template` (`entry`, `equipentry1`, `equipentry2`, `equipentry3`) VALUES
+(10400, 38175, 0, 0);
 
 -- fix no sword showing on regen/whirlwinding headless dude
-UPDATE `creature_template` SET `equipment_id` = 10400 WHERE `entry` = 23800;
+UPDATE `creature_template` SET `EquipmentTemplateId` = 10400 WHERE `entry` = 23800;
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -51,11 +52,11 @@ UPDATE `creature_template` SET `equipment_id` = 10400 WHERE `entry` = 23800;
 -- -----------------------------
 
 -- Headless Horseman fire bunny
-UPDATE creature_template SET unit_flags = 0, AIName = '', faction_a = 35, faction_h = 35, ScriptName = 'npc_horseman_fire_bunny' WHERE entry = 23686;
+UPDATE creature_template SET UnitFlags = 0, AIName = '', FactionAlliance = 35, FactionHorde = 35, ScriptName = 'npc_horseman_fire_bunny' WHERE entry = 23686;
 UPDATE creature_template SET InhabitType = 4, ScriptName = 'npc_shade_of_horseman' WHERE entry = 23543;
 
 -- Headless Horseman fire bunny
-UPDATE creature_template SET unit_flags = 0, AIName = 'EventAI' WHERE entry = 23686;
+UPDATE creature_template SET UnitFlags = 0, AIName = 'EventAI' WHERE entry = 23686;
 DELETE FROM creature_ai_scripts WHERE id IN (2368601, 2368602);
 INSERT INTO creature_ai_scripts (id,creature_id,event_type,event_chance,action1_type,action1_param1) VALUES
 -- visual fire aura on initial spawn
