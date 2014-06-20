@@ -27,24 +27,30 @@ EndScriptData */
 
 enum say
 {
-    SAY_SLAY            = -1603002,
-    SAY_DEATH           = -1603003,
-    SAY_AGGRO           = -1603004,
-    SAY_CHANGE1         = -1603005,
-    SAY_CHANGE2         = -1603006,
-    SAY_CHANGE3         = -1603007,
-    SAY_PLAYER_ON_TOP   = -1603008,
-    SAY_OVERLOAD1       = -1603009,
-    SAY_OVERLOAD2       = -1603010,
-    SAY_OVERLOAD3       = -1603011,
-    SAY_HARD_MODE       = -1603012,
-    SAY_TOWERS_DOWN     = -1603013,
-    SAY_FROST_TOWER     = -1603014,
-    SAY_FIRE_TOWER      = -1603015,
-    SAY_ENERGY_TOWER    = -1603016,
-    SAY_NATURE_TOWER    = -1603017,
+    SAY_AGGRO                               = -1603159,
+    SAY_SLAY                                = -1603160,
+    SAY_DEATH                               = -1603161,
+    SAY_CHANGE1                             = -1603162,
+    SAY_CHANGE2                             = -1603163,
+    SAY_CHANGE3                             = -1603164,
 
-    EMOTE_PURSUE        = -1603018,
+    SAY_PLAYER_ON_TOP                       = -1603165,
+    SAY_OVERLOAD1                           = -1603166,
+    SAY_OVERLOAD2                           = -1603167,
+    SAY_OVERLOAD3                           = -1603168,
+
+    SAY_HARD_MODE                           = -1603169,
+    SAY_TOWER_FROST                         = -1603170,
+    SAY_TOWER_FIRE                          = -1603171,
+    SAY_TOWER_ENERGY                        = -1603172,
+    SAY_TOWER_NATURE                        = -1603173,
+    SAY_TOWERS_DOWN                         = -1603174,
+
+    EMOTE_PURSUE                            = -1603175,
+    EMOTE_HODIR_FURY                        = -1603242,
+    EMOTE_FREYA_WARD                        = -1603243,
+    EMOTE_MIMIRON_INFERNO                   = -1603244,
+    EMOTE_THORIM_HAMMER                     = -1603245,
 };
 
 enum spells

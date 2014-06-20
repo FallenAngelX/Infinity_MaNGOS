@@ -27,15 +27,15 @@ EndScriptData */
 enum
 {
     //yells/emotes
-    SAY_INTRO               = -1603030,
-    SAY_AGGRO1              = -1603031,
-    SAY_AGGRO2              = -1603032,
-    SAY_AGGRO3              = -1603033,
-    SAY_GROUND              = -1603034,
-    EMOTE_DEEP_BREATH       = -1603035,
-    SAY_FIRES_EXTINGUISH    = -1603036,
-    EMOTE_HARPOON           = -1603337,
-    EMOTE_GROUNDED          = -1603338,
+    SAY_INTRO               = -1603036,
+    SAY_AGGRO1              = -1603037,
+    SAY_AGGRO2              = -1603038,
+    SAY_AGGRO3              = -1603039,
+    SAY_GROUND              = -1603040,
+    EMOTE_DEEP_BREATH       = -1603041,
+    SAY_FIRES_EXTINGUISH    = -1603042,
+    EMOTE_HARPOON           = -1603343,
+    EMOTE_GROUNDED          = -1603344,
 
     //razorscale air phase
     SPELL_FIREBALL              = 62796,

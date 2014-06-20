@@ -27,29 +27,45 @@ EndScriptData */
 
 enum
 {
-    //yells
-    SAY_AGGRO           = -1603220,
-    SAY_HARD_MODE       = -1603221,
-    SAY_BERSERK         = -1603222,
-    SAY_TANK_ACTIVE     = -1603223,
-    SAY_TANK_SLAY1      = -1603224,
-    SAY_TANK_SLAY2      = -1603225,
-    SAY_TANK_DEATH      = -1603226,
-    SAY_TORSO_ACTIVE    = -1603227,
-    SAY_TORSO_SLAY1     = -1603228,
-    SAY_TORSO_SLAY2     = -1603229,
-    SAY_TORSO_DEATH     = -1603230,
-    SAY_HEAD_ACTIVE     = -1603231,
-    SAY_HEAD_SLAY1      = -1603232,
-    SAY_HEAD_SLAY2      = -1603233,
-    SAY_HEAD_DEATH      = -1603234,
-    SAY_ROBOT_ACTIVE    = -1603235,
-    SAY_ROBOT_SLAY1     = -1603236,
-    SAY_ROBOT_SLAY2     = -1603237,
-    SAY_ROBOT_DEATH     = -1603238,
+    SAY_INTRO                               = -1603176,
+    SAY_HARD_MODE                           = -1603177,
+    SAY_BERSERK                             = -1603178,
 
-    EMOTE_PLASMA_BLAST     = -1603240,
-//    EMOTE_LASER_SLAVE      = -1603241,
+    SAY_TANK_ACTIVE                         = -1603179,
+    SAY_TANK_SLAY_1                         = -1603180,
+    SAY_TANK_SLAY_2                         = -1603181,
+    SAY_TANK_DEATH                          = -1603182,
+
+    SAY_TORSO_ACTIVE                        = -1603183,
+    SAY_TORSO_SLAY_1                        = -1603184,
+    SAY_TORSO_SLAY_2                        = -1603185,
+    SAY_TORSO_DEATH                         = -1603186,
+
+    SAY_HEAD_ACTIVE                         = -1603187,
+    SAY_HEAD_SLAY_1                         = -1603188,
+    SAY_HEAD_SLAY_2                         = -1603189,
+    SAY_HEAD_DEATH                          = -1603190,
+
+    SAY_ROBOT_ACTIVE                        = -1603191,
+    SAY_ROBOT_SLAY_1                        = -1603192,
+    SAY_ROBOT_SLAY_2                        = -1603193,
+    SAY_ROBOT_DEATH                         = -1603194,
+
+    EMOTE_PLASMA_BLAST                      = -1603196,
+
+    SAY_SELF_DESTRUCT                       = -1603248,
+    SAY_SELF_DESTRUCT_END                   = -1603260,
+    SAY_DESTRUCT_10_MIN                     = -1603249,
+    SAY_DESTRUCT_9_MIN                      = -1603250,
+    SAY_DESTRUCT_8_MIN                      = -1603251,
+    SAY_DESTRUCT_7_MIN                      = -1603252,
+    SAY_DESTRUCT_6_MIN                      = -1603253,
+    SAY_DESTRUCT_5_MIN                      = -1603254,
+    SAY_DESTRUCT_4_MIN                      = -1603255,
+    SAY_DESTRUCT_3_MIN                      = -1603256,
+    SAY_DESTRUCT_2_MIN                      = -1603257,
+    SAY_DESTRUCT_1_MIN                      = -1603258,
+    SAY_DESTRUCT_0_MIN                      = -1603259,
 
     SPELL_JET_PACK          = 63341, // used by mimiron to change seats
     SPELL_SELF_REPAIR       = 64383,
@@ -293,11 +309,11 @@ struct MANGOS_DLL_DECL boss_leviathan_mkAI : public ScriptedAI
         {
             if(m_pInstance->GetData(TYPE_MIMIRON_PHASE) == PHASE_LEVIATHAN)
             {
-                DoScriptText(urand(0,1) ? SAY_TANK_SLAY1 : SAY_TANK_SLAY2, pMimiron);
+                DoScriptText(urand(0,1) ? SAY_TANK_SLAY_1 : SAY_TANK_SLAY_2, pMimiron);
             }
             if(m_pInstance->GetData(TYPE_MIMIRON_PHASE) == PHASE_ROBOT)
             {
-                DoScriptText(urand(0,1) ? SAY_ROBOT_SLAY1 : SAY_ROBOT_SLAY2, pMimiron);
+                DoScriptText(urand(0,1) ? SAY_ROBOT_SLAY_1 : SAY_ROBOT_SLAY_2, pMimiron);
             }
         }
     }
@@ -590,11 +606,11 @@ struct MANGOS_DLL_DECL boss_vx001AI : public ScriptedAI
         {
             if(m_pInstance->GetData(TYPE_MIMIRON_PHASE) == PHASE_VX001)
             {
-                DoScriptText(urand(0,1) ? SAY_TORSO_SLAY1 : SAY_TORSO_SLAY2, pMimiron);
+                DoScriptText(urand(0,1) ? SAY_TORSO_SLAY_1 : SAY_TORSO_SLAY_2, pMimiron);
             }
             if(m_pInstance->GetData(TYPE_MIMIRON_PHASE) == PHASE_ROBOT)
             {
-                DoScriptText(urand(0,1) ? SAY_ROBOT_SLAY1 : SAY_ROBOT_SLAY2, pMimiron);
+                DoScriptText(urand(0,1) ? SAY_ROBOT_SLAY_1 : SAY_ROBOT_SLAY_2, pMimiron);
             }
         }
     }
@@ -1023,11 +1039,11 @@ struct MANGOS_DLL_DECL boss_aerial_command_unitAI : public ScriptedAI
         {
             if(m_pInstance->GetData(TYPE_MIMIRON_PHASE) == PHASE_AERIAL)
             {
-                DoScriptText(urand(0,1) ? SAY_HEAD_SLAY1 : SAY_HEAD_SLAY2, pMimiron);
+                DoScriptText(urand(0,1) ? SAY_HEAD_SLAY_1 : SAY_HEAD_SLAY_2, pMimiron);
             }
             if(m_pInstance->GetData(TYPE_MIMIRON_PHASE) == PHASE_ROBOT)
             {
-                DoScriptText(urand(0,1) ? SAY_ROBOT_SLAY1 : SAY_ROBOT_SLAY2, pMimiron);
+                DoScriptText(urand(0,1) ? SAY_ROBOT_SLAY_1 : SAY_ROBOT_SLAY_2, pMimiron);
             }
         }
     }
@@ -1252,7 +1268,7 @@ struct MANGOS_DLL_DECL boss_mimironAI : public ScriptedAI
     // start event
     void Aggro(Unit *who) 
     {
-        DoScriptText(SAY_AGGRO, m_creature);
+        DoScriptText(SAY_INTRO, m_creature);
         if (m_pInstance)
         {
             m_pInstance->SetData(TYPE_MIMIRON, IN_PROGRESS);

@@ -28,18 +28,18 @@ EndScriptData */
 enum
 {
     // Yells
-    SAY_AGGRO           = -1603090,
-    SAY_SHOCKWEAVE      = -1603091,
-    SAY_GRAB            = -1603092,
-    SAY_LEFT_ARM_LOST   = -1603093,
-    SAY_RIGHT_ARM_LOST  = -1603094,
-    SAY_SLAY1           = -1603095,
-    SAY_SLAY2           = -1603096,
-    SAY_BERSERK         = -1603097,
-    SAY_DEATH           = -1603098,
-    EMOTE_RIGHT_ARM     = -1603099,
-    EMOTE_LEFT_ARM      = -1603100,
-    EMOTE_STONE_GRIP    = -1603101,
+    SAY_AGGRO           = -1603126,
+    SAY_SHOCKWEAVE      = -1603127,
+    SAY_GRAB            = -1603128,
+    SAY_LEFT_ARM_LOST   = -1603129,
+    SAY_RIGHT_ARM_LOST  = -1603130,
+    SAY_SLAY1           = -1603131,
+    SAY_SLAY2           = -1603132,
+    SAY_BERSERK         = -1603133,
+    SAY_DEATH           = -1603134,
+    EMOTE_RIGHT_ARM     = -1603135,
+    EMOTE_LEFT_ARM      = -1603136,
+    EMOTE_STONE_GRIP    = -1603137,
 
     // Kologarn
     SPELL_INSTAKILL_KOLOGARN_ARM= 63628,

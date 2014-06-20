@@ -32,18 +32,18 @@ EndScriptData */
 
 enum
 {
-    SAY_FROZEN_BLOWS            = -1603120,
-    SAY_FLASH_FREEZE            = -1603121,
-    SAY_SLAY_2                  = -1603122,
-    SAY_SLAY_1                  = -1603123,
-    SAY_DEATH                   = -1603124,
-    SAY_AGGRO                   = -1603125,
+    SAY_AGGRO                   = -1603086,
+    SAY_SLAY_1                  = -1603087,
+    SAY_SLAY_2                  = -1603088,
+    SAY_FLASH_FREEZE            = -1603089,
+    SAY_FROZEN_BLOWS            = -1603090,
+    SAY_DEATH                   = -1603091,
 //    SAY_YOGG                    = -1603126,
-    SAY_BERSERK                 = -1603127,
+    SAY_BERSERK                 = -1603092,
 
-    EMOTE_FLASH_FREEZE          = -1603128,
-    EMOTE_FROZEN_BLOWS          = -1603129,
-    EMOTE_SPEEDKILL             = -1603130,
+    EMOTE_FLASH_FREEZE          = -1603094,
+    EMOTE_FROZEN_BLOWS          = -1603095,
+//    EMOTE_SPEEDKILL             = -1603130,
 
     SPELL_ENRAGE                = 26662,
     SPELL_HODIR_CREDIT          = 64899,    // custom spell in spell_dbc.sql
@@ -360,7 +360,7 @@ struct MANGOS_DLL_DECL boss_hodirAI : public ScriptedAI
                 if (m_uiSpeedKillTimer > 180000)
                 {
                     m_bhardmode = false;
-                    DoScriptText(EMOTE_SPEEDKILL, m_creature);
+                    //DoScriptText(EMOTE_SPEEDKILL, m_creature);
                     if (m_pInstance)
                         m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_RARE_CACHE, false);
                 }

@@ -26,17 +26,17 @@ EndScriptData */
 
 enum
 {
-    SAY_AGGRO       = -1603350,
-    SAY_SLAY_1      = -1603351,
-    SAY_SLAY_2      = -1603352,
-    SAY_SURGE       = -1603353,
-    SAY_DEATH       = -1603354,
-    SAY_ENRAGE      = -1603355,
-    SAY_HARD_MODE   = -1603356,
+    SAY_AGGRO                           = -1603096,
+    SAY_SLAY_1                          = -1603097,
+    SAY_SLAY_2                          = -1603098,
+    SAY_SURGE                           = -1603099,
+    SAY_DEATH                           = -1603100,
+    SAY_ENRAGE                          = -1603101,
+    SAY_HARD_MODE                       = -1603102,
 
-    EMOTE_VAPOR     = -1603357,
-    EMOTE_SURGE     = -1603358,
-    EMOTE_ANIMUS    = -1603359,
+    EMOTE_VAPOR                         = -1603103,
+    EMOTE_SURGE                         = -1603104,
+    EMOTE_ANIMUS                        = -1603105,
 
     SPELL_AURA_OF_DESPAIR               = 62692,
     SPELL_SHADOW_CRASH                  = 62660,

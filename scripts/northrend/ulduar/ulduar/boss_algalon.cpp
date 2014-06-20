@@ -26,28 +26,30 @@ EndScriptData */
 
 enum
 {
-    SAY_AGGRO                       = -1603250,
-    SAY_ENGAGE                      = -1603251,
-    SAY_BIGBANG1                    = -1603252,
-    SAY_BIGBANG2                    = -1603253,
-    SAY_PHASE2                      = -1603254,
-    SAY_SLAY1                       = -1603255,
-    SAY_SLAY2                       = -1603256,
-    SAY_BERSERK                     = -1603257,
-    SAY_SUMMON_STAR                 = -1603258,
+    SAY_INTRO_1                         = -1603106,
+    SAY_INTRO_2                         = -1603107,
+    SAY_INTRO_3                         = -1603108,
 
-    SAY_INTRO1                      = -1603260,
-    SAY_INTRO2                      = -1603261,
-    SAY_INTRO3                      = -1603262,
+    SAY_ENGAGE                          = -1603109,
+    SAY_AGGRO                           = -1603110,
+    SAY_SLAY_1                          = -1603111,
+    SAY_SLAY_2                          = -1603112,
+    SAY_SUMMON_STAR                     = -1603113,
+    SAY_BIG_BANG_1                      = -1603114,
+    SAY_BIG_BANG_2                      = -1603115,
+    SAY_PHASE_2                         = -1603116,
+    SAY_BERSERK                         = -1603117,
 
-    SAY_DESPAWN1                    = -1603263,
-    SAY_DESPAWN2                    = -1603264,
-    SAY_DESPAWN3                    = -1603265,
-    SAY_OUTRO1                      = -1603266,
-    SAY_OUTRO2                      = -1603267,
-    SAY_OUTRO3                      = -1603268,
-    SAY_OUTRO4                      = -1603259,
-    SAY_OUTRO5                      = -1603269,
+    SAY_DESPAWN_1                       = -1603118,
+    SAY_DESPAWN_2                       = -1603119,
+    SAY_DESPAWN_3                       = -1603120,
+
+    SAY_OUTRO_1                         = -1603121,
+    SAY_OUTRO_2                         = -1603122,
+    SAY_OUTRO_3                         = -1603123,
+    SAY_OUTRO_4                         = -1603124,
+    SAY_OUTRO_5                         = -1603125,
+    SAY_BRANN_OUTRO                     = -1603246,
 
     ITEM_PLANETARIUM_KEY            = 45796,
     ITEM_PLANETARIUM_KEY_H          = 45798,
@@ -259,8 +261,8 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
     {
         switch(urand(0, 1))
         {
-        case 0: DoScriptText(SAY_SLAY1, m_creature); break;
-        case 1: DoScriptText(SAY_SLAY2, m_creature); break;
+        case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
+        case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
         }
     }
 
@@ -398,17 +400,17 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
                     switch(m_uiIntroStep)
                     {
                     case 1:
-                        DoScriptText(SAY_INTRO1, m_creature);
+                        DoScriptText(SAY_INTRO_1, m_creature);
                         ++m_uiIntroStep;
                         m_uiIntroTimer = 8000;
                         break;
                     case 3:
-                        DoScriptText(SAY_INTRO2, m_creature);
+                        DoScriptText(SAY_INTRO_2, m_creature);
                         ++m_uiIntroStep;
                         m_uiIntroTimer = 6000;
                         break;
                     case 5:
-                        DoScriptText(SAY_INTRO3, m_creature);
+                        DoScriptText(SAY_INTRO_3, m_creature);
                         ++m_uiIntroStep;
                         m_uiIntroTimer = 10000;
                         break;
@@ -526,7 +528,7 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
                 // hp check -> start phase 2
                 if(!m_bIsPhase2 && m_creature->GetHealthPercent() < 20)
                 {
-                    DoScriptText(SAY_PHASE2, m_creature);
+                    DoScriptText(SAY_PHASE_2, m_creature);
                     m_bIsPhase2 = true;
 
                     std::list<Creature*> lAdds;
@@ -573,13 +575,13 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
             case 3:
                 if(m_bIsDespawned)
                 {
-                    DoScriptText(SAY_DESPAWN1, m_creature);
+                    DoScriptText(SAY_DESPAWN_1, m_creature);
                     ++m_uiOutroStep;
                     m_uiOutroTimer = 15000;
                 }
                 else
                 {
-                    DoScriptText(SAY_OUTRO1, m_creature);
+                    DoScriptText(SAY_OUTRO_1, m_creature);
                     ++m_uiOutroStep;
                     m_uiOutroTimer = 37000;
                 }
@@ -587,13 +589,13 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
             case 5:
                 if(m_bIsDespawned)
                 {
-                    DoScriptText(SAY_DESPAWN2, m_creature);
+                    DoScriptText(SAY_DESPAWN_2, m_creature);
                     ++m_uiOutroStep;
                     m_uiOutroTimer = 8000;
                 }
                 else
                 {
-                    DoScriptText(SAY_OUTRO2, m_creature);
+                    DoScriptText(SAY_OUTRO_2, m_creature);
                     ++m_uiOutroStep;
                     m_uiOutroTimer = 17000;
                 }
@@ -601,13 +603,13 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
             case 7:
                 if(m_bIsDespawned)
                 {
-                    DoScriptText(SAY_DESPAWN3, m_creature);
+                    DoScriptText(SAY_DESPAWN_3, m_creature);
                     ++m_uiOutroStep;
                     m_uiOutroTimer = 7000;
                 }
                 else
                 {
-                    DoScriptText(SAY_OUTRO3, m_creature);
+                    DoScriptText(SAY_OUTRO_3, m_creature);
                     ++m_uiOutroStep;
                     m_uiOutroTimer = 12000;
                 }
@@ -621,7 +623,7 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
                 }
                 else
                 {
-                    DoScriptText(SAY_OUTRO4, m_creature);
+                    DoScriptText(SAY_OUTRO_4, m_creature);
                     ++m_uiOutroStep;
                     m_uiOutroTimer = 11000;
                 }
@@ -638,7 +640,7 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
                 }
                 else
                 {
-                    DoScriptText(SAY_OUTRO5, m_creature);
+                    DoScriptText(SAY_OUTRO_5, m_creature);
                     ++m_uiOutroStep;
                     m_uiOutroTimer = 13000;
                 }

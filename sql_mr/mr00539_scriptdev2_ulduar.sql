@@ -1,11 +1,12 @@
 /* ULDUAR from Xfurry*/
 -- -1 603 000 ULDUAR
--- ids may need to be rewritten
 
-DELETE FROM `script_texts` WHERE `entry` BETWEEN -1603999 AND -1603000;
+DELETE FROM `script_texts` WHERE `entry` = -1603013;
 -- translate from lanc
 INSERT INTO `script_texts` (entry, content_default, content_loc1, content_loc2, content_loc3, content_loc4, content_loc5, content_loc6, content_loc7, content_loc8, sound, type, language, emote, comment) VALUES
+(-1603013,'Freya casts Strenghtened Iron Roots!' ,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'EMOTE_iron roots');
 
+/*
 -- Ignis:
 (-1603020, "Insolent whelps! Your blood will temper the weapons used to reclaim this world!", "","","","","","","","Мерзкие глупцы! Ваша кровь закалит оружие, которым был завоеван этот мир!",15564, 1, 0, 0, 'IgnisAggro'),
 (-1603021, "Let the inferno consume you!", "","","","","","","","Да поглотит вас пламя преисподней!",15567, 1, 0, 0, 'Ignis Scorch1'),
@@ -118,10 +119,6 @@ INSERT INTO `script_texts` (entry, content_default, content_loc1, content_loc2, 
 (-1603148,"You have strayed too far, wasted too much time!","","","","","","","","Вы проделали весь этот путь, впустую!",15532,1,0,0,"freya berserk"),
 (-1603149,"Eonar, your servant calls for your blessing!","","","","","","","","Эонар, прошу тебя даруй свое благословение!",15535,1,0,0,"freya yogg"),
 
-(-1603150,'Allies of Nature have appeared!' ,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'EMOTE_allies'),
-(-1603151,'A Lifebinder\'s Gift begins to grow!' ,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'EMOTE_lifebinders'),
-(-1603152,'Freya begins to cast Ground Tremor!' ,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'EMOTE_ground tremor'),
-(-1603153,'Freya casts Strenghtened Iron Roots!' ,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'EMOTE_iron roots'),
 -- Brightleaf
 (-1603160,"Matron, the Conservatory has been breached!","","","","","","","","",15483,1,0,0,"brightleaf aggro"),
 (-1603161,"Fertilizer.","","","","","","","","",15485,1,0,0,"brightleaf slay1"),
@@ -306,7 +303,7 @@ INSERT INTO `script_texts` (entry, content_default, content_loc1, content_loc2, 
 (-1603267,"Perhaps it is your imperfection that which grants you free will. That allows you to persevere against cosmically calculated odds. You prevailed where the Titans' own perfect creations have failed.","","","","","","","","Похоже ваша сила кроется именно в несовершенстве. Дарованная вам свобода воли позволяет принебрегать законами космоса и выходить победителями, тогда когда идеальные создания Титанов оказываются безсильными.",15401,1,0,0,"algalon outro 2"),
 (-1603268,"I've rearranged the reply code. Your planet will be spared. I cannot be certain of my own calculations anymore.","","","","","","","","Я изменил код отклика. Ваша планета будет спасена. Я больше не могу полагаться на свои расчеты.",15402,1,0,0,"algalon outro 3"),
 (-1603269,"Do not worry about my fate <name>. If the signal is not transmitted in time re-origination will proceed regardless. Save. Your. World.","","","","","","","","",15404,1,0,0,"algalon outro 5");
-
+*/
 -- Archivum dialogue: TODO:
 -- Brann
 -- Archivum

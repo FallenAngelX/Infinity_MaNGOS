@@ -28,16 +28,16 @@ EndScriptData */
 enum
 {
     // yells
-    SAY_AGGRO       = -1603020,
-    SAY_SCORCH1     = -1603021,
-    SAY_SCORCH2     = -1603022,
-    SAY_SLAGPOT     = -1603023,
-    EMOTE_FLAMEJETS = -1603024,
-    SAY_SUMMON      = -1603025,
-    SAY_SLAY_1      = -1603026,
-    SAY_SLAY_2      = -1603027,
-    SAY_BERSERK     = -1603028,
-    SAY_DEATH       = -1603029,
+    SAY_AGGRO       = -1603026,
+    SAY_SCORCH1     = -1603027,
+    SAY_SCORCH2     = -1603028,
+    SAY_SLAGPOT     = -1603029,
+    SAY_SUMMON      = -1603030,
+    SAY_SLAY_1      = -1603031,
+    SAY_SLAY_2      = -1603032,
+    SAY_BERSERK     = -1603033,
+    SAY_DEATH       = -1603034,
+    EMOTE_FLAMEJETS = -1603035,
 
     // ignis the furnace master
     SPELL_FLAME_JETS            = 62680,

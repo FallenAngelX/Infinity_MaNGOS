@@ -27,62 +27,63 @@ EndScriptData */
 
 enum
 {
-    //yells
-    //sara    
-    SAY_AGGRO                   = -1603360,
-    SAY_HELP1                   = -1603361,
-    SAY_HELP2                   = -1603362,
-    SAY_KILL1                   = -1603363,
-    SAY_KILL2                   = -1603364,
-    SAY_SPECIAL1                = -1603365,
-    SAY_SPECIAL2                = -1603366,
-    SAY_INTRO1                  = -1603367,
-    SAY_INTRO2                  = -1603368,    
-    SAY_WIPE                    = -1603369,
+    SAY_SARA_INTRO_1                            = -1603197,
+    SAY_SARA_INTRO_2                            = -1603198,
+    SAY_SARA_AGGRO                              = -1603199,
+    SAY_SARA_HELP_1                             = -1603200,
+    SAY_SARA_HELP_2                             = -1603201,
+    SAY_SARA_SLAY_1                             = -1603202,
+    SAY_SARA_SLAY_2                             = -1603203,
+    SAY_WIPE_PHASE_1                            = -1603204,
 
-    //yogg
-    SAY_PHASE2                  = -1603370,
-    SAY_VISION                  = -1603371,
-    SAY_PHASE3                  = -1603372,
-    SAY_SLAY1                   = -1603373,
-    SAY_SLAY2                   = -1603374,
-    SAY_DEATH                   = -1603375,
-    SAY_INSANITY1               = -1603376,
-    SAY_INSANITY2               = -1603377,
-    EMOTE_PORTALS               = -1603378,
-    EMOTE_SHATTER               = -1603379,
+    SAY_KILL1                                   = -1603363,
+    SAY_KILL2                                   = -1603364,
+    SAY_SPECIAL1                                = -1603365,
+    SAY_SPECIAL2                                = -1603366,  
 
-    //visions
-    //stormwind
-    SAY_GARONA1                 = -1603400,
-    SAY_GARONA2                 = -1603401,
-    SAY_GARONA3                 = -1603402,
-    SAY_GARONA4                 = -1603403,
-    SAY_YOGG_V1_1               = -1603404,
-    SAY_YOGG_V1_2               = -1603405,
-    SAY_YOGG_V1_3               = -1603406,
-    SAY_ILANE                   = -1603407,
+    SAY_SARA_PHASE_2_INTRO_A                    = -1603206,
+    SAY_SARA_PHASE_2_INTRO_B                    = -1603207,
 
-    //dragons
-    SAY_NELTHARION1             = -1603390,
-    SAY_YSERA                   = -1603391,
-    SAY_NELTHARION2             = -1603392,
-    SAY_MALYGOS                 = -1603393,
-    SAY_YOGG_V2                 = -1603394,
+    SAY_MADNESS                                 = -1603209,
+    SAY_PHASE_3                                 = -1603210,
+    SAY_SLAY_1                                  = -1603211,
+    SAY_SLAY_2                                  = -1603212,
+    SAY_DEATH                                   = -1603213,
+    SAY_TO_INSANE_1                             = -1603214,
+    SAY_TO_INSANE_2                             = -1603215,
 
-    //lich king
-    SAY_LICH_KING1              = -1603380,
-    SAY_CHAMPION1               = -1603381,
-    SAY_CHAMPION2               = -1603382,
-    SAY_LICH_KING2              = -1603383,
-    SAY_YOGG_V3_1               = -1603384,
-    SAY_YOGG_V3_2               = -1603385,
+    SAY_LICH_KING_1                             = -1603216,
+    SAY_CHAMPION_1                              = -1603217,
+    SAY_CHAMPION_2                              = -1603218,
+    SAY_LICH_KING_2                             = -1603219,
+    SAY_YOGG_V3_1                               = -1603220,
+    SAY_YOGG_V3_2                               = -1603221,
+
+    SAY_NELTHARION_1                            = -1603222,
+    SAY_YSERA                                   = -1603223,
+    SAY_NELTHARION_2                            = -1603224,
+    SAY_MALYGOS                                 = -1603225,
+    SAY_YOGG_V2                                 = -1603226,
+
+    SAY_GARONA_1                                = -1603227,
+    SAY_GARONA_2                                = -1603228,
+    SAY_YOGG_V1_1                               = -1603229,
+    SAY_YOGG_V1_2                               = -1603230,
+    SAY_GARONA_3                                = -1603231,
+    SAY_GARONA_4                                = -1603232,
+    SAY_YOGG_V1_3                               = -1603233,
+
+    EMOTE_VISION_BLAST                          = -1603234,
+    EMOTE_SHATTER_BLAST                         = -1603235,
+    EMOTE_CLOUD_BOIL                            = -1603261,
 
     //keepers yells
-    SAY_HODIR_ACTIVE            = -1603126,
-    SAY_FREYA_ACTIVE            = -1603149,
-    SAY_THORIM_ACTIVE           = -1603207,
-    SAY_MIMIRON_ACTIVE          = -1603239,
+    SAY_HODIR_ACTIVE                            = -1603093,
+    SAY_FREYA_ACTIVE                            = -1603009,
+    SAY_THORIM_ACTIVE                           = -1603155,
+    SAY_MIMIRON_ACTIVE                          = -1603195,
+
+    //SAY_ILANE                                 = ?,
 
     //vision npc
     //stormwind
@@ -553,7 +554,7 @@ struct MANGOS_DLL_DECL boss_yogg_saronAI : public ScriptedAI
             }
 
             if(Creature* pSara = m_pInstance->GetSingleCreatureFromStorage(NPC_SARA))
-                DoScriptText(SAY_AGGRO, pSara);
+                DoScriptText(SAY_SARA_AGGRO, pSara);
         }
     }
 
@@ -565,7 +566,7 @@ struct MANGOS_DLL_DECL boss_yogg_saronAI : public ScriptedAI
 
     void KilledUnit(Unit* pVictim) override
     {
-        DoScriptText(urand(0,1) ? SAY_SLAY1 : SAY_SLAY2, m_creature);
+        DoScriptText(urand(0,1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
     void JustDied(Unit *killer)
@@ -629,7 +630,7 @@ struct MANGOS_DLL_DECL boss_yogg_saronAI : public ScriptedAI
 
     void StartThirdPhase()
     {
-        DoScriptText(SAY_PHASE3, m_creature);
+        DoScriptText(SAY_PHASE_3, m_creature);
         m_creature->RemoveAurasDueToSpell(SPELL_SHADOWY_BARRIER_YOGG);
         m_creature->SetHealth(m_creature->GetMaxHealth() * 0.3);
 
@@ -1038,13 +1039,13 @@ struct MANGOS_DLL_DECL boss_brain_of_yogg_saronAI : public ScriptedAI
                         break;
                     case 1:
                         if(Creature* Garona = m_pInstance->instance->GetCreature(m_uiGaronaGUID))
-                            DoScriptText(SAY_GARONA1, Garona);
+                            DoScriptText(SAY_GARONA_1, Garona);
                         ++m_uiVisionPhase;
                         m_uiSpeechTimer = 12000;
                         break;
                     case 2:
                         if(Creature* Garona = m_pInstance->instance->GetCreature(m_uiGaronaGUID))
-                            DoScriptText(SAY_GARONA2, Garona);
+                            DoScriptText(SAY_GARONA_2, Garona);
                         ++m_uiVisionPhase;
                         m_uiSpeechTimer = 12000;
                         break;
@@ -1062,7 +1063,7 @@ struct MANGOS_DLL_DECL boss_brain_of_yogg_saronAI : public ScriptedAI
                         break;
                     case 5:
                         if(Creature* KingLlane = m_pInstance->instance->GetCreature(m_uiKingLlaneGUID))
-                            DoScriptText(SAY_GARONA3, KingLlane);
+                            DoScriptText(SAY_GARONA_3, KingLlane);
                         ++m_uiVisionPhase;
                         m_uiSpeechTimer = 6000;
                         break;
@@ -1073,7 +1074,7 @@ struct MANGOS_DLL_DECL boss_brain_of_yogg_saronAI : public ScriptedAI
                         }
                         if(Creature* KingLlane = m_pInstance->instance->GetCreature(m_uiKingLlaneGUID))
                         {
-                            DoScriptText(SAY_ILANE, KingLlane);                             
+                            //DoScriptText(SAY_ILANE, KingLlane);                             
                         }
                         ++m_uiVisionPhase;
                         m_uiSpeechTimer = 6000;
@@ -1081,7 +1082,7 @@ struct MANGOS_DLL_DECL boss_brain_of_yogg_saronAI : public ScriptedAI
                     case 7:
                         if(Creature* Garona = m_pInstance->instance->GetCreature(m_uiGaronaGUID))
                         {
-                            DoScriptText(SAY_GARONA4, Garona);
+                            DoScriptText(SAY_GARONA_4, Garona);
                             if(Creature* KingLlane = m_pInstance->instance->GetCreature(m_uiKingLlaneGUID))
                             {
                                 KingLlane->SetStandState(UNIT_STAND_STATE_DEAD);
@@ -1145,7 +1146,7 @@ struct MANGOS_DLL_DECL boss_brain_of_yogg_saronAI : public ScriptedAI
                             break;
                         case 1:
                             if(Creature* Neltharion = m_pInstance->instance->GetCreature(m_uiNeltharionGUID))
-                                DoScriptText(SAY_NELTHARION1, Neltharion);
+                                DoScriptText(SAY_NELTHARION_1, Neltharion);
                             ++m_uiVisionPhase;
                             m_uiSpeechTimer = 10000;
                             break;
@@ -1157,7 +1158,7 @@ struct MANGOS_DLL_DECL boss_brain_of_yogg_saronAI : public ScriptedAI
                             break;
                         case 3:
                             if(Creature* Neltharion = m_pInstance->instance->GetCreature(m_uiNeltharionGUID))
-                                DoScriptText(SAY_NELTHARION2, Neltharion);
+                                DoScriptText(SAY_NELTHARION_2, Neltharion);
                             ++m_uiVisionPhase;
                             m_uiSpeechTimer = 6000;
                             break;
@@ -1219,7 +1220,7 @@ struct MANGOS_DLL_DECL boss_brain_of_yogg_saronAI : public ScriptedAI
                                 if(Creature* LichKing = m_pInstance->instance->GetCreature(m_uiLichKingGUID))
                                 {
                                     LichKing->CastSpell(Champion, 54142, false);
-                                    DoScriptText(SAY_LICH_KING1, LichKing);
+                                    DoScriptText(SAY_LICH_KING_1, LichKing);
                                 }
                             }
                             ++m_uiVisionPhase;
@@ -1227,19 +1228,19 @@ struct MANGOS_DLL_DECL boss_brain_of_yogg_saronAI : public ScriptedAI
                             break;
                         case 2:
                             if(Creature* Champion = m_pInstance->instance->GetCreature(m_uiChampionGUID))
-                                DoScriptText(SAY_CHAMPION1, Champion);
+                                DoScriptText(SAY_CHAMPION_1, Champion);
                             ++m_uiVisionPhase;
                             m_uiSpeechTimer = 8000;
                             break;
                         case 3:
                             if(Creature* Champion = m_pInstance->instance->GetCreature(m_uiChampionGUID))
-                                DoScriptText(SAY_CHAMPION2, Champion);
+                                DoScriptText(SAY_CHAMPION_2, Champion);
                             ++m_uiVisionPhase;
                             m_uiSpeechTimer = 8000;
                             break;
                         case 4:
                             if(Creature* LichKing = m_pInstance->instance->GetCreature(m_uiLichKingGUID))
-                                DoScriptText(SAY_LICH_KING2, LichKing);
+                                DoScriptText(SAY_LICH_KING_2, LichKing);
                             ++m_uiVisionPhase;
                             m_uiSpeechTimer = 7000;
                             break;
@@ -1523,7 +1524,7 @@ struct MANGOS_DLL_DECL boss_saraAI : public ScriptedAI
                         switch(m_uiIntro_Phase)
                         {
                         case 0:
-                            DoScriptText(SAY_INTRO1, m_creature);
+                            DoScriptText(SAY_SARA_INTRO_1, m_creature);
                             m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 50331648);
                             m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 50331648);
                             m_creature->GetMotionMaster()->MoveIdle();
@@ -1533,7 +1534,7 @@ struct MANGOS_DLL_DECL boss_saraAI : public ScriptedAI
                             m_uiSpeech_Timer = 8000;
                             break;
                         case 1:
-                            DoScriptText(SAY_INTRO2, m_creature);
+                            DoScriptText(SAY_SARA_INTRO_2, m_creature);
                             ++m_uiIntro_Phase;
                             m_uiSpeech_Timer = 8000;
                             break;
@@ -1565,14 +1566,14 @@ struct MANGOS_DLL_DECL boss_saraAI : public ScriptedAI
                             if (pYogg->getThreatManager().getThreatList().size() <= 2)
                             {
                                 pYogg->AI()->EnterEvadeMode();
-                                DoScriptText(SAY_WIPE, m_creature);
+                                DoScriptText(SAY_WIPE_PHASE_1, m_creature);
                             }
                         }
                     }
 
                     if (m_uiPhaseYellTimer < uiDiff)
                     {
-                        DoScriptText(urand(0,1) ? SAY_HELP1 : SAY_HELP2, m_creature);
+                        DoScriptText(urand(0,1) ? SAY_SARA_HELP_1 : SAY_SARA_HELP_2, m_creature);
                         m_uiPhaseYellTimer = 30000;
                     }
                     else
@@ -1634,7 +1635,7 @@ struct MANGOS_DLL_DECL boss_saraAI : public ScriptedAI
                         m_uiOutroTimer = 5000;
                         break;
                     case 3:
-                        DoScriptText(SAY_PHASE2, m_creature);
+                        DoScriptText(SAY_SARA_PHASE_2_INTRO_A, m_creature);
                         ++m_uiOutroStep;
                         m_uiOutroTimer = 15000;
                         break;
@@ -1687,7 +1688,7 @@ struct MANGOS_DLL_DECL boss_saraAI : public ScriptedAI
                         if (pYogg->getThreatManager().getThreatList().size() <= 2)
                         {
                             pYogg->AI()->EnterEvadeMode();
-                            DoScriptText(SAY_WIPE, m_creature);
+                            DoScriptText(SAY_WIPE_PHASE_1, m_creature);
                         }
                     }
                 }
@@ -1708,7 +1709,7 @@ struct MANGOS_DLL_DECL boss_saraAI : public ScriptedAI
                 {
                     SetVisionPhase();
                     if(Creature* pYogg = m_pInstance->GetSingleCreatureFromStorage(NPC_YOGGSARON))
-                        DoScriptText(SAY_VISION, pYogg);
+                        DoScriptText(SAY_MADNESS, pYogg);
                     m_uiPortalsTimer = 85000;
                 }
                 else m_uiPortalsTimer -= uiDiff;

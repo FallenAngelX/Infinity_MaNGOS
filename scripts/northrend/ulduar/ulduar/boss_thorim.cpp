@@ -29,33 +29,32 @@ EndScriptData */
 
 enum
 {
-    //yells
-    SAY_AGGRO1          = -1603190,
-    SAY_AGGRO2          = -1603191,
-    SAY_SPECIAL1        = -1603192,
-    SAY_SPECIAL2        = -1603193,
-    SAY_SPECIAL3        = -1603194,
-    SAY_JUMP            = -1603195,
-    SAY_SLAY1           = -1603196,
-    SAY_SLAY2           = -1603197,
-    SAY_BERSERK         = -1603198,
-    SAY_ARENA_WIPE      = -1603199,
-    SAY_DEATH           = -1603200,
-    SAY_OUTRO1          = -1603201,
-    SAY_OUTRO2          = -1603202,
-    SAY_OUTRO3          = -1603203,
-    SAY_OUTRO_HARD1     = -1603204,
-    SAY_OUTRO_HARD2     = -1603205,
-    SAY_OUTRO_HARD3     = -1603206,
-//    SAY_YOGG            = -1603207,
+    SAY_AGGRO_1                             = -1603138,
+    SAY_AGGRO_2                             = -1603139,
+    SAY_SPECIAL_1                           = -1603140,
+    SAY_SPECIAL_2                           = -1603141,
+    SAY_SPECIAL_3                           = -1603142,
+    SAY_JUMP                                = -1603143,
 
-    // Sif
-    SAY_SIF_INTRO           = -1603210,
-    SAY_SIF_EVENT           = -1603211,
-    SAY_SIF_DESPAWN         = -1603212,
+    SAY_SLAY_1                              = -1603144,
+    SAY_SLAY_2                              = -1603145,
+    SAY_BERSERK                             = -1603146,
 
-//    EMOTE_BARRIER_1         = -1603213,
-//    EMOTE_BARRIER_2         = -1603214,
+    SAY_ARENA_WIPE                          = -1603147,
+    SAY_DEATH                               = -1603148,
+
+    SAY_OUTRO_1                             = -1603149,
+    SAY_OUTRO_2                             = -1603150,
+    SAY_OUTRO_3                             = -1603151,
+    SAY_OUTRO_HARD_1                        = -1603152,
+    SAY_OUTRO_HARD_2                        = -1603153,
+    SAY_OUTRO_HARD_3                        = -1603154,
+
+    SAY_SIF_BEGIN                           = -1603156,
+    SAY_SIF_EVENT                           = -1603157,
+    SAY_SIF_DESPAWN                         = -1603158,
+
+    EMOTE_RUNIC_BARRIER                     = -1603247,
 
     // arena
     NPC_DARK_RUNE_CHAMPION          = 32876,
@@ -702,7 +701,7 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
 
     void KilledUnit(Unit* pVictim) override
     {
-        DoScriptText(urand(0,1) ? SAY_SLAY1 : SAY_SLAY2, m_creature);
+        DoScriptText(urand(0,1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell) override
@@ -866,7 +865,7 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
                             m_uiIntroTimer = 10000;
                             break;
                         case 3:
-                            DoScriptText(SAY_AGGRO1, m_creature);
+                            DoScriptText(SAY_AGGRO_1, m_creature);
                             DoCast(m_creature, SPELL_SHEAT_OF_LIGHTNING);
                             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                             m_creature->SetInCombatWithZone();
@@ -876,7 +875,7 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
                             m_uiIntroTimer = 10000;
                             break;
                         case 5:
-                            DoScriptText(SAY_AGGRO2, m_creature);
+                            DoScriptText(SAY_AGGRO_2, m_creature);
                             if(Creature* pSif = m_creature->SummonCreature(NPC_SIF, m_creature->GetPositionX() + 10, m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetOrientation(), TEMPSUMMON_TIMED_OOC_DESPAWN, 180000))
                             {
                                 pSif->setFaction(35);
@@ -887,7 +886,7 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
                             break;
                         case 7:
                             if(Creature* pSif = m_pInstance->instance->GetCreature(m_uiSifGUID))
-                                DoScriptText(SAY_SIF_INTRO, pSif);
+                                DoScriptText(SAY_SIF_BEGIN, pSif);
                             m_uiPhase = PHASE_BALCONY;
                             m_bIsIntro = false;
                             ++m_uiIntroStep;
@@ -1090,9 +1089,9 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
                 {
                     switch(urand(0, 2))
                     {
-                        case 0: DoScriptText(SAY_SPECIAL1, m_creature); break;
-                        case 1: DoScriptText(SAY_SPECIAL2, m_creature); break;
-                        case 2: DoScriptText(SAY_SPECIAL3, m_creature); break;
+                        case 0: DoScriptText(SAY_SPECIAL_1, m_creature); break;
+                        case 1: DoScriptText(SAY_SPECIAL_2, m_creature); break;
+                        case 2: DoScriptText(SAY_SPECIAL_3, m_creature); break;
                     }
                     m_uiArenaYellTimer = 30000;
                 }
@@ -1197,12 +1196,12 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
                 case 5:
                     if(m_bIsHardMode)
                     {
-                        DoScriptText(SAY_OUTRO_HARD1, m_creature);
+                        DoScriptText(SAY_OUTRO_HARD_1, m_creature);
                         if(Creature* Sif = m_pInstance->instance->GetCreature(m_uiSifGUID))
                             DoCast(Sif, SPELL_STORMHAMMER);
                     }
                     else
-                        DoScriptText(SAY_OUTRO1, m_creature);
+                        DoScriptText(SAY_OUTRO_1, m_creature);
                     ++m_uiOutroStep;
                     m_uiOutroTimer = 1000;
                     break;
@@ -1225,17 +1224,17 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
                     break;
                 case 9:
                     if(m_bIsHardMode)
-                        DoScriptText(SAY_OUTRO_HARD2, m_creature);
+                        DoScriptText(SAY_OUTRO_HARD_2, m_creature);
                     else
-                        DoScriptText(SAY_OUTRO2, m_creature);
+                        DoScriptText(SAY_OUTRO_2, m_creature);
                     ++m_uiOutroStep;
                     m_uiOutroTimer = 13000;
                     break;
                 case 11:
                     if(m_bIsHardMode)
-                        DoScriptText(SAY_OUTRO_HARD3, m_creature);
+                        DoScriptText(SAY_OUTRO_HARD_3, m_creature);
                     else
-                        DoScriptText(SAY_OUTRO3, m_creature);
+                        DoScriptText(SAY_OUTRO_3, m_creature);
                     ++m_uiOutroStep;
                     m_uiOutroTimer = 15000;
                     break;
