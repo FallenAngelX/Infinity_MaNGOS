@@ -8,7 +8,7 @@
 
 UPDATE `creature_template` SET `AIName`='',`ScriptName`='mob_nadox_guardian' WHERE (`entry`='30176');
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 30176;
-UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16 WHERE `entry` = 30176;
+UPDATE `creature_template` SET `FactionAlliance` = 16, `FactionHorde` = 16 WHERE `entry` = 30176;
 
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 30178;
 DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=30178);
@@ -32,7 +32,7 @@ INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`
 (30385, 0, 8, 1, 0, 0, 0, ''),
 (31474, 0, 8, 1, 0, 0, 0, '');
 
-UPDATE `creature_template` SET `unit_flags` = '0' WHERE `entry` IN (30114,31473);
+UPDATE `creature_template` SET `UnitFlags` = '0' WHERE `entry` IN (30114,31473);
 
 DELETE FROM `creature_addon` WHERE guid=131953;
 DELETE FROM `creature` WHERE guid IN (131953, 115064);  -- this cause drop C34144 from YTDB
@@ -43,8 +43,8 @@ DELETE FROM `gameobject` WHERE `guid` = 911321;
 INSERT INTO `gameobject` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES
 (911321, 194394, 619, 2, 1, 371.842, -701.621, -16.1797, 5.67851, 0, 0, 0.297751, -0.954644, -10, 0, 1);
 
-UPDATE `creature_template` SET `unit_flags` = 0 WHERE `entry` IN (30258, 30391, 30435);
-UPDATE `creature_template` SET `mindmg` = 488, `maxdmg` = 648, `attackpower` = 782, `dmg_multiplier` = 13  WHERE `entry` = 30258;
+UPDATE `creature_template` SET `UnitFlags` = 0 WHERE `entry` IN (30258, 30391, 30435);
+UPDATE `creature_template` SET `MinMeleeDmg` = 488, `MaxMeleeDmg` = 648, `MeleeAttackPower` = 782, `DamageMultiplier` = 13  WHERE `entry` = 30258;
 
 -- -
 -- Mushrooms
@@ -120,5 +120,5 @@ INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`
 (600112, 30391, 619, 2, 1, 0, 0, 350.138, -958.988, -79.4422, 2.16229, 30, 0, 0, 1, 0, 0, 0),
 (600113, 30391, 619, 2, 1, 0, 0, 342.879, -944.352, -79.8533, 1.64157, 30, 0, 0, 1, 0, 0, 0);
 
-UPDATE `creature_template` SET `minhealth` = 1 WHERE `entry` = 30391;
-UPDATE `creature_template` SET `minmana` = 0 WHERE `entry` = 29310;
+UPDATE `creature_template` SET `MinLevelHealth` = 1 WHERE `entry` = 30391;
+UPDATE `creature_template` SET `MinLevelMana` = 0 WHERE `entry` = 29310;

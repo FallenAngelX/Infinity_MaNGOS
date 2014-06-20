@@ -1,6 +1,6 @@
 -- Zul'Drak Arena (by koksneo)
 -- Gurgthock (30007)
-UPDATE `creature_template` SET `ScriptName`="npc_gurgthock" WHERE `entry`=30007;
+UPDATE `creature_template` SET `ScriptName` = "npc_gurgthock" WHERE `entry`=30007;
 UPDATE `quest_template` SET `StartScript`=12932 WHERE `entry`=12932;
 UPDATE `quest_template` SET `StartScript`=12954 WHERE `entry`=12954;
 UPDATE `quest_template` SET `StartScript`=12933 WHERE `entry`=12933;
@@ -13,7 +13,7 @@ UPDATE `quest_template` SET `StartScript`=12948 WHERE `entry`=12948;
 -- NPC YGGDRAS (30014)
 UPDATE `creature_template` SET
 -- immune for movement imparing effects, silences etc.
-`mechanic_immune_mask` = `mechanic_immune_mask`|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
+`MechanicImmuneMask` = `MechanicImmuneMask`|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
 AIName='EventAI' WHERE `entry`=30014;
 
 DELETE from creature_ai_scripts WHERE creature_id=30014;
@@ -26,7 +26,7 @@ INSERT into creature_ai_scripts VALUES
 -- NPC STINKBEARD (30017)
 UPDATE `creature_template` SET
 -- immune for movement imparing effects, silences etc.
-`mechanic_immune_mask` = `mechanic_immune_mask`|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
+`MechanicImmuneMask` = `MechanicImmuneMask`|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
 AIName='EventAI' WHERE `entry`=30017;
 
 DELETE from creature_ai_scripts WHERE creature_id=30017;
@@ -41,7 +41,7 @@ INSERT into creature_ai_scripts VALUES
 -- NPC AZ BARIN (30026)
 UPDATE `creature_template` SET
 -- immune for movement imparing effects, silences etc.
-`mechanic_immune_mask` = `mechanic_immune_mask`|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
+`MechanicImmuneMask` = `MechanicImmuneMask`|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
 AIName='EventAI' WHERE entry=30026;
 
 DELETE from creature_ai_scripts WHERE creature_id=30026;
@@ -61,7 +61,7 @@ INSERT into creature_ai_scripts VALUES
 -- NPC DUKE SINGEN (30019)
 UPDATE `creature_template` SET
 -- immune for movement imparing effects, silences etc.
-`mechanic_immune_mask` = mechanic_immune_mask|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
+`MechanicImmuneMask` = MechanicImmuneMask|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
 `AIName`='EventAI' WHERE entry=30019;
 
 DELETE from creature_ai_scripts WHERE creature_id=30019;
@@ -80,7 +80,7 @@ INSERT into creature_ai_scripts VALUES
 -- NPC ERATHIUS (30025)
 UPDATE `creature_template` SET
 -- immune for movement imparing effects, silences etc.
-`mechanic_immune_mask` = `mechanic_immune_mask`|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
+`MechanicImmuneMask` = `MechanicImmuneMask`|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
 AIName='EventAI' WHERE `entry`=30025;
 
 DELETE from creature_ai_scripts WHERE creature_id=30025;
@@ -99,7 +99,7 @@ INSERT into creature_ai_scripts VALUES
 -- NPC GARGORAL (30024)
 UPDATE `creature_template` SET
 -- immune for movement imparing effects, silences etc.
-`mechanic_immune_mask` = mechanic_immune_mask|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
+`MechanicImmuneMask` = MechanicImmuneMask|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
 `AIName`='EventAI' WHERE entry=30024;
 
 DELETE from creature_ai_scripts WHERE creature_id=30024;
@@ -118,7 +118,7 @@ INSERT into creature_ai_scripts VALUES
 -- NPC ORINOKO (30020)
 UPDATE `creature_template` SET
 -- immune for movement imparing effects, silences etc.
-`mechanic_immune_mask` = mechanic_immune_mask|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
+`MechanicImmuneMask` = MechanicImmuneMask|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
 AIName='EventAI' WHERE entry=30020;
 
 DELETE from creature_ai_scripts WHERE creature_id=30020;
@@ -133,7 +133,7 @@ INSERT into creature_ai_scripts VALUES
 -- WHISKER (30113)
 UPDATE `creature_template` SET
 -- immune for movement imparing effects, silences etc.
-`mechanic_immune_mask` = mechanic_immune_mask|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
+`MechanicImmuneMask` = MechanicImmuneMask|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
 `AIName`='EventAI' WHERE `entry`=30113;
 
 DELETE from creature_ai_scripts WHERE creature_id=30113;
@@ -146,7 +146,7 @@ INSERT into creature_ai_scripts VALUES
 -- NPC KORRAK (30023)
 UPDATE `creature_template` SET
 -- immune for movement imparing effects, silences etc.
-`mechanic_immune_mask` = mechanic_immune_mask|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
+`MechanicImmuneMask` = MechanicImmuneMask|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
 `AIName`='EventAI' WHERE `entry`=30023;
 
 DELETE from creature_ai_scripts WHERE creature_id=30023;
@@ -161,7 +161,7 @@ INSERT into creature_ai_scripts VALUES
 -- NPC VLADOF THE BUTCHER (30022)
 UPDATE `creature_template` SET
 -- immune for movement imparing effects, silences etc.
-`mechanic_immune_mask` = mechanic_immune_mask|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
+`MechanicImmuneMask` = MechanicImmuneMask|1 |4 |16 |64 |256 |512 |1024 |2048 |65536 |131072 |33554432 ,
 AIName='EventAI' WHERE `entry`=30022;
 
 DELETE from creature_ai_scripts WHERE creature_id=30022;

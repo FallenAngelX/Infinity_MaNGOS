@@ -1,15 +1,15 @@
 -- Alterac Valley: Stats (by lanc) (may YTDB is more correct now)
-UPDATE `creature_template` SET `pickpocketloot` = 11946, `equipment_id` = 2153 WHERE `entry` = 37283;
-UPDATE `creature_template` SET `pickpocketloot` = 11948 WHERE `entry` = 31818;
-UPDATE `creature_template` SET `pickpocketloot` = 11948 WHERE `entry` = 37444;
-UPDATE `creature_template` SET `equipment_id` = 325 WHERE `entry` = 37243;
-UPDATE `creature_template` SET `equipment_id` = 2156 WHERE `entry` = 37412;
-UPDATE `creature_template` SET `equipment_id` = 2158 WHERE `entry` = 37300;
-UPDATE `creature_template` SET `equipment_id` = 2161 WHERE `entry` = 37415;
-UPDATE `creature_template` SET `equipment_id` = 170 WHERE `entry` = 37410;
-UPDATE `creature_template` SET `equipment_id` = 954 WHERE `entry` = 37297;
-UPDATE `creature_template` SET `equipment_id` = 2178 WHERE `entry` IN (37285, 37287, 37327, 37407);
-UPDATE `creature_template` SET `equipment_id` = 2179 WHERE `entry` IN (37291, 37326, 37435, 37468);
+UPDATE `creature_template` SET `PickpocketLootId` = 11946, `EquipmentTemplateId` = 2153 WHERE `entry` = 37283;
+UPDATE `creature_template` SET `PickpocketLootId` = 11948 WHERE `entry` = 31818;
+UPDATE `creature_template` SET `PickpocketLootId` = 11948 WHERE `entry` = 37444;
+UPDATE `creature_template` SET `EquipmentTemplateId` = 325 WHERE `entry` = 37243;
+UPDATE `creature_template` SET `EquipmentTemplateId` = 2156 WHERE `entry` = 37412;
+UPDATE `creature_template` SET `EquipmentTemplateId` = 2158 WHERE `entry` = 37300;
+UPDATE `creature_template` SET `EquipmentTemplateId` = 2161 WHERE `entry` = 37415;
+UPDATE `creature_template` SET `EquipmentTemplateId` = 170 WHERE `entry` = 37410;
+UPDATE `creature_template` SET `EquipmentTemplateId` = 954 WHERE `entry` = 37297;
+UPDATE `creature_template` SET `EquipmentTemplateId` = 2178 WHERE `entry` IN (37285, 37287, 37327, 37407);
+UPDATE `creature_template` SET `EquipmentTemplateId` = 2179 WHERE `entry` IN (37291, 37326, 37435, 37468);
 
 -- Alterac Valley: add missing NPC and movement at Alliance start location (by Bastek)
 -- Stormpike Batteguard (with owls)

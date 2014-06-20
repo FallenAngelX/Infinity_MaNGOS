@@ -115,16 +115,17 @@ DELETE FROM `creature` WHERE `id`=30997;
 -- spell scripts and ect spell_area_stuff -
 -- ----------------------------------------
 
-REPLACE INTO `spell_area` (`spell`, `area`, `quest_start`, `quest_start_active`, `quest_end`, `aura_spell`, `racemask`, `gender`, `autocast`) VALUES('35481','4100','0','0','0','0','0','1','1'); -- cause careate two spell with different racemask fore one area
-REPLACE INTO `spell_area` (`spell`, `area`, `quest_start`, `quest_start_active`, `quest_end`, `aura_spell`, `racemask`, `gender`, `autocast`) VALUES('35480','4100','0','0','0','0','0','0','1'); -- cause careate two spell with different racemask fore one area
+REPLACE INTO `spell_area` (`spell`, `area`, `quest_start`, `quest_start_active`, `quest_end`, `aura_spell`, `racemask`, `gender`, `autocast`) VALUES
+('35481','4100','0','0','0','0','0','1','1'), -- cause careate two spell with different racemask fore one area
+('35480','4100','0','0','0','0','0','0','1'); -- cause careate two spell with different racemask fore one area
 
 -- ----------------------------
 -- Creature Stuff             -
 -- ----------------------------
 
-UPDATE `creature_template` SET `modelid_2` = 24769 WHERE `entry` = 27747;
-UPDATE `creature_template` SET `modelid_2` = 24768 WHERE `entry` = 27745;
-UPDATE `creature_template` SET `modelid_2` = 24949 WHERE `entry` = 26499;
+UPDATE `creature_template` SET `ModelId2` = 24769 WHERE `entry` = 27747;
+UPDATE `creature_template` SET `ModelId2` = 24768 WHERE `entry` = 27745;
+UPDATE `creature_template` SET `ModelId2` = 24949 WHERE `entry` = 26499;
 
 UPDATE `creature` SET `spawntimesecs`= 36000 WHERE `id` IN (31127, 31126, 28167, 28169);
 
@@ -136,7 +137,7 @@ DELETE FROM `creature_movement` WHERE (`id`='138237' AND `point`='1') OR (`id`='
 DELETE FROM `creature_movement` WHERE (`id`='138288' AND `point`='1') OR (`id`='138288' AND `point`='2') OR (`id`='138289' AND `point`='1') OR (`id`='138289' AND `point`='2');
 
 -- added some npc s of my own for mirco management
-   -- footman
+-- footman
 DELETE FROM `creature_template` WHERE `entry` IN(70000, 70001, 70002, 70003);
 INSERT INTO `creature_template` (`entry`, `difficulty_entry_1`, `difficulty_entry_2`, `difficulty_entry_3`, `KillCredit1`, `KillCredit2`, `modelid_1`, `modelid_2`, `modelid_3`, `modelid_4`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `questItem5`, `questItem6`, `movementId`, `RegenHealth`, `vehicle_id`, `equipment_id`, `trainer_id`, `vendor_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES
 (70000, 0, 0, 0, 0, 0, 24768, 24768, 0, 0, 'Lordaeron Footman', '', '', 0, 80, 80, 12600, 12600, 0, 0, 9730, 2076, 2076, 0, 1, 1.14286, 1, 1, 420, 630, 0, 157, 2.7, 2000, 2000, 1, 0, 0, 0, 0, 0, 0, 0, 336, 504, 126, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 223, 0, 0, 0, 0, 'npc_arthas_marine'),
@@ -149,7 +150,7 @@ REPLACE INTO `creature_template_spells` (`entry`, `spell1`, `spell2`) VALUES
 (70002, 52317, 25710),
 (70003, 52317, 25710);
 
-  -- micro manage spawn w/ news one in there recyling old guids
+-- micro manage spawn w/ news one in there recyling old guids
 DELETE FROM `creature` WHERE `id` IN (27745, 70000, 70001, 70002, 70003);
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
 (115398, 27745, 595, 3, 1, 0, 0, 1878.83, 1293.39, 144.713, 4.62512, 300, 0, 0, 12600, 0, 0, 0),
@@ -170,7 +171,7 @@ INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equ
 (115413, 27745, 595, 3, 1, 0, 0, 1865.2, 1292.56, 145.297, 4.62512, 300, 0, 0, 12600, 0, 0, 0),
 (115414, 27745, 595, 3, 1, 0, 0, 1845.58, 1272.22, 144.815, 1.50098, 300, 0, 0, 12600, 0, 0, 0);
 
-   -- priest
+-- priest
 DELETE FROM `creature_template` WHERE `entry` IN(70004, 70005);
 INSERT INTO `creature_template` (`entry`, `difficulty_entry_1`, `difficulty_entry_2`, `difficulty_entry_3`, `KillCredit1`, `KillCredit2`, `modelid_1`, `modelid_2`, `modelid_3`, `modelid_4`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `questItem5`, `questItem6`, `movementId`, `RegenHealth`, `vehicle_id`, `equipment_id`, `trainer_id`, `vendor_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES
 (70004, 0, 0, 0, 0, 0, 24769, 0, 0, 0, 'High Elf Mage-Priest', '', '', 0, 80, 80, 10080, 10080, 8814, 8814, 7784, 2076, 2076, 0, 1, 1.14286, 1, 1, 307, 459, 0, 115, 2.9, 2000, 2000, 8, 0, 0, 0, 0, 0, 0, 0, 246, 367, 92, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 14, 0, 0, 0, 0, 'npc_arthas_priest'),
@@ -179,7 +180,7 @@ REPLACE INTO `creature_template_spells` (`entry`, `spell1`) VALUES
 (70004, 34232),
 (70005, 34232);
 
-  -- micro manage spawn w/ news one in there recyling old guids
+-- micro manage spawn w/ news one in there recyling old guids
 DELETE FROM `creature` WHERE `id` IN (27747, 70004, 70005);
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
 (115421, 27747, 595, 3, 1, 0, 0, 1878.1, 1268.57, 144.42, 1.79769, 300, 0, 0, 10080, 8814, 0, 0),

@@ -22,7 +22,7 @@ UPDATE creature_template SET ScriptName = 'mob_pulsing_pumpkin' WHERE entry = 23
 UPDATE `creature_template` SET `ModelId2` = 21822, `FactionAlliance` = 14, `FactionHorde` = 14 WHERE `entry` = 23545;
 
 -- Pulsing pumkin template fixes
-UPDATE `creature_template` SET `ModelId2` = 24720, `FactionAlliance` = 14, `FactionHorde` = 14, `type` = 6, `MechanicImmuneMask` = 8388624, `ExtraFlags` = 0 WHERE `entry` = 23694;
+UPDATE `creature_template` SET `ModelId2` = 24720, `FactionAlliance` = 14, `FactionHorde` = 14, `CreatureType` = 6, `MechanicImmuneMask` = 8388624, `ExtraFlags` = 0 WHERE `entry` = 23694;
 
 -- head of the horseman fixes
 UPDATE `creature_template` SET `ModelId2` = 21908, `FactionAlliance` = 7, `FactionHorde` = 7, `MechanicImmuneMask` = 787202047 WHERE `entry` = 23775;
