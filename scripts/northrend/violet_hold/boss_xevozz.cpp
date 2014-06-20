@@ -32,7 +32,7 @@ enum
     SAY_SLAY_2                                = -1608029,
     SAY_SLAY_3                                = -1608030,
     SAY_DEATH                                 = -1608031,
-    SAY_SPAWN                                 = -1608032,
+    SAY_SPAWN                                 = -1608010,
     SAY_CHARGED                               = -1608033,
     SAY_REPEAT_SUMMON_1                       = -1608034,
     SAY_REPEAT_SUMMON_2                       = -1608035,

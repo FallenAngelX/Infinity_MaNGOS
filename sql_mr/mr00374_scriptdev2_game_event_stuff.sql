@@ -9,8 +9,7 @@ INSERT INTO script_texts (entry, content_default, TYPE, sound) VALUES
 (-1110003, "The town still burns, a cleansing fire! Time is short, I'll soon retire!",1,12571),
 
 (-1110004, "Fire consumes! You've tried and failed. Let there be no doubt, justice prevailed!",1,11967),
-(-1110005, "My flames have died, left not a spark. I shall send you myself, to the lifeless dark.",1,11968),
-(-1110006, "Harken, cur! Tis you I spurn! Now feel... the burn!",1,12573);
+(-1110005, "My flames have died, left not a spark. I shall send you myself, to the lifeless dark.",1,11968);
 
 -- ------------------------------
 -- Pilgrim's bounty event texts -

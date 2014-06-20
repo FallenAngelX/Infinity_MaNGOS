@@ -1,5 +1,6 @@
 -- Eye of Eternity
 -- russian translation from lanc
+/*
 DELETE FROM `script_texts` where `entry` between -1616035 and -1616000;
 REPLACE INTO `script_texts` (entry, content_default, content_loc1, content_loc2, content_loc3, content_loc4, content_loc5, content_loc6, content_loc7, content_loc8, sound, type, language, emote, comment) VALUES
 (-1616000, 'Lesser beings, intruding here! A shame that your excess courage does not compensate for your stupidity!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Низшие создания, вторгшиеся сюда! Как жаль что ваш ум не так силен как ваша храбрость!', '14512', '1', '0', '1', NULL),
@@ -37,3 +38,4 @@ REPLACE INTO `script_texts` (entry, content_default, content_loc1, content_loc2,
 (-1616033, 'This resolution pains me deeply, but the destruction, the monumental loss of life had to end. Regardless of Malygos recent transgressions, I will mourn his loss. He was once a guardian, a protector. This day, one of the world mightiest has fallen.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Итоги войны черезмерно печалят меня, но разрушения и колоссальные потери жизней должны были быть остановлены. Несмотря на последние прегрешения Малигоса, Я буду оплакивать его. Когда-то он был заступником, защитником. Сегодня пал один из сильнейших этого мира!', '14408', '1', '0', '1', NULL),
 (-1616034, 'The red dragonflight will take on the burden of mending the devastation wrought on Azeroth. Return home to your people and rest. Tomorrow will bring you new challenges, and you must be ready to face them. Life...goes on.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Красные драконы возьмут на себя бремя заживления ран Азерота. Возвращайтесь домой к своим людям и отдохните. Будущее несет вам новые испытания, и вы должны быть готовы к ним. Жизнь... Продолжается.', '14409', '1', '0', '1', NULL),
 (-1616035, 'A Power Spark forms from a nearby rift!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '0', '3', '0', '1', NULL);
+*/

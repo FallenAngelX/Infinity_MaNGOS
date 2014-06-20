@@ -13,7 +13,6 @@ INSERT IGNORE INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`lan
 (-1608029, 'Business concluded.', 14505, 1, 0, 'xevozz SAY_SLAY_2'),
 (-1608030, 'Profit!', 14506, 1, 0, 'xevozz SAY_SLAY_3'),
 (-1608031, 'This is an... unrecoverable... loss.', 14507, 1, 0, 'xevozz SAY_DEATH'),
-(-1608032, 'Back in business! Now to execute an exit strategy.', 14498, 1, 0, 'xevozz SAY_SPAWNED'),
 (-1608033, 'It would seem that a renegotiation is in order.', 14503, 1, 0, 'xevozz SAY_CHARGED'),
 (-1608034, 'The air teems with latent energy... quite the harvest!', 14501, 1, 0, 'xevozz SAY_REPEAT_SUMMON_1'),
 (-1608035, 'Plentiful, exploitable resources... primed for acquisition!', 14502, 1, 0, 'xevozz SAY_REPEAT_SUMMON_2'),
@@ -24,7 +23,6 @@ INSERT IGNORE INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`lan
 (-1608039, 'Relinquish.', 14000, 1, 0, 'zuramat SAY_SLAY_2'),
 (-1608040, 'Fall... to shadow.', 14001, 1, 0, 'zuramat SAY_SLAY_3'),
 (-1608041, 'Disperse.', 14002, 1, 0, 'zuramat SAY_DEATH'),
-(-1608042, 'I am... renewed.', 13995, 1, 0, 'zuramat SAY_SPAWN'),
 (-1608043, 'Know... my... pain.', 13997, 1, 0, 'zuramat SAY_SHIELD'),
 (-1608044, 'Gaze... into the void.', 13998, 1, 0, 'zuramat SAY_WHISPER'),
 -- Cyanigosa
