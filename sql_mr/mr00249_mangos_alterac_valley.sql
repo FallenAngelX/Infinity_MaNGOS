@@ -11,53 +11,6 @@ UPDATE `creature_template` SET `EquipmentTemplateId` = 954 WHERE `entry` = 37297
 UPDATE `creature_template` SET `EquipmentTemplateId` = 2178 WHERE `entry` IN (37285, 37287, 37327, 37407);
 UPDATE `creature_template` SET `EquipmentTemplateId` = 2179 WHERE `entry` IN (37291, 37326, 37435, 37468);
 
--- Alterac Valley: add missing NPC and movement at Alliance start location (by Bastek)
--- Stormpike Batteguard (with owls)
-UPDATE creature SET position_x = 805.184082, position_y = -494.273804, position_z = 99.953552, orientation = 6.120978 WHERE guid = 150139;
-
--- Stormpike Guardsman (with owls at road)
-UPDATE creature SET position_x = 394.125031, position_y = -391.657776, position_z = -1.243851, orientation = 3.204396 WHERE guid = 150095;
-
--- Owls (inside)
-UPDATE creature SET position_x = 805.777222, position_y = -491.144531, position_z = 100.065727, orientation = 6.095846 WHERE guid = 150130;
-UPDATE creature SET position_x = 804.536072, position_y = -497.691895, position_z = 100.019020, orientation = 6.095846 WHERE guid = 150131;
-
--- Owls (at road)
-UPDATE creature SET position_x = 393.981384, position_y = -389.373291, position_z = -1.243851, orientation = 3.204396 WHERE guid = 150128;
-UPDATE creature SET position_x = 394.327148, position_y = -394.871399, position_z = -1.031908, orientation = 3.204396 WHERE guid = 150129;
-
--- Add new NPC's
-DELETE FROM `creature` WHERE `guid` in (410000, 410001, 410002, 410003, 410004, 410005, 410006, 410007, 410008, 410009);
-INSERT INTO creature (guid, id, map, spawnMask, phaseMask, modelid, equipment_id, position_x,	position_y, position_z,	orientation, spawntimesecs, spawndist, currentwaypoint, curhealth, curmana, DeathState,	MovementType) VALUES
-(410000, 14284, 30, 15, 1, 0, 0, 936.976440, -504.630524, 94.179443, 5.328219, 120, 0, 0, 4100, 0, 0, 0),
-(410001, 14284, 30, 15, 1, 0, 0, 879.460754, -508.095276, 96.673584, 1.175040, 120, 0, 0, 4100, 0, 0, 0),
-(410002, 14284, 30, 15, 1, 0, 0, 877.200867, -503.460052, 96.626198, 0.619761, 120, 0, 0, 4100, 0, 0, 0),
-(410003, 14284, 30, 15, 1, 0, 0, 884.787354, -503.095337, 96.853584, 2.992002, 120, 0, 0, 4100, 0, 0, 0),
-(410004, 14284, 30, 15, 1, 0, 0, 885.313965, -496.828156, 96.825073, 3.151438, 120, 0, 0, 4100, 0, 0, 0),
-(410005, 14284, 30, 15, 1, 0, 0, 858.378052, -492.492889, 96.836800, 4.648121, 120, 0, 0, 4100, 0, 0, 0),
-(410006, 14284, 30, 15, 1, 0, 0, 867.442505, -505.663422, 96.475998, 2.190067, 120, 0, 0, 4100, 0, 0, 0),
-(410007, 14284, 30, 15, 1, 0, 0, 862.698914, -508.003754, 96.452995, 1.791085, 120, 0, 0, 4100, 0, 0, 0);
-
--- Stormpike Battleguard (outside)
-UPDATE creature SET position_x = 773.194641, position_y = -486.007416, position_z = 98.670097, orientation = 3.955635 WHERE guid = 150138;
-INSERT INTO creature (guid, id, map, spawnMask, phaseMask, modelid, equipment_id, position_x,	position_y, position_z,	orientation, spawntimesecs, spawndist, currentwaypoint, curhealth, curmana, DeathState,	MovementType) VALUES
-(410008, 14284, 30, 15, 1, 0, 0, 779.099365, -488.935211, 99.924774, 3.632051, 120, 0, 0, 4100, 0, 0, 0),
-(410009, 14284, 30, 15, 1, 0, 0, 777.685669, -496.373871, 99.831039, 2.326713, 120, 0, 0, 4100, 0, 0, 0);
-
--- Stormpike Guardsman
-UPDATE creature SET position_x = 740.938965, position_y = -478.111603, position_z = 85.143028, orientation = 2.780301 WHERE guid = 150097;
-UPDATE creature SET position_x = 740.147217, position_y = -480.206970, position_z = 84.997246, orientation = 2.780301 WHERE guid = 150100;
-UPDATE creature SET position_x = 410.821075, position_y = -400.140289, position_z = 1.638313, orientation = 5.291997 WHERE guid = 150101;
-UPDATE creature SET position_x = 408.326111, position_y = -401.773499, position_z = 1.999235, orientation = 5.291997 WHERE guid = 150093;
-UPDATE creature SET position_x = 414.517822, position_y = -380.779327, position_z = -1.242818, orientation = 0.223995 WHERE guid = 150096;
-UPDATE creature SET position_x = 415.098010, position_y = -383.298004, position_z = -1.242820, orientation = 0.223995 WHERE guid = 150089;
-UPDATE creature SET position_x = 638.477417, position_y = -271.160431, position_z = 30.207394, orientation = 4.644043 WHERE guid = 150098;
-UPDATE creature SET position_x = 635.697937, position_y = -270.970184, position_z = 30.129215, orientation = 4.644043 WHERE guid = 150099;
-UPDATE creature SET position_x = 142.624573, position_y = -391.716858, position_z = 42.409050, orientation = 5.823702 WHERE guid = 150094;
-UPDATE creature SET position_x = 141.609192, position_y = -393.494934, position_z = 42.513943, orientation = 5.823702 WHERE guid = 150092;
-UPDATE creature SET position_x = 459.763, position_y = -434.832, position_z = 32.0776, orientation = 6.195211 WHERE guid = 150090;
-UPDATE creature SET position_x = 459.504, position_y = -437.071, position_z = 32.2797, orientation = 6.195211 WHERE guid = 150091;
-
 -- MOVEMENT
 
 UPDATE creature SET MovementType = 2 WHERE guid IN (150135, 150132, 150133, 150131, 150139, 150130, 150100, 150097, 150090, 150091, 150101, 150093, 150095, 150129, 150128, 150094, 150092, 150096, 150089, 150099, 150098);
@@ -432,4 +385,4 @@ INSERT INTO creature_movement VALUES
 (150129, 12, 371.606, -393.877, -0.495769, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2.80847, 0, 0),
 (150129, 13, 394.327, -394.871, -1.03191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3.23258, 0, 0);
 
-UPDATE `creature_template` SET `minhealth` = 4100 WHERE `entry` = 14284;
+UPDATE `creature_template` SET `MinLevelHealth` = 4100 WHERE `entry` = 14284;
