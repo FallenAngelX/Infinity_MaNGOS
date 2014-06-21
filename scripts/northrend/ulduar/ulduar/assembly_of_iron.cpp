@@ -804,7 +804,7 @@ CreatureAI* GetAI_boss_steelbreaker(Creature* pCreature)
     return new boss_steelbreakerAI(pCreature);
 }
 
-void AddSC_boss_iron_council()
+void AddSC_boss_assembly_of_iron()
 {
     Script* pNewScript;
 

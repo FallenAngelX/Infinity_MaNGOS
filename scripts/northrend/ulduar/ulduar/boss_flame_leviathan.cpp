@@ -1088,7 +1088,7 @@ bool GossipSelect_npc_brann_bronzebeard(Player* pPlayer, Creature* pCreature, ui
     return true;
 }
 
-void AddSC_boss_leviathan()
+void AddSC_boss_flame_leviathan()
 {
     Script* pNewScript;
 

@@ -810,7 +810,7 @@ struct MANGOS_DLL_DECL mob_cosmic_smash_targetAI : public ScriptedAI
 };
 
 
-bool GOHello_go_celestial_acces(Player* pPlayer, GameObject* pGo)
+bool GOHello_go_celestial_access(Player* pPlayer, GameObject* pGo)
 {
     instance_ulduar* m_pInstance = (instance_ulduar*)pGo->GetInstanceData();
     bool m_bIsRegularMode = pGo->GetMap()->IsRegularDifficulty();
@@ -885,34 +885,35 @@ CreatureAI* GetAI_mob_black_hole(Creature* pCreature)
 
 void AddSC_boss_algalon()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_algalon";
-    newscript->GetAI = &GetAI_boss_algalon;
-    newscript->RegisterSelf();
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "mob_collapsing_star";
-    newscript->GetAI = &GetAI_mob_collapsing_star;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_algalon";
+    pNewScript->GetAI = GetAI_boss_algalon;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_living_constellation";
-    newscript->GetAI = &GetAI_mob_living_constellation;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_collapsing_star";
+    pNewScript->GetAI = GetAI_mob_collapsing_star;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_cosmic_smash_target";
-    newscript->GetAI = &GetAI_mob_cosmic_smash_target;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_living_constellation";
+    pNewScript->GetAI = GetAI_mob_living_constellation;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_black_hole";
-    newscript->GetAI = &GetAI_mob_black_hole;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_cosmic_smash_target";
+    pNewScript->GetAI = GetAI_mob_cosmic_smash_target;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_celestial_acces";
-    newscript->pGOUse = &GOHello_go_celestial_acces;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_black_hole";
+    pNewScript->GetAI = GetAI_mob_black_hole;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_celestial_access";
+    pNewScript->pGOUse = &GOHello_go_celestial_access;
+    pNewScript->RegisterSelf();
 }
