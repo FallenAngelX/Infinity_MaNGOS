@@ -538,7 +538,7 @@ bool AreaTrigger(Player* pPlayer, AreaTriggerEntry const* atEntry)
 MANGOS_DLL_EXPORT
 bool NpcSpellClick(Player* pPlayer, Creature* pClickedCreature, uint32 uiSpellId)
 {
-    Script* pTempScript = m_scripts[pClickedCreature->GetScriptId()];
+    Script* pTempScript = m_scripts->at(pClickedCreature->GetScriptId());
 
     if (!pTempScript || !pTempScript->pNpcSpellClick)
         return false;
