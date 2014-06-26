@@ -4103,4 +4103,9 @@ void AddSC_ebon_hold()
     pNewScript->GetAI = &GetAI_npc_acherus_deathcharger;
     pNewScript->pEffectDummyNPC = &EffectDummyCreature_npc_acherus_deathcharger;
     pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_scarlet_miner";
+    pNewScript->GetAI = &GetAI_npc_scarlet_miner;
+    pNewScript->RegisterSelf();
 }
