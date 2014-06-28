@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2013 ScriptDev2 <http://www.scriptdev2.com/>
+/* This file is part of the ScriptDev2 Project. See AUTHORS file for Copyright information
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
 * the Free Software Foundation; either version 2 of the License, or
@@ -343,7 +343,7 @@ void instance_ulduar::OnObjectCreate(GameObject* pGo)
         case GO_HODIR_ENTER:
             break;
             // Mimiron
-        case GO_MIMIRON_BUTTON:
+        case G0_MIMIRON_BUTTON:
         case GO_MIMIRON_DOOR_1:
         case GO_MIMIRON_DOOR_2:
         case GO_MIMIRON_DOOR_3:
@@ -607,13 +607,13 @@ void instance_ulduar::SetData(uint32 uiType, uint32 uiData)
                 DoOpenMadnessDoorIfCan();
             }
             else if (uiData == IN_PROGRESS)
-                DoToggleGameObjectFlags(GO_MIMIRON_BUTTON, GO_FLAG_NO_INTERACT, true);
+                DoToggleGameObjectFlags(G0_MIMIRON_BUTTON, GO_FLAG_NO_INTERACT, true);
             else if (uiData == FAIL)
             {
                 // reset objects
-                DoToggleGameObjectFlags(GO_MIMIRON_BUTTON, GO_FLAG_NO_INTERACT, false);
+                DoToggleGameObjectFlags(G0_MIMIRON_BUTTON, GO_FLAG_NO_INTERACT, false);
 
-                if (GameObject* pButton = GetSingleGameObjectFromStorage(GO_MIMIRON_BUTTON))
+                if (GameObject* pButton = GetSingleGameObjectFromStorage(G0_MIMIRON_BUTTON))
                     pButton->ResetDoorOrButton();
                 if (GameObject* pElevator = GetSingleGameObjectFromStorage(GO_MIMIRON_ELEVATOR))
                     pElevator->SetGoState(GO_STATE_ACTIVE);
@@ -912,7 +912,7 @@ void instance_ulduar::SetData(uint32 uiType, uint32 uiData)
     }
 }
 
-bool instance_ulduar::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) const
+bool instance_ulduar::CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const
 {
     switch (uiInstanceConditionId)
     {

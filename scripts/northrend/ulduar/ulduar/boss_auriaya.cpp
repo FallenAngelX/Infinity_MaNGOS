@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2013 ScriptDev2 <http://www.scriptdev2.com/>
+/* This file is part of the ScriptDev2 Project. See AUTHORS file for Copyright information
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -26,22 +26,13 @@ EndScriptData */
 
 enum
 {
-    //yells
-    SAY_AGGRO       = -1603079,
-    SAY_SLAY_1      = -1603080,
-    SAY_SLAY_2      = -1603081,
-    SAY_BERSERK     = -1603082,
-    SAY_DEATH       = -1603083,
-    EMOTE_SCREECH   = -1603084,
-    EMOTE_DEFENDER  = -1603085,
-
-    //sanctum sentry
-    SPELL_RIP_FLESH                     = 64375,
-    SPELL_RIP_FLESH_H                   = 64667,
-    SPELL_SAVAGE_POUNCE                 = 64666,
-    SPELL_SAVAGE_POUNCE_H               = 64374,
-    SPELL_STRENGHT_OF_PACK              = 64369,
-    SPELL_STRENGHT_OF_PACK_BUFF         = 64381,
+    SAY_AGGRO                           = -1603079,
+    SAY_SLAY_1                          = -1603080,
+    SAY_SLAY_2                          = -1603081,
+    SAY_BERSERK                         = -1603082,
+    SAY_DEATH                           = -1603083,
+    EMOTE_SCREECH                       = -1603084,
+    EMOTE_DEFENDER                      = -1603085,
 
     // Auriaya
     SPELL_BERSERK                       = 47008,
@@ -64,7 +55,6 @@ enum
     SPELL_SEEPING_FERAL_ESSENCE_SUMMON  = 64457,
     SPELL_FEIGN_DEATH                   = 64461,            // related to the feral defender feign death
     SPELL_FULL_HEAL                     = 64460,            // on feign death remove
-    SPELL_FEIGN_DEATH_2                 = 57685,
 
     // Seeping Feral Essence
     SPELL_SEEPING_FERAL_ESSENCE         = 64458,
@@ -73,7 +63,6 @@ enum
     NPC_SEEPING_FERAL_ESSENCE           = 34098,            // summoned by the feral defender on feign death
     // NPC_GUARDIAN_SWARN               = 34034,            // summoned by spell
     NPC_FERAL_DEFENDER_STALKER          = 34096,
-    //NPC_FERAL_DEFENDER          = 34035,
 };
 
 /*######
@@ -99,30 +88,17 @@ struct MANGOS_DLL_DECL boss_auriayaAI : public ScriptedAI
     uint32 m_uiTerrifyingScreechTimer;
     uint32 m_uiDefenderTimer;
 
-    void Reset()
+    void Reset() override
     {
-        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
-        m_uiEnrageTimer             = 10*MINUTE*IN_MILLISECONDS;
+        m_uiEnrageTimer             = 10 * MINUTE * IN_MILLISECONDS;
         m_uiSwarmTimer              = 50000;
         m_uiSonicScreechTimer       = 58000;
         m_uiSentinelBlastTimer      = 40000;
         m_uiTerrifyingScreechTimer  = 38000;
-        m_uiDefenderTimer           = 1*MINUTE*IN_MILLISECONDS;
-
-        for (GuidList::iterator itr = m_pInstance->m_lSanctumSentryGuids.begin(); itr != m_pInstance->m_lSanctumSentryGuids.end(); ++itr)
-        {
-            if (Creature* pSanity = m_creature->GetMap()->GetCreature(*itr))
-            {
-                if (!pSanity->isAlive())
-                {
-                    pSanity->Respawn();
-                    pSanity->NearTeleportTo(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 0.0f);
-                }
-            }
-        }
+        m_uiDefenderTimer           = 1 * MINUTE * IN_MILLISECONDS;
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -130,24 +106,15 @@ struct MANGOS_DLL_DECL boss_auriayaAI : public ScriptedAI
             m_pInstance->SetData(TYPE_AURIAYA, DONE);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_AURIAYA, IN_PROGRESS);
 
-        for (GuidList::iterator itr = m_pInstance->m_lSanctumSentryGuids.begin(); itr != m_pInstance->m_lSanctumSentryGuids.end(); ++itr)
-        {
-            if (Creature* pSanity = m_creature->GetMap()->GetCreature(*itr))
-            {
-                if (pSanity->isAlive())
-                    pSanity->SetInCombatWithZone();
-            }
-        }
-
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void KilledUnit(Unit* /*pVictim*/) override
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
@@ -197,10 +164,7 @@ struct MANGOS_DLL_DECL boss_auriayaAI : public ScriptedAI
             {
                 // Summon the feral defender trigger
                 if (DoCastSpellIfCan(m_creature, SPELL_ACTIVATE_FERAL_DEFENDER_TRIGG) == CAST_OK)
-                {
-                    DoScriptText(EMOTE_DEFENDER, m_creature);
                     m_uiDefenderTimer = 0;
-                }
             }
             else
                 m_uiDefenderTimer -= uiDiff;
@@ -216,9 +180,9 @@ struct MANGOS_DLL_DECL boss_auriayaAI : public ScriptedAI
 
         if (m_uiSwarmTimer < uiDiff)
         {
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, (uint32)0, SELECT_FLAG_PLAYER | SELECT_FLAG_NOT_IN_MELEE_RANGE))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             {
-                if (DoCastSpellIfCan(m_creature, SPELL_GUARDIAN_SWARM) == CAST_OK)
+                if (DoCastSpellIfCan(pTarget, SPELL_GUARDIAN_SWARM) == CAST_OK)
                     m_uiSwarmTimer = 37000;
             }
         }
@@ -230,7 +194,7 @@ struct MANGOS_DLL_DECL boss_auriayaAI : public ScriptedAI
             if (DoCastSpellIfCan(m_creature, SPELL_BERSERK) == CAST_OK)
             {
                 DoScriptText(SAY_BERSERK, m_creature);
-                m_uiEnrageTimer = 10*MINUTE*IN_MILLISECONDS;
+                m_uiEnrageTimer = 10 * MINUTE * IN_MILLISECONDS;
             }
         }
         else
@@ -270,7 +234,7 @@ struct MANGOS_DLL_DECL boss_feral_defenderAI : public ScriptedAI
     uint32 m_uiAttackDelayTimer;
     uint32 m_uiKilledCount;
 
-    void Reset()
+    void Reset() override
     {
         m_uiFeralRushCount      = 0;
         m_uiReviveDelayTimer    = 0;
@@ -282,14 +246,14 @@ struct MANGOS_DLL_DECL boss_feral_defenderAI : public ScriptedAI
         DoCastSpellIfCan(m_creature, SPELL_FERAL_ESSENCE);
     }
 
-    void JustDied(Unit* pKiller) override
+    void JustDied(Unit* /*pKiller*/) override
     {
         // Set achiev criteria to true
         if (m_pInstance)
             m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_NINE_LIVES, true);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32& uiDamage) override
+    void DamageTaken(Unit* /*pDoneBy*/, uint32& uiDamage) override
     {
         // If we don't have the feral essence anymore then ignore this
         if (m_uiKilledCount >= 8)                           // 9-1 == 8
@@ -377,7 +341,7 @@ struct MANGOS_DLL_DECL boss_feral_defenderAI : public ScriptedAI
 
         if (m_uiPounceTimer < uiDiff)
         {
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, (uint32)0, SELECT_FLAG_PLAYER))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             {
                 if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_FERAL_POUNCE : SPELL_FERAL_POUNCE_H) == CAST_OK)
                     m_uiPounceTimer = urand(13000, 16000);
@@ -413,90 +377,6 @@ CreatureAI* GetAI_boss_feral_defender(Creature* pCreature)
     return new boss_feral_defenderAI(pCreature);
 }
 
-// Sanctum Sentry
-struct MANGOS_DLL_DECL boss_sanctum_sentryAI : public ScriptedAI
-{
-    boss_sanctum_sentryAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        m_pInstance = (instance_ulduar*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        Reset();
-    }
-
-    instance_ulduar* m_pInstance;
-    bool m_bIsRegularMode;
-
-    bool m_bIsFollowing;
-
-    uint32 m_uiRip_Flesh_Timer;
-    uint32 m_uiJump_Timer;
-
-    void Reset()
-    {
-        m_uiRip_Flesh_Timer = 13000;
-        m_uiJump_Timer = 0;
-        m_bIsFollowing = false;
-    }
-
-    void Aggro(Unit* pWho)
-    {
-        if (m_pInstance)
-        {
-            if (Creature* pAuriaya = m_pInstance->GetSingleCreatureFromStorage(NPC_AURIAYA))
-            {
-                if (pAuriaya->isAlive())
-                    pAuriaya->SetInCombatWithZone();
-            }
-
-            for (GuidList::iterator itr = m_pInstance->m_lSanctumSentryGuids.begin(); itr != m_pInstance->m_lSanctumSentryGuids.end(); ++itr)
-            {
-                if (Creature* pSanity = m_creature->GetMap()->GetCreature(*itr))
-                {
-                    if (pSanity->isAlive())
-                        pSanity->SetInCombatWithZone();
-                }
-            }
-        }
-        DoCast(m_creature, SPELL_STRENGHT_OF_PACK);
-    }
-
-    void UpdateAI(const uint32 diff)
-    {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-        {
-            if (m_creature->GetMotionMaster()->GetCurrentMovementGeneratorType() != FOLLOW_MOTION_TYPE)
-                if (m_pInstance)
-                    if (Creature *pAuriaya = m_pInstance->GetSingleCreatureFromStorage(NPC_AURIAYA))
-                        m_creature->GetMotionMaster()->MoveFollow(pAuriaya, 5.0f, urand(60, 250)/100.0f);
-            return;
-        }
-
-        if (m_uiRip_Flesh_Timer < diff)
-        {
-            if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_RIP_FLESH : SPELL_RIP_FLESH_H) == CAST_OK)
-                m_uiRip_Flesh_Timer = 13000;
-        }
-        else
-            m_uiRip_Flesh_Timer -= diff;
-
-        if (m_uiJump_Timer < diff)
-        {
-            if (!m_creature->IsWithinDistInMap(m_creature->getVictim(), 8) && m_creature->IsWithinDistInMap(m_creature->getVictim(), 25))
-                DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_SAVAGE_POUNCE : SPELL_SAVAGE_POUNCE_H);
-            m_uiJump_Timer = 1000;
-        }
-        else
-            m_uiJump_Timer -= diff;
-
-        DoMeleeAttackIfReady();
-    }
-};
-
-CreatureAI* GetAI_boss_sanctum_sentry(Creature* pCreature)
-{
-    return new boss_sanctum_sentryAI(pCreature);
-}
-
 void AddSC_boss_auriaya()
 {
     Script* pNewScript;
@@ -507,12 +387,7 @@ void AddSC_boss_auriaya()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name = "mob_sanctum_sentry";
-    pNewScript->GetAI = &GetAI_boss_sanctum_sentry;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name = "mob_feral_defender";
+    pNewScript->Name = "boss_feral_defender";
     pNewScript->GetAI = &GetAI_boss_feral_defender;
     pNewScript->RegisterSelf();
 }

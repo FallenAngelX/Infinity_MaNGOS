@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2013 ScriptDev2 <http://www.scriptdev2.com/>
+/* This file is part of the ScriptDev2 Project. See AUTHORS file for Copyright information
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -15,9 +15,9 @@
  */
 
 /* ScriptData
-SDName: boss_iron_council
-SD%Complete: 
-SDComment: Achievment(Can't Do That While Stunned,
+SDName: assembly_of_iron
+SD%Complete: 90%
+SDComment: Lightning Tendrils target following could use some love from the core side
 SDCategory: Ulduar
 EndScriptData */
 
@@ -26,137 +26,92 @@ EndScriptData */
 
 enum
 {
-    //yells
-    SAY_BRUNDIR_AGGR0       = -1603056,
-    SAY_BRUNDIR_WHIRL       = -1603057,
-    SAY_BRUNDIR_DEATH1      = -1603058,
-    SAY_BRUNDIR_DEATH2      = -1603059,
-    SAY_BRUNDIR_SLAY1       = -1603060,
-    SAY_BRUNDIR_SLAY2       = -1603061,
-    SAY_BRUNDIR_BERSERK     = -1603062,
-    SAY_BRUNDIR_FLY         = -1603063,
+    SAY_BRUNDIR_AGGRO                   = -1603056,
+    SAY_BRUNDIR_WHIRL                   = -1603057,
+    SAY_BRUNDIR_DEATH_1                 = -1603058,
+    SAY_BRUNDIR_DEATH_2                 = -1603059,
+    SAY_BRUNDIR_SLAY_1                  = -1603060,
+    SAY_BRUNDIR_SLAY_2                  = -1603061,
+    SAY_BRUNDIR_BERSERK                 = -1603062,
+    SAY_BRUNDIR_FLY                     = -1603063,
 
-    SAY_MOLGEIM_AGGRO       = -1603064,
-    SAY_MOLGEIM_DEATH1      = -1603065,
-    SAY_MOLGEIM_DEATH2      = -1603066,
-    SAY_MOLGEIM_DEATH_RUNE  = -1603067,
-    SAY_MOLGEIM_SUMMON      = -1603068,
-    SAY_MOLGEIM_SLAY1       = -1603069,
-    SAY_MOLGEIM_SLAY2       = -1603070,
-    SAY_MOLGEIM_BERSERK     = -1603071,
+    SAY_MOLGEIM_AGGRO                   = -1603064,
+    SAY_MOLGEIM_DEATH_1                 = -1603065,
+    SAY_MOLGEIM_DEATH_2                 = -1603066,
+    SAY_MOLGEIM_DEATH_RUNE              = -1603067,
+    SAY_MOLGEIM_SURGE                   = -1603068,
+    SAY_MOLGEIM_SLAY_1                  = -1603069,
+    SAY_MOLGEIM_SLAY_2                  = -1603070,
+    SAY_MOLGEIM_BERSERK                 = -1603071,
 
-    SAY_STEEL_AGGRO         = -1603072,
-    SAY_STEEL_DEATH1        = -1603073,
-    SAY_STEEL_DEATH2        = -1603074,
-    SAY_STEEL_SLAY1         = -1603075,
-    SAY_STEEL_SLAY2         = -1603076,
-    SAY_STEEL_OVERWHELMING  = -1603077,
-    SAY_STEEL_BERSERK       = -1603078,
+    SAY_STEEL_AGGRO                     = -1603072,
+    SAY_STEEL_DEATH_1                   = -1603073,
+    SAY_STEEL_DEATH_2                   = -1603074,
+    SAY_STEEL_SLAY_1                    = -1603075,
+    SAY_STEEL_SLAY_2                    = -1603076,
+    SAY_STEEL_OVERWHELM                 = -1603077,
+    SAY_STEEL_BERSERK                   = -1603078,
 
-    //all
-    SPELL_BERSERK               = 47008,
-    SPELL_SUPERCHARGE           = 61920,
-    SPELL_IRON_COUNCIL_CREDIT   = 65195,    // custom spell in spell_dbc.sql
+    // Common spells
+    SPELL_BERSERK                       = 62535,        // triggers 47008 after 15 min
+    SPELL_SUPERCHARGE                   = 61920,
+    SPELL_LIGHTNING_CHANNEL_PREFIGHT    = 61942,        // cast by Brundir on Steelbreaker
+    SPELL_RUNE_OF_POWER_PREFIGHT        = 61975,        // cast by Molgeim on Stellbreaker
+    SPELL_COUNCIL_KILL_CREDIT           = 65195,        // currently missing from DBC
 
-    //steelbreaker
-    SPELL_HIGH_VOLTAGE          = 61890,
-    SPELL_HIGH_VOLTAGE_H        = 63498,
-    SPELL_FUSION_PUNCH          = 61903,
-    SPELL_FUSION_PUNCH_H        = 63493,
-    SPELL_STATIC_DISRUPTION     = 44008,
-    SPELL_STATIC_DISRUPTION_H   = 63494,
-    SPELL_OVERWHELMING_POWER    = 64637,
-    SPELL_OVERWHELMING_POWER_H  = 61888,
-    SPELL_ELECTRICAL_CHARGE     = 61902,
+    // Steelbreaker
+    SPELL_HIGH_VOLTAGE                  = 61890,        // phase 1 spells
+    SPELL_HIGH_VOLTAGE_H                = 63498,        // probably related to 61892 - couldn't find any info regarding this one
+    SPELL_FUSION_PUNCH                  = 61903,
+    SPELL_FUSION_PUNCH_H                = 63493,
+    SPELL_STATIC_DISRUPTION             = 61911,        // phase 2 spells
+    SPELL_STATIC_DISRUPTION_H           = 63495,        // should be triggered by 64641
+    SPELL_OVERWHELMING_POWER            = 61888,        // phase 3 spells
+    SPELL_OVERWHELMING_POWER_H          = 64637,
+    SPELL_ELECTRICAL_CHARGE             = 61900,        // triggers 61901 when target dies
 
-    //runemaster molgeim
-    SPELL_SHIELD                = 62274,
-    SPELL_SHIELD_H              = 63489,
-    SPELL_RUNE_OF_POWER         = 63513,
-    SPELL_RUNE_OF_DEATH         = 62269,
-    SPELL_RUNE_OF_DEATH_H       = 63490,
-    SPELL_RUNE_OF_SUMMONING     = 62273,
-    //rune of power
-    AURA_RUNE_OF_POWER          = 61974,
-    //rune of summoning
-    AURA_RUNE_OF_SUMMONING      = 62019,
-    //lightning elemental
-    SPELL_LIGHTNING_BLAST       = 62054,
-    SPELL_LIGHTNING_BLAST_H     = 63491,
+    // Runemaster Molgeim
+    SPELL_SHIELD                        = 62274,        // phase 1 spells
+    SPELL_SHIELD_H                      = 63489,
+    SPELL_RUNE_OF_POWER                 = 61973,
+    SPELL_RUNE_OF_DEATH                 = 62269,        // phase 2 spells
+    SPELL_RUNE_OF_DEATH_H               = 63490,
+    SPELL_RUNE_OF_SUMMONING             = 62273,        // phase 3 spells
 
-    //stormcaller brundir
-    SPELL_CHAIN_LIGHTNING       = 61879,
-    SPELL_CHAIN_LIGHTNING_H     = 63479,
-    SPELL_OVERLOAD              = 61869,
-    SPELL_LIGHTNING_WHIRL       = 61915,
-    SPELL_LIGHTNING_WHIRL_H     = 63483,
-    SPELL_STORMSHIELD           = 64187,
-    SPELL_LIGHTNING_TENDRILS    = 61887,
-    SPELL_LIGHTNING_TENDRILS_H  = 63486,
-    LIGHTNING_TENDRILS_VISUAL   = 61883,
-    //NPC ids
-    NPC_LIGHTNING_ELEMENTAL     = 32958,
-    NPC_RUNE_OF_SUMMONING       = 33051,
-    NPC_RUNE_OF_POWER           = 33705
+    // Stormcaller Brundir
+    SPELL_CHAIN_LIGHTNING               = 61879,        // phase 1 spells
+    SPELL_CHAIN_LIGHTNING_H             = 63479,
+    SPELL_OVERLOAD                      = 61869,
+    SPELL_LIGHTNING_WHIRL               = 61915,        // phase 2 spells
+    SPELL_LIGHTNING_WHIRL_H             = 63483,
+    SPELL_LIGHTNING_WHIRL_DAMAGE        = 61916,        // used to check achiev criterias
+    SPELL_LIGHTNING_WHIRL_DAMAGE_H      = 63482,
+    SPELL_STORMSHIELD                   = 64187,        // phase 3 spells
+    SPELL_LIGHTNING_TENDRILS            = 61887,
+    SPELL_LIGHTNING_TENDRILS_H          = 63486,
+    SPELL_TENDRILS_VISUAL               = 61883,
+
+    // Summoned spells
+    SPELL_OVERLOAD_AURA                 = 61877,
+    SPELL_RUNE_OF_POWER_AURA            = 61974,
+    SPELL_RUNE_OF_SUMMONING_AURA        = 62019,        // triggers 62020 which summons 32958
+    SPELL_LIGHTNING_ELEMENTAL_PASSIVE   = 62052,
+    SPELL_LIGHTNING_ELEMENTAL_PASSIVE_H = 63492,
+
+    // summoned npcs
+    NPC_OVERLOAD_VISUAL                 = 32866,
+    NPC_RUNE_OF_POWER                   = 33705,
+    NPC_RUNE_OF_SUMMONING               = 33051,
+    NPC_LIGHTNING_ELEMENTAL             = 32958,
+
+    PHASE_NO_CHARGE                     = 0,
+    PHASE_CHARGE_ONE                    = 1,
+    PHASE_CHARGE_TWO                    = 2,
+
+    POINT_ID_LIFT_OFF                   = 1,
+    POINT_ID_LAND                       = 2,
 };
 
-enum BrundirPhase
-{
-    PHASE_NORMAL,
-    PHASE_TENDRILS,
-    PHASE_TENDRILS_DOWN
-};
-
-// Lightning Elemental
-struct MANGOS_DLL_DECL npc_ulduar_lightning_elementalAI : public ScriptedAI
-{
-    npc_ulduar_lightning_elementalAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        Reset();
-    }
-
-    bool m_bIsRegularMode;
-    uint32 m_uiCheckTimer;
-
-    void Reset()
-    {
-        m_uiCheckTimer = 1000;
-        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-            m_creature->AddThreat(pTarget, 1000.0f);
-    }
-
-    void UpdateAI(const uint32 diff)
-    {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-        {
-            m_creature->SetInCombatWithZone();
-            if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-                m_creature->ForcedDespawn();
-            return;
-        }
-
-        if (m_uiCheckTimer <= diff)
-        {
-            if (m_creature->CanReachWithMeleeAttack(m_creature->getVictim()))
-            {
-                DoCast(m_creature, m_bIsRegularMode ? SPELL_LIGHTNING_BLAST : SPELL_LIGHTNING_BLAST_H);
-                m_creature->ForcedDespawn(500);
-                m_uiCheckTimer = 5000;
-            }
-            m_uiCheckTimer = 1000;
-        }
-        else
-            m_uiCheckTimer -= diff;
-    }
-};
-
-CreatureAI* GetAI_npc_ulduar_lightning_elemental(Creature* pCreature)
-{
-    return new npc_ulduar_lightning_elementalAI(pCreature);
-}
-
-//Stormcaller Brundir
 struct MANGOS_DLL_DECL boss_brundirAI : public ScriptedAI
 {
     boss_brundirAI(Creature* pCreature) : ScriptedAI(pCreature)
@@ -169,244 +124,296 @@ struct MANGOS_DLL_DECL boss_brundirAI : public ScriptedAI
     instance_ulduar* m_pInstance;
     bool m_bIsRegularMode;
 
+    uint8 m_uiPhase;
+    uint32 m_uiVisualTimer;
     uint32 m_uiChainLightningTimer;
     uint32 m_uiOverloadTimer;
-    uint32 m_uiLightningWhirlTimer;
+    uint32 m_uiWhirlTimer;
     uint32 m_uiTendrilsTimer;
+    uint32 m_uiTendrilsTargetTimer;
     uint32 m_uiTendrilsEndTimer;
-    uint32 m_uiEnrageTimer;
+    uint32 m_uiTendrilsFollowTimer;
 
-    uint8 m_uiSuperchargeStack;
+    ObjectGuid m_followTargetGuid;
 
-    BrundirPhase m_uiBrundirPhase;
-
-    void Reset()
+    void Reset() override
     {
-        SetCombatMovement(false);
-        m_creature->SetLevitate(false);
-        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
-
-        m_uiBrundirPhase = PHASE_NORMAL;
+        m_uiPhase               = PHASE_NO_CHARGE;
+        m_uiVisualTimer         = 5000;
         m_uiChainLightningTimer = 0;
-        m_uiOverloadTimer       = urand(35000, 40000);
-        m_uiEnrageTimer         = 900000;
-        m_uiSuperchargeStack    = 0;
+        m_uiOverloadTimer       = 35000;
+        m_uiWhirlTimer          = 10000;
         m_uiTendrilsTimer       = 60000;
-        m_uiLightningWhirlTimer = urand(12000, 15000);
+        m_uiTendrilsEndTimer    = 0;
+        m_uiTendrilsTargetTimer = 0;
+        m_uiTendrilsFollowTimer = 500;
+
+        m_creature->SetLevitate(false);
     }
 
-    void SpellHit(Unit* caster, const SpellEntry* spell) override
+    void JustDied(Unit* /*pKiller*/) override
     {
-        if (spell->Id == SPELL_SUPERCHARGE)
-        {
-            m_creature->SetHealth(m_creature->GetMaxHealth());
-            ++m_uiSuperchargeStack;
-            if (m_uiSuperchargeStack > 1)
-                DoCast(m_creature, SPELL_STORMSHIELD, true);
-        }
-    }
+        if (!m_pInstance)
+            return;
 
-    void JustDied(Unit* pKiller) override
-    {
-        if (m_uiSuperchargeStack > 1)
+        // If we are not on the last phase then cast Supercharge and set as unlootable
+        if (m_uiPhase != PHASE_CHARGE_TWO)
         {
-            m_pInstance->SetData(TYPE_ASSEMBLY, DONE);
-            DoCast(m_creature, SPELL_IRON_COUNCIL_CREDIT, true);
+            m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+            DoCastSpellIfCan(m_creature, SPELL_SUPERCHARGE, CAST_TRIGGERED);
+            m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_BRUNDIR, false);
         }
         else
         {
-            if (m_pInstance)
-                m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_YOU_BRUNDIR, false);
-            m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
-            DoCast(m_creature, SPELL_SUPERCHARGE, true);
+            m_pInstance->SetData(TYPE_ASSEMBLY, DONE);
+            m_creature->CastSpell(m_creature, SPELL_COUNCIL_KILL_CREDIT, true);
         }
 
-        DoScriptText(urand(0, 1) ? SAY_BRUNDIR_DEATH1 : SAY_BRUNDIR_DEATH2, m_creature);
+        DoScriptText(urand(0, 1) ? SAY_BRUNDIR_DEATH_1 : SAY_BRUNDIR_DEATH_2, m_creature);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
-        DoScriptText(SAY_BRUNDIR_AGGR0, m_creature);
-        if (!m_pInstance)
-            return;
-        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_STEELBREAKER))
-        {
-            if (pTemp->isAlive())
-                pTemp->SetInCombatWithZone();
-        }
-        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_MOLGEIM))
-        {
-            if (pTemp->isAlive())
-                pTemp->SetInCombatWithZone();
-        }
-        if (m_pInstance->GetData(TYPE_ASSEMBLY) != IN_PROGRESS)
+        DoScriptText(SAY_BRUNDIR_AGGRO, m_creature);
+
+        if (m_pInstance)
             m_pInstance->SetData(TYPE_ASSEMBLY, IN_PROGRESS);
+
+        m_creature->InterruptNonMeleeSpells(false);
+        DoCastSpellIfCan(m_creature, SPELL_BERSERK, CAST_TRIGGERED);
+    }
+
+    void KilledUnit(Unit* /*pVictim*/) override
+    {
+        DoScriptText(urand(0, 1) ? SAY_BRUNDIR_SLAY_1 : SAY_BRUNDIR_SLAY_2, m_creature);
     }
 
     void JustReachedHome() override
     {
         if (m_pInstance)
+            m_pInstance->SetData(TYPE_ASSEMBLY, FAIL);
+    }
+
+    void JustSummoned(Creature* pSummoned) override
+    {
+        if (pSummoned->GetEntry() == NPC_OVERLOAD_VISUAL)
         {
-            if (m_pInstance->GetData(TYPE_ASSEMBLY) != FAIL)
-                m_pInstance->SetData(TYPE_ASSEMBLY, FAIL);
+            pSummoned->CastSpell(pSummoned, SPELL_OVERLOAD_AURA, true);
+            // Visual npc- shouldn't move and should despawn in 6 sec
+            pSummoned->GetMotionMaster()->MoveIdle();
+            pSummoned->ForcedDespawn(6000);
         }
     }
 
-    void KilledUnit(Unit* pWho)
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
-        DoScriptText(urand(0, 1) ? SAY_BRUNDIR_SLAY1 : SAY_BRUNDIR_SLAY2, m_creature);
+        // Increase the phase when hit with the supercharge spell by his brothers
+        if (pSpell->Id == SPELL_SUPERCHARGE)
+        {
+            // Not sure if there is a spell for this, so we are doing it here
+            m_creature->SetHealth(m_creature->GetMaxHealth());
+            ++m_uiPhase;
+        }
+
+        if (m_uiPhase == PHASE_CHARGE_TWO)
+        {
+            // Cast stormshield in the last phase
+            DoCastSpellIfCan(m_creature, SPELL_STORMSHIELD, CAST_TRIGGERED);
+
+            // set the instace data to special in order to mark the last phase - this is used to check the achiev criteria
+            if (m_pInstance)
+                m_pInstance->SetData(TYPE_ASSEMBLY, SPECIAL);
+        }
+    }
+
+    void SpellHitTarget(Unit* pTarget, const SpellEntry* pSpell) override
+    {
+        if (pTarget->GetTypeId() != TYPEID_PLAYER)
+            return;
+
+        if (!m_pInstance)
+            return;
+
+        // Check achiev criterias
+        switch (pSpell->Id)
+        {
+            case SPELL_CHAIN_LIGHTNING:
+            case SPELL_CHAIN_LIGHTNING_H:
+            case SPELL_LIGHTNING_WHIRL_DAMAGE:
+            case SPELL_LIGHTNING_WHIRL_DAMAGE_H:
+                m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_STUNNED, false);
+                break;
+        }
+    }
+
+    void MovementInform(uint32 uiMoveType, uint32 uiPointId) override
+    {
+        if (uiMoveType != POINT_MOTION_TYPE || !uiPointId)
+            return;
+
+        switch (uiPointId)
+        {
+                // After lift up follow a target and set the target change timer
+            case POINT_ID_LIFT_OFF:
+                // TODO: the boss should follow without changing his Z position - missing core feature
+                // Current implementation with move point is wrong
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER | SELECT_FLAG_NOT_IN_MELEE_RANGE))
+                {
+                    DoMoveToTarget(pTarget);
+                    m_followTargetGuid = pTarget->GetObjectGuid();
+                }
+                m_uiTendrilsTargetTimer = 5000;
+                m_uiTendrilsFollowTimer = 500;
+                break;
+                // After reached the land remove all the auras and resume basic combat
+            case POINT_ID_LAND:
+                m_creature->SetLevitate(false);
+                SetCombatMovement(true);
+                if (m_creature->getVictim())
+                    m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+
+                m_creature->RemoveAurasDueToSpell(SPELL_TENDRILS_VISUAL);
+                m_creature->RemoveAurasDueToSpell(m_bIsRegularMode ? SPELL_LIGHTNING_TENDRILS : SPELL_LIGHTNING_TENDRILS_H);
+                break;
+        }
+    }
+
+    // Wrapper for target movement
+    void DoMoveToTarget(Unit* pTarget)
+    {
+        if (pTarget)
+        {
+            m_creature->GetMotionMaster()->Clear();
+            m_creature->GetMotionMaster()->MovePoint(0, pTarget->GetPositionX(), pTarget->GetPositionY(), m_creature->GetPositionZ());
+        }
     }
 
     void UpdateAI(const uint32 uiDiff) override
     {
+        // Pre fight visual spell
+        if (m_uiVisualTimer)
+        {
+            if (m_uiVisualTimer <= uiDiff)
+            {
+                if (DoCastSpellIfCan(m_creature, SPELL_LIGHTNING_CHANNEL_PREFIGHT) == CAST_OK)
+                    m_uiVisualTimer = 0;
+            }
+            else
+                m_uiVisualTimer -= uiDiff;
+        }
+
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (m_uiEnrageTimer <= uiDiff)
+        switch (m_uiPhase)
         {
-            if (DoCastSpellIfCan(m_creature, SPELL_BERSERK) == CAST_OK)
-            {
-                DoScriptText(SAY_BRUNDIR_BERSERK, m_creature);
-                m_uiEnrageTimer = 1800000;
-            }
-        }
-        else
-            m_uiEnrageTimer -= uiDiff;
+            case PHASE_CHARGE_TWO:
 
-        switch(m_uiBrundirPhase)
-        {
-            case PHASE_NORMAL:
-            {
-                // Supercharge Abilities
-                if (m_uiSuperchargeStack)
+                if (m_uiTendrilsTimer < uiDiff)
                 {
-                    if (m_uiLightningWhirlTimer <= uiDiff)
+                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_LIGHTNING_TENDRILS : SPELL_LIGHTNING_TENDRILS_H) == CAST_OK)
                     {
-                        if (m_uiTendrilsTimer > uiDiff && DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_LIGHTNING_WHIRL : SPELL_LIGHTNING_WHIRL_H) == CAST_OK)
-                        {
-                            DoScriptText(SAY_BRUNDIR_WHIRL, m_creature);
-                            m_uiLightningWhirlTimer = urand(12000, 15000);
-                        }
-                    }
-                    else
-                        m_uiLightningWhirlTimer -= uiDiff;
-
-                    if (m_uiSuperchargeStack > 1)
-                    {
-                        if (m_uiTendrilsTimer <= uiDiff)
-                        {
-                            if (!m_creature->IsNonMeleeSpellCasted(false))
-                            {
-                                m_uiBrundirPhase = PHASE_TENDRILS;
-                                DoScriptText(SAY_BRUNDIR_FLY, m_creature);
-
-                                m_creature->StopMoving();
-                                m_creature->GetMotionMaster()->Clear();
-                                m_creature->GetMotionMaster()->MoveIdle();
-                                DoCast(m_creature, m_bIsRegularMode ? SPELL_LIGHTNING_TENDRILS : SPELL_LIGHTNING_TENDRILS_H, true);
-                                DoCast(m_creature, LIGHTNING_TENDRILS_VISUAL, true);
-                                m_creature->SetLevitate(true);
-                                m_creature->SetWalk(false);
-                                m_creature->SetSpeedRate(MOVE_RUN, 0.8f);
-                                m_creature->GetMotionMaster()->MovePoint(1, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 10.0f);
-                                m_uiTendrilsTimer = 4000;
-                                m_uiTendrilsEndTimer = 26000;
-                            }
-                            else
-                                m_uiTendrilsTimer = 0;
-                        }
-                        else
-                            m_uiTendrilsTimer -= uiDiff;
-                    }
-                }
-
-                if (m_uiOverloadTimer <= uiDiff)
-                {
-                    if (m_uiTendrilsTimer > uiDiff && DoCastSpellIfCan(m_creature, SPELL_OVERLOAD) == CAST_OK)
-                    {
-                        m_uiOverloadTimer = 60000;
-                        m_uiLightningWhirlTimer = urand(12000, 15000);
+                        DoCastSpellIfCan(m_creature, SPELL_TENDRILS_VISUAL, CAST_TRIGGERED);
+                        DoScriptText(SAY_BRUNDIR_FLY, m_creature);
+                        SetCombatMovement(false);
+                        m_creature->SetLevitate(true);
+                        m_creature->GetMotionMaster()->MovePoint(POINT_ID_LIFT_OFF, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 15.0f);
+                        m_uiTendrilsTimer = 90000;
+                        m_uiTendrilsEndTimer = 25000;
                     }
                 }
                 else
-                    m_uiOverloadTimer -= uiDiff;
+                    m_uiTendrilsTimer -= uiDiff;
 
-                if (m_uiChainLightningTimer <= uiDiff)
+                if (m_uiTendrilsEndTimer)
                 {
-                    if (m_uiTendrilsTimer > uiDiff)
+                    if (m_uiTendrilsEndTimer <= uiDiff)
                     {
-                        Unit* pVictim = m_creature->getVictim();
-                        bool bMeeleeAttack = pVictim && m_creature->GetDistance2d(pVictim) < 15.0f;
-                        if (bMeeleeAttack && !m_creature->CanReachWithMeleeAttack(pVictim))
+                        // Get proper Z position and land
+                        float fZ = m_creature->GetTerrain()->GetWaterOrGroundLevel(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
+                        m_creature->GetMotionMaster()->MovePoint(POINT_ID_LAND, m_creature->GetPositionX(), m_creature->GetPositionY(), fZ);
+                        m_uiOverloadTimer       = 40000;
+                        m_uiWhirlTimer          = 15000;
+                        m_uiChainLightningTimer = 3000;
+                        m_uiTendrilsEndTimer    = 0;
+                        m_uiTendrilsTargetTimer = 0;
+                    }
+                    else
+                        m_uiTendrilsEndTimer -= uiDiff;
+
+                    // Change follow target every 5 seconds
+                    if (m_uiTendrilsTargetTimer)
+                    {
+                        if (m_uiTendrilsTargetTimer <= uiDiff)
                         {
-                            m_creature->GetMotionMaster()->MoveChase(pVictim);
-                            m_uiChainLightningTimer = urand(5000, 10000);
+                            // TODO: the boss should follow without changing his Z position - missing core feature
+                            // Current implementation with move point is wrong
+                            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, uint32(0), SELECT_FLAG_PLAYER | SELECT_FLAG_NOT_IN_MELEE_RANGE))
+                            {
+                                DoMoveToTarget(pTarget);
+                                m_followTargetGuid = pTarget->GetObjectGuid();
+                            }
+                            m_uiTendrilsTargetTimer = 5000;
+                            m_uiTendrilsFollowTimer = 500;
                         }
                         else
+                            m_uiTendrilsTargetTimer -= uiDiff;
+
+                        // Workaround to follow the target
+                        if (m_uiTendrilsFollowTimer < uiDiff)
                         {
-                            if (pVictim = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                            {
-                                if (DoCastSpellIfCan(pVictim, m_bIsRegularMode ? SPELL_CHAIN_LIGHTNING : SPELL_CHAIN_LIGHTNING_H) == CAST_OK)
-                                    m_uiChainLightningTimer = bMeeleeAttack ? urand(5000, 10000) : 2000;
-                            }
+                            if (Unit* pTarget = m_creature->GetMap()->GetUnit(m_followTargetGuid))
+                                DoMoveToTarget(pTarget);
+                            m_uiTendrilsFollowTimer = 500;
                         }
+                        else
+                            m_uiTendrilsFollowTimer -= uiDiff;
+                    }
+
+                    // no other spells during tendrils
+                    return;
+                }
+
+                // no break here; he uses the other spells as well
+            case PHASE_CHARGE_ONE:
+
+                if (m_uiWhirlTimer < uiDiff)
+                {
+                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_LIGHTNING_WHIRL : SPELL_LIGHTNING_WHIRL_H) == CAST_OK)
+                    {
+                        DoScriptText(SAY_BRUNDIR_WHIRL, m_creature);
+                        m_uiWhirlTimer = 30000;
+                    }
+                }
+                else
+                    m_uiWhirlTimer -= uiDiff;
+
+                // no break here; he uses the other spells as well
+            case PHASE_NO_CHARGE:
+
+                if (m_uiChainLightningTimer < uiDiff)
+                {
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    {
+                        if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_CHAIN_LIGHTNING : SPELL_CHAIN_LIGHTNING_H) == CAST_OK)
+                            m_uiChainLightningTimer = 2000;
                     }
                 }
                 else
                     m_uiChainLightningTimer -= uiDiff;
 
-                DoMeleeAttackIfReady();
-                break;
-            }
-            case PHASE_TENDRILS:
-                if (m_uiTendrilsTimer <= uiDiff)
+                if (m_uiOverloadTimer < uiDiff)
                 {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, (uint32)0, SELECT_FLAG_PLAYER))
-                    {
-                        m_creature->SetSpeedRate(MOVE_RUN, 1.8f);
-                        m_creature->GetMotionMaster()->MovePoint(1, pTarget->GetPositionX(), pTarget->GetPositionY(), m_creature->GetPositionZ());
-                    }
-                    m_uiTendrilsTimer = 4000;
+                    if (DoCastSpellIfCan(m_creature, SPELL_OVERLOAD) == CAST_OK)
+                        m_uiOverloadTimer = 80000;
                 }
                 else
-                    m_uiTendrilsTimer -= uiDiff;
+                    m_uiOverloadTimer -= uiDiff;
 
-                if (m_uiTendrilsEndTimer <= uiDiff)
-                {
-                    m_uiBrundirPhase = PHASE_TENDRILS_DOWN;
-
-                    m_creature->StopMoving();
-                    m_creature->GetMotionMaster()->Clear();
-                    float x = m_creature->GetPositionX();
-                    float y = m_creature->GetPositionY();
-                    float z = m_creature->GetTerrain()->GetWaterOrGroundLevel(x, y, m_creature->GetPositionZ());
-                    m_creature->GetMotionMaster()->MovePoint(1, x, y, z);
-                    m_creature->SetSpeedRate(MOVE_RUN, 0.8f);
-
-                    m_uiTendrilsTimer = 4000;
-                }
-                else
-                    m_uiTendrilsEndTimer -= uiDiff;
-                break;
-            case PHASE_TENDRILS_DOWN:
-                if (m_uiTendrilsTimer <= uiDiff)
-                {
-                    m_uiBrundirPhase = PHASE_NORMAL;
-                    m_creature->SetLevitate(false);
-                    m_creature->SetWalk(true);
-                    if (m_creature->HasAura(SPELL_LIGHTNING_TENDRILS))
-                        m_creature->RemoveAurasDueToSpell(SPELL_LIGHTNING_TENDRILS);
-                    if (m_creature->HasAura(SPELL_LIGHTNING_TENDRILS_H))
-                        m_creature->RemoveAurasDueToSpell(SPELL_LIGHTNING_TENDRILS_H);
-                    if (m_creature->HasAura(LIGHTNING_TENDRILS_VISUAL))
-                        m_creature->RemoveAurasDueToSpell(LIGHTNING_TENDRILS_VISUAL);
-
-                    m_uiTendrilsTimer = 60000;
-                }
-                else
-                    m_uiTendrilsTimer -= uiDiff;
                 break;
         }
+
+        DoMeleeAttackIfReady();
     }
 };
 
@@ -415,7 +422,6 @@ CreatureAI* GetAI_boss_brundir(Creature* pCreature)
     return new boss_brundirAI(pCreature);
 }
 
-// Runemaster Molgeim
 struct MANGOS_DLL_DECL boss_molgeimAI : public ScriptedAI
 {
     boss_molgeimAI(Creature* pCreature) : ScriptedAI(pCreature)
@@ -428,212 +434,169 @@ struct MANGOS_DLL_DECL boss_molgeimAI : public ScriptedAI
     instance_ulduar* m_pInstance;
     bool m_bIsRegularMode;
 
-    uint32 m_uiShieldOfRunesTimer;
-    uint32 m_uiRuneOfPowerTimer;
-    uint32 m_uiRuneOfDeathTimer;
-    uint32 m_uiRuneOfSummoningTimer;
-    uint32 m_uiEnrageTimer;
+    uint8 m_uiPhase;
+    uint32 m_uiVisualTimer;
+    uint32 m_uiShieldTimer;
+    uint32 m_uiRunePowerTimer;
+    uint32 m_uiRuneDeathTimer;
+    uint32 m_uiRuneSummonTimer;
 
-    uint8 m_uiSuperchargeStack;
-    GuidList m_lAddsGuidList;
-
-    void Reset()
+    void Reset() override
     {
-        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
-        m_uiShieldOfRunesTimer   = urand(30000, 40000);;
-        m_uiRuneOfPowerTimer     = urand(10000, 20000);
-        m_uiEnrageTimer          = 900000;
-        m_uiSuperchargeStack     = 0;
-        m_uiRuneOfDeathTimer     = urand(20000, 40000);
-        m_uiRuneOfSummoningTimer = urand(10000, 20000);
+        m_uiPhase               = PHASE_NO_CHARGE;
+        m_uiVisualTimer         = 5000;
+        m_uiShieldTimer         = 25000;
+        m_uiRunePowerTimer      = 15000;
+        m_uiRuneSummonTimer     = 10000;
+        m_uiRuneDeathTimer      = 30000;
     }
 
-    void SpellHit(Unit* caster, const SpellEntry* spell) override
+    void JustDied(Unit* /*pKiller*/) override
     {
-        if (spell->Id == SPELL_SUPERCHARGE)
-        {
-            m_creature->SetHealth(m_creature->GetMaxHealth());
-            ++m_uiSuperchargeStack;
-        }
-    }
+        if (!m_pInstance)
+            return;
 
-    void JustSummoned(Creature* pSummoned) override
-    {
-        switch(pSummoned->GetEntry())
+        // If we are not on the last phase then cast Supercharge and set as unlootable
+        if (m_uiPhase != PHASE_CHARGE_TWO)
         {
-            case NPC_RUNE_OF_SUMMONING:
-                pSummoned->CastSpell(pSummoned, AURA_RUNE_OF_SUMMONING, true);
-                break;
-            case NPC_RUNE_OF_POWER:
-                pSummoned->CastSpell(pSummoned, AURA_RUNE_OF_POWER, true);
-                pSummoned->ForcedDespawn(urand(34000, 38000));
-                break;
-            case NPC_LIGHTNING_ELEMENTAL:
-                break;
-            default:
-                return;
-        }
-        m_lAddsGuidList.push_back(pSummoned->GetObjectGuid());
-    }
-
-    void DespawnSummonedCreatures()
-    {
-        if (!m_lAddsGuidList.empty())
-        {
-            for (GuidList::iterator iter = m_lAddsGuidList.begin(); iter != m_lAddsGuidList.end(); ++iter)
-            {
-                if (Creature* pSummoned = m_creature->GetMap()->GetCreature(*iter))
-                    pSummoned->ForcedDespawn();
-            }
-            m_lAddsGuidList.clear();
-        }
-    }
-
-    void JustDied(Unit* pKiller) override
-    {
-        if (m_uiSuperchargeStack > 1)
-        {
-            m_pInstance->SetData(TYPE_ASSEMBLY, DONE);
-            DoCast(m_creature, SPELL_IRON_COUNCIL_CREDIT, true);
-            DespawnSummonedCreatures();
+            m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+            DoCastSpellIfCan(m_creature, SPELL_SUPERCHARGE, CAST_TRIGGERED);
+            m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_MOLGEIM, false);
         }
         else
         {
-            if (m_pInstance)
-                m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_YOU_MOLGEIM, false);
-            m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
-            DoCast(m_creature, SPELL_SUPERCHARGE, true);
+            m_pInstance->SetData(TYPE_ASSEMBLY, DONE);
+            m_creature->CastSpell(m_creature, SPELL_COUNCIL_KILL_CREDIT, true);
         }
 
-        DoScriptText(urand(0, 1) ? SAY_MOLGEIM_DEATH1 : SAY_MOLGEIM_DEATH2, m_creature);
+        DoScriptText(urand(0, 1) ? SAY_MOLGEIM_DEATH_1 : SAY_MOLGEIM_DEATH_2, m_creature);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_MOLGEIM_AGGRO, m_creature);
-        if (!m_pInstance)
-            return;
-        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_STEELBREAKER))
-        {
-            if (pTemp->isAlive())
-                pTemp->SetInCombatWithZone();
-        }
-        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_BRUNDIR))
-        {
-            if (pTemp->isAlive())
-                pTemp->SetInCombatWithZone();
-        }
-        if (m_pInstance->GetData(TYPE_ASSEMBLY) != IN_PROGRESS)
+
+        if (m_pInstance)
             m_pInstance->SetData(TYPE_ASSEMBLY, IN_PROGRESS);
+
+        m_creature->InterruptNonMeleeSpells(false);
+        DoCastSpellIfCan(m_creature, SPELL_BERSERK, CAST_TRIGGERED);
+    }
+
+    void KilledUnit(Unit* /*pVictim*/) override
+    {
+        DoScriptText(urand(0, 1) ? SAY_MOLGEIM_SLAY_1 : SAY_MOLGEIM_SLAY_2, m_creature);
     }
 
     void JustReachedHome() override
     {
         if (m_pInstance)
-        {
-            if (m_pInstance->GetData(TYPE_ASSEMBLY) != FAIL)
-                m_pInstance->SetData(TYPE_ASSEMBLY, FAIL);
-        }
-        DespawnSummonedCreatures();
+            m_pInstance->SetData(TYPE_ASSEMBLY, FAIL);
     }
 
-    void KilledUnit(Unit* who)
+    void JustSummoned(Creature* pSummoned) override
     {
-        DoScriptText(urand(0, 1) ? SAY_MOLGEIM_SLAY1 : SAY_MOLGEIM_SLAY2, m_creature);
+        if (pSummoned->GetEntry() == NPC_RUNE_OF_SUMMONING)
+            pSummoned->CastSpell(pSummoned, SPELL_RUNE_OF_SUMMONING_AURA, true, NULL, NULL, m_creature->GetObjectGuid());
+        else if (pSummoned->GetEntry() == NPC_RUNE_OF_POWER)
+            pSummoned->CastSpell(pSummoned, SPELL_RUNE_OF_POWER_AURA, true);
+        else if (pSummoned->GetEntry() == NPC_LIGHTNING_ELEMENTAL)
+        {
+            pSummoned->CastSpell(pSummoned, m_bIsRegularMode ? SPELL_LIGHTNING_ELEMENTAL_PASSIVE : SPELL_LIGHTNING_ELEMENTAL_PASSIVE_H, true);
+
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                pSummoned->AI()->AttackStart(pTarget);
+        }
     }
 
-    void DoCastRuneOfPower()
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
     {
-        Creature* pRuneOfPowerTarget = NULL;
-        switch(urand(0, 2))
+        // Increase the phase when hit with the supercharge spell by his brothers
+        if (pSpell->Id == SPELL_SUPERCHARGE)
         {
-            case 0:
-                pRuneOfPowerTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_BRUNDIR);
-                if (pRuneOfPowerTarget && !pRuneOfPowerTarget->isAlive() && urand(0, 1))
-                    pRuneOfPowerTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_STEELBREAKER);
-                break;
-            case 1:
-                pRuneOfPowerTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_STEELBREAKER);
-                if (pRuneOfPowerTarget && !pRuneOfPowerTarget->isAlive() && urand(0, 1))
-                    pRuneOfPowerTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_BRUNDIR);
-                break;
-            case 2:
-                break;
+            // Not sure if there is a spell for this, so we are doing it here
+            m_creature->SetHealth(m_creature->GetMaxHealth());
+            ++m_uiPhase;
         }
-        if (pRuneOfPowerTarget && pRuneOfPowerTarget->isAlive())
-            pRuneOfPowerTarget->CastSpell(pRuneOfPowerTarget, SPELL_RUNE_OF_POWER, true, 0, 0, m_creature->GetObjectGuid());
-        else
-            m_creature->CastSpell(m_creature, SPELL_RUNE_OF_POWER, true);
+
+        if (m_uiPhase == PHASE_CHARGE_TWO)
+        {
+            // set the instace data to special in order to mark the last phase - this is used to check the achiev criteria
+            if (m_pInstance)
+                m_pInstance->SetData(TYPE_ASSEMBLY, SPECIAL);
+        }
     }
 
     void UpdateAI(const uint32 uiDiff) override
     {
+        // Pre fight visual spell
+        if (m_uiVisualTimer)
+        {
+            if (m_uiVisualTimer <= uiDiff)
+            {
+                if (DoCastSpellIfCan(m_creature, SPELL_RUNE_OF_POWER_PREFIGHT) == CAST_OK)
+                    m_uiVisualTimer = 0;
+            }
+            else
+                m_uiVisualTimer -= uiDiff;
+        }
+
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        // Normal spells
-        if (m_uiShieldOfRunesTimer <= uiDiff)
+        switch (m_uiPhase)
         {
-            if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SHIELD : SPELL_SHIELD_H) == CAST_OK)
-                m_uiShieldOfRunesTimer = urand(30000, 35000);;
-        }
-        else
-            m_uiShieldOfRunesTimer -= uiDiff;
+            case PHASE_CHARGE_TWO:
 
-        if (m_uiRuneOfPowerTimer <= uiDiff)
-        {
-            DoCastRuneOfPower();
-            m_uiRuneOfPowerTimer = 32000;
-        }
-        else
-            m_uiRuneOfPowerTimer -= uiDiff;
-
-        // Supercharge Abilities
-        if (m_uiSuperchargeStack)
-        {
-            if (m_uiRuneOfDeathTimer <= uiDiff)
-            {
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, (uint32)0, SELECT_FLAG_PLAYER))
+                if (m_uiRuneSummonTimer < uiDiff)
                 {
-                    if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_RUNE_OF_DEATH : SPELL_RUNE_OF_DEATH_H) == CAST_OK)
+                    if (DoCastSpellIfCan(m_creature, SPELL_RUNE_OF_SUMMONING) == CAST_OK)
                     {
-                        DoScriptText(SAY_MOLGEIM_DEATH_RUNE, m_creature);
-                        m_uiRuneOfDeathTimer = 30000;
+                        DoScriptText(SAY_MOLGEIM_SURGE, m_creature);
+                        m_uiRuneSummonTimer = 30000;
                     }
                 }
-            }
-            else
-                m_uiRuneOfDeathTimer -= uiDiff;
+                else
+                    m_uiRuneSummonTimer -= uiDiff;
 
-            if (m_uiSuperchargeStack > 1)
-            {
-                if (m_uiRuneOfSummoningTimer <= uiDiff)
+                // no break here; he uses the other spells as well
+            case PHASE_CHARGE_ONE:
+
+                if (m_uiRuneDeathTimer < uiDiff)
                 {
-                    m_creature->CastStop();
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0, (uint32)0, SELECT_FLAG_PLAYER))
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     {
-                        if (DoCastSpellIfCan(pTarget, SPELL_RUNE_OF_SUMMONING) == CAST_OK)
+                        if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_RUNE_OF_DEATH : SPELL_RUNE_OF_DEATH_H) == CAST_OK)
                         {
-                            DoScriptText(SAY_MOLGEIM_SUMMON, m_creature);
-                            m_uiRuneOfSummoningTimer = urand(20000, 30000);
+                            DoScriptText(SAY_MOLGEIM_DEATH_RUNE, m_creature);
+                            m_uiRuneDeathTimer = 30000;
                         }
                     }
                 }
                 else
-                    m_uiRuneOfSummoningTimer -= uiDiff;
-            }
-        }
+                    m_uiRuneDeathTimer -= uiDiff;
 
-        if (m_uiEnrageTimer <= uiDiff)
-        {
-            if (DoCastSpellIfCan(m_creature, SPELL_BERSERK) == CAST_OK)
-            {
-                DoScriptText(SAY_MOLGEIM_BERSERK, m_creature);
-                m_uiEnrageTimer = 1800000;
-            }
+                // no break here; he uses the other spells as well
+            case PHASE_NO_CHARGE:
+
+                if (m_uiShieldTimer < uiDiff)
+                {
+                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SHIELD : SPELL_SHIELD_H) == CAST_OK)
+                        m_uiShieldTimer = 40000;
+                }
+                else
+                    m_uiShieldTimer -= uiDiff;
+
+                if (m_uiRunePowerTimer < uiDiff)
+                {
+                    if (DoCastSpellIfCan(m_creature, SPELL_RUNE_OF_POWER) == CAST_OK)
+                        m_uiRunePowerTimer = 45000;
+                }
+                else
+                    m_uiRunePowerTimer -= uiDiff;
+
+                break;
         }
-        else
-            m_uiEnrageTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
@@ -644,7 +607,6 @@ CreatureAI* GetAI_boss_molgeim(Creature* pCreature)
     return new boss_molgeimAI(pCreature);
 }
 
-// Steelbreaker
 struct MANGOS_DLL_DECL boss_steelbreakerAI : public ScriptedAI
 {
     boss_steelbreakerAI(Creature* pCreature) : ScriptedAI(pCreature)
@@ -657,85 +619,80 @@ struct MANGOS_DLL_DECL boss_steelbreakerAI : public ScriptedAI
     instance_ulduar* m_pInstance;
     bool m_bIsRegularMode;
 
+    uint8 m_uiPhase;
     uint32 m_uiFusionPunchTimer;
-    uint32 m_uiStaticDisruptionTimer;
-    uint32 m_uiOverwhelmingPowerTimer;
-    uint32 m_uiEnrageTimer;
+    uint32 m_uiDisruptionTimer;
+    uint32 m_uiPowerTimer;
 
-    uint8 m_uiSuperchargeStack;
-
-    void Reset()
+    void Reset() override
     {
-        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
-
-        m_uiFusionPunchTimer       = urand(15000, 20000);
-        m_uiEnrageTimer            = 900000;
-        m_uiSuperchargeStack       = 0;
-        m_uiOverwhelmingPowerTimer = 5000;
-        m_uiStaticDisruptionTimer  = 12000;
+        m_uiPhase               = PHASE_NO_CHARGE;
+        m_uiFusionPunchTimer    = 15000;
+        m_uiDisruptionTimer     = 15000;
+        m_uiPowerTimer          = 10000;
     }
 
-    void KilledUnit(Unit* pVictim) override
+    void JustDied(Unit* /*pKiller*/) override
     {
-        if (m_uiSuperchargeStack > 1)
-            DoCast(m_creature, SPELL_ELECTRICAL_CHARGE);
+        if (!m_pInstance)
+            return;
 
-        DoScriptText(urand(0, 1) ? SAY_STEEL_SLAY1 : SAY_STEEL_SLAY2, m_creature);
-    }
-
-    void SpellHit(Unit* caster, const SpellEntry* spell) override
-    {
-        if (spell->Id == SPELL_SUPERCHARGE)
+        // If we are not on the last phase then cast Supercharge and set as unlootable
+        if (m_uiPhase != PHASE_CHARGE_TWO)
         {
-            m_creature->SetHealth(m_creature->GetMaxHealth());
-            ++m_uiSuperchargeStack;
-            if (m_uiSuperchargeStack > 1)
-                DoCast(m_creature, m_bIsRegularMode ? SPELL_HIGH_VOLTAGE : SPELL_HIGH_VOLTAGE_H, true);
-        }
-    }
-
-    void JustDied(Unit* pKiller) override
-    {
-        if (m_uiSuperchargeStack > 1)
-        {
-            m_pInstance->SetData(TYPE_ASSEMBLY, DONE);
-            DoCast(m_creature, SPELL_IRON_COUNCIL_CREDIT, true);
+            m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
+            DoCastSpellIfCan(m_creature, SPELL_SUPERCHARGE, CAST_TRIGGERED);
+            m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_STEELBREAKER, false);
         }
         else
         {
-            if (m_pInstance)
-                m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_YOU_STEELBREAKER, false);
-            m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
-            DoCast(m_creature, SPELL_SUPERCHARGE, true);
+            m_pInstance->SetData(TYPE_ASSEMBLY, DONE);
+            m_creature->CastSpell(m_creature, SPELL_COUNCIL_KILL_CREDIT, true);
         }
-        DoScriptText(urand(0, 1) ? SAY_STEEL_DEATH1 : SAY_STEEL_DEATH2, m_creature);
+
+        DoScriptText(urand(0, 1) ? SAY_STEEL_DEATH_1 : SAY_STEEL_DEATH_2, m_creature);
     }
 
-    void Aggro(Unit* pWho)
+    void Aggro(Unit* /*pWho*/) override
     {
         DoScriptText(SAY_STEEL_AGGRO, m_creature);
-        if (!m_pInstance)
-            return;
-        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_MOLGEIM))
-        {
-            if (pTemp->isAlive())
-                pTemp->SetInCombatWithZone();
-        }
-        if (Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_BRUNDIR))
-        {
-            if (pTemp->isAlive())
-                pTemp->SetInCombatWithZone();
-        }
-        if (m_pInstance->GetData(TYPE_ASSEMBLY) != IN_PROGRESS)
+
+        if (m_pInstance)
             m_pInstance->SetData(TYPE_ASSEMBLY, IN_PROGRESS);
+
+        DoCastSpellIfCan(m_creature, SPELL_BERSERK, CAST_TRIGGERED);
+        DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_HIGH_VOLTAGE : SPELL_HIGH_VOLTAGE_H, CAST_TRIGGERED);
+    }
+
+    void KilledUnit(Unit* /*pVictim*/) override
+    {
+        DoScriptText(urand(0, 1) ? SAY_STEEL_SLAY_1 : SAY_STEEL_SLAY_2, m_creature);
     }
 
     void JustReachedHome() override
     {
         if (m_pInstance)
+            m_pInstance->SetData(TYPE_ASSEMBLY, FAIL);
+    }
+
+    void SpellHit(Unit* /*pCaster*/, const SpellEntry* pSpell) override
+    {
+        // Increase the phase when hit with the supercharge spell by his brothers
+        if (pSpell->Id == SPELL_SUPERCHARGE)
         {
-            if (m_pInstance->GetData(TYPE_ASSEMBLY) != FAIL)
-                m_pInstance->SetData(TYPE_ASSEMBLY, FAIL);
+            // Not sure if there is a spell for this, so we are doing it here
+            m_creature->SetHealth(m_creature->GetMaxHealth());
+            ++m_uiPhase;
+        }
+
+        if (m_uiPhase == PHASE_CHARGE_TWO)
+        {
+            // Cast electrical charge aura on all players - this will proc when player dies
+            DoCastSpellIfCan(m_creature, SPELL_ELECTRICAL_CHARGE, CAST_TRIGGERED);
+
+            // set the instace data to special in order to mark the last phase - this is used to check the achiev criteria
+            if (m_pInstance)
+                m_pInstance->SetData(TYPE_ASSEMBLY, SPECIAL);
         }
     }
 
@@ -744,56 +701,52 @@ struct MANGOS_DLL_DECL boss_steelbreakerAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (m_uiFusionPunchTimer <= uiDiff)
+        switch (m_uiPhase)
         {
-            if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FUSION_PUNCH : SPELL_FUSION_PUNCH_H))
-                m_uiFusionPunchTimer = 15000;
-        }
-        else
-            m_uiFusionPunchTimer -= uiDiff;
-        
-        // Supercharge Abilities
-        if (m_uiSuperchargeStack)
-        {
-            if (m_uiStaticDisruptionTimer <= uiDiff)
-            {
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, (uint32)0, SELECT_FLAG_PLAYER))
-                {
-                    if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_STATIC_DISRUPTION : SPELL_STATIC_DISRUPTION_H) == CAST_OK)
-                        m_uiStaticDisruptionTimer = 12000;
-                }
-                else // Solo player
-                    DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_STATIC_DISRUPTION : SPELL_STATIC_DISRUPTION_H);
-            }
-            else
-                m_uiStaticDisruptionTimer -= uiDiff;
+            case PHASE_CHARGE_TWO:
 
-            if (m_uiSuperchargeStack > 1)
-            {
-                if (m_uiOverwhelmingPowerTimer <= uiDiff)
+                if (m_uiPowerTimer < uiDiff)
                 {
-
                     if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_OVERWHELMING_POWER : SPELL_OVERWHELMING_POWER_H) == CAST_OK)
                     {
-                        DoScriptText(SAY_STEEL_OVERWHELMING, m_creature);
-                        m_uiOverwhelmingPowerTimer = m_bIsRegularMode ? 65000 : 35000;
+                        DoScriptText(SAY_STEEL_OVERWHELM, m_creature);
+                        m_uiPowerTimer = m_bIsRegularMode ? 60000 : 35000;
                     }
                 }
                 else
-                    m_uiOverwhelmingPowerTimer -= uiDiff;
-            }
-        }
+                    m_uiPowerTimer -= uiDiff;
 
-        if (m_uiEnrageTimer <= uiDiff)
-        {
-            if (DoCastSpellIfCan(m_creature, SPELL_BERSERK) == CAST_OK)
-            {
-                DoScriptText(SAY_STEEL_BERSERK, m_creature);
-                m_uiEnrageTimer = 1800000;
-            }
+                // no break here; he uses the other spells as well
+            case PHASE_CHARGE_ONE:
+
+                if (m_uiDisruptionTimer < uiDiff)
+                {
+                    // NOTE: This spell is not cast right: Normally it should be triggered by 64641 in core
+                    // Because of the poor target selection in core we'll implement it here with select flag targeting
+                    Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1, uint32(0), SELECT_FLAG_NOT_IN_MELEE_RANGE);
+
+                    if (!pTarget)
+                        pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+
+                    if (DoCastSpellIfCan(pTarget, m_bIsRegularMode ? SPELL_STATIC_DISRUPTION : SPELL_STATIC_DISRUPTION_H) == CAST_OK)
+                        m_uiDisruptionTimer = urand(10000, 15000);
+                }
+                else
+                    m_uiDisruptionTimer -= uiDiff;
+
+                // no break here; he uses the other spells as well
+            case PHASE_NO_CHARGE:
+
+                if (m_uiFusionPunchTimer < uiDiff)
+                {
+                    if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FUSION_PUNCH : SPELL_FUSION_PUNCH_H) == CAST_OK)
+                        m_uiFusionPunchTimer = 15000;
+                }
+                else
+                    m_uiFusionPunchTimer -= uiDiff;
+
+                break;
         }
-        else
-            m_uiEnrageTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
@@ -821,10 +774,5 @@ void AddSC_boss_assembly_of_iron()
     pNewScript = new Script;
     pNewScript->Name = "boss_steelbreaker";
     pNewScript->GetAI = GetAI_boss_steelbreaker;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name = "npc_ulduar_lightning_elemental";
-    pNewScript->GetAI = &GetAI_npc_ulduar_lightning_elemental;
     pNewScript->RegisterSelf();
 }

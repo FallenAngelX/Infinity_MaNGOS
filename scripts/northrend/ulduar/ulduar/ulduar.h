@@ -1,6 +1,6 @@
-/* Copyright (C) 2006 - 2013 ScriptDev2 <http://www.scriptdev2.com/>
- * This program is free software licensed under GPL version 2
- * Please see the included DOCS/LICENSE.TXT for more information */
+/* This file is part of the ScriptDev2 Project. See AUTHORS file for Copyright information
+* This program is free software licensed under GPL version 2
+* Please see the included DOCS/LICENSE.TXT for more information */
 
 #ifndef DEF_ULDUAR_H
 #define DEF_ULDUAR_H
@@ -30,64 +30,36 @@ enum
 
     // Hard mode boss types
     // Used for hard mode bosses only
-    TYPE_LEVIATHAN_HARD         = 20,
-    TYPE_XT002_HARD             = 21,
-    TYPE_MIMIRON_HARD           = 23,
-    TYPE_HODIR_HARD             = 24,
-    TYPE_THORIM_HARD            = 25,
-    TYPE_FREYA_HARD             = 26, // this means 3 elders up
-    TYPE_VEZAX_HARD             = 27,
-    TYPE_YOGGSARON_HARD         = 28,
-    TYPE_YOGGSARON_HARD_4       = 29,
+    TYPE_LEVIATHAN_HARD         = 15,
+    TYPE_XT002_HARD             = 16,
+    TYPE_MIMIRON_HARD           = 17,
+    TYPE_HODIR_HARD             = 18,
+    TYPE_THORIM_HARD            = 19,
+    TYPE_FREYA_HARD             = 20,
+    TYPE_VEZAX_HARD             = 21,
+    TYPE_YOGGSARON_HARD         = 22,
 
     // Keeper types
     // Used to store the keepers which will be used at yogg
-    TYPE_KEEPER_HODIR           = 30,
-    TYPE_KEEPER_FREYA           = 31,
-    TYPE_KEEPER_THORIM          = 32,
-    TYPE_KEEPER_MIMIRON         = 33,
+    TYPE_KEEPER_HODIR           = 23,
+    TYPE_KEEPER_FREYA           = 24,
+    TYPE_KEEPER_THORIM          = 25,
+    TYPE_KEEPER_MIMIRON         = 26,
 
     // Tower types
     // Used to store the towers which will be used at Leviathan encounter
-    TYPE_TOWER_HODIR            = 34,
-    TYPE_TOWER_FREYA            = 35,
-    TYPE_TOWER_THORIM           = 36,
-    TYPE_TOWER_MIMIRON          = 37,
-
-    // teleporters
-    TYPE_LEVIATHAN_TP           = 40,
-    TYPE_XT002_TP               = 41,
-    TYPE_MIMIRON_TP             = 42,
+    TYPE_TOWER_HODIR            = 27,
+    TYPE_TOWER_FREYA            = 28,
+    TYPE_TOWER_THORIM           = 29,
+    TYPE_TOWER_MIMIRON          = 30,
 
     // Other types - not saved
-    TYPE_LEVIATHAN_GAUNTLET     = 60,
-    TYPE_RUNE_GIANT             = 50,
-    TYPE_RUNIC_COLOSSUS         = 51,
-    TYPE_LEVIATHAN_MK           = 52,
-    TYPE_VX001                  = 53,
-    TYPE_AERIAL_UNIT            = 54,
-    TYPE_YOGG_BRAIN             = 55,
-    TYPE_MIMIRON_PHASE          = 56,
-    TYPE_YOGG_PHASE             = 57,
-    TYPE_VISION_PHASE           = 58,
-
-    NPC_KEEPER_OF_NORGANNON     = 33686,
+    TYPE_LEVIATHAN_GAUNTLET     = 31,
 
     // The siege of ulduar
-    VEHICLE_SIEGE              = 33060,
-    VEHICLE_CHOPPER            = 33062,
-    VEHICLE_DEMOLISHER         = 33109,
-
     NPC_LEVIATHAN               = 33113,
-    NPC_WARD_OF_LIFE            = 34275,
-    NPC_WRITHING_LASHER         = 33387,
-
-    NPC_IGNIS                   = 33118,
-    NPC_IRON_CONSTRUCT          = 33121,
-
+    // NPC_IGNIS                = 33118,
     NPC_RAZORSCALE              = 33186,
-    NPC_COMMANDER               = 33210,
-
     NPC_XT002                   = 33293,
     NPC_HEART_DECONSTRUCTOR     = 33329,
     NPC_XT_TOY_PILE             = 33337,                    // robot spawner npc for XT002
@@ -125,8 +97,6 @@ enum
     NPC_RIGHT_ARM               = 32934,
     NPC_LEFT_ARM                = 32933,
     NPC_RUBBLE_STALKER          = 33809,                    // npc which spawns Rubble on Kologarn arms death
-    NPC_KOLOGARN_BRIDGE_DUMMY   = 34297,
-
     NPC_AURIAYA                 = 33515,
     NPC_SANCTUM_SENTRY          = 34014,
     NPC_FERAL_DEFENDER          = 34035,
@@ -184,9 +154,6 @@ enum
     NPC_LEFT_HAND_BUNNY         = 33141,
     NPC_HONOR_GUARD_STAIRS      = 33125,                    // summoned mobs before the Rune Giant
     NPC_RUNE_ACOLYTE_STAIRS     = 32957,
-    NPC_BRIGHTLEAF              = 32915,
-    NPC_IRONBRACH               = 32913,
-    NPC_STONEBARK               = 32914,
 
     // Mimiron event npcs
     NPC_LEVIATHAN_MK            = 33432,
@@ -242,29 +209,6 @@ enum
     TYPE_ACHIEV_COOL_FRIENDS    = 15,
     TYPE_ACHIEV_LIGHTNING       = 16,
     TYPE_ACHIEV_BACK_NATURE     = 17,
-    TYPE_ACHIEV_IRON_DWARF_MEDIUM_RARE = 18,
-    TYPE_ACHIEV_NERF_ENGINEERING       = 19,
-    TYPE_ACHIEV_HEARTBREAKER           = 20,
-    TYPE_ACHIEV_YOU_BRUNDIR            = 21,
-    TYPE_ACHIEV_YOU_MOLGEIM            = 22,
-    TYPE_ACHIEV_YOU_STEELBREAKER       = 23,
-    TYPE_ACHIEV_IF_LOOKS_COULD_KILL    = 24,
-    TYPE_ACHIEV_RUBBLE_AND_ROLL        = 25,
-    TYPE_ACHIEV_CRAZY_CAT_LADY         = 26,
-    TYPE_ACHIEV_COOLEST_FRIEND         = 27,
-    TYPE_ACHIEV_RARE_CACHE             = 28,
-    TYPE_ACHIEV_SIFFED                 = 29,   // Thorim
-    TYPE_ACHIEV_LOSE_YOUR_ILLUSION     = 30,
-    TYPE_ACHIEV_BACK_TO_NATURE         = 31,   // Freya
-    TYPE_ACHIEV_KNOCK_WOOD             = 32,
-    TYPE_ACHIEV_KNOCK_KNOCK_WOOD       = 33,
-    TYPE_ACHIEV_KNOCK_KNOCK_KNOCK_WOOD = 34,
-    TYPE_ACHIEV_FIREFIGHTER            = 35,
-    TYPE_ACHIEV_MORNING_SARONITE       = 36,
-    TYPE_ACHIEV_THREE_LIGHTS           = 37,
-    TYPE_ACHIEV_TWO_LIGHTS             = 38,
-    TYPE_ACHIEV_ONE_LIGHT              = 39,
-    TYPE_ACHIEV_ALONE                  = 40,
 
     // Loot chests
     // Kologarn
@@ -292,19 +236,6 @@ enum
     // Alagon
     GO_GIFT_OF_OBSERVER_10      = 194821,
     GO_GIFT_OF_OBSERVER_25      = 194822,
-    GO_GIFT_OF_OBSERVER_HH      = 194823,  // unk
-    // Freya -> each chest is for a mode
-    // 10 man
-    GO_FREYA_GIFT               = 194324,  // 10 normal
-    GO_FREYA_GIFT_HARD          = 194327,  // 10 3 elders
-    // 25 man
-    GO_FREYA_GIFT_H             = 194328,  // 25 normal
-    GO_FREYA_GIFT_HARD_H        = 194331,  // 25 3 elders
-    // Mimiron
-    GO_CACHE_OF_INOV            = 194789,
-    GO_CACHE_OF_INOV_H          = 194956,
-    GO_CACHE_OF_INOV_HARD       = 194957,
-    GO_CACHE_OF_INOV_HARD_H     = 194958,
 
     // Doors and other Objects
     // The siege
@@ -324,10 +255,10 @@ enum
 
     // Antechamber
     GO_KOLOGARN_BRIDGE          = 194232,
-    GO_SHATTERED_DOOR           = 194553,                   // Door before kologarn
+    // GO_SHATTERED_DOOR        = 194553,                   // Door before kologarn
     GO_IRON_ENTRANCE_DOOR       = 194554,                   // Door before iron council
     GO_ARCHIVUM_DOOR            = 194556,                   // Entrance door to the archivum
-    GO_ARCHIVUM_CONSOLE         = 194555,                   // Used at some sort of cinematic
+    // GO_ARCHIVUM_CONSOLE      = 194555,                   // Used at some sort of cinematic
     // GO_FLOOR_ARCHIVUM        = 194715,                   // Used for animation
 
     // Planetarium
@@ -346,8 +277,7 @@ enum
     GO_HODIR_ICE_WALL           = 194441,
     GO_HODIR_ENTER              = 194442,
     // Mimiron
-    GO_MIMIRON_BUTTON           = 194739,                   // Used to start hard mode
-    GO_MIMIRON_TRAM             = 194675,
+    G0_MIMIRON_BUTTON           = 194739,                   // Used to start hard mode
     GO_MIMIRON_DOOR_1           = 194774,
     GO_MIMIRON_DOOR_2           = 194775,
     GO_MIMIRON_DOOR_3           = 194776,
@@ -375,26 +305,6 @@ enum
     GO_BRAIN_DOOR1              = 194635,                   // Brain chamber doors
     GO_BRAIN_DOOR2              = 194636,
     GO_BRAIN_DOOR3              = 194637,
-
-    // Towers
-    GO_TOWER_OF_FROST           = 194370,
-    GO_TOWER_OF_FLAME           = 194371,
-    GO_TOWER_OF_LIFE            = 194375,
-    GO_TOWER_OF_STORMS          = 194377,
-
-    // Repair
-    RX_214_REPAIR               = 194261,
-    RX_214_REPAIR_TRAP          = 194262,
-
-    ACHIEV_IRON_COUNCIL         = 2888,
-    ACHIEV_IRON_COUNCIL_H       = 2889,
-
-    ACHIEV_KEEPERS              = 2890,
-    ACHIEV_KEEPERS_H            = 2891,
-
-    ACHIEV_CELESTIAL_DEFENDER   = 3259,     // realm first algalon
-    SPELL_ALGALON_ACHIEV_TRIGG  = 65184,
-    ACHIEV_DEATHS_DEMISE        = 3117,     // realm first yogg
 
     // World state used for algalon timer
     WORLD_STATE_TIMER           = 4132,
@@ -491,47 +401,6 @@ enum
     ACHIEV_CRIT_KNOCK_3_H       = 10461,
     ACHIEV_CRIT_FIREFIGHTER_N   = 10450,                    // Mimiron, achievs 3180, 3189
     ACHIEV_CRIT_FIREFIGHTER_H   = 10463,
-    ACHIEV_CRIT_IRON_DWARF_MEDIUM_RARE               = 10066, // Razorscale, achievs 2923, 2924
-    ACHIEV_CRIT_IRON_DWARF_MEDIUM_RARE_H             = 10067,
-    ACHIEV_CRIT_BUT_I_AM_ON_YOUR_SIDE_BRUNDIR        = 10418, // Iron Council, achiev 2945 
-    ACHIEV_CRIT_BUT_I_AM_ON_YOUR_SIDE_MOLGEIM        = 10088,
-    ACHIEV_CRIT_BUT_I_AM_ON_YOUR_SIDE_STEELBREAKER   = 10419,
-    ACHIEV_CRIT_BUT_I_AM_ON_YOUR_SIDE_BRUNDIR_H      = 10089, // Iron Council, achiev 2946
-    ACHIEV_CRIT_BUT_I_AM_ON_YOUR_SIDE_MOLGEIM_H      = 10421,
-    ACHIEV_CRIT_BUT_I_AM_ON_YOUR_SIDE_STEELBREAKER_H = 10420,
-    //Thorim
-    ACHIEV_CRIT_SIFFED                   = 10289,   // achiev 2977
-    ACHIEV_CRIT_SIFFED_H                 = 10314,   // achiev 2978
-    // Yogg
-    ACHIEV_CRIT_THREE_LIGHTS             = 10410,   // achiev 3157
-    ACHIEV_CRIT_THREE_LIGHTS_H           = 10414,   // achiev 3161
-    ACHIEV_CRIT_TWO_LIGHTS               = 10388,   // achiev 3141
-    ACHIEV_CRIT_TWO_LIGHTS_H             = 10415,   // achiev 3162
-    ACHIEV_CRIT_ONE_LIGHT                = 10409,   // achiev 3158
-    ACHIEV_CRIT_ONE_LIGHT_H              = 10416,   // achiev 3163
-    ACHIEV_CRIT_ALONE                    = 10412,   // achiev 3159
-    ACHIEV_CRIT_ALONE_H                  = 10417,   // achiev 3164
-
-    // SPELLS
-    // Special Auras for Achievments
-    SPELL_IRON_BOOT_AURA        = 58501,
-    SPELL_RUNIC_SMASH_DMG       = 62465,
-
-    // Difficulty
-    NONE_DIFFICULTY    = 0,
-    EASY_DIFFICULTY       ,
-    HARD_DIFFICULTY       ,
-    HARD_DIFFICULTY_1_DONE,
-    HARD_DIFFICULTY_2_DONE,
-    HARD_DIFFICULTY_3_DONE,
-    HARD_DIFFICULTY_4_DONE
-};
-
-enum ExplosionSide
-{
-    LEFT_EXPLOSION  = 0,
-    RIGHT_EXPLOSION = 1,
-    NO_EXPLOSION    = 2,
 };
 
 struct UlduarSpawns
@@ -616,8 +485,6 @@ class MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance, private Dialogu
         void OnCreatureEvade(Creature* pCreature) override;
         void OnObjectCreate(GameObject* pGo) override;
 
-        void OnPlayerEnterArea(Player* Player, uint32 uiNewAreaId, uint32 uiOldAreaId) override;
-
         void SetData(uint32 uiType, uint32 uiData) override;
         uint32 GetData(uint32 uiType) const override;
 
@@ -626,27 +493,11 @@ class MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance, private Dialogu
 
         void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
         bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/) const override;
-        bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, ConditionSource conditionSourceType) const override;
+        bool CheckConditionCriteriaMeet(Player const* pPlayer, uint32 uiInstanceConditionId, WorldObject const* pConditionSource, uint32 conditionSourceType) const override;
 
         void DoSpawnThorimNpcs(Player* pSummoner);
         void DoProcessShatteredEvent();
-        void OpenDoor(uint32 uiEntry);
-        void CloseDoor(uint32 uiEntry);
-        void OpenXtDoor();
-        void CheckIronCouncil();
-        void CheckKeepers();
-        void SortHandTrigger(Creature* pCreature);
-        void DoColossusExplosion(ExplosionSide explosionSide);
 
-        GuidList m_lXtToyPileGuids;
-        GuidList m_lThorimMobsGuids;
-        GuidList m_lHandTriggerGuids[2][10];
-        GuidList m_lLowerOrbs;
-        GuidList m_lUpperOrbs;
-        GuidList m_lCloudGuids;
-        GuidList m_lSanctumSentryGuids;
-
-        GuidVector m_lBrokenHarpoonGUID;
         ObjectGuid GetKoloRubbleStalker(bool bRightSide) { return bRightSide ? m_rightKoloStalkerGuid : m_leftKoloStalkerGuid; }
 
         void GetDefenderGuids(GuidList& lDefenders) { lDefenders = m_lDefendersGuids; }
@@ -676,14 +527,6 @@ class MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance, private Dialogu
         bool m_abAchievCriteria[MAX_SPECIAL_ACHIEV_CRITS];
 
         bool m_bHelpersLoaded;
-        uint32  m_uiShatterTimer;        // Ignis Achievement
-        bool    m_bOneIsDeath;
-
-        ExplosionSide m_explosionSide;
-        uint8         m_uiExplosionRow;
-        uint32        m_uiExplosionTimer;
-
-        GuidList m_lIronConstructsGuids;
 
         uint32 m_uiAlgalonTimer;
         uint32 m_uiShatterAchievTimer;

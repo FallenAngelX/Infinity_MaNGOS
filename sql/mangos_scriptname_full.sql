@@ -1258,15 +1258,86 @@ UPDATE creature_template SET ScriptName='npc_searing_gaze' WHERE entry=28265;
 
 /* ULDUAR */
 UPDATE instance_template SET ScriptName='instance_ulduar' WHERE map=603;
+UPDATE gameobject_template SET ScriptName='go_ulduar_teleporter' WHERE entry=194569;
 UPDATE creature_template SET ScriptName='boss_general_vezax' WHERE entry=33271;
 UPDATE creature_template SET ScriptName='boss_auriaya' WHERE entry=33515;
 UPDATE creature_template SET ScriptName='boss_feral_defender' WHERE entry=34035;
 UPDATE creature_template SET ScriptName='boss_brundir' WHERE entry=32857;
 UPDATE creature_template SET ScriptName='boss_molgeim' WHERE entry=32927;
 UPDATE creature_template SET ScriptName='boss_steelbreaker' WHERE entry=32867;
-DELETE FROM scripted_event_id WHERE id=9735;
+UPDATE creature_template SET ScriptName='boss_ignis' WHERE entry=33118;
+UPDATE creature_template SET ScriptName='npc_iron_construct' WHERE entry=33121;
+UPDATE creature_template SET ScriptName='npc_scorch' WHERE entry=33221;
+UPDATE creature_template SET ScriptName='boss_xt_002' WHERE entry=33293;
+UPDATE creature_template SET ScriptName='boss_heart_deconstructor' WHERE entry=33329;
+UPDATE creature_template SET ScriptName='npc_scrapbot' WHERE entry=33343;
+UPDATE creature_template SET ScriptName='npc_xt_toy_pile' WHERE entry=33337;
+UPDATE creature_template SET ScriptName='boss_razorscale' WHERE entry=33186;
+UPDATE creature_template SET ScriptName='npc_expedition_commander' WHERE entry=33210;
+UPDATE creature_template SET ScriptName='npc_razorscale_spawner' WHERE entry=33245;
+UPDATE creature_template SET ScriptName='npc_harpoon_fire_state' WHERE entry=33282;
+UPDATE creature_template SET ScriptName='npc_keeper_norgannon' WHERE entry=33686;
+UPDATE creature_template SET ScriptName='npc_brann_ulduar' WHERE entry=33579;
+UPDATE creature_template SET ScriptName='boss_flame_leviathan' WHERE entry=33113;
+UPDATE creature_template SET ScriptName='npc_hodir_fury_reticle' WHERE entry=33108;
+UPDATE creature_template SET ScriptName='npc_hodir_fury' WHERE entry=33212;
+UPDATE creature_template SET ScriptName='npc_freya_ward' WHERE entry=33367;
+UPDATE creature_template SET ScriptName='npc_mimiron_inferno' WHERE entry=33370;
+UPDATE creature_template SET ScriptName='boss_kologarn' WHERE entry=32930;
+UPDATE creature_template SET ScriptName='npc_focused_eyebeam' WHERE entry IN (33802,33632);
+UPDATE creature_template SET ScriptName='npc_rubble_stalker' WHERE entry=33809;
+UPDATE creature_template SET ScriptName='npc_storm_tempered_keeper' WHERE entry IN (33699,33722);
+UPDATE creature_template SET ScriptName='npc_charged_sphere' WHERE entry=33715;
+UPDATE creature_template SET ScriptName='boss_algalon' WHERE entry=32871;
+UPDATE creature_template SET ScriptName='npc_living_constellation' WHERE entry=33052;
+UPDATE creature_template SET ScriptName='npc_worm_hole' WHERE entry=34099;
+UPDATE creature_template SET ScriptName='npc_black_hole' WHERE entry=32953;
+UPDATE creature_template SET ScriptName='npc_collapsing_star' WHERE entry=32955;
+UPDATE gameobject_template SET ScriptName='go_celestial_access' WHERE entry IN (194628,194752);
+UPDATE creature_template SET ScriptName='boss_hodir' WHERE entry=32845;
+UPDATE creature_template SET ScriptName='npc_flash_freeze' WHERE entry IN (32926,32938);
+UPDATE creature_template SET ScriptName='npc_icicle_target' WHERE entry=33174;
+UPDATE creature_template SET ScriptName='boss_thorim' WHERE entry=32865;
+UPDATE creature_template SET ScriptName='boss_sif' WHERE entry=33196;
+UPDATE creature_template SET ScriptName='npc_thunder_orb' WHERE entry=33378;
+UPDATE creature_template SET ScriptName='npc_runic_colossus' WHERE entry=32872;
+UPDATE creature_template SET ScriptName='boss_freya' WHERE entry=32906;
+UPDATE creature_template SET ScriptName='npc_eonars_gift' WHERE entry=33228;
+UPDATE creature_template SET ScriptName='npc_nature_bomb' WHERE entry=34129;
+UPDATE creature_template SET ScriptName='npc_iron_roots' WHERE entry IN (33088,33168);
+UPDATE creature_template SET ScriptName='npc_healthy_spore' WHERE entry=33215;
+UPDATE creature_template SET ScriptName='npc_water_spirit' WHERE entry=33202;
+UPDATE creature_template SET ScriptName='npc_snaplasher' WHERE entry=32916;
+UPDATE creature_template SET ScriptName='npc_storm_lasher' WHERE entry=32919;
+UPDATE creature_template SET ScriptName='boss_mimiron' WHERE entry=33350;
+UPDATE creature_template SET ScriptName='boss_leviathan_mk2' WHERE entry=33432;
+UPDATE creature_template SET ScriptName='boss_vx001' WHERE entry=33651;
+UPDATE creature_template SET ScriptName='boss_aerial_unit' WHERE entry=33670;
+UPDATE creature_template SET ScriptName='npc_proximity_mine' WHERE entry=34362;
+UPDATE creature_template SET ScriptName='npc_bot_trigger' WHERE entry=33856;
+UPDATE creature_template SET ScriptName='npc_rocket_strike' WHERE entry=34047;
+UPDATE creature_template SET ScriptName='npc_frost_bomb' WHERE entry=34149;
+UPDATE creature_template SET ScriptName='npc_mimiron_flames' WHERE entry IN (34363,34121);
+UPDATE creature_template SET ScriptName='boss_leviathan_mk2_turret' WHERE entry=34071;
+UPDATE creature_template SET ScriptName='npc_computer' WHERE entry=34143;
+UPDATE gameobject_template SET ScriptName='go_big_red_button' WHERE entry=194739;
+UPDATE creature_template SET ScriptName='npc_ulduar_keeper' WHERE entry IN (33241,33242,33244,33213);
+UPDATE creature_template SET ScriptName='boss_sara' WHERE entry=33134;
+UPDATE creature_template SET ScriptName='npc_ominous_cloud' WHERE entry=33292;
+UPDATE creature_template SET ScriptName='npc_voice_yogg_saron' WHERE entry=33280;
+DELETE FROM scripted_event_id WHERE id IN (9735,20907,20964,21030,21031,21032,21033,21045,21605,21606,21620);
 INSERT INTO scripted_event_id VALUES
-(9735,'event_spell_saronite_barrier');
+(9735, 'event_spell_saronite_barrier'), -- Vezax saronite barrier event
+(20907,'event_boss_hodir'),             -- Hodir shatter chest event
+(20964,'event_spell_harpoon_shot'),     -- Razorscale harpoon event
+(21030,'event_go_ulduar_tower'),        -- Tower of Life destroyed event
+(21031,'event_go_ulduar_tower'),        -- Tower of Storms destroyed event
+(21032,'event_go_ulduar_tower'),        -- Tower of Frost destroyed event
+(21033,'event_go_ulduar_tower'),        -- Tower of Flame destroyed event
+(21045,'event_boss_hodir'),             -- Hodir attack start event
+(21605,'event_ulduar'),                 -- Flame Leviathan shutdown event
+(21606,'event_ulduar'),                 -- XT-002 Scrap repair event
+(21620,'event_ulduar');                 -- Ignis construct shatter event
 
 /* UN'GORO CRATER */
 UPDATE creature_template SET ScriptName='npc_ame01' WHERE entry=9623;
