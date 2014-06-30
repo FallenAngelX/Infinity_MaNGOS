@@ -4,7 +4,7 @@
 -- temp fix need to find true fix
 -- help fix quest 12813 currently
 -- insert been commented out til i figure out how to handle this guy in this area  he shouldn't be here like this or in this form or something
-DELETE FROM `creature` WHERE `id`=29560;
+DELETE FROM `creature` WHERE `id` = 29560;
 -- INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
 -- (88692, 29560, 571, 1, 1, 0, 0, 7458.74, 4846.24, 54.1606, 0.0676441, 300, 0, 0, 63000, 19970, 0, 0);
 
@@ -20,20 +20,22 @@ DELETE FROM `creature` WHERE `id`=29560;
 UPDATE `gameobject_template` SET `data2` = 11560 WHERE `entry` = 187373;
 UPDATE `creature_template` SET `ScriptName` = "npc_tadpole" WHERE `entry` = 25201;
 DELETE FROM `scripted_event_id` WHERE `id` = 11560;
-INSERT INTO `scripted_event_id` (`id`,`ScriptName`) VALUES (11560,"go_tadpole_cage"); 
+INSERT INTO `scripted_event_id` (`id`,`ScriptName`) VALUES
+(11560, "go_tadpole_cage"); 
 
 -- --------------
 -- Quest 12240  -
 -- --------------
 UPDATE `creature_template` SET `ModelId1` = 17612 WHERE `entry` = 27353;
-DELETE FROM `creature` WHERE `id`=27238;
+DELETE FROM `creature` WHERE `id` = 27238;
 UPDATE `creature_template` SET `Armor` = 7618, `FactionAlliance` = 67, `FactionHorde` = 67 WHERE `entry` = 27238;
 
 -- -------------
 -- Quest 14104 -
 -- -------------
 DELETE FROM `dbscripts_on_event` WHERE `id` = 22030;
-INSERT INTO `dbscripts_on_event` (`id`,`delay`,`command`,`datalong`,`datalong2`,`x`,`y`,`z`,`o`,`comments`) VALUES (22030,3,10,35012,300000,10006.4,650.6,10.34,4.542,"");
+INSERT INTO `dbscripts_on_event` (`id`,`delay`,`command`,`datalong`,`datalong2`,`x`,`y`,`z`,`o`,`comments`) VALUES
+(22030,3,10,35012,300000,10006.4,650.6,10.34,4.542,"");
 
 -- ------------
 -- Quest 9164 -
@@ -56,7 +58,7 @@ UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_charge_target'
 -- ------------
 -- Quest 13663
 -- ------------
-UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_black_knights_gryphon' WHERE `entry` = 33519;
+UPDATE creature_template SET `AIName` = '', `ScriptName` = 'npc_black_knights_gryphon' WHERE `entry` = 33519;
 UPDATE creature_template SET VehicleTemplateId = 402 WHERE entry = 33519; -- vehicle_id can be 88 107 108 112 143 etc.
 UPDATE creature_template SET KillCredit1 = 38595 WHERE entry = 33448;
 
@@ -69,8 +71,7 @@ UPDATE quest_template SET RequiredClasses = 0 WHERE entry = 13794;
 UPDATE quest_template SET PrevQuestId = 13794, ExclusiveGroup = 0 WHERE entry = 13795;
 
 -- it is also necessary (otherwise spell=63010 do not work)
-UPDATE creature_template SET UnitFlags = 8 WHERE entry IN
-(33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);
+UPDATE creature_template SET UnitFlags = 8 WHERE entry IN (33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);
 
 -- The Valiant's Challenge (10 quests)
 UPDATE `creature_template` SET `KillCredit1` = 33708 WHERE `entry` = 33707;
@@ -94,8 +95,7 @@ INSERT INTO `gossip_menu_option`(`menu_id`,`id`,`option_icon`,`option_text`,`opt
 (10461,0,0,'I am ready to fight!',1,1,-1,0,10461,0,0,NULL ,1,62853,0,6,67,0,0,0,0),
 (10462,0,0,'I am ready to fight!',1,1,-1,0,10462,0,0,NULL ,1,62853,0,6,67,0,0,0,0);
 */
-INSERT INTO `dbscripts_on_gossip`(`id`,`delay`,`command`,`datalong`,`datalong2`,`buddy_entry`,`search_radius`,
-`data_flags`,`dataint`,`dataint2`,`dataint3`,`dataint4`,`x`,`y`,`z`,`o`,`comments`) VALUES
+INSERT INTO `dbscripts_on_gossip`(`id`,`delay`,`command`,`datalong`,`datalong2`,`buddy_entry`,`search_radius`, `data_flags`,`dataint`,`dataint2`,`dataint3`,`dataint4`,`x`,`y`,`z`,`o`,`comments`) VALUES
 (10453,1,22,14,2,0,0,4,0,0,0,0,0,0,0,0,''),
 (10453,0,0,0,0,0,0,4,2000000449,2000000450,2000000451,0,0,0,0,0,''),
 (10454,1,22,14,2,0,0,4,0,0,0,0,0,0,0,0,''),
@@ -268,13 +268,13 @@ UPDATE `creature_template` SET `UnitFlags` = 516, `DynamicFlags` = 8 WHERE `entr
 
 -- spawn more sands   (really should be able to use the whole area)
 INSERT IGNORE INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES
-(600011, 300209, 571, 1, 1, 4102.71, -444.36, 124.134, 1.774, 0, 0, 0.775178, 0.631742, -300, 0, 1),
-(600012, 300209, 571, 1, 1, 4076.75, -441.368, 120.635, 0.995666, 0, 0, 0.477523, 0.878619, -300, 0, 1),
-(600013, 300209, 571, 1, 1, 4070.94, -418.43, 120.234, 6.23349, 0, 0, 0.0248472, -0.999691, -300, 0, 1),
-(600014, 300209, 571, 1, 1, 4128.17, -436.042, 125.947, 3.17357, 0, 0, 0.999872, -0.0159903, -300, 0, 1),
-(600015, 300209, 571, 1, 1, 4145.28, -419.433, 124.344, 3.38956, 0, 0, 0.992324, -0.123666, -300, 0, 1),
-(600016, 300209, 571, 1, 1, 4150.45, -390.681, 120.723, 3.66602, 0, 0, 0.965819, -0.259218, -300, 0, 1),
-(600017, 300209, 571, 1, 1, 4126.18, -391.728, 119.142, 5.33813, 0, 0, 0.455137, -0.890421, -300, 0, 1);
+(600006, 300209, 571, 1, 1, 4102.71, -444.36, 124.134, 1.774, 0, 0, 0.775178, 0.631742, -300, 0, 1),
+(600007, 300209, 571, 1, 1, 4076.75, -441.368, 120.635, 0.995666, 0, 0, 0.477523, 0.878619, -300, 0, 1),
+(600008, 300209, 571, 1, 1, 4070.94, -418.43, 120.234, 6.23349, 0, 0, 0.0248472, -0.999691, -300, 0, 1),
+(600009, 300209, 571, 1, 1, 4128.17, -436.042, 125.947, 3.17357, 0, 0, 0.999872, -0.0159903, -300, 0, 1),
+(600010, 300209, 571, 1, 1, 4145.28, -419.433, 124.344, 3.38956, 0, 0, 0.992324, -0.123666, -300, 0, 1),
+(600011, 300209, 571, 1, 1, 4150.45, -390.681, 120.723, 3.66602, 0, 0, 0.965819, -0.259218, -300, 0, 1),
+(600012, 300209, 571, 1, 1, 4126.18, -391.728, 119.142, 5.33813, 0, 0, 0.455137, -0.890421, -300, 0, 1);
 -- ----------------------------------------
 -- Bury Those Cockroaches Quest 11608 -----
 -- ----------------------------------------
@@ -346,46 +346,44 @@ UPDATE creature_template SET ScriptName = 'mob_taste_test' WHERE entry IN (28047
 
 UPDATE `creature_template` SET `Scale` = 4, `ModelId1` = 11686, `ModelId2` = 11686 WHERE `entry` IN (25090, 25091, 25092);
 
+-- Kill credits
 INSERT IGNORE INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
-(600019, 25092, 530, 1, 1, 0, 0, 13261.8, -7144.76, 29.6207, 3.73767, 25, 0, 0, 1, 0, 0, 0),
-(600020, 25092, 530, 1, 1, 0, 0, 13313.5, -7149.11, 23.029, 0.326681, 25, 0, 0, 1, 0, 0, 0),
-(600021, 25092, 530, 1, 1, 0, 0, 13263.9, -7144.98, 18.0722, 2.95227, 25, 0, 0, 1, 0, 0, 0),
-(600022, 25092, 530, 1, 1, 0, 0, 13271.3, -7146.79, 19.1243, 5.98391, 25, 0, 0, 1, 0, 0, 0),
-(600023, 25092, 530, 1, 1, 0, 0, 13289.9, -7151.84, 20.5758, 2.77005, 25, 0, 0, 1, 0, 0, 0),
-(600024, 25092, 530, 1, 1, 0, 0, 13300.4, -7149.66, 3.98094, 1.67521, 25, 0, 0, 1, 0, 0, 0),
-(600025, 25092, 530, 1, 1, 0, 0, 13305.6, -7147.99, 19.165, 2.99467, 25, 0, 0, 1, 0, 0, 0),
-(600026, 25092, 530, 1, 1, 0, 0, 13331.7, -7150.1, 25.3583, 3.09835, 25, 0, 0, 1, 0, 0, 0),
-(600027, 25092, 530, 1, 1, 0, 0, 13348.8, -7151.36, 29.4228, 3.06536, 25, 0, 0, 1, 0, 0, 0);
+(600127, 25090, 530, 1, 1, 0, 0, 13252.6, -7054.9, 22.4681, 3.5688, 25, 0, 0, 1, 0, 0, 0),
+(600128, 25090, 530, 1, 1, 0, 0, 13229.6, -7052.88, 4.3433, 2.60276, 25, 0, 0, 1, 0, 0, 0),
+(600129, 25090, 530, 1, 1, 0, 0, 13213.4, -7053.09, 18.7827, 1.69955, 25, 0, 0, 1, 0, 0, 0),
+(600130, 25090, 530, 1, 1, 0, 0, 13226.3, -7052.35, 17.7073, 2.66795, 25, 0, 0, 1, 0, 0, 0),
+(600131, 25090, 530, 1, 1, 0, 0, 13256.7, -7056.42, 23.4799, 6.09779, 25, 0, 0, 1, 0, 0, 0),
+(600132, 25090, 530, 1, 1, 0, 0, 13241, -7054.83, 19.4747, 3.12191, 25, 0, 0, 1, 0, 0, 0),
+(600133, 25090, 530, 1, 1, 0, 0, 13272, -7058.13, 27.1397, 2.9664, 25, 0, 0, 1, 0, 0, 0);
 
 INSERT IGNORE INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
-(600028, 25090, 530, 1, 1, 0, 0, 13252.6, -7054.9, 22.4681, 3.5688, 25, 0, 0, 1, 0, 0, 0),
-(600029, 25090, 530, 1, 1, 0, 0, 13229.6, -7052.88, 4.3433, 2.60276, 25, 0, 0, 1, 0, 0, 0),
-(600030, 25090, 530, 1, 1, 0, 0, 13213.4, -7053.09, 18.7827, 1.69955, 25, 0, 0, 1, 0, 0, 0),
-(600031, 25090, 530, 1, 1, 0, 0, 13226.3, -7052.35, 17.7073, 2.66795, 25, 0, 0, 1, 0, 0, 0),
-(600032, 25090, 530, 1, 1, 0, 0, 13256.7, -7056.42, 23.4799, 6.09779, 25, 0, 0, 1, 0, 0, 0),
-(600033, 25090, 530, 1, 1, 0, 0, 13241, -7054.83, 19.4747, 3.12191, 25, 0, 0, 1, 0, 0, 0),
-(600034, 25090, 530, 1, 1, 0, 0, 13272, -7058.13, 27.1397, 2.9664, 25, 0, 0, 1, 0, 0, 0);
+(600134, 25091, 530, 1, 1, 0, 0, 13328.7, -6993.48, 11.8975, 1.60531, 25, 0, 0, 1, 0, 0, 0),
+(600135, 25091, 530, 1, 1, 0, 0, 13346, -6993.5, 3.21209, 1.40346, 25, 0, 0, 1, 0, 0, 0),
+(600136, 25091, 530, 1, 1, 0, 0, 13323, -6989.96, 18.1137, 5.29668, 25, 0, 0, 1, 0, 0, 0),
+(600137, 25091, 530, 1, 1, 0, 0, 13309.5, -6987.26, 16.2246, 4.39818, 25, 0, 0, 1, 0, 0, 0),
+(600138, 25091, 530, 1, 1, 0, 0, 13354.3, -6990.59, 19.2655, 1.4121, 25, 0, 0, 1, 0, 0, 0),
+(600139, 25091, 530, 1, 1, 0, 0, 13360.6, -6991.35, 20.7843, 6.2588, 25, 0, 0, 1, 0, 0, 0),
+(600140, 25091, 530, 1, 1, 0, 0, 13339.9, -6989.69, 17.719, 6.27843, 25, 0, 0, 1, 0, 0, 0),
+(600141, 25091, 530, 1, 1, 0, 0, 13379.1, -6991.55, 25.1392, 3.19418, 25, 0, 0, 1, 0, 0, 0),
+(600142, 25091, 530, 1, 1, 0, 0, 13328.7, -6993.48, 11.8975, 1.60531, 25, 0, 0, 1, 0, 0, 0);
 
 INSERT IGNORE INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
-(600035, 25091, 530, 1, 1, 0, 0, 13328.7, -6993.48, 11.8975, 1.60531, 25, 0, 0, 1, 0, 0, 0),
-(600036, 25091, 530, 1, 1, 0, 0, 13346, -6993.5, 3.21209, 1.40346, 25, 0, 0, 1, 0, 0, 0),
-(600037, 25091, 530, 1, 1, 0, 0, 13323, -6989.96, 18.1137, 5.29668, 25, 0, 0, 1, 0, 0, 0),
-(600038, 25091, 530, 1, 1, 0, 0, 13309.5, -6987.26, 16.2246, 4.39818, 25, 0, 0, 1, 0, 0, 0),
-(600039, 25091, 530, 1, 1, 0, 0, 13354.3, -6990.59, 19.2655, 1.4121, 25, 0, 0, 1, 0, 0, 0),
-(600040, 25091, 530, 1, 1, 0, 0, 13360.6, -6991.35, 20.7843, 6.2588, 25, 0, 0, 1, 0, 0, 0),
-(600041, 25091, 530, 1, 1, 0, 0, 13339.9, -6989.69, 17.719, 6.27843, 25, 0, 0, 1, 0, 0, 0),
-(600045, 25091, 530, 1, 1, 0, 0, 13379.1, -6991.55, 25.1392, 3.19418, 25, 0, 0, 1, 0, 0, 0),
-(600046, 25091, 530, 1, 1, 0, 0, 13328.7, -6993.48, 11.8975, 1.60531, 25, 0, 0, 1, 0, 0, 0);
+(600143, 25092, 530, 1, 1, 0, 0, 13261.8, -7144.76, 29.6207, 3.73767, 25, 0, 0, 1, 0, 0, 0),
+(600144, 25092, 530, 1, 1, 0, 0, 13313.5, -7149.11, 23.029, 0.326681, 25, 0, 0, 1, 0, 0, 0),
+(600145, 25092, 530, 1, 1, 0, 0, 13263.9, -7144.98, 18.0722, 2.95227, 25, 0, 0, 1, 0, 0, 0),
+(600146, 25092, 530, 1, 1, 0, 0, 13271.3, -7146.79, 19.1243, 5.98391, 25, 0, 0, 1, 0, 0, 0),
+(600147, 25092, 530, 1, 1, 0, 0, 13289.9, -7151.84, 20.5758, 2.77005, 25, 0, 0, 1, 0, 0, 0),
+(600148, 25092, 530, 1, 1, 0, 0, 13300.4, -7149.66, 3.98094, 1.67521, 25, 0, 0, 1, 0, 0, 0),
+(600149, 25092, 530, 1, 1, 0, 0, 13305.6, -7147.99, 19.165, 2.99467, 25, 0, 0, 1, 0, 0, 0),
+(600150, 25092, 530, 1, 1, 0, 0, 13331.7, -7150.1, 25.3583, 3.09835, 25, 0, 0, 1, 0, 0, 0),
+(600151, 25092, 530, 1, 1, 0, 0, 13348.8, -7151.36, 29.4228, 3.06536, 25, 0, 0, 1, 0, 0, 0);
 
 -- EventAI -- one additional has been made to YTDB acid  a despawn  so quest graphics and effects reset for next player  at the moment its 2 mins to despawn and 30 secs to respawn (credit triggers are invis) quest might take longer then 2 mins 
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2509051');
-INSERT INTO `creature_ai_scripts` VALUES ('2509051', '25090', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25090', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543&R2');
-
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2509151');
-INSERT INTO `creature_ai_scripts` VALUES ('2509151', '25091', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25091', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543&R2');
-
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2509251');
-INSERT INTO `creature_ai_scripts` VALUES ('2509251', '25092', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25092', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543&R2');
+DELETE FROM `creature_ai_scripts` WHERE `id` IN ('2509051', '2509151', '2509251');
+INSERT INTO `creature_ai_scripts` VALUES
+('2509051', '25090', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25090', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543&R2'),
+('2509151', '25091', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25091', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543&R2'),
+('2509251', '25092', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25092', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543&R2');
 
 -- -------------------------
 -- fix quest toxic_test 9051 -- still not working is kill credit

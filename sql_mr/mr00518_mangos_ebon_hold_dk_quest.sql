@@ -67,8 +67,9 @@ UPDATE `creature_template` SET `MechanicImmuneMask` = 12582928 WHERE `entry` = 2
 
 -- tweak Valroth EAI
 DELETE FROM `creature_ai_scripts` WHERE `id` IN (2900101, 2900112);
-INSERT INTO `creature_ai_scripts` VALUES ('2900101', '29001', '1', '0', '100', '0', '0', '0', '0', '0', '21', '1', '1', '0', '22', '0', '0', '0', '0', '0', '0', '0', 'High Inquisitor Valroth - Set Phase to 0 on Spawn');
-INSERT INTO `creature_ai_scripts` VALUES ('2900112', '29001', '0', '0', '100', '1', '2000', '10000', '7500', '10000', '11', '52922', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'High Inquisitor Valroth - Cast Inquisitor_penance');
+INSERT INTO `creature_ai_scripts` VALUES 
+('2900101', '29001', '1', '0', '100', '0', '0', '0', '0', '0', '21', '1', '1', '0', '22', '0', '0', '0', '0', '0', '0', '0', 'High Inquisitor Valroth - Set Phase to 0 on Spawn'),
+('2900112', '29001', '0', '0', '100', '1', '2000', '10000', '7500', '10000', '11', '52922', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'High Inquisitor Valroth - Cast Inquisitor_penance');
 
 UPDATE `gameobject_template` SET `castBarCaption` = 'Valroth\'s Remains' WHERE `entry` = 191092;  -- caption bar message when looting remains
 
@@ -258,7 +259,6 @@ INSERT INTO `creature_ai_texts` (`entry`, `content_default`, `comment`) VALUES
 -- EVENTAI scripts
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` IN (28834, 28856, 28850, 29104, 28941, 28942, 28577, 28576, 28557, 28892);
 INSERT INTO `creature_ai_scripts` VALUES
-
 -- Scarlet Defender
 (2883401, 28834, 0, 0, 100, 1, 0, 0, 3000, 3000, 11, 52566, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Scarlet Defender - Cast Shoot"),
 -- Scarlet Guardian

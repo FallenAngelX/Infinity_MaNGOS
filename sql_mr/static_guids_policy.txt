@@ -5,18 +5,27 @@ Attention! If your use new GUID's scope for some creatures/objects - first defin
 Creature GUIDS 600000 - 600003
 # Event: Headless horseman
 Creature GUIDS 600004 - 600027
+# Icecrown Citadel
+Creature GUIDS 600028 - 600029
 # Ahn'kahet
 Creature GUIDS 600047 - 600113
 # Stratholme
 Creature GUIDS 600114 - 600125
 # Trial of the crusader
 Creature GUIDS 600126
+# Quest 12470
+Creature GUIDS 600127 - 600151
+
 
 
 # Sunwell Plateau Doors
-Gameobje GUIDS 600000 - 600004
+Gameobject GUIDS 600000 - 600004
 # Ahn'kahet
-Gameobje GUIDS 600005
+Gameobject GUIDS 600005
+# Quest 12470
+Gameobject GUIDS 600006 - 600012
+# Halls of Reflection - Captain Chest
+Gameobject GUIDS 600013 - 600016
 
 
 Custom creature_template ids used for scripting purposes. By far the wrong way but keep in mind.
