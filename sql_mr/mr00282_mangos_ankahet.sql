@@ -6,9 +6,8 @@
 -- Elder Nadox -
 -- -------------
 
-UPDATE `creature_template` SET `AIName`='',`ScriptName`='mob_nadox_guardian' WHERE (`entry`='30176');
+UPDATE `creature_template` SET `FactionAlliance` = 16, `FactionHorde` = 16, `AIName` = '', `ScriptName` = 'mob_nadox_guardian' WHERE `entry` = 30176;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 30176;
-UPDATE `creature_template` SET `FactionAlliance` = 16, `FactionHorde` = 16 WHERE `entry` = 30176;
 
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 30178;
 DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=30178);
@@ -17,8 +16,6 @@ INSERT INTO `creature_ai_scripts` VALUES
 
 UPDATE `creature_template` SET `ScriptName` = '', `AIName`='' WHERE `entry` = 30172;
 UPDATE `creature_template` SET `ScriptName` = '', `AIName`='' WHERE `entry` = 30173;
-
-
 
 
 -- --------------- OLD STUFF ----------------------------------------------------------------------- 
@@ -34,14 +31,9 @@ INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`
 
 UPDATE `creature_template` SET `UnitFlags` = '0' WHERE `entry` IN (30114,31473);
 
-DELETE FROM `creature_addon` WHERE guid=131953;
-DELETE FROM `creature` WHERE guid IN (131953, 115064);  -- this cause drop C34144 from YTDB
-INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
-(131953, 29310, 619, 3, 1, 26777, 0, 357.353, -692.808, -10.7028, 5.56541, 14400, 5, 0, 212700, 0, 0, 1);
-
-DELETE FROM `gameobject` WHERE `guid` = 911321;
+DELETE FROM `gameobject` WHERE `guid` = 600004;
 INSERT INTO `gameobject` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES
-(911321, 194394, 619, 2, 1, 371.842, -701.621, -16.1797, 5.67851, 0, 0, 0.297751, -0.954644, -10, 0, 1);
+(600004, 194394, 619, 2, 1, 371.842, -701.621, -16.1797, 5.67851, 0, 0, 0.297751, -0.954644, -10, 0, 1);
 
 UPDATE `creature_template` SET `UnitFlags` = 0 WHERE `entry` IN (30258, 30391, 30435);
 UPDATE `creature_template` SET `MinMeleeDmg` = 488, `MaxMeleeDmg` = 648, `MeleeAttackPower` = 782, `DamageMultiplier` = 13  WHERE `entry` = 30258;

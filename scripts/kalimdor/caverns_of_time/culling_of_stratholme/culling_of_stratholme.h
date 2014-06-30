@@ -71,25 +71,25 @@ enum Data
 ///-> end
 
 ///-> Second Quest stuff
-    QUEST_A_ROYAL_ESCORT    = 13151,
+    QUEST_A_ROYAL_ESCORT        = 13151,
 
-    NPC_MARINE_1            = 70000,
-    NPC_MARINE_2            = 70001,
-    NPC_MARINE_3            = 70002,
-    NPC_MARINE_4            = 70003,
-    NPC_PRIEST_1            = 70004,
-    NPC_PRIEST_2            = 70005,
-    NPC_ARTHAS              = 26499,
-    NPC_JAINA               = 26497,
-    NPC_UTHER               = 26528,
-    NPC_KNIGHT              = 28612,
-    NPC_CHROMI02            = 27915,
-    NPC_CITY                = 28167,
-    NPC_CRAZYMAN            = 28169,
-    NPC_INVIS_STALKER       = 20562,
-    WORLD_STATE_COS_WAVE_COUNT    = 3504,
+    NPC_MARINE_1                = 10,
+    NPC_MARINE_2                = 11,
+    NPC_MARINE_3                = 12,
+    NPC_MARINE_4                = 13,
+    NPC_PRIEST_1                = 14,
+    NPC_PRIEST_2                = 15,
+    NPC_ARTHAS                  = 26499,
+    NPC_JAINA                   = 26497,
+    NPC_UTHER                   = 26528,
+    NPC_KNIGHT                  = 28612,
+    NPC_CHROMI02                = 27915,
+    NPC_CITY                    = 28167,
+    NPC_CRAZYMAN                = 28169,
+    NPC_INVIS_STALKER           = 20562,
+    WORLD_STATE_COS_WAVE_COUNT  = 3504,
 
-    MALGANIS_KC_BUNNY      = 31006,
+    MALGANIS_KC_BUNNY           = 31006,
 
 ///-> end
 

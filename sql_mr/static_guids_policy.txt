@@ -5,4 +5,7 @@ Creature GUIDS 600000 - 600003
 # Sunwell Plateau Doors
 Gameobje GUIDS 600000 - 600004
 # Ahn'kahet
+Gameobje GUIDS 600004
 Creature GUIDS 600047 - 600113
+# Stratholme
+Creature GUIDS 600114 - 600125
