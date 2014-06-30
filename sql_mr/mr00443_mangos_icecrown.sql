@@ -423,7 +423,7 @@ UPDATE `creature_template` SET `ScriptName`='mob_frost_bomb', `AIName`='' WHERE 
 UPDATE `creature_template_addon` SET `auras` = '73878 73220 72846' WHERE `entry` IN (39166, 39167, 39168);
 UPDATE `creature_template` SET `SpeedWalk` = 1.0, `SpeedRun` = 1.1 WHERE `entry` IN (36597, 39166, 39167, 39168);
 UPDATE `creature_template` SET `ScriptName` = 'boss_tirion_icc' WHERE `entry`= 38995;
-UPDATE `creature_template` SET `ScriptName` = 'boss_terenas_menethil_icc' WHERE entry = 38579;
+-- UPDATE `creature_template` SET `ScriptName` = 'boss_terenas_menethil_icc' WHERE entry = 38579;
 
 UPDATE `creature_template` SET `ScriptName`='mob_ice_sphere_icc', `AIName`='' WHERE `entry`= 36633;
 UPDATE `creature_template` SET `ScriptName`='mob_defiler_icc', `AIName`='' WHERE `entry`= 38757;

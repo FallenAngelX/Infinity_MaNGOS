@@ -75,7 +75,7 @@ UPDATE `creature_template` SET `MinLevel` = 73, `MaxLevel` = 73, `MinLevelHealth
 UPDATE `creature_template` SET `AIName` = '', `EquipmentTemplateId` = 0 WHERE `entry` IN(25741, 25840);
 
 -- Dark fiend fixes
-UPDATE `creature_template` SET `ScriptName` = 'mob_dark_fiend', `AIName` = '' WHERE `entry` = 25744;
+-- UPDATE `creature_template` SET `ScriptName` = 'mob_dark_fiend', `AIName` = '' WHERE `entry` = 25744;
 -- move slower then the player they are suppose run away from then
 UPDATE `creature_template` SET `SpeedWalk` = 1, `SpeedRun` = 1.14286 WHERE `entry` = 25744;
 -- shorter attack range ( needs to be for chase explode )
@@ -116,10 +116,10 @@ UPDATE `creature_template` SET `SpeedWalk` = 5, `SpeedRun` = 5 WHERE `entry` = 2
 UPDATE `creature` SET position_z = 60.0 WHERE id = 26046;
 -- Orb of the Blue Flight
 UPDATE `gameobject_template` SET `type` = 10, `flags` = 16 WHERE `entry` = 188415;
-UPDATE `gameobject_template` SET `ScriptName` = 'go_orb_of_the_blue_flight' WHERE `entry` = 188415;
+-- UPDATE `gameobject_template` SET `ScriptName` = 'go_orb_of_the_blue_flight' WHERE `entry` = 188415;
 -- Felfire Portal
 UPDATE `creature_template` SET `UnitFlags` = 33554438, `FactionAlliance` = 14, `FactionHorde` = 14 WHERE `entry` = 25603;
-UPDATE `creature_template` SET `ScriptName` = 'mob_felfire_portal' WHERE `entry` = 25603;
+-- UPDATE `creature_template` SET `ScriptName` = 'mob_felfire_portal' WHERE `entry` = 25603;
 -- Kil'jaeden
 UPDATE `creature_template` SET `UnitFlags` = `UnitFlags` | 4 WHERE `entry` = 25315;
 -- Shield Orb
