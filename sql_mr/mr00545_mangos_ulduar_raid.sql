@@ -1,5 +1,5 @@
 /* ULDUAR from Xfurry*/
-
+/*
 -- --------------- --
 -- Flame Leviathan --
 -- --------------- --
@@ -184,6 +184,8 @@ DELETE FROM creature WHERE guid IN (800010, 800011);
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
 (800010, 34014, 603, 2, 65535, 0, 0, 1945.2, 37.2442, 411.356, 3.62107, 7200, 0, 0, 334680, 0, 0, 0),
 (800011, 34014, 603, 2, 65535, 0, 0, 1936.11, 49.8233, 411.352, 3.85276, 7200, 0, 0, 334680, 0, 0, 0);
+
+
 DELETE FROM `creature_movement` WHERE `id`=94378;
 INSERT INTO `creature_movement` (`id`,`point`,`position_x`,`position_y`,`position_z`,`waittime`,`textid1`,`textid2`,`textid3`,`textid4`,`textid5`,`emote`,`spell`,`wpguid`,`orientation`,`model1`,`model2`) VALUES
 -- UPDATED CREATURE MOVEMENT FOR AURIAYA, SHOULD MOVE AROUND THE CENTER SPIRE
@@ -218,6 +220,7 @@ INSERT INTO `creature_movement` (`id`,`point`,`position_x`,`position_y`,`positio
 (94378, 24, 2013.07, 44.3788, 417.715, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5.71365, 0, 0), 	-- before mimiron up
 (94378, 25, 1967.38, 51.4931, 417.561, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.09545, 0, 0),	-- after yogg up
 (94378, 26, 1957.04, 49.3067, 411.355, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.37071, 0, 0);	-- after yogg down
+
 
 -- Freya
 UPDATE creature_template SET ScriptName = 'boss_freya' WHERE entry = 32906;
@@ -399,6 +402,8 @@ UPDATE creature_template SET ScriptName = 'mob_dark_rune_honor_guard' WHERE entr
 #INSERT INTO gameobject VALUES (110010,194264,603,3,65535,2173.276, -252.805, 420.146, 3.027,0,0,0,0,604800,0,1);
 UPDATE `creature` SET `phaseMask` = 128 WHERE `id` IN (32907, 32883); 	-- horde soldiers: phase 128 for aly: 65535
 UPDATE `creature` SET `phaseMask` = 64 WHERE `id` IN (32885, 32908);	-- alliance soldiers: phase 64 for horde
+*/
+
 -- reset pos to some creatures 
 -- SOME POSITION ADJUSTMENTS, CHECK YOUR DB FOR THIS
 /*
@@ -414,6 +419,8 @@ UPDATE `creature` SET `position_y` = -434.64 WHERE `guid` = 129862;
 UPDATE `creature` SET `position_y` = -434.64 WHERE `guid` = 129863;
 UPDATE `creature` SET `position_y` = -434.64 WHERE `guid` = 129391;
 */
+
+/*
 REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('62565', '1', '32865');
 
 -- Vezax
@@ -504,3 +511,4 @@ UPDATE `creature_template` SET `ScriptName` = 'generic_creature' WHERE `entry` I
 -- some fixes (thx to mns and Reamer)
 UPDATE `creature_template` SET `ScriptName` = 'mob_eyebeam_trigger' where `entry` in (33802,33632);
 UPDATE `creature_template` SET `ScriptName` = 'mob_kologarn_pit_kill_bunny' where `entry` in (33742);
+*/
