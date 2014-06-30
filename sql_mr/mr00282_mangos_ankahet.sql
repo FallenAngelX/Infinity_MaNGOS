@@ -31,9 +31,9 @@ INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`
 
 UPDATE `creature_template` SET `UnitFlags` = '0' WHERE `entry` IN (30114,31473);
 
-DELETE FROM `gameobject` WHERE `guid` = 600004;
+DELETE FROM `gameobject` WHERE `guid` = 600005;
 INSERT INTO `gameobject` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES
-(600004, 194394, 619, 2, 1, 371.842, -701.621, -16.1797, 5.67851, 0, 0, 0.297751, -0.954644, -10, 0, 1);
+(600005, 194394, 619, 2, 1, 371.842, -701.621, -16.1797, 5.67851, 0, 0, 0.297751, -0.954644, -10, 0, 1);
 
 UPDATE `creature_template` SET `UnitFlags` = 0 WHERE `entry` IN (30258, 30391, 30435);
 UPDATE `creature_template` SET `MinMeleeDmg` = 488, `MaxMeleeDmg` = 648, `MeleeAttackPower` = 782, `DamageMultiplier` = 13  WHERE `entry` = 30258;
