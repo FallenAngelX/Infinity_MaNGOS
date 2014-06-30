@@ -191,8 +191,8 @@ UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `en
 
 -- fixed spawn of onslaught harbor guards
 INSERT IGNORE INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
-(600009, 29330, 571, 1, 1, 0, 989, 7459.84, 4851.9, 54.1595, 0.00143623, 600, 0, 0, 12600, 0, 0, 0),
-(600010, 29330, 571, 1, 1, 0, 989, 7459.58, 4840.95, 54.1595, 0.0367786, 600, 0, 0, 12387, 0, 0, 0);
+(600153, 29330, 571, 1, 1, 0, 989, 7459.84, 4851.9, 54.1595, 0.00143623, 600, 0, 0, 12600, 0, 0, 0),
+(600154, 29330, 571, 1, 1, 0, 989, 7459.58, 4840.95, 54.1595, 0.0367786, 600, 0, 0, 12387, 0, 0, 0);
 
 -- ACID scripts (ytdb and R2 acid combined 8P ) and related fixes
 
@@ -317,12 +317,6 @@ UPDATE gameobject_template SET ScriptName='go_still_at_it_quest' WHERE entry IN(
 
 UPDATE creature_template SET ScriptName='npc_tipsy_mcmanus' WHERE entry=28566;
 
-DELETE FROM `gameobject` WHERE `guid` = 200000; -- may redundant (found in YTDB)
-INSERT INTO `gameobject` VALUES ('200000','190643','571','1','1','5545.45','5767.53','-77.8042','5.39307','0','0','0.959937','0.280215','-25','0','1');
-
-DELETE FROM `creature` where `id` = 28537; -- may redundant (found in YTDB)
-INSERT INTO creature VALUES
-(600018,28537,571,1,1,0,0,5550.404,5768.214,-78.02,1.278,300,0,0,0,0,0,0);
 UPDATE `creature_template` SET `MinLevelHealth` = 0, `MaxLevelHealth` = 1 WHERE `entry` = 28537;
 
 DELETE from spell_script_target WHERE entry in(51932,51931,51933);
@@ -441,7 +435,8 @@ DELETE FROM `creature_ai_scripts` WHERE (`id`='2629302');
 INSERT INTO `creature_ai_scripts` VALUES ('2629302', '26293', '2', '0', '100', '0', '70', '50', '0', '0', '1', '-262930', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'R2 - Hulking Jormungar - emote between 70% and 50% ');
 
 DELETE FROM `creature_ai_texts` WHERE entry IN ('-262930');
-INSERT INTO `creature_ai_texts` VALUES ('-262930', 'The Hulking Jormungar falters for a moment, opening its mouth wide.', '', '', '', '', '', '', '', '', '3', '0', '0', '0', 'R2 - Hulking Jormungar-raid emote');
+INSERT INTO `creature_ai_texts` (`entry`, `content_default`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
+('-262930', 'The Hulking Jormungar falters for a moment, opening its mouth wide.', '3', '0', '0', '0', 'R2 - Hulking Jormungar-raid emote');
 
 -- ------------------------------------------
 -- Support for quest The Denouncement (12273)
@@ -449,11 +444,11 @@ INSERT INTO `creature_ai_texts` VALUES ('-262930', 'The Hulking Jormungar falter
 
 -- Texts
 DELETE FROM creature_ai_texts WHERE entry IN (-272371,-272351,-272341,-272361);
-INSERT INTO creature_ai_texts VALUES
-(-272371,'High general Abbendis personally told me that it was a mistake to come north and that we\'re doomed! I urge you all to lay down your weapons and leave before it\'s too late!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'R2 - Commander Jordan yell'),
-(-272351,'Renounce the Scarlet Onslaught! Don\'t listen to the lies of the high general and the grand admiral any longer!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'R2 - Lead Cannoneer Zierhut yell'),
-(-272341,'You are being misled! The Onslaught is all lies! The Scourge and the Forsaken are not our enemies! Wake up!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'R2 - Blacksmith Goodman yell'),
-(-272361,'Abbendis is nothing but a harlot and Grand Admiral Westwind is selling her cheap like he sold us out!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'R2 - Stable Master Mercer yell');
+INSERT INTO creature_ai_texts (`entry`, `content_default`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
+(-272371,'High general Abbendis personally told me that it was a mistake to come north and that we\'re doomed! I urge you all to lay down your weapons and leave before it\'s too late!',0,1,0,0,'R2 - Commander Jordan yell'),
+(-272351,'Renounce the Scarlet Onslaught! Don\'t listen to the lies of the high general and the grand admiral any longer!',0,1,0,0,'R2 - Lead Cannoneer Zierhut yell'),
+(-272341,'You are being misled! The Onslaught is all lies! The Scourge and the Forsaken are not our enemies! Wake up!',0,1,0,0,'R2 - Blacksmith Goodman yell'),
+(-272361,'Abbendis is nothing but a harlot and Grand Admiral Westwind is selling her cheap like he sold us out!',0,1,0,0,'R2 - Stable Master Mercer yell');
 
 -- ACID
 DELETE FROM creature_ai_scripts WHERE id IN (2723701,2723702,2723703,2723704,2723705,2723501,2723502,2723503,2723504,2723401,2723402,2723403,2723404,2723405,2723601,2723602,2723603,2723604);

@@ -13,9 +13,10 @@ Creature GUIDS 600047 - 600113
 Creature GUIDS 600114 - 600125
 # Trial of the crusader
 Creature GUIDS 600126
-# Quest 12470
+# Quest 11542/11543 
 Creature GUIDS 600127 - 600151
-
+# Quest 12813
+Creature GUIDS 600153 - 600154
 
 
 # Sunwell Plateau Doors

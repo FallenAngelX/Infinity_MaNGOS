@@ -179,7 +179,7 @@ INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
 (52479, 1, 28822),
 (52479, 1, 28891);
 
-DELETE FROM `spell_script_target` WHERE entry = 52479;
+DELETE FROM `spell_script_target` WHERE entry = 52514;
 INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
 (52514, 1, 28845);
 
@@ -191,10 +191,10 @@ INSERT INTO `creature_ai_scripts` VALUES
 (2884601, 28846, 11, 0, 100, 0, 0, 0, 0, 0, 1, -286100, -286101, -286102, 0, 0, 0, 0, 0, 0, 0, 0, "Scarlet Ghost - Random say at spawn");
 
 DELETE FROM `creature_ai_texts` WHERE `entry` IN (-286102, -286101, -286100);
-INSERT INTO `creature_ai_texts` VALUES
-(-286100, "Die, Scourge filth!", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Сдохни, отродье Плети!", 0, 0, 0, 0, "Scarlet Ghost SAY1"),
-(-286101, "It won't be that easy, friend!", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Это не будет просто, друг!", 0, 0, 0, 0, "Scarlet Ghost SAY2"),
-(-286102, "I'll take you with me!", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Я заберу тебя с собой!", 0, 0, 0, 0, "Scarlet Ghost SAY3");
+INSERT INTO `creature_ai_texts` (`entry`, `content_default`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
+(-286100, "Die, Scourge filth!", "Сдохни, отродье Плети!", 0, 0, 0, 0, "Scarlet Ghost SAY1"),
+(-286101, "It won't be that easy, friend!", "Это не будет просто, друг!", 0, 0, 0, 0, "Scarlet Ghost SAY2"),
+(-286102, "I'll take you with me!", "Я заберу тебя с собой!", 0, 0, 0, 0, "Scarlet Ghost SAY3");
 
 -- fix to take Quest Item Away at end of quest
 UPDATE `quest_template` SET `ReqItemId1` = 39253, `ReqItemCount1` = 1 WHERE `entry` = 12698;
