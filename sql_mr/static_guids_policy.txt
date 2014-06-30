@@ -9,3 +9,14 @@ Gameobje GUIDS 600004
 Creature GUIDS 600047 - 600113
 # Stratholme
 Creature GUIDS 600114 - 600125
+# Trial of the crusader
+Creature GUIDS 600126
+
+
+Custom creature_template ids used for scripting purposes. By far the wrong way but keep in mind.
+# Trial of the Crusader
+Ids 7 - 9
+# Stratholme
+Ids 10 - 15
+# Ruby Sanctum
+Ids 16

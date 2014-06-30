@@ -4,7 +4,7 @@ DELETE FROM `creature` WHERE `map` = 649 AND `id` IN
 
 -- announcers
 INSERT IGNORE INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
-(114727, 34816, 649, 15, 65535, 0, 0, 559.258, 90.2662, 395.123, 5.01319, 300, 0, 0, 126000, 0, 0, 0);
+(600126, 34816, 649, 15, 65535, 0, 0, 559.258, 90.2662, 395.123, 5.01319, 300, 0, 0, 126000, 0, 0, 0);
 UPDATE `creature_template` SET `ScriptName` = 'npc_toc_announcer' WHERE `entry` = 34816;
 DELETE FROM `creature` WHERE `map` = 649 AND `id` = 35766;
 
@@ -30,28 +30,27 @@ UPDATE `creature_template` SET `ScriptName` = 'boss_lich_king_toc' WHERE `entry`
 UPDATE `creature_template` SET `ScriptName` = 'npc_fizzlebang_toc' WHERE `entry` = 35458;
 DELETE FROM `creature` WHERE `map` = 649 AND `id` IN (35651, 22517);
 
-UPDATE `creature_template` SET `ScriptName`='npc_tirion_toc' WHERE `entry` = 34996;
-UPDATE `creature_template` SET `ScriptName`='npc_garrosh_toc' WHERE `entry` = 34995;
-UPDATE `creature_template` SET `ScriptName`='npc_rinn_toc' WHERE `entry` = 34990;
+UPDATE `creature_template` SET `ScriptName` = 'npc_tirion_toc' WHERE `entry` = 34996;
+UPDATE `creature_template` SET `ScriptName` = 'npc_garrosh_toc' WHERE `entry` = 34995;
+UPDATE `creature_template` SET `ScriptName` = 'npc_rinn_toc' WHERE `entry` = 34990;
 
 -- Grand crusaders
-UPDATE `creature_template` SET `ScriptName`='mob_toc_warrior', `AIName` ='' WHERE `entry` IN (34475,34453);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_mage', `AIName` ='' WHERE `entry` IN (34468,34449);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_shaman', `AIName` ='' WHERE `entry` IN (34463,34455);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_enh_shaman', `AIName` ='' WHERE `entry` IN (34470,34444);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_hunter', `AIName` ='' WHERE `entry` IN (34467,34448);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_rogue', `AIName` ='' WHERE `entry` IN (34472,34454);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_priest', `AIName` ='' WHERE `entry` IN (34466,34447);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_shadow_priest', `AIName` ='' WHERE `entry` IN (34473,34441);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_dk', `AIName` ='' WHERE `entry` IN (34461,34458);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_paladin', `AIName` ='' WHERE `entry` IN (34465,34445);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_retro_paladin', `AIName` ='' WHERE `entry` IN (34471,34456);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_druid', `AIName` ='' WHERE `entry` IN (34460,34451);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_boomkin', `AIName` ='' WHERE `entry` IN (34469,34459);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_warlock' WHERE `entry` IN (34474,34450);
-
-UPDATE `creature_template` SET `ScriptName`='mob_toc_pet_warlock', `AIName` ='' WHERE `entry` IN (35465);
-UPDATE `creature_template` SET `ScriptName`='mob_toc_pet_hunter', `AIName` ='' WHERE `entry` IN (35610);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_warrior', `AIName` ='' WHERE `entry` IN (34475,34453);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_mage', `AIName` ='' WHERE `entry` IN (34468,34449);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_shaman', `AIName` ='' WHERE `entry` IN (34463,34455);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_enh_shaman', `AIName` ='' WHERE `entry` IN (34470,34444);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_hunter', `AIName` ='' WHERE `entry` IN (34467,34448);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_rogue', `AIName` ='' WHERE `entry` IN (34472,34454);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_priest', `AIName` ='' WHERE `entry` IN (34466,34447);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_shadow_priest', `AIName` ='' WHERE `entry` IN (34473,34441);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_dk', `AIName` ='' WHERE `entry` IN (34461,34458);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_paladin', `AIName` ='' WHERE `entry` IN (34465,34445);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_retro_paladin', `AIName` ='' WHERE `entry` IN (34471,34456);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_druid', `AIName` ='' WHERE `entry` IN (34460,34451);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_boomkin', `AIName` ='' WHERE `entry` IN (34469,34459);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_warlock' WHERE `entry` IN (34474,34450);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_pet_warlock', `AIName` ='' WHERE `entry` IN (35465);
+UPDATE `creature_template` SET `ScriptName` = 'mob_toc_pet_hunter', `AIName` ='' WHERE `entry` IN (35610);
 
 DELETE FROM `creature_ai_scripts` WHERE `id` BETWEEN 3444101 AND 3444119;
 
@@ -96,29 +95,29 @@ UPDATE `creature_template` SET `ScriptName` = 'mob_swarm_scarab', `AIName` ='' W
 UPDATE `creature_template` SET `ScriptName` = 'mob_nerubian_borrower', `AIName` ='' WHERE `entry`=34607;
 UPDATE `creature_template` SET `ScriptName` = 'mob_anubarak_spike', `MinLevel` = 80, `MaxLevel` = 80, `AIName` = '' WHERE `entry` = 34660;
 
-DELETE FROM `creature_template` WHERE `entry` IN (34863, 34864, 34865);
+DELETE FROM `creature_template` WHERE `entry` IN (7, 8, 9);
 INSERT INTO `creature_template` (`Entry`, `DifficultyEntry1`, `DifficultyEntry2`, `DifficultyEntry3`, `KillCredit1`, `KillCredit2`, `ModelId1`, `ModelId2`, `ModelId3`, `ModelId4`, `Name`, `SubName`, `IconName`, `GossipMenuId`,             `MinLevel`, `MaxLevel`, `MinLevelHealth`, `MaxLevelHealth`,    `MinLevelMana`, `MaxLevelMana`, `Armor`, `FactionAlliance`, `FactionHorde`, `NpcFlags`, `SpeedWalk`, `SpeedRun`, `Scale`, `Rank`, `MinMeleeDmg`, `MaxMeleeDmg`, `DamageSchool`, `MeleeAttackPower`, `DamageMultiplier`, `MeleeBaseAttackTime`, `RangedBaseAttackTime`, `UnitClass`, `UnitFlags`, `DynamicFlags`, `Family`, `TrainerType`, `TrainerSpell`, `TrainerClass`, `TrainerRace`, `MinRangedDmg`, `MaxRangedDmg`, `RangedAttackPower`, `CreatureType`, `CreatureTypeFlags`, `LootId`, `PickpocketLootId`, `SkinningLootId`, `ResistanceHoly`, `ResistanceFire`, `ResistanceNature`, `ResistanceFrost`, `ResistanceShadow`, `ResistanceArcane`, `PetSpellDataId`, `MinLootGold`, `MaxLootGold`, `AIName`, `MovementType`, `InhabitType`, `RegenerateStats`, `RacialLeader`, `QuestItem1`, `QuestItem2`, `QuestItem3`, `QuestItem4`, `QuestItem5`, `QuestItem6`, `MovementTemplateId`, `HealthMultiplier`, `EquipmentTemplateId`, `MechanicImmuneMask`, `ExtraFlags`, `ScriptName`) VALUES
-(34863, 0, 0, 0, 0, 0, 19725, 28549, 0, 0, 'Nerubian Burrow Two', '', '', 0, 1, 1, 1, 1, 0, 0, 17, 35, 35, 0, 1, 1.14286, 1, 0, 1, 2, 0, 0, 1, 2000, 2000, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, ''),
-(34864, 0, 0, 0, 0, 0, 19725, 28549, 0, 0, 'Nerubian Burrow Three', '', '', 0, 1, 1, 1, 1, 0, 0, 17, 35, 35, 0, 1, 1.14286, 1, 0, 1, 2, 0, 0, 1, 2000, 2000, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, ''),
-(34865, 0, 0, 0, 0, 0, 19725, 28549, 0, 0, 'Nerubian Burrow Four', '', '', 0, 1, 1, 1, 1, 0, 0, 17, 35, 35, 0, 1, 1.14286, 1, 0, 1, 2, 0, 0, 1, 2000, 2000, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, '');
+(7, 0, 0, 0, 0, 0, 19725, 28549, 0, 0, 'Nerubian Burrow Two', '', '', 0, 1, 1, 1, 1, 0, 0, 17, 35, 35, 0, 1, 1.14286, 1, 0, 1, 2, 0, 0, 1, 2000, 2000, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, ''),
+(8, 0, 0, 0, 0, 0, 19725, 28549, 0, 0, 'Nerubian Burrow Three', '', '', 0, 1, 1, 1, 1, 0, 0, 17, 35, 35, 0, 1, 1.14286, 1, 0, 1, 2, 0, 0, 1, 2000, 2000, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, ''),
+(9, 0, 0, 0, 0, 0, 19725, 28549, 0, 0, 'Nerubian Burrow Four', '', '', 0, 1, 1, 1, 1, 0, 0, 17, 35, 35, 0, 1, 1.14286, 1, 0, 1, 2, 0, 0, 1, 2000, 2000, 1, 0, 0, 0, 0, 0, 0, 0, 1, 2, 0, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 2, '');
 
-DELETE FROM `creature_template_addon` WHERE `entry` IN (34863, 34864, 34865);
+DELETE FROM `creature_template_addon` WHERE `entry` IN (7, 8, 9);
 INSERT INTO `creature_template_addon` VALUES
-(34863, 0, 0, 1, 0, 0, 0, '66324'),
-(34864, 0, 0, 1, 0, 0, 0, '66324'),
-(34865, 0, 0, 1, 0, 0, 0, '66324');
+(7, 0, 0, 1, 0, 0, 0, '66324'),
+(8, 0, 0, 1, 0, 0, 0, '66324'),
+(9, 0, 0, 1, 0, 0, 0, '66324');
 
 -- Must be spawned by the script!!
-DELETE FROM `creature` WHERE `id` IN (34862, 34863, 34864, 34865);
+DELETE FROM `creature` WHERE `id` IN (34862, 7, 8, 8);
 INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
 (600000, 34862, 649, 15, 1, 0, 0, 735.403, 75.3576, 142.202, 2.09439, 180, 0, 0, 1, 0, 0, 0),
-(600001, 34863, 649, 15, 1, 0, 0, 692.92, 184.809, 142.203, 5.35816, 180, 0, 0, 1, 0, 0, 0),
-(600002, 34864, 649, 15, 1, 0, 0, 688.207, 102.847, 142.202, 0.645772, 180, 0, 0, 1, 0, 0, 0),
-(600003, 34865, 649, 15, 1, 0, 0, 740.545, 189.113, 142.197, 3.75246, 180, 0, 0, 1, 0, 0, 0);
+(600001, 7, 649, 15, 1, 0, 0, 692.92, 184.809, 142.203, 5.35816, 180, 0, 0, 1, 0, 0, 0),
+(600002, 8, 649, 15, 1, 0, 0, 688.207, 102.847, 142.202, 0.645772, 180, 0, 0, 1, 0, 0, 0),
+(600003, 9, 649, 15, 1, 0, 0, 740.545, 189.113, 142.197, 3.75246, 180, 0, 0, 1, 0, 0, 0);
 
 UPDATE `gameobject_template` SET `flags` = '4' WHERE `entry` = 195485;
 UPDATE `gameobject` SET `spawnMask` = '15' WHERE `guid` = 2358;
-UPDATE `creature_template` SET `ExtraFlags` = '2' WHERE `entry` IN (34862, 34863, 34864, 34865);
+UPDATE `creature_template` SET `ExtraFlags` = '2' WHERE `entry` IN (34862, 7, 8, 9);
 
 -- PSZ patch for Fel Fireball (thx)
 DELETE FROM `spell_dbc` WHERE `Id` IN (66532, 66963, 66964, 66965);

@@ -37,7 +37,7 @@ enum
 
     NPC_XERESTRASZA                = 40429,
 
-    NPC_BALTHARUS_TARGET           = 39900,
+    NPC_BALTHARUS_TARGET           = 16,
     NPC_ZARITHRIAN_SPAWN_STALKER   = 39794,
 
     // Orb rotation
