@@ -178,6 +178,7 @@ INSERT INTO `creature_ai_scripts` (`id`,`creature_id`,`event_type`,`event_invers
 (3702301,37023,0,0,100,31,10000,10000,10000,10000,11,71103,4,0,0,0,0,0,0,0,0,0, 'Plague scientist - combobulating spray'),
 (3702302,37023,0,0,100,31,8000,11000,8000,11000,11,73079,4,0,0,0,0,0,0,0,0,0, 'Plague scientist - plague blast'),
 (3702303,37023,0,0,100,31,15000,20000,15000,20000,11,69871,6,0,0,0,0,0,0,0,0,0, 'Plague scientist - plague stream');
+-- ERROR CreatureEventAI: Event 3702303 Action1 uses incorrect Target type 6 for event-type 0
 
 -- Vengefull fleshreaper (need compare with YTDB)
 DELETE FROM `creature_ai_scripts` WHERE `id`=3703801;
@@ -440,6 +441,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('13200111','132001','11','0','100','30','0','0','0','0','2','6','0','0','0','0','0','0','0','0','0','0','Set Faction 6 at spawn.'),
 ('13200112','132001','2','0','100','30','50','0','0','0','17','24','292000','0','0','0','0','0','0','0','0','0','Get Health Full at 50% HP.'),
 ('13200113','132001','21','0','100','30','0','0','0','0','41','0','0','0','0','0','0','0','0','0','0','0','Force despawn Just Reached Home.');
+-- ERROR CreatureEventAI: Creature 132001 are using percentage event(13200103) with param1 <= param2 (MaxPercent <= MinPercent). Event will never trigger! 
 
 
 DELETE FROM `creature_ai_summons` WHERE `id` IN (1571, 1572, 1573, 1574, 1575, 1576, 1577, 1578, 1579, 1580);
@@ -468,6 +470,8 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('3750307','37503','4','0','100','30','0','0','0','0','21','0','0','0','20','0','0','0','4','17167','0','0','Spider Event Controller - Preevent Stop Combat Movement and False Auto Attack and Play sound.'),
 ('3750308','37503','10','0','100','31','0','500','1000','1000','38','0','0','0','0','0','0','0','0','0','0','0','Spider Event Controller - Start Event'),
 ('3750309','37503','0','0','100','31','3000','3000','20000','20000','32','37501','1','1571','32','37502','1','1573','32','37501','1','1572','Spider Event Controller - Summon Nerub Champion and Webweaver.');
+-- ERROR CreatureEventAI: Event 3750306 Action 1 summons missing CreatureEventAI_Summon 1754
+-- ERROR CreatureEventAI: Creature 37503 are using event(3750303) with nonexistent creature template id (0) in param1, skipped.
 
 -- Creature id: 37502
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '37502';

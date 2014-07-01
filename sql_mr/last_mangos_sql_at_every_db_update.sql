@@ -5,7 +5,6 @@
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 25316;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 26127;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 27483;
-DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 27600;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 28610;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 28939;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29199;
@@ -34,6 +33,19 @@ DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 32191;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 31118;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29395;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 31513;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 39814;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 38163;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 38422;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 38508;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 37949;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 34800;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 36791;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 37863;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 37868;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 37886;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 37934;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 37890;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 37918;
 
 
 -- fixes for YTDB DB update
@@ -53,6 +65,5 @@ DELETE FROM `creature_ai_texts` WHERE `entry` IN(-696, -697);
 DELETE FROM `creature_ai_texts` WHERE `entry`= -1137;
 
 -- Official Sd2 Clean up
-DELETE FROM scripted_event_id WHERE id = 9735;
 UPDATE creature_template SET ScriptName='' WHERE entry IN (30679,32174);
 UPDATE gameobject_template SET ScriptName='' WHERE entry = 193611;

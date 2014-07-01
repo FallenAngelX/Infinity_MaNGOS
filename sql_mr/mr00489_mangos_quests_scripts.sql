@@ -379,6 +379,10 @@ INSERT INTO `creature_ai_scripts` VALUES
 ('2509151', '25091', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25091', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543&R2'),
 ('2509251', '25092', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25092', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543&R2');
 
+UPDATE creature_template SET AIName = 'EventAI' WHERE entry = 25090;
+UPDATE creature_template SET AIName = 'EventAI' WHERE entry = 25091;
+UPDATE creature_template SET AIName = 'EventAI' WHERE entry = 25092;
+
 -- -------------------------
 -- fix quest toxic_test 9051 -- still not working is kill credit
 -- -------------------------

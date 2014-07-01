@@ -132,7 +132,7 @@ UPDATE `creature_template` SET MeleeBaseAttackTime = 1000 WHERE `entry` IN (3781
 -- ------------
 
 UPDATE `creature_template` SET `ExtraFlags` = `ExtraFlags` | 256 WHERE `entry` IN (38296, 38297); -- can't taunt on heroic mode
-UPDATE `creature_template` SET `FactionAlliance` = 14, `FactionHorde` = 14,`ScriptName` = '', `AIName` = '' WHERE `entry`= 38222;
+UPDATE `creature_template` SET `FactionAlliance` = 14, `FactionHorde` = 14,`ScriptName` = '', `AIName` = 'EventAI' WHERE `entry`= 38222;
 UPDATE `creature_template` SET `ScriptName`='mob_cult_adherent', `AIName`='' WHERE `entry`= 37949;
 UPDATE `creature_template` SET `ScriptName`='mob_cult_fanatic', `AIName`='' WHERE `entry`= 37890;
 
