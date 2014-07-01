@@ -64,6 +64,7 @@ UPDATE `creature_loot_template` SET `condition_id` = @ConditionEntry + 2 WHERE `
 UPDATE `creature_loot_template` SET `condition_id` = @ConditionEntry + 3 WHERE `entry` = 28860 AND `groupid` IN (7); -- at least 3 drake
 -- 25 Player
 UPDATE `creature_loot_template` SET `groupid` = 2, `ChanceOrQuestChance` = 0, `mincountOrRef` = 1, `maxcount` = 1 WHERE `entry` = 31311 AND `item` IN (40433, 40630, 43345, 43346);
+-- ERROR:Table 'reference_loot_template' entry 40630 isn't reference id and not referenced from loot, and then useless.
 DELETE FROM `creature_loot_template` WHERE `entry` = 31311 AND `item` = 47241;
 UPDATE `creature_loot_template` SET `condition_id` = @ConditionEntry + 1 WHERE `entry` = 31311 AND `groupid` IN (4); -- at least 1 drake
 UPDATE `creature_loot_template` SET `condition_id` = @ConditionEntry + 2 WHERE `entry` = 31311 AND `groupid` IN (1); -- at least 2 drake
