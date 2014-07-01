@@ -21,8 +21,6 @@ UPDATE `creature_template` SET `ScriptName` = '', `AIName`='' WHERE `entry` = 30
 -- --------------- OLD STUFF ----------------------------------------------------------------------- 
 
 UPDATE `creature_template` SET `ScriptName` = 'mob_flame_orb', `AIName`='' WHERE `entry`=30702;
-UPDATE `creature_template` SET `ScriptName` = 'mob_twisted_visage' WHERE `entry` = 30621;
-UPDATE `creature_template` SET `ScriptName` = 'mob_ancient_void' WHERE `entry` = 30622;
 
 DELETE FROM `creature_template_addon` WHERE `entry` IN (30385, 31474);
 INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES

@@ -13,9 +13,6 @@ UPDATE `item_template` SET `spellid_1` = 24707 WHERE `entry` = 20516;
 -- Boss Headless Horseman fight in scarlet monastry
 -- ------------------------------------------
 
--- Scriptname assignment
-UPDATE creature_template SET ScriptName = 'mob_pulsing_pumpkin' WHERE entry = 23694;
-
 -- Pumkin fiend template fixes
 UPDATE `creature_template` SET `ModelId2` = 21822, `FactionAlliance` = 14, `FactionHorde` = 14 WHERE `entry` = 23545;
 

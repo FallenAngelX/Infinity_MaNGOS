@@ -313,8 +313,6 @@ INSERT INTO `creature_ai_scripts` VALUES ('2551351', '25513', '8', '0', '100', '
 -- Quest :: 12644
 -- -------------------------
 
-UPDATE gameobject_template SET ScriptName='go_still_at_it_quest' WHERE entry IN(190638,190637,190635,190636,190639);
-
 UPDATE creature_template SET ScriptName='npc_tipsy_mcmanus' WHERE entry=28566;
 
 UPDATE `creature_template` SET `MinLevelHealth` = 0, `MaxLevelHealth` = 1 WHERE `entry` = 28537;

@@ -46,7 +46,6 @@ UPDATE `creature_template` SET `ExtraFlags` = 128 WHERE `entry` = 25703;
 DELETE FROM `creature` WHERE `id` = 25038;
 
 UPDATE `creature_template` SET `ScriptName` = 'npc_felmyst_vapor' WHERE `entry` = 25265;
-UPDATE `creature_template` SET `ScriptName` = 'npc_felmyst_vapor_cloud' WHERE `entry` = 25267;
 
 -- Demonic Vapor :: unit flags (not attackable, pacified, not selectable), bosslevel, factions, speed, spawn/dmg aura
 UPDATE `creature_template` SET `ModelId2` = 11686, `MinLevel` = 73, `MaxLevel` = 73, `FactionAlliance` = 16, `FactionHorde` = 16, `UnitFlags` = 33685506 WHERE `entry` = 25265;
@@ -116,17 +115,14 @@ UPDATE `creature_template` SET `SpeedWalk` = 5, `SpeedRun` = 5 WHERE `entry` = 2
 UPDATE `creature` SET position_z = 60.0 WHERE id = 26046;
 -- Orb of the Blue Flight
 UPDATE `gameobject_template` SET `type` = 10, `flags` = 16 WHERE `entry` = 188415;
--- UPDATE `gameobject_template` SET `ScriptName` = 'go_orb_of_the_blue_flight' WHERE `entry` = 188415;
 -- Felfire Portal
 UPDATE `creature_template` SET `UnitFlags` = 33554438, `FactionAlliance` = 14, `FactionHorde` = 14 WHERE `entry` = 25603;
--- UPDATE `creature_template` SET `ScriptName` = 'mob_felfire_portal' WHERE `entry` = 25603;
 -- Kil'jaeden
 UPDATE `creature_template` SET `UnitFlags` = `UnitFlags` | 4 WHERE `entry` = 25315;
 -- Shield Orb
 UPDATE `creature_template` SET `ScriptName` = 'mob_shield_orb' WHERE `entry` = 25502;
 UPDATE `creature_template` SET `SpeedWalk` = 2, `SpeedRun` = 2 WHERE `entry` = 25502;
 -- armageddon creature
-UPDATE `creature_template` SET `ScriptName` = 'npc_armageddon_target' WHERE `entry` = 25735;
 UPDATE `creature_template` SET `ModelId1` = 15880, `UnitFlags` = 33554438, `FactionAlliance` = 14, `FactionHorde` = 14, `MinLevel` = 73, `MaxLevel` = 73 WHERE `entry` = 25735;
 
 -- ---------------------------------------------
