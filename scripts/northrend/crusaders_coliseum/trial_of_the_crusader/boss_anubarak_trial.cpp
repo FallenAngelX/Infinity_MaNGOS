@@ -899,6 +899,26 @@ CreatureAI* GetAI_mob_anubarak_spike(Creature* pCreature)
     return new mob_anubarak_spikeAI(pCreature);
 };
 
+/*######
+## npc_nerubian_borrow
+######*/
+
+// TODO Remove this 'script' when combat movement can be proper prevented from core-side
+struct MANGOS_DLL_DECL npc_nerubian_borrowAI : public Scripted_NoMovementAI
+{
+    npc_nerubian_borrowAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
+
+    void Reset() override { }
+    void MoveInLineOfSight(Unit* /*pWho*/) override { }
+    void AttackStart(Unit* /*pWho*/) override { }
+    void UpdateAI(const uint32 /*uiDiff*/) override { }
+};
+
+CreatureAI* GetAI_npc_nerubian_borrow(Creature* pCreature)
+{
+    return new npc_nerubian_borrowAI(pCreature);
+}
+
 void AddSC_boss_anubarak_trial()
 {
     Script* pNewScript;
@@ -909,8 +929,18 @@ void AddSC_boss_anubarak_trial()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name = "mob_swarm_scarab";
-    pNewScript->GetAI = &GetAI_mob_swarm_scarab;
+    pNewScript->Name = "mob_anubarak_spike";
+    pNewScript->GetAI = &GetAI_mob_anubarak_spike;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "mob_frost_sphere";
+    pNewScript->GetAI = &GetAI_mob_frost_sphere;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_nerubian_borrow";
+    pNewScript->GetAI = &GetAI_npc_nerubian_borrow;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
@@ -919,12 +949,7 @@ void AddSC_boss_anubarak_trial()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name = "mob_anubarak_spike";
-    pNewScript->GetAI = &GetAI_mob_anubarak_spike;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name = "mob_frost_sphere";
-    pNewScript->GetAI = &GetAI_mob_frost_sphere;
+    pNewScript->Name = "mob_swarm_scarab";
+    pNewScript->GetAI = &GetAI_mob_swarm_scarab;
     pNewScript->RegisterSelf();
 }
