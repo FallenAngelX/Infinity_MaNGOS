@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2013 ScriptDev2 <http://www.scriptdev2.com/>
+/* This file is part of the ScriptDev2 Project. See AUTHORS file for Copyright information
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -15,326 +15,390 @@
  */
 
 /* ScriptData
- SDName: Boss_Ymiron
- SD%Complete: 20%
- SDComment:
- SDCategory: Utgarde Pinnacle
- EndScriptData */
+SDName: Boss_Ymiron
+SD%Complete: 90%
+SDComment: Timers
+SDCategory: Utgarde Pinnacle
+EndScriptData */
 
 #include "precompiled.h"
 #include "utgarde_pinnacle.h"
-#include "MotionMaster.h"
 
 enum
 {
-    SAY_AGGRO                       = -1575031,
-    SAY_SUMMON_BJORN                = -1575032,
-    SAY_SUMMON_HALDOR               = -1575033,
-    SAY_SUMMON_RANULF               = -1575034,
-    SAY_SUMMON_TORGYN               = -1575035,
-    SAY_SLAY_1                      = -1575036,
-    SAY_SLAY_2                      = -1575037,
-    SAY_SLAY_3                      = -1575038,
-    SAY_SLAY_4                      = -1575039,
-    SAY_DEATH                       = -1575040,
+    SAY_AGGRO                   = -1575031,
+    SAY_SUMMON_BJORN            = -1575032,
+    SAY_SUMMON_HALDOR           = -1575033,
+    SAY_SUMMON_RANULF           = -1575034,
+    SAY_SUMMON_TORGYN           = -1575035,
+    SAY_SLAY_1                  = -1575036,
+    SAY_SLAY_2                  = -1575037,
+    SAY_SLAY_3                  = -1575038,
+    SAY_SLAY_4                  = -1575039,
+    SAY_DEATH                   = -1575040,
 
-    SPELL_BANE                      = 48294,
-    SPELL_BANE_H                    = 59301,
-    SPELL_DARK_SLASH                = 48292,
-    SPELL_FETID_ROT                 = 48291,
-    SPELL_FETID_ROT_H               = 59300,
-    SPELL_SCREAMS_OF_THE_DEAD       = 51750,
-    SPELL_SPIRIT_BURST              = 48529,
-    SPELL_SPIRIT_BURST_H            = 59305,
-    SPELL_SPIRIT_STRIKE             = 48423,
-    SPELL_SPIRIT_STRIKE_H           = 59304,
+    SPELL_BANE                  = 48294,            // sends script event 20651 when target is hit - set achiev to false
+    SPELL_BANE_H                = 59301,
+    SPELL_DARK_SLASH            = 48292,
+    SPELL_FETID_ROT             = 48291,
+    SPELL_FETID_ROT_H           = 59300,
+    SPELL_SCREAMS_OF_THE_DEAD   = 51750,            // knockback players to summon boat
+    // SPELL_CHOOSE_SPIRIT       = 48306,            // boss chooses spirit
 
-    SPELL_SUMMON_AVENGING_SPIRIT    = 48593,
-    SPELL_SUMMON_SPIRIT_FOUNT       = 48386,
+    // blessings
+    SPELL_SPIRIT_BURST          = 48529,            // by Ranulf
+    SPELL_SPIRIT_BURST_H        = 59305,
+    SPELL_SPIRIT_STRIKE         = 48423,            // by Haldor
+    SPELL_SPIRIT_STRIKE_H       = 59304,
+    SPELL_SUMMON_SPIRIT_FOUNT   = 48386,            // by Bjorn
+    SPELL_SPIRIT_FOUNT_BEAM     = 48385,            // channeled beam on the spirit fount - triggers 48380 : 59320 on aura expire
+    SPELL_AVENGING_SPIRITS      = 48590,            // by Torgyn
 
-    SPELL_CHANNEL_SPIRIT_TO_YMIRON  = 48316,
-    SPELL_CHANNEL_YMIRON_TO_SPIRIT  = 48307,
+    // visuals
+    SPELL_CHANNEL_YMIRON_SPIRIT = 48307,
+    SPELL_CHANNEL_SPIRIT_YMIRON = 48316,
+    SPELL_EMERGE_STATE          = 56864,
+    SPELL_SPIRIT_DIES           = 48596,            // cast by a boat spirit
 
-    SPELL_SPIRIT_FOUNT              = 48380,
-    SPELL_SPIRIT_FOUNT_H            = 59320
+    // by summoned creatures
+    // SPELL_SPIRIT_VISUAL       = 48593,            // avenging spirit summon visual - handled in eventAI
+    // SPELL_WITHER_TRIGG        = 48584,            // aura for avenging spirits - triggers 48585 on melee  - handled in eventAI
 
+    // spirit transforms
+    SPELL_BJORN_TRANSFORM       = 48308,
+    SPELL_HALDOR_TRANSFORM      = 48311,
+    SPELL_RANULF_TRANSFORM      = 48312,
+    SPELL_TORGYN_TRANSFORM      = 48313,
+
+    NPC_SPIRIT_FOUNT            = 27339,
+    // NPC_AVENGING_SPIRIT       = 27386,
+    // NPC_SPIRIT_SUMMONER       = 27392,            // summoned around the boss - triggers 48592
+
+    MAX_BOATS                   = 4,
+
+    PHASE_NO_BOAT               = 0,
+    PHASE_BJORN                 = 1,
+    PHASE_HALDOR                = 2,
+    PHASE_RANULF                = 3,
+    PHASE_TORGYN                = 4
 };
 
-enum Ghost{
-    NO_GHOST= 0,
-    BJORN   = 1,
-    HALDOR  = 2,
-    RANULF  = 3,
-    TORGYN  = 4
-};
-
-enum Creatures
+struct BoatSpirits
 {
-    CREATURE_BJORN          = 27303,
-    CREATURE_BJORN_VISUAL   = 27304,
-    CREATURE_HALDOR         = 27307,
-    CREATURE_HALDOR_VISUAL  = 27310,
-    CREATURE_RANULF         = 27308,
-    CREATURE_RANULF_VISUAL  = 27311,
-    CREATURE_TORGYN         = 27309,
-    CREATURE_TORGYN_VISUAL  = 27312,
-    CREATURE_SPIRIT_FOUNT   = 27339,
-    CREATURE_AVENGING_SPIRIT = 27386
+    uint32 uiSpiritSpell, uiSpiritTarget;
+    int32 iYellId;
+    uint8 uiBoatPhase;
 };
 
-struct ActiveBoatStruct
+static const BoatSpirits aYmironBoatsSpirits[MAX_BOATS] =
 {
-        uint32 npc;
-        int32 say;
-        float MoveX, MoveY, MoveZ, SpawnX, SpawnY, SpawnZ, SpawnO;
+    {SPELL_BJORN_TRANSFORM,  NPC_BJORN,  SAY_SUMMON_BJORN,  PHASE_BJORN},
+    {SPELL_HALDOR_TRANSFORM, NPC_HALDOR, SAY_SUMMON_HALDOR, PHASE_HALDOR},
+    {SPELL_RANULF_TRANSFORM, NPC_RANULF, SAY_SUMMON_RANULF, PHASE_RANULF},
+    {SPELL_TORGYN_TRANSFORM, NPC_TORGYN, SAY_SUMMON_TORGYN, PHASE_TORGYN}
 };
-
-static ActiveBoatStruct ActiveBot[4] =
-{
-{ CREATURE_BJORN_VISUAL, SAY_SUMMON_BJORN, 404.379f, -335.335f, 104.756f, 413.594f, -335.408f, 107.995f, 3.157f },
-{ CREATURE_HALDOR_VISUAL, SAY_SUMMON_HALDOR, 380.813f, -335.069f, 104.756f, 369.994f, -334.771f, 107.995f, 6.232f },
-{ CREATURE_RANULF_VISUAL, SAY_SUMMON_RANULF, 381.546f, -314.362f, 104.756f, 370.841f, -314.426f, 107.995f, 6.232f },
-{ CREATURE_TORGYN_VISUAL, SAY_SUMMON_TORGYN, 404.310f, -314.761f, 104.756f, 413.992f, -314.703f, 107.995f, 3.157f } };
 
 /*######
- ## boss_ymiron
- ######*/
+## boss_ymiron
+######*/
 
-struct MANGOS_DLL_DECL boss_ymironAI: public ScriptedAI
+struct MANGOS_DLL_DECL boss_ymironAI : public ScriptedAI
 {
-        boss_ymironAI(Creature* pCreature) : ScriptedAI(pCreature)
+    boss_ymironAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+
+        for (uint8 i = 0; i < MAX_BOATS; ++i)
+            m_vuiBoatPhases.push_back(i);
+
+        Reset();
+    }
+
+    ScriptedInstance* m_pInstance;
+    bool m_bIsRegularMode;
+
+    uint32 m_uiFetidRotTimer;
+    uint32 m_uiBaneTimer;
+    uint32 m_uiDarkSlashTimer;
+    uint32 m_uiSpiritTransformTimer;
+    uint32 m_uiCombatResumeTimer;
+    uint8 m_uiPhase;
+    uint8 m_uiBoats;
+    float m_fHealthCheck;
+
+    uint32 m_uiSpiritBurstTimer;
+    uint32 m_uiSpiritStrikeTimer;
+    uint32 m_uiSpiritFountTimer;
+    uint32 m_uiAvengingSpiritsTimer;
+
+    bool m_bIsChannelingSpirit;
+
+    ObjectGuid m_uiCurrentSpiritGuid;
+
+    std::vector<uint8> m_vuiBoatPhases;
+
+    void Reset() override
+    {
+        m_uiFetidRotTimer           = urand(8000, 13000);
+        m_uiBaneTimer               = urand(18000, 23000);
+        m_uiDarkSlashTimer          = urand(28000, 33000);
+        m_uiSpiritTransformTimer    = 0;
+        m_uiCombatResumeTimer       = 0;
+        m_uiPhase                   = PHASE_NO_BOAT;
+        m_uiBoats                   = 0;
+        m_fHealthCheck              = m_bIsRegularMode ? 33.3f : 20.0f;
+
+        m_uiSpiritBurstTimer        = 10000;
+        m_uiSpiritStrikeTimer       = 10000;
+        m_uiSpiritFountTimer        = 10000;
+        m_uiAvengingSpiritsTimer    = 10000;
+
+        m_bIsChannelingSpirit       = false;
+
+        m_uiCurrentSpiritGuid.Clear();
+
+        // Randomize spirit order
+        std::random_shuffle(m_vuiBoatPhases.begin(), m_vuiBoatPhases.end());
+    }
+
+    void Aggro(Unit* /*pWho*/) override
+    {
+        DoScriptText(SAY_AGGRO, m_creature);
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_YMIRON, IN_PROGRESS);
+    }
+
+    void KilledUnit(Unit* /*pVictim*/) override
+    {
+        switch (urand(0, 3))
         {
-            m_pInstance = (instance_pinnacle*) pCreature->GetInstanceData();
-            m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-            Reset();
+            case 0: DoScriptText(SAY_SLAY_1, m_creature); break;
+            case 1: DoScriptText(SAY_SLAY_2, m_creature); break;
+            case 2: DoScriptText(SAY_SLAY_3, m_creature); break;
+            case 3: DoScriptText(SAY_SLAY_4, m_creature); break;
+        }
+    }
+
+    void JustDied(Unit* /*pKiller*/) override
+    {
+        DoScriptText(SAY_DEATH, m_creature);
+
+        // Burn the last spirit
+        if (Creature* pSpirit = m_creature->GetMap()->GetCreature(m_uiCurrentSpiritGuid))
+        {
+            pSpirit->InterruptNonMeleeSpells(false);
+            pSpirit->CastSpell(pSpirit, SPELL_SPIRIT_DIES, false);
         }
 
-        instance_pinnacle* m_pInstance;
-        bool m_bIsRegularMode;
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_YMIRON, DONE);
+    }
 
-        Ghost ghost;
+    void JustReachedHome() override
+    {
+        DoResetSpirits();
 
-        float m_fPrecentLifeNextBoat;
-        ObjectGuid m_ghostGUID;
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_YMIRON, FAIL);
+    }
 
-        uint32 m_uiBane;
-        uint32 m_uiFetidRot;
-        uint32 m_uiDarkSlash;
+    // Wrapper which handles the spirits reset
+    void DoResetSpirits()
+    {
+        if (!m_pInstance)
+            return;
 
-        uint32 m_uiSpecialCast;
-
-        GuidList addsList;
-
-        void Reset()
+        for (uint8 i = 0; i < MAX_BOATS; ++i)
         {
-            m_uiFetidRot = urand(8000, 13000);
-            m_uiBane = urand(15000, 18000);
-            m_uiDarkSlash = urand(28000, 33000);
+            if (Creature* pSpirit = m_pInstance->GetSingleCreatureFromStorage(aYmironBoatsSpirits[i].uiSpiritTarget))
+                pSpirit->AI()->EnterEvadeMode();
+        }
+    }
 
-            m_uiSpecialCast = 4000;
-            addsList.clear();
+    void DoChannelSpiritYmiron()
+    {
+        if (Creature* pSpirit = m_creature->GetMap()->GetCreature(m_uiCurrentSpiritGuid))
+            pSpirit->CastSpell(m_creature, SPELL_CHANNEL_SPIRIT_YMIRON, false);
 
-            ghost = NO_GHOST;
-
-            m_fPrecentLifeNextBoat = 80.0f;
+        // Channeling is finished - resume combat
+        if (m_creature->getVictim())
+        {
+            m_creature->GetMotionMaster()->Clear();
+            m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
         }
 
-        void JustSummoned(Creature* pSummoned) override
-        {
-            addsList.push_back(pSummoned->GetObjectGuid());
-        }
+        SetCombatMovement(true);
+        m_bIsChannelingSpirit = false;
 
-        Ghost GetNextActiveBoot()
+        m_uiPhase = aYmironBoatsSpirits[m_vuiBoatPhases[m_uiBoats]].uiBoatPhase;
+        ++m_uiBoats;
+    }
+
+    void JustSummoned(Creature* pSummoned) override
+    {
+        if (pSummoned->GetEntry() == NPC_SPIRIT_FOUNT)
+            DoCastSpellIfCan(pSummoned, SPELL_SPIRIT_FOUNT_BEAM, CAST_INTERRUPT_PREVIOUS);
+    }
+
+    void MovementInform(uint32 uiMotionType, uint32 uiPointId) override
+    {
+        if (uiMotionType != POINT_MOTION_TYPE || !uiPointId)
+            return;
+
+        if (Creature* pSpirit = m_creature->GetMap()->GetCreature(m_uiCurrentSpiritGuid))
         {
-            if (!ghost)
-                return (Ghost) urand(1,4);
+            DoCastSpellIfCan(pSpirit, SPELL_CHANNEL_YMIRON_SPIRIT);
+            DoScriptText(aYmironBoatsSpirits[m_vuiBoatPhases[m_uiBoats]].iYellId, m_creature);
+            m_uiSpiritTransformTimer = 3000;
+            m_uiCombatResumeTimer    = 6000;
+        }
+    }
+
+    void UpdateAI(const uint32 uiDiff) override
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+
+        if (m_uiSpiritTransformTimer)
+        {
+            if (m_uiSpiritTransformTimer <= uiDiff)
+            {
+                if (Creature* pSpirit = m_creature->GetMap()->GetCreature(m_uiCurrentSpiritGuid))
+                {
+                    pSpirit->CastSpell(pSpirit, aYmironBoatsSpirits[m_vuiBoatPhases[m_uiBoats]].uiSpiritSpell, true);
+                    pSpirit->CastSpell(pSpirit, SPELL_EMERGE_STATE, true);
+                }
+                m_uiSpiritTransformTimer = 0;
+            }
             else
-            {
-                uint32 result = ghost;
-                ++result;
-                if (result > TORGYN)
-                {
-                    result = BJORN;
-                }
-                return (Ghost) result;
-            }
+                m_uiSpiritTransformTimer -= uiDiff;
         }
 
-        void Aggro(Unit* pWho)
+        if (m_uiCombatResumeTimer)
         {
+            // This should be done on aura 48307 remove, but because of lack of core support, we'll handle it on normal timer
+            if (m_uiCombatResumeTimer <= uiDiff)
+            {
+                DoChannelSpiritYmiron();
+                m_uiCombatResumeTimer = 0;
+            }
+            else
+                m_uiCombatResumeTimer -= uiDiff;
+        }
+
+        // Don't attack while channeling on the boats
+        if (m_bIsChannelingSpirit)
+            return;
+
+        if (m_uiBaneTimer < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_BANE : SPELL_BANE_H) == CAST_OK)
+                m_uiBaneTimer = urand(20000, 25000);
+        }
+        else
+            m_uiBaneTimer -= uiDiff;
+
+        if (m_uiFetidRotTimer < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FETID_ROT : SPELL_FETID_ROT_H) == CAST_OK)
+                m_uiFetidRotTimer = urand(10000, 15000);
+        }
+        else
+            m_uiFetidRotTimer -= uiDiff;
+
+        if (m_uiDarkSlashTimer < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_DARK_SLASH) == CAST_OK)
+                m_uiDarkSlashTimer = urand(30000, 35000);
+        }
+        else
+            m_uiDarkSlashTimer -= uiDiff;
+
+        // Check the spirit phases (also don't allow him to change phase if below 1%)
+        if (m_creature->GetHealthPercent() < 100 - m_fHealthCheck && m_creature->GetHealthPercent() > 1.0f)
+        {
+            // change phase
+            DoCastSpellIfCan(m_creature, SPELL_SCREAMS_OF_THE_DEAD, CAST_INTERRUPT_PREVIOUS);
+
+            // make the current spirit die (burn)
+            if (Creature* pSpirit = m_creature->GetMap()->GetCreature(m_uiCurrentSpiritGuid))
+            {
+                pSpirit->InterruptNonMeleeSpells(false);
+                pSpirit->CastSpell(pSpirit, SPELL_SPIRIT_DIES, false);
+            }
+
+            // Get a close point to the spirits and move near them
             if (m_pInstance)
             {
-                m_pInstance->SetData(TYPE_YMIRON, IN_PROGRESS);
-                m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_KINGS_BANE, true);
-            }
-            DoScriptText(SAY_AGGRO, m_creature);
-        }
-
-        void KilledUnit(Unit* pVictim) override
-        {
-            switch (urand(0, 3))
-            {
-                case 0:
-                    DoScriptText(SAY_SLAY_1, m_creature);
-                    break;
-                case 1:
-                    DoScriptText(SAY_SLAY_2, m_creature);
-                    break;
-                case 2:
-                    DoScriptText(SAY_SLAY_3, m_creature);
-                    break;
-                case 3:
-                    DoScriptText(SAY_SLAY_4, m_creature);
-                    break;
-            }
-        }
-
-        void EnterEvadeMode() override
-        {
-            ScriptedAI::EnterEvadeMode();
-            if (m_pInstance)
-            {
-                m_pInstance->SetData(TYPE_YMIRON, FAIL);
-            }
-            for(GuidList::iterator itr = addsList.begin(); itr != addsList.end(); ++itr)
-            {
-                if (Creature * pTemp = m_creature->GetMap()->GetCreature(*itr))
+                if (Creature* pSpirit = m_pInstance->GetSingleCreatureFromStorage(aYmironBoatsSpirits[m_vuiBoatPhases[m_uiBoats]].uiSpiritTarget))
                 {
-                    pTemp->ForcedDespawn();
-                }
-            }
-        }
-
-        void JustDied(Unit* pKiller) override
-        {
-            if (m_pInstance)
-            {
-                m_pInstance->SetData(TYPE_YMIRON, DONE);
-            }
-            for(GuidList::iterator itr = addsList.begin(); itr != addsList.end(); ++itr)
-            {
-                if (Creature * pTemp = m_creature->GetMap()->GetCreature(*itr))
-                {
-                    pTemp->ForcedDespawn();
-                }
-            }
-            DoScriptText(SAY_DEATH, m_creature);
-        }
-
-        void MovementInform(uint32 uiMovementType, uint32 uiData)
-        {
-            if (Creature* pOldGhost = m_creature->GetMap()->GetCreature(m_ghostGUID))
-            {
-                pOldGhost->ForcedDespawn();
-            }
-            if (Creature* pGhost = m_creature->SummonCreature(ActiveBot[ghost-1].npc, ActiveBot[ghost-1].SpawnX, ActiveBot[ghost-1].SpawnY,ActiveBot[ghost-1].SpawnZ,ActiveBot[ghost-1].SpawnO, TEMPSUMMON_CORPSE_DESPAWN, 0))
-            {
-                m_ghostGUID = pGhost->GetObjectGuid();
-                DoCast(pGhost, SPELL_CHANNEL_YMIRON_TO_SPIRIT);
-                pGhost->CastSpell(m_creature, SPELL_CHANNEL_SPIRIT_TO_YMIRON,false);
-                pGhost->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE | UNIT_FLAG_NOT_SELECTABLE);
-                pGhost->SetLevitate(true);
-                m_uiSpecialCast = 4000;
-            }
-            if (m_creature->getVictim())
-            {
-                m_creature->GetMotionMaster()->Clear();
-                m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-            }
-
-        }
-
-        void UpdateAI(const uint32 uiDiff) override
-        {
-            if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-                return;
-
-            if (m_creature->GetHealthPercent() < m_fPrecentLifeNextBoat)
-            {
-                if (DoCastSpellIfCan (m_creature, SPELL_SCREAMS_OF_THE_DEAD) == CAST_OK)
-                {
-                    m_fPrecentLifeNextBoat -= 20.0f;
-                    m_uiBane = urand(15000, 18000);
-                    ghost = GetNextActiveBoot();
-                    DoScriptText(ActiveBot[ghost-1].say, m_creature);
-                    m_creature->GetMotionMaster()->Clear();
-                    m_creature->GetMotionMaster()->MovePoint(0, ActiveBot[ghost-1].MoveX, ActiveBot[ghost-1].MoveY, ActiveBot[ghost-1].MoveZ);
+                    float fX, fY, fZ;
+                    m_uiCurrentSpiritGuid = pSpirit->GetObjectGuid();
+                    pSpirit->GetContactPoint(m_creature, fX, fY, fZ, INTERACTION_DISTANCE);
+                    m_creature->GetMotionMaster()->MovePoint(1, fX, fY, fZ);
                 }
             }
 
-            // Normal spells ------------------------------------------------------------------------
-            if (m_uiBane <= uiDiff)
-            {
-                if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_BANE : SPELL_BANE_H) == CAST_OK)
+            SetCombatMovement(false);
+            m_bIsChannelingSpirit = true;
+            m_fHealthCheck += m_bIsRegularMode ? 33.3f : 20.0f;
+        }
+
+        switch (m_uiPhase)
+        {
+            case PHASE_BJORN:
+
+                if (m_uiSpiritFountTimer)
                 {
-                    if (m_pInstance)
+                    if (m_uiSpiritFountTimer <= uiDiff)
                     {
-                        m_pInstance->SetSpecialAchievementCriteria(TYPE_ACHIEV_KINGS_BANE, false);
+                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_SPIRIT_FOUNT) == CAST_OK)
+                            m_uiSpiritFountTimer = 0;
                     }
-                    m_uiBane = urand(20000, 25000);
+                    else
+                        m_uiSpiritFountTimer -= uiDiff;
                 }
-            }
-            else
-                m_uiBane -= uiDiff;
 
-            if (m_uiFetidRot <= uiDiff)
-            {
-                if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FETID_ROT : SPELL_FETID_ROT_H) == CAST_OK)
-                    m_uiFetidRot = urand(10000, 15000);
-            }
-            else
-                m_uiFetidRot -= uiDiff;
+                break;
+            case PHASE_HALDOR:
 
-            if (m_uiDarkSlash <= uiDiff)
-            {
-                if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_DARK_SLASH) == CAST_OK)
-                    m_uiDarkSlash = urand(30000, 35000);
-            }
-            else
-                m_uiDarkSlash -= uiDiff;
-
-            // Special spells ------------------------------------------------------------------------
-            if (ghost != NO_GHOST)
-            {
-                if (m_uiSpecialCast <= uiDiff)
+                if (m_uiSpiritStrikeTimer < uiDiff)
                 {
-                    switch(ghost)
-                    {
-                        
-                        case BJORN:
-                        {
-                            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_SUMMON_SPIRIT_FOUNT) == CAST_OK)
-                                m_uiSpecialCast = 15000;
-                            break;
-                        }
-                        case HALDOR:
-                        {
-                            if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_SPIRIT_STRIKE : SPELL_SPIRIT_STRIKE_H) == CAST_OK)
-                                m_uiSpecialCast = 5000;
-                            break;
-                        }
-                        case RANULF:
-                        {
-                            if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SPIRIT_BURST : SPELL_SPIRIT_BURST_H) == CAST_OK)
-                                m_uiSpecialCast = 5000;
-                            break;
-                        }
-                        case TORGYN:
-                        {
-                            if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_AVENGING_SPIRIT) == CAST_OK)
-                                m_uiSpecialCast = 15000;
-                            break;
-                        }
-                        default:
-                            break;                     
-                    }
+                    if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_SPIRIT_STRIKE : SPELL_SPIRIT_STRIKE_H) == CAST_OK)
+                        m_uiSpiritStrikeTimer = 5000;
                 }
                 else
-                    m_uiSpecialCast -= uiDiff;
-            }
-            
-            DoMeleeAttackIfReady();
+                    m_uiSpiritStrikeTimer -= uiDiff;
+
+                break;
+            case PHASE_RANULF:
+
+                if (m_uiSpiritBurstTimer < uiDiff)
+                {
+                    if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SPIRIT_BURST : SPELL_SPIRIT_BURST_H) == CAST_OK)
+                        m_uiSpiritBurstTimer = 10000;
+                }
+                else
+                    m_uiSpiritBurstTimer -= uiDiff;
+
+                break;
+            case PHASE_TORGYN:
+
+                if (m_uiAvengingSpiritsTimer < uiDiff)
+                {
+                    if (DoCastSpellIfCan(m_creature, SPELL_AVENGING_SPIRITS) == CAST_OK)
+                        m_uiAvengingSpiritsTimer = 15000;
+                }
+                else
+                    m_uiAvengingSpiritsTimer -= uiDiff;
+
+                break;
         }
+
+        DoMeleeAttackIfReady();
+    }
 };
 
 CreatureAI* GetAI_boss_ymiron(Creature* pCreature)
@@ -342,37 +406,17 @@ CreatureAI* GetAI_boss_ymiron(Creature* pCreature)
     return new boss_ymironAI(pCreature);
 }
 
-struct MANGOS_DLL_DECL npc_spirit_fountAI: public ScriptedAI
+bool ProcessEventId_event_achiev_kings_bane(uint32 /*uiEventId*/, Object* pSource, Object* /*pTarget*/, bool /*bIsStart*/)
 {
-        npc_spirit_fountAI(Creature* pCreature) : ScriptedAI(pCreature)
-        {
-            m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-            Reset();
-        }
+    if (instance_pinnacle* pInstance = (instance_pinnacle*)((Creature*)pSource)->GetInstanceData())
+    {
+        if (pInstance->GetData(TYPE_YMIRON) != IN_PROGRESS)
+            return false;
 
-        bool m_bIsRegularMode;
-
-        void Reset()
-        {
-            m_creature->SetSpeedRate(MOVE_WALK, 0.4f);
-            m_creature->SetSpeedRate(MOVE_RUN, 0.4f);
-        }
-
-        void EnterEvadeMode() override
-        {
-            ScriptedAI::EnterEvadeMode();
-            m_creature->ForcedDespawn();
-        }
-
-        void UpdateAI(const uint32  uiDiff)
-        {
-            DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SPIRIT_FOUNT : SPELL_SPIRIT_FOUNT_H, CAST_AURA_NOT_PRESENT);
-        }
-};
-
-CreatureAI* GetAI_npc_spirit_fount(Creature* pCreature)
-{
-    return new npc_spirit_fountAI(pCreature);
+        pInstance->SetData(TYPE_YMIRON, SPECIAL);
+        return true;
+    }
+    return false;
 }
 
 void AddSC_boss_ymiron()
@@ -385,7 +429,7 @@ void AddSC_boss_ymiron()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name = "npc_spirit_fount";
-    pNewScript->GetAI = &GetAI_npc_spirit_fount;
+    pNewScript->Name = "event_achiev_kings_bane";
+    pNewScript->pProcessEventId = &ProcessEventId_event_achiev_kings_bane;
     pNewScript->RegisterSelf();
 }
