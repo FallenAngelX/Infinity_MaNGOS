@@ -108,20 +108,12 @@ void ScriptedAI::EnterCombat(Unit* pEnemy)
 }
 
 /**
-* Called to select / update victim
- */
-Unit* ScriptedAI::SelectVictim()
-{
-    return m_creature->SelectHostileTarget() ? m_creature->getVictim() : NULL;
-}
-
-/**
  * Main update function, by default let the creature behave as expected by a mob (threat management and melee dmg)
  * Always handle here threat-management with m_creature->SelectHostileTarget()
  * Handle (if required) melee attack with DoMeleeAttackIfReady()
  * This is usally overwritten to support timers for ie spells
  */
-void ScriptedAI::UpdateAI(const uint32 /*uiDiff*/)
+void ScriptedAI::UpdateAI(uint32 const /*uiDiff*/)
 {
     // Check if we have a current target
     if (!SelectVictim())
@@ -150,8 +142,11 @@ void ScriptedAI::EnterEvadeMode()
     m_creature->DeleteThreatList();
     m_creature->CombatStop(true);
 
-    if (m_creature->isAlive())
+    if (m_creature->isAlive() && !m_creature->GetVehicle())
+    {
+        m_creature->GetMotionMaster()->Clear(true);
         m_creature->GetMotionMaster()->MoveTargetedHome();
+    }
 
     m_creature->SetLootRecipient(NULL);
 
@@ -185,17 +180,17 @@ void ScriptedAI::DoStopAttack()
         m_creature->AttackStop();
 }
 
-void ScriptedAI::DoCast(Unit* pTarget, uint32 uiSpellId, bool bTriggered)
+void ScriptedAI::DoCast(Unit* pTarget, uint32 uiSpellId, bool bTriggered /*=false*/)
 {
-    if (m_creature->IsNonMeleeSpellCasted(false) && !bTriggered)
+    if (!bTriggered && m_creature->IsNonMeleeSpellCasted(false))
         return;
 
     m_creature->CastSpell(pTarget, uiSpellId, bTriggered);
 }
 
-void ScriptedAI::DoCastSpell(Unit* pTarget, SpellEntry const* pSpellInfo, bool bTriggered)
+void ScriptedAI::DoCastSpell(Unit* pTarget, SpellEntry const* pSpellInfo, bool bTriggered /*=false*/)
 {
-    if (m_creature->IsNonMeleeSpellCasted(false) && !bTriggered)
+    if (!bTriggered && m_creature->IsNonMeleeSpellCasted(false))
         return;
 
     m_creature->CastSpell(pTarget, pSpellInfo, bTriggered);

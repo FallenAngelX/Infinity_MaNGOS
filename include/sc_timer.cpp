@@ -4,7 +4,7 @@
 
 #include "precompiled.h"
 
-bool TTimer::Expired(const uint32 tickDiff)
+bool TTimer::Expired(uint32 const tickDiff)
 {
     m_counter += tickDiff;
     if (m_counter >= m_period)
@@ -16,18 +16,18 @@ bool TTimer::Expired(const uint32 tickDiff)
     return false;
 }
 
-void TTimer::Reset(const uint32 period)
+void TTimer::Reset(uint32 const period)
 {
     m_period  = period;
     m_counter = 0;
 }
 
-void TTimer::Reset(const uint32 periodMin, const uint32 periodMax)
+void TTimer::Reset(uint32 const periodMin, uint32 const periodMax)
 {
     Reset(urand(periodMin, periodMax));
 }
 
-void TTimer::ResetAuto(const uint32 period)
+void TTimer::ResetAuto(uint32 const period)
 {
     Reset(period);
     m_autoReset = true;

@@ -22,7 +22,7 @@ class TTimer
         bool IsSet() const { return m_period > 0; }
 
         void SetAutoReset(bool const autoReset) { m_autoReset = autoReset; }
-        uint32 GetAutoReset() const { return m_autoReset; }
+        bool GetAutoReset() const { return m_autoReset; }
 
         uint32 GetPeriod() const { return m_period; }
         uint32 GetCounter() const { return m_counter; }
