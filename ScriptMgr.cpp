@@ -172,7 +172,7 @@ void InitScriptLibrary()
  * @param pSource Source of the text
  * @param pTarget Can be NULL (depending on CHAT_TYPE of iTextEntry). Possible target for the text
  */
-void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
+void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget/*=NULL*/)
 {
     if (!pSource)
     {
@@ -182,8 +182,8 @@ void DoScriptText(int32 iTextEntry, WorldObject* pSource, Unit* pTarget)
 
     if (iTextEntry >= 0)
     {
-        script_error_log("DoScriptText with source entry %u (TypeId=%u, guid=%u) attempts to process text entry %i, but text entry must be negative.",
-                         pSource->GetEntry(), pSource->GetTypeId(), pSource->GetGUIDLow(), iTextEntry);
+        script_error_log("DoScriptText with source %s attempts to process text entry %i, but text entry must be negative.",
+            pSource->GetGuidStr().c_str(), iTextEntry);
 
         return;
     }
@@ -269,12 +269,19 @@ void Script::RegisterSelf(bool bReportError)
 //*********************************
 //******** AutoScript *************
 
-Script* AutoScript::newScript(const char* scriptName, bool reportError/*=true*/)
+Script* AutoScript::newScript(char const* scriptName, bool reportError /*=true*/)
 {
     Register(); // register last added script (if any)
 
     m_script = new Script(scriptName);
     m_reportError = reportError;
+    return m_script;
+}
+
+Script* AutoScript::newScript(char const* scriptName, TGetAI getAIPtr, bool reportError /*= true*/)
+{
+    newScript(scriptName, reportError);
+    m_script->GetAI = getAIPtr;
     return m_script;
 }
 

@@ -62,7 +62,7 @@ enum EscortFaction
 
 struct Script
 {
-    Script(const char* scriptName = NULL) : Name(scriptName),
+    Script(char const* scriptName = NULL) : Name(scriptName),
         pGossipHello(NULL), pGossipHelloGO(NULL), pGossipSelect(NULL), pGossipSelectGO(NULL),
         pGossipSelectWithCode(NULL), pGossipSelectGOWithCode(NULL),
         pDialogStatusNPC(NULL), pDialogStatusGO(NULL),
@@ -73,7 +73,7 @@ struct Script
         pEffectAuraDummy(NULL), GetAI(NULL), GetInstanceData(NULL)
     {}
 
-    const char* Name;
+    char const* Name;
 
     bool (*pGossipHello             )(Player*, Creature*);
     bool (*pGossipHelloGO           )(Player*, GameObject*);
@@ -108,6 +108,9 @@ struct Script
 // *********************************************************
 // ******************* AutoScript **************************
 
+typedef CreatureAI* (*TGetAI)(Creature*);
+typedef InstanceData* (*TGetInstanceData)(Map*);
+
 class AutoScript
 {
     private:
@@ -118,10 +121,14 @@ class AutoScript
 
     public:
         AutoScript() : m_script(NULL), m_reportError(true) {}
-        AutoScript(const char* scriptName, bool reportError = true) : m_script(NULL) { newScript(scriptName, reportError); }
+        AutoScript(char const* scriptName, bool reportError = true) : m_script(NULL) { newScript(scriptName, reportError); }
+        AutoScript(char const* scriptName, TGetAI getAIPtr, bool reportError = true) : m_script(NULL) { newScript(scriptName, reportError); m_script->GetAI = getAIPtr; }
+        AutoScript(char const* scriptName, TGetInstanceData getIDPtr, bool reportError = true) : m_script(NULL) { newScript(scriptName, reportError); m_script->GetInstanceData = getIDPtr; }
+
         ~AutoScript() { Register(); }
 
-        Script* newScript(const char* scriptName, bool reportError = true);
+        Script* newScript(char const* scriptName, bool reportError = true);
+        Script* newScript(char const* scriptName, TGetAI getAIPtr, bool reportError = true);
 
         Script* operator -> ()
         {
