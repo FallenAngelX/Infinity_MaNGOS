@@ -1323,7 +1323,7 @@ bool EffectDummyCreature_npc_immortal_guardian(Unit* /*pCaster*/, uint32 uiSpell
         uint8 uiProjectedStacks = pCreatureTarget->GetHealthPercent() * 0.1 - 1;
         uint8 uiCurrentStacks = 0;
 
-        if (SpellAuraHolder* pEmpowerAura = pCreatureTarget->GetSpellAuraHolder(SPELL_EMPOWERED_MOD))
+        if (SpellAuraHolderPtr pEmpowerAura = pCreatureTarget->GetSpellAuraHolder(SPELL_EMPOWERED_MOD))
             uiCurrentStacks = pEmpowerAura->GetStackAmount();
 
         // if creature already has the required stacks, ignore
