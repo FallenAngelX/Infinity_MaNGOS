@@ -24,6 +24,7 @@ EndScriptData */
 /* ContentData
 npc_dalaran_guardian_mage
 npc_minigob_manabonk
+npc_dalaran_vendor
 EndContentData */
 
 #include "precompiled.h"
@@ -57,22 +58,23 @@ struct MANGOS_DLL_DECL npc_dalaran_guardian_mageAI : public ScriptedAI
 
     void MoveInLineOfSight(Unit* pWho) override
     {
-        if (m_creature->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
+        if (self->GetDistanceZ(pWho) > CREATURE_Z_ATTACK_RANGE)
             return;
 
-        if (pWho->isTargetableForAttack() && m_creature->IsHostileTo(pWho))
+        if (pWho->isTargetableForAttack() && self->IsHostileTo(pWho))
         {
-            // exception for quests 20439 and 24451
-            if (pWho->HasAura(SPELL_COVENANT_DISGUISE_1) || pWho->HasAura(SPELL_COVENANT_DISGUISE_2) ||
-                    pWho->HasAura(SPELL_SUNREAVER_DISGUISE_1) || pWho->HasAura(SPELL_SUNREAVER_DISGUISE_2))
-                return;
-
-            if (m_creature->IsWithinDistInMap(pWho, m_creature->GetAttackDistance(pWho)) && m_creature->IsWithinLOSInMap(pWho))
+            if (self->IsWithinDistInMap(pWho, self->GetAttackDistance(pWho)) && self->IsWithinLOSInMap(pWho))
             {
                 if (Player* pPlayer = pWho->GetCharmerOrOwnerPlayerOrPlayerItself())
                 {
-                    // it's mentioned that pet may also be teleported, if so, we need to tune script to apply to those in addition.
+                    // exception for quests 20439 and 24451
+                    if (pPlayer->HasAura(SPELL_COVENANT_DISGUISE_1) || pPlayer->HasAura(SPELL_COVENANT_DISGUISE_2) ||
+                        pPlayer->HasAura(SPELL_SUNREAVER_DISGUISE_1) || pPlayer->HasAura(SPELL_SUNREAVER_DISGUISE_2))
+                    {
+                        return;
+                    }
 
+                    // it's mentioned that pet may also be teleported, if so, we need to tune script to apply to those in addition.
                     if (pPlayer->GetAreaId() == AREA_ID_SILVER_ENCLAVE)
                         DoCastSpellIfCan(pPlayer, SPELL_TRESPASSER_A);
                     else if (pPlayer->GetAreaId() == AREA_ID_SUNREAVER)
@@ -129,8 +131,11 @@ struct MANGOS_DLL_DECL npc_minigob_manabonkAI : public ScriptedAI
         {
             if (Player* pPlayer = itr->getSource())
             {
-                if (pPlayer->GetZoneId() == ZONE_DALARAN && !pPlayer->IsFlying() && !pPlayer->IsMounted() && !pPlayer->isGameMaster())
+                if (pPlayer->GetZoneId() == ZONE_DALARAN && !pPlayer->IsFlying() &&
+                    !pPlayer->IsMounted() && !pPlayer->isGameMaster())
+                {
                     lPlayers.push_back(pPlayer);
+                }
             }
         }
 
@@ -213,9 +218,165 @@ struct MANGOS_DLL_DECL npc_minigob_manabonkAI : public ScriptedAI
     }
 };
 
+/*#####
+# npc_dalaran_vendor
+#####*/
+
+enum
+{
+    SAY_VENDOR_1 = -1020384,
+    SAY_VENDOR_2 = -1020385,
+    SAY_VENDOR_3 = -1020386,
+    SAY_VENDOR_4 = -1020387,
+    SAY_VENDOR_5 = -1020388,
+    SAY_VENDOR_6 = -1020389,
+    SAY_VENDOR_7 = -1020390,
+};
+
+struct MANGOS_DLL_DECL npc_dalaran_vendorAI : public ScriptedAI
+{
+    npc_dalaran_vendorAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+
+    TTimer     m_delayTimer;
+    ObjectGuid m_lastPlayerGuid;
+
+    void Reset() override
+    {
+        m_delayTimer.Reset(1000);
+        m_lastPlayerGuid.Clear();
+    }
+
+    void MoveInLineOfSight(Unit* pWho) override
+    {
+        if (!pWho || pWho->GetTypeId() != TYPEID_PLAYER || ((Player*)pWho)->isGameMaster())
+            return;
+
+        if (m_delayTimer.IsSet())
+            return;
+
+        if (m_lastPlayerGuid == pWho->GetObjectGuid())
+            return;
+
+        if (!self->IsWithinDistInMap(pWho, 10.0f) || !self->IsWithinLOSInMap(pWho))
+            return;
+
+        m_delayTimer.Reset(30000, 120000);
+        m_lastPlayerGuid = pWho->GetObjectGuid();
+
+        int32 sayMsgId;
+        switch (self->GetEntry())
+        {
+            case 28714:
+            {
+                int32 sayId[] = {SAY_VENDOR_1, SAY_VENDOR_4, SAY_VENDOR_7};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            case 28715:
+            {
+                int32 sayId[] = {SAY_VENDOR_2, SAY_VENDOR_5, SAY_VENDOR_6};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            case 28718:
+            {
+                int32 sayId[] = {SAY_VENDOR_1, SAY_VENDOR_2, SAY_VENDOR_3, SAY_VENDOR_4, SAY_VENDOR_5, SAY_VENDOR_6, SAY_VENDOR_7};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            case 28721:
+            {
+                int32 sayId[] = {SAY_VENDOR_1, SAY_VENDOR_3, SAY_VENDOR_4, SAY_VENDOR_5, SAY_VENDOR_6, SAY_VENDOR_7};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            case 28723:
+            {
+                int32 sayId[] = {SAY_VENDOR_1, SAY_VENDOR_4, SAY_VENDOR_5};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            case 28725:
+            {
+                int32 sayId[] = {SAY_VENDOR_1, SAY_VENDOR_2, SAY_VENDOR_3, SAY_VENDOR_6};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            case 28726:
+            {
+                int32 sayId[] = {SAY_VENDOR_2, SAY_VENDOR_3, SAY_VENDOR_4, SAY_VENDOR_5, SAY_VENDOR_6, SAY_VENDOR_7};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            case 28727:
+            {
+                int32 sayId[] = {SAY_VENDOR_2, SAY_VENDOR_3, SAY_VENDOR_4, SAY_VENDOR_6};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            case 28989:
+            {
+                int32 sayId[] = {SAY_VENDOR_1, SAY_VENDOR_3, SAY_VENDOR_4, SAY_VENDOR_5, SAY_VENDOR_6, SAY_VENDOR_7};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            case 28994:
+            {
+                int32 sayId[] = {SAY_VENDOR_1, SAY_VENDOR_3, SAY_VENDOR_4, SAY_VENDOR_7};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            case 28997:
+            {
+                int32 sayId[] = {SAY_VENDOR_2, SAY_VENDOR_4, SAY_VENDOR_5, SAY_VENDOR_7};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            case 29491:
+            {
+                int32 sayId[] = {SAY_VENDOR_1, SAY_VENDOR_3};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            case 29523:
+            {
+                int32 sayId[] = {SAY_VENDOR_1, SAY_VENDOR_2, SAY_VENDOR_6, SAY_VENDOR_7};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            case 33027:
+            {
+                int32 sayId[] = {SAY_VENDOR_1, SAY_VENDOR_3, SAY_VENDOR_5, SAY_VENDOR_6, SAY_VENDOR_7};
+                sayMsgId = sayId[urand(0, countof(sayId) - 1)];
+                break;
+            }
+            default:
+                return;
+        }
+
+        DoScriptText(sayMsgId, self, pWho);
+    }
+
+    void UpdateAI(uint32 const uiDiff) override
+    {
+        if (m_delayTimer.IsSet() && m_delayTimer.Expired(uiDiff))
+            m_delayTimer.Reset(0);
+    }
+
+    static CreatureAI* GetAI(Creature* pCreature)
+    {
+        return new npc_dalaran_vendorAI(pCreature);
+    }
+};
+
+/*#####
+# Register scripts
+#####*/
+
 void AddSC_dalaran()
 {
     AutoScript s;
     s.newScript("npc_dalaran_guardian_mage", &npc_dalaran_guardian_mageAI::GetAI);
     s.newScript("npc_minigob_manabonk", &npc_minigob_manabonkAI::GetAI);
+    s.newScript("npc_dalaran_vendor", &npc_dalaran_vendorAI::GetAI);
 }
