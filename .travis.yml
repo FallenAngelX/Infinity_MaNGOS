@@ -11,9 +11,9 @@ compiler:
 
 env:
   global:
-    - C_RELEASE_STRING="-march=native -O2 -DNDEBUG -finput-charset=utf-8 -fexec-charset=utf-8"
+    - C_RELEASE_STRING="-march=native -O2 -DNDEBUG"
     - C_EXTRA_STRING=
-    - CXX_RELEASE_STRING="-march=native -O2 -DNDEBUG -finput-charset=utf-8 -fexec-charset=utf-8"
+    - CXX_RELEASE_STRING="-march=native -O2 -DNDEBUG"
     - CXX_EXTRA_STRING=
     - CMAKE_COMMON_STRING="-DUSE_STD_MALLOC=1 -DCMAKE_INSTALL_PREFIX=../install"
 
