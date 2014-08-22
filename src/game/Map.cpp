@@ -35,6 +35,7 @@
 #include "MapPersistentStateMgr.h"
 #include "VMapFactory.h"
 #include "MoveMap.h"
+#include "MoveMapSharedDefines.h"
 #include "BattleGround/BattleGroundMgr.h"
 #include "Calendar.h"
 #include "Chat.h"
@@ -3012,7 +3013,7 @@ bool Map::GetRandomPointOnGround(uint32 phaseMask, float& x, float& y, float& z,
     if (MMAP::MMapFactory::IsPathfindingEnabled(i_id))
     {
         MMAP::MMapManager* mmap = MMAP::MMapFactory::createOrGetMMapManager();
-        dtNavMeshQuery const* navMeshQuery = mmap->GetNavMeshQuery(i_id, i_instanceId);
+        dtNavMeshQuery const* navMeshQuery = mmap->GetNavMeshQuery(i_id, i_InstanceId);
         if (navMeshQuery)
         {
             // mmap provided a valid usable point
