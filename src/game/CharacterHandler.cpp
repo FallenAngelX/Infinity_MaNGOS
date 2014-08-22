@@ -132,7 +132,9 @@ class CharacterHandler
         }
         void HandlePlayerLoginCallback(QueryResult* /*dummy*/, SqlQueryHolder* holder)
         {
-            if (!holder) return;
+            if (!holder)
+                return;
+
             WorldSession* session = sWorld.FindSession(((LoginQueryHolder*)holder)->GetAccountId());
             if (!session)
             {
@@ -144,16 +146,15 @@ class CharacterHandler
         // Playerbot mod: is different from the normal HandlePlayerLoginCallback in that it
         // sets up the bot's world session and also stores the pointer to the bot player in the master's
         // world session m_playerBots map
-        void HandlePlayerBotLoginCallback(QueryResult * /*dummy*/, SqlQueryHolder * holder, uint32 masterId)
+        void HandlePlayerBotLoginCallback(QueryResult* /*dummy*/, SqlQueryHolder* holder, uint32 masterId)
         {
             if (!holder)
                 return;
 
-            LoginQueryHolder* lqh = (LoginQueryHolder*) holder;
+            LoginQueryHolder* lqh = (LoginQueryHolder*)holder;
 
             WorldSession* masterSession = sWorld.FindSession(masterId);
-
-            if (! masterSession || sObjectMgr.GetPlayer(lqh->GetGuid()))
+            if (!masterSession || masterSession->isLogingOut() || sObjectMgr.GetPlayer(lqh->GetGuid()))
             {
                 delete holder;
                 return;
@@ -161,9 +162,17 @@ class CharacterHandler
 
             // The bot's WorldSession is owned by the bot's Player object
             // The bot's WorldSession is deleted by PlayerbotMgr::LogoutPlayerBot
-            WorldSession *botSession = new WorldSession(lqh->GetAccountId(), NULL, SEC_PLAYER, masterSession->Expansion(), 0, masterSession->GetSessionDbcLocale());
+            WorldSession* botSession = new WorldSession(lqh->GetAccountId(), NULL, SEC_PLAYER, masterSession->Expansion(), 0, masterSession->GetSessionDbcLocale());
             botSession->m_Address = "bot";
             botSession->HandlePlayerLogin(lqh); // will delete lqh
+
+            masterSession = sWorld.FindSession(masterId);
+            if (!masterSession || masterSession->isLogingOut())
+                return;
+
+            if (!masterSession->GetPlayer() || !masterSession->GetPlayer()->GetPlayerbotMgr())
+                return;
+
             masterSession->GetPlayer()->GetPlayerbotMgr()->OnBotLogin(botSession->GetPlayer());
         }
 } chrHandler;
