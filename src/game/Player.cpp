@@ -24733,6 +24733,27 @@ uint8 Player::GetTalentsCount(uint8 tab)
     return talentCount;
 }
 
+bool Player::HasOrphan()
+{
+    if (Pet* pPet = GetMiniPet())
+    {
+        // We have a summon, is it an orphan?
+        switch (pPet->GetEntry())
+        {
+            case 14305: // human
+            case 14444: // orc
+            case 22817: // bloodelf
+            case 22818: // draenei
+            case 33532: // wolvar
+            case 33533: // oracle
+                return true;
+            default:
+                break;
+        }
+    }
+    return false;
+}
+
 uint32 Player::GetModelForForm(SpellShapeshiftFormEntry const* ssEntry) const
 {
     ShapeshiftForm form = ShapeshiftForm(ssEntry->ID);

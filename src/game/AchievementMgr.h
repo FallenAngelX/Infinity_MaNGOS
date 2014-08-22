@@ -70,6 +70,7 @@ enum AchievementCriteriaRequirementType
     ACHIEVEMENT_CRITERIA_REQUIRE_S_EQUIPPED_ITEM_LVL = 19,  // item_level     item_quality  fir equipped item in slot `misc1` to item level and quality
     ACHIEVEMENT_CRITERIA_REQUIRE_NTH_BIRTHDAY        = 20,  // N                            login on day of N-th Birthday
     ACHIEVEMENT_CRITERIA_REQUIRE_KNOWN_TITLE         = 21,  // title_id                     known (pvp) title, values from dbc
+    ACHIEVEMENT_CRITERIA_REQUIRE_T_BE_SPELL_TARGET   = 22,  // spell_id
 };
 
 class Player;
@@ -178,6 +179,11 @@ struct AchievementCriteriaRequirement
         {
             uint32 title_id;
         } known_title;
+        // ACHIEVEMENT_CRITERIA_REQUIRE_T_BE_SPELL_TARGET = 22,
+        struct
+        {
+            uint32 spell_id;
+        } spell;
         // ...
         struct
         {
@@ -260,7 +266,7 @@ class AchievementMgr
         ~AchievementMgr();
 
         void Reset();
-        static void DeleteFromDB(ObjectGuid guid);
+        static void DeleteFromDB(ObjectGuid const& guid);
         void LoadFromDB(QueryResult* achievementResult, QueryResult* criteriaResult);
         void SaveToDB();
         void ResetAchievementCriteria(AchievementCriteriaTypes type, uint32 miscvalue1 = 0, uint32 miscvalue2 = 0);
@@ -300,10 +306,13 @@ class AchievementMgr
         void CompleteAchievementsWithRefs(AchievementEntry const* entry);
         void BuildAllDataPacket(WorldPacket* data);
 
+
+        uint32 GetAchievementPoints() const { return m_achievementPoints; }
         Player* m_player;
         CriteriaProgressMap m_criteriaProgress;
         CompletedAchievementMap m_completedAchievements;
         AchievementCriteriaFailTimeMap m_criteriaFailTimes;
+        uint32 m_achievementPoints;
 };
 
 class AchievementGlobalMgr
