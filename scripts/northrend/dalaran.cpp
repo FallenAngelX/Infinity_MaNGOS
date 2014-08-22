@@ -36,8 +36,8 @@ EndContentData */
 
 enum
 {
-    SPELL_TRESPASSER_H          = 54028,
-    SPELL_TRESPASSER_A          = 54029,
+    SPELL_TRESPASSER_A      = 54028,
+    SPELL_TRESPASSER_H      = 54029,
 
     // Exception auras - used for quests 20439 and 24451
     SPELL_COVENANT_DISGUISE_1   = 70971,
@@ -74,11 +74,15 @@ struct MANGOS_DLL_DECL npc_dalaran_guardian_mageAI : public ScriptedAI
                         return;
                     }
 
-                    // it's mentioned that pet may also be teleported, if so, we need to tune script to apply to those in addition.
-                    if (pPlayer->GetAreaId() == AREA_ID_SILVER_ENCLAVE)
-                        DoCastSpellIfCan(pPlayer, SPELL_TRESPASSER_A);
-                    else if (pPlayer->GetAreaId() == AREA_ID_SUNREAVER)
-                        DoCastSpellIfCan(pPlayer, SPELL_TRESPASSER_H);
+                    uint32 spellId;
+                    switch (pPlayer->GetAreaId())
+                    {
+                        case AREA_ID_SUNREAVER:      spellId = SPELL_TRESPASSER_H; break;
+                        case AREA_ID_SILVER_ENCLAVE: spellId = SPELL_TRESPASSER_A; break;
+                        default:
+                            return;
+                    }
+                    DoCastSpellIfCan(pPlayer, spellId);
                 }
             }
         }
@@ -194,7 +198,7 @@ struct MANGOS_DLL_DECL npc_minigob_manabonkAI : public ScriptedAI
                 self->GetClosePoint(x, y, z, 0.0f, frand(15.0f, 40.0f));
                 self->GetMotionMaster()->MovePoint(0, x, y, z);
 
-                m_eventTimer.Reset(2500);
+                m_eventTimer.Reset(3000);
                 m_eventStage++;
                 break;
             case 2:
