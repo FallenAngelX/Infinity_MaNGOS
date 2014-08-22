@@ -1128,7 +1128,7 @@ uint32 Map::GetMaxPlayers() const
     if (mapDiff && mapDiff->maxPlayers)
         return mapDiff->maxPlayers;
 
-    return m_mapEntry->maxPlayers;
+    return i_mapEntry->maxPlayers;
 }
 
 uint32 Map::GetMaxResetDelay() const
@@ -3009,10 +3009,10 @@ bool Map::GetRandomPointOnGround(uint32 phaseMask, float& x, float& y, float& z,
     float i_y = y + range * sin(angle);
     float i_z = z;
 
-    if (MMAP::MMapFactory::IsPathfindingEnabled(m_id))
+    if (MMAP::MMapFactory::IsPathfindingEnabled(i_id))
     {
         MMAP::MMapManager* mmap = MMAP::MMapFactory::createOrGetMMapManager();
-        dtNavMeshQuery const* navMeshQuery = mmap->GetNavMeshQuery(m_id, m_instanceId);
+        dtNavMeshQuery const* navMeshQuery = mmap->GetNavMeshQuery(i_id, i_instanceId);
         if (navMeshQuery)
         {
             // mmap provided a valid usable point
