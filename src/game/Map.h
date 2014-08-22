@@ -428,6 +428,9 @@ class MANGOS_DLL_SPEC Map : public GridRefManager<NGridType>
         void KillAllEvents(bool force);
         void AddEvent(BasicEvent* Event, uint64 e_time, bool set_addtime = true);
 
+        bool GetRandomPointOnGround(uint32 phaseMask, float& x, float& y, float& z, float o, float radius);
+        bool GetRandomPointInTheAir(uint32 phaseMask, float& x, float& y, float& z, float radius);
+        bool GetRandomPointUnderWater(uint32 phaseMask, float& x, float& y, float& z, float radius, float water_z);
 
     private:
         void LoadMapAndVMap(int gx, int gy);

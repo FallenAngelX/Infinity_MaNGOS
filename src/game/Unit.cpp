@@ -14460,6 +14460,60 @@ void Unit::DisableSpline()
     movespline->_Interrupt();
 }
 
+bool Unit::GetRandomPosition(float& x, float& y, float& z, float radius)
+{
+    if (radius < 0.1f)
+        return false;
+
+    float i_x = x;
+    float i_y = y;
+    float i_z = z;
+
+    bool newDestAssigned = false;   // used to check if new random destination is found
+    float ground_z = GetMap()->GetHeight(GetPhaseMask(), i_x, i_y, i_z) + 0.5f;
+
+    bool canFly;
+    bool canSwim;
+
+    if (GetTypeId() == TYPEID_UNIT)
+    {
+        canFly = ((Creature*)this)->CanFly();
+        canSwim = ((Creature*)this)->CanSwim();
+    }
+    else
+    {
+        canFly = ((Player*)this)->CanFly();
+        canSwim = true;
+    }
+
+    if (canFly && (i_z > ground_z || IsLevitating()))
+    {
+        newDestAssigned = GetMap()->GetRandomPointInTheAir(GetPhaseMask(), i_x, i_y, i_z, radius);
+    }
+    else
+    {
+        if (canSwim)
+        {
+            float water_z;
+            if (GetMap()->GetTerrain()->IsUnderWater(i_x, i_y, i_z, &water_z))
+                newDestAssigned = GetMap()->GetRandomPointUnderWater(GetPhaseMask(), i_x, i_y, i_z, radius, water_z);
+        }
+
+        if (!newDestAssigned)
+            newDestAssigned = GetMap()->GetRandomPointOnGround(GetPhaseMask(), i_x, i_y, i_z, GetOrientation(), radius);
+    }
+
+    if (newDestAssigned)
+    {
+        x = i_x;
+        y = i_y;
+        z = i_z;
+        return true;
+    }
+
+    return false;
+}
+
 uint32 Unit::GetResistance(SpellSchoolMask schoolMask) const
 {
     int32 resistance = 0;
