@@ -1348,7 +1348,7 @@ struct MapEntry
     uint32  MapID;                                          // 0        m_ID
     //char*       internalname;                             // 1        m_Directory
     uint32  map_type;                                       // 2        m_InstanceType
-    uint32 mapFlags;                                        // 3        m_Flags (0x100 - CAN_CHANGE_PLAYER_DIFFICULTY)
+    uint32  mapFlags;                                       // 3        m_Flags (0x100 - CAN_CHANGE_PLAYER_DIFFICULTY)
     //uint32 isPvP;                                         // 4        m_PVP 0 or 1 for battlegrounds (not arenas)
     char*   name[16];                                       // 5-20     m_MapName_lang
                                                             // 21 string flags
@@ -1364,8 +1364,8 @@ struct MapEntry
     float   ghost_entrance_y;                               // 61       m_corpseY entrance y coordinate in ghost mode  (in most cases = normal entrance)
     //uint32  timeOfDayOverride;                            // 62       m_timeOfDayOverride
     uint32  addon;                                          // 63       m_expansionID
-    uint32  instanceResetOffset;                            // 64       m_raidOffset
-    //uint32 maxPlayers;                                    // 65       m_maxPlayers
+    uint32  instanceResetOffset;                            // 64       m_raidOffset offset used instead of first period while creating reset table
+    uint32  maxPlayers;                                     // 65       m_maxPlayers, fallback if not present in MapDifficulty.dbc
 
     // Helpers
     uint32 Expansion() const { return addon; }
@@ -1397,8 +1397,11 @@ struct MapEntry
     {
         if (IsContinent())
             return false;
+
         return map_type == MAP_COMMON && mapFlags == MAP_FLAG_INSTANCEABLE && linked_zone == 0;
     }
+
+    bool IsDynamicDifficultyMap() const { return mapFlags & MAP_FLAG_VARIABLE_DIFFICULTY; }
 };
 
 struct MapDifficultyEntry
