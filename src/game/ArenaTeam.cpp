@@ -190,11 +190,11 @@ bool ArenaTeam::AddMember(ObjectGuid playerGuid)
 
     if (GetType() == ARENA_TYPE_2v2)
     {
-        QueryResult *result = CharacterDatabase.PQuery("SELECT rating2 FROM hidden_rating WHERE guid='%u'", playerGuid.GetCounter());
+        QueryResult* result = CharacterDatabase.PQuery("SELECT rating2 FROM hidden_rating WHERE guid = %u", playerGuid.GetCounter());
 
         if (!result)
         {
-            CharacterDatabase.PExecute("INSERT INTO hidden_rating (guid, rating2, rating3, rating5) VALUES""('%u', '%u', '%u', '%u')", playerGuid.GetCounter(), 1500, 1500, 1500);
+            CharacterDatabase.PExecute("INSERT INTO hidden_rating (guid, rating2, rating3, rating5) VALUES ('%u', '%u', '%u', '%u')", playerGuid.GetCounter(), 1500, 1500, 1500);
             newmember.matchmaker_rating = 1500;
         }
         else
@@ -203,13 +203,12 @@ bool ArenaTeam::AddMember(ObjectGuid playerGuid)
             delete result;
         }
     }
-    if (GetType() == ARENA_TYPE_3v3)
+    else if (GetType() == ARENA_TYPE_3v3)
     {
-        QueryResult *result = CharacterDatabase.PQuery("SELECT rating3 FROM hidden_rating WHERE guid='%u'", playerGuid.GetCounter());
-
+        QueryResult* result = CharacterDatabase.PQuery("SELECT rating3 FROM hidden_rating WHERE guid = %u", playerGuid.GetCounter());
         if (!result)
         {
-            CharacterDatabase.PExecute("INSERT INTO hidden_rating (guid, rating2, rating3, rating5) VALUES""('%u', '%u', '%u', '%u')", playerGuid.GetCounter(), 1500, 1500, 1500);
+            CharacterDatabase.PExecute("INSERT INTO hidden_rating (guid, rating2, rating3, rating5) VALUES (%u, %u, %u, %u)", playerGuid.GetCounter(), 1500, 1500, 1500);
             newmember.matchmaker_rating = 1500;
         }
         else
@@ -218,13 +217,13 @@ bool ArenaTeam::AddMember(ObjectGuid playerGuid)
             delete result;
         }
     }
-    if (GetType() == ARENA_TYPE_5v5)
+    else if (GetType() == ARENA_TYPE_5v5)
     {
-        QueryResult *result = CharacterDatabase.PQuery("SELECT rating5 FROM hidden_rating WHERE guid='%u'", playerGuid.GetCounter());
+        QueryResult* result = CharacterDatabase.PQuery("SELECT rating5 FROM hidden_rating WHERE guid = %u", playerGuid.GetCounter());
 
         if (!result)
         {
-            CharacterDatabase.PExecute("INSERT INTO hidden_rating (guid, rating2, rating3, rating5) VALUES""('%u', '%u', '%u', '%u')", playerGuid.GetCounter(), 1500, 1500, 1500);
+            CharacterDatabase.PExecute("INSERT INTO hidden_rating (guid, rating2, rating3, rating5) VALUES (%u, %u, %u, %u)", playerGuid.GetCounter(), 1500, 1500, 1500);
             newmember.matchmaker_rating = 1500;
         }
         else
@@ -235,6 +234,7 @@ bool ArenaTeam::AddMember(ObjectGuid playerGuid)
     }
 
     int32 conf_value = sWorld.getConfig(CONFIG_INT32_ARENA_STARTPERSONALRATING);
+
     if (conf_value < 0)                                     // -1 = select by season id
     {
         if (sWorldStateMgr.GetWorldStateValue(ARENA_SEASON_ID) >= 6)
@@ -318,7 +318,7 @@ bool ArenaTeam::LoadMembersFromDB(QueryResult* arenaTeamMembersResult)
         {
             // there is in table arena_team_member record which doesn't have arenateamid in arena_team table, report error
             sLog.outErrorDb("ArenaTeam %u does not exist but it has record in arena_team_member table, deleting it!", arenaTeamId);
-            CharacterDatabase.PExecute("DELETE FROM arena_team_member WHERE arenateamid = '%u'", arenaTeamId);
+            CharacterDatabase.PExecute("DELETE FROM arena_team_member WHERE arenateamid = %u", arenaTeamId);
             continue;
         }
 
@@ -338,11 +338,10 @@ bool ArenaTeam::LoadMembersFromDB(QueryResult* arenaTeamMembersResult)
 
         if (GetType() == ARENA_TYPE_2v2)
         {
-            QueryResult *result = CharacterDatabase.PQuery("SELECT rating2 FROM hidden_rating WHERE guid='%u'", fields[1].GetUInt32());
-
+            QueryResult* result = CharacterDatabase.PQuery("SELECT rating2 FROM hidden_rating WHERE guid = %u", fields[1].GetUInt32());
             if (!result)
             {
-                CharacterDatabase.PExecute("INSERT INTO hidden_rating (guid, rating2, rating3, rating5) VALUES""('%u', '%u', '%u', '%u')", fields[1].GetUInt32(), 1500, 1500, 1500);
+                CharacterDatabase.PExecute("INSERT INTO hidden_rating (guid, rating2, rating3, rating5) VALUES (%u, %u, %u, %u)", fields[1].GetUInt32(), 1500, 1500, 1500);
                 newmember.matchmaker_rating = 1500;
             }
             else
@@ -353,11 +352,10 @@ bool ArenaTeam::LoadMembersFromDB(QueryResult* arenaTeamMembersResult)
         }
         if (GetType() == ARENA_TYPE_3v3)
         {
-            QueryResult *result = CharacterDatabase.PQuery("SELECT rating3 FROM hidden_rating WHERE guid='%u'", fields[1].GetUInt32());
-
+            QueryResult* result = CharacterDatabase.PQuery("SELECT rating3 FROM hidden_rating WHERE guid = %u", fields[1].GetUInt32());
             if (!result)
             {
-                CharacterDatabase.PExecute("INSERT INTO hidden_rating (guid, rating2, rating3, rating5) VALUES""('%u', '%u', '%u', '%u')", fields[1].GetUInt32(), 1500, 1500, 1500);
+                CharacterDatabase.PExecute("INSERT INTO hidden_rating (guid, rating2, rating3, rating5) VALUES (%u, %u, %u, %u)", fields[1].GetUInt32(), 1500, 1500, 1500);
                 newmember.matchmaker_rating = 1500;
             }
             else
@@ -368,11 +366,10 @@ bool ArenaTeam::LoadMembersFromDB(QueryResult* arenaTeamMembersResult)
         }
         if (GetType() == ARENA_TYPE_5v5)
         {
-            QueryResult *result = CharacterDatabase.PQuery("SELECT rating5 FROM hidden_rating WHERE guid='%u'", fields[1].GetUInt32());
-
+            QueryResult* result = CharacterDatabase.PQuery("SELECT rating5 FROM hidden_rating WHERE guid = %u", fields[1].GetUInt32());
             if (!result)
             {
-                CharacterDatabase.PExecute("INSERT INTO hidden_rating (guid, rating2, rating3, rating5) VALUES""('%u', '%u', '%u', '%u')", fields[1].GetUInt32(), 1500, 1500, 1500);
+                CharacterDatabase.PExecute("INSERT INTO hidden_rating (guid, rating2, rating3, rating5) VALUES (%u, %u, %u, %u)", fields[1].GetUInt32(), 1500, 1500, 1500);
                 newmember.matchmaker_rating = 1500;
             }
             else
@@ -385,7 +382,7 @@ bool ArenaTeam::LoadMembersFromDB(QueryResult* arenaTeamMembersResult)
         // check if member exists in characters table
         if (newmember.name.empty())
         {
-            CharacterDatabase.PExecute("DELETE FROM hidden_rating where guid = '%u'", fields[1].GetUInt32());
+            CharacterDatabase.PExecute("DELETE FROM hidden_rating where guid = %u", fields[1].GetUInt32());
             sLog.outErrorDb("ArenaTeam %u has member with empty name - probably player %s doesn't exist, deleting him from memberlist!", arenaTeamId, newmember.guid.GetString().c_str());
             DelMember(newmember.guid);
             continue;
@@ -423,11 +420,10 @@ void ArenaTeam::SetCaptain(ObjectGuid guid)
     m_CaptainGuid = guid;
 
     // update database
-    CharacterDatabase.PExecute("UPDATE arena_team SET captainguid = '%u' WHERE arenateamid = '%u'", guid.GetCounter(), m_TeamId);
+    CharacterDatabase.PExecute("UPDATE arena_team SET captainguid = %u WHERE arenateamid = %u", guid.GetCounter(), m_TeamId);
 
     // enable remove/promote buttons
-    Player* newcaptain = sObjectMgr.GetPlayer(guid);
-    if (newcaptain)
+    if (Player* newcaptain = sObjectMgr.GetPlayer(guid))
         newcaptain->SetArenaTeamInfoField(GetSlot(), ARENA_TEAM_MEMBER, 0);
 }
 
@@ -442,8 +438,7 @@ void ArenaTeam::DelMember(ObjectGuid guid)
         }
     }
 
-    Player* player = sObjectMgr.GetPlayer(guid);
-    if (player)
+    if (Player* player = sObjectMgr.GetPlayer(guid))
     {
         player->GetSession()->SendArenaTeamCommandResult(ERR_ARENA_TEAM_QUIT_S, GetName(), "", 0);
         // delete all info regarding this team
@@ -451,7 +446,7 @@ void ArenaTeam::DelMember(ObjectGuid guid)
             player->SetArenaTeamInfoField(GetSlot(), ArenaTeamInfoType(i), 0);
     }
 
-    CharacterDatabase.PExecute("DELETE FROM arena_team_member WHERE arenateamid = '%u' AND guid = '%u'", GetId(), guid.GetCounter());
+    CharacterDatabase.PExecute("DELETE FROM arena_team_member WHERE arenateamid = %u AND guid = %u", GetId(), guid.GetCounter());
 }
 
 void ArenaTeam::Disband(WorldSession* session)
@@ -549,8 +544,7 @@ void ArenaTeam::NotifyStatsChanged()
     // updates arena team stats for every member of the team (not only the ones who participated!)
     for (MemberList::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
     {
-        Player* plr = sObjectMgr.GetPlayer(itr->guid);
-        if (plr)
+        if (Player * plr = sObjectMgr.GetPlayer(itr->guid))
             Stats(plr->GetSession());
     }
 }
@@ -712,10 +706,12 @@ float ArenaTeam::GetChanceAgainst(uint32 own_rating, uint32 enemy_rating)
 {
     // returns the chance to win against a team with the given rating, used in the rating adjustment calculation
     // ELO system
-
     if (sWorldStateMgr.GetWorldStateValue(ARENA_SEASON_ID) >= 6)
+    {
         if (enemy_rating < 1000)
             enemy_rating = 1000;
+    }
+
     return 1.0f / (1.0f + exp(log(10.0f) * (float)((float)enemy_rating - (float)own_rating) / 400.0f));
 }
 
@@ -765,7 +761,7 @@ int32 ArenaTeam::LostAgainst(uint32 againstRating)
     int32 mod = (int32)ceil(K * (0.0f - chance));
     // modify the team stats accordingly
 
-    if(againstRating <= sWorld.getConfig(CONFIG_UINT32_LOSERNOCHANGE) || m_stats.rating <= sWorld.getConfig(CONFIG_UINT32_LOSERNOCHANGE))
+    if (againstRating <= sWorld.getConfig(CONFIG_UINT32_LOSERNOCHANGE) || m_stats.rating <= sWorld.getConfig(CONFIG_UINT32_LOSERNOCHANGE))
         mod = 0;
     else if (m_stats.rating <= sWorld.getConfig(CONFIG_UINT32_LOSERHALFCHANGE))
         mod /= 2;
@@ -776,10 +772,10 @@ int32 ArenaTeam::LostAgainst(uint32 againstRating)
     return mod;
 }
 
-void ArenaTeam::MemberLost(Player* plr, uint32 againstRating)
+void ArenaTeam::MemberLost(Player * plr, uint32 againstRating)
 {
     // called for each participant of a match after losing
-    for (MemberList::iterator itr = m_members.begin(); itr !=  m_members.end(); ++itr)
+    for (MemberList::iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
     {
         if (itr->guid == plr->GetObjectGuid())
         {
@@ -789,7 +785,7 @@ void ArenaTeam::MemberLost(Player* plr, uint32 againstRating)
             // calculate the rating modification (ELO system with k=32 or k=48 if rating<1000)
             int32 mod = (int32)ceil(K * (0.0f - chance));
 
-            if(againstRating <= sWorld.getConfig(CONFIG_UINT32_LOSERNOCHANGE) || itr->personal_rating <= sWorld.getConfig(CONFIG_UINT32_LOSERNOCHANGE))
+            if (againstRating <= sWorld.getConfig(CONFIG_UINT32_LOSERNOCHANGE) || itr->personal_rating <= sWorld.getConfig(CONFIG_UINT32_LOSERNOCHANGE))
                 mod = 0;
             else if (itr->personal_rating <= sWorld.getConfig(CONFIG_UINT32_LOSERHALFCHANGE))
                 mod /= 2;
@@ -946,8 +942,7 @@ bool ArenaTeam::IsFighting() const
 {
     for (MemberList::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
     {
-        Player* plr = sObjectMgr.GetPlayer(itr->guid);
-        if (plr)
+        if (Player* plr = sObjectMgr.GetPlayer(itr->guid))
         {
             if (plr->GetMap()->IsBattleArena())
                 return true;
@@ -959,16 +954,17 @@ bool ArenaTeam::IsFighting() const
 // add new arena event to all already connected team members
 void ArenaTeam::MassInviteToEvent(WorldSession* session)
 {
-    WorldPacket data(SMSG_CALENDAR_ARENA_TEAM);
+    WorldPacket data(SMSG_CALENDAR_ARENA_TEAM, (8 + 1) * m_members.size());
 
     data << uint32(m_members.size());
 
     for (MemberList::const_iterator itr = m_members.begin(); itr != m_members.end(); ++itr)
     {
-        uint32 level = Player::GetLevelFromDB(itr->guid);
-
         if (itr->guid != session->GetPlayer()->GetObjectGuid())
         {
+            Player* pPlayer = sObjectMgr.GetPlayer(itr->guid);
+            uint32 level = pPlayer ? pPlayer->getLevel() : Player::GetLevelFromDB(itr->guid);
+
             data << itr->guid.WriteAsPacked();
             data << uint8(level);
         }
