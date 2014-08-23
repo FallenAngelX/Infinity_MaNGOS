@@ -968,10 +968,25 @@ struct BGData
 
     bool m_needSave;                                        ///< true, if saved to DB fields modified after prev. save (marked as "saved" above)
 
-    bool forLFG;                                            // true, if data used for LFG entry point set ( fields modified after prev. save (instanceID = 0!)
+    bool forLFG;                                            // true, if data used for LFG entry point set (fields modified after prev. save (instanceID = 0!)
 
     void ClearTaxiPath()     { taxiPath[0] = taxiPath[1] = 0; }
     bool HasTaxiPath() const { return taxiPath[0] && taxiPath[1]; }
+};
+
+struct TTradeStatusInfo
+{
+    TTradeStatusInfo() :
+        m_status(TRADE_STATUS_BUSY), m_traderGuid(ObjectGuid()),
+        m_itemLimitCategoryId(0), m_slot(0),
+        m_invResult(EQUIP_ERR_OK), m_isTargetResult(false) {}
+
+    TradeStatus      m_status;
+    ObjectGuid       m_traderGuid;
+    uint32           m_itemLimitCategoryId;
+    uint8            m_slot;
+    InventoryResult  m_invResult;
+    bool             m_isTargetResult;
 };
 
 class TradeData
@@ -1201,8 +1216,8 @@ class MANGOS_DLL_SPEC Player : public Unit
         bool CanNoReagentCast(SpellEntry const* spellInfo) const;
         bool HasItemOrGemWithIdEquipped(uint32 item, uint32 count, uint8 except_slot = NULL_SLOT) const;
         bool HasItemOrGemWithLimitCategoryEquipped(uint32 limitCategory, uint32 count, uint8 except_slot = NULL_SLOT) const;
-        InventoryResult CanTakeMoreSimilarItems(Item* pItem) const { return _CanTakeMoreSimilarItems(pItem->GetEntry(), pItem->GetCount(), pItem); }
-        InventoryResult CanTakeMoreSimilarItems(uint32 entry, uint32 count) const { return _CanTakeMoreSimilarItems(entry, count, NULL); }
+        InventoryResult CanTakeMoreSimilarItems(Item* pItem, uint32* itemLimitCategory = NULL) const { return _CanTakeMoreSimilarItems(pItem->GetEntry(), pItem->GetCount(), pItem, NULL, itemLimitCategory); }
+        InventoryResult CanTakeMoreSimilarItems(uint32 entry, uint32 count, uint32* itemLimitCategory = NULL) const { return _CanTakeMoreSimilarItems(entry, count, NULL, NULL, itemLimitCategory); }
         InventoryResult CanStoreNewItem(uint8 bag, uint8 slot, ItemPosCountVec& dest, uint32 item, uint32 count, uint32* no_space_count = NULL) const
         {
             return _CanStoreItem(bag, slot, dest, item, count, NULL, false, no_space_count);
@@ -1215,7 +1230,7 @@ class MANGOS_DLL_SPEC Player : public Unit
             return _CanStoreItem(bag, slot, dest, pItem->GetEntry(), count, pItem, swap, NULL);
 
         }
-        InventoryResult CanStoreItems(Item **pItem,int count) const;
+        InventoryResult CanStoreItems(Item** pItem, int count, uint32* itemLimitCategory) const;
         InventoryResult CanEquipNewItem(uint8 slot, uint16 &dest, uint32 item, bool swap) const;
         InventoryResult CanEquipItem(uint8 slot, uint16 &dest, Item *pItem, bool swap, bool direct_action = true) const;
 
@@ -1242,7 +1257,7 @@ class MANGOS_DLL_SPEC Player : public Unit
 
         Item* ConvertItem(Item* item, uint32 newItemId);
 
-        InventoryResult _CanTakeMoreSimilarItems(uint32 entry, uint32 count, Item* pItem, uint32* no_space_count = NULL) const;
+        InventoryResult _CanTakeMoreSimilarItems(uint32 entry, uint32 count, Item* pItem, uint32* no_space_count = NULL, uint32* itemLimitCategory = NULL) const;
         InventoryResult _CanStoreItem(uint8 bag, uint8 slot, ItemPosCountVec& dest, uint32 entry, uint32 count, Item *pItem = NULL, bool swap = false, uint32* no_space_count = NULL) const;
 
         void ApplyEquipCooldown(Item * pItem);
@@ -1539,6 +1554,7 @@ class MANGOS_DLL_SPEC Player : public Unit
             MoneyChanged(value);
             UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HIGHEST_GOLD_VALUE_OWNED);
         }
+        bool HasEnoughMoney(uint32 amount) const { return (GetMoney() >= amount); }
 
         QuestStatusMap const& GetQuestStatusMap() { return mQuestStatus; };
         QuestStatusData* GetQuestStatusData(uint32 questId);

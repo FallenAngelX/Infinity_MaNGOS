@@ -360,9 +360,12 @@ void TradeData::SetMoney(uint32 money)
     if (m_money == money)
         return;
 
-    if (money > m_player->GetMoney())
+    if (!m_player->HasEnoughMoney(money))
     {
-        m_player->GetSession()->SendTradeStatus(TRADE_STATUS_BUSY);
+        TTradeStatusInfo info;
+        info.m_status = TRADE_STATUS_CLOSE_WINDOW;
+        info.m_invResult = EQUIP_ERR_NOT_ENOUGH_MONEY;
+        m_player->GetSession()->SendTradeStatus(info);
         return;
     }
 
@@ -388,10 +391,13 @@ void TradeData::SetAccepted(bool state, bool crosssend /*= false*/)
 
     if (!state)
     {
+        TTradeStatusInfo info;
+        info.m_status = TRADE_STATUS_BACK_TO_TRADE;
+
         if (crosssend)
-            m_trader->GetSession()->SendTradeStatus(TRADE_STATUS_BACK_TO_TRADE);
+            m_trader->GetSession()->SendTradeStatus(info);
         else
-            m_player->GetSession()->SendTradeStatus(TRADE_STATUS_BACK_TO_TRADE);
+            m_player->GetSession()->SendTradeStatus(info);
     }
 }
 
@@ -9738,7 +9744,7 @@ bool Player::HasItemOrGemWithLimitCategoryEquipped(uint32 limitCategory, uint32 
     return false;
 }
 
-InventoryResult Player::_CanTakeMoreSimilarItems(uint32 entry, uint32 count, Item* pItem, uint32* no_space_count) const
+InventoryResult Player::_CanTakeMoreSimilarItems(uint32 entry, uint32 count, Item* pItem, uint32* no_space_count /*=NULL*/, uint32* itemLimitCategory /*=NULL*/) const
 {
     ItemPrototype const* pProto = ObjectMgr::GetItemPrototype(entry);
     if (!pProto)
@@ -9780,6 +9786,8 @@ InventoryResult Player::_CanTakeMoreSimilarItems(uint32 entry, uint32 count, Ite
             {
                 if (no_space_count)
                     *no_space_count = count + curcount - limitEntry->maxCount;
+                if (itemLimitCategory)
+                    *itemLimitCategory = pProto->ItemLimitCategory;
                 return EQUIP_ERR_ITEM_MAX_LIMIT_CATEGORY_COUNT_EXCEEDED_IS;
             }
         }
@@ -10437,22 +10445,22 @@ InventoryResult Player::_CanStoreItem(uint8 bag, uint8 slot, ItemPosCountVec& de
 }
 
 //////////////////////////////////////////////////////////////////////////
-InventoryResult Player::CanStoreItems(Item** pItems, int count) const
+InventoryResult Player::CanStoreItems(Item** pItems, int count, uint32* itemLimitCategory) const
 {
     Item* pItem2;
 
     // fill space table
-    int inv_slot_items[INVENTORY_SLOT_ITEM_END - INVENTORY_SLOT_ITEM_START];
-    int inv_bags[INVENTORY_SLOT_BAG_END - INVENTORY_SLOT_BAG_START][MAX_BAG_SIZE];
-    int inv_keys[KEYRING_SLOT_END - KEYRING_SLOT_START];
-    int inv_tokens[CURRENCYTOKEN_SLOT_END - CURRENCYTOKEN_SLOT_START];
+    uint32 inv_slot_items[INVENTORY_SLOT_ITEM_END - INVENTORY_SLOT_ITEM_START];
+    uint32 inv_bags[INVENTORY_SLOT_BAG_END - INVENTORY_SLOT_BAG_START][MAX_BAG_SIZE];
+    uint32 inv_keys[KEYRING_SLOT_END - KEYRING_SLOT_START];
+    uint32 inv_tokens[CURRENCYTOKEN_SLOT_END - CURRENCYTOKEN_SLOT_START];
 
-    memset(inv_slot_items, 0, sizeof(int) * (INVENTORY_SLOT_ITEM_END - INVENTORY_SLOT_ITEM_START));
-    memset(inv_bags, 0, sizeof(int) * (INVENTORY_SLOT_BAG_END - INVENTORY_SLOT_BAG_START)*MAX_BAG_SIZE);
-    memset(inv_keys, 0, sizeof(int) * (KEYRING_SLOT_END - KEYRING_SLOT_START));
-    memset(inv_tokens, 0, sizeof(int) * (CURRENCYTOKEN_SLOT_END - CURRENCYTOKEN_SLOT_START));
+    memset(inv_slot_items, 0, sizeof(uint32) * (INVENTORY_SLOT_ITEM_END - INVENTORY_SLOT_ITEM_START));
+    memset(inv_bags, 0, sizeof(uint32) * (INVENTORY_SLOT_BAG_END - INVENTORY_SLOT_BAG_START)*MAX_BAG_SIZE);
+    memset(inv_keys, 0, sizeof(uint32) * (KEYRING_SLOT_END - KEYRING_SLOT_START));
+    memset(inv_tokens, 0, sizeof(uint32) * (CURRENCYTOKEN_SLOT_END - CURRENCYTOKEN_SLOT_START));
 
-    for (int i = INVENTORY_SLOT_ITEM_START; i < INVENTORY_SLOT_ITEM_END; ++i)
+    for (uint8 i = INVENTORY_SLOT_ITEM_START; i < INVENTORY_SLOT_ITEM_END; ++i)
     {
         pItem2 = GetItemByPos(INVENTORY_SLOT_BAG_0, i);
 
@@ -10462,7 +10470,7 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
         }
     }
 
-    for (int i = KEYRING_SLOT_START; i < KEYRING_SLOT_END; ++i)
+    for (uint8 i = KEYRING_SLOT_START; i < KEYRING_SLOT_END; ++i)
     {
         pItem2 = GetItemByPos(INVENTORY_SLOT_BAG_0, i);
 
@@ -10472,7 +10480,7 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
         }
     }
 
-    for (int i = CURRENCYTOKEN_SLOT_START; i < CURRENCYTOKEN_SLOT_END; ++i)
+    for (uint8 i = CURRENCYTOKEN_SLOT_START; i < CURRENCYTOKEN_SLOT_END; ++i)
     {
         pItem2 = GetItemByPos(INVENTORY_SLOT_BAG_0, i);
 
@@ -10482,7 +10490,7 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
         }
     }
 
-    for (int i = INVENTORY_SLOT_BAG_START; i < INVENTORY_SLOT_BAG_END; ++i)
+    for (uint8 i = INVENTORY_SLOT_BAG_START; i < INVENTORY_SLOT_BAG_END; ++i)
     {
         if (Bag* pBag = (Bag*)GetItemByPos(INVENTORY_SLOT_BAG_0, i))
         {
@@ -10503,7 +10511,8 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
         Item* pItem = pItems[k];
 
         // no item
-        if (!pItem)  continue;
+        if (!pItem)
+            continue;
 
         DEBUG_LOG("STORAGE: CanStoreItems %i. item = %u, count = %u", k + 1, pItem->GetEntry(), pItem->GetCount());
         ItemPrototype const* pProto = pItem->GetProto();
@@ -10524,7 +10533,7 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
         ItemPrototype const* pBagProto;
 
         // item is 'one item only'
-        InventoryResult res = CanTakeMoreSimilarItems(pItem);
+        InventoryResult res = CanTakeMoreSimilarItems(pItem, itemLimitCategory);
         if (res != EQUIP_ERR_OK)
             return res;
 
@@ -10533,7 +10542,7 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
         {
             bool b_found = false;
 
-            for (int t = KEYRING_SLOT_START; t < KEYRING_SLOT_END; ++t)
+            for (uint8 t = KEYRING_SLOT_START; t < KEYRING_SLOT_END; ++t)
             {
                 pItem2 = GetItemByPos(INVENTORY_SLOT_BAG_0, t);
                 if (pItem2 && pItem2->CanBeMergedPartlyWith(pProto) == EQUIP_ERR_OK && inv_keys[t - KEYRING_SLOT_START] + pItem->GetCount() <= pProto->GetMaxStackSize())
@@ -10543,9 +10552,10 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
                     break;
                 }
             }
-            if (b_found) continue;
+            if (b_found)
+                continue;
 
-            for (int t = CURRENCYTOKEN_SLOT_START; t < CURRENCYTOKEN_SLOT_END; ++t)
+            for (uint8 t = CURRENCYTOKEN_SLOT_START; t < CURRENCYTOKEN_SLOT_END; ++t)
             {
                 pItem2 = GetItemByPos(INVENTORY_SLOT_BAG_0, t);
                 if (pItem2 && pItem2->CanBeMergedPartlyWith(pProto) == EQUIP_ERR_OK && inv_tokens[t - CURRENCYTOKEN_SLOT_START] + pItem->GetCount() <= pProto->GetMaxStackSize())
@@ -10555,9 +10565,10 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
                     break;
                 }
             }
-            if (b_found) continue;
+            if (b_found)
+                continue;
 
-            for (int t = INVENTORY_SLOT_ITEM_START; t < INVENTORY_SLOT_ITEM_END; ++t)
+            for (uint8 t = INVENTORY_SLOT_ITEM_START; t < INVENTORY_SLOT_ITEM_END; ++t)
             {
                 pItem2 = GetItemByPos(INVENTORY_SLOT_BAG_0, t);
                 if (pItem2 && pItem2->CanBeMergedPartlyWith(pProto) == EQUIP_ERR_OK && inv_slot_items[t - INVENTORY_SLOT_ITEM_START] + pItem->GetCount() <= pProto->GetMaxStackSize())
@@ -10567,9 +10578,10 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
                     break;
                 }
             }
-            if (b_found) continue;
+            if (b_found)
+                continue;
 
-            for (int t = INVENTORY_SLOT_BAG_START; !b_found && t < INVENTORY_SLOT_BAG_END; ++t)
+            for (uint8 t = INVENTORY_SLOT_BAG_START; !b_found && t < INVENTORY_SLOT_BAG_END; ++t)
             {
                 pBag = (Bag*)GetItemByPos(INVENTORY_SLOT_BAG_0, t);
                 if (pBag)
@@ -10586,7 +10598,8 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
                     }
                 }
             }
-            if (b_found) continue;
+            if (b_found)
+                continue;
         }
 
         // special bag case
@@ -10607,7 +10620,8 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
                 }
             }
 
-            if (b_found) continue;
+            if (b_found)
+                continue;
 
             if (pProto->BagFamily & BAG_FAMILY_MASK_CURRENCY_TOKENS)
             {
@@ -10622,9 +10636,10 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
                 }
             }
 
-            if (b_found) continue;
+            if (b_found)
+                continue;
 
-            for (int t = INVENTORY_SLOT_BAG_START; !b_found && t < INVENTORY_SLOT_BAG_END; ++t)
+            for (uint8 t = INVENTORY_SLOT_BAG_START; !b_found && t < INVENTORY_SLOT_BAG_END; ++t)
             {
                 pBag = (Bag*)GetItemByPos(INVENTORY_SLOT_BAG_0, t);
                 if (pBag)
@@ -10647,12 +10662,13 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
                     }
                 }
             }
-            if (b_found) continue;
+            if (b_found)
+                continue;
         }
 
         // search free slot
         bool b_found = false;
-        for (int t = INVENTORY_SLOT_ITEM_START; t < INVENTORY_SLOT_ITEM_END; ++t)
+        for (uint8 t = INVENTORY_SLOT_ITEM_START; t < INVENTORY_SLOT_ITEM_END; ++t)
         {
             if (inv_slot_items[t - INVENTORY_SLOT_ITEM_START] == 0)
             {
@@ -10661,10 +10677,11 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
                 break;
             }
         }
-        if (b_found) continue;
+        if (b_found)
+            continue;
 
         // search free slot in bags
-        for (int t = INVENTORY_SLOT_BAG_START; !b_found && t < INVENTORY_SLOT_BAG_END; ++t)
+        for (uint8 t = INVENTORY_SLOT_BAG_START; !b_found && t < INVENTORY_SLOT_BAG_END; ++t)
         {
             pBag = (Bag*)GetItemByPos(INVENTORY_SLOT_BAG_0, t);
             if (pBag)
@@ -10689,7 +10706,7 @@ InventoryResult Player::CanStoreItems(Item** pItems, int count) const
 
         // no free slot found?
         if (!b_found)
-            return EQUIP_ERR_INVENTORY_FULL;
+            return EQUIP_ERR_BAG_FULL;
     }
 
     return EQUIP_ERR_OK;

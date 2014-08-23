@@ -3092,7 +3092,7 @@ enum TradeStatus
     TRADE_STATUS_NO_TARGET      = 6,
     TRADE_STATUS_BACK_TO_TRADE  = 7,
     TRADE_STATUS_TRADE_COMPLETE = 8,
-    // 9?
+    TRADE_STATUS_TRADE_REJECTED = 9,
     TRADE_STATUS_TARGET_TO_FAR  = 10,
     TRADE_STATUS_WRONG_FACTION  = 11,
     TRADE_STATUS_CLOSE_WINDOW   = 12,
@@ -3105,8 +3105,8 @@ enum TradeStatus
     TRADE_STATUS_YOU_LOGOUT     = 19,
     TRADE_STATUS_TARGET_LOGOUT  = 20,
     TRADE_STATUS_TRIAL_ACCOUNT  = 21,                       // Trial accounts can not perform that action
-    TRADE_STATUS_ONLY_CONJURED  = 22,                       // You can only trade conjured items... (cross realm BG related).
-    TRADE_STATUS_NOT_ELIGIBLE   = 23                        // Related to trading soulbound loot items
+    TRADE_STATUS_WRONG_REALM    = 22,                       // You can only trade conjured items... (cross realm BG related).
+    TRADE_STATUS_NOT_ON_TAPLIST = 23                        // Related to trading soulbound loot items
 };
 
 enum EncounterCreditType
@@ -3147,6 +3147,7 @@ enum AreaLockStatus
 
 #define CONTACT_DISTANCE            0.5f
 #define INTERACTION_DISTANCE        5.0f
+#define TRADE_DISTANCE              11.11f
 #define ATTACK_DISTANCE             5.0f
 #define MAX_VISIBILITY_DISTANCE     500.0f      // max distance for visible object show, limited in 500 yards
 #define DEFAULT_VISIBILITY_DISTANCE 90.0f       // default visible distance, 90 yards on continents
