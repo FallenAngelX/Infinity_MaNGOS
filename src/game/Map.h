@@ -193,6 +193,8 @@ class MANGOS_DLL_SPEC Map : public GridRefManager<NGridType>
     public:
         virtual ~Map();
 
+        MapEntry const* GetEntry() const { return m_mapEntry; }
+
         // currently unused for normal maps
         bool CanUnload(uint32 diff)
         {
@@ -292,6 +294,7 @@ class MANGOS_DLL_SPEC Map : public GridRefManager<NGridType>
         bool IsDungeon() const { return i_mapEntry && i_mapEntry->IsDungeon(); }
         bool IsRaid() const { return i_mapEntry && i_mapEntry->IsRaid(); }
         bool IsRaidOrHeroicDungeon() const { return IsRaid() || GetDifficulty() > DUNGEON_DIFFICULTY_NORMAL; }
+        bool IsHeroic() const { return IsRaid() ? GetDifficulty() >= RAID_DIFFICULTY_10MAN_HEROIC : GetDifficulty() >= DUNGEON_DIFFICULTY_HEROIC; }
         bool IsBattleGround() const { return i_mapEntry && i_mapEntry->IsBattleGround(); }
         bool IsBattleArena() const { return i_mapEntry && i_mapEntry->IsBattleArena(); }
         bool IsBattleGroundOrArena() const { return i_mapEntry && i_mapEntry->IsBattleGroundOrArena(); }
