@@ -4604,20 +4604,23 @@ void Unit::DeMorph()
 
 int32 Unit::GetTotalAuraModifier(AuraType auratype) const
 {
+    AuraList const& mTotalAuraList = GetAurasByType(auratype);
+    if (mTotalAuraList.empty())
+        return 0;
+
     int32 modifier = 0;
     int32 nonStackingPos = 0;
     int32 nonStackingNeg = 0;
 
-    AuraList const& mTotalAuraList = GetAurasByType(auratype);
-    for(AuraList::const_iterator i = mTotalAuraList.begin();i != mTotalAuraList.end(); ++i)
+    for (AuraList::const_iterator i = mTotalAuraList.begin(); i != mTotalAuraList.end(); ++i)
     {
-        if((*i)->IsStacking())
+        if ((*i)->IsStacking())
             modifier += (*i)->GetModifier()->m_amount;
         else
         {
-            if((*i)->GetModifier()->m_amount > nonStackingPos)
+            if ((*i)->GetModifier()->m_amount > nonStackingPos)
                 nonStackingPos = (*i)->GetModifier()->m_amount;
-            else if((*i)->GetModifier()->m_amount < nonStackingNeg)
+            else if ((*i)->GetModifier()->m_amount < nonStackingNeg)
                 nonStackingNeg = (*i)->GetModifier()->m_amount;
         }
     }
@@ -14706,9 +14709,11 @@ void Unit::RemoveSpellCategoryCooldown(uint32 cat, bool update /* = false */)
 void Unit::AddSpellAndCategoryCooldowns(SpellEntry const* spellInfo, uint32 itemId /*= 0*/, bool infinityCooldown  /*= false*/)
 {
     // init cooldown values
-    uint32 category   = 0;
-    int32 cooldown    = -1;
+    uint32 category = 0;
+    int32 cooldown = -1;
     int32 categorycooldown = -1;
+
+    bool needsCooldownPacket = false;
 
     // some special item spells without correct cooldown in SpellInfo
     // cooldown information stored in item prototype
@@ -14718,12 +14723,12 @@ void Unit::AddSpellAndCategoryCooldowns(SpellEntry const* spellInfo, uint32 item
     {
         if (ItemPrototype const* proto = ObjectMgr::GetItemPrototype(itemId))
         {
-            for (int idx = 0; idx < MAX_ITEM_PROTO_SPELLS; ++idx)
+            for (uint8 idx = 0; idx < MAX_ITEM_PROTO_SPELLS; ++idx)
             {
                 if (proto->Spells[idx].SpellId == spellInfo->Id)
                 {
-                    category    = proto->Spells[idx].SpellCategory;
-                    cooldown    = proto->Spells[idx].SpellCooldown;
+                    category = proto->Spells[idx].SpellCategory;
+                    cooldown = proto->Spells[idx].SpellCooldown;
                     categorycooldown = proto->Spells[idx].SpellCategoryCooldown;
                     break;
                 }
@@ -14749,15 +14754,20 @@ void Unit::AddSpellAndCategoryCooldowns(SpellEntry const* spellInfo, uint32 item
     {
         // use +MONTH as infinity mark for spell cooldown (will checked as MONTH/2 at save ans skipped)
         // but not allow ignore until reset or re-login
-        catrecTime = categorycooldown > 0 ? curTime+infinityCooldownDelay : 0;
-        recTime    = cooldown    > 0 ? curTime+infinityCooldownDelay : catrecTime;
+        catrecTime = categorycooldown > 0 ? curTime + infinityCooldownDelay : 0;
+        recTime = cooldown > 0 ? curTime + infinityCooldownDelay : catrecTime;
     }
     else
     {
         // shoot spells used equipped item cooldown values already assigned in GetAttackTime(RANGED_ATTACK)
         // prevent 0 cooldowns set by another way
         if (cooldown <= 0 && categorycooldown <= 0 && (category == 76 || (IsAutoRepeatRangedSpell(spellInfo) && spellInfo->Id != SPELL_ID_AUTOSHOT)))
+        {
             cooldown = GetAttackTime(RANGED_ATTACK);
+
+            if (spellInfo->Id == 5019)
+                ProhibitSpellSchool(SPELL_SCHOOL_MASK_MAGIC, cooldown);
+        }
 
         // Now we have cooldown data (if found any), time to apply mods if we are a player, or a pet from player
         if (Player* modOwner = GetSpellModOwner())
@@ -14765,7 +14775,7 @@ void Unit::AddSpellAndCategoryCooldowns(SpellEntry const* spellInfo, uint32 item
             if (cooldown > 0)
                 modOwner->ApplySpellMod(spellInfo->Id, SPELLMOD_COOLDOWN, cooldown);
 
-            if (categorycooldown > 0)
+            if (categorycooldown > 0 && !spellInfo->HasAttribute(SPELL_ATTR_EX6_IGNORE_CAT_COOLDOWN_MODS))
                 modOwner->ApplySpellMod(spellInfo->Id, SPELLMOD_COOLDOWN, categorycooldown);
         }
         else if (GetTypeId() == TYPEID_PLAYER)
@@ -14773,25 +14783,46 @@ void Unit::AddSpellAndCategoryCooldowns(SpellEntry const* spellInfo, uint32 item
             if (cooldown > 0)
                 ((Player*)this)->ApplySpellMod(spellInfo->Id, SPELLMOD_COOLDOWN, cooldown);
 
-            if (categorycooldown > 0)
+            if (categorycooldown > 0 && !spellInfo->HasAttribute(SPELL_ATTR_EX6_IGNORE_CAT_COOLDOWN_MODS))
                 ((Player*)this)->ApplySpellMod(spellInfo->Id, SPELLMOD_COOLDOWN, categorycooldown);
         }
 
+        if (int32 cooldownMod = GetTotalAuraModifier(SPELL_AURA_MOD_COOLDOWN))
+        {
+            // Apply SPELL_AURA_MOD_COOLDOWN only to own spells
+            if (HasSpell(spellInfo->Id))
+            {
+                needsCooldownPacket = true;
+                cooldown += cooldownMod * IN_MILLISECONDS;   // SPELL_AURA_MOD_COOLDOWN does not affect category cooldows, verified with shaman shocks
+            }
+        }
+
         // replace negative cooldowns by 0
-        if (cooldown < 0) cooldown = 0;
-        if (categorycooldown < 0) categorycooldown = 0;
+        if (cooldown < 0)
+            cooldown = 0;
+        if (categorycooldown < 0)
+            categorycooldown = 0;
 
         // no cooldown after applying spell mods
         if (cooldown == 0 && categorycooldown == 0)
             return;
 
-        catrecTime = categorycooldown ? curTime+categorycooldown/IN_MILLISECONDS : 0;
-        recTime    = cooldown ? curTime+cooldown/IN_MILLISECONDS : catrecTime;
+        catrecTime = categorycooldown ? curTime + categorycooldown / IN_MILLISECONDS : 0;
+        recTime = cooldown ? curTime + cooldown / IN_MILLISECONDS : catrecTime;
     }
 
     // self spell cooldown
     if (recTime > 0)
+    {
         AddSpellCooldown(spellInfo->Id, itemId, recTime);
+
+        if (needsCooldownPacket && GetTypeId() == TYPEID_PLAYER)
+        {
+            WorldPacket data;
+            BuildCooldownPacket(data, SPELL_COOLDOWN_FLAG_NONE, spellInfo->Id, cooldown);
+            ((Player*)this)->SendDirectMessage(&data);
+        }
+    }
 
     // category spells
     if (category && categorycooldown > 0)
@@ -14843,6 +14874,27 @@ void Unit::RemoveOutdatedSpellCooldowns()
         {
             RemoveSpellCooldown(itr->first);
         }
+    }
+}
+
+void Unit::BuildCooldownPacket(WorldPacket& data, uint8 flags, uint32 spellId, uint32 cooldown)
+{
+    data.Initialize(SMSG_SPELL_COOLDOWN, 8 + 1 + 4 + 4);
+    data << GetObjectGuid();
+    data << uint8(flags);
+    data << uint32(spellId);
+    data << uint32(cooldown);
+}
+
+void Unit::BuildCooldownPacket(WorldPacket& data, uint8 flags, PacketCooldowns const& cooldowns)
+{
+    data.Initialize(SMSG_SPELL_COOLDOWN, 8 + 1 + (4 + 4) * cooldowns.size());
+    data << GetObjectGuid();
+    data << uint8(flags);
+    for (PacketCooldowns::const_iterator itr = cooldowns.begin(); itr != cooldowns.end(); ++itr)
+    {
+        data << uint32(itr->first);
+        data << uint32(itr->second);
     }
 }
 

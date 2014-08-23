@@ -11466,11 +11466,8 @@ Item* Player::EquipItem(uint16 pos, Item* pItem, bool update)
                 {
                     m_weaponChangeTimer = spellProto->StartRecoveryTime;
 
-                    WorldPacket data(SMSG_SPELL_COOLDOWN, 8 + 1 + 4);
-                    data << GetObjectGuid();
-                    data << uint8(1);
-                    data << uint32(cooldownSpell);
-                    data << uint32(0);
+                    WorldPacket data;
+                    BuildCooldownPacket(data, SPELL_COOLDOWN_FLAG_INCLUDE_GCD, cooldownSpell, 0);
                     GetSession()->SendPacket(&data);
                 }
             }
@@ -19718,20 +19715,22 @@ void Player::ContinueTaxiFlight()
 
 void Player::ProhibitSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs)
 {
-                                                            // last check 2.0.10
-    WorldPacket data(SMSG_SPELL_COOLDOWN, 8+1+m_spells.size()*8);
-    data << GetObjectGuid();
-    data << uint8(0x0);                                     // flags (0x1, 0x2)
+    PacketCooldowns cooldowns;
     time_t curTime = time(NULL);
+
     for (PlayerSpellMap::const_iterator itr = m_spells.begin(); itr != m_spells.end(); ++itr)
     {
         if (itr->second.state == PLAYERSPELL_REMOVED)
             continue;
+
         uint32 unSpellId = itr->first;
+        if (!unSpellId)
+            continue;
+
         SpellEntry const* spellInfo = sSpellStore.LookupEntry(unSpellId);
         if (!spellInfo)
         {
-            MANGOS_ASSERT(spellInfo);
+            sLog.outError("Player::ProhibitSpellSchool: %s have nonexistent spell %u!", GetGuidStr().c_str(), unSpellId);
             continue;
         }
 
@@ -19739,14 +19738,22 @@ void Player::ProhibitSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs)
         if (spellInfo->HasAttribute(SPELL_ATTR_DISABLED_WHILE_ACTIVE))
             continue;
 
+        if (spellInfo->PreventionType != SPELL_PREVENTION_TYPE_SILENCE)
+            continue;
+
         if ((idSchoolMask & GetSpellSchoolMask(spellInfo)) && GetSpellCooldownDelay(spellInfo) < unTimeMs)
         {
-            data << uint32(unSpellId);
-            data << uint32(unTimeMs);                       // in m.secs
+            cooldowns[spellId] = unTimeMs;
             AddSpellCooldown(unSpellId, 0, curTime + unTimeMs / IN_MILLISECONDS);
         }
     }
-    GetSession()->SendPacket(&data);
+
+    if (!cooldowns.empty())
+    {
+        WorldPacket data;
+        BuildCooldownPacket(data, SPELL_COOLDOWN_FLAG_NONE, cooldowns);
+        GetSession()->SendPacket(&data);
+    }
 }
 
 void Player::SendModifyCooldown(uint32 spell_id, int32 delta)

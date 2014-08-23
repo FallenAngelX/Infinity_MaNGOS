@@ -1153,14 +1153,12 @@ void Pet::_LoadSpellCooldowns()
 {
     RemoveAllSpellCooldown();
 
-    QueryResult* result = CharacterDatabase.PQuery("SELECT spell,time FROM pet_spell_cooldown WHERE guid = '%u'",m_charmInfo->GetPetNumber());
+    QueryResult* result = CharacterDatabase.PQuery("SELECT spell, time FROM pet_spell_cooldown WHERE guid = %u", m_charmInfo->GetPetNumber());
     if (result)
     {
         time_t curTime = time(NULL);
 
-        WorldPacket data(SMSG_SPELL_COOLDOWN, (8+1+size_t(result->GetRowCount())*8));
-        data << ObjectGuid(GetObjectGuid());
-        data << uint8(0x0);                                 // flags (0x1, 0x2)
+        PacketCooldowns cooldowns;
 
         do
         {
@@ -1171,7 +1169,7 @@ void Pet::_LoadSpellCooldowns()
 
             if (!sSpellStore.LookupEntry(spell_id))
             {
-                sLog.outError("Pet %u have unknown spell %u in `pet_spell_cooldown`, skipping.",m_charmInfo->GetPetNumber(),spell_id);
+                sLog.outError("Pet %u have unknown spell %u in `pet_spell_cooldown`, skipping.", m_charmInfo->GetPetNumber(), spell_id);
                 continue;
             }
 
@@ -1179,19 +1177,19 @@ void Pet::_LoadSpellCooldowns()
             if (db_time <= curTime)
                 continue;
 
-            data << uint32(spell_id);
-            data << uint32(uint32(db_time-curTime) * IN_MILLISECONDS);
+            cooldowns[spell_id] = uint32(db_time - curTime) * IN_MILLISECONDS;
 
             AddSpellCooldown(spell_id, 0, db_time);
 
             DEBUG_LOG("Pet (Number: %u) spell %u cooldown loaded (%u secs).", m_charmInfo->GetPetNumber(), spell_id, uint32(db_time-curTime));
         }
         while (result->NextRow());
-
         delete result;
 
-        if (!GetSpellCooldownMap()->empty() && GetOwner())
+        if (!cooldowns.empty() && GetOwner())
         {
+	        WorldPacket data;
+            BuildCooldownPacket(data, SPELL_COOLDOWN_FLAG_NONE, cooldowns);
             ((Player*)GetOwner())->GetSession()->SendPacket(&data);
         }
     }
@@ -1199,19 +1197,18 @@ void Pet::_LoadSpellCooldowns()
 
 void Pet::_SaveSpellCooldowns()
 {
-    static SqlStatementID delSpellCD ;
-    static SqlStatementID insSpellCD ;
+    static SqlStatementID delSpellCD;
+    CharacterDatabase.CreateStatement(delSpellCD, "DELETE FROM pet_spell_cooldown WHERE guid = ?")
+        .PExecute(m_charmInfo->GetPetNumber());
 
-    SqlStatement stmt = CharacterDatabase.CreateStatement(delSpellCD, "DELETE FROM pet_spell_cooldown WHERE guid = ?");
-    stmt.PExecute(m_charmInfo->GetPetNumber());
-
-    // remove oudated and save active
+    // remove oudated
     RemoveOutdatedSpellCooldowns();
-    for(SpellCooldowns::const_iterator itr = GetSpellCooldownMap()->begin();itr != GetSpellCooldownMap()->end(); ++itr)
-    {
-        stmt = CharacterDatabase.CreateStatement(insSpellCD, "INSERT INTO pet_spell_cooldown (guid,spell,time) VALUES (?, ?, ?)");
+
+    // save active
+    static SqlStatementID insSpellCD;
+    SqlStatement stmt = CharacterDatabase.CreateStatement(insSpellCD, "INSERT INTO pet_spell_cooldown (guid, spell, time) VALUES (?, ?, ?)");
+    for (SpellCooldowns::const_iterator itr = GetSpellCooldownMap()->begin(); itr != GetSpellCooldownMap()->end(); ++itr)
         stmt.PExecute(m_charmInfo->GetPetNumber(), itr->first, uint64(itr->second.end));
-    }
 }
 
 void Pet::_LoadSpells()
