@@ -1542,7 +1542,7 @@ float Creature::GetAttackDistance(Unit const* pPlayer) const
     uint32 creatureLevel = GetLevelForTarget(pPlayer);
     int32 levelDiff = int32(playerLevel) - int32(creatureLevel);
 
-    // "The maximum Aggro Radius has a cap of 25 levels under. 
+    // "The maximum Aggro Radius has a cap of 25 levels under.
     // Example: A level 30 char has the same Aggro Radius of a level 5 char on a level 60 mob."
     if (levelDiff < -25)
         levelDiff = -25;
@@ -2240,11 +2240,42 @@ bool Creature::IsInEvadeMode() const
     return IsInUnitState(UNIT_ACTION_HOME) || hasUnitState(UNIT_STAT_DELAYED_EVADE);
 }
 
-bool Creature::HasSpell(uint32 spellID)
+void Creature::ProhibitSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs)
+{
+    time_t curTime = time(NULL);
+
+    for (uint8 i = 0; i <= GetSpellMaxIndex(); ++i)
+    {
+        uint32 spellId = GetSpell(i);
+        if (!spellId)
+            continue;
+
+        SpellEntry const* spellInfo = sSpellStore.LookupEntry(spellId);
+        if (!spellInfo)
+        {
+            sLog.outError("Creature::ProhibitSpellSchool: %s have nonexistent spell %u!", GetGuidStr().c_str(), spellId);
+            continue;
+        }
+
+        // Not send cooldown for this spells
+        if (spellInfo->HasAttribute(SPELL_ATTR_DISABLED_WHILE_ACTIVE))
+            continue;
+
+        if (spellInfo->PreventionType != SPELL_PREVENTION_TYPE_SILENCE)
+            continue;
+
+        if ((idSchoolMask & GetSpellSchoolMask(spellInfo)) && GetSpellCooldownDelay(spellInfo) < unTimeMs)
+            AddSpellCooldown(spellId, 0, curTime + unTimeMs / IN_MILLISECONDS);
+    }
+}
+
+bool Creature::HasSpell(uint32 spellId)
 {
     for (uint8 i = 0; i <= GetSpellMaxIndex(); ++i)
-        if (spellID == GetSpell(i))
+    {
+        if (spellId == GetSpell(i))
             return true;
+    }
     return false;
 }
 

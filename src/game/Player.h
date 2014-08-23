@@ -1664,7 +1664,7 @@ class MANGOS_DLL_SPEC Player : public Unit
         template <class T> T ApplySpellMod(uint32 spellId, SpellModOp op, T &basevalue);
 
         void SendCooldownEvent(SpellEntry const *spellInfo, uint32 itemId = 0);
-        void ProhibitSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs);
+        void ProhibitSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs) override;
         void SendClearCooldown(uint32 spell_id, Unit* target);
         void SendModifyCooldown(uint32 spell_id, int32 delta);
 

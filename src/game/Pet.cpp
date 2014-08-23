@@ -2098,6 +2098,8 @@ bool Pet::HasSpell(uint32 spellId) const
     uint32 parentSpell = 0;
     switch (spellId)
     {
+        case 0:
+            return false;
         case 54045:                  // Carrion feeder - not triggered spell
             parentSpell = 54044;
             break;
@@ -2818,18 +2820,21 @@ Unit* Pet::GetOwner() const
     Unit* owner = Unit::GetOwner();
 
     if (!owner)
-        if (!GetOwnerGuid().IsEmpty() && GetOwnerGuid().IsAnyTypeCreature())
+    {
+        if (GetOwnerGuid() && GetOwnerGuid().IsAnyTypeCreature())
+        {
             if (Map* pMap = GetMap())
                 owner = pMap->GetAnyTypeCreature(GetOwnerGuid());
+        }
+    }
 
     if (owner && owner->GetTypeId() == TYPEID_UNIT && ((Creature*)owner)->IsTotem())
+    {
         if (Unit* ownerOfOwner = owner->GetOwner())
             return ownerOfOwner;
+    }
 
-    if (owner)
-        return owner;
-    else
-        return NULL;
+    return owner ? owner : NULL;
 }
 
 bool Pet::IsInEvadeMode() const
@@ -3078,7 +3083,7 @@ void Pet::RegenerateHealth(uint32 diff)
 
     // polymorphed case
     if (IsPolymorphed())
-        addvalue = (float)GetMaxHealth() / 3.0f;
+        addvalue = float(GetMaxHealth()) / 3.0f;
     // normal regen case (maybe partly in combat case)
     else if (!isInCombat() || HasAuraType(SPELL_AURA_MOD_REGEN_DURING_COMBAT))
     {
@@ -3086,7 +3091,7 @@ void Pet::RegenerateHealth(uint32 diff)
         if (!isInCombat())
         {
             AuraList const& mModHealthRegenPct = GetAurasByType(SPELL_AURA_MOD_HEALTH_REGEN_PERCENT);
-            for(AuraList::const_iterator i = mModHealthRegenPct.begin(); i != mModHealthRegenPct.end(); ++i)
+            for (AuraList::const_iterator i = mModHealthRegenPct.begin(); i != mModHealthRegenPct.end(); ++i)
                 addvalue *= (100.0f + (*i)->GetModifier()->m_amount) / 100.0f;
         }
         else if (HasAuraType(SPELL_AURA_MOD_REGEN_DURING_COMBAT))
@@ -3098,9 +3103,10 @@ void Pet::RegenerateHealth(uint32 diff)
     if (addvalue < 0)
         addvalue = 0;
 
-    addvalue *= (float)diff / REGEN_TIME_FULL;
+    addvalue *= float(diff) / REGEN_TIME_FULL;
 
-    ModifyHealth(int32(addvalue));
+    if (addvalue)
+        ModifyHealth(int32(addvalue));
 }
 
 void Pet::ApplyScalingBonus(ScalingAction* action)
@@ -3151,7 +3157,7 @@ void Pet::ApplyScalingBonus(ScalingAction* action)
 
 void Pet::AddScalingAction(ScalingTarget target, uint32 stat, bool apply)
 {
-    m_scalingQueue.push(ScalingAction(target,stat,apply));
+    m_scalingQueue.push(ScalingAction(target, stat, apply));
 }
 
 void ApplyScalingBonusWithHelper::operator() (Unit* unit) const
@@ -3443,4 +3449,51 @@ Unit* Pet::SelectPreferredTargetForSpell(SpellEntry const* spellInfo)
     }
 
     return target;
+}
+
+void Pet::ProhibitSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs)
+{
+    PacketCooldowns cooldowns;
+    time_t curTime = time(NULL);
+
+    for (PetSpellMap::const_iterator itr = m_spells.begin(); itr != m_spells.end(); ++itr)
+    {
+        if (itr->second.state == PETSPELL_REMOVED)
+            continue;
+
+        uint32 spellId = itr->first;
+        if (!spellId)
+            continue;
+
+        SpellEntry const* spellInfo = sSpellStore.LookupEntry(spellId);
+        if (!spellInfo)
+        {
+            sLog.outError("Pet::ProhibitSpellSchool: %s have nonexistent spell %u!", GetGuidStr().c_str(), spellId);
+            continue;
+        }
+
+        // Not send cooldown for this spells
+        if (spellInfo->HasAttribute(SPELL_ATTR_DISABLED_WHILE_ACTIVE))
+            continue;
+
+        if (spellInfo->PreventionType != SPELL_PREVENTION_TYPE_SILENCE)
+            continue;
+
+        if ((idSchoolMask & GetSpellSchoolMask(spellInfo)) && GetSpellCooldownDelay(spellInfo) < unTimeMs)
+        {
+            cooldowns[spellId] = unTimeMs;
+            AddSpellCooldown(spellId, 0, curTime + unTimeMs / IN_MILLISECONDS);
+        }
+    }
+
+    if (!cooldowns.empty())
+    {
+        Unit* owner = GetOwner();
+        if (owner && owner->GetTypeId() == TYPEID_PLAYER)
+        {
+            WorldPacket data;
+            BuildCooldownPacket(data, SPELL_COOLDOWN_FLAG_NONE, cooldowns);
+            ((Player*)owner)->GetSession()->SendPacket(&data);
+        }
+    }
 }

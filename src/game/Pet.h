@@ -250,6 +250,7 @@ class MANGOS_DLL_SPEC Pet : public Creature
         bool unlearnSpell(uint32 spell_id, bool learn_prev, bool clear_ab = true);
         bool removeSpell(uint32 spell_id, bool learn_prev, bool clear_ab = true);
         void CleanupActionBar();
+        void ProhibitSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs) override;
 
         PetSpellMap     m_spells;
         AutoSpellList   m_autospells;

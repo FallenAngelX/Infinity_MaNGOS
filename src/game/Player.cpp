@@ -19723,14 +19723,14 @@ void Player::ProhibitSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs)
         if (itr->second.state == PLAYERSPELL_REMOVED)
             continue;
 
-        uint32 unSpellId = itr->first;
-        if (!unSpellId)
+        uint32 spellId = itr->first;
+        if (!spellId)
             continue;
 
-        SpellEntry const* spellInfo = sSpellStore.LookupEntry(unSpellId);
+        SpellEntry const* spellInfo = sSpellStore.LookupEntry(spellId);
         if (!spellInfo)
         {
-            sLog.outError("Player::ProhibitSpellSchool: %s have nonexistent spell %u!", GetGuidStr().c_str(), unSpellId);
+            sLog.outError("Player::ProhibitSpellSchool: %s have nonexistent spell %u!", GetGuidStr().c_str(), spellId);
             continue;
         }
 
@@ -19744,7 +19744,7 @@ void Player::ProhibitSpellSchool(SpellSchoolMask idSchoolMask, uint32 unTimeMs)
         if ((idSchoolMask & GetSpellSchoolMask(spellInfo)) && GetSpellCooldownDelay(spellInfo) < unTimeMs)
         {
             cooldowns[spellId] = unTimeMs;
-            AddSpellCooldown(unSpellId, 0, curTime + unTimeMs / IN_MILLISECONDS);
+            AddSpellCooldown(spellId, 0, curTime + unTimeMs / IN_MILLISECONDS);
         }
     }
 
