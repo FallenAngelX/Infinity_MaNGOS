@@ -193,7 +193,7 @@ class MANGOS_DLL_SPEC Map : public GridRefManager<NGridType>
     public:
         virtual ~Map();
 
-        MapEntry const* GetEntry() const { return m_mapEntry; }
+        MapEntry const* GetEntry() const { return i_mapEntry; }
 
         // currently unused for normal maps
         bool CanUnload(uint32 diff)
