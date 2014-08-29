@@ -174,11 +174,6 @@ void Creature::AddToWorld()
         GetVehicleKit()->Reset();
 }
 
-void Creature::RemoveFromWorld(bool remove)
-{
-    Unit::RemoveFromWorld(remove);
-}
-
 void Creature::RemoveCorpse()
 {
     // since pool system can fail to roll unspawned object, this one can remain spawned, so must set respawn nevertheless

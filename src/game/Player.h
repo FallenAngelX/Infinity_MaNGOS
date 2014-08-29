@@ -1054,8 +1054,9 @@ class MANGOS_DLL_SPEC Player : public Unit
 
         virtual void CleanupsBeforeDelete() override;
 
-        void AddToWorld();
-        virtual void RemoveFromWorld(bool remove) override;
+        void AddToWorld() override;
+        void RemoveFromWorld(bool remove) override;
+
         virtual void SetMap(Map* map) override;
         virtual void ResetMap() override;
         // Used for lock map from unloading. Use with caution!

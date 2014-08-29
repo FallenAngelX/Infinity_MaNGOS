@@ -38,16 +38,6 @@ DynamicObject::DynamicObject() : WorldObject()
     m_valuesCount = DYNAMICOBJECT_END;
 }
 
-void DynamicObject::AddToWorld()
-{
-    WorldObject::AddToWorld();
-}
-
-void DynamicObject::RemoveFromWorld(bool remove)
-{
-    WorldObject::RemoveFromWorld(remove);
-}
-
 bool DynamicObject::Create(uint32 guidlow, Unit* caster, uint32 spellId, SpellEffectIndex effIndex, float x, float y, float z, int32 duration, float radius, DynamicObjectType type)
 {
     WorldObject::_Create(ObjectGuid(HIGHGUID_DYNAMICOBJECT, guidlow), caster->GetPhaseMask());
