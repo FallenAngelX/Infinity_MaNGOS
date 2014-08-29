@@ -109,7 +109,7 @@ void GameEventMgr::LoadFromDB()
         mGameEvent.resize(max_event_id + 1);
     }
 
-    QueryResult* result = WorldDatabase.Query("SELECT entry,UNIX_TIMESTAMP(start_time),UNIX_TIMESTAMP(end_time),occurence,length,holiday,description FROM game_event");
+    QueryResult* result = WorldDatabase.Query("SELECT entry, UNIX_TIMESTAMP(start_time), UNIX_TIMESTAMP(end_time), occurence, length, holiday, description, silent FROM game_event");
     if (!result)
     {
         mGameEvent.clear();
@@ -144,6 +144,7 @@ void GameEventMgr::LoadFromDB()
             pGameEvent.occurence    = fields[3].GetUInt32();
             pGameEvent.length       = fields[4].GetUInt32();
             pGameEvent.holiday_id   = HolidayIds(fields[5].GetUInt32());
+            pGameEvent.silent       = fields[7].GetBool();
 
             if (pGameEvent.length == 0)                     // length>0 is validity check
             {
@@ -153,6 +154,7 @@ void GameEventMgr::LoadFromDB()
 
             if (pGameEvent.occurence < pGameEvent.length)   // occurence < length is useless. This also asserts that occurence > 0!
             {
+                pGameEvent.length = 0;                      // disable event (GameEventData::isValid() returns false when it gets updated)
                 sLog.outErrorDb("`game_event` game event id (%i) has occurence %u  < length %u and can't be used.", event_id, pGameEvent.occurence, pGameEvent.length);
                 continue;
             }
@@ -199,7 +201,6 @@ void GameEventMgr::LoadFromDB()
     }
     else
     {
-
         BarGoLink bar(result->GetRowCount());
         do
         {
@@ -278,7 +279,6 @@ void GameEventMgr::LoadFromDB()
     }
     else
     {
-
         BarGoLink bar(result->GetRowCount());
         do
         {
@@ -342,7 +342,7 @@ void GameEventMgr::LoadFromDB()
     }
 
     // now recheck that all eventPools linked with events after our skip pools with parents
-    for (std::map<uint16, int16>::const_iterator itr = pool2event.begin(); itr != pool2event.end();  ++itr)
+    for (std::map<uint16, int16>::const_iterator itr = pool2event.begin(); itr != pool2event.end(); ++itr)
     {
         uint16 pool_id = itr->first;
         int16 event_id = itr->second;
@@ -370,7 +370,6 @@ void GameEventMgr::LoadFromDB()
     }
     else
     {
-
         BarGoLink bar(result->GetRowCount());
         do
         {
@@ -382,7 +381,7 @@ void GameEventMgr::LoadFromDB()
 
             if (event_id == 0)
             {
-                sLog.outErrorDb("`game_event_creature_data` game event id (%i) is reserved and can't be used." , event_id);
+                sLog.outErrorDb("`game_event_creature_data` game event id (%i) is reserved and can't be used.", event_id);
                 continue;
             }
 
@@ -451,7 +450,6 @@ void GameEventMgr::LoadFromDB()
     }
     else
     {
-
         BarGoLink bar(result->GetRowCount());
         do
         {
@@ -623,6 +621,9 @@ uint32 GameEventMgr::Update(ActiveEvents const* activeAtShutdown /*= NULL*/)
     uint32 calcDelay;
     for (uint16 itr = 1; itr < mGameEvent.size(); ++itr)
     {
+        if (!mGameEvent[itr].isValid())
+            continue;
+
         // sLog.outErrorDb("Checking event %u",itr);
         if (CheckOneGameEvent(itr, currenttime))
         {
@@ -660,7 +661,10 @@ uint32 GameEventMgr::Update(ActiveEvents const* activeAtShutdown /*= NULL*/)
 void GameEventMgr::UnApplyEvent(uint16 event_id)
 {
     m_ActiveEvents.erase(event_id);
-    CharacterDatabase.PExecute("DELETE FROM game_event_status WHERE event = %u", event_id);
+
+    static SqlStatementID delStat;
+    CharacterDatabase.CreateStatement(delStat, "DELETE FROM game_event_status WHERE event = ?")
+        .PExecute(event_id);
 
     sLog.outString("GameEvent %u \"%s\" removed.", event_id, mGameEvent[event_id].description.c_str());
     // un-spawn positive event tagged objects
@@ -679,12 +683,15 @@ void GameEventMgr::UnApplyEvent(uint16 event_id)
 void GameEventMgr::ApplyNewEvent(uint16 event_id, bool resume)
 {
     m_ActiveEvents.insert(event_id);
-    CharacterDatabase.PExecute("REPLACE INTO game_event_status (event) VALUES (%u)", event_id);
 
-    if (sWorld.getConfig(CONFIG_BOOL_EVENT_ANNOUNCE))
+    static SqlStatementID saveStat;
+    CharacterDatabase.CreateStatement(saveStat, "REPLACE INTO game_event_status (event) VALUES (?)")
+        .PExecute(event_id);
+
+    if (sWorld.getConfig(CONFIG_BOOL_EVENT_ANNOUNCE) && (!mGameEvent[event_id].silent))
         sWorld.SendWorldText(LANG_EVENTMESSAGE, mGameEvent[event_id].description.c_str());
 
-    sLog.outString("GameEvent %u \"%s\" started.", event_id, mGameEvent[event_id].description.c_str());
+    sLog.outString("GameEvent %u \"%s\" started. %s", event_id, mGameEvent[event_id].description.c_str(), mGameEvent[event_id].silent ? "(hidden)" : "");
     // spawn positive event tagget objects
     GameEventSpawn(event_id);
     // un-spawn negative event tagged objects
@@ -1023,8 +1030,10 @@ bool GameEventMgr::IsActiveHoliday(HolidayIds id)
         return false;
 
     for (GameEventMgr::ActiveEvents::const_iterator itr = m_ActiveEvents.begin(); itr != m_ActiveEvents.end(); ++itr)
+    {
         if (mGameEvent[*itr].holiday_id == id)
             return true;
+    }
 
     return false;
 }
