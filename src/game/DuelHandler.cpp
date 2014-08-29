@@ -47,52 +47,54 @@ void WorldSession::HandleDuelAcceptedOpcode(WorldPacket& recvPacket)
     pl->duel->startTimer = now;
     plTarget->duel->startTimer = now;
 
-    pl->SendDuelCountdown(3000);
-    plTarget->SendDuelCountdown(3000);
-
     /**
     * Duel reset script
-    *
     */
 
-    uint32 areaId = pl->GetAreaId();
+    if (sWorld.getConfig(CONFIG_BOOL_RESET_DUEL_AREA_ENABLED) && sWorld.IsAreaIdEnabledDuelReset(pl->GetAreaId()))
+    {
+        if (!pl->GetMap()->IsDungeon())
+        {
+            // remove arena cds
+            pl->RemoveArenaSpellCooldowns();
+            plTarget->RemoveArenaSpellCooldowns();
 
-    if(sWorld.getConfig(CONFIG_BOOL_RESET_DUEL_AREA_ENABLED) && sWorld.IsAreaIdEnabledDuelReset(areaId)){
-        //remove arena cds
-        pl->RemoveArenaSpellCooldowns();
-        plTarget->RemoveArenaSpellCooldowns();
+            // remove negative arena auras
+            pl->RemoveArenaAuras(true);
+            plTarget->RemoveArenaAuras(true);
+        }
 
-        //remove negative arena auras
-        pl->RemoveArenaAuras(true);
-        plTarget->RemoveArenaAuras(true);
-
-        //set max mana and hp
+        // set max mana and hp
         pl->SetHealth(pl->GetMaxHealth());
-        pl->SetPower(POWER_MANA, pl->GetMaxPower(POWER_MANA));
+        if (pl->GetPowerType() == POWER_MANA)
+            pl->SetPower(POWER_MANA, pl->GetMaxPower(POWER_MANA));
+
         plTarget->SetHealth(plTarget->GetMaxHealth());
-        plTarget->SetPower(POWER_MANA,  plTarget->GetMaxPower(POWER_MANA));
+        if (plTarget->GetPowerType() == POWER_MANA)
+            plTarget->SetPower(POWER_MANA, plTarget->GetMaxPower(POWER_MANA));
 
         // set max hp, mana and remove buffs of players' pet if they have
-        Pet* plPet = pl->GetPet();
-        if(plPet != NULL)
+        if (Pet* pet = pl->GetPet())
         {
-            plPet->SetHealth(plPet->GetMaxHealth());
-            plPet->SetPower(plPet->GetPowerType(), plPet->GetMaxPower(plPet->GetPowerType()));
-            plPet->RemoveArenaAuras(true);
+            pet->SetHealth(pet->GetMaxHealth());
+            pet->SetPower(pet->GetPowerType(), pet->GetMaxPower(pet->GetPowerType()));
+            pet->RemoveArenaAuras(true);
         }
-        Pet* plPetTarget = plTarget->GetPet();
-        if(plPetTarget != NULL)
+
+        if (Pet* petTarget = plTarget->GetPet())
         {
-            plPetTarget->SetHealth(plPetTarget->GetMaxHealth());
-            plPetTarget->SetPower(plPetTarget->GetPowerType(), plPetTarget->GetMaxPower(plPetTarget->GetPowerType()));
-            plPetTarget->RemoveArenaAuras(true);
+            petTarget->SetHealth(petTarget->GetMaxHealth());
+            petTarget->SetPower(petTarget->GetPowerType(), petTarget->GetMaxPower(petTarget->GetPowerType()));
+            petTarget->RemoveArenaAuras(true);
         }
     }
+
+    pl->SendDuelCountdown(3000);
+    plTarget->SendDuelCountdown(3000);
 }
 
 void WorldSession::HandleDuelCancelledOpcode(WorldPacket& recvPacket)
 {
-
     // player either discarded the duel using the "discard button"
     // or used "/forfeit" before countdown reached 0
     ObjectGuid guid;
@@ -109,7 +111,12 @@ void WorldSession::HandleDuelCancelledOpcode(WorldPacket& recvPacket)
         if (GetPlayer()->GetGuidValue(PLAYER_DUEL_ARBITER) != guid ||
             GetPlayer()->duel->opponent->GetGuidValue(PLAYER_DUEL_ARBITER) != guid)
         {
-            sLog.outError("WorldSession::HandleDuelCancelledOpcode player %s try cancel duel with %s, but his different arbiters! Possible exploit use.",GetPlayer()->GetObjectGuid().GetString().c_str(),GetPlayer()->duel->opponent->GetObjectGuid().GetString().c_str());
+            if (!GetPlayer()->duel->opponent->GetGuidValue(PLAYER_DUEL_ARBITER))
+            {
+                sLog.outError("WorldSession::HandleDuelCancelledOpcode player %s try cancel duel with %s, but his different arbiters! Possible exploit use.",
+                    GetPlayer()->GetGuidStr().c_str(), GetPlayer()->duel->opponent->GetGuidStr().c_str());
+            }
+
             GetPlayer()->DuelComplete(DUEL_INTERRUPTED);
             return;
         }
