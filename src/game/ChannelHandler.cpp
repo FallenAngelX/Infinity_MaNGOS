@@ -88,8 +88,10 @@ void WorldSession::HandleChannelPasswordOpcode(WorldPacket& recvPacket)
     // recvPacket.hexlike();
     std::string channelname, pass;
     recvPacket >> channelname;
-
     recvPacket >> pass;
+
+    if (pass.length() > MAX_CHANNEL_PASS_STR)
+        return;
 
     if (ChannelMgr* cMgr = channelMgr(_player->GetTeam()))
         if (Channel* chn = cMgr->GetChannel(channelname, _player))
