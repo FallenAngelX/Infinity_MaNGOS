@@ -242,6 +242,16 @@ struct AchievementCriteriaEntry
             uint32  spellID;                                // 3 Reference to Map.dbc
         } learn_spell;
 
+        // ACHIEVEMENT_CRITERIA_TYPE_HONORABLE_KILL         = 35
+        struct
+        {
+            uint32  unused;                                 // 3
+            uint32  killCount;                              // 4
+            uint32  unk5;                                   // 5
+            uint32  unkn1;                                  // 6
+            uint32  unkn2;                                  // 7
+        } honorable_kill_scripted;
+
         // ACHIEVEMENT_CRITERIA_TYPE_OWN_ITEM               = 36
         struct
         {
@@ -421,6 +431,8 @@ struct AchievementCriteriaEntry
         {
             uint32  unused;                                 // 3
             uint32  killCount;                              // 4
+            uint32  flag;                                   // 5
+            uint32  mapid;                                  // 6
         } special_pvp_kill;
 
         // ACHIEVEMENT_CRITERIA_TYPE_FISH_IN_GAMEOBJECT     = 72
@@ -1381,11 +1393,11 @@ struct MapEntry
     bool IsMountAllowed() const
     {
         return !IsDungeon() ||
-            MapID==209 || MapID==269 || MapID==309 ||       // TanarisInstance, CavernsOfTime, Zul'gurub
-            MapID==509 || MapID==534 || MapID==560 ||       // AhnQiraj, HyjalPast, HillsbradPast
-            MapID==568 || MapID==580 || MapID==595 ||       // ZulAman, Sunwell Plateau, Culling of Stratholme
-            MapID==603 || MapID==615 || MapID==616 ||       // Ulduar, The Obsidian Sanctum, The Eye Of Eternity
-            MapID==658;                                     // Pit of Saron
+            MapID == 209 || MapID == 269 || MapID == 309 ||       // TanarisInstance, CavernsOfTime, Zul'gurub
+            MapID == 509 || MapID == 534 || MapID == 560 ||       // AhnQiraj, HyjalPast, HillsbradPast
+            MapID == 568 || MapID == 580 || MapID == 595 ||       // ZulAman, Sunwell Plateau, Culling of Stratholme
+            MapID == 603 || MapID == 615 || MapID == 616 ||       // Ulduar, The Obsidian Sanctum, The Eye Of Eternity
+            MapID == 631 || MapID == 658 || MapID == 724;         // ICC, Pit of Saron, Ruby Sanctum
     }
 
     bool IsContinent() const
