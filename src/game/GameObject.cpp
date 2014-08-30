@@ -2831,3 +2831,20 @@ bool GameObject::SetTeam(Team team)
     }
     return false;
 }
+
+float GameObject::GetInteractionDistance()
+{
+    switch (GetGoType())
+    {
+        // TODO: find out how the client calculates the maximal usage distance to spellless working
+        // gameobjects like guildbanks and mailboxes - 10.0 is a just an abitrary choosen number
+        case GAMEOBJECT_TYPE_GUILD_BANK:
+        case GAMEOBJECT_TYPE_MAILBOX:
+            return 10.0f;
+        case GAMEOBJECT_TYPE_FISHINGNODE:
+        case GAMEOBJECT_TYPE_FISHINGHOLE:
+            return 20.0f + CONTACT_DISTANCE;                // max spell range
+        default:
+            return INTERACTION_DISTANCE;
+    }
+}

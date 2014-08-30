@@ -282,19 +282,15 @@ void WorldSession::HandleOpenItemOpcode(WorldPacket& recvPacket)
             return;
         }
 
-        static SqlStatementID delGifts ;
-
-        SqlStatement stmt = CharacterDatabase.CreateStatement(delGifts, "DELETE FROM character_gifts WHERE item_guid = ?");
-        stmt.PExecute(pItem->GetGUIDLow());
+        pItem->DeleteGiftsFromDB();
     }
     else
-        pUser->SendLoot(pItem->GetObjectGuid(),LOOT_CORPSE);
+        pUser->SendLoot(pItem->GetObjectGuid(), LOOT_CORPSE);
 }
 
-void WorldSession::HandleGameObjectUseOpcode( WorldPacket & recv_data )
+void WorldSession::HandleGameObjectUseOpcode(WorldPacket& recv_data)
 {
     ObjectGuid guid;
-
     recv_data >> guid;
 
     DEBUG_LOG("WORLD: Recvd CMSG_GAMEOBJ_USE Message guid: %s", guid.GetString().c_str());
@@ -303,8 +299,8 @@ void WorldSession::HandleGameObjectUseOpcode( WorldPacket & recv_data )
     if (!_player->IsSelfMover())
         return;
 
-    GameObject *obj = GetPlayer()->GetMap()->GetGameObject(guid);
-    if(!obj)
+    GameObject* obj = _player->GetMap()->GetGameObject(guid);
+    if (!obj)
         return;
 
     // Additional check preventing exploits (ie loot despawned chests)
@@ -328,7 +324,11 @@ void WorldSession::HandleGameObjectUseOpcode( WorldPacket & recv_data )
         return;
     }
 
-    GetPlayer()->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_USE);
+    if (!obj->IsWithinDistInMap(_player, obj->GetInteractionDistance()))
+        return;
+
+    _player->RemoveAurasWithInterruptFlags(AURA_INTERRUPT_FLAG_USE);
+
     obj->Use(_player);
 }
 
