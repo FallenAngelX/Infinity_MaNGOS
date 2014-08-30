@@ -36,13 +36,13 @@ using G3D::Vector3;
 void WorldSession::HandleUseItemOpcode(WorldPacket& recvPacket)
 {
     uint8 bagIndex, slot;
-    uint8 unk_flags;                                        // flags (if 0x02 - some additional data are received)
+    uint8 cast_flags;                                       // flags (if 0x02 - some additional data are received)
     uint8 cast_count;                                       // next cast if exists (single or not)
     ObjectGuid itemGuid;
     uint32 glyphIndex;                                      // something to do with glyphs?
     uint32 spellid;                                         // casted spell id
 
-    recvPacket >> bagIndex >> slot >> cast_count >> spellid >> itemGuid >> glyphIndex >> unk_flags;
+    recvPacket >> bagIndex >> slot >> cast_count >> spellid >> itemGuid >> glyphIndex >> cast_flags;
 
     // TODO: add targets.read() check
     Player* pUser = _player;
@@ -77,7 +77,7 @@ void WorldSession::HandleUseItemOpcode(WorldPacket& recvPacket)
         return;
     }
 
-    DETAIL_LOG("WORLD: CMSG_USE_ITEM packet, bagIndex: %u, slot: %u, cast_count: %u, spellid: %u, Item: %u, glyphIndex: %u, unk_flags: %u, data length = %i", bagIndex, slot, cast_count, spellid, pItem->GetEntry(), glyphIndex, unk_flags, (uint32)recvPacket.size());
+    DETAIL_LOG("WORLD: CMSG_USE_ITEM packet, bagIndex: %u, slot: %u, cast_count: %u, spellid: %u, Item: %u, glyphIndex: %u, unk_flags: %u, data length = %i", bagIndex, slot, cast_count, spellid, pItem->GetEntry(), glyphIndex, cast_flags, (uint32)recvPacket.size());
 
     ItemPrototype const* proto = pItem->GetProto();
     if (!proto)
@@ -132,7 +132,7 @@ void WorldSession::HandleUseItemOpcode(WorldPacket& recvPacket)
 
     if (pUser->isInCombat())
     {
-        for (int i = 0; i < MAX_ITEM_PROTO_SPELLS; ++i)
+        for (uint8 i = 0; i < MAX_ITEM_PROTO_SPELLS; ++i)
         {
             if (SpellEntry const* spellInfo = sSpellStore.LookupEntry(proto->Spells[i].SpellId))
             {
@@ -169,12 +169,12 @@ void WorldSession::HandleUseItemOpcode(WorldPacket& recvPacket)
     recvPacket >> targets.ReadForCaster(pUser);
 
     // some spell cast packet including more data (for projectiles?)
-    if (unk_flags & 0x02)
+    if (cast_flags & 0x02)
         targets.ReadAdditionalData(recvPacket);
 
     targets.Update(pUser);
 
-    Unit* pTarget = pUser->GetMap()->GetUnit(pUser->GetTargetGuid());
+    Unit* pTarget = targets.getUnitTarget() ? pUser->GetMap()->GetUnit(targets.getUnitTarget()->GetObjectGuid()) : NULL;
 
     if (!pItem->IsTargetValidForItemUse(pTarget))
     {
@@ -195,19 +195,19 @@ void WorldSession::HandleUseItemOpcode(WorldPacket& recvPacket)
         return;
     }
 
-    //Note: If script stop casting it must send appropriate data to client to prevent stuck item in gray state.
+    // Note: If script stop casting it must send appropriate data to client to prevent stuck item in gray state.
     if (!sScriptMgr.OnItemUse(pUser, pItem, targets))
     {
         // no script or script not process request by self
-        pUser->CastItemUseSpell(pItem,targets,cast_count,glyphIndex);
+        pUser->CastItemUseSpell(pItem, targets, cast_count, glyphIndex);
     }
 }
 
-#define OPEN_CHEST 11437
-#define OPEN_SAFE 11535
-#define OPEN_CAGE 11792
+#define OPEN_CHEST       11437
+#define OPEN_SAFE        11535
+#define OPEN_CAGE        11792
 #define OPEN_BOOTY_CHEST 5107
-#define OPEN_STRONGBOX 8517
+#define OPEN_STRONGBOX   8517
 
 void WorldSession::HandleOpenItemOpcode(WorldPacket& recvPacket)
 {
@@ -262,18 +262,18 @@ void WorldSession::HandleOpenItemOpcode(WorldPacket& recvPacket)
 
     if (pItem->HasFlag(ITEM_FIELD_FLAGS, ITEM_DYNFLAG_WRAPPED))// wrapped?
     {
-        QueryResult *result = CharacterDatabase.PQuery("SELECT entry, flags FROM character_gifts WHERE item_guid = '%u'", pItem->GetGUIDLow());
+        QueryResult* result = CharacterDatabase.PQuery("SELECT entry, flags FROM character_gifts WHERE item_guid = %u", pItem->GetGUIDLow());
         if (result)
         {
-            Field *fields = result->Fetch();
+            Field* fields = result->Fetch();
             uint32 entry = fields[0].GetUInt32();
             uint32 flags = fields[1].GetUInt32();
+            delete result;
 
             pItem->SetGuidValue(ITEM_FIELD_GIFTCREATOR, ObjectGuid());
             pItem->SetEntry(entry);
             pItem->SetUInt32Value(ITEM_FIELD_FLAGS, flags);
             pItem->SetState(ITEM_CHANGED, pUser);
-            delete result;
         }
         else
         {
@@ -485,12 +485,12 @@ void WorldSession::HandleCancelCastOpcode(WorldPacket& recvPacket)
         mover->InterruptNonMeleeSpells(false,spellId);
 }
 
-void WorldSession::HandleCancelAuraOpcode( WorldPacket& recvPacket)
+void WorldSession::HandleCancelAuraOpcode(WorldPacket& recvPacket)
 {
     uint32 spellId;
     recvPacket >> spellId;
 
-    SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellId);
+    SpellEntry const* spellInfo = sSpellStore.LookupEntry(spellId);
     if (!spellInfo)
         return;
 
@@ -498,6 +498,10 @@ void WorldSession::HandleCancelAuraOpcode( WorldPacket& recvPacket)
         return;
 
     if (IsPassiveSpell(spellInfo))
+        return;
+
+    // Honorless Target
+    if (spellInfo->Id == SPELL_ID_HONORLESS_TARGET)
         return;
 
     if (!IsPositiveSpell(spellId))
@@ -863,11 +867,12 @@ void WorldSession::HandleUpdateMissileTrajectory(WorldPacket& recv_data)
 
     if (moveFlag)
     {
-        ObjectGuid guid2;                               // unk guid (possible - active mover) - unused
-        MovementInfo movementInfo;                      // MovementInfo
+        recv_data.rfinish();
+        //ObjectGuid guid2;                               // unk guid (possible - active mover) - unused
+        //MovementInfo movementInfo;                      // MovementInfo
 
-        recv_data >> Unused<uint32>();                  // >> MSG_MOVE_STOP
-        recv_data >> guid.ReadAsPacked();
-        recv_data >> movementInfo;
+        //recv_data >> Unused<uint32>();                  // >> MSG_MOVE_STOP
+        //recv_data >> guid.ReadAsPacked();
+        //recv_data >> movementInfo;
     }
 }
