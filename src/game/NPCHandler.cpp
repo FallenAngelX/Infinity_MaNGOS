@@ -67,7 +67,7 @@ void WorldSession::HandleTabardVendorActivateOpcode( WorldPacket & recv_data )
 void WorldSession::SendTabardVendorActivate(ObjectGuid guid)
 {
     WorldPacket data( MSG_TABARDVENDOR_ACTIVATE, 8 );
-    data << ObjectGuid(guid);
+    data << guid;
     SendPacket(&data);
 }
 
@@ -92,14 +92,14 @@ void WorldSession::HandleBankerActivateOpcode( WorldPacket & recv_data )
 void WorldSession::SendShowBank(ObjectGuid guid)
 {
     WorldPacket data(SMSG_SHOW_BANK, 8);
-    data << ObjectGuid(guid);
+    data << guid;
     SendPacket(&data);
 }
 
 void WorldSession::SendShowMailBox(ObjectGuid guid)
 {
     WorldPacket data(SMSG_SHOW_MAILBOX, 8);
-    data << ObjectGuid(guid);
+    data << guid;
     SendPacket(&data);
 }
 
@@ -176,7 +176,7 @@ void WorldSession::SendTrainerList(ObjectGuid guid, const std::string& strTitle)
     uint32 trainer_type = cSpells && cSpells->trainerType ? cSpells->trainerType : (tSpells ? tSpells->trainerType : 0);
 
     WorldPacket data( SMSG_TRAINER_LIST, 8+4+4+maxcount*38 + strTitle.size()+1);
-    data << ObjectGuid(guid);
+    data << guid;
     data << uint32(trainer_type);
 
     size_t count_pos = data.wpos();
@@ -306,7 +306,7 @@ void WorldSession::HandleTrainerBuySpellOpcode( WorldPacket & recv_data )
         _player->learnSpell(spellId, false);
 
     data.Initialize(SMSG_TRAINER_BUY_SUCCEEDED, 12);
-    data << ObjectGuid(guid);
+    data << guid;
     data << uint32(spellId);                                // should be same as in packet from client
     SendPacket(&data);
 }

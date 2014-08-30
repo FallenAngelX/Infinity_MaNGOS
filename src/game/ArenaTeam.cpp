@@ -645,7 +645,7 @@ void ArenaTeam::BroadcastEvent(ArenaTeamEvents event, ObjectGuid guid, char cons
         data << str1;
 
     if (guid)
-        data << ObjectGuid(guid);
+        data << guid;
 
     BroadcastPacket(&data);
 

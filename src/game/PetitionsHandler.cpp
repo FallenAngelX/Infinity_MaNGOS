@@ -271,7 +271,7 @@ void WorldSession::HandlePetitionShowSignOpcode(WorldPacket & recv_data)
     DEBUG_LOG("CMSG_PETITION_SHOW_SIGNATURES petition: %s", petitionguid.GetString().c_str());
 
     WorldPacket data(SMSG_PETITION_SHOW_SIGNATURES, (8+8+4+1+signs*12));
-    data << ObjectGuid(petitionguid);                       // petition guid
+    data << petitionguid;                                   // petition guid
     data << _player->GetObjectGuid();                       // owner guid
     data << uint32(petitionguid_low);                       // guild guid (in mangos always same as GUID_LOPART(petitionguid)
     data << uint8(signs);                                   // sign's count
@@ -281,7 +281,7 @@ void WorldSession::HandlePetitionShowSignOpcode(WorldPacket & recv_data)
         Field *fields2 = result->Fetch();
         ObjectGuid signerGuid = ObjectGuid(HIGHGUID_PLAYER, fields2[0].GetUInt32());
 
-        data << ObjectGuid(signerGuid);                     // Player GUID
+        data << signerGuid;                                 // Player GUID
         data << uint32(0);                                  // there 0 ...
 
         result->NextRow();
@@ -336,7 +336,7 @@ void WorldSession::SendPetitionQueryOpcode(ObjectGuid petitionguid)
 
     WorldPacket data(SMSG_PETITION_QUERY_RESPONSE, (4+8+name.size()+1+1+4*12+2+10));
     data << uint32(petitionLowGuid);                        // guild/team guid (in mangos always same as GUID_LOPART(petition guid)
-    data << ObjectGuid(ownerGuid);                          // charter owner guid
+    data << ownerGuid;                                      // charter owner guid
     data << name;                                           // name (guild/arena team)
     data << uint8(0);                                       // some string
     if (type == 9)
@@ -438,7 +438,7 @@ void WorldSession::HandlePetitionRenameOpcode(WorldPacket & recv_data)
     DEBUG_LOG("Petition %s renamed to '%s'", petitionGuid.GetString().c_str(), newname.c_str());
 
     WorldPacket data(MSG_PETITION_RENAME, (8+newname.size()+1));
-    data << ObjectGuid(petitionGuid);
+    data << petitionGuid;
     data << newname;
     SendPacket(&data);
 }
@@ -542,8 +542,8 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket & recv_data)
     {
         delete result;
         WorldPacket data(SMSG_PETITION_SIGN_RESULTS, (8+8+4));
-        data << ObjectGuid(petitionGuid);
-        data << ObjectGuid(_player->GetObjectGuid());
+        data << petitionGuid;
+        data << _player->GetObjectGuid();
         data << uint32(PETITION_SIGN_ALREADY_SIGNED);
 
         // close at signer side
@@ -562,8 +562,8 @@ void WorldSession::HandlePetitionSignOpcode(WorldPacket & recv_data)
     DEBUG_LOG("PETITION SIGN: %s by %s", petitionGuid.GetString().c_str(), _player->GetGuidStr().c_str());
 
     WorldPacket data(SMSG_PETITION_SIGN_RESULTS, (8+8+4));
-    data << ObjectGuid(petitionGuid);
-    data << ObjectGuid(_player->GetObjectGuid());
+    data << petitionGuid;
+    data << _player->GetObjectGuid();
     data << uint32(PETITION_SIGN_OK);
 
     // close at signer side
@@ -698,8 +698,8 @@ void WorldSession::HandleOfferPetitionOpcode(WorldPacket & recv_data)
 
     /// Send response
     WorldPacket data(SMSG_PETITION_SHOW_SIGNATURES, (8+8+4+signs+signs*12));
-    data << ObjectGuid(petitionGuid);                       // petition guid
-    data << ObjectGuid(_player->GetObjectGuid());           // owner guid
+    data << petitionGuid;                                   // petition guid
+    data << _player->GetObjectGuid();                       // owner guid
     data << uint32(petitionGuid.GetCounter());              // guild guid (in mangos always same as low part of petition guid)
     data << uint8(signs);                                   // sign's count
 
@@ -708,7 +708,7 @@ void WorldSession::HandleOfferPetitionOpcode(WorldPacket & recv_data)
         Field *fields2 = result->Fetch();
         ObjectGuid signerGuid = ObjectGuid(HIGHGUID_PLAYER, fields2[0].GetUInt32());
 
-        data << ObjectGuid(signerGuid);                     // Player GUID
+        data << signerGuid;                                 // Player GUID
         data << uint32(0);                                  // there 0 ...
 
         result->NextRow();
@@ -934,7 +934,7 @@ void WorldSession::SendPetitionShowList(ObjectGuid guid)
         count = 3;
 
     WorldPacket data(SMSG_PETITION_SHOWLIST, 8+1+4*6);
-    data << ObjectGuid(guid);                               // npc guid
+    data << guid;                                           // npc guid
     data << uint8(count);                                   // count
     if(count == 1)
     {

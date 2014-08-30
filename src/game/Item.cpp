@@ -1160,7 +1160,7 @@ void Item::SendTimeUpdate(Player* owner)
         return;
 
     WorldPacket data(SMSG_ITEM_TIME_UPDATE, 8 + 4);
-    data << ObjectGuid(GetObjectGuid());
+    data << GetObjectGuid();
     data << uint32(duration);
     owner->GetSession()->SendPacket(&data);
 }

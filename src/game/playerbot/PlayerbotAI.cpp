@@ -6431,7 +6431,7 @@ void PlayerbotAI::HandleCommand(const std::string& text, Player& fromPlayer)
                     {
                         visuals = false;
                         WorldPacket data(SMSG_PLAY_SPELL_VISUAL, 12);           // visual effect on trainer
-                        data << ObjectGuid(fromPlayer.GetSelectionGuid());
+                        data << fromPlayer.GetSelectionGuid();
                         data << uint32(0xB3);                                   // index from SpellVisualKit.dbc
                         GetMaster()->GetSession()->SendPacket(&data);
 
@@ -6442,7 +6442,7 @@ void PlayerbotAI::HandleCommand(const std::string& text, Player& fromPlayer)
                     }
 
                     WorldPacket data(SMSG_TRAINER_BUY_SUCCEEDED, 12);
-                    data << ObjectGuid(fromPlayer.GetSelectionGuid());
+                    data << fromPlayer.GetSelectionGuid();
                     data << uint32(spellId);                                // should be same as in packet from client
                     GetMaster()->GetSession()->SendPacket(&data);
 

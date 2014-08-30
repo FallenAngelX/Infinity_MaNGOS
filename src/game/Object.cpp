@@ -1710,14 +1710,14 @@ void WorldObject::SendMessageToSetExcept(WorldPacket* data, Player const* skippe
 void WorldObject::SendObjectDeSpawnAnim(ObjectGuid guid)
 {
     WorldPacket data(SMSG_GAMEOBJECT_DESPAWN_ANIM, 8);
-    data << ObjectGuid(guid);
+    data << guid;
     SendMessageToSet(&data, true);
 }
 
 void WorldObject::SendGameObjectCustomAnim(ObjectGuid guid, uint32 animId /*= 0*/)
 {
     WorldPacket data(SMSG_GAMEOBJECT_CUSTOM_ANIM, 8+4);
-    data << ObjectGuid(guid);
+    data << guid;
     data << uint32(animId);
     SendMessageToSet(&data, true);
 }

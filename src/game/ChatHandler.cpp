@@ -598,7 +598,7 @@ namespace MaNGOS
                 uint32 namlen = (nam ? strlen(nam) : 0) + 1;
 
                 data.Initialize(SMSG_TEXT_EMOTE, (20 + namlen));
-                data << ObjectGuid(i_player.GetObjectGuid());
+                data << i_player.GetObjectGuid();
                 data << uint32(i_text_emote);
                 data << uint32(i_emote_num);
                 data << uint32(namlen);

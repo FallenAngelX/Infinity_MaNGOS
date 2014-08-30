@@ -457,7 +457,7 @@ void WorldSession::HandleReadItemOpcode(WorldPacket& recv_data)
             DETAIL_LOG("STORAGE: Unable to read item");
             _player->SendEquipError(msg, pItem, NULL);
         }
-        data << ObjectGuid(pItem->GetObjectGuid());
+        data << pItem->GetObjectGuid();
         SendPacket(&data);
     }
     else
@@ -744,7 +744,7 @@ void WorldSession::SendListInventory(ObjectGuid vendorguid)
     if (!vItems && !tItems)
     {
         WorldPacket data(SMSG_LIST_INVENTORY, (8 + 1 + 1));
-        data << ObjectGuid(vendorguid);
+        data << vendorguid;
         data << uint8(0);                                   // count==0, next will be error code
         data << uint8(0);                                   // "Vendor has no inventory"
         SendPacket(&data);
@@ -757,7 +757,7 @@ void WorldSession::SendListInventory(ObjectGuid vendorguid)
     uint8 count = 0;
 
     WorldPacket data(SMSG_LIST_INVENTORY, (8 + 1 + numitems * 8 * 4));
-    data << ObjectGuid(vendorguid);
+    data << vendorguid;
 
     size_t count_pos = data.wpos();
     data << uint8(count);                                   // placeholder, client limit 150 items (as of 3.3.3)
@@ -1051,8 +1051,8 @@ void WorldSession::HandleSetAmmoOpcode(WorldPacket& recv_data)
 void WorldSession::SendEnchantmentLog(ObjectGuid targetGuid, ObjectGuid casterGuid, uint32 itemId, uint32 spellId)
 {
     WorldPacket data(SMSG_ENCHANTMENTLOG, (8 + 8 + 4 + 4 + 1)); // last check 2.0.10
-    data << ObjectGuid(targetGuid);
-    data << ObjectGuid(casterGuid);
+    data << targetGuid;
+    data << casterGuid;
     data << uint32(itemId);
     data << uint32(spellId);
     data << uint8(0);
@@ -1063,10 +1063,10 @@ void WorldSession::SendItemEnchantTimeUpdate(ObjectGuid playerGuid, ObjectGuid i
 {
     // last check 2.0.10
     WorldPacket data(SMSG_ITEM_ENCHANT_TIME_UPDATE, (8 + 4 + 4 + 8));
-    data << ObjectGuid(itemGuid);
+    data << itemGuid;
     data << uint32(slot);
     data << uint32(duration);
-    data << ObjectGuid(playerGuid);
+    data << playerGuid;
     SendPacket(&data);
 }
 
@@ -1547,7 +1547,7 @@ void WorldSession::HandleItemTextQuery(WorldPacket& recv_data)
     if (Item* item = _player->GetItemByGuid(itemGuid))
     {
         data << uint8(0);                                   // has text
-        data << ObjectGuid(itemGuid);                       // item guid
+        data << itemGuid;                                   // item guid
         data << item->GetText();
     }
     else

@@ -3603,7 +3603,7 @@ void ChatHandler::BuildChatPacket(WorldPacket& data, ChatMsg msgtype, char const
     data.Initialize(isGM ? SMSG_GM_MESSAGECHAT : SMSG_MESSAGECHAT);
     data << uint8(msgtype);
     data << uint32(language);
-    data << ObjectGuid(senderGuid);
+    data << senderGuid;
     data << uint32(0);                                              // 2.1.0
 
     switch (msgtype)
@@ -3621,7 +3621,7 @@ void ChatHandler::BuildChatPacket(WorldPacket& data, ChatMsg msgtype, char const
             MANGOS_ASSERT(targetName);
             data << uint32(strlen(senderName) + 1);
             data << senderName;
-            data << ObjectGuid(targetGuid);                         // Unit Target
+            data << targetGuid;                                     // Unit Target
             if (targetGuid && !targetGuid.IsPlayer() && !targetGuid.IsPet() && (msgtype != CHAT_MSG_WHISPER_FOREIGN))
             {
                 data << uint32(strlen(targetName) + 1);             // target name length
@@ -3631,7 +3631,7 @@ void ChatHandler::BuildChatPacket(WorldPacket& data, ChatMsg msgtype, char const
         case CHAT_MSG_BG_SYSTEM_NEUTRAL:
         case CHAT_MSG_BG_SYSTEM_ALLIANCE:
         case CHAT_MSG_BG_SYSTEM_HORDE:
-            data << ObjectGuid(targetGuid);                         // Unit Target
+            data << targetGuid;                                     // Unit Target
             if (targetGuid && !targetGuid.IsPlayer())
             {
                 MANGOS_ASSERT(targetName);
@@ -3641,7 +3641,7 @@ void ChatHandler::BuildChatPacket(WorldPacket& data, ChatMsg msgtype, char const
             break;
         case CHAT_MSG_ACHIEVEMENT:
         case CHAT_MSG_GUILD_ACHIEVEMENT:
-            data << ObjectGuid(targetGuid);                         // Unit Target
+            data << targetGuid;                                     // Unit Target
             isAchievement = true;
             break;
         default:
@@ -3656,7 +3656,7 @@ void ChatHandler::BuildChatPacket(WorldPacket& data, ChatMsg msgtype, char const
                 MANGOS_ASSERT(channelName);
                 data << channelName;
             }
-            data << ObjectGuid(targetGuid);
+            data << targetGuid;
             break;
     }
     MANGOS_ASSERT(message);

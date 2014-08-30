@@ -160,7 +160,7 @@ void PlayerMenu::SendGossipMenu(uint32 TitleTextId, ObjectGuid objectGuid)
     mGossipMenu.SetSenderGuid(objectGuid);
 
     WorldPacket data(SMSG_GOSSIP_MESSAGE, (100));           // guess size
-    data << ObjectGuid(objectGuid);
+    data << objectGuid;
     data << uint32(mGossipMenu.GetMenuId());                // new 2.4.0
     data << uint32(TitleTextId);
     data << uint32(mGossipMenu.MenuItemCount());            // max count 0x20
@@ -388,7 +388,7 @@ void QuestMenu::ClearMenu()
 void PlayerMenu::SendQuestGiverQuestList(QEmote eEmote, const std::string& Title, ObjectGuid npcGUID)
 {
     WorldPacket data(SMSG_QUESTGIVER_QUEST_LIST, 100);      // guess size
-    data << ObjectGuid(npcGUID);
+    data << npcGUID;
     data << Title;
     data << uint32(eEmote._Delay);                          // player emote
     data << uint32(eEmote._Emote);                          // NPC emote
@@ -723,7 +723,7 @@ void PlayerMenu::SendQuestGiverOfferReward(Quest const* pQuest, ObjectGuid npcGU
 
     WorldPacket data(SMSG_QUESTGIVER_OFFER_REWARD, 50);     // guess size
 
-    data << ObjectGuid(npcGUID);
+    data << npcGUID;
     data << uint32(pQuest->GetQuestId());
     data << Title;
     data << OfferRewardText;
@@ -838,7 +838,7 @@ void PlayerMenu::SendQuestGiverRequestItems(Quest const* pQuest, ObjectGuid npcG
     }
 
     WorldPacket data(SMSG_QUESTGIVER_REQUEST_ITEMS, 50);    // guess size
-    data << ObjectGuid(npcGUID);
+    data << npcGUID;
     data << uint32(pQuest->GetQuestId());
     data << Title;
     data << RequestItemsText;

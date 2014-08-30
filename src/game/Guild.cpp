@@ -2516,7 +2516,7 @@ void Guild::BroadcastEvent(GuildEvents event, ObjectGuid guid, char const* str1 
         data << str1;
 
     if (guid)
-        data << ObjectGuid(guid);
+        data << guid;
 
     BroadcastPacket(&data);
 

@@ -6928,7 +6928,7 @@ bool Player::RewardHonor(Unit* uVictim, uint32 groupsize, float honor)
     // victim_rank [0,20+] HK: <>
     WorldPacket data(SMSG_PVP_CREDIT, 4 + 8 + 4);
     data << uint32(honor);
-    data << ObjectGuid(victim_guid);
+    data << victim_guid;
     data << uint32(victim_rank);
     GetSession()->SendPacket(&data);
 
@@ -8767,7 +8767,7 @@ void Player::SendLoot(ObjectGuid guid, LootType loot_type)
     loot->loot_type = loot_type;
 
     WorldPacket data(SMSG_LOOT_RESPONSE, 8 + 1 + 50);       // we guess size
-    data << ObjectGuid(guid);
+    data << guid;
     data << uint8(loot_type);
     data << LootView(*loot, this, permission);
     SendDirectMessage(&data);
@@ -8887,14 +8887,14 @@ uint32 Player::GetXPRestBonus(uint32 xp)
 void Player::SetBindPoint(ObjectGuid guid)
 {
     WorldPacket data(SMSG_BINDER_CONFIRM, 8);
-    data << ObjectGuid(guid);
+    data << guid;
     GetSession()->SendPacket(&data);
 }
 
 void Player::SendTalentWipeConfirm(ObjectGuid guid)
 {
     WorldPacket data(MSG_TALENT_WIPE_CONFIRM, 8 + 4);
-    data << ObjectGuid(guid);
+    data << guid;
     data << uint32(resetTalentsCost());
     GetSession()->SendPacket(&data);
 }
@@ -12676,7 +12676,7 @@ void Player::SendSellError(SellResult msg, Creature* pCreature, ObjectGuid itemG
     DEBUG_LOG("WORLD: Sent SMSG_SELL_ITEM");
     WorldPacket data(SMSG_SELL_ITEM, 8 + 8 + (param ? 4 : 0) + 1);   // last check 2.0.10
     data << (pCreature ? pCreature->GetObjectGuid() : ObjectGuid());
-    data << ObjectGuid(itemGuid);
+    data << itemGuid;
     if (param > 0)
         data << uint32(param);
     data << uint8(msg);
@@ -17583,7 +17583,7 @@ void Player::SendRaidInfo()
                 DungeonPersistentState* state = itr->second.state;
                 data << uint32(state->GetMapId());              // map id
                 data << uint32(state->GetDifficulty());         // difficulty
-                data << ObjectGuid(state->GetInstanceGuid());   // instance guid
+                data << state->GetInstanceGuid();               // instance guid
                 data << uint8((state->GetRealResetTime() > now) ? 1 : 0);   // expired = 0
                 data << uint8(itr->second.extend ? 1 : 0);      // extended = 1
                 data << uint32(state->GetRealResetTime() > now ? state->GetRealResetTime() - now
@@ -20917,7 +20917,7 @@ void Player::ApplyEquipCooldown(Item * pItem)
         AddSpellCooldown(spellData.SpellId, pItem->GetEntry(), time(NULL) + 30);
 
         WorldPacket data(SMSG_ITEM_COOLDOWN, 12);
-        data << ObjectGuid(pItem->GetObjectGuid());
+        data << pItem->GetObjectGuid();
         data << uint32(spellData.SpellId);
         GetSession()->SendPacket(&data);
     }
