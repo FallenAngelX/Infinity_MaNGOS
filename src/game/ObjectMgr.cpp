@@ -47,6 +47,7 @@
 #include "Mail.h"
 #include "InstanceData.h"
 #include "GridNotifiers.h"
+#include "CellImpl.h"
 
 #include <limits>
 
@@ -8538,6 +8539,7 @@ bool PlayerCondition::Meets(Player const* player, Map const* map, WorldObject co
         case CONDITION_GENDER:
             return player->getGender() == m_value1;
         case CONDITION_DEAD_OR_AWAY:
+        {
             switch (m_value1)
             {
                 case 0:                                     // Player dead or out of range
@@ -8568,6 +8570,7 @@ bool PlayerCondition::Meets(Player const* player, Map const* map, WorldObject co
                 case 3:                                     // Creature source is dead
                     return !source || source->GetTypeId() != TYPEID_UNIT || !((Unit*)source)->isAlive();
             }
+        }
         case CONDITION_CREATURE_IN_RANGE:
         {
             Creature* creature = NULL;
