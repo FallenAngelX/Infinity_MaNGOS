@@ -122,8 +122,10 @@ void GameObject::RemoveFromWorld(bool remove)
     }
 
     if (m_model && GetMap())
+    {
         if (GetMap()->ContainsGameObjectModel(*m_model))
             GetMap()->RemoveGameObjectModel(*m_model);
+    }
 
     WorldObject::RemoveFromWorld(remove);
 }
@@ -137,7 +139,7 @@ bool GameObject::Create(uint32 guidlow, uint32 name_id, Map* map, uint32 phaseMa
 
     if (!IsPositionValid())
     {
-        sLog.outError("Gameobject (GUID: %u Entry: %u ) not created. Suggested coordinates are invalid (X: %f Y: %f)", guidlow, name_id, x, y);
+        sLog.outError("Gameobject (GUID: %u Entry: %u) not created. Suggested coordinates are invalid (X: %f Y: %f)", guidlow, name_id, x, y);
         return false;
     }
 
@@ -174,6 +176,7 @@ bool GameObject::Create(uint32 guidlow, uint32 name_id, Map* map, uint32 phaseMa
     SetDisplayId(goinfo->displayId);
 
     m_model = GameObjectModel::construct(this);
+
     // GAMEOBJECT_BYTES_1, index at 0, 1, 2 and 3
     SetGoState(go_state);
     SetGoType(GameobjectTypes(goinfo->type));
@@ -685,7 +688,7 @@ bool GameObject::LoadFromDB(uint32 guid, Map* map)
 
     if (!data)
     {
-        sLog.outErrorDb("Gameobject (GUID: %u) not found in table `gameobject`, can't load. ", guid);
+        sLog.outErrorDb("Gameobject (GUID: %u) not found in table `gameobject`, can't load.", guid);
         return false;
     }
 
@@ -1241,8 +1244,8 @@ void GameObject::Use(Unit* user)
             // Some may have have animation and/or are expected to despawn.
 
             // TODO: Improve this when more information is available, currently these traps are known that must send the anim (Onyxia/ Heigan Fissures/ Trap in DireMaul)
-            if (GetDisplayId() == 4392 || GetDisplayId() == 4472 || GetDisplayId() == 6785 || GetDisplayId() == 3073)
-                SendGameObjectCustomAnim(GetObjectGuid(), 0);
+            if (GetDisplayId() == 4392 || GetDisplayId() == 4472 || GetDisplayId() == 4491 || GetDisplayId() == 6785 || GetDisplayId() == 3073)
+                SendGameObjectCustomAnim(GetObjectGuid());
 
             // TODO: Despawning of traps? (Also related to code in ::Update)
             return;
@@ -1653,7 +1656,8 @@ void GameObject::Use(Unit* user)
                     return;
             }
 
-            spellId = info->spellcaster.spellId;
+            if (!scriptReturnValue)
+                spellId = info->spellcaster.spellId;
 
             // dismount players
             if (user && user->IsMounted())
@@ -1806,7 +1810,7 @@ void GameObject::Use(Unit* user)
     SpellEntry const* spellInfo = sSpellStore.LookupEntry(spellId);
     if (!spellInfo)
     {
-        sLog.outError("WORLD: unknown spell id %u at use action for gameobject (Entry: %u GoType: %u )", spellId, GetEntry(), GetGoType());
+        sLog.outError("WORLD: unknown spell id %u at use action for gameobject (Entry: %u GoType: %u)", spellId, GetEntry(), GetGoType());
         return;
     }
 
@@ -1857,11 +1861,11 @@ void GameObject::DealGameObjectDamage(uint32 damage, uint32 spellId, Unit* caste
         || !sSpellStore.LookupEntry(spellId))
     {
         sLog.outError("GameObject::DealGameObjectDamage not valid damage method for %s, spell %u, damage %u, caster %s",
-            GetObjectGuid().GetString().c_str(),spellId, damage, caster ? caster->GetObjectGuid().GetString().c_str() : "<none>");
+            GetGuidStr().c_str(), spellId, damage, caster ? caster->GetGuidStr().c_str() : "<none>");
         return;
     }
 
-    DEBUG_FILTER_LOG(LOG_FILTER_DAMAGE, "GameObject::DealGameObjectDamage, spell ID %u, object %s, damage %u", spellId, GetObjectGuid().GetString().c_str(), damage);
+    DEBUG_FILTER_LOG(LOG_FILTER_DAMAGE, "GameObject::DealGameObjectDamage, spell ID %u, object %s, damage %u", spellId, GetGuidStr().c_str(), damage);
 
     if (!damage)
         return;
@@ -1964,7 +1968,7 @@ void GameObject::DamageTaken(Unit* pDoneBy, int32 damage, uint32 spellId)
                     outdoorPvP->EventPlayerDamageGO(pWho,this,GetGOInfo()->destructibleBuilding.destroyedEvent, spellId);
             }
             SetLinkedWorldState(OBJECT_STATE_LAST_INDEX - (GetTeamIndex(GetTeam()) + 1)*OBJECT_STATE_PERIOD + OBJECT_STATE_DESTROY);
-            DEBUG_FILTER_LOG(LOG_FILTER_DAMAGE, "GameObject::DamageTaken %s gain DESTROY state, team %u", GetObjectGuid().GetString().c_str(),GetTeam());
+            DEBUG_FILTER_LOG(LOG_FILTER_DAMAGE, "GameObject::DamageTaken %s gain DESTROY state, team %u", GetGuidStr().c_str(), GetTeam());
         }
         DealGameObjectDamage(realDamage, spellId, pDoneBy);
     }
@@ -2037,7 +2041,7 @@ void GameObject::Rebuild(Unit* pCaster, uint32 spellId)
 
     SetLinkedWorldState(OBJECT_STATE_LAST_INDEX - (GetTeamIndex(GetTeam()) + 1)*OBJECT_STATE_PERIOD + OBJECT_STATE_INTACT);
 
-    DEBUG_FILTER_LOG(LOG_FILTER_DAMAGE, "GameObject::Rebuild %s gain INTACT state, team %u", GetObjectGuid().GetString().c_str(),GetTeam());
+    DEBUG_FILTER_LOG(LOG_FILTER_DAMAGE, "GameObject::Rebuild %s gain INTACT state, team %u", GetGuidStr().c_str(), GetTeam());
 
     SetGoAnimProgress(255);
 }
@@ -2236,12 +2240,9 @@ void GameObject::SetLootState(LootState state)
 void GameObject::SetGoState(GOState state)
 {
     SetByteValue(GAMEOBJECT_BYTES_1, 0, state);
-    if (m_model)
-    {
-        if (!IsInWorld())
-            return;
+
+    if (m_model && IsInWorld())
         EnableCollision(CalculateCurrentCollisionState());
-    }
 }
 
 void GameObject::SetDisplayId(uint32 modelId)
@@ -2289,10 +2290,9 @@ bool GameObject::CalculateCurrentCollisionState() const
     }
 
     if ((GetGoState() == GO_STATE_ACTIVE || GetGoState() == GO_STATE_ACTIVE_ALTERNATIVE) ||
-        (getLootState()  == GO_ACTIVATED || getLootState()  == GO_JUST_DEACTIVATED))
+        (getLootState() == GO_ACTIVATED || getLootState() == GO_JUST_DEACTIVATED))
         result = startOpen;
-    else if (GetGoState() == GO_STATE_READY ||
-            getLootState()  == GO_READY)
+    else if (GetGoState() == GO_STATE_READY || getLootState() == GO_READY)
         result = !startOpen;
 
     return result;
@@ -2303,9 +2303,12 @@ void GameObject::UpdateModel()
     if (!IsInWorld())
         return;
     if (m_model)
+    {
         if (GetMap()->ContainsGameObjectModel(*m_model))
             GetMap()->RemoveGameObjectModel(*m_model);
-    delete m_model;
+        delete m_model;
+    }
+
     m_model = GameObjectModel::construct(this);
     if (m_model)
         GetMap()->InsertGameObjectModel(*m_model);
@@ -2653,7 +2656,7 @@ void GameObject::TickCapturePoint()
 
 
         DEBUG_LOG("GameObject::TickCapturePoint gameobject %s send event %u to faction %u, players group size %u, new state %u",
-            GetObjectGuid().GetString().c_str(),
+            GetGuidStr().c_str(),
             eventId, progressFaction, players.size(), m_captureState);
 
         StartEvents_Event(GetMap(), eventId, this, this, true, *capturingPlayers.begin());
@@ -2669,7 +2672,7 @@ uint32 GameObject::GetLinkedWorldState(bool stateId)
             if (WorldStateMgr::CheckWorldState(GetGOInfo()->destructibleBuilding.linkedWorldState))
                 return stateId ?
                     GetGOInfo()->destructibleBuilding.linkedWorldState :
-                    sWorldStateMgr.GetWorldStateValueFor(this,GetGOInfo()->destructibleBuilding.linkedWorldState);
+                    sWorldStateMgr.GetWorldStateValueFor(this, GetGOInfo()->destructibleBuilding.linkedWorldState);
             break;
         }
         case GAMEOBJECT_TYPE_CAPTURE_POINT:
@@ -2677,7 +2680,7 @@ uint32 GameObject::GetLinkedWorldState(bool stateId)
             if (GetGOInfo()->capturePoint.worldState2)
                 return stateId ?
                     GetGOInfo()->capturePoint.worldState2 :
-                    sWorldStateMgr.GetWorldStateValueFor(this,GetGOInfo()->capturePoint.worldState2);
+                    sWorldStateMgr.GetWorldStateValueFor(this, GetGOInfo()->capturePoint.worldState2);
             break;
         }
         default:
