@@ -308,8 +308,8 @@ class MANGOS_DLL_SPEC Item : public Object
         bool IsBag() const { return GetProto()->InventoryType == INVTYPE_BAG; }
         bool IsBroken() const { return GetUInt32Value(ITEM_FIELD_MAXDURABILITY) > 0 && GetUInt32Value(ITEM_FIELD_DURABILITY) == 0; }
         bool CanBeTraded(bool mail = false, bool trade = false) const;
-        void SetInTrade(bool b = true) { mb_in_trade = b; }
-        bool IsInTrade() const { return mb_in_trade; }
+        void SetInTrade(bool trade = true) { m_inTrade = trade; }
+        bool IsInTrade() const { return m_inTrade; }
 
         bool IsFitToSpellRequirements(SpellEntry const* spellInfo) const;
         bool HasTriggeredByAuraSpell(SpellEntry const* spellInfo) const;
@@ -388,7 +388,7 @@ class MANGOS_DLL_SPEC Item : public Object
 
         void AddToClientUpdateList() override;
         void RemoveFromClientUpdateList() override;
-        void BuildUpdateData(UpdateDataMapType& update_players) override;
+        void BuildUpdateData(UpdateDataMapType& playerMap) override;
 
         // Item Refunding system
         bool IsEligibleForRefund() const;
@@ -420,18 +420,18 @@ class MANGOS_DLL_SPEC Item : public Object
         void DeleteSoulboundTradeableFromDB();
         void SaveSoulboundTradeableToDB();
 
-        std::string m_text;
-        Bag* m_container;
-        uint8 m_slot;
-        ItemUpdateState m_state;
-        int16 m_queuePos;
+        std::string         m_text;
+        Bag*                m_container;
+        uint8               m_slot;
+        ItemUpdateState     m_state;
+        int16               m_queuePos;
         ItemLootUpdateState m_lootState;
-        bool mb_in_trade;                                   // true if item is currently in trade-window
+        bool                m_inTrade;                      // true if item is currently in trade-window
 
-        uint32 m_paidCost;
-        uint16 m_paidExtCost;
+        uint32              m_paidCost;
+        uint16              m_paidExtCost;
 
-        AllowedLooterSet m_allowedLooterGuids;
+        AllowedLooterSet    m_allowedLooterGuids;
 };
 
 #endif
