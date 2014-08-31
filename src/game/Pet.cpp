@@ -3300,7 +3300,7 @@ Unit* Pet::SelectPreferredTargetForSpell(SpellEntry const* spellInfo)
     SpellRangeEntry const* srange = sSpellRangeStore.LookupEntry(spellInfo->GetRangeIndex());
 
     float max_range_friendly = GetSpellMaxRange(srange,true);
-    float max_range_unfriendly = (spellInfo->GetRangeIndex() == SPELL_RANGE_IDX_COMBAT) ?
+    float max_range_unfriendly = (spellInfo->GetRangeIndex() == SPELL_RANGE_IDX_COMBAT)
         ? GetObjectBoundingRadius() + 1.0f
         : GetSpellMaxRange(srange, false);
 
