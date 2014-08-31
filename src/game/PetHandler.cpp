@@ -80,7 +80,7 @@ void WorldSession::HandlePetAction(WorldPacket& recv_data)
     else if (((Creature*)pet)->IsPet())
     {
         // pet can have action bar disabled
-        if (charmInfo->HasState(CHARM_STATE_ACTION,ACTIONS_DISABLE))
+        if (charmInfo->HasState(CHARM_STATE_ACTION, ACTIONS_DISABLE))
             return;
     }
 
@@ -347,12 +347,12 @@ void WorldSession::HandlePetRename(WorldPacket& recv_data)
     if (isdeclined)
     {
         for (int i = 0; i < MAX_DECLINED_NAME_CASES; ++i)
-        {
             recv_data >> declinedname.name[i];
-        }
 
         std::wstring wname;
-        Utf8toWStr(name, wname);
+        if (!Utf8toWStr(name, wname))
+            return;
+
         if (!ObjectMgr::CheckDeclinedNames(GetMainPartOfName(wname, 0), declinedname))
         {
             SendPetNameInvalid(PET_NAME_DECLENSION_DOESNT_MATCH_BASE_NAME, name, &declinedname);
@@ -361,17 +361,29 @@ void WorldSession::HandlePetRename(WorldPacket& recv_data)
     }
 
     CharacterDatabase.BeginTransaction();
+
     if (isdeclined)
     {
-        for (int i = 0; i < MAX_DECLINED_NAME_CASES; ++i)
-            CharacterDatabase.escape_string(declinedname.name[i]);
-        CharacterDatabase.PExecute("DELETE FROM character_pet_declinedname WHERE owner = '%u' AND id = '%u'", _player->GetGUIDLow(), pet->GetCharmInfo()->GetPetNumber());
-        CharacterDatabase.PExecute("INSERT INTO character_pet_declinedname (id, owner, genitive, dative, accusative, instrumental, prepositional) VALUES ('%u','%u','%s','%s','%s','%s','%s')",
-            pet->GetCharmInfo()->GetPetNumber(), _player->GetGUIDLow(), declinedname.name[0].c_str(), declinedname.name[1].c_str(), declinedname.name[2].c_str(), declinedname.name[3].c_str(), declinedname.name[4].c_str());
+        static SqlStatementID delDName;
+        CharacterDatabase.CreateStatement(delDName, "DELETE FROM character_pet_declinedname WHERE owner = ? AND id = ?")
+            .PExecute(_player->GetGUIDLow(), pet->GetCharmInfo()->GetPetNumber());
+
+        static SqlStatementID insDName;
+        SqlStatement stmt = CharacterDatabase.CreateStatement(insDName, "INSERT INTO character_pet_declinedname (id, owner, genitive, dative, accusative, instrumental, prepositional) VALUES (?, ?, ?, ?, ?, ?, ?)");
+        stmt.addUInt32(pet->GetCharmInfo()->GetPetNumber());
+        stmt.addUInt32(_player->GetGUIDLow());
+        stmt.addString(declinedname.name[0].c_str());
+        stmt.addString(declinedname.name[1].c_str());
+        stmt.addString(declinedname.name[2].c_str());
+        stmt.addString(declinedname.name[3].c_str());
+        stmt.addString(declinedname.name[4].c_str());
+        stmt.Execute();
     }
 
-    CharacterDatabase.escape_string(name);
-    CharacterDatabase.PExecute("UPDATE character_pet SET name = '%s', renamed = '1' WHERE owner = '%u' AND id = '%u'", name.c_str(), _player->GetGUIDLow(), pet->GetCharmInfo()->GetPetNumber());
+    static SqlStatementID updName;
+    CharacterDatabase.CreateStatement(updName, "UPDATE character_pet SET name = ?, renamed = 1 WHERE owner = ? AND id = ?")
+        .PExecute(name.c_str(), _player->GetGUIDLow(), pet->GetCharmInfo()->GetPetNumber());
+
     CharacterDatabase.CommitTransaction();
 
     pet->SetUInt32Value(UNIT_FIELD_PET_NAME_TIMESTAMP, uint32(time(NULL)));
@@ -497,7 +509,7 @@ void WorldSession::HandlePetCastSpellOpcode(WorldPacket& recvPacket)
         pet->InterruptNonMeleeSpells(false);
 
     if (pet->IsPet() || pet->isCharmed())
-        GetPlayer()->CallForAllControlledUnits(DoPetCastWithHelper(GetPlayer(), cast_count, &targets, spellInfo),CONTROLLED_PET | CONTROLLED_GUARDIANS | CONTROLLED_CHARM);
+        GetPlayer()->CallForAllControlledUnits(DoPetCastWithHelper(GetPlayer(), cast_count, &targets, spellInfo), CONTROLLED_PET | CONTROLLED_GUARDIANS | CONTROLLED_CHARM);
 }
 
 void WorldSession::SendPetNameInvalid(uint32 error, const std::string& name, DeclinedName* declinedName)

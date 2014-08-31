@@ -128,7 +128,7 @@ enum ScalingTarget
 
 struct ScalingAction
 {
-    explicit ScalingAction(ScalingTarget _target, uint32 _stat, bool _apply ) :
+    explicit ScalingAction(ScalingTarget _target, uint32 _stat, bool _apply) :
                                          target(_target), stat(_stat), apply(_apply)
     {}
     ScalingTarget target;
@@ -144,8 +144,8 @@ typedef std::map<uint8, uint32> PetNumberList;
 
 #define ACTIVE_SPELLS_MAX           4
 
-#define PET_FOLLOW_DIST  1.0f
-#define PET_FOLLOW_ANGLE (M_PI_F/2.0f)
+#define PET_FOLLOW_DIST  1.1f
+#define PET_FOLLOW_ANGLE (M_PI_F / 2.0f)
 
 class Player;
 struct PetScalingData;
@@ -163,15 +163,15 @@ class MANGOS_DLL_SPEC Pet : public Creature
 
         bool IsPermanentPetFor(Player* owner);              // pet have tab in character windows and set UNIT_FIELD_PETNUMBER
 
-        bool Create (uint32 guidlow, CreatureCreatePos& cPos, CreatureInfo const* cinfo, uint32 pet_number, Unit* owner);
+        bool Create(uint32 guidlow, CreatureCreatePos& cPos, CreatureInfo const* cinfo, uint32 pet_number, Unit* owner);
         bool CreateBaseAtCreature(Creature* creature, Unit* owner);
-        bool LoadPetFromDB( Player* owner,uint32 petentry = 0,uint32 petnumber = 0, bool current = false, CreatureCreatePos* pos = NULL );
+        bool LoadPetFromDB(Player* owner,uint32 petentry = 0,uint32 petnumber = 0, bool current = false, CreatureCreatePos* pos = NULL);
         void SavePetToDB(PetSaveMode mode);
         void Unsummon(PetSaveMode mode, Unit* owner = NULL);
         static void DeleteFromDB(uint32 guidlow, bool separate_transaction = true);
 
         void SetDeathState(DeathState s);                   // overwrite virtual Creature::SetDeathState and Unit::SetDeathState
-        virtual void Update(uint32 update_diff, uint32 diff) override;  // overwrite virtual Creature::Update and Unit::Update
+        void Update(uint32 update_diff, uint32 diff) override;  // overwrite virtual Creature::Update and Unit::Update
 
         uint8 GetPetAutoSpellSize() const { return m_autospells.size(); }
         uint32 GetPetAutoSpellOnPos(uint8 pos) const
@@ -184,7 +184,7 @@ class MANGOS_DLL_SPEC Pet : public Creature
 
         Unit* SelectPreferredTargetForSpell(SpellEntry const* spellInfo);
 
-        void RegenerateAll(uint32 update_diff);             // overwrite Creature::RegenerateAll
+        void RegenerateAll(uint32 update_diff) override; // overwrite Creature::RegenerateAll
         void Regenerate(Powers power, uint32 diff);
         HappinessState GetHappinessState();
         void GivePetXP(uint32 xp);
@@ -232,7 +232,7 @@ class MANGOS_DLL_SPEC Pet : public Creature
         void ApplyPowerregenScalingBonus(bool apply);
         void ApplyAttackSpeedScalingBonus(bool apply);
         bool ReapplyScalingAura(Aura* aura, int32 basePoints);
-        PetScalingData* CalculateScalingData( bool recalculate = false );
+        PetScalingData* CalculateScalingData(bool recalculate = false);
         void AddScalingAction(ScalingTarget target, uint32 stat, bool apply);
         void ApplyHappinessBonus(bool apply);
 
@@ -308,7 +308,7 @@ class MANGOS_DLL_SPEC Pet : public Creature
         std::queue<ScalingAction> m_scalingQueue;
         uint8   m_HappinessState;
 
-        DeclinedName *m_declinedname;
+        DeclinedName* m_declinedname;
 
     private:
         void SaveToDB(uint32, uint8, uint32)                // overwrited of Creature::SaveToDB     - don't must be called
@@ -321,10 +321,9 @@ class MANGOS_DLL_SPEC Pet : public Creature
         }
 };
 
-
 struct ApplyScalingBonusWithHelper
 {
-    explicit ApplyScalingBonusWithHelper(ScalingTarget _target, uint32 _stat, bool _apply ) :
+    explicit ApplyScalingBonusWithHelper(ScalingTarget _target, uint32 _stat, bool _apply) :
                                          target(_target), stat(_stat), apply(_apply)
     {}
     void operator()(Unit* unit) const;
@@ -335,7 +334,7 @@ struct ApplyScalingBonusWithHelper
 
 struct ApplyArenaPreparationWithHelper
 {
-    explicit ApplyArenaPreparationWithHelper(bool _apply ) : apply(_apply)
+    explicit ApplyArenaPreparationWithHelper(bool _apply) : apply(_apply)
     {}
     void operator()(Unit* unit) const;
     bool apply;
@@ -343,7 +342,7 @@ struct ApplyArenaPreparationWithHelper
 
 struct DoPetActionWithHelper
 {
-    explicit DoPetActionWithHelper( Player* _owner, uint8 _flag, uint32 _spellid, ObjectGuid _petGuid, ObjectGuid _targetGuid) :
+    explicit DoPetActionWithHelper(Player* _owner, uint8 _flag, uint32 _spellid, ObjectGuid _petGuid, ObjectGuid _targetGuid) :
              owner(_owner), flag(_flag), spellid(_spellid), petGuid(_petGuid), targetGuid(_targetGuid)
     {}
     void operator()(Unit* unit) const { unit->DoPetAction(owner, flag, spellid, petGuid, targetGuid); }
@@ -356,10 +355,10 @@ struct DoPetActionWithHelper
 
 struct DoPetCastWithHelper
 {
-    explicit DoPetCastWithHelper( Player* _owner, uint8 _cast_count, SpellCastTargets* _targets, SpellEntry const* _spellInfo ) :
+    explicit DoPetCastWithHelper(Player* _owner, uint8 _cast_count, SpellCastTargets* _targets, SpellEntry const* _spellInfo) :
              owner(_owner), cast_count(_cast_count), targets(_targets), spellInfo(_spellInfo)
     {}
-    void operator()(Unit* unit) const { unit->DoPetCastSpell(owner,cast_count,targets,spellInfo ); }
+    void operator()(Unit* unit) const { unit->DoPetCastSpell(owner,cast_count,targets,spellInfo); }
     Player* owner;
     uint8 cast_count;
     SpellCastTargets* targets;
@@ -374,6 +373,6 @@ struct AttackedByHelper
     Unit* attacker;
 };
 
-typedef UNORDERED_MAP<uint32,std::string> KnownPetNames;
+//typedef std::map<uint32,std::string> KnownPetNames;
 
 #endif
