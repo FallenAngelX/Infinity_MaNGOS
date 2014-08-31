@@ -13656,13 +13656,13 @@ void Spell::EffectActivateRune(SpellEffectIndex eff_idx)
     if (m_caster->GetTypeId() != TYPEID_PLAYER)
         return;
 
-    Player *plr = (Player*)m_caster;
+    Player* plr = (Player*)m_caster;
 
     if (plr->getClass() != CLASS_DEATH_KNIGHT)
         return;
 
     int32 count = damage;                                   // max amount of reset runes
-    if (plr->ActivateRunes(RuneType(m_spellInfo->EffectMiscValue[eff_idx]), count))
+    if (plr->ActivateRunes(RuneType(m_spellInfo->EffectMiscValue[eff_idx]), count, m_spellInfo->Id == 45529/* Blood Tap */))
         plr->ResyncRunes();
 }
 

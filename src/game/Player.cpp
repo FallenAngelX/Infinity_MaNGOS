@@ -484,13 +484,17 @@ Player::Player(WorldSession* session): Unit(), m_mover(this), m_camera(NULL), m_
 
     m_lastLiquid = NULL;
 
-    for (int i = 0; i < MAX_TIMERS; ++i)
+    for (uint8 i = 0; i < MAX_TIMERS; ++i)
         m_MirrorTimer[i] = DISABLED_MIRROR_TIMER;
 
     m_MirrorTimerFlags = UNDERWATER_NONE;
     m_MirrorTimerFlagsLast = UNDERWATER_NONE;
 
     m_isInWater = false;
+
+    // Init rune grace data
+    ResetRuneGraceData();
+
     m_drunkTimer = 0;
     m_restTime = 0;
     m_deathTimer = 0;
@@ -1496,6 +1500,26 @@ void Player::Update(uint32 update_diff, uint32 p_time)
     UpdateEnchantTime(update_diff);
     UpdateHomebindTime(update_diff);
 
+    if (getClass() == CLASS_DEATH_KNIGHT)
+    {
+        // Update rune grace data
+        for (uint8 i = 0; i < MAX_RUNES; ++i)
+        {
+            // Don't update timer if rune is disabled
+            if (GetRuneCooldown(i))
+                continue;
+
+            uint32 timer = GetRuneTimer(i);
+
+            // Timer has began
+            if (timer < UINT32_MAX)
+            {
+                timer += p_time;
+                SetRuneTimer(i, std::min(uint32(2500), timer));
+            }
+        }
+    }
+
     // Group update
     SendUpdateToOutOfRangeGroupMembers();
 
@@ -2253,30 +2277,30 @@ void Player::Regenerate(Powers power, uint32 diff)
             if (IsUnderLastManaUseEffect())
             {
                 // Mangos Updates Mana in intervals of 2s, which is correct
-                addvalue += GetFloatValue(UNIT_FIELD_POWER_REGEN_INTERRUPTED_FLAT_MODIFIER) *  ManaIncreaseRate * (float)REGEN_TIME_FULL/IN_MILLISECONDS;
+                addvalue = GetFloatValue(UNIT_FIELD_POWER_REGEN_INTERRUPTED_FLAT_MODIFIER) *  ManaIncreaseRate * (float)REGEN_TIME_FULL/IN_MILLISECONDS;
             }
             else
             {
-                addvalue += GetFloatValue(UNIT_FIELD_POWER_REGEN_FLAT_MODIFIER) * ManaIncreaseRate * (float)REGEN_TIME_FULL/IN_MILLISECONDS;
+                addvalue = GetFloatValue(UNIT_FIELD_POWER_REGEN_FLAT_MODIFIER) * ManaIncreaseRate * (float)REGEN_TIME_FULL/IN_MILLISECONDS;
             }
             break;
         }
         case POWER_RAGE:                                    // Regenerate rage
         {
             float RageDecreaseRate = sWorld.getConfig(CONFIG_FLOAT_RATE_POWER_RAGE_LOSS);
-            addvalue += 20 * RageDecreaseRate;               // 2 rage by tick (= 2 seconds => 1 rage/sec)
+            addvalue = 20 * RageDecreaseRate;               // 2 rage by tick (= 2 seconds => 1 rage/sec)
             break;
         }
         case POWER_ENERGY:                                  // Regenerate energy
         {
             float EnergyRate = sWorld.getConfig(CONFIG_FLOAT_RATE_POWER_ENERGY);
-            addvalue += 20 * EnergyRate;
+            addvalue = 20 * EnergyRate;
             break;
         }
         case POWER_RUNIC_POWER:
         {
             float RunicPowerDecreaseRate = sWorld.getConfig(CONFIG_FLOAT_RATE_POWER_RUNICPOWER_LOSS);
-            addvalue += 30 * RunicPowerDecreaseRate;         // 3 RunicPower by tick
+            addvalue = 30 * RunicPowerDecreaseRate;         // 3 RunicPower by tick
             break;
         }
         case POWER_RUNE:
@@ -2326,29 +2350,31 @@ void Player::Regenerate(Powers power, uint32 diff)
 
     // Mana regen calculated in Player::UpdateManaRegen()
     // Exist only for POWER_MANA, POWER_ENERGY, POWER_FOCUS auras
-    if (power != POWER_MANA)
+    if (power != POWER_MANA && power != POWER_RUNE)
     {
         AuraList const& ModPowerRegenPCTAuras = GetAurasByType(SPELL_AURA_MOD_POWER_REGEN_PERCENT);
         for (AuraList::const_iterator i = ModPowerRegenPCTAuras.begin(); i != ModPowerRegenPCTAuras.end(); ++i)
+        {
             if ((*i)->GetModifier()->m_miscvalue == int32(power))
-                addvalue *= ((*i)->GetModifier()->m_amount + 100) / 100.0f;
+                addvalue *= float((*i)->GetModifier()->m_amount + 100) / 100.0f;
+        }
     }
 
     // addvalue computed on a 2sec basis. => update to diff time
-    uint32 _addvalue = ceil(fabs(addvalue * float(diff) / (float)REGEN_TIME_FULL));
+    uint32 uiAddValue = addvalue != 0.0f ? ceil(fabs(addvalue * float(diff) / float(REGEN_TIME_FULL))) : 0;
 
     if (power != POWER_RAGE && power != POWER_RUNIC_POWER)
     {
-        curValue += _addvalue;
+        curValue += uiAddValue;
         if (curValue > maxValue)
             curValue = maxValue;
     }
     else
     {
-        if (curValue <= _addvalue)
+        if (curValue <= uiAddValue)
             curValue = 0;
         else
-            curValue -= _addvalue;
+            curValue -= uiAddValue;
     }
     SetPower(power, curValue);
 }
@@ -22388,6 +22414,27 @@ void Player::SetTitle(CharTitlesEntry const* title, bool lost)
     GetSession()->SendPacket(&data);
 }
 
+void Player::SetRuneCooldown(uint8 index, uint16 cooldown, bool casted /*=false*/)
+{
+    if (casted && isInCombat())
+    {
+        if (cooldown > 0)
+        {
+            uint32 gracePeriod = GetRuneTimer(index);
+            if (gracePeriod < UINT32_MAX)
+            {
+                uint32 lessCd = std::min(uint32(2500), gracePeriod);
+                cooldown = (cooldown > lessCd) ? (cooldown - lessCd) : 0;
+                SetLastRuneGraceTimer(index, lessCd);
+            }
+        }
+        SetRuneTimer(index, 0);
+    }
+
+    m_runes->runes[index].Cooldown = cooldown;
+    m_runes->SetRuneState(index, (cooldown == 0) ? true : false);
+}
+
 void Player::ConvertRune(uint8 index, RuneType newType, uint32 spellid)
 {
     SetCurrentRune(index, newType);
@@ -22401,16 +22448,41 @@ void Player::ConvertRune(uint8 index, RuneType newType, uint32 spellid)
     GetSession()->SendPacket(&data);
 }
 
-bool Player::ActivateRunes(RuneType type, uint32 count)
+bool Player::ActivateRunes(RuneType type, uint32 count, bool forBloodTap /*=false*/)
 {
     bool modify = false;
-    for (uint32 j = 0; count > 0 && j < MAX_RUNES; ++j)
+    for (uint8 j = 0; count > 0 && j < MAX_RUNES; ++j)
     {
         if (GetCurrentRune(j) == type && GetRuneCooldown(j) > 0)
         {
+            if (forBloodTap && GetBaseRune(j) != RUNE_BLOOD)
+                continue;
+
             SetRuneCooldown(j, 0);
             --count;
             modify = true;
+        }
+    }
+
+    // Blood Tap
+    if (forBloodTap && count > 0)
+    {
+        for (uint8 r = 0; r + 1 < MAX_RUNES && count > 0; ++r)
+        {
+            // Check if both runes are on cd as that is the only time when this needs to come into effect
+            if ((GetRuneCooldown(r) && GetCurrentRune(r) == RUNE_BLOOD) &&
+                (GetRuneCooldown(r + 1) && GetCurrentRune(r + 1) == RUNE_BLOOD))
+            {
+                // Should always update the rune with the lowest cd
+                if (r + 1 < MAX_RUNES && GetRuneCooldown(r) >= GetRuneCooldown(r + 1))
+                    r++;
+
+                SetRuneCooldown(r, 0);
+                --count;
+                modify = true;
+            }
+            else
+                break;
         }
     }
 
@@ -22421,7 +22493,7 @@ void Player::ResyncRunes()
 {
     WorldPacket data(SMSG_RESYNC_RUNES, 4 + MAX_RUNES * 2);
     data << uint32(MAX_RUNES);
-    for (uint32 i = 0; i < MAX_RUNES; ++i)
+    for (uint8 i = 0; i < MAX_RUNES; ++i)
     {
         data << uint8(GetCurrentRune(i));                   // rune type
         data << uint8(255 - ((GetRuneCooldown(i) / REGEN_TIME_FULL) * 51));     // passed cooldown time (0-255)
@@ -22455,7 +22527,7 @@ void Player::InitRunes()
     m_runes->runeState = 0;
     m_runes->needConvert = 0;
 
-    for (uint32 i = 0; i < MAX_RUNES; ++i)
+    for (uint8 i = 0; i < MAX_RUNES; ++i)
     {
         SetBaseRune(i, runeSlotTypes[i]);                   // init base types
         SetCurrentRune(i, runeSlotTypes[i]);                // init current types
@@ -22464,17 +22536,43 @@ void Player::InitRunes()
         m_runes->SetRuneState(i);
     }
 
+    ResetRuneGraceData();
+
     for (uint32 i = 0; i < NUM_RUNE_TYPES; ++i)
         SetFloatValue(PLAYER_RUNE_REGEN_1 + i, 0.1f);
 }
 
+void Player::ResetRuneGraceData()
+{
+    for (uint8 i = 0; i < MAX_RUNES; ++i)
+    {
+        SetRuneTimer(i, UINT32_MAX);
+        SetLastRuneGraceTimer(i, 0);
+    }
+}
+
+uint32 Player::GetRuneBaseCooldown(uint8 index) const
+{
+    uint8 rune = GetBaseRune(index);
+    uint32 cooldown = RUNE_BASE_COOLDOWN;
+
+    AuraList const& modRegens = GetAurasByType(SPELL_AURA_MOD_POWER_REGEN_PERCENT);
+    for (AuraList::const_iterator itr = modRegens.begin(); itr != modRegens.end(); ++itr)
+    {
+        if ((*itr)->GetModifier()->m_miscvalue == POWER_RUNE && (*itr)->GetMiscValueB() == rune)
+            cooldown = cooldown * (100 - (*itr)->GetModifier()->m_amount) / 100;
+    }
+
+    return cooldown;
+}
 
 bool Player::IsBaseRuneSlotsOnCooldown(RuneType runeType) const
 {
-    for (uint32 i = 0; i < MAX_RUNES; ++i)
+    for (uint8 i = 0; i < MAX_RUNES; ++i)
+    {
         if (GetBaseRune(i) == runeType && GetRuneCooldown(i) == 0)
             return false;
-
+    }
     return true;
 }
 

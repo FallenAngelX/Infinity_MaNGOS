@@ -5212,7 +5212,8 @@ void Spell::TakePower()
     // health as power used
     if (m_spellInfo->GetPowerType() == POWER_HEALTH)
     {
-        m_caster->ModifyHealth( -(int32)m_powerCost );
+        if (m_powerCost)
+            m_caster->ModifyHealth(-int32(m_powerCost));
         return;
     }
 
@@ -5244,7 +5245,8 @@ void Spell::TakePower()
         if (Player* modOwner = m_caster->GetSpellModOwner())
             modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_COST_ON_HIT_FAIL, m_powerCost);
 
-    m_caster->ModifyPower(powerType, -(int32)m_powerCost);
+    if (m_powerCost)
+	    m_caster->ModifyPower(powerType, -(int32)m_powerCost);
 
     // Set the five second timer
     if (powerType == POWER_MANA && m_powerCost > 0)
@@ -5264,14 +5266,13 @@ SpellCastResult Spell::CheckOrTakeRunePower(bool take)
     if (m_caster->GetTypeId() != TYPEID_PLAYER)
         return SPELL_CAST_OK;
 
-    Player *plr = (Player*)m_caster;
+    Player* plr = (Player*)m_caster;
 
     if (plr->getClass() != CLASS_DEATH_KNIGHT)
         return SPELL_CAST_OK;
 
-    SpellRuneCostEntry const *src = sSpellRuneCostStore.LookupEntry(m_spellInfo->runeCostID);
-
-    if(!src)
+    SpellRuneCostEntry const* src = sSpellRuneCostStore.LookupEntry(m_spellInfo->runeCostID);
+    if (!src)
         return SPELL_CAST_OK;
 
     if (src->NoRuneCost() && (!take || src->NoRunicPowerGain()))
@@ -5290,13 +5291,13 @@ SpellCastResult Spell::CheckOrTakeRunePower(bool take)
         int32 runeCost[NUM_RUNE_TYPES];                         // blood, frost, unholy, death
 
         // init cost data and apply mods
-        for(uint32 i = 0; i < RUNE_DEATH; ++i)
+        for (uint8 i = 0; i < RUNE_DEATH; ++i)
             runeCost[i] = runeCostMod > 0 ? src->RuneCost[i] : 0;
 
         runeCost[RUNE_DEATH] = 0;                               // calculated later
 
         // scan non-death runes (death rune not used explicitly in rune costs)
-        for(uint32 i = 0; i < MAX_RUNES; ++i)
+        for (uint8 i = 0; i < MAX_RUNES; ++i)
         {
             RuneType rune = plr->GetCurrentRune(i);
             if (runeCost[rune] <= 0)
@@ -5307,20 +5308,22 @@ SpellCastResult Spell::CheckOrTakeRunePower(bool take)
                 continue;
 
             if (take)
-                plr->SetRuneCooldown(i, RUNE_COOLDOWN);         // 5*2=10 sec
+                plr->SetRuneCooldown(i, RUNE_BASE_COOLDOWN, true); // 5*2=10 sec
 
             --runeCost[rune];
         }
 
         // collect all not counted rune costs to death runes cost
-        for(uint32 i = 0; i < RUNE_DEATH; ++i)
+        for (uint8 i = 0; i < RUNE_DEATH; ++i)
+        {
             if (runeCost[i] > 0)
                 runeCost[RUNE_DEATH] += runeCost[i];
+        }
 
         // scan death runes
         if (runeCost[RUNE_DEATH] > 0)
         {
-            for(uint32 i = 0; i < MAX_RUNES && runeCost[RUNE_DEATH]; ++i)
+            for (uint8 i = 0; i < MAX_RUNES && runeCost[RUNE_DEATH]; ++i)
             {
                 RuneType rune = plr->GetCurrentRune(i);
                 if (rune != RUNE_DEATH)
@@ -5331,7 +5334,7 @@ SpellCastResult Spell::CheckOrTakeRunePower(bool take)
                     continue;
 
                 if (take)
-                    plr->SetRuneCooldown(i, RUNE_COOLDOWN); // 5*2=10 sec
+                    plr->SetRuneCooldown(i, RUNE_BASE_COOLDOWN, true); // 5*2=10 sec
 
                 --runeCost[rune];
 
@@ -5343,7 +5346,7 @@ SpellCastResult Spell::CheckOrTakeRunePower(bool take)
             }
         }
 
-        if(!take && runeCost[RUNE_DEATH] > 0)
+        if (!take && runeCost[RUNE_DEATH] > 0)
             return SPELL_FAILED_NO_POWER;                       // not sure if result code is correct
     }
 
@@ -5352,7 +5355,7 @@ SpellCastResult Spell::CheckOrTakeRunePower(bool take)
         // you can gain some runic power when use runes
         float rp = float(src->runePowerGain);
         rp *= sWorld.getConfig(CONFIG_FLOAT_RATE_POWER_RUNICPOWER_INCOME);
-        plr->ModifyPower(POWER_RUNIC_POWER, (int32)rp);
+        plr->ModifyPower(POWER_RUNIC_POWER, int32(rp));
     }
 
     return SPELL_CAST_OK;
@@ -5386,7 +5389,6 @@ void Spell::TakeAmmo()
             ((Player*)m_caster)->DestroyItemCount(ammo, 1, true);
     }
 }
-
 
 void Spell::TakeReagents()
 {

@@ -50,7 +50,7 @@ void Unit::UpdateAllMaxPower()
 
 bool Player::UpdateStats(Stats stat)
 {
-    if(stat > STAT_SPIRIT)
+    if (stat > STAT_SPIRIT)
         return false;
 
     // value = ((base_value * base_pct) + total_value) * total_pct
@@ -846,6 +846,28 @@ void Player::UpdateManaRegen()
 
     if (IsInWorld())
         CallForAllControlledUnits(ApplyScalingBonusWithHelper(SCALING_TARGET_POWERREGEN, 0, false), CONTROLLED_PET | CONTROLLED_GUARDIANS);
+}
+
+void Player::UpdateRuneRegen(uint8 index)
+{
+    if (index >= NUM_RUNE_TYPES)
+        return;
+
+    uint32 cooldown = 0;
+    for (uint8 i = 0; i < MAX_RUNES; ++i)
+    {
+        if (GetBaseRune(i) == index)
+        {
+            cooldown = GetRuneBaseCooldown(index);
+            break;
+        }
+    }
+
+    if (!cooldown)
+        return;
+
+    float regen = float(1 * IN_MILLISECONDS) / float(cooldown);
+    SetFloatValue(PLAYER_RUNE_REGEN_1 + index, regen);
 }
 
 void Player::_ApplyAllStatBonuses()

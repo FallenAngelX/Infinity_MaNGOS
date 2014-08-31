@@ -322,8 +322,8 @@ struct Areas
     float y2;
 };
 
-#define MAX_RUNES       6
-#define RUNE_COOLDOWN   (2*5*IN_MILLISECONDS)                // msec
+#define MAX_RUNES     6
+#define RUNE_BASE_COOLDOWN (2 * 5 * IN_MILLISECONDS)        // msec
 
 enum RuneType
 {
@@ -1852,6 +1852,7 @@ class MANGOS_DLL_SPEC Player : public Unit
         void UpdateArmorPenetration();
         void ApplyManaRegenBonus(int32 amount, bool apply);
         void UpdateManaRegen();
+        void UpdateRuneRegen(uint8 index);
         void ApplyHealthRegenBonus(int32 amount, bool apply);
 
         ObjectGuid const& GetLootGuid() const { return m_lootGuid; }
@@ -2393,10 +2394,11 @@ class MANGOS_DLL_SPEC Player : public Unit
         RuneType GetBaseRune(uint8 index) const { return RuneType(m_runes->runes[index].BaseRune); }
         RuneType GetCurrentRune(uint8 index) const { return RuneType(m_runes->runes[index].CurrentRune); }
         uint16 GetRuneCooldown(uint8 index) const { return m_runes->runes[index].Cooldown; }
+        uint32 GetRuneBaseCooldown(uint8 index) const;
         bool IsBaseRuneSlotsOnCooldown(RuneType runeType) const;
         void SetBaseRune(uint8 index, RuneType baseRune) { m_runes->runes[index].BaseRune = baseRune; }
         void SetCurrentRune(uint8 index, RuneType currentRune) { m_runes->runes[index].CurrentRune = currentRune; }
-        void SetRuneCooldown(uint8 index, uint16 cooldown) { m_runes->runes[index].Cooldown = cooldown; m_runes->SetRuneState(index, (cooldown == 0) ? true : false); }
+        void SetRuneCooldown(uint8 index, uint16 cooldown, bool casted = false);
         void ConvertRune(uint8 index, RuneType newType, uint32 spellid = 0);
         void SetConvertedBy(uint8 index, uint32 spellid) { m_runes->runes[index].ConvertedBy = spellid; }
         void ClearConvertedBy(uint8 index) { m_runes->runes[index].ConvertedBy = 0; }
@@ -2411,10 +2413,15 @@ class MANGOS_DLL_SPEC Player : public Unit
             if (spellid != 0)
                 SetConvertedBy(index, spellid);
         }
-        bool ActivateRunes(RuneType type, uint32 count);
+        bool ActivateRunes(RuneType type, uint32 count, bool forBloodTap = false);
         void ResyncRunes();
         void AddRunePower(uint8 index);
         void InitRunes();
+        void ResetRuneGraceData();
+        uint32 GetRuneTimer(uint8 index) const { return m_runeGraceCooldown[index]; }
+        void SetRuneTimer(uint8 index, uint32 timer) { m_runeGraceCooldown[index] = timer; }
+        uint32 GetLastRuneGraceTimer(uint8 index) const { return m_lastRuneGraceTimers[index]; }
+        void SetLastRuneGraceTimer(uint8 index, uint32 timer) { m_lastRuneGraceTimers[index] = timer; }
 
         AchievementMgr const& GetAchievementMgr() const { return m_achievementMgr; }
         AchievementMgr& GetAchievementMgr() { return m_achievementMgr; }
@@ -2751,6 +2758,10 @@ class MANGOS_DLL_SPEC Player : public Unit
         uint8 m_MirrorTimerFlags;
         uint8 m_MirrorTimerFlagsLast;
         bool m_isInWater;
+
+        // Rune type / Rune timer
+        uint32 m_runeGraceCooldown[MAX_RUNES];
+        uint32 m_lastRuneGraceTimers[MAX_RUNES];
 
         // Current teleport data
         WorldLocation m_teleport_dest;
