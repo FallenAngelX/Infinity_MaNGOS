@@ -160,12 +160,14 @@ Player* World::FindPlayerInZone(uint32 zone)
     SessionMap::const_iterator itr;
     for (itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
     {
-        if(!itr->second)
+        if (!itr->second)
             continue;
-        Player *player = itr->second->GetPlayer();
-        if(!player)
+
+        Player* player = itr->second->GetPlayer();
+        if (!player)
             continue;
-        if ( player->IsInWorld() && player->GetZoneId() == zone )
+
+        if (player->IsInWorld() && player->GetZoneId() == zone)
         {
             // Used by the weather system. We return the player to broadcast the change weather message to him and all players in the zone.
             return player;
@@ -410,7 +412,7 @@ Weather* World::AddWeather(uint32 zone_id)
     WeatherZoneChances const* weatherChances = sObjectMgr.GetWeatherChances(zone_id);
 
     // zone not have weather, ignore
-    if(!weatherChances)
+    if (!weatherChances)
         return NULL;
 
     Weather* w = new Weather(zone_id,weatherChances);
@@ -1851,11 +1853,11 @@ void World::Update(uint32 diff)
     if (!bSingletonUpdate && m_timers[WUPDATE_WEATHERS].Passed())
     {
         ///- Send an update signal to Weather objects
-        for (WeatherMap::iterator itr = m_weathers.begin(); itr != m_weathers.end(); )
+        for (WeatherMap::iterator itr = m_weathers.begin(); itr != m_weathers.end();)
         {
             ///- and remove Weather objects for zones with no player
                                                             //As interval > WorldTick
-            if(!itr->second->Update(m_timers[WUPDATE_WEATHERS].GetInterval()))
+            if (!itr->second->Update(m_timers[WUPDATE_WEATHERS].GetInterval()))
             {
                 delete itr->second;
                 m_weathers.erase(itr++);
@@ -1863,6 +1865,7 @@ void World::Update(uint32 diff)
             else
                 ++itr;
         }
+
         m_timers[WUPDATE_WEATHERS].SetCurrent(0);
         bSingletonUpdate = true;
     }
@@ -2119,10 +2122,10 @@ void World::SendDefenseMessage(uint32 zoneId, int32 textId)
 }
 
 /// Send a packet to all players (or players selected team) in the zone (except self if mentioned)
-void World::SendZoneMessage(uint32 zone, WorldPacket* packet, WorldSession* self /*= NULL*/, Team team /*= TEAM_NONE*/)
+bool World::SendZoneMessage(uint32 zone, WorldPacket* packet, WorldSession* self /*= NULL*/, Team team /*= TEAM_NONE*/) const
 {
-    SessionMap::const_iterator itr;
-    for (itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
+    bool foundPlayerToSend = false;
+    for (SessionMap::const_iterator itr = m_sessions.begin(); itr != m_sessions.end(); ++itr)
     {
         if (itr->second &&
             itr->second->GetPlayer() &&
@@ -2132,8 +2135,10 @@ void World::SendZoneMessage(uint32 zone, WorldPacket* packet, WorldSession* self
             (team == TEAM_NONE || itr->second->GetPlayer()->GetTeam() == team))
         {
             itr->second->SendPacket(packet);
+            foundPlayerToSend = true;
         }
     }
+    return foundPlayerToSend;
 }
 
 /// Send a System Message to all players in the zone (except self if mentioned)

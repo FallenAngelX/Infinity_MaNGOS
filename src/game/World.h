@@ -618,7 +618,7 @@ class World
         void SendWorldText(int32 string_id, ...);
         void SendWorldTextWithSecurity(AccountTypes security, int32 string_id, ...);
         void SendGlobalMessage(WorldPacket* packet, WorldSession* self = NULL, Team team = TEAM_NONE, AccountTypes security = SEC_PLAYER);
-        void SendZoneMessage(uint32 zone, WorldPacket* packet, WorldSession* self = NULL, Team team = TEAM_NONE);
+        bool SendZoneMessage(uint32 zone, WorldPacket* packet, WorldSession* self = NULL, Team team = TEAM_NONE) const;
         void SendZoneText(uint32 zone, const char* text, WorldSession* self = NULL, Team team = TEAM_NONE);
         void SendServerMessage(ServerMessageType type, const char* text = "", Player* player = NULL);
         void SendZoneUnderAttackMessage(uint32 zoneId, Team team);
