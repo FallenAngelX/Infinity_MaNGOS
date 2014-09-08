@@ -443,7 +443,7 @@ void Pet::SavePetToDB(PetSaveMode mode)
         bool needDelimiter = false;
         for (uint32 i = ACTION_BAR_INDEX_START; i < ACTION_BAR_INDEX_END; ++i)
         {
-            needDelimiter ? ss << ' ' : needDelimiter = true;
+            if (needDelimiter) ss << ' '; else needDelimiter = true;
             UnitActionBarEntry const* uabe = m_charmInfo->GetActionBarEntry(i);
             ss << uint32(uabe->GetType()) << ' ' << uint32(uabe->GetAction());
         };

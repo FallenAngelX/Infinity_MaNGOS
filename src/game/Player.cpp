@@ -260,7 +260,7 @@ std::string PlayerTaxi::SaveTaxiDestinationsToString()
     bool needDelimiter = false;
     for (size_t i = 0; i < m_TaxiDestinations.size(); ++i)
     {
-        needDelimiter ? ss << ' ' : needDelimiter = true;
+        if (needDelimiter) ss << ' '; else needDelimiter = true;
         ss << m_TaxiDestinations[i];
     }
 
@@ -285,7 +285,7 @@ std::ostringstream& operator << (std::ostringstream& ss, PlayerTaxi const& taxi)
     bool needDelimiter = false;
     for (uint8 i = 0; i < TaxiMaskSize; ++i)
     {
-        needDelimiter ? ss << ' ' : needDelimiter = true;
+        if (needDelimiter) ss << ' '; else needDelimiter = true;
         ss << taxi.m_taximask[i];
     }
     return ss;
@@ -17917,7 +17917,7 @@ void Player::SaveToDB()
     bool needDelimiter = false;
     for (uint32 i = 0; i < PLAYER_EXPLORED_ZONES_SIZE; ++i) // string
     {
-        needDelimiter ? ss << ' ' : needDelimiter = true;
+        if (needDelimiter) ss << ' '; else needDelimiter = true;
         ss << GetUInt32Value(PLAYER_EXPLORED_ZONES_1 + i);
     }
     uberInsert.addString(ss);
@@ -17925,7 +17925,7 @@ void Player::SaveToDB()
     needDelimiter = false;
     for (uint32 i = 0; i < EQUIPMENT_SLOT_END * 2; ++i)     // string
     {
-        needDelimiter ? ss << ' ' : needDelimiter = true;
+        if (needDelimiter) ss << ' '; else needDelimiter = true;
         ss << GetUInt32Value(PLAYER_VISIBLE_ITEM_1_ENTRYID + i);
     }
     uberInsert.addString(ss);
@@ -17935,7 +17935,7 @@ void Player::SaveToDB()
     needDelimiter = false;
     for (uint32 i = 0; i < KNOWN_TITLES_SIZE * 2; ++i)      // string
     {
-        needDelimiter ? ss << ' ' : needDelimiter = true;
+        if (needDelimiter) ss << ' '; else needDelimiter = true;
         ss << GetUInt32Value(PLAYER__FIELD_KNOWN_TITLES + i);
     }
     uberInsert.addString(ss);
