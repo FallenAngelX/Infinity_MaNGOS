@@ -3375,8 +3375,12 @@ void Spell::SetTargetMap(SpellEffectIndex effIndex, uint32 targetMode, UnitList&
                     break;
                 case SPELL_EFFECT_APPLY_AREA_AURA_PARTY:
                     // AreaAura
-                    if ((m_spellInfo->GetAttributes() == (SPELL_ATTR_NOT_SHAPESHIFT | SPELL_ATTR_UNK18 | SPELL_ATTR_CASTABLE_WHILE_MOUNTED | SPELL_ATTR_CASTABLE_WHILE_SITTING)) || (m_spellInfo->GetAttributes() == SPELL_ATTR_NOT_SHAPESHIFT))
+                    if ((m_spellInfo->Attributes == (SPELL_ATTR_NOT_SHAPESHIFT | SPELL_ATTR_DONT_AFFECT_SHEATH_STATE |
+                        SPELL_ATTR_CASTABLE_WHILE_MOUNTED | SPELL_ATTR_CASTABLE_WHILE_SITTING)) ||
+                        (m_spellInfo->Attributes == SPELL_ATTR_NOT_SHAPESHIFT))
+                    {
                         SetTargetMap(effIndex, TARGET_AREAEFFECT_PARTY, targetUnitMap);
+                    }
                     break;
                 case SPELL_EFFECT_SKIN_PLAYER_CORPSE:
                     if (m_targets.getUnitTarget())
@@ -4424,7 +4428,7 @@ void Spell::finish(bool ok)
         m_caster->DealHeal(m_caster, uint32(m_healthLeech) - absorb, m_spellInfo, false, absorb);
     }
 
-    if (IsMeleeAttackResetSpell())
+    if (IsMeleeAttackResetSpell() && !m_spellInfo->HasAttribute(SPELL_ATTR_EX2_NOT_RESET_AUTOATTACK))
     {
         m_caster->resetAttackTimer(BASE_ATTACK);
         if (m_caster->haveOffhandWeapon())
@@ -5246,7 +5250,7 @@ void Spell::TakePower()
             modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_COST_ON_HIT_FAIL, m_powerCost);
 
     if (m_powerCost)
-	    m_caster->ModifyPower(powerType, -(int32)m_powerCost);
+        m_caster->ModifyPower(powerType, -(int32)m_powerCost);
 
     // Set the five second timer
     if (powerType == POWER_MANA && m_powerCost > 0)
@@ -5940,8 +5944,10 @@ SpellCastResult Spell::CheckCast(bool strict)
                     return m_IsTriggeredSpell ? SPELL_FAILED_DONT_REPORT : SPELL_FAILED_AURA_BOUNCED;
         }
 
-        //Must be behind the target.
-        if (m_spellInfo->GetAttributesEx2() == SPELL_ATTR_EX2_UNK20 && m_spellInfo->HasAttribute(SPELL_ATTR_EX_UNK9) && target->HasInArc(M_PI_F, m_caster))
+        // Must be behind the target.
+        if (m_spellInfo->GetAttributesEx2() == SPELL_ATTR_EX2_UNK20 &&
+            m_spellInfo->HasAttribute(SPELL_ATTR_EX_MELEE_COMBAT_START) &&
+            target->HasInArc(M_PI_F, m_caster))
         {
             // Exclusion for Pounce: Facing Limitation was removed in 2.0.1, but it still uses the same, old Ex-Flags
             // Exclusion for Mutilate:Facing Limitation was removed in 2.0.1 and 3.0.3, but they still use the same, old Ex-Flags
@@ -5955,8 +5961,8 @@ SpellCastResult Spell::CheckCast(bool strict)
             }
         }
 
-        //Target must be facing you.
-        if ((m_spellInfo->GetAttributes() == (SPELL_ATTR_ABILITY | SPELL_ATTR_NOT_SHAPESHIFT | SPELL_ATTR_UNK18 | SPELL_ATTR_STOP_ATTACK_TARGET)) && !target->HasInArc(M_PI_F, m_caster))
+        // Target must be facing you.
+        if ((m_spellInfo->GetAttributes() == (SPELL_ATTR_ABILITY | SPELL_ATTR_NOT_SHAPESHIFT | SPELL_ATTR_DONT_AFFECT_SHEATH_STATE | SPELL_ATTR_STOP_ATTACK_TARGET)) && !target->HasInArc(M_PI_F, m_caster))
         {
             SendInterrupted(2);
             return SPELL_FAILED_NOT_INFRONT;
@@ -5965,7 +5971,16 @@ SpellCastResult Spell::CheckCast(bool strict)
         // check if target is in combat
         if (non_caster_target && m_spellInfo->HasAttribute(SPELL_ATTR_EX_NOT_IN_COMBAT_TARGET) && target->isInCombat())
             return SPELL_FAILED_TARGET_AFFECTING_COMBAT;
+
+        // check that the target was in front caster
+        if ((m_spellInfo->HasAttribute(SPELL_ATTR_EX_MELEE_COMBAT_START) ||
+            m_spellInfo->HasAttribute(SPELL_ATTR_EX_UNK27)) &&
+            !m_caster->HasInArc(M_PI_F + M_PI_F / 16.0f, target))
+        {
+            return SPELL_FAILED_UNIT_NOT_INFRONT;
+        }
     }
+
     // zone check
     if (!m_caster->GetMap() || !m_caster->GetTerrain())
         return SPELL_FAILED_DONT_REPORT;

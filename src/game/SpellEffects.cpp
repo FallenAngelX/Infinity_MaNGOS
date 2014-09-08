@@ -6372,9 +6372,7 @@ void Spell::EffectPersistentAA(SpellEffectIndex eff_idx)
 
 void Spell::EffectEnergize(SpellEffectIndex eff_idx)
 {
-    if (!unitTarget)
-        return;
-    if (!unitTarget->isAlive())
+    if (!unitTarget || !unitTarget->isAlive())
         return;
 
     // don't energize isolated units (banished)
@@ -6386,14 +6384,17 @@ void Spell::EffectEnergize(SpellEffectIndex eff_idx)
 
     Powers power = Powers(m_spellInfo->EffectMiscValue[eff_idx]);
 
+    if (unitTarget->GetPowerType() != power && !m_spellInfo->HasAttribute(SPELL_ATTR_EX7_CAN_RESTORE_SECONDARY_POWER))
+        return;
+
     // Some level depends spells
     int level_multiplier = 0;
     int level_diff = 0;
     switch (m_spellInfo->Id)
     {
         case 2687:                                          // Bloodrage
-            if (m_caster->HasAura(70844))
-                m_caster->CastSpell(m_caster,70845,true);
+            if (m_caster->HasAura(70844, EFFECT_INDEX_0))
+                m_caster->CastSpell(m_caster, 70845, true);
             break;
         case 9512:                                          // Restore Energy
             level_diff = m_caster->getLevel() - 40;
@@ -6407,14 +6408,14 @@ void Spell::EffectEnergize(SpellEffectIndex eff_idx)
             level_diff = m_caster->getLevel() - 60;
             level_multiplier = 4;
             break;
-        case 48542:                                         // Revitalize (mana restore case)
-            damage = damage * unitTarget->GetMaxPower(POWER_MANA) / 100;
-            break;
         case 31930:                                         // Judgements of the Wise
         case 63375:                                         // Improved Stormstrike
         case 67545:                                         // Empowered Fire
         case 68082:                                         // Glyph of Seal of Command
             damage = damage * unitTarget->GetCreateMana() / 100;
+            break;
+        case 48542:                                         // Revitalize (mana restore case)
+            damage = damage * unitTarget->GetMaxPower(POWER_MANA) / 100;
             break;
         case 67487:                                         // Mana Potion Injector
         case 67490:                                         // Runic Mana Injector
@@ -6423,7 +6424,7 @@ void Spell::EffectEnergize(SpellEffectIndex eff_idx)
             {
                 Player* player = (Player*)unitTarget;
                 if (player->HasSkill(SKILL_ENGINEERING))
-                    damage += int32(damage * 0.25);
+                    damage += int32(float(damage) * 0.25f);
             }
             break;
         }
@@ -6461,14 +6462,14 @@ void Spell::EffectEnergize(SpellEffectIndex eff_idx)
         // get all available elixirs by mask and spell level
         std::vector<uint32> elixirs;
         SpellElixirMap const& m_spellElixirs = sSpellMgr.GetSpellElixirMap();
-        for(SpellElixirMap::const_iterator itr = m_spellElixirs.begin(); itr != m_spellElixirs.end(); ++itr)
+        for (SpellElixirMap::const_iterator itr = m_spellElixirs.begin(); itr != m_spellElixirs.end(); ++itr)
         {
             if (itr->second & elixir_mask)
             {
                 if (itr->second & (ELIXIR_UNSTABLE_MASK | ELIXIR_SHATTRATH_MASK))
                     continue;
 
-                SpellEntry const *spellInfo = sSpellStore.LookupEntry(itr->first);
+                SpellEntry const* spellInfo = sSpellStore.LookupEntry(itr->first);
                 if (spellInfo && (spellInfo->spellLevel < m_spellInfo->spellLevel || spellInfo->spellLevel > unitTarget->getLevel()))
                     continue;
 
@@ -6479,23 +6480,35 @@ void Spell::EffectEnergize(SpellEffectIndex eff_idx)
         if (!elixirs.empty())
         {
             // cast random elixir on target
-            uint32 rand_spell = urand(0,elixirs.size()-1);
-            m_caster->CastSpell(unitTarget,elixirs[rand_spell],true,m_CastItem);
+            uint32 rand_spell = urand(0, elixirs.size() - 1);
+            m_caster->CastSpell(unitTarget, elixirs[rand_spell], true, m_CastItem);
+        }
+    }
+    // Crazy Alchemist Potion
+    else if (m_spellInfo->Id == 53750)
+    {
+        if (roll_chance_i(30))
+        {
+            uint32 spellIds[] = {43185, 43186, 53753, 53761, 53762, 53908,
+                                 53909, 53910, 53911, 53913, 53914, 53915};
+
+            m_caster->CastSpell(unitTarget, spellIds[urand(0, countof(spellIds) - 1)], true, m_CastItem);
         }
     }
 }
 
 void Spell::EffectEnergisePct(SpellEffectIndex eff_idx)
 {
-    if (!unitTarget)
-        return;
-    if (!unitTarget->isAlive())
+    if (!unitTarget || !unitTarget->isAlive())
         return;
 
     if (m_spellInfo->EffectMiscValue[eff_idx] < 0 || m_spellInfo->EffectMiscValue[eff_idx] >= MAX_POWERS)
         return;
 
     Powers power = Powers(m_spellInfo->EffectMiscValue[eff_idx]);
+
+    if (unitTarget->GetPowerType() != power && !m_spellInfo->HasAttribute(SPELL_ATTR_EX7_CAN_RESTORE_SECONDARY_POWER))
+        return;
 
     uint32 maxPower = unitTarget->GetMaxPower(power);
     if (maxPower == 0)

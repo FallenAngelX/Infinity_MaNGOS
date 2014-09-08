@@ -971,7 +971,7 @@ bool IsPositiveEffect(SpellEntry const *spellproto, SpellEffectIndex effIndex)
                         spellproto->SpellFamilyName == SPELLFAMILY_GENERIC)
                         return false;
                     // but not this if this first effect (don't found better check)
-                    if (spellproto->HasAttribute(SPELL_ATTR_UNK26) && effIndex == EFFECT_INDEX_0)
+                    if (spellproto->HasAttribute(SPELL_ATTR_NEGATIVE_1) && effIndex == EFFECT_INDEX_0)
                         return false;
                     break;
                 case SPELL_AURA_TRANSFORM:
@@ -2352,9 +2352,9 @@ bool SpellMgr::IsNoStackSpellDueToSpell(uint32 spellId_1, uint32 spellId_2) cons
             if (MatchedSpellIdPair(65157, 64775) || MatchedSpellIdPair(65157, 64775))
                 return false;
 
-			// Empowered (dummy) and Empowered
-			if (MatchedSpellIdPair(64161, 65294) || MatchedSpellIdPair(64161, 65294))
-				return false;
+            // Empowered (dummy) and Empowered
+            if (MatchedSpellIdPair(64161, 65294) || MatchedSpellIdPair(64161, 65294))
+                return false;
             break;
         }
         case SPELLFAMILY_WARLOCK:
