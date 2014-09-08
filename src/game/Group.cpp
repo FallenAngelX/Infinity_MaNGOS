@@ -347,8 +347,6 @@ bool Group::AddLeaderInvite(Player* player)
 
     m_leaderGuid = player->GetObjectGuid();
     m_leaderName = player->GetName();
-    if (Player* newLeader = ObjectAccessor::FindPlayer(m_leaderGuid))
-        newLeader->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_GROUP_LEADER);
 
     return true;
 }
@@ -542,9 +540,6 @@ uint32 Group::RemoveMember(ObjectGuid guid, uint8 method, bool logout /*=false*/
 
         if (leaderChanged)
         {
-            if (Player* oldLeader = sObjectMgr.GetPlayer(guid))
-                oldLeader->RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_GROUP_LEADER);
-
             WorldPacket data(SMSG_GROUP_SET_LEADER, m_memberSlots.front().name.size() + 1);
             data << m_memberSlots.front().name;
             BroadcastPacket(&data, true);
@@ -672,8 +667,6 @@ bool Group::ChangeLeaderToFirstSuitableMember(bool onlySet/*= false*/)
             _setLeader(newLeader->GetObjectGuid());
         else
             ChangeLeader(newLeader->GetObjectGuid());
-
-        newLeader->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_GROUP_LEADER);
         return true;
     }
 
@@ -1670,6 +1663,12 @@ void Group::_setLeader(ObjectGuid guid)
 
         CharacterDatabase.CommitTransaction();
     }
+
+    if (Player* oldLeader = sObjectMgr.GetPlayer(m_leaderGuid))
+        oldLeader->RemoveFlag(PLAYER_FLAGS, PLAYER_FLAGS_GROUP_LEADER);
+
+    if (player)
+        player->SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_GROUP_LEADER);
 
     m_leaderGuid = slot->guid;
     m_leaderName = slot->name;
