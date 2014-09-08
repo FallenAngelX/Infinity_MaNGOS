@@ -1432,6 +1432,7 @@ void Map::AddToActive(WorldObject* obj)
         PlayerList const& plist = GetPlayers();
         if (!plist.isEmpty())
         {
+            WorldPacket packet;
             for (PlayerList::const_iterator itr = plist.begin(); itr != plist.end(); ++itr)
             {
                 Player* player = itr->getSource();
@@ -1439,7 +1440,6 @@ void Map::AddToActive(WorldObject* obj)
                 {
                     UpdateData data;
                     obj->BuildCreateUpdateBlockForPlayer(&data, player);
-                    WorldPacket packet;
                     data.BuildPacket(&packet);
                     player->SendDirectMessage(&packet);
                     obj->AddNotifiedClient(player->GetObjectGuid());
@@ -2294,20 +2294,18 @@ void Map::SendObjectUpdates()
 
     if (!update_players.empty())
     {
+        WorldPacket packet;
         for (UpdateDataMapType::iterator iter = update_players.begin(); iter != update_players.end(); ++iter)
         {
             if (!iter->first || !iter->first.IsPlayer())
                 continue;
 
             Player* pPlayer = GetPlayer(iter->first);
-            if (!pPlayer)
+            if (!pPlayer || !pPlayer->GetSession())
                 continue;
 
-            WorldPacket packet;
-
-            if (pPlayer->GetSession())
-                if (iter->second.BuildPacket(&packet))
-                    pPlayer->GetSession()->SendPacket(&packet);
+            iter->second.BuildPacket(&packet);
+            pPlayer->GetSession()->SendPacket(&packet);
         }
     }
 }

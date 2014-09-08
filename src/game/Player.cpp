@@ -21337,7 +21337,6 @@ void Player::UpdateForQuestWorldObjects()
         return;
 
     UpdateData udata;
-    WorldPacket packet;
     for (GuidSet::const_iterator itr = GetClientGuids().begin(); itr != GetClientGuids().end(); ++itr)
     {
         if (itr->IsGameObject())
@@ -21366,6 +21365,8 @@ void Player::UpdateForQuestWorldObjects()
             }
         }
     }
+
+    WorldPacket packet;
     udata.BuildPacket(&packet);
     GetSession()->SendPacket(&packet);
 }

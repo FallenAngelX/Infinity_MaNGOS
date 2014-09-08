@@ -172,7 +172,7 @@ void Object::SendForcedObjectUpdate()
 //    RemoveFromClientUpdateList();
 
     WorldPacket packet;                                     // here we allocate a std::vector with a size of 0x10000
-    for(UpdateDataMapType::iterator iter = update_players.begin(); iter != update_players.end(); ++iter)
+    for (UpdateDataMapType::iterator iter = update_players.begin(); iter != update_players.end(); ++iter)
     {
         if (!iter->first || !iter->first.IsPlayer())
             continue;
@@ -183,7 +183,6 @@ void Object::SendForcedObjectUpdate()
 
         iter->second.BuildPacket(&packet);
         pPlayer->GetSession()->SendPacket(&packet);
-        packet.clear();                                     // clean the string
     }
 }
 

@@ -102,13 +102,11 @@ void UpdateData::Compress(void* dst, uint32* dst_size, void* src, int src_size)
     *dst_size = c_stream.total_out;
 }
 
-bool UpdateData::BuildPacket(WorldPacket* packet)
+void UpdateData::BuildPacket(WorldPacket* packet)
 {
-    MANGOS_ASSERT(packet->empty());                         // shouldn't happen
-
     ByteBuffer buf(4 + (m_outOfRangeGuids.empty() ? 0 : 1 + 4 + 9 * m_outOfRangeGuids.size()) + m_data.wpos());
 
-    buf << uint32((!m_outOfRangeGuids.empty() ? m_blockCount + 1 : m_blockCount));
+    buf << uint32(!m_outOfRangeGuids.empty() ? m_blockCount + 1 : m_blockCount);
 
     if (!m_outOfRangeGuids.empty())
     {
@@ -122,12 +120,16 @@ bool UpdateData::BuildPacket(WorldPacket* packet)
     buf.append(m_data);
 
     size_t pktSize = buf.wpos(); // use real used data size
+    uint32 dstSize = pktSize;
 
-    uint32 dstSize = compressBound(pktSize);
-    packet->resize(sizeof(uint32) + dstSize);
-    packet->put<uint32>(0, pktSize); // put uncompessed size
+    if (pktSize > 64)
+    {
+        dstSize = compressBound(pktSize);
+        if (packet->size() < sizeof(uint32) + dstSize)
+            packet->resize(sizeof(uint32) + dstSize);
 
-    Compress(const_cast<uint8*>(packet->contents()) + sizeof(uint32), &dstSize, (void*)buf.contents(), pktSize);
+        Compress(const_cast<uint8*>(packet->contents()) + sizeof(uint32), &dstSize, (void*)buf.contents(), pktSize);
+    }
 
     // if compress error, send as uncompressed
     if (!dstSize)
@@ -138,18 +140,17 @@ bool UpdateData::BuildPacket(WorldPacket* packet)
     // send compressed packet if size less
     if (dstSize < pktSize)
     {
-        packet->resize(dstSize);
+        packet->wpos(dstSize);
+        packet->put<uint32>(0, pktSize); // put uncompessed size
         packet->SetOpcode(SMSG_COMPRESSED_UPDATE_OBJECT);
     }
     // send packets without compression
     else
     {
-        packet->clear(); // clear before append buf. in WorldSocket::SendPacket used pct.size(), not pct.wpos()
+        packet->wpos(0); // reuse allocated mem
         packet->append(buf);
         packet->SetOpcode(SMSG_UPDATE_OBJECT);
     }
-
-    return true;
 }
 
 void UpdateData::Clear()

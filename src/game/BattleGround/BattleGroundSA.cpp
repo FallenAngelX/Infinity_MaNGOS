@@ -134,6 +134,7 @@ void BattleGroundSA::StartShips()
     DoorOpen(m_BgObjects[BG_SA_BOAT_ONE]);
     DoorOpen(m_BgObjects[BG_SA_BOAT_TWO]);
 
+    WorldPacket pkt;
     for (int i = BG_SA_BOAT_ONE; i <= BG_SA_BOAT_TWO; i++)
     {
         for (BattleGroundPlayerMap::const_iterator itr = GetPlayers().begin(); itr != GetPlayers().end(); ++itr)
@@ -142,7 +143,6 @@ void BattleGroundSA::StartShips()
             if (p)
             {
                 UpdateData data;
-                WorldPacket pkt;
                 GetBGObject(i)->BuildValuesUpdateBlockForPlayer(&data, p);
                 data.BuildPacket(&pkt);
                 p->GetSession()->SendPacket(&pkt);

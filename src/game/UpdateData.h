@@ -55,9 +55,9 @@ class UpdateData
         UpdateData();
 
         void AddOutOfRangeGuids(GuidSet& guids);
-        void AddOutOfRangeGuid(ObjectGuid const &guid);
-        void AddUpdateBlock(const ByteBuffer& block);
-        bool BuildPacket(WorldPacket* packet);
+        void AddOutOfRangeGuid(ObjectGuid const& guid);
+        void AddUpdateBlock(ByteBuffer const& block);
+        void BuildPacket(WorldPacket* packet);
         bool HasData() { return m_blockCount > 0 || !m_outOfRangeGuids.empty(); }
         void Clear();
 
@@ -70,4 +70,5 @@ class UpdateData
 
         void Compress(void* dst, uint32* dst_size, void* src, int src_size);
 };
+
 #endif

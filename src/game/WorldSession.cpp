@@ -157,7 +157,7 @@ void WorldSession::SendPacket(WorldPacket const* packet)
     if (!m_Socket)
         return;
 
-    #ifdef MANGOS_DEBUG
+#ifdef MANGOS_DEBUG
 
     // Code for network use statistic
     static uint64 sendPacketCount = 0;
@@ -171,13 +171,13 @@ void WorldSession::SendPacket(WorldPacket const* packet)
 
     time_t cur_time = time(NULL);
 
-    if((cur_time - lastTime) < 60)
+    if ((cur_time - lastTime) < 60)
     {
-        sendPacketCount+=1;
-        sendPacketBytes+=packet->size();
+        sendPacketCount += 1;
+        sendPacketBytes += packet->wpos();
 
-        sendLastPacketCount+=1;
-        sendLastPacketBytes+=packet->size();
+        sendLastPacketCount += 1;
+        sendLastPacketBytes += packet->wpos();
     }
     else
     {
@@ -191,10 +191,10 @@ void WorldSession::SendPacket(WorldPacket const* packet)
         sendLastPacketBytes = packet->wpos();               // wpos is real written size
     }
 
-    #endif                                                  // !MANGOS_DEBUG
+#endif                                                      // !MANGOS_DEBUG
 
-    if (m_Socket->SendPacket (*packet) == -1)
-        m_Socket->CloseSocket ();
+    if (m_Socket->SendPacket(*packet) == -1)
+        m_Socket->CloseSocket();
 }
 
 /// Add an incoming packet to the queue
@@ -906,17 +906,18 @@ void WorldSession::SendTransferAborted(uint32 mapid, uint8 reason, uint8 arg)
     SendPacket(&data);
 }
 
-void WorldSession::ReadAddonsInfo(WorldPacket &data)
+void WorldSession::ReadAddonsInfo(WorldPacket& data)
 {
     if (data.rpos() + 4 > data.size())
         return;
+
     uint32 size;
     data >> size;
 
-    if(!size)
+    if (!size)
         return;
 
-    if(size > 0xFFFFF)
+    if (size > 0xFFFFF)
     {
         sLog.outError("WorldSession::ReadAddonsInfo addon info too big, size %u", size);
         return;
@@ -934,7 +935,7 @@ void WorldSession::ReadAddonsInfo(WorldPacket &data)
         uint32 addonsCount;
         addonInfo >> addonsCount;                         // addons count
 
-        for(uint32 i = 0; i < addonsCount; ++i)
+        for (uint32 i = 0; i < addonsCount; ++i)
         {
             std::string addonName;
             uint8 enabled;
@@ -1082,10 +1083,13 @@ void WorldSession::ExecuteOpcode( OpcodeHandler const& opHandle, WorldPacket* pa
         LogUnprocessedTail(packet);
 }
 
-void WorldSession::InitWarden(BigNumber *K, std::string os)
+void WorldSession::InitWarden(BigNumber* K, std::string os)
 {
     if (!sWorld.getConfig(CONFIG_BOOL_ANTICHEAT_WARDEN))
         return;
+
+    if (m_Warden)
+        delete m_Warden;
 
     if (os == "niW")                                        // Windows
         m_Warden = (WardenBase*)new WardenWin();
