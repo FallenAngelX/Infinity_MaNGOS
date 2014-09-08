@@ -5711,7 +5711,7 @@ bool ChatHandler::HandleWorldStateListCommand(char* args)
     if (!wsSet)
         return false;
 
-    for (uint8 i = 0; i < wsSet->count(); ++i)
+    for (uint32 i = 0; i < wsSet->count(); ++i)
     {
         WorldState* ws = (*wsSet)[i];
         PSendSysMessage(LANG_WORLDSTATE_LIST, ws->GetId(), ws->GetType(), ws->GetCondition(), ws->GetInstance(), ws->GetValue());
@@ -5726,7 +5726,7 @@ bool ChatHandler::HandleWorldStateListAllCommand(char* args)
     if (!wsSet)
         return false;
 
-    for (uint8 i = 0; i < wsSet->count(); ++i)
+    for (uint32 i = 0; i < wsSet->count(); ++i)
     {
         WorldState* ws = (*wsSet)[i];
         PSendSysMessage(LANG_WORLDSTATE_LIST_FULL, ws->GetId(), ws->GetType(), ws->GetCondition(), ws->GetInstance(), ws->GetValue());

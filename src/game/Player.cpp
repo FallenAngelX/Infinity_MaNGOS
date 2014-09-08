@@ -8853,7 +8853,7 @@ void Player::SendUpdatedWorldStates(bool force)
 
     if (WorldStateSet* wsSet = sWorldStateMgr.GetUpdatedWorldStatesFor(this, force ? 0 : GetLastWorldStateUpdateTime()))
     {
-        for (uint8 i = 0; i < wsSet->count(); ++i)
+        for (uint32 i = 0; i < wsSet->count(); ++i)
         {
             //DEBUG_LOG("Player::SendUpdatedWorldStates send state %u instance %u value %u to %s",(*itr)->GetId(), (*itr)->GetInstance(),(*itr)->GetValue(),GetObjectGuid().GetString().c_str());
             WorldState* ws = (*wsSet)[i];
@@ -8883,10 +8883,9 @@ void Player::SendInitWorldStates(uint32 zoneid, uint32 areaid)
     data << uint32(GetMapId());                             // mapid
     data << uint32(zoneid);                                 // zone id
     data << uint32(areaid);                                 // area id, new 2.1.0
-
     data << uint16(wsSet->count());
 
-    for (uint8 i = 0; i < wsSet->count(); ++i)
+    for (uint32 i = 0; i < wsSet->count(); ++i)
     {
         WorldState* ws = (*wsSet)[i];
         data << uint32(ws->GetId());

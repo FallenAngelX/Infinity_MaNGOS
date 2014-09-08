@@ -223,34 +223,34 @@ struct WorldState
 
     // Client operations
     void AddClient(Player* player);
-    void AddClient(ObjectGuid const& guid)       { if (guid.IsPlayer()) m_clientGuids.insert(guid);};
+    void AddClient(ObjectGuid const& guid)       { if (guid.IsPlayer()) m_clientGuids.insert(guid); }
 
-    bool HasClients()                      const { return !m_clientGuids.empty();};
+    bool HasClients()                      const { return !m_clientGuids.empty(); }
     bool HasClient(Player* player)         const;
-    bool HasClient(ObjectGuid const& guid) const { return m_clientGuids.find(guid) != m_clientGuids.end();};
+    bool HasClient(ObjectGuid const& guid) const { return m_clientGuids.find(guid) != m_clientGuids.end(); }
 
     void RemoveClient(Player* player);
-    void RemoveClient(ObjectGuid const& guid)    { if (guid.IsPlayer()) m_clientGuids.erase(guid);};
+    void RemoveClient(ObjectGuid const& guid)    { if (guid.IsPlayer()) m_clientGuids.erase(guid); }
 
     GuidSet const& GetClients()                  { return m_clientGuids; };
 
     // Linked Guid operations
-    ObjectGuid const& GetLinkedGuid()      const { return m_linkedGuid;};
-    void              SetLinkedGuid(ObjectGuid const& guid)    { m_linkedGuid = guid;};
+    ObjectGuid const& GetLinkedGuid()      const { return m_linkedGuid; }
+    void              SetLinkedGuid(ObjectGuid const& guid)    { m_linkedGuid = guid; }
 
     bool IsExpired() const;
 
     WorldStateTemplate const* GetTemplate() const { return m_pState; }
 
     // Linked state wrappers
-    bool HasUpLink()   const { return GetTemplate() ? GetTemplate()->m_linkedId != 0 : false; };
-    bool HasDownLink() const { return GetTemplate() ? !GetTemplate()->m_linkedList.empty() : false; };
-    bool HasDownLink(uint32 stateId) const { return GetTemplate() ? (GetTemplate()->m_linkedList.find(stateId) != GetTemplate()->m_linkedList.end()) : false; };
-    WorldStatesLinkedSet const* GetLinkedSet() const { return GetTemplate() ? &GetTemplate()->m_linkedList : NULL; };
+    bool HasUpLink()   const { return GetTemplate() ? GetTemplate()->m_linkedId != 0 : false; }
+    bool HasDownLink() const { return GetTemplate() ? !GetTemplate()->m_linkedList.empty() : false; }
+    bool HasDownLink(uint32 stateId) const { return GetTemplate() ? (GetTemplate()->m_linkedList.find(stateId) != GetTemplate()->m_linkedList.end()) : false; }
+    WorldStatesLinkedSet const* GetLinkedSet() const { return GetTemplate() ? &GetTemplate()->m_linkedList : NULL; }
 
-    void AddFlag(WorldStateFlags flag)    { m_flags |= (1 << flag); };
-    void RemoveFlag(WorldStateFlags flag) { m_flags &= ~(1 << flag); };
-    bool HasFlag(WorldStateFlags flag) const   { return bool(m_flags & (1 << flag)); };
+    void AddFlag(WorldStateFlags flag)    { m_flags |= (1 << flag); }
+    void RemoveFlag(WorldStateFlags flag) { m_flags &= ~(1 << flag); }
+    bool HasFlag(WorldStateFlags flag) const   { return bool(m_flags & (1 << flag)); }
 
     uint32 const& GetId()        const { return m_stateId; }
     uint32 const& GetCondition() const { return m_condition; }
@@ -292,24 +292,25 @@ struct WorldState
 typedef UNORDERED_MULTIMAP<uint32 /* state id */, WorldState> WorldStateMap;
 typedef std::pair<WorldStateMap::const_iterator, WorldStateMap::const_iterator> WorldStateBounds;
 
-#define MAX_WORD_STATE_SET_COUNT 254
+
+#define MAX_WORD_STATE_SET_COUNT 4084
 
 class WorldStateSet
 {
     private:
         WorldState* m_states[MAX_WORD_STATE_SET_COUNT];
-        uint8 m_count;
+        uint32 m_count;
     public:
         WorldStateSet(): m_count(0) {}
 
         void add(WorldState const* wState)
         {
-            MANGOS_ASSERT(m_count < MAX_WORD_STATE_SET_COUNT);
+            MANGOS_ASSERT(m_count < MAX_WORD_STATE_SET_COUNT && "WorldStateSet: exceeded storage size.");
             m_states[m_count++] = (WorldState*)wState;
         }
-        uint8 count() const { return m_count; }
+        uint32 count() const { return m_count; }
 
-        WorldState* operator[](uint8 idx) const { return m_states[idx]; }
+        WorldState* operator[](uint32 idx) const { return m_states[idx]; }
 };
 
 inline void AddToWorldStateSet(WorldStateSet** wss, WorldState const* wState)

@@ -149,7 +149,7 @@ void WorldStateMgr::LoadTemplatesFromDBC()
 
         WorldStatesLinkedSet linkedList;
 
-        if (!strcmp(wsEntry->m_uiType,"CAPTUREPOINT"))
+        if (!strcmp(wsEntry->m_uiType, "CAPTUREPOINT"))
         {
             type = WORLD_STATE_TYPE_CAPTURE_POINT;
             condition = 0;
@@ -427,7 +427,7 @@ void WorldStateMgr::LoadFromDB()
     while (result->NextRow());
 
     sLog.outString();
-    sLog.outString(">> Loaded data for " SIZEFMTD " WorldStates", m_worldState.size());
+    sLog.outString(">> Loaded data for "SIZEFMTD" WorldStates", m_worldState.size());
     delete result;
 }
 
@@ -591,24 +591,24 @@ void WorldStateMgr::SaveToDB()
 void WorldStateMgr::Save(WorldState const* state)
 {
     static SqlStatementID wsDel;
-    SqlStatement stmt = CharacterDatabase.CreateStatement(wsDel, "DELETE FROM `worldstate_data` WHERE `state_id` = ? AND `instance` = ?");
-    stmt.PExecute(state->GetId(), state->GetInstance());
+    CharacterDatabase.CreateStatement(wsDel, "DELETE FROM worldstate_data WHERE state_id = ? AND instance = ?")
+        .PExecute(state->GetId(), state->GetInstance());
 
     if (!state->HasFlag(WORLD_STATE_FLAG_DELETED))
     {
         static SqlStatementID wsSave;
-        SqlStatement stmt1 = CharacterDatabase.CreateStatement(wsSave, "INSERT INTO `worldstate_data` (`state_id`, `instance`, `type`, `condition`, `flags`, `value`, `renewtime`) VALUES (?,?,?,?,?,?,?)");
+        SqlStatement stmt = CharacterDatabase.CreateStatement(wsSave, "INSERT INTO `worldstate_data` (`state_id`, `instance`, `type`, `condition`, `flags`, `value`, `renewtime`) VALUES (?, ?, ?, ?, ?, ?, ?)");
 
         const_cast<WorldState*>(state)->AddFlag(WORLD_STATE_FLAG_SAVED);
 
-        stmt1.addUInt32(state->GetId());
-        stmt1.addUInt32(state->GetInstance());
-        stmt1.addUInt32(state->GetType());
-        stmt1.addUInt32(state->GetCondition());
-        stmt1.addUInt32(state->GetFlags());
-        stmt1.addUInt32(state->GetValue());
-        stmt1.addUInt64(state->GetRenewTime());
-        stmt1.Execute();
+        stmt.addUInt32(state->GetId());
+        stmt.addUInt32(state->GetInstance());
+        stmt.addUInt32(state->GetType());
+        stmt.addUInt32(state->GetCondition());
+        stmt.addUInt32(state->GetFlags());
+        stmt.addUInt32(state->GetValue());
+        stmt.addUInt64(state->GetRenewTime());
+        stmt.Execute();
     }
 }
 
@@ -618,8 +618,8 @@ void WorldStateMgr::DeleteWorldState(WorldState* state)
         return;
 
     static SqlStatementID wsDel;
-    SqlStatement stmt = CharacterDatabase.CreateStatement(wsDel, "DELETE FROM `worldstate_data` WHERE `state_id` = ? AND `instance` = ?");
-    stmt.PExecute(state->GetId(), state->GetInstance());
+    CharacterDatabase.CreateStatement(wsDel, "DELETE FROM worldstate_data WHERE state_id = ? AND instance = ?")
+        .PExecute(state->GetId(), state->GetInstance());
 
     for (WorldStateMap::iterator iter = m_worldState.begin(); iter != m_worldState.end();)
     {
@@ -813,7 +813,7 @@ bool WorldStateMgr::IsFitToCondition(Player* player, WorldState const* state)
         }
         case WORLD_STATE_TYPE_ZONE:
         {
-            if (player->GetZoneId() == state->GetCondition() && player->GetInstanceId() == state->GetInstance())
+            if (player->GetCachedZoneId() == state->GetCondition() && player->GetInstanceId() == state->GetInstance())
                 return true;
             break;
         }
@@ -838,10 +838,10 @@ bool WorldStateMgr::IsFitToCondition(Player* player, WorldState const* state)
             }
             return false;
         }
-        case  WORLD_STATE_TYPE_DESTRUCTIBLE_OBJECT:
+        case WORLD_STATE_TYPE_DESTRUCTIBLE_OBJECT:
         {
             // Need more correct limitation
-            if (player->GetZoneId() == state->GetCondition())
+            if (player->GetCachedZoneId() == state->GetCondition())
                 return true;
             break;
         }
@@ -852,7 +852,7 @@ bool WorldStateMgr::IsFitToCondition(Player* player, WorldState const* state)
             else if (
                 (player->GetMapId() == state->GetCondition() ||
                 player->GetAreaId() == state->GetCondition() ||
-                player->GetZoneId() == state->GetCondition()) &&
+                player->GetCachedZoneId() == state->GetCondition()) &&
                 player->GetInstanceId() == state->GetInstance())
                 return true;
             break;
@@ -1265,7 +1265,7 @@ void WorldStateMgr::AddWorldStateFor(Player* player, uint32 stateId, uint32 inst
             {
                 if (WorldStateSet* stateSet = GetDownLinkedWorldStates(state))
                 {
-                    for (uint8 i = 0; i < stateSet->count(); ++i)
+                    for (uint32 i = 0; i < stateSet->count(); ++i)
                     {
                         WorldState* ws = (*stateSet)[i];
                         ws->AddClient(player);
@@ -1286,7 +1286,7 @@ void WorldStateMgr::AddWorldStateFor(Player* player, uint32 stateId, uint32 inst
 
 void WorldStateMgr::RemoveWorldStateFor(Player* player, uint32 stateId, uint32 instanceId)
 {
-    if (!player || !player->IsInWorld())
+    if (!player)
         return;
 
     WorldState const* state = GetWorldState(stateId, instanceId, player);
@@ -1297,7 +1297,7 @@ void WorldStateMgr::RemoveWorldStateFor(Player* player, uint32 stateId, uint32 i
         {
             if (WorldStateSet* stateSet = GetDownLinkedWorldStates(state))
             {
-                for (uint8 i = 0; i < stateSet->count(); ++i)
+                for (uint32 i = 0; i < stateSet->count(); ++i)
                     (*stateSet)[i]->RemoveClient(player);
                 delete stateSet;
             }
@@ -1368,7 +1368,7 @@ void WorldStateMgr::DeleteInstanceState(uint32 mapId, uint32 instanceId)
 
     if (WorldStateSet* stateSet = GetInstanceStates(mapId, instanceId))
     {
-        for (uint8 i = 0; i < stateSet->count(); ++i)
+        for (uint32 i = 0; i < stateSet->count(); ++i)
             DeleteWorldState((*stateSet)[i]);
         delete stateSet;
     }
@@ -1430,7 +1430,7 @@ WorldStateSet* WorldStateMgr::GetInitWorldStates(uint32 mapId, uint32 instanceId
             {
                 if (WorldStateSet* linkedStateSet = GetDownLinkedWorldStates(state))
                 {
-                    for (uint8 i = 0; i < linkedStateSet->count(); ++i)
+                    for (uint32 i = 0; i < linkedStateSet->count(); ++i)
                         AddToWorldStateSet(&stateSet, (*linkedStateSet)[i]);
                     delete linkedStateSet;
                 }
