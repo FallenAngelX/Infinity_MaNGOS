@@ -10720,17 +10720,25 @@ void Aura::HandlePhase(bool apply, bool Real)
     if (!Real)
         return;
 
-    Unit *target = GetTarget();
+    Unit* target = GetTarget();
 
-    // always non stackable
-    if (apply)
+    uint32 newPhase = 0;
+
+    Unit::AuraList const& phases = target->GetAurasByType(SPELL_AURA_PHASE);
+    if (!phases.empty())
     {
-        Unit::AuraList const& phases = target->GetAurasByType(SPELL_AURA_PHASE);
-        if (!phases.empty())
-            target->RemoveAurasDueToSpell(phases.front()->GetId(), GetHolder());
+        for (Unit::AuraList::const_iterator itr = phases.begin(); itr != phases.end(); ++itr)
+            newPhase |= (*itr)->GetMiscValue();
     }
 
-    target->SetPhaseMask(apply ? GetMiscValue() : PHASEMASK_NORMAL, true);
+    if (!apply)
+        newPhase &= ~GetMiscValue();
+
+    if (!newPhase)
+        newPhase = PHASEMASK_NORMAL;
+
+    target->SetPhaseMask(newPhase, true);
+
     // no-phase is also phase state so same code for apply and remove
     if (target->GetTypeId() == TYPEID_PLAYER)
     {

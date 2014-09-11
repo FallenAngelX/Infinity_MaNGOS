@@ -13452,7 +13452,7 @@ struct SetPhaseMaskHelper
 
 void Unit::SetPhaseMask(uint32 newPhaseMask, bool update)
 {
-    if (newPhaseMask==GetPhaseMask())
+    if (newPhaseMask == GetPhaseMask())
         return;
 
     // first move to both phase for proper update controlled units
@@ -13460,16 +13460,37 @@ void Unit::SetPhaseMask(uint32 newPhaseMask, bool update)
 
     if (IsInWorld())
     {
+        // if phase mask changed for player on vehicle, set new phase mask to vehicle and all vehicle passengers
+        if (GetTypeId() == TYPEID_PLAYER)
+        {
+            if (VehicleKitPtr vehicle = GetVehicle())
+            {
+                if (Unit* vehUnit = vehicle->GetBase())
+                {
+                    for (uint8 i = 0; i < MAX_VEHICLE_SEAT; ++i)
+                    {
+                        if (Unit* passenger = vehicle->GetPassenger(i))
+                        {
+                            if (passenger != this)
+                                passenger->SetPhaseMask(newPhaseMask, true);
+                        }
+                    }
+
+                    vehUnit->SetPhaseMask(newPhaseMask, true);
+                }
+            }
+        }
+
         RemoveNotOwnTrackedTargetAuras(newPhaseMask);       // we can lost access to caster or target
 
         // all controlled except not owned charmed units
-        CallForAllControlledUnits(SetPhaseMaskHelper(newPhaseMask), CONTROLLED_PET|CONTROLLED_GUARDIANS|CONTROLLED_MINIPET|CONTROLLED_TOTEMS|CONTROLLED_CHARM);
+        CallForAllControlledUnits(SetPhaseMaskHelper(newPhaseMask), CONTROLLED_PET | CONTROLLED_GUARDIANS | CONTROLLED_MINIPET | CONTROLLED_TOTEMS);
     }
 
     WorldObject::SetPhaseMask(newPhaseMask, update);
 }
 
-void Unit::NearTeleportTo( float x, float y, float z, float orientation, bool casting /*= false*/ )
+void Unit::NearTeleportTo(float x, float y, float z, float orientation, bool casting /*= false*/ )
 {
     NearTeleportTo(WorldLocation(GetMapId(), x, y, z, orientation, GetPhaseMask()), TELE_TO_NOT_LEAVE_TRANSPORT | TELE_TO_NOT_LEAVE_COMBAT | TELE_TO_NOT_UNSUMMON_PET | (casting ? TELE_TO_SPELL : 0));
 }

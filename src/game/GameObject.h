@@ -714,7 +714,7 @@ class MANGOS_DLL_SPEC GameObject : public WorldObject
         void SetGoAnimProgress(uint8 animprogress) { SetByteValue(GAMEOBJECT_BYTES_1, 3, animprogress); }
         uint32 GetDisplayId() const { return GetUInt32Value(GAMEOBJECT_DISPLAYID); }
         void SetDisplayId(uint32 modelId);
-        void SetPhaseMask(uint32 newPhaseMask, bool update);
+        void SetPhaseMask(uint32 newPhaseMask, bool update) override; // overwrite WorldObject::SetPhaseMask
         void EnableCollision(bool enable);
         bool CalculateCurrentCollisionState() const;
 
