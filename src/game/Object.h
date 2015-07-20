@@ -75,6 +75,7 @@ class TemporarySummon;
 class TerrainInfo;
 class Totem;
 class Transport;
+class TransportBase;
 class TransportInfo;
 class Unit;
 class UpdateData;
