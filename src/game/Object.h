@@ -63,22 +63,25 @@ enum TempSummonType
     TEMPSUMMON_DEAD_OR_LOST_UNIQUENESS_DESPAWN              = 24,            // despawns when owner spawn creature this type in visible range, or by rules of TEMPSUMMON_DEAD_DESPAWN
 };
 
-class WorldPacket;
-class UpdateData;
-class WorldSession;
+class Corpse;
 class Creature;
+class DynamicObject;
 class GameObject;
-class Player;
 class Group;
-class Unit;
-class Group;
-class Map;
-class UpdateMask;
 class InstanceData;
+class Player;
+class Map;
+class TemporarySummon;
 class TerrainInfo;
+class Totem;
 class Transport;
-class TransportBase;
 class TransportInfo;
+class Unit;
+class UpdateData;
+class UpdateMask;
+class WorldPacket;
+class WorldSession;
+
 struct MangosStringLocale;
 
 typedef UNORDERED_MAP<ObjectGuid, UpdateData> UpdateDataMapType;
@@ -764,5 +767,55 @@ class MANGOS_DLL_SPEC WorldObject : public Object
 
         GuidSet    m_notifiedClients;
 };
+
+// Helpers for simplify object type checks and casts
+// Note: obj not checked for NULL
+
+/// IS
+inline bool IsGameObject(Object* obj) { return obj->GetTypeId() == TYPEID_GAMEOBJECT; }
+inline bool IsGameObject(Object const* obj) { return obj->GetTypeId() == TYPEID_GAMEOBJECT; }
+
+inline bool IsUnit(Object* obj) { return obj->GetTypeId() == TYPEID_UNIT; }
+inline bool IsUnit(Object const* obj) { return obj->GetTypeId() == TYPEID_UNIT; }
+
+inline bool IsPlayer(Object* obj) { return obj->GetTypeId() == TYPEID_PLAYER; }
+inline bool IsPlayer(Object const* obj) { return obj->GetTypeId() == TYPEID_PLAYER; }
+
+inline bool IsCorpse(Object* obj) { return obj->GetTypeId() == TYPEID_CORPSE; }
+inline bool IsCorpse(Object const* obj) { return obj->GetTypeId() == TYPEID_CORPSE; }
+
+inline bool IsDynObject(Object* obj) { return obj->GetTypeId() == TYPEID_DYNAMICOBJECT; }
+inline bool IsDynObject(Object const* obj) { return obj->GetTypeId() == TYPEID_DYNAMICOBJECT; }
+
+/// AS
+inline GameObject* AsGameObject(Object* obj) { return (GameObject*)obj; }
+inline GameObject const* AsGameObject(Object const* obj) { return (GameObject const*)obj; }
+
+inline Unit* AsUnit(Object* obj) { return (Unit*)obj; }
+inline Unit const* AsUnit(Object const* obj) { return (Unit const*)obj; }
+
+inline WorldObject* AsWorldObject(Object* obj) { return (WorldObject*)obj; }
+inline WorldObject const* AsWorldObject(Object const* obj) { return (WorldObject const*)obj; }
+
+inline Creature* AsCreature(Object* obj) { return (Creature*)obj; }
+inline Creature const* AsCreature(Object const* obj) { return (Creature const*)obj; }
+
+inline Totem* AsTotem(Object* obj) { return (Totem*)obj; }
+inline Totem const* AsTotem(Object const* obj) { return (Totem const*)obj; }
+
+inline Player* AsPlayer(Object* obj) { return (Player*)obj; }
+inline Player const* AsPlayer(Object const* obj) { return (Player const*)obj; }
+
+inline Corpse* AsCorpse(Object* obj) { return (Corpse*)obj; }
+inline Corpse const* AsCorpse(Object const* obj) { return (Corpse const*)obj; }
+
+inline Pet* AsPet(Object* obj) { return (Pet*)obj; }
+inline Pet const* AsPet(Object const* obj) { return (Pet const*)obj; }
+
+inline DynamicObject* AsDynObject(Object* obj) { return (DynamicObject*)obj; }
+inline DynamicObject const* AsDynObject(Object const* obj) { return (DynamicObject const*)obj; }
+
+inline TemporarySummon* AsTempSummon(Object* obj) { return (TemporarySummon*)obj; }
+inline TemporarySummon const* AsTempSummon(Object const* obj) { return (TemporarySummon const*)obj; }
 
 #endif
