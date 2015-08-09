@@ -456,7 +456,7 @@ bool Database::CheckRequiredField(char const* table_name, char const* required_n
         return true;
     }
 
-    // check fail, prepare readabale error message
+    // check fail, prepare readable error message
 
     // search current required_* field in DB
     const char* db_name;

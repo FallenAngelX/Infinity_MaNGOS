@@ -41,6 +41,9 @@
 #include "SpellMgr.h"
 #include "Calendar.h"
 
+// Playerbot mod:
+#include "playerbot/PlayerbotMgr.h"
+
 // config option SkipCinematics supported values
 enum CinematicsSkipMode
 {
@@ -135,6 +138,31 @@ class CharacterHandler
                 return;
             }
             session->HandlePlayerLogin((LoginQueryHolder*)holder);
+        }
+        // Playerbot mod: is different from the normal HandlePlayerLoginCallback in that it
+        // sets up the bot's world session and also stores the pointer to the bot player in the master's
+        // world session m_playerBots map
+        void HandlePlayerBotLoginCallback(QueryResult * /*dummy*/, SqlQueryHolder * holder, uint32 masterId)
+        {
+            if (!holder)
+                return;
+
+            LoginQueryHolder* lqh = (LoginQueryHolder*) holder;
+
+            WorldSession* masterSession = sWorld.FindSession(masterId);
+
+            if (! masterSession || sObjectMgr.GetPlayer(lqh->GetGuid()))
+            {
+                delete holder;
+                return;
+            }
+
+            // The bot's WorldSession is owned by the bot's Player object
+            // The bot's WorldSession is deleted by PlayerbotMgr::LogoutPlayerBot
+            WorldSession *botSession = new WorldSession(lqh->GetAccountId(), NULL, SEC_PLAYER, masterSession->Expansion(), 0, masterSession->GetSessionDbcLocale());
+            botSession->m_Address = "bot";
+            botSession->HandlePlayerLogin(lqh); // will delete lqh
+            masterSession->GetPlayer()->GetPlayerbotMgr()->OnBotLogin(botSession->GetPlayer());
         }
 } chrHandler;
 
@@ -554,6 +582,14 @@ void WorldSession::HandlePlayerLoginOpcode(WorldPacket& recv_data)
     ObjectGuid playerGuid;
     recv_data >> playerGuid;
 
+    // check if character is currently a playerbot, if so then logout
+    Player* pPlayer = sObjectMgr.GetPlayer(playerGuid);
+    if (pPlayer && pPlayer->GetPlayerbotAI())
+    {
+        --pPlayer->GetPlayerbotAI()->GetManager()->m_botCount;
+        pPlayer->GetPlayerbotAI()->GetManager()->LogoutPlayerBot(playerGuid);
+    }
+
     if (PlayerLoading() || GetPlayer() != NULL)
     {
         sLog.outError("Player tryes to login again, AccountId = %d", GetAccountId());
@@ -562,7 +598,7 @@ void WorldSession::HandlePlayerLoginOpcode(WorldPacket& recv_data)
 
     m_playerLoading = true;
 
-    DEBUG_LOG("WORLD: Received opcode Player Logon Message");
+    DEBUG_LOG("WORLD: Recvd Player Logon Message");
 
     LoginQueryHolder* holder = new LoginQueryHolder(GetAccountId(), playerGuid);
     if (!holder->Initialize())
@@ -573,6 +609,29 @@ void WorldSession::HandlePlayerLoginOpcode(WorldPacket& recv_data)
     }
 
     CharacterDatabase.DelayQueryHolder(&chrHandler, &CharacterHandler::HandlePlayerLoginCallback, holder);
+}
+
+// Playerbot mod. Can't easily reuse HandlePlayerLoginOpcode for logging in bots because it assumes
+// a WorldSession exists for the bot. The WorldSession for a bot is created after the character is loaded.
+void PlayerbotMgr::LoginPlayerBot(ObjectGuid playerGuid)
+{
+    // has bot already been added?
+    if (sObjectMgr.GetPlayer(playerGuid))
+        return;
+
+    uint32 accountId = sObjectMgr.GetPlayerAccountIdByGUID(playerGuid);
+    if (accountId == 0)
+        return;
+
+    LoginQueryHolder *holder = new LoginQueryHolder(accountId, playerGuid);
+    if (!holder->Initialize())
+    {
+        delete holder;                                      // delete all unprocessed queries
+        return;
+    }
+
+    uint32 masterId = sObjectMgr.GetPlayerAccountIdByGUID(GetMaster()->GetObjectGuid());
+    CharacterDatabase.DelayQueryHolder(&chrHandler, &CharacterHandler::HandlePlayerBotLoginCallback, holder, masterId);
 }
 
 void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
@@ -740,6 +799,7 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
     SqlStatement stmt = CharacterDatabase.CreateStatement(updChars, "UPDATE characters SET online = 1 WHERE guid = ?");
     stmt.PExecute(pCurrChar->GetGUIDLow());
 
+    if (pCurrChar->GetSession()->GetRemoteAddress() != "bot")
     stmt = LoginDatabase.CreateStatement(updAccount, "UPDATE account SET active_realm_id = ? WHERE id = ?");
     stmt.PExecute(realmID, GetAccountId());
 
