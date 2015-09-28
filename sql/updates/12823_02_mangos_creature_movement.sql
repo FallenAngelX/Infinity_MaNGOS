@@ -1,3 +1,0 @@
-ALTER TABLE db_version CHANGE COLUMN required_12823_01_mangos_command required_12823_02_mangos_creature_movement bit;
-
-ALTER TABLE creature_movement DROP COLUMN wpguid;

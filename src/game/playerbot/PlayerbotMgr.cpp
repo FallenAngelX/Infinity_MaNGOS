@@ -616,7 +616,7 @@ void PlayerbotMgr::HandleMasterIncomingPacket(const WorldPacket& packet)
             ObjectGuid Guid;
             uint32 itemSlot;
             uint8 rollType;
-            Loot *loot = NULL;
+            Loot *loot = nullptr;
 
             p.rpos(0);        //reset packet pointer
             p >> Guid;        //guid of the lootable target
@@ -929,7 +929,7 @@ void PlayerbotMgr::OnBotLogin(Player * const bot)
     // if bot is in a group and master is not in group then
     // have bot leave their group
     if (bot->GetGroup() &&
-        (m_master->GetGroup() == NULL ||
+        (m_master->GetGroup() == nullptr ||
         m_master->GetGroup()->IsMember(bot->GetObjectGuid()) == false))
         bot->RemoveFromGroup();
 
@@ -1078,7 +1078,7 @@ bool Player::getNextQuestId(const std::string& pString, unsigned int& pStartPos,
 
 bool Player::requiredQuests(const char* pQuestIdString)
 {
-    if (pQuestIdString != NULL)
+    if (pQuestIdString != nullptr)
     {
         unsigned int pos = 0;
         unsigned int id;
@@ -1157,7 +1157,7 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
         }
 
         char *cmd = strtok ((char *) args, " ");
-        char *charname = strtok (NULL, " ");
+        char *charname = strtok (nullptr, " ");
         if (!cmd || !charname)
         {
             PSendSysMessage("|cffff0000usage: add PLAYERNAME  or  remove PLAYERNAME");

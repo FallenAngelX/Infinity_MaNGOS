@@ -52,8 +52,8 @@ void PlayerbotClassAI::DoNonCombatActions()
 
 bool PlayerbotClassAI::EatDrinkBandage(bool bMana, unsigned char foodPercent, unsigned char drinkPercent, unsigned char bandagePercent)
 {
-    Item* drinkItem = NULL;
-    Item* foodItem = NULL;
+    Item* drinkItem = nullptr;
+    Item* foodItem = nullptr;
     if (bMana && m_ai->GetManaPercent() < drinkPercent)
         drinkItem = m_ai->FindDrink();
     if (m_ai->GetHealthPercent() < foodPercent)
@@ -188,16 +188,16 @@ CombatManeuverReturns PlayerbotClassAI::Buff(bool (*BuffHelper)(PlayerbotAI*, ui
  * If none of the healths are low enough (or multiple valid targets) against these checks, the lowest health is healed. Having a target
  * returned does not guarantee it's worth healing, merely that the target does not have 100% health.
  *
- * return NULL If NULL is returned, no healing is required. At all.
+ * return nullptr If nullptr is returned, no healing is required. At all.
  *
  * Will need extensive re-write for co-operation amongst multiple healers. As it stands, multiple healers would all pick the same 'ideal'
  * healing target.
  */
 Player* PlayerbotClassAI::GetHealTarget(JOB_TYPE type)
 {
-    if (!m_ai)  return NULL;
-    if (!m_bot) return NULL;
-    if (!m_bot->isAlive() || m_bot->IsInDuel()) return NULL;
+    if (!m_ai)  return nullptr;
+    if (!m_bot) return nullptr;
+    if (!m_bot->isAlive() || m_bot->IsInDuel()) return nullptr;
 
     // define seperately for sorting purposes - DO NOT CHANGE ORDER!
     std::vector<heal_priority> targets;
@@ -304,15 +304,15 @@ Player* PlayerbotClassAI::GetHealTarget(JOB_TYPE type)
     }
     if (x > -1) return targets.at(x).p;
 
-    return NULL;
+    return nullptr;
 }
 
 Player* PlayerbotClassAI::GetResurrectionTarget(JOB_TYPE type, bool bMustBeOOC)
 {
-    if (!m_ai)  return NULL;
-    if (!m_bot) return NULL;
-    if (!m_bot->isAlive() || m_bot->IsInDuel()) return NULL;
-    if (bMustBeOOC && m_bot->isInCombat()) return NULL;
+    if (!m_ai)  return nullptr;
+    if (!m_bot) return nullptr;
+    if (!m_bot->isAlive() || m_bot->IsInDuel()) return nullptr;
+    if (bMustBeOOC && m_bot->isInCombat()) return nullptr;
 
     // First, fill the list of targets
     if (m_bot->GetGroup())
