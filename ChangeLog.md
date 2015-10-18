@@ -6,11 +6,13 @@
 
 ### Game Features ###
 * Implented Playerbot and bot sharing
+* Started implenting Optional Custom Stuff
 
 ### Server Features ###
 * Updated OpenSll 1.0.2d
 * Started Merging in Infinity_MaNGOS Setup to Cmangos template
 * Started setting up just Windows project
+* Implented IsQl ( Infinity_MaNGOS Database & Importer )
 
 ================================================================================
 # Changelog of CMaNGOS

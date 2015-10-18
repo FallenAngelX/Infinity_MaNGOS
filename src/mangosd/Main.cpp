@@ -180,13 +180,22 @@ extern int main(int argc, char** argv)
     sLog.outString("%s [world-daemon]", _FULLVERSION(REVISION_DATE, REVISION_TIME, REVISION_ID));
     sLog.outString("<Ctrl-C> to stop.");
     sLog.outString("\n\n"
-                   "       _____     __  __       _   _  _____  ____   _____ \n"
-                   "      / ____|   |  \\/  |     | \\ | |/ ____|/ __ \\ / ____|\n"
-                   "     | |        | \\  / |     |  \\| | |  __  |  | | (___  \n"
-                   "     | |ontinued| |\\/| | __ _| . ` | | |_ | |  | |\\___ \\ \n"
-                   "     | |____    | |  | |/ _` | |\\  | |__| | |__| |____) |\n"
-                   "      \\_____|   |_|  |_| (_| |_| \\_|\\_____|\\____/ \\____/ \n"
-                   "      http://cmangos.net\\__,_|     Doing things right!\n\n");
+                   "     \n"				   
+				   " IIII   i         i           i       i     iiii        iiii       iiiii \n"
+                   "  II    ii       ii           ii      i    i    i      i    i     i     i \n"
+                   "  II    ii       ii           i i     i   i      i    i      i   i       i \n"
+                   "  II    i i     i i    iiii   i i     i  i           i        i  i         \n"
+                   " IIII   i i     i i   i    i  i  i    i  i           i        i   i        \n"
+                   "        i  i   i  i  i     i  i   i   i  i           i        i    iii     \n"
+                   "        i  i   i  i      iii  i   i   i  i    iiiii  i        i       iii  \n"
+                   "        i   i i   i   iii  i  i    i  i  i        i  i        i          i \n"
+                   "        i   i i   i  i     i  i     i i  i        i  i        i          i \n"
+                   "        i   i i   i  i     i  i     i i   i      i    i      i   i       i \n"
+                   "        i    i    i  i    ii  i      ii    i    i      i    i     i     i  \n"
+                   "        i    i    i   iiii i  i       i     iiii        iiii       iiiii    \n"
+                   "                                                               \n"
+                   "     Highly Custom Optional & Blizz - Like Server              \n"
+                   "    https://github.com/FallenAngelX/Infinity_MaNGOS            \n\n");
 
     sLog.outString("Using configuration file %s.", cfg_file);
 
