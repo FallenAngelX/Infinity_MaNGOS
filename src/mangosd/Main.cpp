@@ -194,7 +194,7 @@ extern int main(int argc, char** argv)
                    "        i    i    i  i    ii  i      ii    i    i      i    i     i     i  \n"
                    "        i    i    i   iiii i  i       i     iiii        iiii       iiiii    \n"
                    "                                                               \n"
-                   "     Highly Custom Optional & Blizz - Like Server              \n"
+                   "     Highly Blizz - Like & Highly Custom Optional Server       \n"
                    "    https://github.com/FallenAngelX/Infinity_MaNGOS            \n\n");
 
     sLog.outString("Using configuration file %s.", cfg_file);

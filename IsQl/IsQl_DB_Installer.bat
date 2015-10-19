@@ -20,19 +20,22 @@ goto install
 rem Standard install section
 color 3
 echo.
-echo i             iiii     i
-echo i            i    i    i   ( Infinity_MaNGOS Project )
-echo i           i      i   i
-echo i   iiii   i        i  i
-echo i  i    i  i        i  i   ( Credits for DB Installer )
-echo i  i       i        i  i
-echo i  i       i        i  i
-echo i   iiii   i        i  i
-echo i       i  i        i  i     (PSMDB and FallenAngelX )
-echo i       i   i   ii ii  i
-echo i  i    i    i    ii   i
-echo i   iiii      iiii ii  i
+echo IIII   i         i           i       i     iiii        iiii       iiiii 
+echo  II    ii       ii           ii      i    i    i      i    i     i     i
+echo  II    ii       ii           i i     i   i      i    i      i   i       i
+echo  II    i i     i i    iiii   i i     i  i           i        i  i        
+echo IIII   i i     i i   i    i  i  i    i  i           i        i   i       
+echo        i  i   i  i  i     i  i   i   i  i           i        i    iii    
+echo        i  i   i  i      iii  i   i   i  i    iiiii  i        i       iii 
+echo        i   i i   i   iii  i  i    i  i  i        i  i        i          i
+echo        i   i i   i  i     i  i     i i  i        i  i        i          i
+echo        i   i i   i  i     i  i     i i   i      i    i      i   i       i
+echo        i    i    i  i    ii  i      ii    i    i      i    i     i     i 
+echo        i    i    i   iiii i  i       i     iiii        iiii       iiiii  
 echo.
+echo             ( Infinity_MaNGOS DataBase Project )
+echo                 ( Credits for DB Installer )
+echo                  (PSMDB and FallenAngelX )
 echo             IsQl Databases Importer Version 2.0
 echo.
 echo.

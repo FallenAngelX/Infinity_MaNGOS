@@ -8,7 +8,7 @@ CREATE TABLE `I_DataBase_version` (
 
 INSERT INTO `I_DataBase_version` VALUES ('r00', null);
 
---- FallenAngelX
+--- FallenAngelX  -- used to update lock
 /*ALTER TABLE I_DataBase_version CHANGE COLUMN r00 r01 bit;
 REPLACE INTO `I_DataBase_version` (`version`) VALUES ('r01');
 
