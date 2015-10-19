@@ -65,7 +65,40 @@ pause
 goto :eof
 
 :Begin
+if %quick% == off echo.
+if %quick% == off echo This Will Install All Custom Data and Spawn All Custom Content
+                  echo.
+if %quick% == off set /p yesno=Do you wish to continue? (y/n)
+if %quick% == off if %yesno% neq y if %yesno% neq Y goto JumpStart
 
+echo.
+echo Installing Custom Data
+
+for %%i in (%dbpath%\*.sql) do if %%i neq %dbpath3%\*.sql if %%i neq %dbpath1%\*.sql if %%i neq %dbpath2%\*.sql echo %%i & %mysql%\mysql -q -s -h %svr% --user=%user% --password=%pass% --port=%port% < %%i
+
+:JumpStart
+if %quick% == off echo.
+if %quick% == off echo This Will Install Northren JumpStart Data for the Server
+                  echo.
+if %quick% == off set /p yesno=Do you wish to continue? (y/n)
+if %quick% == off if %yesno% neq y if %yesno% neq Y goto Remove
+
+echo.
+echo Installing JumpStart Data
+
+for %%i in (%dbpath1%\*.sql) do if %%i neq %dbpath3%\*.sql if %%i neq %dbpath1%\*.sql if %%i neq %dbpath2%\*.sql echo %%i & %mysql%\mysql -q -s -h %svr% --user=%user% --password=%pass% --port=%port% < %%i
+
+:Remove
+if %quick% == off echo.
+if %quick% == off echo This Will Remove All Custom Content Data and Spawns
+                  echo.
+if %quick% == off set /p yesno=Do you wish to continue? (y/n)
+if %quick% == off if %yesno% neq y if %yesno% neq Y goto done
+
+echo.
+echo Removing Custom Data and Spawns
+
+for %%i in (%dbpath2%\*.sql) do if %%i neq %dbpath3%\*.sql if %%i neq %dbpath1%\*.sql if %%i neq %dbpath2%\*.sql echo %%i & %mysql%\mysql -q -s -h %svr% --user=%user% --password=%pass% --port=%port% < %%i
 
 :done
 echo.
