@@ -80,6 +80,11 @@ if %quick% == off echo Do u need to create new databases (*This will wipe your c
 if %quick% == off set /p yesno=Do you wish to continue? (y/n)
 if %quick% == off if %yesno% neq y if %yesno% neq Y goto World
 
+echo.
+echo Creating Databases
+
+for %%i in (%dbpath4%\*.sql) do if %%i neq %dbpath3%\*.sql if %%i neq %dbpath1%\*.sql if %%i neq %dbpath2%\*.sql echo %%i & %mysql%\mysql -q -s -h %svr% --user=%user% --password=%pass% --port=%port% < %%i
+
 :world
 if %quick% == off echo.
 if %quick% == off echo This will wipe out your current World database data and replace it with new data.
