@@ -10,9 +10,6 @@
     <Filter Include="scripts\battlegrounds">
       <UniqueIdentifier>{ced0a1e2-6867-4f01-a762-390a3d1f01d3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="scripts\custom">
-      <UniqueIdentifier>{af3d4b4d-a585-41c4-ba95-79669a614ea8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="scripts\eastern_kingdoms">
       <UniqueIdentifier>{ca2551e0-68d0-4331-88f3-ab0cdaa2bf9a}</UniqueIdentifier>
     </Filter>
@@ -297,6 +294,9 @@
     </Filter>
     <Filter Include="scripts\northrend\ruby_sanctum">
       <UniqueIdentifier>{e35abead-2389-4eb9-88bd-70e6fe5636b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scripts\custom">
+      <UniqueIdentifier>{4ff68ac5-9b01-462f-b0fb-116a18d8632a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1668,6 +1668,18 @@
     </ClCompile>
     <ClCompile Include="..\..\src\scriptdev2\scripts\northrend\ruby_sanctum\instance_ruby_sanctum.cpp">
       <Filter>scripts\northrend\ruby_sanctum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scriptdev2\scripts\custom\custom_gameobjects.cpp">
+      <Filter>scripts\custom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scriptdev2\scripts\custom\custom_items.cpp">
+      <Filter>scripts\custom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scriptdev2\scripts\custom\custom_npcs.cpp">
+      <Filter>scripts\custom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\scriptdev2\scripts\custom\teleguy.cpp">
+      <Filter>scripts\custom</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

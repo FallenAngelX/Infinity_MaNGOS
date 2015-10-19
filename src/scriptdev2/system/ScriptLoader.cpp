@@ -8,6 +8,10 @@
 extern void AddSC_battleground();
 
 // custom
+extern void AddSC_mob_teleguy();
+extern void AddSC_custom_items();
+extern void AddSC_custom_gameobjects();
+extern void AddSC_custom_npcs();
 
 // examples
 extern void AddSC_example_creature();
@@ -475,6 +479,10 @@ void AddScripts()
     AddSC_battleground();
 
     // custom
+    AddSC_mob_teleguy();
+    AddSC_custom_items();
+    AddSC_custom_gameobjects();
+    AddSC_custom_npcs();
 
     // examples
     AddSC_example_creature();

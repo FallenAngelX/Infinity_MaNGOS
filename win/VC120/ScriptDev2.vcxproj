@@ -90,10 +90,10 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|x64'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">mangosscript</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">mangosscript</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">mangosscript</TargetName>
-    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">mangosscript</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">InfinityMaNGOSscript</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">InfinityMaNGOSscript</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">InfinityMaNGOSscript</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">InfinityMaNGOSscript</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -120,7 +120,7 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)mangosscript.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)InfinityMaNGOSscript.lib</ImportLibrary>
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -152,7 +152,7 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)mangosscript.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)InfinityMaNGOSscript.lib</ImportLibrary>
       <TargetMachine>MachineX64</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
@@ -181,7 +181,7 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)mangosscript.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)InfinityMaNGOSscript.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -211,7 +211,7 @@
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
       <DataExecutionPrevention>
       </DataExecutionPrevention>
-      <ImportLibrary>$(OutDir)mangosscript.lib</ImportLibrary>
+      <ImportLibrary>$(OutDir)InfinityMaNGOSscript.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -220,6 +220,10 @@
     <ClCompile Include="..\..\src\scriptdev2\base\guard_ai.cpp" />
     <ClCompile Include="..\..\src\scriptdev2\base\pet_ai.cpp" />
     <ClCompile Include="..\..\src\scriptdev2\scripts\battlegrounds\battleground.cpp" />
+    <ClCompile Include="..\..\src\scriptdev2\scripts\custom\custom_gameobjects.cpp" />
+    <ClCompile Include="..\..\src\scriptdev2\scripts\custom\custom_items.cpp" />
+    <ClCompile Include="..\..\src\scriptdev2\scripts\custom\custom_npcs.cpp" />
+    <ClCompile Include="..\..\src\scriptdev2\scripts\custom\teleguy.cpp" />
     <ClCompile Include="..\..\src\scriptdev2\scripts\eastern_kingdoms\alterac_mountains.cpp" />
     <ClCompile Include="..\..\src\scriptdev2\scripts\eastern_kingdoms\arathi_highlands.cpp" />
     <ClCompile Include="..\..\src\scriptdev2\scripts\eastern_kingdoms\blasted_lands.cpp" />

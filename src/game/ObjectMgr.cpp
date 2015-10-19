@@ -1972,6 +1972,9 @@ void ObjectMgr::LoadItemPrototypes()
 
             if (proto->DisplayInfoID != dbcitem->DisplayId)
             {
+                if(!sWorld.getConfig(CONFIG_BOOL_OP_CUSTOM_ENABLED))
+                return;
+
                 sLog.outErrorDb("Item (Entry: %u) not correct %u display id, must be %u (using it).", i, proto->DisplayInfoID, dbcitem->DisplayId);
                 const_cast<ItemPrototype*>(proto)->DisplayInfoID = dbcitem->DisplayId;
             }

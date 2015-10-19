@@ -570,7 +570,9 @@ void World::LoadConfigSettings(bool reload)
     setConfig(CONFIG_UINT32_PLAYERBOT_SELLALL_LV_DIFF, "PlayerbotAI.SellAll.LevelDiff", 10);
 
     setConfig(CONFIG_BOOL_PLAYERBOT_SHAREDBOTS, "PlayerbotAI.SharedBots", true);
-
+//--> Custom OptionalSetting
+    setConfig(CONFIG_BOOL_OP_CUSTOM_ENABLED, "OP_Custom.CustomDisplay", true);
+//--> End of setting
     setConfigMinMax(CONFIG_UINT32_START_PLAYER_MONEY, "StartPlayerMoney", 0, 0, MAX_MONEY_AMOUNT);
 
     setConfig(CONFIG_UINT32_MAX_HONOR_POINTS, "MaxHonorPoints", 75000);
