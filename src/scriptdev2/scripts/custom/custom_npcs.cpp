@@ -55,6 +55,7 @@ custom_npc_arena_honor
 
 DatabaseMysql WorldDatabase;
 DatabaseType CharacterDatabase;
+extern Config IMaNGOSConfig;
 
 #define MSG_COMBAT	"You Are In Combat."
 
@@ -2468,12 +2469,6 @@ bool GossipHello_custom_npc_teleportmaster(Player* pPlayer, Creature* Creature)
 	Config IMaNGOSConfig;
 	if (!IMaNGOSConfig.SetSource(_MANGOSD_CONFIG))
 		error_log("IMaNGOS: Unable to open configuration file");
-    {
-        pPlayer->CLOSE_GOSSIP_MENU();
-        error_log("TeleportMaster: Unable to open configuration file");
-        Creature->MonsterWhisper("I'm sorry, we are having technical difficulties.  Please check back later.", pPlayer, false);
-        return false;
-    }
 
     ProcessMenu_custom_npc_teleportmaster(pPlayer, Creature,0,0,0);
     return true;
