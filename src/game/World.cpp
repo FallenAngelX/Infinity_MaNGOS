@@ -67,6 +67,7 @@
 #include "CreatureLinkingMgr.h"
 #include "Calendar.h"
 #include "Weather.h"
+#include "Language.h"
 
 INSTANTIATE_SINGLETON_1(World);
 
@@ -175,6 +176,23 @@ bool World::RemoveSession(uint32 id)
     }
 
     return true;
+}
+
+///PVP Announcer
+void World::SendPvPAnnounce(Player* killer, Player* killed)
+{
+    std::ostringstream msg;
+    std::ostringstream KillerName;
+    std::ostringstream KilledName;
+    std::string KillerColor = sConfig.GetStringDefault("PvPAnnouncer.ColorKiller", "|CFFFFFF01");
+    std::string KilledColor = sConfig.GetStringDefault("PvPAnnouncer.ColorKilled", "|CFFFFFF01");
+    std::string AreaColor = sConfig.GetStringDefault("PvPAnnouncer.ColorArea", "|CFFFE8A0E");
+
+    KillerName << killer->GetName();
+    KilledName << killed->GetName();
+
+    msg << KillerColor << KillerName.str().c_str() << "]" << "|CFF0042FF Has Killed " << KilledColor << KilledName.str().c_str() << "]" << "|CFFE55BB0 in " << AreaColor << "[" << killer->GetMap()->GetMapName() << "]";
+    SendWorldText(LANG_SYSTEMMESSAGE, msg.str().c_str());
 }
 
 void World::AddSession(WorldSession* s)
@@ -777,6 +795,20 @@ void World::LoadConfigSettings(bool reload)
     setConfig(CONFIG_UINT32_TIMERBAR_BREATH_MAX,      "TimerBar.Breath.Max", 180);
     setConfig(CONFIG_UINT32_TIMERBAR_FIRE_GMLEVEL,    "TimerBar.Fire.GMLevel", SEC_CONSOLE);
     setConfig(CONFIG_UINT32_TIMERBAR_FIRE_MAX,        "TimerBar.Fire.Max", 1);
+
+    // PvP Token System
+    setConfig(CONFIG_BOOL_PVP_TOKEN_ENABLE,"PvPToken.Enable", true);
+    setConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMID,"PvPToken.ItemID", 29434);
+    setConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT,"PvPToken.ItemCount", 1);
+    setConfig(CONFIG_FLOAT_PVP_TOKEN_GOLD,"PvPToken.Gold", 100000);
+    setConfig(CONFIG_FLOAT_PVP_TOKEN_HONOR,"PvPToken.Honor", 100000);
+    setConfig(CONFIG_FLOAT_PVP_TOKEN_ARENA,"PvPToken.Arena", 100000);
+    setConfig(CONFIG_FLOAT_PVP_TOKEN_RESTRICTION,"PvPToken.MapRestriction", 4);
+    // PvP Announcer System
+    setConfig(CONFIG_BOOL_PVP_ANNOUNCER,"PvPAnnouncer.Enable", true);
+
+    if(getConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT) < 1)
+        setConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT,"PvPToken.ItemCount",1);
 
     setConfig(CONFIG_BOOL_PET_UNSUMMON_AT_MOUNT,      "PetUnsummonAtMount", true);
 
