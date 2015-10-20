@@ -391,6 +391,45 @@ enum EUnitFields
     PLAYER_GLYPHS_ENABLED                     = UNIT_END + 0x0498, // Size: 1, Type: INT, Flags: PRIVATE
     PLAYER_PET_SPELL_POWER                    = UNIT_END + 0x0499, // Size: 1, Type: INT, Flags: PRIVATE
     PLAYER_END                                = UNIT_END + 0x049A,
+
+    // ----------------------------------------------------------------------------------------------
+
+    IMaNGOS_AP_MELEE_1                        = 0x007B, // TYPE: INT
+    IMaNGOS_AP_MELEE_2                        = 0x007C, // TYPE: INT
+    IMaNGOS_AP_RANGED_1                       = 0x007E, // TYPE: INT
+    IMaNGOS_AP_RANGED_2                       = 0x007F, // TYPE: INT
+
+    IMaNGOS_BLOCKRATING                       = 0x04D3, // TYPE: INT
+    IMaNGOS_DEFRATING                         = 0x04D0, // TYPE: INT
+    IMaNGOS_DODGERATING                       = 0x04D1, // TYPE: INT
+    IMaNGOS_PARRYRATING                       = 0x04D2, // TYPE: INT
+    IMaNGOS_RESILIENCE                        = 0x04DE, // TYPE: INT
+
+    IMaNGOS_MANAREGEN                         = 0x0028, // TYPE: FLOAT
+
+    IMaNGOS_MELEE_HITRATING                   = 0x04D4, // TYPE: INT
+    IMaNGOS_MELEE_CRITRATING                  = 0x04D7, // TYPE: INT
+    IMaNGOS_MELEE_HASTERATING                 = 0x04E0, // TYPE: INT
+    IMaNGOS_MELEE_MAINMINDMG                  = 0x0046, // TYPE: FLOAT
+    IMaNGOS_MELEE_MAINMAXDMG                  = 0x0047, // TYPE: FLOAT
+    IMaNGOS_MELEE_OFFMINDMG                   = 0x0046, // TYPE: FLOAT
+    IMaNGOS_MELEE_OFFMAXDMG                   = 0x0047, // TYPE: FLOAT
+    IMaNGOS_MELLE_OFFTIME                     = 0x003E, // TYPE: FLOAT
+    IMaNGOS_MELLE_MAINTIME                    = 0x003E, // TYPE: FLOAT
+
+    IMaNGOS_RANGED_CRITRATING                 = 0x04D8, // TYPE: INT
+    IMaNGOS_RANGED_HASTERATING                = 0x04E1, // TYPE: INT
+    IMaNGOS_RANGED_HITRATING                  = 0x04D5, // TYPE: INT
+    IMaNGOS_RANGED_MINDMG                     = 0x0081, // TYPE: FLOAT
+    IMaNGOS_RANGED_MAXDMG                     = 0x0082, // TYPE: FLOAT
+    IMaNGOS_RANGED_ATTACKTIME                 = 0x003F, // TYPE: FLOAT
+
+    IMaNGOS_SPELL_HITRATING                   = 0x04D6, // TYPE: INT
+    IMaNGOS_SPELL_CRITRATING                  = 0x04D9, // TYPE: INT
+    IMaNGOS_SPELL_HASTERATING                 = 0x04E2, // TYPE: INT
+    IMaNGOS_SPELL_BONUSDMG                    = 0x0496, // TYPE: INT
+    IMaNGOS_SPELL_BONUSHEAL                   = 0x04A8, // TYPE: INT
+    IMaNGOS_SPELL_CRITPROC                    = 0x040B, // TYPE: FLOAT
 };
 
 enum EGameObjectFields
