@@ -32,7 +32,7 @@ void LoadDatabase()
     }
 
     // Initialize connection to DB
-    if (SD2Database.Initialize(strSD2DBinfo.c_str()))
+    if (WorldDatabase.Initialize(strSD2DBinfo.c_str()))
     {
         outstring_log("SD2: ScriptDev2 database initialized.");
         outstring_log("");
@@ -60,7 +60,7 @@ void LoadDatabase()
         return;
     }
 
-    SD2Database.HaltDelayThread();
+    WorldDatabase.HaltDelayThread();
 }
 
 struct TSpellSummary

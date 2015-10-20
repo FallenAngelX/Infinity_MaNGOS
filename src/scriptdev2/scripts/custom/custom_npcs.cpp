@@ -40,17 +40,10 @@ custom_npc_arena_honor
 #include "precompiled.h"
 #include "../../shared/Config/Config.h"
 #include "../../config.h"
+#include "../system/system.h"
 #include "Database/DatabaseEnv.h"
 #include "sc_creature.h"
 #include "sc_gossip.h"
-
-DatabaseMysql WorldDatabase;
-DatabaseType CharacterDatabase;
-Config IMaNGOSConfig;
-
-//extern DatabaseMysql WorldDatabase;
-//extern DatabaseType CharacterDatabase;
-//extern Config IMaNGOSConfig;
 
 #define GOSSIP_ITEM_ARENA_TO_HONOR  -3000770
 #define GOSSIP_ITEM_ARENA_TO_HONOR1 -3000771
@@ -59,6 +52,9 @@ Config IMaNGOSConfig;
 
 #define UNSUCCESSFUL_HONOR  -1001007
 #define UNSUCCESSFUL_ARENA  -1001008
+
+DatabaseMysql WorldDatabase;
+DatabaseType CharacterDatabase;
 
 #define MSG_COMBAT	"You Are In Combat."
 
@@ -1215,7 +1211,7 @@ bool GossipSelect_custom_npc_renamecharacter(Player* pPlayer, Creature* pCreatur
     {
         pCreature->MonsterWhisper("You will be allowed to change your name at next relogin.", pPlayer, false);
         pPlayer->SetAtLoginFlag(AT_LOGIN_RENAME);
-        WorldDatabase.PExecute("UPDATE characters.characters SET at_login = at_login | '1' WHERE guid = '%u'", pPlayer->GetGUIDLow());
+		CharacterDatabase.PExecute("UPDATE characters.characters SET at_login = at_login | '1' WHERE guid = '%u'", pPlayer->GetGUIDLow());
         pPlayer->CLOSE_GOSSIP_MENU();
     }
 

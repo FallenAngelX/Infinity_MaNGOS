@@ -152,7 +152,7 @@ ConfVersion=2010102201
 #
 ###################################################################################################################
 
-AuctionHouseBot.Seller.Enabled = 0
+AuctionHouseBot.Seller.Enabled = 1
 AuctionHouseBot.DEBUG.Seller = 0
 
 AuctionHouseBot.Alliance.Items.Amount.Ratio = 100
@@ -259,7 +259,7 @@ AuctionHouseBot.forceExcludeItems = ""
 #
 ###################################################################################################################
 
-AuctionHouseBot.Buyer.Enabled = 0
+AuctionHouseBot.Buyer.Enabled = 1
 AuctionHouseBot.DEBUG.Buyer = 0
 
 AuctionHouseBot.Buyer.Alliance.Enabled = 1

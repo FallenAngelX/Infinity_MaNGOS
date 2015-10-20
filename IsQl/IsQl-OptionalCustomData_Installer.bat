@@ -5,7 +5,7 @@ rem This will automatically use the variables below to install the world and scr
 rem To use: Set your environment variables below and change 'set quick=off' to 'set quick=on' 
 set quick=off
 if %quick% == off goto standard
-echo (( PSDB Quick Installer ))
+echo (( Custom DB Quick Installer ))
 rem -- Change the values below to match your server --
 set svr=localhost
 set user=root
@@ -56,7 +56,7 @@ set mysql=.\Development
 :checkpaths
 if not exist %dbpath% then goto patherror
 if not exist %mysql%\mysql.exe then goto patherror
-goto create
+goto Begin
 
 :patherror
 echo Cannot find required files, please ensure you have fully clone from github source
@@ -74,7 +74,7 @@ if %quick% == off if %yesno% neq y if %yesno% neq Y goto JumpStart
 echo.
 echo Installing Custom Data
 
-for %%i in (%dbpath%\*.sql) do if %%i neq %dbpath3%\*.sql if %%i neq %dbpath1%\*.sql if %%i neq %dbpath2%\*.sql echo %%i & %mysql%\mysql -q -s -h %svr% --user=%user% --password=%pass% --port=%port% < %%i
+for %%i in (%dbpath%\*.sql) do if %%i neq %dbpath%\scriptdev2.sql if %%i neq %dbpath%\characters.sql if %%i neq %dbpath%\realmd.sql echo %%i & %mysql%\mysql -q -s -h %svr% --user=%user% --password=%pass% --port=%port% %wdb% < %%i
 
 :JumpStart
 if %quick% == off echo.
@@ -86,7 +86,7 @@ if %quick% == off if %yesno% neq y if %yesno% neq Y goto Remove
 echo.
 echo Installing JumpStart Data
 
-for %%i in (%dbpath1%\*.sql) do if %%i neq %dbpath3%\*.sql if %%i neq %dbpath1%\*.sql if %%i neq %dbpath2%\*.sql echo %%i & %mysql%\mysql -q -s -h %svr% --user=%user% --password=%pass% --port=%port% < %%i
+for %%i in (%dbpath1%\*.sql) do if %%i neq %dbpath%\scriptdev2.sql if %%i neq %dbpath%\characters.sql if %%i neq %dbpath%\realmd.sql echo %%i & %mysql%\mysql -q -s -h %svr% --user=%user% --password=%pass% --port=%port% %wdb% < %%i
 
 :Remove
 if %quick% == off echo.
@@ -98,7 +98,7 @@ if %quick% == off if %yesno% neq y if %yesno% neq Y goto done
 echo.
 echo Removing Custom Data and Spawns
 
-for %%i in (%dbpath2%\*.sql) do if %%i neq %dbpath3%\*.sql if %%i neq %dbpath1%\*.sql if %%i neq %dbpath2%\*.sql echo %%i & %mysql%\mysql -q -s -h %svr% --user=%user% --password=%pass% --port=%port% < %%i
+for %%i in (%dbpath2%\*.sql) do if %%i neq %dbpath%\scriptdev2.sql if %%i neq %dbpath%\characters.sql if %%i neq %dbpath%\realmd.sql echo %%i & %mysql%\mysql -q -s -h %svr% --user=%user% --password=%pass% --port=%port% %wdb% < %%i
 
 :done
 echo.

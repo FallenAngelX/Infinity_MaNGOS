@@ -10,6 +10,7 @@
 #include "Database/DatabaseEnv.h"
 
 DatabaseType SD2Database;
+extern DatabaseMysql WorldDatabase;
 std::string  strSD2Version;
 
 SystemMgr::SystemMgr()
@@ -25,7 +26,7 @@ SystemMgr& SystemMgr::Instance()
 void SystemMgr::LoadVersion()
 {
     // Get Version information
-    QueryResult* pResult = SD2Database.PQuery("SELECT version FROM sd2_db_version LIMIT 1");
+    QueryResult* pResult = WorldDatabase.PQuery("SELECT version FROM sd2_db_version LIMIT 1");
 
     if (pResult)
     {
@@ -51,19 +52,19 @@ void SystemMgr::LoadVersion()
 void SystemMgr::LoadScriptTexts()
 {
     outstring_log("SD2: Loading Script Texts...");
-    LoadMangosStrings(SD2Database, "script_texts", TEXT_SOURCE_TEXT_START, TEXT_SOURCE_TEXT_END, true);
+    LoadMangosStrings(WorldDatabase, "script_texts", TEXT_SOURCE_TEXT_START, TEXT_SOURCE_TEXT_END, true);
 }
 
 void SystemMgr::LoadScriptTextsCustom()
 {
     outstring_log("SD2: Loading Custom Texts...");
-    LoadMangosStrings(SD2Database, "custom_texts", TEXT_SOURCE_CUSTOM_START, TEXT_SOURCE_CUSTOM_END, true);
+    LoadMangosStrings(WorldDatabase, "custom_texts", TEXT_SOURCE_CUSTOM_START, TEXT_SOURCE_CUSTOM_END, true);
 }
 
 void SystemMgr::LoadScriptGossipTexts()
 {
     outstring_log("SD2: Loading Gossip Texts...");
-    LoadMangosStrings(SD2Database, "gossip_texts", TEXT_SOURCE_GOSSIP_START, TEXT_SOURCE_GOSSIP_END);
+    LoadMangosStrings(WorldDatabase, "gossip_texts", TEXT_SOURCE_GOSSIP_START, TEXT_SOURCE_GOSSIP_END);
 }
 
 void SystemMgr::LoadScriptWaypoints()
@@ -71,7 +72,7 @@ void SystemMgr::LoadScriptWaypoints()
     uint64 uiCreatureCount = 0;
 
     // Load Waypoints
-    QueryResult* pResult = SD2Database.PQuery("SELECT COUNT(entry) FROM script_waypoint GROUP BY entry");
+    QueryResult* pResult = WorldDatabase.PQuery("SELECT COUNT(entry) FROM script_waypoint GROUP BY entry");
     if (pResult)
     {
         uiCreatureCount = pResult->GetRowCount();
@@ -80,7 +81,7 @@ void SystemMgr::LoadScriptWaypoints()
 
     outstring_log("SD2: Loading Script Waypoints for " UI64FMTD " creature(s)...", uiCreatureCount);
 
-    pResult = SD2Database.PQuery("SELECT entry, pointid, location_x, location_y, location_z, waittime FROM script_waypoint ORDER BY entry, pointid");
+    pResult = WorldDatabase.PQuery("SELECT entry, pointid, location_x, location_y, location_z, waittime FROM script_waypoint ORDER BY entry, pointid");
 
     if (pResult)
     {

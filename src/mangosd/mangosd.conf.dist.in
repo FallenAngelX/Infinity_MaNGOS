@@ -62,9 +62,9 @@ ConfVersion=2015090801
 RealmID = 1
 DataDir = "."
 LogsDir = ""
-LoginDatabaseInfo     = "127.0.0.1;3306;mangos;mangos;realmd"
-WorldDatabaseInfo     = "127.0.0.1;3306;mangos;mangos;mangos"
-CharacterDatabaseInfo = "127.0.0.1;3306;mangos;mangos;characters"
+LoginDatabaseInfo     = "127.0.0.1;3306;root;ascent;realmd"
+WorldDatabaseInfo     = "127.0.0.1;3306;root;ascent;mangos"
+CharacterDatabaseInfo = "127.0.0.1;3306;root;ascent;characters"
 LoginDatabaseConnections = 1
 WorldDatabaseConnections = 1
 CharacterDatabaseConnections = 1
@@ -402,7 +402,7 @@ GmLogFile = ""
 GmLogTimestamp = 0
 GmLogPerAccount = 0
 RaLogFile = ""
-LogColors = ""
+LogColors = "13 7 11 9"
 
 ###################################################################################################################
 # SERVER SETTINGS
@@ -1928,7 +1928,7 @@ ResetMaster.LevelAfterReset = 10
 ################################################################################################
 
 Item_SummonBankerEntryID = 29530
-Item_SummonTeleportMasterEntryID = 90001
+Item_SummonTeleportMasterEntryID = 100148
 Item_TalentPointStoneAddTalents = 5
 Item_CooldownRemoverInfinte = 1
 

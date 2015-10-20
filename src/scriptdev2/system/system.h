@@ -5,7 +5,12 @@
 #ifndef SC_SYSTEM_H
 #define SC_SYSTEM_H
 
+extern DatabaseMysql WorldDatabase;
+extern DatabaseType CharacterDatabase;
 extern DatabaseType SD2Database;
+
+extern Config IMaNGOSConfig;
+
 extern std::string  strSD2Version;                          // version info: database entry and revision
 
 #define TEXT_SOURCE_RANGE -1000000                          // the amount of entries each text source has available

@@ -24,13 +24,9 @@ EndScriptData */
 #include "precompiled.h"
 #include "../../shared/Config/Config.h"
 #include "../../config.h"
+#include "Database/DatabaseEnv.h"
+#include "../system/system.h"
 #include "Group.h"
-
-extern DatabaseMysql WorldDatabase;
-extern DatabaseType CharacterDatabase;
-extern Config IMaNGOSConfig;
-
-
 
 // Talent Points Giving Item
 bool ItemUse_custom_item_talentstone(Player* pPlayer, Item* pItem, const SpellCastTargets &pTargets)
