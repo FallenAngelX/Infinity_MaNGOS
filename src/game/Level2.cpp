@@ -4981,6 +4981,23 @@ bool ChatHandler::HandleTitlesCurrentCommand(char* args)
     return true;
 }
 
+bool ChatHandler::HandleModifyMirrorCommand(char* args)
+{
+    Creature *pCreature = getSelectedCreature();
+
+    if (!pCreature)
+    {
+        SendSysMessage("Please select a creature.");
+        SetSentErrorMessage(true);
+        return false;
+    }
+
+    CreatureInfo const* cInfo = pCreature->GetCreatureInfo();
+    m_session->GetPlayer()->SetDisplayId(pCreature->GetDisplayId());
+
+    return true;
+}
+
 bool ChatHandler::HandleMmapPathCommand(char* args)
 {
     if (!MMAP::MMapFactory::createOrGetMMapManager()->GetNavMesh(m_session->GetPlayer()->GetMapId()))

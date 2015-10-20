@@ -839,6 +839,10 @@ ChatCommand* ChatHandler::getCommandTable()
         { "gearscore",      SEC_ADMINISTRATOR,  false, &ChatHandler::HandleShowGearScoreCommand,       "", nullptr },
         { "chatspy",        SEC_ADMINISTRATOR,  true, NULL,                                            "", chatspyCommandTable },
         { "mmap",           SEC_GAMEMASTER,     false, nullptr,                                           "", mmapCommandTable },
+        { "freeze",         SEC_ADMINISTRATOR,  true, &ChatHandler::HandleFreezeCommand,               "", NULL }, // [Freeze Command]
+        { "unfreeze",       SEC_ADMINISTRATOR,  true, &ChatHandler::HandleUnFreezeCommand,             "", NULL }, // [Freeze Command]
+        { "listfreeze",     SEC_ADMINISTRATOR,  true, &ChatHandler::HandleListFreezeCommand,           "", NULL }, // [Freeze Command]
+        { "mirror",         SEC_GAMEMASTER,     false, &ChatHandler::HandleModifyMirrorCommand,        "", NULL }, // [Mirror Command]
 
         { nullptr,             0,                  false, nullptr,                                           "", nullptr }
     };
