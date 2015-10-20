@@ -7004,16 +7004,37 @@ void Player::UpdateZone(uint32 newZone, uint32 newArea)
             pvpInfo.endTimer = time(0);                     // start toggle-off
     }
 
+    if(sWorld.getConfig(CONFIG_BOOL_EXTRA_PVP))
+    {
+        if(GetZoneId() == (sWorld.getConfig(CONFIG_UINT32_PVP_ID_1)) || GetZoneId() == (sWorld.getConfig(CONFIG_UINT32_PVP_ID_2)) || GetZoneId() == (sWorld.getConfig(CONFIG_UINT32_PVP_ID_3)) || GetZoneId() == (sWorld.getConfig(CONFIG_UINT32_PVP_ID_4)))
+        {
+            if (zone->flags & AREA_FLAG_SANCTUARY)
+            RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_SANCTUARY);
+            if (!IsPvP() || pvpInfo.endTimer != 0)
+            {
+                UpdatePvP(true, true);
+                SetFlag(PLAYER_FLAGS, PLAYER_FLAGS_IN_PVP);
+                pvpInfo.inHostileArea = true;
+            }
+        }
+	}
+
     if (zone->flags & AREA_FLAG_SANCTUARY)                  // in sanctuary
     {
         SetByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_SANCTUARY);
         if (sWorld.IsFFAPvPRealm())
             SetFFAPvP(false);
     }
-    else
+    else if(GetZoneId() == (sWorld.getConfig(CONFIG_UINT32_SANCTUARY_ID)) && (sWorld.getConfig(CONFIG_BOOL_EXTRA_SANCTUARY)) == 1)                   // in sanctuary
     {
-        RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_SANCTUARY);
-    }
+        SetByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_SANCTUARY);
+        if(sWorld.IsFFAPvPRealm())
+            SetFFAPvP(false);
+     }
+     else
+     {
+         RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_SANCTUARY);
+     }
 
     if (zone->flags & AREA_FLAG_CAPITAL)                    // in capital city
         SetRestType(REST_TYPE_IN_CITY);

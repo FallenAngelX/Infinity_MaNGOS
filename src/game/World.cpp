@@ -821,6 +821,14 @@ void World::LoadConfigSettings(bool reload)
     if(getConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT) < 1)
         setConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT,"PvPToken.ItemCount",1);
 
+    setConfig(CONFIG_BOOL_EXTRA_SANCTUARY, "Custom.AddExtraSanctuary", false);
+    setConfig(CONFIG_BOOL_EXTRA_PVP, "Custom.AddExtraPvPZones", false);
+    setConfig(CONFIG_UINT32_SANCTUARY_ID, "Custom.SanctuaryZone", 0);
+    setConfig(CONFIG_UINT32_PVP_ID_1, "Custom.PvPZone1", 0);
+    setConfig(CONFIG_UINT32_PVP_ID_2, "Custom.PvPZone2", 0);
+    setConfig(CONFIG_UINT32_PVP_ID_3, "Custom.PvPZone3", 0);
+    setConfig(CONFIG_UINT32_PVP_ID_4, "Custom.PvPZone4", 0);
+
     setConfig(CONFIG_BOOL_PET_UNSUMMON_AT_MOUNT,      "PetUnsummonAtMount", true);
 
     m_relocation_ai_notify_delay = sConfig.GetIntDefault("Visibility.AIRelocationNotifyDelay", 1000u);
