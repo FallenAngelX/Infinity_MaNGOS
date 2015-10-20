@@ -183,11 +183,31 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                 break;
 
             if (type == CHAT_MSG_SAY)
-                GetPlayer()->Say(msg, lang);
+            {
+                if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_SAYLEVEL))
+                {
+                    SendNotification(LANG_CHAT_DISABLE_SAYLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_SAYLEVEL));
+                    break;
+                }
+                else
+                {
+                    GetPlayer()->Say(msg, lang);
+                }
+            }
             else if (type == CHAT_MSG_EMOTE)
                 GetPlayer()->TextEmote(msg);
             else if (type == CHAT_MSG_YELL)
-                GetPlayer()->Yell(msg, lang);
+            {
+                if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_YELLLEVEL))
+                {
+                    SendNotification(LANG_CHAT_DISABLE_YELLLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_YELLLEVEL));
+                    break;
+                }
+                else
+                {
+                    GetPlayer()->Yell(msg, lang);
+                }
+            }
         } break;
 
         case CHAT_MSG_WHISPER:
@@ -201,6 +221,12 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
 
             if (msg.empty())
                 break;
+
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_WHISPERLEVEL))
+            {
+                SendNotification(LANG_CHAT_DISABLE_WHISPERLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_WHISPERLEVEL));
+                break;
+            }
 
             if (!normalizePlayerName(to))
             {
@@ -255,6 +281,12 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             if (msg.empty())
                 break;
 
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_GUILDLEVEL))
+            {
+                SendNotification(LANG_CHAT_DISABLE_GUILDLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_GUILDLEVEL));
+                break;
+            }
+
             // if player is in battleground, he cannot say to battleground members by /p
             Group* group = GetPlayer()->GetOriginalGroup();
             if (!group)
@@ -266,6 +298,12 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
 
             if ((type == CHAT_MSG_PARTY_LEADER) && !group->IsLeader(_player->GetObjectGuid()))
                 return;
+
+           // ChatSpy
+            GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_PARTY, lang);
+            for (GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
+                if (Player *pl = itr->getSource())
+                    pl->HandleChatSpyMessage(msg, CHAT_MSG_PARTY, lang, GetPlayer());
 
             // Playerbot mod: broadcast message to bot members
             for(GroupReference* itr = group->GetFirstMember(); itr != nullptr; itr=itr->next())
@@ -316,6 +354,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             if (GetPlayer()->GetGuildId())
                 if (Guild* guild = sGuildMgr.GetGuildById(GetPlayer()->GetGuildId()))
                     guild->BroadcastToGuild(this, msg, lang == LANG_ADDON ? LANG_ADDON : LANG_UNIVERSAL);
+                    GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_GUILD, lang);
 
             break;
         }
@@ -336,10 +375,16 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             if (msg.empty())
                 break;
 
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_GUILDLEVEL))
+            {
+                SendNotification(LANG_CHAT_DISABLE_GUILDLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_GUILDLEVEL));
+                break;
+            }
+
             if (GetPlayer()->GetGuildId())
                 if (Guild* guild = sGuildMgr.GetGuildById(GetPlayer()->GetGuildId()))
                     guild->BroadcastToOfficers(this, msg, lang == LANG_ADDON ? LANG_ADDON : LANG_UNIVERSAL);
-
+                    GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_GUILD, lang);
             break;
         }
         case CHAT_MSG_RAID:
@@ -359,6 +404,12 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             if (msg.empty())
                 break;
 
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_RAIDLEVEL))
+            {
+                SendNotification(LANG_CHAT_DISABLE_RAIDLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_RAIDLEVEL));
+                break;
+            }
+
             // if player is in battleground, he cannot say to battleground members by /ra
             Group* group = GetPlayer()->GetOriginalGroup();
             if (!group)
@@ -367,6 +418,12 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                 if (!group || group->isBGGroup() || !group->isRaidGroup())
                     return;
             }
+
+            // ChatSpy
+            GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_RAID, lang);
+            for (GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
+                if (Player *pl = itr->getSource())
+                    pl->HandleChatSpyMessage(msg, CHAT_MSG_RAID, lang, GetPlayer());
 
             WorldPacket data;
             ChatHandler::BuildChatPacket(data, CHAT_MSG_RAID, msg.c_str(), Language(lang), _player->GetChatTag(), _player->GetObjectGuid(), _player->GetName());
@@ -389,6 +446,12 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             if (msg.empty())
                 break;
 
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_RAIDLEVEL))
+            {
+                SendNotification(LANG_CHAT_DISABLE_RAIDLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_RAIDLEVEL));
+                break;
+            }
+
             // if player is in battleground, he cannot say to battleground members by /ra
             Group* group = GetPlayer()->GetOriginalGroup();
             if (!group)
@@ -397,6 +460,12 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                 if (!group || group->isBGGroup() || !group->isRaidGroup() || !group->IsLeader(_player->GetObjectGuid()))
                     return;
             }
+
+            // ChatSpy
+            GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_RAID_LEADER, lang);
+            for (GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
+                if (Player *pl = itr->getSource())
+                    pl->HandleChatSpyMessage(msg, CHAT_MSG_RAID_LEADER, lang, GetPlayer());
 
             WorldPacket data;
             ChatHandler::BuildChatPacket(data, CHAT_MSG_RAID_LEADER, msg.c_str(), Language(lang), _player->GetChatTag(), _player->GetObjectGuid(), _player->GetName());
@@ -419,6 +488,12 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                     !(group->IsLeader(GetPlayer()->GetObjectGuid()) || group->IsAssistant(GetPlayer()->GetObjectGuid())))
                 return;
 
+            // ChatSpy
+            GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_RAID_WARNING, lang);
+            for (GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
+                if (Player *pl = itr->getSource())
+                    pl->HandleChatSpyMessage(msg, CHAT_MSG_RAID_WARNING, lang, GetPlayer());
+
             WorldPacket data;
             // in battleground, raid warning is sent only to players in battleground - code is ok
             ChatHandler::BuildChatPacket(data, CHAT_MSG_RAID_WARNING, msg.c_str(), Language(lang), _player->GetChatTag(), _player->GetObjectGuid(), _player->GetName());
@@ -436,10 +511,22 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             if (msg.empty())
                 break;
 
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_BGLEVEL))
+            {
+                SendNotification(LANG_CHAT_DISABLE_BGLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_BGLEVEL));
+                break;
+            }
+
             // battleground raid is always in Player->GetGroup(), never in GetOriginalGroup()
             Group* group = GetPlayer()->GetGroup();
             if (!group || !group->isBGGroup())
                 return;
+
+            // ChatSpy
+            GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_BATTLEGROUND, lang);
+            for (GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
+                if (Player *pl = itr->getSource())
+                    pl->HandleChatSpyMessage(msg, CHAT_MSG_BATTLEGROUND, lang, GetPlayer());
 
             WorldPacket data;
             ChatHandler::BuildChatPacket(data, CHAT_MSG_BATTLEGROUND, msg.c_str(), Language(lang), _player->GetChatTag(), _player->GetObjectGuid(), _player->GetName());
@@ -457,10 +544,22 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             if (msg.empty())
                 break;
 
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_BGLEVEL))
+            {
+                SendNotification(LANG_CHAT_DISABLE_BGLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_BGLEVEL));
+                break;
+            }
+
             // battleground raid is always in Player->GetGroup(), never in GetOriginalGroup()
             Group* group = GetPlayer()->GetGroup();
             if (!group || !group->isBGGroup() || !group->IsLeader(GetPlayer()->GetObjectGuid()))
                 return;
+
+            // ChatSpy
+            GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_RAID_LEADER, lang);
+            for (GroupReference *itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
+                if (Player *pl = itr->getSource())
+                    pl->HandleChatSpyMessage(msg, CHAT_MSG_RAID_LEADER, lang, GetPlayer());
 
             WorldPacket data;
             ChatHandler::BuildChatPacket(data, CHAT_MSG_BATTLEGROUND_LEADER, msg.c_str(), Language(lang), _player->GetChatTag(), _player->GetObjectGuid(), _player->GetName());
@@ -479,9 +578,18 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
             if (msg.empty())
                 break;
 
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_CHANNELLEVEL))
+            {
+                SendNotification(LANG_CHAT_DISABLE_CHANNELLEVEL,  sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_CHANNELLEVEL));
+                break;
+            }
+
             if (ChannelMgr* cMgr = channelMgr(_player->GetTeam()))
                 if (Channel* chn = cMgr->GetChannel(channel, _player))
-                    chn->Say(_player, msg.c_str(), lang);
+                {
+					chn->Say(_player, msg.c_str(), lang);
+                    //GetPlayer()->HandleChatSpyMessage(msg, CHAT_MSG_CHANNEL, lang, NULL, channel);
+                }
         } break;
 
         case CHAT_MSG_AFK:

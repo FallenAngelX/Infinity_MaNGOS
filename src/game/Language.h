@@ -1023,6 +1023,27 @@ enum MangosStrings
     // Use for custom patches             11000-11999
     LANG_YOU_RECEIVE_TOKEN              = 11050,
 
+    //ChatSpy
+    LANG_CHATSPY_APEENDED               = 11600,
+    LANG_CHATSPY_CANCELLEDMASSIVE       = 11601,
+    LANG_CHATSPY_ALLRESET               = 11602,
+    LANG_CHATSPY_NOCHATSPY              = 11603,
+    LANG_CHATSPY_YOURCANCELLED          = 11604,
+    LANG_CHATSPY_SMBCANCELLED           = 11605,
+    LANG_CHATSPY_LISTOFSPYS             = 11606,
+    LANG_CHATSPY_TOTAL                  = 11607,
+    LANG_CHATSPY_ONESPYSANOTHER         = 11608,
+
+    //ChatDisable
+    LANG_CHAT_DISABLE_SAYLEVEL          = 50000,
+    LANG_CHAT_DISABLE_YELLLEVEL         = 50001,
+    LANG_CHAT_DISABLE_WHISPERLEVEL      = 50002,
+    LANG_CHAT_DISABLE_PARTYLEVEL        = 50003,
+    LANG_CHAT_DISABLE_GUILDLEVEL        = 50004,
+    LANG_CHAT_DISABLE_RAIDLEVEL         = 50005,
+    LANG_CHAT_DISABLE_BGLEVEL           = 50006,
+    LANG_CHAT_DISABLE_CHANNELLEVEL      = 50007,
+
     // NOT RESERVED IDS                   12000-1999999999
     // `db_script_string` table index     2000000000-2000999999 (MIN_DB_SCRIPT_STRING_ID-MAX_DB_SCRIPT_STRING_ID)
     // For other tables maybe             2001000000-2147483647 (max index)
