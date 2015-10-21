@@ -2618,7 +2618,8 @@ INSERT INTO `pickpocketing_loot_template` (`entry`, `item`, `ChanceOrQuestChance
 	(2719, 16884, 3.3898, 0, 1, 1, 0),
 	(2720, 3928, 1.9608, 0, 1, 1, 0),
 	(2720, 4599, 3.5948, 0, 1, 1, 0),
-	(2720, 4601, 3.268, 0, 1, 1, 0),
+	(2720, 4601, 3.268, 0, 1, 1, 0);
+INSERT INTO `pickpocketing_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(2720, 5428, 6.2092, 0, 1, 1, 0),
 	(2720, 7909, 0.3268, 0, 1, 1, 0),
 	(2720, 7910, 0.3268, 0, 1, 1, 0),
@@ -5174,7 +5175,8 @@ INSERT INTO `pickpocketing_loot_template` (`entry`, `item`, `ChanceOrQuestChance
 	(7025, 8952, 3.4602, 0, 1, 1, 0),
 	(7025, 16885, 5.1903, 0, 1, 1, 0),
 	(7026, 3928, 1.2848, 0, 1, 1, 0),
-	(7026, 5428, 13.0621, 0, 1, 1, 0),
+	(7026, 5428, 13.0621, 0, 1, 1, 0);
+INSERT INTO `pickpocketing_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(7026, 7910, 0.2141, 0, 1, 1, 0),
 	(7026, 8950, 3.212, 0, 1, 1, 0),
 	(7026, 8952, 5.3533, 0, 1, 1, 0),
@@ -7694,7 +7696,8 @@ INSERT INTO `pickpocketing_loot_template` (`entry`, `item`, `ChanceOrQuestChance
 	(16954, 29569, 9.2827, 0, 1, 1, 0),
 	(16954, 29570, 9.8453, 0, 1, 1, 0),
 	(16960, 22829, 2.1277, 0, 1, 1, 0),
-	(16960, 23107, 0.1934, 0, 1, 1, 0),
+	(16960, 23107, 0.1934, 0, 1, 1, 0);
+INSERT INTO `pickpocketing_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(16960, 27854, 3.675, 0, 1, 1, 0),
 	(16960, 29569, 10.6383, 0, 1, 1, 0),
 	(16960, 29570, 9.2843, 0, 1, 1, 0),
@@ -10146,7 +10149,8 @@ INSERT INTO `pickpocketing_loot_template` (`entry`, `item`, `ChanceOrQuestChance
 	(21810, 29569, 9.4437, 0, 1, 1, 0),
 	(21810, 29570, 10.7374, 0, 1, 1, 0),
 	(21815, 22829, 2.7818, 0, 1, 1, 0),
-	(21815, 27859, 6.4422, 0, 1, 1, 0),
+	(21815, 27859, 6.4422, 0, 1, 1, 0);
+INSERT INTO `pickpocketing_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(21815, 29569, 11.8594, 0, 1, 1, 0),
 	(21827, 27854, 4.3478, 0, 1, 1, 0),
 	(21827, 29569, 21.7391, 0, 1, 1, 0),

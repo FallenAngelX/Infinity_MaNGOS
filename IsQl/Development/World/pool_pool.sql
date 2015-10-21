@@ -1475,7 +1475,8 @@ INSERT INTO `pool_pool` (`pool_id`, `mother_pool`, `chance`, `description`) VALU
 	(4895, 2018, 0, 'Mineral Spawn Point 16 - Loch Modan'),
 	(4896, 2018, 0, 'Mineral Spawn Point 17 - Loch Modan'),
 	(4897, 2018, 0, 'Mineral Spawn Point 18 - Loch Modan'),
-	(4898, 2018, 0, 'Mineral Spawn Point 19 - Loch Modan'),
+	(4898, 2018, 0, 'Mineral Spawn Point 19 - Loch Modan');
+INSERT INTO `pool_pool` (`pool_id`, `mother_pool`, `chance`, `description`) VALUES
 	(4899, 2018, 0, 'Mineral Spawn Point 20 - Loch Modan'),
 	(4900, 2018, 0, 'Mineral Spawn Point 21 - Loch Modan'),
 	(4901, 2018, 0, 'Mineral Spawn Point 22 - Loch Modan'),
@@ -2969,7 +2970,8 @@ INSERT INTO `pool_pool` (`pool_id`, `mother_pool`, `chance`, `description`) VALU
 	(6743, 2030, 0, 'Mineral Spawn Point 43 - Westfall'),
 	(6744, 2030, 0, 'Mineral Spawn Point 44 - Westfall'),
 	(6745, 2030, 0, 'Mineral Spawn Point 45 - Westfall'),
-	(6746, 2030, 0, 'Mineral Spawn Point 46 - Westfall'),
+	(6746, 2030, 0, 'Mineral Spawn Point 46 - Westfall');
+INSERT INTO `pool_pool` (`pool_id`, `mother_pool`, `chance`, `description`) VALUES
 	(6747, 2030, 0, 'Mineral Spawn Point 47 - Westfall'),
 	(6748, 2030, 0, 'Mineral Spawn Point 48 - Westfall'),
 	(6749, 2030, 0, 'Mineral Spawn Point 49 - Westfall'),
@@ -4658,7 +4660,8 @@ INSERT INTO `pool_pool` (`pool_id`, `mother_pool`, `chance`, `description`) VALU
 	(3529, 2002, 0, 'Mineral Spawn Point 330 - Arathi Highlands'),
 	(3530, 2002, 0, 'Mineral Spawn Point 331 - Arathi Highlands'),
 	(3531, 2002, 0, 'Mineral Spawn Point 332 - Arathi Highlands'),
-	(3532, 2003, 0, 'Mineral Spawn Point 333 - Arathi Highlands'),
+	(3532, 2003, 0, 'Mineral Spawn Point 333 - Arathi Highlands');
+INSERT INTO `pool_pool` (`pool_id`, `mother_pool`, `chance`, `description`) VALUES
 	(3533, 2003, 0, 'Mineral Spawn Point 334 - Arathi Highlands'),
 	(3534, 2023, 0, 'Mineral Spawn Point 103 - Silverpine Forest'),
 	(3535, 2023, 0, 'Mineral Spawn Point 104 - Silverpine Forest'),

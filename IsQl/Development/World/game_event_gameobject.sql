@@ -6206,7 +6206,8 @@ INSERT INTO `game_event_gameobject` (`guid`, `event`) VALUES
 	(39564, 12),
 	(39565, 12),
 	(39566, 12),
-	(39567, 12),
+	(39567, 12);
+INSERT INTO `game_event_gameobject` (`guid`, `event`) VALUES
 	(39568, 12),
 	(39569, 12),
 	(39570, 12),
@@ -12632,7 +12633,8 @@ INSERT INTO `game_event_gameobject` (`guid`, `event`) VALUES
 	(51977, 1),
 	(51978, 1),
 	(51979, 1),
-	(51980, 1),
+	(51980, 1);
+INSERT INTO `game_event_gameobject` (`guid`, `event`) VALUES
 	(51981, 1),
 	(51982, 1),
 	(51983, 1),
@@ -19148,7 +19150,8 @@ INSERT INTO `game_event_gameobject` (`guid`, `event`) VALUES
 	(81202, 8),
 	(81203, 8),
 	(81204, 8),
-	(63459, 8),
+	(63459, 8);
+INSERT INTO `game_event_gameobject` (`guid`, `event`) VALUES
 	(63460, 8),
 	(45963, 8),
 	(45967, 8),

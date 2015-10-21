@@ -3076,7 +3076,8 @@ INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`,
 	(3743, 0.372, 1.5, 0, 0, 0),
 	(3744, 0.372, 1.5, 0, 0, 0),
 	(3745, 0.372, 1.5, 0, 0, 0),
-	(3746, 0.372, 1.5, 0, 0, 0),
+	(3746, 0.372, 1.5, 0, 0, 0);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES
 	(3747, 0.372, 1.5, 0, 0, 0),
 	(3748, 0.372, 1.5, 0, 0, 0),
 	(3749, 0.372, 1.5, 0, 0, 0),
@@ -6029,7 +6030,8 @@ INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`,
 	(8793, 0.347, 1.5, 0, 8794, 0),
 	(8794, 0.347, 1.5, 0, 8793, 0),
 	(8795, 0.347, 1.5, 1, 8796, 0),
-	(8796, 0.347, 1.5, 1, 8795, 0),
+	(8796, 0.347, 1.5, 1, 8795, 0);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES
 	(8797, 1.389, 2, 2, 0, 0),
 	(8798, 0.347, 1.5, 0, 8799, 0),
 	(8799, 0.347, 1.5, 0, 8798, 0),
@@ -8908,7 +8910,8 @@ INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`,
 	(13674, 0, 0, 1, 13675, 0),
 	(13675, 0, 0, 1, 13674, 0),
 	(13676, 0, 0, 1, 13677, 0),
-	(13677, 0, 0, 1, 13676, 0),
+	(13677, 0, 0, 1, 13676, 0);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES
 	(13678, 0, 0, 1, 13679, 0),
 	(13679, 0, 0, 1, 13678, 0),
 	(13680, 0, 0, 1, 13681, 0),
@@ -11880,7 +11883,8 @@ INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`,
 	(17533, 0, 0, 2, 0, 0),
 	(17534, 0.2832, 1.8, 1, 0, 0),
 	(17535, 2, 6, 2, 0, 0),
-	(17536, 0.4213, 1.65, 0, 0, 0),
+	(17536, 0.4213, 1.65, 0, 0, 0);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES
 	(17537, 0, 0, 0, 0, 0),
 	(17538, 0.383, 1.5, 0, 17539, 0),
 	(17539, 0.383, 1.5, 0, 17538, 0),
@@ -14879,7 +14883,8 @@ INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`,
 	(20596, 0.165, 0.55, 2, 0, 0),
 	(20597, 1.2, 4, 0, 0, 0),
 	(20598, 0.7, 1.75, 2, 0, 0),
-	(20599, 0.589, 1.9, 2, 0, 0),
+	(20599, 0.589, 1.9, 2, 0, 0);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES
 	(20600, 1.75, 3.5, 2, 0, 0),
 	(20601, 0.403, 1.3, 2, 0, 0),
 	(20602, 0.403, 1.3, 2, 0, 0),
@@ -17861,7 +17866,8 @@ INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`,
 	(23923, 0.372, 1.5, 0, 0, 0),
 	(23924, 0.3348, 1.35, 0, 0, 0),
 	(23925, 0.87723, 3.645, 0, 0, 0),
-	(23927, 0.3366, 1.65, 0, 0, 0),
+	(23927, 0.3366, 1.65, 0, 0, 0);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES
 	(23930, 0.347222, 1.5, 2, 0, 0),
 	(23932, 0.372, 1.5, 0, 0, 0),
 	(23933, 0.372, 1.5, 0, 0, 0),
@@ -20796,7 +20802,8 @@ INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`,
 	(24787, 0.8, 1.2, 0, 0, 0),
 	(24788, 0.1, 0.5, 2, 0, 0),
 	(24789, 0.15, 3, 0, 0, 0),
-	(24791, 0, 0, 0, 0, 0),
+	(24791, 0, 0, 0, 0, 0);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES
 	(24792, 0.77, 1.575, 2, 0, 0),
 	(24793, 0.31, 2.5, 0, 0, 0),
 	(24794, 0, 0, 2, 0, 0),
@@ -23944,7 +23951,8 @@ INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`,
 	(31391, 1, 1.5, 0, 0, 0),
 	(31410, 1, 1.5, 0, 0, 0),
 	(31416, 1, 1.5, 0, 0, 0),
-	(31465, 1, 1.5, 0, 0, 0),
+	(31465, 1, 1.5, 0, 0, 0);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES
 	(31472, 1, 1.5, 0, 0, 0),
 	(31521, 1, 1.5, 0, 0, 0),
 	(31564, 1, 1.5, 0, 0, 0),

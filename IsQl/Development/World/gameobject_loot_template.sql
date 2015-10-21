@@ -2759,7 +2759,8 @@ INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, 
 	(9932, 15757, 0.5, 0, 1, 1, 0),
 	(9932, 15755, 0.5, 0, 1, 1, 0),
 	(9932, 15746, 0.5, 0, 1, 1, 0),
-	(9932, 15745, 0.5, 0, 1, 1, 0),
+	(9932, 15745, 0.5, 0, 1, 1, 0);
+INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(9932, 15743, 0.5, 0, 1, 1, 0),
 	(9932, 15742, 0.5, 0, 1, 1, 0),
 	(9932, 15737, 0.5, 0, 1, 1, 0),
@@ -5632,7 +5633,8 @@ INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, 
 	(4077, 6383, 0, 1, 1, 1, 0),
 	(4077, 6382, 0, 1, 1, 1, 0),
 	(4077, 6381, 0, 1, 1, 1, 0),
-	(4077, 6375, 0.5, 0, 1, 1, 0),
+	(4077, 6375, 0.5, 0, 1, 1, 0);
+INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(4077, 6348, 0.5, 0, 1, 1, 0),
 	(4077, 6211, 0.5, 0, 1, 1, 0),
 	(4077, 6045, 0.5, 0, 1, 1, 0),
@@ -8496,7 +8498,8 @@ INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, 
 	(2284, 9832, 0, 1, 1, 1, 0),
 	(2284, 9830, 0, 1, 1, 1, 0),
 	(2284, 9828, 0, 1, 1, 1, 0),
-	(2284, 9827, 0, 1, 1, 1, 0),
+	(2284, 9827, 0, 1, 1, 1, 0);
+INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(2284, 9826, 0, 1, 1, 1, 0),
 	(2284, 9825, 0, 1, 1, 1, 0),
 	(2284, 9824, 0, 1, 1, 1, 0),
@@ -11404,7 +11407,8 @@ INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, 
 	(2281, 1210, 0.5, 0, 1, 1, 0),
 	(2281, 1206, 0.5, 0, 1, 1, 0),
 	(2281, 1205, 0, 4, 1, 1, 0),
-	(2281, 1179, 0, 4, 1, 1, 0),
+	(2281, 1179, 0, 4, 1, 1, 0);
+INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(2281, 1121, 0.01, 0, 1, 1, 0),
 	(2281, 929, 25, 0, 1, 1, 0),
 	(2281, 890, 0.01, 0, 1, 1, 0),
@@ -14133,7 +14137,8 @@ INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, 
 	(9934, 10147, 0.0635913, 0, 1, 1, 0),
 	(9934, 10148, 0.0327041, 0, 1, 1, 0),
 	(9934, 10156, 0.0672251, 0, 1, 1, 0),
-	(9934, 10159, 0.0436054, 0, 1, 1, 0),
+	(9934, 10159, 0.0436054, 0, 1, 1, 0);
+INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(9934, 10164, 0.0526899, 0, 1, 1, 0),
 	(9934, 10167, 0.02, 0, 1, 1, 0),
 	(9934, 10168, 0.0327041, 0, 1, 1, 0),
@@ -16755,7 +16760,8 @@ INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, 
 	(21281, 27499, 8.3, 0, 1, 1, 0),
 	(21281, 27500, 8.3, 0, 1, 1, 0),
 	(21281, 27501, 7.7, 0, 1, 1, 0),
-	(21281, 27502, 7.6, 0, 1, 1, 0),
+	(21281, 27502, 7.6, 0, 1, 1, 0);
+INSERT INTO `gameobject_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(21281, 27503, 7.2, 0, 1, 1, 0),
 	(21281, 31234, 0.2, 0, 1, 1, 0),
 	(21281, 31240, 0.1, 0, 1, 1, 0),

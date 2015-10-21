@@ -2812,7 +2812,8 @@ INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `
 	(24042, 13115, 0, 1, 1, 1, 0),
 	(24042, 13145, 0, 1, 1, 1, 0),
 	(24043, 1608, 0, 1, 1, 1, 0),
-	(24043, 1677, 0, 1, 1, 1, 0),
+	(24043, 1677, 0, 1, 1, 1, 0);
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(24043, 1994, 0, 1, 1, 1, 0),
 	(24043, 4069, 0, 1, 1, 1, 0),
 	(24043, 4082, 0, 1, 1, 1, 0),
@@ -5630,7 +5631,8 @@ INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `
 	(34056, 29987, 0, 2, 1, 1, 0),
 	(34056, 29988, 0, 2, 1, 1, 0),
 	(34056, 29989, 0, 2, 1, 1, 0),
-	(34056, 29990, 0, 2, 1, 1, 0),
+	(34056, 29990, 0, 2, 1, 1, 0);
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(34056, 29991, 0, 2, 1, 1, 0),
 	(34056, 29992, 0, 2, 1, 1, 0),
 	(34056, 29993, 0, 2, 1, 1, 0),
@@ -8381,7 +8383,8 @@ INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `
 	(26002, 33399, 0, 1, 1, 1, 0),
 	(26002, 33400, 0, 1, 1, 1, 0),
 	(26002, 33401, 0, 1, 1, 1, 0),
-	(26002, 33402, 0, 1, 1, 1, 0),
+	(26002, 33402, 0, 1, 1, 1, 0);
+INSERT INTO `reference_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(26002, 33403, 0, 1, 1, 1, 0),
 	(26002, 33412, 0, 1, 1, 1, 0),
 	(26002, 33413, 0, 1, 1, 1, 0),

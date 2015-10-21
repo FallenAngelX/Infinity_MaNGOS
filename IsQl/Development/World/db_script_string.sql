@@ -631,7 +631,8 @@ INSERT INTO `db_script_string` (`entry`, `content_default`, `content_loc1`, `con
 	(2000000079, 'Well, back to business for me. But it sure was nice taking that short break, and it\'s always nice drinking Thunder Ale!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL),
 	(2000000077, 'Ah, that sure does hit the spot! I think i\'ll get myself a couple more...can you watch these barrels for me, $N?', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, NULL),
 	(2000000076, 'Hear ye, denizens of Tanaris! Let it be known $n is an exalted member of the Mithril Order. A blacksmith of honor, dedication, and infinite patience. Three cheers for $n!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 4, 0, 0, NULL),
-	(2000000075, 'Since the sparrowhawks have proven such a success in hunting down the raven stones, Watcher Elaira has trained another one to relay my voice at a great distance. He can help us communicate as you investigate the bird spirits revealed in the tablet!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, NULL),
+	(2000000075, 'Since the sparrowhawks have proven such a success in hunting down the raven stones, Watcher Elaira has trained another one to relay my voice at a great distance. He can help us communicate as you investigate the bird spirits revealed in the tablet!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, NULL);
+INSERT INTO `db_script_string` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
 	(2000000074, 'The tablet has the confirmation we need, just as I thought. Now, we have to use this information to draw out and defeat this Anzu before he can do any more damage to the Emerald Dream!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, NULL),
 	(2000000073, 'There\'s something else here, too. After a discription of a bloody battle and the downfall of the raven, there\'s a prophecy. Anzu will haunt the dreams of his enemies, twisting them to affect a return to this world...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, NULL),
 	(2000005452, 'Tear the land asunder, Gul\'dan! Sever the tie!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 15, NULL),
@@ -1214,7 +1215,8 @@ INSERT INTO `db_script_string` (`entry`, `content_default`, `content_loc1`, `con
 	(2000005807, 'Everyone I know seems to be coming down with something really bad.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 'Citizen - gossip 1'),
 	(2000005808, 'Have you talked to anyone who hasn\'t started getting sick?', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 'Citizen - gossip 2'),
 	(2000005809, 'It must be something in the water, I tell you.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 'Citizen - gossip 3'),
-	(2000005810, 'My bed is looking pretty good right now.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 'Citizen - gossip 4'),
+	(2000005810, 'My bed is looking pretty good right now.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 'Citizen - gossip 4');
+INSERT INTO `db_script_string` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
 	(2000005811, 'Prince Arthas, may the light be praised! Many people in the town have begun to fall seriously ill, can you help us?', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, 'Citizen - query'),
 	(2000005812, 'I can only help you with a clean death.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 14294, 0, 0, 0, 'Arthas - city 2'),
 	(2000005813, 'What? This can\'t be!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 274, 'Citizen - attack'),

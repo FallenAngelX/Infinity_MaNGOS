@@ -3287,7 +3287,8 @@ INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost
 	(3075, 2388, 0, 0, 0, 0),
 	(3075, 2389, 0, 0, 0, 0),
 	(3075, 2390, 0, 0, 0, 0),
-	(3075, 2391, 0, 0, 0, 0),
+	(3075, 2391, 0, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`, `condition_id`) VALUES
 	(3075, 17183, 0, 0, 0, 0),
 	(3076, 159, 0, 0, 0, 0),
 	(3076, 2512, 0, 0, 0, 0),
@@ -6533,7 +6534,8 @@ INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost
 	(4570, 2535, 0, 0, 0, 0),
 	(4571, 159, 0, 0, 0, 0),
 	(4571, 1179, 0, 0, 0, 0),
-	(4571, 1205, 0, 0, 0, 0),
+	(4571, 1205, 0, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`, `condition_id`) VALUES
 	(4571, 1645, 0, 0, 0, 0),
 	(4571, 1708, 0, 0, 0, 0),
 	(4571, 4604, 0, 0, 0, 0),
@@ -9765,7 +9767,8 @@ INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost
 	(10856, 13482, 0, 0, 0, 0),
 	(10856, 13724, 0, 0, 0, 0),
 	(10856, 13810, 0, 0, 0, 0),
-	(10856, 13813, 0, 0, 0, 0),
+	(10856, 13813, 0, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`, `condition_id`) VALUES
 	(19857, 33722, 0, 0, 2288, 0),
 	(19857, 33721, 0, 0, 2288, 0),
 	(20278, 35005, 0, 0, 2366, 0),
@@ -12801,7 +12804,8 @@ INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost
 	(16631, 16060, 0, 0, 0, 0),
 	(16632, 5208, 0, 0, 0, 0),
 	(16632, 5209, 0, 0, 0, 0),
-	(16632, 5210, 0, 0, 0, 0),
+	(16632, 5210, 0, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`, `condition_id`) VALUES
 	(16632, 5211, 0, 0, 0, 0),
 	(16632, 5236, 0, 0, 0, 0),
 	(16632, 5238, 0, 0, 0, 0),
@@ -15875,7 +15879,8 @@ INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost
 	(19722, 21899, 1, 43200, 0, 0),
 	(19772, 28553, 0, 0, 293, 0),
 	(19772, 28555, 0, 0, 293, 0),
-	(19772, 28556, 0, 0, 298, 0),
+	(19772, 28556, 0, 0, 298, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`, `condition_id`) VALUES
 	(19772, 28557, 0, 0, 298, 0),
 	(19772, 28559, 0, 0, 194, 0),
 	(19772, 28560, 0, 0, 194, 0),
@@ -18789,7 +18794,8 @@ INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost
 	(18525, 29273, 0, 0, 1015, 0),
 	(25036, 29450, 0, 0, 0, 0),
 	(25036, 29451, 0, 0, 0, 0),
-	(25036, 8957, 0, 0, 0, 0),
+	(25036, 8957, 0, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`, `condition_id`) VALUES
 	(25036, 28399, 0, 0, 0, 0),
 	(25036, 27856, 0, 0, 0, 0),
 	(25036, 27858, 0, 0, 0, 0),
@@ -21768,7 +21774,8 @@ INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost
 	(18006, 10921, 0, 0, 0, 0),
 	(18006, 10922, 0, 0, 0, 0),
 	(18006, 20844, 0, 0, 0, 0),
-	(18006, 21835, 0, 0, 0, 0),
+	(18006, 21835, 0, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`, `condition_id`) VALUES
 	(18006, 21927, 0, 0, 0, 0),
 	(18006, 22053, 0, 0, 0, 0),
 	(18006, 22054, 0, 0, 0, 0),
@@ -24831,7 +24838,8 @@ INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost
 	(27146, 4471, 0, 0, 0, 0),
 	(27146, 6532, 0, 0, 0, 0),
 	(27146, 10648, 0, 0, 0, 0),
-	(27146, 14341, 0, 0, 0, 0),
+	(27146, 14341, 0, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`, `condition_id`) VALUES
 	(27146, 18256, 0, 0, 0, 0),
 	(27146, 38426, 0, 0, 0, 0),
 	(27146, 39354, 0, 0, 0, 0),
@@ -27847,7 +27855,8 @@ INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost
 	(30730, 39354, 0, 0, 0, 0),
 	(30730, 39489, 3, 9000, 0, 0),
 	(30730, 39501, 0, 0, 0, 0),
-	(30730, 39502, 0, 0, 0, 0),
+	(30730, 39502, 0, 0, 0, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`, `condition_id`) VALUES
 	(30730, 39505, 0, 0, 0, 0),
 	(30731, 10648, 0, 0, 0, 0),
 	(30731, 39354, 0, 0, 0, 0),
@@ -30752,7 +30761,8 @@ INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost
 	(33921, 44421, 0, 0, 2623, 0),
 	(33921, 44422, 0, 0, 2623, 0),
 	(33921, 41864, 0, 0, 2340, 0),
-	(33921, 41869, 0, 0, 2470, 0),
+	(33921, 41869, 0, 0, 2470, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`, `condition_id`) VALUES
 	(33921, 40847, 0, 0, 2340, 0),
 	(33921, 40848, 0, 0, 2340, 0),
 	(33921, 42385, 0, 0, 2623, 0),
@@ -33550,7 +33560,8 @@ INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost
 	(33930, 40863, 0, 0, 2445, 0),
 	(33930, 40864, 0, 0, 2445, 0),
 	(33930, 40905, 0, 0, 2440, 0),
-	(33930, 40926, 0, 0, 2441, 0),
+	(33930, 40926, 0, 0, 2441, 0);
+INSERT INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`, `condition_id`) VALUES
 	(33930, 40932, 0, 0, 2440, 0),
 	(33930, 40938, 0, 0, 2440, 0),
 	(33930, 40962, 0, 0, 2445, 0),

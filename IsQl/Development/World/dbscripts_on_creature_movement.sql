@@ -1159,7 +1159,8 @@ INSERT INTO `dbscripts_on_creature_movement` (`id`, `delay`, `command`, `datalon
 	(1061003, 201, 1, 11, 0, 10803, 266, 16, 0, 0, 0, 0, 0, 0, 0, 0, 'Wheeler'),
 	(1061003, 202, 3, 0, 0, 10805, 272, 16, 0, 0, 0, 0, -6007.3, -200.348, 406.777, 3.28222, 'Klemmy'),
 	(1061003, 202, 3, 0, 0, 10611, 267, 16, 0, 0, 0, 0, -6007.46, -202.158, 407.448, 2, 'Shorty'),
-	(1061003, 203, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6009.25, -202.65, 406.983, 2, 'angus'),
+	(1061003, 203, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, -6009.25, -202.65, 406.983, 2, 'angus');
+INSERT INTO `dbscripts_on_creature_movement` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES
 	(1061003, 203, 3, 0, 0, 10804, 268, 16, 0, 0, 0, 0, -6010.67, -199.434, 406.792, 5.53269, 'Middlecamp'),
 	(1061003, 203, 3, 0, 0, 10803, 266, 16, 0, 0, 0, 0, -6008.53, -199.145, 406.687, 4.37218, 'Wheeler'),
 	(1061003, 212, 3, 0, 0, 10805, 272, 16, 0, 0, 0, 0, 0, 0, 0, 3.28222, 'Klemmy'),
@@ -2286,7 +2287,8 @@ INSERT INTO `dbscripts_on_creature_movement` (`id`, `delay`, `command`, `datalon
 	(3449601, 1, 10, 34704, 0, 0, 0, 0, 0, 0, 0, 0, 563.467, 81.9323, 395.288, 0, 'Summon Val\'kyr Twins Bullet Stalker Dark'),
 	(3449601, 1, 10, 34704, 0, 0, 0, 0, 0, 0, 0, 0, 514.566, 159.918, 395.287, 0, 'Summon Val\'kyr Twins Bullet Stalker Dark'),
 	(3449601, 1, 10, 34704, 0, 0, 0, 0, 0, 0, 0, 0, 509.743, 149.005, 395.253, 0, 'Summon Val\'kyr Twins Bullet Stalker Dark'),
-	(3449601, 1, 10, 34704, 0, 0, 0, 0, 0, 0, 0, 0, 526.833, 181.783, 395.285, 0, 'Summon Val\'kyr Twins Bullet Stalker Dark'),
+	(3449601, 1, 10, 34704, 0, 0, 0, 0, 0, 0, 0, 0, 526.833, 181.783, 395.285, 0, 'Summon Val\'kyr Twins Bullet Stalker Dark');
+INSERT INTO `dbscripts_on_creature_movement` (`id`, `delay`, `command`, `datalong`, `datalong2`, `buddy_entry`, `search_radius`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES
 	(3449601, 1, 10, 34704, 0, 0, 0, 0, 0, 0, 0, 0, 518.503, 170.649, 395.289, 0, 'Summon Val\'kyr Twins Bullet Stalker Dark'),
 	(3449601, 1, 10, 34704, 0, 0, 0, 0, 0, 0, 0, 0, 506.038, 139.517, 395.288, 0, 'Summon Val\'kyr Twins Bullet Stalker Dark'),
 	(3449601, 1, 10, 34704, 0, 0, 0, 0, 0, 0, 0, 0, 554.818, 187.568, 395.288, 0, 'Summon Val\'kyr Twins Bullet Stalker Dark'),

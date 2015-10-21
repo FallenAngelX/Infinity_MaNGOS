@@ -5588,7 +5588,8 @@ INSERT INTO `creature_involvedrelation` (`id`, `quest`) VALUES
 	(23139, 11053),
 	(23139, 11084),
 	(23139, 11086),
-	(23139, 11092),
+	(23139, 11092);
+INSERT INTO `creature_involvedrelation` (`id`, `quest`) VALUES
 	(23139, 11097),
 	(23139, 11101),
 	(23139, 11107),

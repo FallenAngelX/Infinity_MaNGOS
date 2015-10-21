@@ -2935,7 +2935,8 @@ INSERT INTO `quest_poi` (`questId`, `poiId`, `objIndex`, `mapId`, `mapAreaId`, `
 	(1459, 17, -1, 1, 101, 0, 0, 1),
 	(1462, 0, -1, 1, 9, 0, 0, 1),
 	(1463, 0, -1, 1, 4, 0, 0, 1),
-	(1464, 0, -1, 1, 4, 0, 0, 1),
+	(1464, 0, -1, 1, 4, 0, 0, 1);
+INSERT INTO `quest_poi` (`questId`, `poiId`, `objIndex`, `mapId`, `mapAreaId`, `floorId`, `unk3`, `unk4`) VALUES
 	(1465, 0, -1, 1, 81, 0, 0, 1),
 	(1466, 2, 4, 1, 101, 0, 0, 1),
 	(1466, 3, 5, 1, 101, 0, 0, 1),
@@ -5730,7 +5731,8 @@ INSERT INTO `quest_poi` (`questId`, `poiId`, `objIndex`, `mapId`, `mapAreaId`, `
 	(7028, 0, 4, 1, 101, 0, 0, 1),
 	(7028, 1, 4, 1, 101, 0, 0, 1),
 	(7028, 2, 4, 1, 101, 0, 0, 1),
-	(7028, 3, 4, 1, 101, 0, 0, 1),
+	(7028, 3, 4, 1, 101, 0, 0, 1);
+INSERT INTO `quest_poi` (`questId`, `poiId`, `objIndex`, `mapId`, `mapAreaId`, `floorId`, `unk3`, `unk4`) VALUES
 	(7028, 4, -1, 1, 101, 0, 0, 1),
 	(7029, 0, -1, 1, 101, 0, 0, 1),
 	(7041, 0, -1, 1, 81, 0, 0, 1),
@@ -8470,7 +8472,8 @@ INSERT INTO `quest_poi` (`questId`, `poiId`, `objIndex`, `mapId`, `mapAreaId`, `
 	(9320, 4, -1, 1, 9, 0, 0, 1),
 	(9320, 5, -1, 1, 4, 0, 0, 1),
 	(9320, 6, -1, 1, 4, 0, 0, 1),
-	(9320, 7, -1, 530, 462, 0, 0, 1),
+	(9320, 7, -1, 530, 462, 0, 0, 1);
+INSERT INTO `quest_poi` (`questId`, `poiId`, `objIndex`, `mapId`, `mapAreaId`, `floorId`, `unk3`, `unk4`) VALUES
 	(9321, 0, -1, 0, 30, 0, 0, 1),
 	(9321, 1, -1, 0, 30, 0, 0, 1),
 	(9321, 2, -1, 0, 27, 0, 0, 1),
@@ -11056,7 +11059,8 @@ INSERT INTO `quest_poi` (`questId`, `poiId`, `objIndex`, `mapId`, `mapAreaId`, `
 	(10504, 1, 0, 530, 475, 0, 0, 1),
 	(10504, 2, -1, 530, 475, 0, 0, 1),
 	(10505, 1, 0, 530, 475, 0, 0, 5),
-	(10505, 2, -1, 530, 475, 0, 0, 5),
+	(10505, 2, -1, 530, 475, 0, 0, 5);
+INSERT INTO `quest_poi` (`questId`, `poiId`, `objIndex`, `mapId`, `mapAreaId`, `floorId`, `unk3`, `unk4`) VALUES
 	(10506, 0, 0, 530, 475, 0, 0, 1),
 	(10506, 1, -1, 530, 475, 0, 0, 1),
 	(10507, 0, 0, 530, 479, 0, 0, 5),
@@ -13595,7 +13599,8 @@ INSERT INTO `quest_poi` (`questId`, `poiId`, `objIndex`, `mapId`, `mapAreaId`, `
 	(11863, 0, -1, 530, 467, 0, 0, 1),
 	(11864, 0, -1, 571, 486, 0, 0, 1),
 	(11865, 0, 0, 571, 486, 0, 0, 1),
-	(11865, 1, -1, 571, 486, 0, 0, 1),
+	(11865, 1, -1, 571, 486, 0, 0, 1);
+INSERT INTO `quest_poi` (`questId`, `poiId`, `objIndex`, `mapId`, `mapAreaId`, `floorId`, `unk3`, `unk4`) VALUES
 	(11866, 0, 4, 571, 486, 0, 0, 1),
 	(11866, 1, 4, 571, 486, 0, 0, 1),
 	(11866, 2, -1, 571, 486, 0, 0, 1),
@@ -16130,7 +16135,8 @@ INSERT INTO `quest_poi` (`questId`, `poiId`, `objIndex`, `mapId`, `mapAreaId`, `
 	(12960, 8, 11, 571, 490, 0, 0, 3),
 	(12960, 9, 11, 571, 491, 0, 0, 1),
 	(12960, 10, 11, 571, 491, 0, 0, 1),
-	(12960, 11, 11, 571, 491, 0, 0, 1),
+	(12960, 11, 11, 571, 491, 0, 0, 1);
+INSERT INTO `quest_poi` (`questId`, `poiId`, `objIndex`, `mapId`, `mapAreaId`, `floorId`, `unk3`, `unk4`) VALUES
 	(12960, 12, -1, 571, 504, 1, 0, 3),
 	(12961, 1, 11, 571, 491, 0, 0, 1),
 	(12961, 2, 11, 571, 495, 0, 0, 1),

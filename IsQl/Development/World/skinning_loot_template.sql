@@ -2576,7 +2576,8 @@ INSERT INTO `skinning_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `g
 	(10237, 4235, 4, 1, 1, 1, 0),
 	(10237, 4304, 20, 1, 1, 1, 0),
 	(10237, 7428, 14, 1, 1, 1, 0),
-	(10257, 4304, 15, 1, 1, 1, 0),
+	(10257, 4304, 15, 1, 1, 1, 0);
+INSERT INTO `skinning_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(10257, 8170, 60, 1, 1, 1, 0),
 	(10257, 8171, 5, 1, 1, 1, 0),
 	(10257, 19768, 20, 1, 1, 1, 0),

@@ -1290,7 +1290,8 @@ INSERT INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option_text`,
 	(6209, 0, 0, 'I would speak against my brother joining the order, rushing a permanent breech in our relationship.  He would be a danger to himself and those around him, and that is too great a risk hoping he would improve over time.', 1, 1, 6211, 0, 620901, 0, 0, '', 0),
 	(6209, 1, 0, 'I would speak for my brother joining the order, potentially risking the safety of the order.  I could help him with the order\'s regimens, and I\'d have faith in his ability to adapt and learn.', 1, 1, 6211, 0, 620902, 0, 0, '', 0),
 	(6209, 2, 0, 'I would create some surreptitious means to keep my brother out of the order.  I can keep him out without him being any bit wiser, thereby saving our familial bonds.', 1, 1, 6211, 0, 620903, 0, 0, '', 0),
-	(6210, 0, 0, 'I would show my liege the beast\'s ear and claim the beast\'s death as my own, taking the reward for my own use.  It is wrong to claim a deed as your own that someone else in fact did.\n', 1, 1, 6211, 0, 620802, 0, 0, '', 0),
+	(6210, 0, 0, 'I would show my liege the beast\'s ear and claim the beast\'s death as my own, taking the reward for my own use.  It is wrong to claim a deed as your own that someone else in fact did.\n', 1, 1, 6211, 0, 620802, 0, 0, '', 0);
+INSERT INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option_text`, `option_id`, `npc_option_npcflag`, `action_menu_id`, `action_poi_id`, `action_script_id`, `box_coded`, `box_money`, `box_text`, `condition_id`) VALUES
 	(6210, 1, 0, 'I would show my liege the beast\'s ear and claim the beast\'s death as my own - after all, I did slay it.  I would then offer some of the reward to the destitute knight to help his family.', 1, 1, 6211, 0, 620801, 0, 0, '', 0),
 	(6210, 2, 0, 'I would remain silent about the kill and allow the knight to claim the reward to aid his family.', 1, 1, 6211, 0, 618703, 0, 0, '', 0),
 	(6211, 0, 0, 'I\'d love to get one of those written fortunes you mentioned!  I\'ve got the space in my inventory for it.', 1, 1, 6212, 0, 6211, 0, 0, '', 0),
@@ -2384,7 +2385,8 @@ INSERT INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option_text`,
 	(4662, 2, 0, 'Learn about Dual Talent Specialization.', 1, 1, 10371, 0, 0, 0, 0, '', 645),
 	(7260, 1, 0, 'I wish to unlearn my talents.', 1, 1, 4461, 0, 0, 0, 0, '', 541),
 	(7260, 2, 0, 'Learn about Dual Talent Specialization.', 1, 1, 10371, 0, 0, 0, 0, '', 645),
-	(4675, 1, 0, 'I wish to unlearn my talents.', 1, 1, 4461, 0, 0, 0, 0, '', 542),
+	(4675, 1, 0, 'I wish to unlearn my talents.', 1, 1, 4461, 0, 0, 0, 0, '', 542);
+INSERT INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option_text`, `option_id`, `npc_option_npcflag`, `action_menu_id`, `action_poi_id`, `action_script_id`, `box_coded`, `box_money`, `box_text`, `condition_id`) VALUES
 	(4675, 2, 0, 'Learn about Dual Talent Specialization.', 1, 1, 10371, 0, 0, 0, 0, '', 646),
 	(4647, 1, 0, 'I wish to unlearn my talents.', 1, 1, 4461, 0, 0, 0, 0, '', 542),
 	(4647, 2, 0, 'Learn about Dual Talent Specialization.', 1, 1, 10371, 0, 0, 0, 0, '', 646),

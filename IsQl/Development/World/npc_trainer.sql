@@ -2617,7 +2617,8 @@ INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillv
 	(18753, 20012, 10000, 333, 270, 0),
 	(18753, 20014, 10000, 333, 265, 0),
 	(18753, 20008, 10000, 333, 255, 0),
-	(18753, 17181, 10000, 333, 250, 0),
+	(18753, 17181, 10000, 333, 250, 0);
+INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillvalue`, `reqlevel`) VALUES
 	(18753, 17180, 10000, 333, 250, 0),
 	(18753, 13948, 6500, 333, 250, 0),
 	(18753, 13941, 6200, 333, 245, 0),
@@ -5202,7 +5203,8 @@ INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillv
 	(18993, 6500, 300, 185, 125, 0),
 	(18993, 2546, 150, 185, 80, 0),
 	(18993, 2544, 200, 185, 75, 0),
-	(18993, 2541, 100, 185, 50, 0),
+	(18993, 2541, 100, 185, 50, 0);
+INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillvalue`, `reqlevel`) VALUES
 	(18993, 6499, 100, 185, 50, 0),
 	(18993, 2539, 50, 185, 10, 0),
 	(18993, 37836, 10, 185, 1, 0),
@@ -7797,7 +7799,8 @@ INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillv
 	(16588, 2332, 150, 171, 40, 0),
 	(16588, 2331, 100, 171, 25, 0),
 	(16588, 3170, 50, 171, 15, 0),
-	(16588, 2275, 10, 0, 0, 5),
+	(16588, 2275, 10, 0, 0, 5);
+INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillvalue`, `reqlevel`) VALUES
 	(16773, 5011, 1000, 0, 0, 0),
 	(17005, 200, 10000, 0, 0, 20),
 	(17005, 201, 1000, 0, 0, 0),
@@ -10417,7 +10420,8 @@ INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillv
 	(11052, 2397, 200, 197, 60, 0),
 	(11052, 3841, 200, 197, 60, 0),
 	(11052, 2386, 200, 197, 65, 0),
-	(11052, 2396, 200, 197, 70, 0),
+	(11052, 2396, 200, 197, 70, 0);
+INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillvalue`, `reqlevel`) VALUES
 	(11052, 3842, 300, 197, 70, 0),
 	(11052, 2395, 300, 197, 70, 0),
 	(11052, 2964, 100, 197, 75, 0),
@@ -12935,7 +12939,8 @@ INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillv
 	(26952, 19667, 250, 164, 150, 0),
 	(26952, 19668, 2500, 164, 200, 0),
 	(26952, 19669, 10000, 164, 275, 0),
-	(26952, 20201, 10000, 164, 275, 0),
+	(26952, 20201, 10000, 164, 275, 0);
+INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillvalue`, `reqlevel`) VALUES
 	(26952, 29545, 15000, 164, 300, 0),
 	(26952, 29547, 15000, 164, 305, 0),
 	(26952, 29548, 20000, 164, 315, 0),
@@ -15382,7 +15387,8 @@ INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillv
 	(26951, 53902, 150000, 171, 435, 0),
 	(26951, 53903, 180000, 171, 435, 0),
 	(26951, 53905, 120000, 171, 395, 0),
-	(26951, 54213, 150000, 171, 435, 0),
+	(26951, 54213, 150000, 171, 435, 0);
+INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillvalue`, `reqlevel`) VALUES
 	(26951, 54218, 120000, 171, 385, 0),
 	(26951, 57425, 150000, 171, 430, 0),
 	(26951, 57427, 150000, 171, 425, 0),
@@ -17889,7 +17895,8 @@ INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillv
 	(30709, 52739, 142, 773, 35, 0),
 	(30709, 53462, 285, 773, 75, 0),
 	(30709, 52840, 380, 773, 75, 0),
-	(30709, 50612, 380, 773, 75, 0),
+	(30709, 50612, 380, 773, 75, 0);
+INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillvalue`, `reqlevel`) VALUES
 	(30709, 50605, 380, 773, 75, 0),
 	(30709, 50598, 380, 773, 75, 0),
 	(30709, 58485, 380, 773, 80, 0),
@@ -20410,7 +20417,8 @@ INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillv
 	(33590, 53889, 10000, 755, 350, 0),
 	(33590, 53890, 10000, 755, 350, 0),
 	(33590, 53891, 10000, 755, 360, 0),
-	(33590, 53892, 10000, 755, 350, 0),
+	(33590, 53892, 10000, 755, 350, 0);
+INSERT INTO `npc_trainer` (`entry`, `spell`, `spellcost`, `reqskill`, `reqskillvalue`, `reqlevel`) VALUES
 	(33590, 53893, 10000, 755, 350, 0),
 	(33590, 53894, 10000, 755, 350, 0),
 	(33590, 53916, 10000, 755, 350, 0),

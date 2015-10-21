@@ -5575,7 +5575,8 @@ INSERT INTO `creature_questrelation` (`id`, `quest`) VALUES
 	(23749, 12297),
 	(23761, 11164),
 	(23761, 11165),
-	(23761, 12484),
+	(23761, 12484);
+INSERT INTO `creature_questrelation` (`id`, `quest`) VALUES
 	(23770, 11190),
 	(23773, 11155),
 	(23778, 11233),

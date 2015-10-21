@@ -4638,7 +4638,8 @@ INSERT INTO `item_enchantment_template` (`entry`, `ench`, `chance`) VALUES
 	(587, 858, 1.47),
 	(587, 859, 1.47),
 	(587, 860, 1.47),
-	(587, 942, 1.18),
+	(587, 942, 1.18);
+INSERT INTO `item_enchantment_template` (`entry`, `ench`, `chance`) VALUES
 	(587, 943, 1.18),
 	(587, 944, 1.18),
 	(587, 945, 1.18),
@@ -9191,7 +9192,8 @@ INSERT INTO `item_enchantment_template` (`entry`, `ench`, `chance`) VALUES
 	(761, 1037, 3.08),
 	(761, 1038, 3.08),
 	(761, 1039, 3.08),
-	(761, 1206, 2.55),
+	(761, 1206, 2.55);
+INSERT INTO `item_enchantment_template` (`entry`, `ench`, `chance`) VALUES
 	(761, 1207, 2.55),
 	(761, 1208, 2.55),
 	(761, 1209, 2.55),
@@ -13749,7 +13751,8 @@ INSERT INTO `item_enchantment_template` (`entry`, `ench`, `chance`) VALUES
 	(947, 193, 5.48),
 	(947, 219, 5.48),
 	(947, 605, 1.34),
-	(947, 606, 1.34),
+	(947, 606, 1.34);
+INSERT INTO `item_enchantment_template` (`entry`, `ench`, `chance`) VALUES
 	(947, 607, 1.34),
 	(947, 608, 1.34),
 	(947, 690, 0.88),
@@ -18162,7 +18165,8 @@ INSERT INTO `item_enchantment_template` (`entry`, `ench`, `chance`) VALUES
 	(1155, 255, 0.89),
 	(1155, 514, 1.23),
 	(1155, 515, 1.23),
-	(1155, 516, 1.23),
+	(1155, 516, 1.23);
+INSERT INTO `item_enchantment_template` (`entry`, `ench`, `chance`) VALUES
 	(1155, 517, 1.23),
 	(1155, 599, 2.96),
 	(1155, 600, 2.96),
@@ -22499,7 +22503,8 @@ INSERT INTO `item_enchantment_template` (`entry`, `ench`, `chance`) VALUES
 	(3539, 1756, 0.59),
 	(3541, 167, 4.65),
 	(3541, 168, 4.65),
-	(3541, 247, 2.85),
+	(3541, 247, 2.85);
+INSERT INTO `item_enchantment_template` (`entry`, `ench`, `chance`) VALUES
 	(3541, 250, 2.85),
 	(3541, 251, 2.85),
 	(3541, 252, 2.85),
@@ -26841,7 +26846,8 @@ INSERT INTO `item_enchantment_template` (`entry`, `ench`, `chance`) VALUES
 	(5294, 186, 5.8),
 	(5294, 191, 6.6),
 	(5294, 599, 6.63),
-	(5294, 600, 6.63),
+	(5294, 600, 6.63);
+INSERT INTO `item_enchantment_template` (`entry`, `ench`, `chance`) VALUES
 	(5294, 601, 6.63),
 	(5294, 602, 6.63),
 	(5294, 684, 6.63),

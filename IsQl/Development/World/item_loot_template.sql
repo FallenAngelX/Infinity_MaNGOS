@@ -2843,7 +2843,8 @@ INSERT INTO `item_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `group
 	(17962, 7910, 64.7, 0, 1, 3, 0),
 	(17962, 7971, 29.4, 0, 1, 1, 0),
 	(17962, 12361, 88.2, 0, 1, 1, 0),
-	(17962, 13926, 2.9, 0, 1, 1, 0),
+	(17962, 13926, 2.9, 0, 1, 1, 0);
+INSERT INTO `item_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `condition_id`) VALUES
 	(17963, 1529, 84.8, 0, 1, 3, 0),
 	(17963, 3864, 71.7, 0, 1, 3, 0),
 	(17963, 7909, 50, 0, 1, 3, 0),

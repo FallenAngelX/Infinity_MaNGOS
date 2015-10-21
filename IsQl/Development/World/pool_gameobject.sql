@@ -1959,7 +1959,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(3616, 962, 0, 'Bruiseweed zone 400, node 37'),
 	(3617, 960, 0, 'Bruiseweed zone 331, node 161'),
 	(3618, 960, 0, 'Bruiseweed zone 331, node 162'),
-	(3619, 960, 0, 'Bruiseweed zone 331, node 163'),
+	(3619, 960, 0, 'Bruiseweed zone 331, node 163');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(3620, 995, 0, 'Bruiseweed zone 10, node 141'),
 	(3623, 962, 0, 'Bruiseweed zone 400, node 38'),
 	(3624, 951, 0, 'Bruiseweed zone 40, node 152'),
@@ -3747,7 +3748,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(8668, 959, 0, 'Goldthorn zone 45, node 312'),
 	(8669, 965, 0, 'Goldthorn zone 47, node 73'),
 	(8670, 996, 0, 'Goldthorn zone 8, node 110'),
-	(8671, 996, 0, 'Goldthorn zone 8, node 111'),
+	(8671, 996, 0, 'Goldthorn zone 8, node 111');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(8672, 965, 0, 'Goldthorn zone 47, node 74'),
 	(8673, 988, 0, 'Goldthorn zone 33, node 316'),
 	(8674, 988, 0, 'Goldthorn zone 33, node 317'),
@@ -5641,7 +5643,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(17792, 1667, 0, 'Dire Maul pod, node 1667'),
 	(17793, 1603, 0, 'Dire Maul pod, node 1603'),
 	(17794, 1604, 0, 'Dire Maul pod, node 1604'),
-	(17795, 1605, 0, 'Dire Maul pod, node 1605'),
+	(17795, 1605, 0, 'Dire Maul pod, node 1605');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(17796, 1606, 0, 'Dire Maul pod, node 1606'),
 	(17797, 1607, 0, 'Dire Maul pod, node 1607'),
 	(17798, 1608, 0, 'Dire Maul pod, node 1608'),
@@ -7462,7 +7465,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(26427, 984, 0, 'Goldclover zone 394, node 14'),
 	(26444, 984, 0, 'Goldclover zone 394, node 15'),
 	(26446, 984, 0, 'Goldclover zone 394, node 16'),
-	(26447, 984, 0, 'Goldclover zone 394, node 17'),
+	(26447, 984, 0, 'Goldclover zone 394, node 17');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(26448, 984, 0, 'Goldclover zone 394, node 18'),
 	(26451, 986, 0, 'Goldclover zone 495, node 32'),
 	(26452, 986, 0, 'Goldclover zone 495, node 33'),
@@ -9256,7 +9260,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(45823, 968, 0, 'Sungrass zone 139, node 315'),
 	(45824, 968, 0, 'Arthas\' Tears zone 139, node 316'),
 	(45825, 968, 0, 'Golden Sansam zone 139, node 317'),
-	(45826, 968, 0, 'Mountain Silversage zone 139, node 318'),
+	(45826, 968, 0, 'Mountain Silversage zone 139, node 318');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(45827, 968, 0, 'Mountain Silversage zone 139, node 319'),
 	(45828, 968, 0, 'Mountain Silversage zone 139, node 320'),
 	(45832, 968, 0, 'Plaguebloom zone 139, node 321'),
@@ -11141,7 +11146,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(63708, 954, 0, 'Plaguebloom zone 28, node 203'),
 	(63709, 954, 0, 'Plaguebloom zone 28, node 204'),
 	(199376, 10265, 20, 'Howling Fjord 189979, node 48'),
-	(63711, 954, 0, 'Plaguebloom zone 28, node 205'),
+	(63711, 954, 0, 'Plaguebloom zone 28, node 205');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(63712, 968, 0, 'Plaguebloom zone 139, node 389'),
 	(63713, 954, 0, 'Plaguebloom zone 28, node 206'),
 	(63714, 968, 0, 'Plaguebloom zone 139, node 390'),
@@ -13031,7 +13037,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(68699, 3216, 5, 'Mineral Spawn Point 17 - Silver'),
 	(68700, 3216, 5, 'Mineral Spawn Point 17 - Gold'),
 	(68701, 3216, 1, 'Mineral Spawn Point 17 - Truesilver'),
-	(68702, 3217, 0, 'Mineral Spawn Point 18 - Iron'),
+	(68702, 3217, 0, 'Mineral Spawn Point 18 - Iron');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(68703, 3217, 25, 'Mineral Spawn Point 18 - Mithril'),
 	(68704, 3217, 15, 'Mineral Spawn Point 18 - Tin'),
 	(68705, 3217, 5, 'Mineral Spawn Point 18 - Silver'),
@@ -14684,7 +14691,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(70352, 3492, 0, 'Mineral Spawn Point 293 - Iron'),
 	(70353, 3492, 25, 'Mineral Spawn Point 293 - Mithril'),
 	(70354, 3492, 15, 'Mineral Spawn Point 293 - Tin'),
-	(70355, 3492, 5, 'Mineral Spawn Point 293 - Silver'),
+	(70355, 3492, 5, 'Mineral Spawn Point 293 - Silver');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(70356, 3492, 5, 'Mineral Spawn Point 293 - Gold'),
 	(70357, 3492, 1, 'Mineral Spawn Point 293 - Truesilver'),
 	(70358, 3493, 0, 'Mineral Spawn Point 294 - Iron'),
@@ -16286,7 +16294,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(72133, 4122, 25, 'Mineral Spawn Point 23 - Rich Thorium'),
 	(72134, 4122, 25, 'Mineral Spawn Point 23 - Mithril'),
 	(72135, 4122, 10, 'Mineral Spawn Point 23 - Gold'),
-	(72136, 4122, 10, 'Mineral Spawn Point 23 - Truesilver'),
+	(72136, 4122, 10, 'Mineral Spawn Point 23 - Truesilver');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(72137, 4122, 5, 'Mineral Spawn Point 23 - Dark Iron'),
 	(72138, 4123, 0, 'Mineral Spawn Point 24 - Small Thorium'),
 	(72139, 4123, 25, 'Mineral Spawn Point 24 - Rich Thorium'),
@@ -17858,7 +17867,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(73778, 4435, 10, 'Mineral Spawn Point 36 - Silver'),
 	(73779, 4435, 10, 'Mineral Spawn Point 36 - Gold'),
 	(73780, 4436, 0, 'Mineral Spawn Point 37 - Copper'),
-	(73781, 4436, 0, 'Mineral Spawn Point 37 - Tin'),
+	(73781, 4436, 0, 'Mineral Spawn Point 37 - Tin');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(73782, 4436, 0, 'Mineral Spawn Point 37 - Iron'),
 	(73783, 4436, 10, 'Mineral Spawn Point 37 - Silver'),
 	(73784, 4436, 10, 'Mineral Spawn Point 37 - Gold'),
@@ -19513,7 +19523,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(75797, 4945, 5, 'Mineral Spawn Point 66 - Silver'),
 	(75798, 4946, 0, 'Mineral Spawn Point 67 - Copper'),
 	(75799, 4946, 30, 'Mineral Spawn Point 67 - Tin'),
-	(75800, 4946, 5, 'Mineral Spawn Point 67 - Silver'),
+	(75800, 4946, 5, 'Mineral Spawn Point 67 - Silver');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(75801, 4947, 0, 'Mineral Spawn Point 68 - Copper'),
 	(75802, 4947, 30, 'Mineral Spawn Point 68 - Tin'),
 	(75803, 4947, 5, 'Mineral Spawn Point 68 - Silver'),
@@ -21183,7 +21194,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(77467, 6389, 7, 'Mineral Spawn Point 80 - Gold'),
 	(77468, 6389, 3, 'Mineral Spawn Point 80 - Tin'),
 	(77469, 6390, 0, 'Mineral Spawn Point 81 - Iron'),
-	(77470, 6390, 30, 'Mineral Spawn Point 81 - Mithril'),
+	(77470, 6390, 30, 'Mineral Spawn Point 81 - Mithril');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(77471, 6390, 10, 'Mineral Spawn Point 81 - Silver'),
 	(77472, 6390, 7, 'Mineral Spawn Point 81 - Gold'),
 	(77473, 6390, 3, 'Mineral Spawn Point 81 - Tin'),
@@ -22825,7 +22837,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(79112, 6772, 30, 'Mineral Spawn Point 72 - Tin'),
 	(79113, 6772, 5, 'Mineral Spawn Point 72 - Silver'),
 	(79114, 6773, 0, 'Mineral Spawn Point 73 - Copper'),
-	(79115, 6773, 30, 'Mineral Spawn Point 73 - Tin'),
+	(79115, 6773, 30, 'Mineral Spawn Point 73 - Tin');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(79116, 6773, 5, 'Mineral Spawn Point 73 - Silver'),
 	(79117, 6774, 0, 'Mineral Spawn Point 74 - Copper'),
 	(79118, 6774, 30, 'Mineral Spawn Point 74 - Tin'),
@@ -24553,7 +24566,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(83924, 25099, 0, 'Noblegarden egg, node 25099'),
 	(83925, 25207, 0, 'Noblegarden egg, node 25207'),
 	(83926, 25208, 0, 'Noblegarden egg, node 25208'),
-	(83927, 25209, 0, 'Noblegarden egg, node 25209'),
+	(83927, 25209, 0, 'Noblegarden egg, node 25209');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(83928, 25210, 0, 'Noblegarden egg, node 25210'),
 	(83929, 25211, 0, 'Noblegarden egg, node 25211'),
 	(83930, 25212, 0, 'Noblegarden egg, node 25212'),
@@ -26326,7 +26340,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(86784, 983, 0, 'Frozen Herb zone 66, node 122'),
 	(86785, 983, 0, 'Frozen Herb zone 66, node 123'),
 	(86786, 983, 0, 'Frozen Herb zone 66, node 124'),
-	(86787, 983, 0, 'Frozen Herb zone 66, node 125'),
+	(86787, 983, 0, 'Frozen Herb zone 66, node 125');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(86788, 983, 0, 'Frozen Herb zone 66, node 126'),
 	(86789, 983, 0, 'Frozen Herb zone 66, node 127'),
 	(86790, 983, 0, 'Frozen Herb zone 66, node 128'),
@@ -28061,7 +28076,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(198929, 10455, 10, 'Wintergrasp 191133, node 24'),
 	(198927, 10456, 40, 'Wintergrasp 189981, node 25'),
 	(198926, 10456, 10, 'Wintergrasp 191133, node 25'),
-	(198924, 10457, 40, 'Wintergrasp 189981, node 26'),
+	(198924, 10457, 40, 'Wintergrasp 189981, node 26');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(198923, 10457, 10, 'Wintergrasp 191133, node 26'),
 	(198921, 10458, 40, 'Wintergrasp 189981, node 27'),
 	(198920, 10458, 10, 'Wintergrasp 191133, node 27'),
@@ -29781,7 +29797,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(196692, 11216, 40, 'Terokkar Forest 181555, node 7'),
 	(196691, 11216, 5, 'Terokkar Forest 181557, node 7'),
 	(196690, 11217, 0, 'Terokkar Forest 181556, node 8'),
-	(196689, 11217, 40, 'Terokkar Forest 181569, node 8'),
+	(196689, 11217, 40, 'Terokkar Forest 181569, node 8');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(196688, 11217, 5, 'Terokkar Forest 181557, node 8'),
 	(196687, 11218, 0, 'Terokkar Forest 181556, node 9'),
 	(196686, 11218, 40, 'Terokkar Forest 181555, node 9'),
@@ -31362,7 +31379,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(73480, 3177, 10, 'Mineral Spawn Point 165 - Silver'),
 	(73481, 3177, 7, 'Mineral Spawn Point 165 - Gold'),
 	(73482, 3177, 3, 'Mineral Spawn Point 165 - Tin'),
-	(73483, 3178, 0, 'Mineral Spawn Point 166 - Iron'),
+	(73483, 3178, 0, 'Mineral Spawn Point 166 - Iron');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(73484, 3178, 30, 'Mineral Spawn Point 166 - Mithril'),
 	(73485, 3178, 10, 'Mineral Spawn Point 166 - Silver'),
 	(73486, 3178, 7, 'Mineral Spawn Point 166 - Gold'),
@@ -33050,7 +33068,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(194356, 11938, 40, 'Sholazar Basin 189981, node 153'),
 	(194355, 11938, 5, 'Sholazar Basin 191133, node 153'),
 	(194354, 11939, 0, 'Sholazar Basin 189980, node 154'),
-	(194353, 11939, 40, 'Sholazar Basin 189981, node 154'),
+	(194353, 11939, 40, 'Sholazar Basin 189981, node 154');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(194352, 11939, 5, 'Sholazar Basin 191133, node 154'),
 	(194351, 11940, 0, 'Sholazar Basin 189980, node 155'),
 	(194350, 11940, 40, 'Sholazar Basin 189981, node 155'),
@@ -34716,7 +34735,8 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(50424, 25428, 2.77, '1852515 - Netherwing Egg #1'),
 	(50423, 25428, 2.77, '1852515 - Netherwing Egg #2'),
 	(50422, 25428, 2.77, '1852515 - Netherwing Egg #3'),
-	(121883, 25428, 2.77, '1852515 - Netherwing Egg #4'),
+	(121883, 25428, 2.77, '1852515 - Netherwing Egg #4');
+INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(121891, 25428, 2.77, '1852515 - Netherwing Egg #5'),
 	(121884, 25428, 2.77, '1852515 - Netherwing Egg #6'),
 	(121890, 25428, 2.77, '1852515 - Netherwing Egg #7'),
@@ -34754,8 +34774,7 @@ INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VA
 	(121894, 25429, 7.69, '1852515 - Netherwing Egg #3'),
 	(121895, 25429, 7.69, '1852515 - Netherwing Egg #4'),
 	(121896, 25429, 7.69, '1852515 - Netherwing Egg #5'),
-	(121897, 25429, 7.69, '1852515 - Netherwing Egg #6');
-INSERT INTO `pool_gameobject` (`guid`, `pool_entry`, `chance`, `description`) VALUES
+	(121897, 25429, 7.69, '1852515 - Netherwing Egg #6'),
 	(121898, 25429, 7.69, '1852515 - Netherwing Egg #7'),
 	(121899, 25429, 7.69, '1852515 - Netherwing Egg #8'),
 	(121900, 25429, 7.69, '1852515 - Netherwing Egg #9'),

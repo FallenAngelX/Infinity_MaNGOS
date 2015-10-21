@@ -711,7 +711,8 @@ INSERT INTO `creature_ai_texts` (`entry`, `content_default`, `content_loc1`, `co
 	(-690, 'Net not stop me! No... net stop me.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '29618'),
 	(-691, 'Me not afraid!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '29618'),
 	(-692, 'No kill me!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '29618'),
-	(-693, 'You no take...me!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '29618'),
+	(-693, 'You no take...me!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 1, '29618');
+INSERT INTO `creature_ai_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
 	(-694, '%s chips and splinters!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 2, 0, 0, '7023'),
 	(-695, 'None may steal the secrets of the Makers!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5851, 1, 0, 0, '7228'),
 	(-696, 'King Dred raises his talon menacingly!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 5, 0, 0, '27483'),

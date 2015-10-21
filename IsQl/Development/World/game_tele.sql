@@ -1406,7 +1406,8 @@ INSERT INTO `game_tele` (`id`, `position_x`, `position_y`, `position_z`, `orient
 	(1377, 3381.52, -4922.54, 160.168, 5.33458, 0, 'Zulmashar'),
 	(1378, -14.5469, -2479.52, 120.64, 2.32214, 0, 'ZunWatha'),
 	(1379, -11701.7, 963.365, 3.89563, 5.6466, 0, 'ZuuldaiaRuins'),
-	(1380, -8419.34, 1212.14, 5.17277, 1.55232, 0, 'StormwindHarbor'),
+	(1380, -8419.34, 1212.14, 5.17277, 1.55232, 0, 'StormwindHarbor');
+INSERT INTO `game_tele` (`id`, `position_x`, `position_y`, `position_z`, `orientation`, `map`, `name`) VALUES
 	(1381, 564.401, -4944.94, 18.5962, 5.36544, 571, 'Valgarde'),
 	(1382, 424.405, -4548.76, 245.652, 5.37325, 571, 'NewAgamand'),
 	(1383, 774.043, -2940.65, 7.36477, 1.41719, 571, 'Kamagua'),

@@ -2126,7 +2126,8 @@ INSERT INTO `pool_template` (`entry`, `max_limit`, `description`) VALUES
 	(10699, 1, 'Storm Peaks mineral, node 54'),
 	(10700, 1, 'Storm Peaks mineral, node 55'),
 	(10701, 1, 'Storm Peaks mineral, node 56'),
-	(10702, 1, 'Storm Peaks mineral, node 57'),
+	(10702, 1, 'Storm Peaks mineral, node 57');
+INSERT INTO `pool_template` (`entry`, `max_limit`, `description`) VALUES
 	(10703, 1, 'Storm Peaks mineral, node 58'),
 	(10704, 1, 'Storm Peaks mineral, node 59'),
 	(10705, 1, 'Storm Peaks mineral, node 60'),
@@ -3710,7 +3711,8 @@ INSERT INTO `pool_template` (`entry`, `max_limit`, `description`) VALUES
 	(6531, 1, 'Mineral Spawn Point 15 - The Hinterlands'),
 	(6532, 1, 'Mineral Spawn Point 16 - The Hinterlands'),
 	(6533, 1, 'Mineral Spawn Point 17 - The Hinterlands'),
-	(6534, 1, 'Mineral Spawn Point 18 - The Hinterlands'),
+	(6534, 1, 'Mineral Spawn Point 18 - The Hinterlands');
+INSERT INTO `pool_template` (`entry`, `max_limit`, `description`) VALUES
 	(6535, 1, 'Mineral Spawn Point 19 - The Hinterlands'),
 	(6536, 1, 'Mineral Spawn Point 20 - The Hinterlands'),
 	(6537, 1, 'Mineral Spawn Point 21 - The Hinterlands'),
@@ -5408,7 +5410,8 @@ INSERT INTO `pool_template` (`entry`, `max_limit`, `description`) VALUES
 	(11658, 1, 'Icecrown mineral, node 233'),
 	(11659, 1, 'Icecrown mineral, node 234'),
 	(11660, 1, 'Icecrown mineral, node 235'),
-	(11661, 1, 'Icecrown mineral, node 236'),
+	(11661, 1, 'Icecrown mineral, node 236');
+INSERT INTO `pool_template` (`entry`, `max_limit`, `description`) VALUES
 	(11662, 1, 'Icecrown mineral, node 237'),
 	(11663, 1, 'Icecrown mineral, node 238'),
 	(11664, 1, 'Icecrown mineral, node 239'),

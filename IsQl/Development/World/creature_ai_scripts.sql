@@ -689,7 +689,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(484405, 4844, 3, 13, 100, 0, 7, 0, 0, 0, 21, 1, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Shadowforge Surveyor - Start Combat Movement and Set Phase 2 when Mana is at 7% (Phase 1)'),
 	(484406, 4844, 9, 13, 100, 0, 35, 80, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowforge Surveyor - Start Combat Movement at 35 Yards (Phase 1)'),
 	(484407, 4844, 9, 13, 100, 0, 5, 15, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowforge Surveyor - Prevent Combat Movement at 15 Yards (Phase 1)'),
-	(484408, 4844, 9, 13, 100, 0, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowforge Surveyor - Start Combat Movement Below 5 Yards'),
+	(484408, 4844, 9, 13, 100, 0, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowforge Surveyor - Start Combat Movement Below 5 Yards');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(484409, 4844, 3, 11, 100, 1, 100, 15, 100, 100, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowforge Surveyor - Set Phase 1 when Mana is above 15% (Phase 2)'),
 	(484410, 4844, 0, 0, 100, 1, 10700, 20100, 20300, 22600, 11, 11831, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowforge Surveyor - Cast Frost Nova'),
 	(484411, 4844, 27, 0, 100, 1, 12544, 1, 15000, 30000, 11, 12544, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowforge Surveyor - Cast Frost Armor on Missing Buff'),
@@ -1317,7 +1318,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(620802, 6208, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Caverndeep Invader - Flee at 15% HP'),
 	(620901, 6209, 0, 0, 100, 1, 4000, 9000, 21000, 26000, 11, 10851, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Caverndeep Looter - Cast Grab Weapon'),
 	(620902, 6209, 8, 0, 100, 0, 9798, -1, 0, 0, 1, -31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Caverndeep Looter - Emote on Radiation Spellhit'),
-	(621001, 6210, 11, 0, 100, 0, 0, 0, 0, 0, 11, 8876, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Caverndeep Pillager - Cast Thrash on Spawn'),
+	(621001, 6210, 11, 0, 100, 0, 0, 0, 0, 0, 11, 8876, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Caverndeep Pillager - Cast Thrash on Spawn');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(621002, 6210, 9, 0, 100, 1, 0, 5, 24500, 24500, 11, 1777, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Caverndeep Pillager - Cast Gouge'),
 	(621003, 6210, 8, 0, 100, 0, 9798, -1, 0, 0, 1, -31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Caverndeep Pillager - Emote on Radiation Spellhit'),
 	(621004, 6210, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Caverndeep Pillager - Flee at 15% HP'),
@@ -1954,7 +1956,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(11301, 113, 4, 0, 15, 0, 0, 0, 0, 0, 11, 6268, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Stonetusk Boar - Cast Rushing Charge'),
 	(11601, 116, 4, 0, 25, 0, 0, 0, 0, 0, 1, -2, -3, -4, 0, 0, 0, 0, 0, 0, 0, 0, 'Defias Bandit - Random Say on Aggro'),
 	(11602, 116, 0, 0, 65, 1, 4000, 4000, 5000, 9000, 11, 8646, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Defias Bandit - Cast Snap Kick'),
-	(11901, 119, 4, 0, 15, 0, 0, 0, 0, 0, 11, 6268, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Longsnout - Cast Rushing Charge'),
+	(11901, 119, 4, 0, 15, 0, 0, 0, 0, 0, 11, 6268, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Longsnout - Cast Rushing Charge');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(25701, 257, 4, 0, 30, 0, 0, 0, 0, 0, 1, -7, -8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Kobold Worker - Random Say on Aggro'),
 	(29501, 295, 1, 0, 40, 1, 30000, 75000, 600000, 720000, 1, -233, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Innkeeper Farley - Random OOC Say'),
 	(29901, 299, 1, 0, 10, 0, 30000, 600000, 120000, 600000, 4, 1018, 0, 0, 5, 393, 0, 0, 0, 0, 0, 0, 'Diseased Young Wolf - Howl and Emote OOC'),
@@ -2577,7 +2580,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(234504, 2345, 9, 5, 100, 1, 30, 80, 0, 0, 21, 1, 1, 0, 20, 1, 0, 0, 0, 0, 0, 0, 'Dun Garok Rifleman - Start Combat Movement and Start Melee at 30 Yards (Phase 1)'),
 	(234505, 2345, 9, 5, 100, 1, 0, 10, 0, 0, 21, 1, 0, 0, 40, 1, 0, 0, 20, 1, 0, 0, 'Dun Garok Rifleman - Start Combat Movement and Set Melee Weapon Model and Start Melee at 10 Yards (Phase 1)'),
 	(234506, 2345, 9, 5, 100, 1, 11, 25, 0, 0, 21, 0, 1, 0, 20, 0, 0, 0, 0, 0, 0, 0, 'Dun Garok Rifleman - Prevent Combat Movement and Prevent Melee at 25 Yards (Phase 1)'),
-	(234507, 2345, 2, 0, 100, 0, 30, 0, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dun Garok Rifleman - Set Phase 2 at 30% HP'),
+	(234507, 2345, 2, 0, 100, 0, 30, 0, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dun Garok Rifleman - Set Phase 2 at 30% HP');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(234508, 2345, 2, 3, 100, 0, 30, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Dun Garok Rifleman - Start Combat Movement and Flee at 30% HP (Phase 2)'),
 	(234509, 2345, 7, 0, 100, 0, 0, 0, 0, 0, 22, 1, 0, 0, 40, 1, 0, 0, 0, 0, 0, 0, 'Dun Garok Rifleman - Set Phase 1 and Set Melee Weapon Model on Evade'),
 	(234601, 2346, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 'Dun Garok Priest - Prevent Combat Movement and Set Phase to 0 on Spawn'),
@@ -3222,7 +3226,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(71102, 711, 0, 0, 100, 1, 6800, 10900, 245000, 255000, 11, 3256, 1, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Ardo Dirtpaw - Cast Plague Cloud'),
 	(71103, 711, 0, 0, 100, 1, 4900, 7900, 30000, 35000, 11, 3650, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Ardo Dirtpaw - Cast Sling Mud'),
 	(71104, 711, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Ardo Dirtpaw - Flee at 15% HP'),
-	(71201, 712, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Redridge Thrasher - Flee at 15% HP'),
+	(71201, 712, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Redridge Thrasher - Flee at 15% HP');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(81901, 819, 0, 0, 100, 1, 600, 8800, 27300, 37300, 11, 8129, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Servant of Ilgalar - Cast Mana Burn'),
 	(93101, 931, 4, 0, 100, 0, 0, 0, 0, 0, 12, 9526, 1, 30000, 12, 9526, 1, 30000, 1, -549, 0, 0, 'Ariena Stormfeather - Summon Enraged Gryphons and Yell on Aggro'),
 	(94701, 947, 11, 0, 100, 0, 0, 0, 0, 0, 11, 3616, 0, 0, 11, 30831, 0, 0, 0, 0, 0, 0, 'Rohh the Silent - Cast Poison Proc and Cast Stealth on Spawn'),
@@ -3842,7 +3847,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(130801, 1308, 10, 0, 100, 0, 0, 15, 0, 0, 12, 68, 1, 600000, 0, 0, 0, 0, 0, 0, 0, 0, 'Owen Vaughn - Summon Stormwind City Guard on Hostile LOS'),
 	(130901, 1309, 10, 0, 100, 0, 0, 15, 0, 0, 12, 68, 1, 600000, 0, 0, 0, 0, 0, 0, 0, 0, 'Wynne Larson - Summon Stormwind City Guard on Hostile LOS'),
 	(131001, 1310, 10, 0, 100, 0, 0, 15, 0, 0, 12, 68, 1, 600000, 0, 0, 0, 0, 0, 0, 0, 0, 'Evan Larson - Summon Stormwind City Guard on Hostile LOS'),
-	(131101, 1311, 10, 0, 100, 0, 0, 15, 0, 0, 12, 68, 1, 600000, 0, 0, 0, 0, 0, 0, 0, 0, 'Joachim Brenlow - Summon Stormwind City Guard on Hostile LOS'),
+	(131101, 1311, 10, 0, 100, 0, 0, 15, 0, 0, 12, 68, 1, 600000, 0, 0, 0, 0, 0, 0, 0, 0, 'Joachim Brenlow - Summon Stormwind City Guard on Hostile LOS');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(131201, 1312, 10, 0, 100, 0, 0, 15, 0, 0, 12, 68, 1, 600000, 0, 0, 0, 0, 0, 0, 0, 0, 'Ardwyn Cailen - Summon Stormwind City Guard on Hostile LOS'),
 	(131301, 1313, 10, 0, 100, 0, 0, 15, 0, 0, 12, 68, 1, 600000, 0, 0, 0, 0, 0, 0, 0, 0, 'Maria Lumere - Summon Stormwind City Guard on Hostile LOS'),
 	(131401, 1314, 10, 0, 100, 0, 0, 15, 0, 0, 12, 68, 1, 600000, 0, 0, 0, 0, 0, 0, 0, 0, 'Duncan Cullen - Summon Stormwind City Guard on Hostile LOS'),
@@ -4465,7 +4471,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(86601, 866, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Stonard Grunt - Flee at 15% HP'),
 	(86701, 867, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Stonard Cartographer - Flee at 15% HP'),
 	(86801, 868, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Stonard Shaman - Flee at 15% HP'),
-	(95001, 950, 0, 0, 100, 1, 1000, 3000, 15000, 30000, 11, 9636, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Swamp Talker - Summon Swamp Spirit'),
+	(95001, 950, 0, 0, 100, 1, 1000, 3000, 15000, 30000, 11, 9636, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Swamp Talker - Summon Swamp Spirit');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(95002, 950, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Swamp Talker - Flee at 15% HP'),
 	(98801, 988, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Kartosh - Flee at 15% HP'),
 	(106301, 1063, 4, 0, 100, 0, 0, 0, 0, 0, 1, -404, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Jade - Say on Aggro'),
@@ -5094,7 +5101,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(428509, 4285, 14, 0, 100, 1, 300, 40, 18000, 21000, 11, 11640, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Disciple - Cast Renew on Friendlies'),
 	(428510, 4285, 14, 0, 100, 1, 600, 40, 11000, 15000, 11, 11642, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Disciple - Cast Heal on Friendlies'),
 	(428511, 4285, 2, 0, 100, 0, 15, 0, 0, 0, 22, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Disciple - Set Phase 3 at 15% HP'),
-	(428512, 4285, 2, 7, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Scarlet Disciple - Start Combat Movement and Flee at 15% HP (Phase 3)'),
+	(428512, 4285, 2, 7, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Scarlet Disciple - Start Combat Movement and Flee at 15% HP (Phase 3)');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(428513, 4285, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Disciple - Set Phase to 0 on Evade'),
 	(1035601, 10356, 9, 0, 100, 1, 0, 5, 20000, 24000, 11, 3604, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Bayne - Cast Tendon Rip'),
 	(1035602, 10356, 0, 0, 100, 1, 5000, 8000, 21000, 25000, 11, 13443, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Bayne - Cast Rend'),
@@ -5724,7 +5732,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(1060504, 10605, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Scarlet Medic - Flee at 15% HP'),
 	(1060801, 10608, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Priest - Prevent Combat Movement and Set Phase to 0 on Spawn'),
 	(1060802, 10608, 4, 0, 100, 0, 0, 0, 0, 0, 11, 15498, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Scarlet Priest - Cast Holy Smite and Set Phase 1 on Aggro'),
-	(1060803, 10608, 9, 13, 100, 1, 0, 40, 3400, 4800, 11, 15498, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Priest - Cast Holy Smite (Phase 1)'),
+	(1060803, 10608, 9, 13, 100, 1, 0, 40, 3400, 4800, 11, 15498, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Priest - Cast Holy Smite (Phase 1)');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(1060804, 10608, 3, 13, 100, 0, 7, 0, 0, 0, 21, 1, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Scarlet Priest - Start Combat Movement and Set Phase 2 when Mana is at 7% (Phase 1)'),
 	(1060805, 10608, 9, 13, 100, 0, 35, 80, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Priest - Start Combat Movement at 35 Yards (Phase 1)'),
 	(1060806, 10608, 9, 13, 100, 0, 5, 15, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Priest - Prevent Combat Movement at 15 Yards (Phase 1)'),
@@ -6373,7 +6382,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(371712, 3717, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Wrathtail Sorceress - Set Phase to 0 on Evade'),
 	(372101, 3721, 0, 0, 100, 1, 2900, 7400, 3600, 8200, 11, 6917, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Mystlash Hydra - Cast Venom Spit'),
 	(372201, 3722, 11, 0, 100, 0, 0, 0, 0, 0, 11, 8876, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Mystlash Flayer - Cast Thrash on Spawn'),
-	(372501, 3725, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Strand Cultist - Prevent Combat Movement on Spawn'),
+	(372501, 3725, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Strand Cultist - Prevent Combat Movement on Spawn');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(372502, 3725, 1, 0, 100, 0, 1000, 1000, 0, 0, 11, 11939, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Strand Cultist - Summon Imp on Spawn'),
 	(372503, 3725, 4, 0, 100, 0, 0, 0, 0, 0, 11, 20791, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Dark Strand Cultist - Cast Shadow Bolt and Set Phase 1 on Aggro'),
 	(372504, 3725, 9, 5, 100, 1, 0, 40, 3900, 5900, 11, 20791, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Strand Cultist - Cast Shadow Bolt (Phase 1)'),
@@ -7002,7 +7012,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(637101, 6371, 9, 0, 100, 1, 0, 5, 7000, 10000, 11, 11976, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Storm Bay Warrior - Cast Strike'),
 	(637102, 6371, 0, 0, 100, 1, 9000, 14000, 12000, 15000, 11, 12555, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Storm Bay Warrior - Cast Pummel'),
 	(637103, 6371, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Storm Bay Warrior - Flee at 15% HP'),
-	(637201, 6372, 9, 0, 100, 1, 0, 5, 20000, 23000, 11, 3604, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Makrinni Snapclaw - Cast Tendon Rip'),
+	(637201, 6372, 9, 0, 100, 1, 0, 5, 20000, 23000, 11, 3604, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Makrinni Snapclaw - Cast Tendon Rip');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(637501, 6375, 9, 0, 100, 1, 0, 20, 8000, 12000, 11, 12553, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Thunderhead Hippogryph - Cast Shock'),
 	(637701, 6377, 9, 0, 100, 1, 0, 20, 8000, 12000, 11, 12553, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Thunderhead Stagwing - Cast Shock'),
 	(637702, 6377, 9, 0, 100, 1, 7000, 10000, 12000, 17000, 11, 11019, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Thunderhead Stagwing - Cast Wing Flap'),
@@ -7630,7 +7641,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(389909, 3899, 3, 11, 100, 1, 100, 15, 100, 100, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Balizar the Umbrage - Set Phase 1 when Mana is above 15% (Phase 2)'),
 	(389910, 3899, 0, 0, 100, 1, 5000, 7000, 30000, 35000, 11, 14868, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Balizar the Umbrage - Cast Curse of Agony'),
 	(389911, 3899, 9, 0, 100, 1, 0, 30, 9000, 18000, 11, 11980, 1, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Balizar the Umbrage - Cast Curse of Weakness'),
-	(389912, 3899, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Balizar the Umbrage - Set Phase to 0 on Evade'),
+	(389912, 3899, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Balizar the Umbrage - Set Phase to 0 on Evade');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(390001, 3900, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 'Caedakar the Vicious - Prevent Combat Movement and Set Phase to 0 on Spawn'),
 	(390002, 3900, 1, 0, 100, 1, 1000, 1000, 600000, 600000, 11, 905, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Caedakar the Vicious - Cast Lightning Shield on Spawn'),
 	(390003, 3900, 4, 0, 100, 0, 0, 0, 0, 0, 11, 9532, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Caedakar the Vicious - Cast Lightning Bolt and Set Phase 1 on Aggro'),
@@ -8248,7 +8260,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(311203, 3112, 9, 5, 100, 1, 30, 80, 0, 0, 21, 1, 1, 0, 20, 1, 0, 0, 0, 0, 0, 0, 'Razormane Scout - Start Combat Movement and Start Melee at 30 Yards (Phase 1)'),
 	(311204, 3112, 9, 5, 100, 1, 0, 10, 0, 0, 21, 1, 0, 0, 40, 1, 0, 0, 20, 1, 0, 0, 'Razormane Scout - Start Combat Movement and Set Melee Weapon Model and Start Melee Below 10 Yards (Phase 1)'),
 	(311205, 3112, 9, 5, 100, 1, 11, 25, 0, 0, 21, 0, 1, 0, 20, 0, 0, 0, 0, 0, 0, 0, 'Razormane Scout - Prevent Combat Movement and Prevent Melee at 25 Yards (Phase 1)'),
-	(311206, 3112, 2, 0, 100, 0, 15, 0, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Razormane Scout - Set Phase 2 at 15% HP'),
+	(311206, 3112, 2, 0, 100, 0, 15, 0, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Razormane Scout - Set Phase 2 at 15% HP');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(311207, 3112, 2, 3, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Razormane Scout - Start Combat Movement and Flee at 15% HP (Phase 2)'),
 	(311208, 3112, 7, 0, 100, 0, 0, 0, 0, 0, 22, 1, 0, 0, 40, 1, 0, 0, 0, 0, 0, 0, 'Razormane Scout - Set Phase 1 and Set Melee Weapon Model on Evade'),
 	(311301, 3113, 9, 0, 100, 1, 0, 30, 30000, 35000, 11, 6950, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Razormane Dustrunner - Cast Faerie Fire'),
@@ -8909,7 +8922,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(2484105, 24841, 9, 5, 100, 1, 11, 25, 0, 0, 21, 0, 1, 0, 20, 0, 0, 0, 0, 0, 0, 0, 'Marine Halters - Prevent Combat Movement and Prevent Melee at 35 Yards (Phase 1)'),
 	(2484106, 24841, 9, 0, 100, 1, 0, 20, 7000, 9000, 11, 12024, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Marine Halters - Cast Net'),
 	(2484107, 24841, 2, 0, 100, 0, 15, 0, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Marine Halters - Set Phase 2 at 15% HP'),
-	(2484108, 24841, 2, 3, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Marine Halters - Start Combat Movement and Flee at 15% HP (Phase 2)'),
+	(2484108, 24841, 2, 3, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Marine Halters - Start Combat Movement and Flee at 15% HP (Phase 2)');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(2484109, 24841, 7, 0, 100, 0, 0, 0, 0, 0, 22, 1, 0, 0, 40, 1, 0, 0, 0, 0, 0, 0, 'Marine Halters - Set Phase 1 and Set Melee Weapon Model on Evade'),
 	(2484201, 24842, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 20, 0, 0, 0, 23, 1, 0, 0, 'Marine Anderson - Prevent Combat Movement and Prevent Melee and Set Phase 1 on Spawn'),
 	(2484202, 24842, 9, 5, 100, 1, 0, 45, 2300, 3900, 11, 23337, 1, 0, 40, 2, 0, 0, 0, 0, 0, 0, 'Marine Anderson - Cast Shoot and Set Ranged Weapon Model (Phase 1)'),
@@ -9551,7 +9565,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(3620801, 36208, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Xerash Fireblade - Flee at 15% HP'),
 	(1089701, 10897, 4, 0, 100, 0, 0, 0, 0, 0, 12, 9527, 1, 30000, 12, 9527, 1, 30000, 1, -549, 0, 0, 'Sindrayl - Summon Enraged Hippogryphs on Aggro'),
 	(1274001, 12740, 4, 0, 100, 0, 0, 0, 0, 0, 12, 9297, 1, 30000, 12, 9297, 1, 30000, 1, -548, 0, 0, 'Faustron - Summon Enraged Wyverns and Yell on Aggro'),
-	(1562901, 15629, 0, 0, 100, 0, 15000, 20000, 15000, 20000, 11, 21307, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Nightmare Phantasm - Cast Swell of Souls'),
+	(1562901, 15629, 0, 0, 100, 0, 15000, 20000, 15000, 20000, 11, 21307, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Nightmare Phantasm - Cast Swell of Souls');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(1562902, 15629, 0, 0, 100, 0, 7000, 14000, 12000, 18000, 11, 17228, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Nightmare Phantasm - Cast Shadowbolt Volley'),
 	(294701, 2947, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 20, 0, 0, 0, 23, 1, 0, 0, 'Harken Windtotem - Prevent Combat Movement and Prevent Melee and Set Phase 1 on Spawn'),
 	(294702, 2947, 9, 5, 100, 1, 5, 30, 2300, 3900, 11, 6660, 1, 0, 40, 2, 0, 0, 0, 0, 0, 0, 'Harken Windtotem - Cast Shoot and Set Ranged Weapon Model (Phase 1)'),
@@ -10186,7 +10201,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(819701, 8197, 9, 0, 100, 1, 0, 5, 9000, 16000, 11, 40504, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Chronalis - Cast Swoop'),
 	(819702, 8197, 0, 0, 100, 1, 12000, 16000, 14000, 18000, 11, 20717, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Chronalis - Cast Sand Breath'),
 	(819801, 8198, 9, 0, 100, 1, 8000, 16000, 12000, 18000, 11, 21073, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Tick - Cast Arcane Explosion'),
-	(819802, 8198, 0, 0, 100, 1, 12000, 16000, 14000, 18000, 11, 20717, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Tick - Cast Sand Breath'),
+	(819802, 8198, 0, 0, 100, 1, 12000, 16000, 14000, 18000, 11, 20717, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Tick - Cast Sand Breath');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(819901, 8199, 0, 0, 100, 1, 8200, 10100, 18100, 34100, 11, 6713, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Warleader Krazzilak - Cast Disarm'),
 	(819902, 8199, 0, 0, 100, 1, 13100, 15700, 16900, 26500, 11, 9080, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Warleader Krazzilak - Cast Hamstring'),
 	(819903, 8199, 0, 0, 100, 1, 14100, 18300, 12100, 26700, 11, 17230, 4, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Warleader Krazzilak - Cast Infected Wound'),
@@ -10822,7 +10838,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(916401, 9164, 11, 0, 100, 0, 0, 0, 0, 0, 11, 3417, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Elder Diemetradon - Thrash'),
 	(916402, 9164, 0, 0, 100, 1, 5000, 6000, 7000, 9000, 11, 12555, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Elder Diemetradon - Cast Pummel'),
 	(916501, 9165, 0, 0, 100, 1, 8000, 8000, 15000, 15000, 11, 5708, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Fledgling Pterrordax - Cast Swoop'),
-	(916601, 9166, 0, 0, 100, 1, 8000, 8000, 10000, 14000, 11, 6605, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Pterrordax - Cast Terrifying Screech'),
+	(916601, 9166, 0, 0, 100, 1, 8000, 8000, 10000, 14000, 11, 6605, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Pterrordax - Cast Terrifying Screech');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(916701, 9167, 11, 0, 100, 0, 0, 0, 0, 0, 11, 3417, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Frenzied Pterrordax - Thrash'),
 	(916702, 9167, 0, 0, 100, 1, 6000, 6000, 10000, 14000, 11, 7399, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Frenzied Pterrordax - Cast Terrify'),
 	(937601, 9376, 11, 0, 100, 0, 0, 0, 0, 0, 11, 13913, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Blazerunner - Cast Blazerunner Aura'),
@@ -11440,7 +11457,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(1715602, 17156, 0, 0, 75, 1, 25000, 25000, 12000, 12000, 11, 13728, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Tortured Earth Spirit - Cast Earth Shock'),
 	(1715701, 17157, 0, 0, 100, 1, 12000, 17000, 14000, 21000, 11, 33840, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shattered Rumbler - Cast Earth Rumble'),
 	(1798101, 17981, 0, 0, 100, 1, 2500, 9700, 6000, 18900, 11, 36447, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Voidspawn - Cast Mind Sear'),
-	(1798102, 17981, 0, 0, 100, 0, 8000, 16500, 17300, 17300, 11, 32026, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Voidspawn - Cast Pain Spike'),
+	(1798102, 17981, 0, 0, 100, 0, 8000, 16500, 17300, 17300, 11, 32026, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Voidspawn - Cast Pain Spike');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(1803701, 18037, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Warmaul Warlock - Prevent Combat Movement on Spawn'),
 	(1803702, 18037, 1, 0, 50, 0, 1000, 1000, 0, 0, 11, 11939, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Warmaul Warlock - Summon Imp on Spawn'),
 	(1803703, 18037, 4, 0, 100, 0, 0, 0, 0, 0, 11, 9613, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Warmaul Warlock - Cast Shadow Bolt and Set Phase 1 on Aggro'),
@@ -12057,7 +12075,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(2118107, 21181, 21, 0, 100, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Cyrukh the Firelord - Forced Despawn on Reached Home'),
 	(2138401, 21384, 0, 0, 100, 1, 6000, 6000, 6000, 12000, 11, 15496, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Conclave Harbringer - Cast Cleave'),
 	(2138402, 21384, 2, 0, 100, 1, 50, 0, 8000, 8000, 11, 16588, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Conclave Harbringer - Cast Dark Mending'),
-	(2138501, 21385, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Conclave Scornclaw - Prevent Combat Movement on Spawn'),
+	(2138501, 21385, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Conclave Scornclaw - Prevent Combat Movement on Spawn');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(2138502, 21385, 4, 0, 100, 0, 0, 0, 0, 0, 11, 9672, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Dark Conclave Scornclaw - Cast Frostbolt and Set Phase 1 on Aggro'),
 	(2138503, 21385, 9, 5, 100, 1, 0, 40, 2400, 3800, 11, 9672, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Conclave Scornclaw - Cast Frostbolt (Phase 1)'),
 	(2138504, 21385, 3, 5, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Dark Conclave Scornclaw - Start Combat Movement and Set Phase 2 when Mana is at 15% (Phase 1)'),
@@ -12690,7 +12709,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(1807702, 18077, 27, 0, 100, 1, 12550, 1, 15000, 30000, 11, 12550, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Umbrafen Oracle - Cast Lightning Shield on Missing Buff'),
 	(1807703, 18077, 2, 0, 100, 0, 50, 0, 0, 0, 11, 11986, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Umbrafen Oracle- Cast Healing Wave at 50% HP'),
 	(1807704, 18077, 2, 0, 100, 0, 15, 0, 0, 0, 11, 11986, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Umbrafen Oracle- Cast Healing Wave at 15% HP'),
-	(1807901, 18079, 0, 0, 100, 1, 2000, 2000, 5000, 5000, 11, 9739, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Umbrafen Seer - Cast Wrath'),
+	(1807901, 18079, 0, 0, 100, 1, 2000, 2000, 5000, 5000, 11, 9739, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Umbrafen Seer - Cast Wrath');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(1807902, 18079, 0, 0, 100, 1, 500, 500, 8000, 8000, 11, 31287, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Umbrafen Seer- Cast Entangling Roots'),
 	(1808001, 18080, 4, 0, 100, 0, 0, 0, 0, 0, 11, 32734, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Kataru - Cast Earth Shield'),
 	(1808002, 18080, 0, 0, 100, 1, 2000, 2000, 6000, 6000, 11, 12058, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Kataru - Cast Chain Lightning'),
@@ -12751,8 +12771,7 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(1811702, 18117, 2, 0, 100, 0, 25, 0, 0, 0, 11, 8599, 0, 0, 1, -46, 0, 0, 0, 0, 0, 0, 'Ango\'rosh Ogre - Cast Enrage at 25% HP'),
 	(1811801, 18118, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Ango\'rosh Shaman - Prevent Combat Movement on Spawn'),
 	(1811802, 18118, 4, 0, 100, 0, 0, 0, 0, 0, 11, 9532, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Ango\'rosh Shaman - Cast Lightning Bolt and Set Phase 1 on Aggro'),
-	(1811803, 18118, 9, 5, 100, 1, 0, 40, 2400, 3800, 11, 9532, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Ango\'rosh Shaman - Cast Lightning Bolt (Phase 1)');
-INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
+	(1811803, 18118, 9, 5, 100, 1, 0, 40, 2400, 3800, 11, 9532, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Ango\'rosh Shaman - Cast Lightning Bolt (Phase 1)'),
 	(1811804, 18118, 3, 5, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Ango\'rosh Shaman - Start Combat Movement and Set Phase 2 when Mana is at 15% (Phase 1)'),
 	(1811805, 18118, 9, 5, 100, 0, 35, 80, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Ango\'rosh Shaman - Start Combat Movement at 35 Yards (Phase 1)'),
 	(1811806, 18118, 9, 5, 100, 0, 5, 15, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Ango\'rosh Shaman - Prevent Combat Movement at 15 Yards (Phase 1)'),
@@ -13312,7 +13331,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(2580603, 25806, 0, 6, 25, 0, 1000, 1000, 0, 0, 1, -514, -515, -516, 22, 0, 0, 0, 0, 0, 0, 0, 'Loot Crazed Poacher - Chance Say on Aggro 1'),
 	(2580604, 25806, 0, 5, 25, 0, 1000, 1000, 0, 0, 1, -517, -518, -519, 22, 0, 0, 0, 0, 0, 0, 0, 'Loot Crazed Poacher - Chance Say on Aggro 2'),
 	(2580605, 25806, 0, 3, 25, 0, 1000, 1000, 0, 0, 1, -520, -521, -522, 22, 0, 0, 0, 0, 0, 0, 0, 'Loot Crazed Poacher - Chance Say on Aggro 3'),
-	(2580801, 25808, 4, 0, 25, 0, 0, 0, 0, 0, 1, -994, -995, -996, 0, 0, 0, 0, 0, 0, 0, 0, 'D.E.H.T.A. Enforcer - Chance Say on Aggro'),
+	(2580801, 25808, 4, 0, 25, 0, 0, 0, 0, 0, 1, -994, -995, -996, 0, 0, 0, 0, 0, 0, 0, 0, 'D.E.H.T.A. Enforcer - Chance Say on Aggro');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(2580901, 25809, 4, 0, 25, 0, 0, 0, 0, 0, 1, -994, -995, -996, 0, 0, 0, 0, 0, 0, 0, 0, 'Arch Druid Lathorius - Chance Say on Aggro'),
 	(2581001, 25810, 4, 0, 25, 0, 0, 0, 0, 0, 1, -994, -995, -996, 0, 0, 0, 0, 0, 0, 0, 0, 'Hierophant Cenius - Chance Say on Aggro'),
 	(2581101, 25811, 4, 0, 25, 0, 0, 0, 0, 0, 1, -994, -995, -996, 0, 0, 0, 0, 0, 0, 0, 0, 'Zaza - Chance Say on Aggro'),
@@ -13914,7 +13934,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(2682801, 26828, 0, 0, 100, 1, 5000, 9000, 9000, 15000, 11, 51830, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Magister Keldonus - Cast Arcane Blast'),
 	(2682802, 26828, 9, 0, 100, 1, 0, 10, 24000, 28000, 11, 51806, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Magister Keldonus - Cast Power Flux'),
 	(2682803, 26828, 0, 0, 100, 1, 7000, 12000, 14000, 22000, 11, 51804, 4, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Magister Keldonus - Cast Power Syphon'),
-	(2682804, 26828, 0, 0, 100, 1, 9000, 12000, 20000, 25000, 11, 51808, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Magister Keldonus - Cast Fury of the Blue'),
+	(2682804, 26828, 0, 0, 100, 1, 9000, 12000, 20000, 25000, 11, 51808, 5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Magister Keldonus - Cast Fury of the Blue');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(2682805, 26828, 2, 0, 100, 1, 30, 0, 120000, 130000, 11, 51800, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Magister Keldonus - Cast Might of Malygos at 30% HP'),
 	(2683601, 26836, 9, 0, 100, 1, 0, 5, 6000, 12000, 11, 9080, 1, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Gigantaur - Cast Hamstring'),
 	(2683602, 26836, 0, 0, 100, 1, 5000, 9000, 12000, 15000, 11, 52139, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Gigantaur - Cast Gigantic Blow'),
@@ -14507,7 +14528,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(2635606, 26356, 9, 0, 100, 1, 0, 20, 11000, 16000, 11, 12024, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Redfang Hunter - Cast Net'),
 	(2635607, 26356, 9, 0, 100, 1, 0, 5, 4000, 7000, 11, 30639, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Redfang Hunter - Cast Carnivorous Bite'),
 	(2635608, 26356, 2, 0, 100, 0, 15, 0, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Redfang Hunter - Set Phase 2 at 15% HP'),
-	(2635609, 26356, 2, 3, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Redfang Hunter - Start Combat Movement and Flee at 15% HP (Phase 2)'),
+	(2635609, 26356, 2, 3, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Redfang Hunter - Start Combat Movement and Flee at 15% HP (Phase 2)');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(2635610, 26356, 7, 0, 100, 0, 0, 0, 0, 0, 22, 1, 0, 0, 40, 1, 0, 0, 0, 0, 0, 0, 'Redfang Hunter - Set Phase 1 and Set Melee Weapon Model on Evade'),
 	(2635611, 26356, 6, 0, 100, 0, 0, 0, 0, 0, 11, 47034, 1, 39, 0, 0, 0, 0, 0, 0, 0, 0, 'Redfang Hunter - Cast Frostpaw Ally on Death'),
 	(2635701, 26357, 0, 0, 100, 1, 3000, 8000, 7000, 11000, 11, 12054, 1, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Frostpaw Warrior - Cast Rend'),
@@ -15114,7 +15136,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(2810503, 28105, 0, 0, 100, 0, 3000, 3000, 0, 0, 1, -1046, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Warlord Tartek - Say 2 on Aggro'),
 	(2810504, 28105, 9, 5, 100, 1, 0, 5, 5000, 9000, 11, 15572, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Warlord Tartek - Cast Sunder Armor (Phase 1)'),
 	(2810505, 28105, 24, 5, 100, 1, 15572, 5, 5000, 5000, 23, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Warlord Tartek - Set Phase 2 on Target Max Sunder Armor Aura Stack (Phase 1)'),
-	(2810506, 28105, 28, 3, 100, 1, 15572, 1, 5000, 5000, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Warlord Tartek - Set Phase 1 on Target Missing Sunder Armor Aura Stack (Phase 2)'),
+	(2810506, 28105, 28, 3, 100, 1, 15572, 1, 5000, 5000, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Warlord Tartek - Set Phase 1 on Target Missing Sunder Armor Aura Stack (Phase 2)');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(2810507, 28105, 0, 0, 100, 1, 3000, 6000, 4000, 7000, 11, 29426, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Warlord Tartek - Cast Heroic Strike'),
 	(2810508, 28105, 2, 0, 100, 1, 30, 0, 12000, 15000, 11, 35429, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Warlord Tartek - Cast Sweeping Strikes at 30% HP'),
 	(2810509, 28105, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Warlord Tartek - Set Phase to 0 on Evade'),
@@ -15722,7 +15745,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(2849506, 28495, 9, 5, 100, 0, 5, 15, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Gawanil - Prevent Combat Movement at 15 Yards (Phase 1)'),
 	(2849507, 28495, 9, 5, 100, 0, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Gawanil - Start Combat Movement Below 5 Yards (Phase 1)'),
 	(2849508, 28495, 3, 3, 100, 1, 100, 15, 100, 100, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Gawanil - Set Phase 1 when Mana is above 15% (Phase 2)'),
-	(2849509, 28495, 0, 0, 100, 1, 6000, 9000, 11000, 14000, 11, 14868, 4, 33, 0, 0, 0, 0, 0, 0, 0, 0, 'Gawanil - Cast Curse of Agony'),
+	(2849509, 28495, 0, 0, 100, 1, 6000, 9000, 11000, 14000, 11, 14868, 4, 33, 0, 0, 0, 0, 0, 0, 0, 0, 'Gawanil - Cast Curse of Agony');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(2849510, 28495, 0, 0, 100, 1, 9000, 13000, 9000, 13000, 11, 39212, 4, 33, 0, 0, 0, 0, 0, 0, 0, 0, 'Gawanil- Cast Corruption'),
 	(2849511, 28495, 2, 0, 100, 1, 75, 0, 15000, 20000, 11, 35195, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Gawanil- Cast Siphon Life at 75% HP'),
 	(2849512, 28495, 6, 0, 100, 0, 0, 0, 0, 0, 11, 51814, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Gawanil - Summon the Treasure of Gawanil on Death'),
@@ -16334,7 +16358,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(1863203, 18632, 0, 0, 100, 5, 7200, 15900, 15700, 32500, 11, 15578, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Cabal Executioner (Heroic) - Cast Whirlwind'),
 	(1863204, 18632, 12, 0, 100, 7, 20, 0, 8000, 12000, 11, 7160, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Cabal Executioner - Cast Execute when Target is at 20% HP'),
 	(1863205, 18632, 2, 0, 100, 6, 25, 0, 0, 0, 11, 30485, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Cabal Executioner - Cast Enrage at 25% HP'),
-	(1863301, 18633, 4, 0, 10, 38, 0, 0, 0, 0, 1, -664, -665, -666, 1, -667, -668, -669, 1, -665, -666, -669, 'Cabal Acolyte - Random Say on Aggro'),
+	(1863301, 18633, 4, 0, 10, 38, 0, 0, 0, 0, 1, -664, -665, -666, 1, -667, -668, -669, 1, -665, -666, -669, 'Cabal Acolyte - Random Say on Aggro');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(1863302, 18633, 1, 0, 100, 7, 1000, 1000, 3600000, 3600000, 11, 33482, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Cabal Acolyte - Cast Shadow Defense on Spawn'),
 	(1863303, 18633, 14, 0, 100, 3, 6500, 15, 15700, 27700, 11, 12039, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Cabal Acolyte (Normal) - Cast Heal on Friendlies'),
 	(1863304, 18633, 14, 0, 100, 5, 10000, 15, 15700, 27700, 11, 38209, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Cabal Acolyte (Heroic) - Cast Heal on Friendlies'),
@@ -16955,7 +16980,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(903805, 9038, 3, 13, 100, 2, 15, 0, 0, 0, 21, 1, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Seeth\'rel - Start Combat Movement and Set Phase 2 when Mana is at 15% (Phase 1)'),
 	(903806, 9038, 9, 13, 100, 2, 35, 80, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Seeth\'rel - Start Combat Movement at 35 Yards (Phase 1)'),
 	(903807, 9038, 9, 13, 100, 2, 5, 15, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Seeth\'rel - Prevent Combat Movement at 15 Yards (Phase 1)'),
-	(903808, 9038, 9, 13, 100, 2, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Seeth\'rel - Start Combat Movement Below 5 Yards (Phase 1)'),
+	(903808, 9038, 9, 13, 100, 2, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Seeth\'rel - Start Combat Movement Below 5 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(903809, 9038, 3, 11, 100, 3, 100, 30, 100, 100, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Seeth\'rel - Set Phase 1 when Mana is above 30% (Phase 2)'),
 	(903810, 9038, 0, 0, 100, 3, 9000, 14000, 19000, 24000, 11, 15244, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Seeth\'rel - Cast Cone of Cold'),
 	(903811, 9038, 9, 0, 100, 3, 0, 8, 16000, 23000, 11, 12674, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Seeth\'rel - Cast Frost Nova'),
@@ -17582,7 +17608,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(1817112, 18171, 0, 0, 100, 7, 4400, 5800, 12100, 15700, 11, 21068, 4, 33, 0, 0, 0, 0, 0, 0, 0, 0, 'Infinite Defiler - Cast Corruption'),
 	(1817113, 18171, 0, 0, 100, 3, 3400, 8100, 19300, 22900, 11, 31977, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Infinite Defiler (Normal) - Cast Curse of Infinity'),
 	(1817114, 18171, 0, 0, 100, 5, 3400, 8100, 19300, 22900, 11, 38387, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Infinite Defiler (Heroic) - Cast Bane of Infinity'),
-	(1817115, 18171, 7, 0, 100, 6, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Infinite Defiler - Set Phase to 0 on Evade'),
+	(1817115, 18171, 7, 0, 100, 6, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Infinite Defiler - Set Phase to 0 on Evade');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(1817116, 18171, 6, 0, 10, 6, 0, 0, 0, 0, 1, -1290, -1291, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Infinite Defiler - Random Say on Death'),
 	(1817201, 18172, 4, 0, 10, 6, 0, 0, 0, 0, 1, -1288, -1289, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Infinite Saboteur - Random Say on Aggro'),
 	(1817202, 18172, 9, 0, 100, 7, 0, 5, 9100, 18200, 11, 15496, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Infinite Saboteur - Cast Cleave'),
@@ -18197,7 +18224,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(1777130, 17771, 3, 223, 100, 6, 15, 0, 0, 0, 21, 1, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Murkblood Oracle - Start Combat Movement and Set Phase 6 when Mana is at 15% (Phase 5)'),
 	(1777131, 17771, 9, 223, 100, 6, 35, 80, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Murkblood Oracle - Start Combat Movement at 35 Yards (Phase 5)'),
 	(1777132, 17771, 9, 223, 100, 6, 5, 15, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Murkblood Oracle - Prevent Combat Movement at 15 Yards (Phase 5)'),
-	(1777133, 17771, 9, 223, 100, 6, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Murkblood Oracle - Start Combat Movement Below 5 Yards (Phase 5)'),
+	(1777133, 17771, 9, 223, 100, 6, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Murkblood Oracle - Start Combat Movement Below 5 Yards (Phase 5)');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(1777134, 17771, 0, 223, 100, 3, 7600, 7600, 3600, 10100, 11, 31405, 4, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Murkblood Oracle (Normal) - Cast Corruption (Phase 5)'),
 	(1777135, 17771, 0, 223, 100, 5, 7600, 7600, 6700, 6700, 11, 37113, 4, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Murkblood Oracle (Heroic) - Cast Corruption (Phase 5)'),
 	(1777136, 17771, 3, 191, 100, 7, 100, 30, 100, 100, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Murkblood Oracle - Set Phase 5 when Mana is above 30% (Phase 6)'),
@@ -18822,7 +18850,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(622203, 6222, 4, 0, 10, 2, 0, 0, 0, 0, 1, -188, -189, -190, 1, -191, -188, -189, 1, -190, -191, -188, 'Leprous Technician - Random Say on Aggro'),
 	(622204, 6222, 4, 0, 100, 2, 0, 0, 0, 0, 39, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Leprous Technician - Call For Help on Aggro'),
 	(622205, 6222, 9, 5, 100, 3, 0, 30, 1200, 2500, 11, 13398, 1, 0, 40, 2, 0, 0, 0, 0, 0, 0, 'Leprous Technician - Cast Throw Wrench and Set Ranged Weapon Model (Phase 1)'),
-	(622206, 6222, 9, 5, 100, 3, 30, 80, 0, 0, 21, 1, 1, 0, 20, 1, 0, 0, 0, 0, 0, 0, 'Leprous Technician - Start Combat Movement and Start Melee at 30 Yards (Phase 1)'),
+	(622206, 6222, 9, 5, 100, 3, 30, 80, 0, 0, 21, 1, 1, 0, 20, 1, 0, 0, 0, 0, 0, 0, 'Leprous Technician - Start Combat Movement and Start Melee at 30 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(622207, 6222, 9, 5, 100, 3, 0, 10, 0, 0, 21, 1, 0, 0, 40, 1, 0, 0, 20, 1, 0, 0, 'Leprous Technician - Start Combat Movement and Set Melee Weapon Model and Start Melee Below 10 Yards (Phase 1)'),
 	(622208, 6222, 9, 5, 100, 3, 11, 25, 0, 0, 21, 0, 1, 0, 20, 0, 0, 0, 0, 0, 0, 0, 'Leprous Technician - Prevent Combat Movement and Prevent Melee at 25 Yards (Phase 1)'),
 	(622209, 6222, 8, 0, 100, 2, 9798, -1, 0, 0, 1, -31, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Leprous Technician - Emote on Radiation Spellhit'),
@@ -19416,7 +19445,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(2468405, 24684, 14, 0, 100, 3, 14000, 40, 30000, 50000, 11, 44479, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Sunblade Blood Knight (Normal) - Cast Holy Light on Friendlies'),
 	(2468406, 24684, 14, 0, 100, 5, 14000, 40, 30000, 50000, 11, 46029, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Sunblade Blood Knight (Heroic) - Cast Holy Light on Friendlies'),
 	(2468501, 24685, 1, 0, 100, 6, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Sunblade Magister - Prevent Combat Movement on Spawn'),
-	(2468502, 24685, 4, 0, 100, 2, 0, 0, 0, 0, 11, 44606, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Sunblade Magister (Normal) - Cast Frostbolt and Set Phase 1 on Aggro'),
+	(2468502, 24685, 4, 0, 100, 2, 0, 0, 0, 0, 11, 44606, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Sunblade Magister (Normal) - Cast Frostbolt and Set Phase 1 on Aggro');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(2468503, 24685, 9, 5, 100, 3, 0, 40, 3400, 4800, 11, 44606, 1, 0, 11, 44604, 0, 0, 0, 0, 0, 0, 'Sunblade Magister (Normal) - Cast Frostbolt and Enchantment of Spell Haste (Phase 1)'),
 	(2468504, 24685, 4, 0, 100, 4, 0, 0, 0, 0, 11, 46035, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Sunblade Magister (Heroic) - Cast Frostbolt and Set Phase 1 on Aggro'),
 	(2468505, 24685, 9, 5, 100, 5, 0, 40, 3400, 4800, 11, 46035, 1, 0, 11, 44604, 0, 0, 0, 0, 0, 0, 'Sunblade Magister (Heroic) - Cast Frostbolt and Enchantment of Spell Haste (Phase 1)'),
@@ -20034,7 +20064,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(429402, 4294, 4, 0, 100, 2, 0, 0, 0, 0, 11, 9672, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Scarlet Sorcerer - Cast Frostbolt and Set Phase 1 on Aggro'),
 	(429403, 4294, 9, 13, 100, 3, 0, 40, 3600, 4800, 11, 9672, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Sorcerer - Cast Frostbolt (Phase 1)'),
 	(429404, 4294, 3, 13, 100, 2, 15, 0, 0, 0, 21, 1, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Scarlet Sorcerer - Start Combat Movement and Set Phase 2 when Mana is at 15% (Phase 1)'),
-	(429405, 4294, 9, 13, 100, 2, 35, 80, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Sorcerer - Start Combat Movement at 35 Yards (Phase 1)'),
+	(429405, 4294, 9, 13, 100, 2, 35, 80, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Sorcerer - Start Combat Movement at 35 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(429406, 4294, 9, 13, 100, 2, 5, 15, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Sorcerer - Prevent Combat Movement at 15 Yards (Phase 1)'),
 	(429407, 4294, 9, 13, 100, 2, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Sorcerer - Start Combat Movement Below 5 Yards'),
 	(429408, 4294, 3, 11, 100, 3, 100, 30, 100, 100, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Scarlet Sorcerer - Set Phase 1 when Mana is above 30% (Phase 2)'),
@@ -20674,7 +20705,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(526701, 5267, 11, 0, 100, 2, 0, 0, 0, 0, 11, 8876, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Unliving Atal\'ai - Cast Thrash on Spawn'),
 	(526702, 5267, 2, 0, 100, 2, 30, 0, 0, 0, 11, 8269, 0, 1, 1, -106, 0, 0, 0, 0, 0, 0, 'Unliving Atal\'ai - Cast Frenzy at 30% HP'),
 	(526901, 5269, 1, 0, 100, 2, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Atal\'ai Priest - Prevent Combat Movement on Spawn'),
-	(526902, 5269, 1, 0, 100, 3, 1000, 1000, 1800000, 1800000, 11, 31976, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Atal\'ai Priest - Cast Shadow Shield on Spawn'),
+	(526902, 5269, 1, 0, 100, 3, 1000, 1000, 1800000, 1800000, 11, 31976, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Atal\'ai Priest - Cast Shadow Shield on Spawn');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(526903, 5269, 4, 0, 100, 2, 0, 0, 0, 0, 11, 9613, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Atal\'ai Priest - Cast Shadow Bolt and Set Phase 1 on Aggro'),
 	(526904, 5269, 9, 13, 100, 3, 0, 40, 2400, 3800, 11, 9613, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Atal\'ai Priest - Cast Shadow Bolt (Phase 1)'),
 	(526905, 5269, 3, 13, 100, 2, 15, 0, 0, 0, 21, 1, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Atal\'ai Priest - Start Combat Movement and Set Phase 2 when Mana is at 15% (Phase 1)'),
@@ -21283,7 +21315,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(441701, 4417, 1, 0, 100, 2, 0, 0, 0, 0, 21, 0, 0, 0, 20, 0, 0, 0, 23, 1, 0, 0, 'Defias Taskmaster - Prevent Combat Movement and Prevent Melee and Set Phase 1 on Spawn'),
 	(441702, 4417, 9, 1, 100, 3, 5, 30, 2200, 3800, 11, 6660, 1, 0, 40, 2, 0, 0, 0, 0, 0, 0, 'Defias Taskmaster - Cast Shoot and Set Ranged Weapon Model (Phase 1)'),
 	(441703, 4417, 0, 1, 100, 3, 6000, 12000, 32000, 39000, 11, 6685, 4, 1, 40, 2, 0, 0, 0, 0, 0, 0, 'Defias Taskmaster - Cast Piercing Shot and Set Ranged Weapon Model (Phase 1)'),
-	(441704, 4417, 9, 1, 100, 3, 30, 80, 0, 0, 21, 1, 1, 0, 20, 1, 0, 0, 0, 0, 0, 0, 'Defias Taskmaster - Start Combat Movement and Start Melee at 30 Yards (Phase 1)'),
+	(441704, 4417, 9, 1, 100, 3, 30, 80, 0, 0, 21, 1, 1, 0, 20, 1, 0, 0, 0, 0, 0, 0, 'Defias Taskmaster - Start Combat Movement and Start Melee at 30 Yards (Phase 1)');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(441705, 4417, 9, 1, 100, 3, 0, 10, 0, 0, 21, 1, 0, 0, 40, 1, 0, 0, 20, 1, 0, 0, 'Defias Taskmaster - Start Combat Movement and Set Melee Weapon Model and Start Melee Below 10 Yards (Phase 1)'),
 	(441706, 4417, 9, 1, 100, 3, 11, 25, 0, 0, 21, 0, 1, 0, 20, 0, 0, 0, 0, 0, 0, 0, 'Defias Taskmaster - Prevent Combat Movement and Prevent Melee at 25 Yards (Phase 1)'),
 	(441707, 4417, 7, 0, 100, 2, 0, 0, 0, 0, 22, 1, 0, 0, 40, 1, 0, 0, 0, 0, 0, 0, 'Defias Taskmaster - Set Phase 1 and Set Melee Weapon Model on Evade'),
@@ -21898,7 +21931,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(485202, 4852, 0, 5, 100, 3, 6400, 15700, 31400, 36200, 11, 5605, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Stonevault Oracle - Cast Healing Ward (Phase 1)'),
 	(485203, 4852, 25, 5, 100, 3, 3560, 3000, 5000, 0, 11, 8264, 0, 1, 23, 1, 0, 0, 0, 0, 0, 0, 'Stonevault Oracle - Cast Lava Spout Totem on Healing Ward Death and Set Phase 2 (Phase 1)'),
 	(485204, 4852, 0, 3, 100, 3, 15100, 37300, 13300, 16600, 11, 8264, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Stonevault Oracle - Cast Lava Spout Totem'),
-	(485205, 4852, 25, 3, 100, 3, 6017, 3000, 5000, 0, 11, 5605, 0, 1, 23, -1, 0, 0, 0, 0, 0, 0, 'Stonevault Oracle - Cast Healing Ward on Lava Spout Totem Death and Set Phase 1 (Phase 2)'),
+	(485205, 4852, 25, 3, 100, 3, 6017, 3000, 5000, 0, 11, 5605, 0, 1, 23, -1, 0, 0, 0, 0, 0, 0, 'Stonevault Oracle - Cast Healing Ward on Lava Spout Totem Death and Set Phase 1 (Phase 2)');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(485206, 4852, 27, 0, 100, 3, 945, 1, 15000, 30000, 11, 945, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Stonevault Oracle - Cast Lightning Shield on Missing Buff'),
 	(485207, 4852, 14, 0, 100, 3, 1600, 40, 14400, 14400, 11, 8005, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Stonevault Oracle - Cast Healing Wave at 50% HP'),
 	(485208, 4852, 2, 0, 100, 2, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Stonevault Oracle - Flee at 15% HP'),
@@ -22502,7 +22536,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(384012, 3840, 16, 0, 100, 2, 8041, 5, 0, 0, 21, 0, 0, 0, 22, 1, 0, 0, 0, 0, 0, 0, 'Druid of the Fang - Prevent Combat Movement and Set Phase 1 When No Longer Serpant Form'),
 	(384013, 3840, 7, 0, 100, 2, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Druid of the Fang - Set Phase to 0 on Evade'),
 	(504801, 5048, 11, 0, 100, 2, 0, 0, 0, 0, 11, 3616, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Deviate Adder - Cast Poison Proc on Spawn'),
-	(505301, 5053, 9, 0, 100, 3, 0, 5, 9000, 12000, 11, 3604, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Deviate Crocolisk - Cast Tendon Rip'),
+	(505301, 5053, 9, 0, 100, 3, 0, 5, 9000, 12000, 11, 3604, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Deviate Crocolisk - Cast Tendon Rip');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(505501, 5055, 9, 0, 100, 3, 0, 8, 7000, 10000, 11, 7342, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Deviate Lasher - Cast Wide Slash'),
 	(505601, 5056, 9, 0, 100, 3, 0, 5, 9000, 15000, 11, 7399, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Deviate Dreadfang - Cast Terrify'),
 	(575501, 5755, 0, 0, 100, 3, 5000, 8000, 10000, 16000, 11, 7947, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Deviate Viper - Cast Localized Toxin'),
@@ -23120,7 +23155,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(1788805, 17888, 0, 0, 100, 2, 45000, 45000, 0, 0, 11, 31447, 0, 4, 1, -571, -572, 0, 0, 0, 0, 0, 'Kaz\'rogal - First Cast Mark Of Kaz\'rogal and Random Yells'),
 	(1788806, 17888, 0, 0, 100, 2, 85000, 85000, 0, 0, 11, 31447, 0, 4, 1, -571, -572, 0, 0, 0, 0, 0, 'Kaz\'rogal - Second Cast Mark Of Kaz\'rogal and Random Yells'),
 	(1788807, 17888, 0, 0, 100, 2, 120000, 120000, 0, 0, 11, 31447, 0, 4, 1, -571, -572, 0, 0, 0, 0, 0, 'Kaz\'rogal - Third Cast Mark Of Kaz\'rogal and Random Yells'),
-	(1788808, 17888, 0, 0, 100, 2, 150000, 150000, 0, 0, 11, 31447, 0, 4, 1, -571, -572, 0, 0, 0, 0, 0, 'Kaz\'rogal - Fourth Cast Mark Of Kaz\'rogal and Random Yells'),
+	(1788808, 17888, 0, 0, 100, 2, 150000, 150000, 0, 0, 11, 31447, 0, 4, 1, -571, -572, 0, 0, 0, 0, 0, 'Kaz\'rogal - Fourth Cast Mark Of Kaz\'rogal and Random Yells');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(1788809, 17888, 0, 0, 100, 2, 175000, 175000, 0, 0, 11, 31447, 0, 4, 1, -571, -572, 0, 0, 0, 0, 0, 'Kaz\'rogal - Fifth Cast Mark Of Kaz\'rogal and Random Yells'),
 	(1788810, 17888, 0, 0, 100, 2, 195000, 195000, 0, 0, 11, 31447, 0, 4, 1, -571, -572, 0, 0, 0, 0, 0, 'Kaz\'rogal - Sixth Cast Mark Of Kaz\'rogal and Random Yells'),
 	(1788811, 17888, 0, 0, 100, 3, 210000, 210000, 10000, 10000, 11, 31447, 0, 4, 1, -571, -572, 0, 0, 0, 0, 0, 'Kaz\'rogal - Repeatable Cast Mark Of Kaz\'rogal and Random Yells'),
@@ -23723,7 +23759,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(1554701, 15547, 0, 0, 100, 3, 5000, 9000, 13000, 17000, 11, 29320, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Spectral Charger - Cast Charge'),
 	(1554801, 15548, 9, 0, 100, 3, 0, 5, 6000, 9000, 11, 29577, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Spectral Stallion - Cast Hoof Strike'),
 	(1554802, 15548, 0, 0, 100, 3, 4000, 7000, 9000, 13000, 11, 29323, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Spectral Stallion - Cast Absorb Vitality'),
-	(1555101, 15551, 9, 0, 100, 3, 0, 5, 11000, 15000, 11, 18812, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Spectral Stable Hand - Cast Knockdown'),
+	(1555101, 15551, 9, 0, 100, 3, 0, 5, 11000, 15000, 11, 18812, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Spectral Stable Hand - Cast Knockdown');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(1555102, 15551, 0, 0, 100, 3, 4000, 8000, 45000, 48000, 11, 6016, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Spectral Stable Hand - Cast Pierce Armor'),
 	(1555103, 15551, 14, 0, 100, 2, 38400, 30, 21000, 28000, 11, 29339, 6, 1, 11, 29340, 6, 0, 0, 0, 0, 0, 'Spectral Stable Hand - Cast Healing Touch and Whip Rage on Friendlies'),
 	(1555104, 15551, 6, 0, 100, 2, 0, 0, 0, 0, 1, -40, -41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Spectral Stable Hand - Random Say on Death'),
@@ -24351,7 +24388,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(1538601, 15386, 4, 0, 100, 2, 0, 0, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Major Yeggeth - Set Phase 1 on Aggro'),
 	(1538602, 15386, 9, 5, 100, 3, 0, 5, 5000, 9000, 11, 24317, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Major Yeggeth - Cast Sunder Armor (Phase 1)'),
 	(1538603, 15386, 24, 5, 100, 3, 24317, 5, 5000, 5000, 23, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Major Yeggeth - Set Phase 2 on Target Max Sunder Armor Aura Stack (Phase 1)'),
-	(1538604, 15386, 28, 3, 100, 3, 24317, 1, 5000, 5000, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Major Yeggeth - Set Phase 1 on Target Missing Sunder Armor Aura Stack (Phase 2)'),
+	(1538604, 15386, 28, 3, 100, 3, 24317, 1, 5000, 5000, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Major Yeggeth - Set Phase 1 on Target Missing Sunder Armor Aura Stack (Phase 2)');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(1538605, 15386, 0, 0, 100, 3, 5000, 9000, 9000, 11000, 11, 40504, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Major Yeggeth - Cast Cleave'),
 	(1538606, 15386, 0, 0, 100, 3, 11000, 17000, 15000, 23000, 11, 25282, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Major Yeggeth - Cast Shield of Rajaxx'),
 	(1538607, 15386, 7, 0, 100, 2, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Major Yeggeth - Set Phase to 0 on Evade'),
@@ -24972,7 +25010,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(3419001, 34190, 0, 0, 100, 7, 15000, 20000, 30000, 35000, 11, 64877, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Hardened Iron Golem - Cast Harden Fists'),
 	(3419002, 34190, 0, 0, 100, 3, 10000, 15000, 20000, 25000, 11, 64874, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Hardened Iron Golem (Normal) - Cast Rune Punch'),
 	(3419003, 34190, 0, 0, 100, 5, 10000, 15000, 20000, 25000, 11, 64967, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Hardened Iron Golem (Heroic) - Cast Rune Punch'),
-	(3419201, 34192, 9, 0, 100, 7, 0, 5, 0, 0, 11, 63767, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Boomer XP-500 - Cast Bomb Bot on Range Check'),
+	(3419201, 34192, 9, 0, 100, 7, 0, 5, 0, 0, 11, 63767, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Boomer XP-500 - Cast Bomb Bot on Range Check');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(3419202, 34192, 6, 0, 100, 6, 0, 0, 0, 0, 11, 63767, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 'Boomer XP-500 - Cast Bomb Bot on Death'),
 	(3419301, 34193, 0, 0, 100, 7, 5000, 9000, 10000, 15000, 11, 64740, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Clockwork Sapper - Cast Energy Sap'),
 	(3419401, 34194, 11, 0, 100, 7, 0, 0, 0, 0, 11, 64724, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Superheated Winds - Cast Superheated Winds on Spawn'),
@@ -25094,8 +25133,7 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(2358602, 23586, 0, 0, 100, 3, 2000, 2000, 4000, 5000, 11, 16496, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Scout - Cast Shoot'),
 	(2358603, 23586, 0, 0, 100, 3, 6000, 6000, 20000, 24000, 11, 43205, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Scout - Cast Multi-Shot'),
 	(2358701, 23587, 0, 0, 75, 3, 2000, 2000, 8000, 8000, 11, 43298, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Reinforcement - Cast Strike'),
-	(2358702, 23587, 4, 0, 75, 2, 0, 0, 0, 0, 11, 32323, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Reinforcement - Cast Charge on Aggro');
-INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
+	(2358702, 23587, 4, 0, 75, 2, 0, 0, 0, 0, 11, 32323, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Reinforcement - Cast Charge on Aggro'),
 	(2359601, 23596, 0, 0, 100, 3, 2000, 2000, 30000, 30000, 11, 43242, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Flame Caster - Cast Haste'),
 	(2359602, 23596, 0, 0, 100, 3, 0, 0, 18000, 18000, 11, 43240, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Flame Caster - Cast Fireball Volley'),
 	(2359603, 23596, 0, 0, 100, 3, 0, 0, 9700, 9700, 11, 43245, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Amani\'shi Flame Caster - Cast Fire Blast'),
@@ -25592,7 +25630,8 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 	(1355301, 13553, 0, 0, 100, 3, 5000, 8000, 9000, 13000, 11, 16856, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Veteran Irondeep Guard - Cast Mortal Strike'),
 	(1355302, 13553, 0, 0, 100, 3, 4000, 7000, 7000, 9000, 11, 15284, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Veteran Irondeep Guard - Cast Cleave'),
 	(1355401, 13554, 0, 0, 100, 3, 5000, 8000, 9000, 13000, 11, 16856, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Champion Irondeep Guard - Cast Mortal Strike'),
-	(1355402, 13554, 0, 0, 100, 3, 4000, 7000, 7000, 9000, 11, 15284, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Champion Irondeep Guard - Cast Cleave'),
+	(1355402, 13554, 0, 0, 100, 3, 4000, 7000, 7000, 9000, 11, 15284, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Champion Irondeep Guard - Cast Cleave');
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(1355501, 13555, 0, 0, 100, 3, 1000, 3000, 3000, 5000, 11, 15498, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Seasoned Irondeep Surveyor - Cast Holy Smite'),
 	(1355502, 13555, 0, 0, 100, 3, 4000, 7000, 20000, 24000, 11, 15654, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Seasoned Irondeep Surveyor - Cast Shadow Word: Pain'),
 	(1355503, 13555, 2, 0, 100, 2, 50, 0, 15000, 20000, 11, 15586, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Seasoned Irondeep Surveyor - Cast Heal at 50% HP'),

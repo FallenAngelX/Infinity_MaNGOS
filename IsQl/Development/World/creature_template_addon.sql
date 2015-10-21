@@ -2636,7 +2636,8 @@ INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`
 	(18884, 0, 0, 1, 16, 0, 0, '32942'),
 	(18885, 0, 0, 1, 16, 0, 0, NULL),
 	(18886, 0, 0, 1, 16, 0, 0, NULL),
-	(18891, 0, 0, 1, 16, 0, 0, NULL),
+	(18891, 0, 0, 1, 16, 0, 0, NULL);
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES
 	(18892, 0, 0, 1, 1, 233, 0, NULL),
 	(18893, 0, 0, 0, 0, 0, 0, NULL),
 	(18895, 0, 0, 1, 0, 0, 0, NULL),
@@ -5201,7 +5202,8 @@ INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`
 	(2411, 0, 0, 1, 0, 0, 0, NULL),
 	(2412, 0, 0, 1, 0, 0, 0, NULL),
 	(2413, 0, 0, 1, 0, 0, 0, NULL),
-	(2414, 0, 0, 1, 0, 0, 0, NULL),
+	(2414, 0, 0, 1, 0, 0, 0, NULL);
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES
 	(2415, 0, 0, 1, 0, 0, 0, NULL),
 	(2417, 0, 0, 1, 16, 0, 0, NULL),
 	(2418, 0, 0, 1, 16, 0, 0, NULL),
@@ -7832,7 +7834,8 @@ INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`
 	(17175, 0, 0, 1, 0, 0, 0, NULL),
 	(17176, 0, 0, 1, 0, 0, 0, NULL),
 	(17178, 0, 0, 1, 0, 0, 0, NULL),
-	(17218, 0, 0, 1, 1, 0, 0, NULL),
+	(17218, 0, 0, 1, 1, 0, 0, NULL);
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES
 	(17223, 0, 0, 0, 1, 0, 0, NULL),
 	(17235, 0, 0, 1, 16, 0, 0, NULL),
 	(17236, 0, 0, 1, 16, 0, 0, NULL),
@@ -10384,7 +10387,8 @@ INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`
 	(432, 0, 0, 1, 16, 0, 0, NULL),
 	(433, 0, 0, 1, 16, 0, 0, NULL),
 	(434, 0, 0, 1, 16, 0, 0, NULL),
-	(435, 0, 0, 1, 16, 0, 0, NULL),
+	(435, 0, 0, 1, 16, 0, 0, NULL);
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES
 	(437, 0, 0, 1, 16, 0, 0, NULL),
 	(440, 0, 0, 1, 16, 0, 0, NULL),
 	(441, 0, 0, 1, 16, 0, 0, NULL),
@@ -12984,7 +12988,8 @@ INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`
 	(28850, 0, 0, 1, 0, 0, 0, NULL),
 	(28856, 0, 0, 1, 0, 333, 0, '48356'),
 	(28884, 0, 0, 1, 0, 0, 0, '29266'),
-	(28885, 0, 0, 1, 0, 0, 0, '29266'),
+	(28885, 0, 0, 1, 0, 0, 0, '29266');
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES
 	(28887, 0, 0, 1, 0, 0, 0, '29266'),
 	(28889, 0, 0, 1, 1, 0, 0, NULL),
 	(28891, 0, 0, 1, 0, 0, 0, '29266'),
