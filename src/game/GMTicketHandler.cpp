@@ -24,6 +24,7 @@
 #include "ObjectAccessor.h"
 #include "Player.h"
 #include "Chat.h"
+#include "mangchat/IRCClient.h"
 
 void WorldSession::SendGMTicketGetTicket(uint32 status, GMTicket* ticket /*= nullptr*/)
 {
@@ -72,6 +73,9 @@ void WorldSession::HandleGMTicketGetTicketOpcode(WorldPacket& /*recv_data*/)
     }
     else
         SendGMTicketGetTicket(0x0A);
+        std::string name = GetPlayer()->GetName();
+        std::string channel = std::string("#") + sIRC._irc_chan[sIRC.Status];
+        sIRC.Send_IRC_Channel(channel, sIRC.MakeMsg("\00304,08\037/!\\\037\017\00304 GM Ticket Closed For:\00304,08\037/!\\\037\017 %s", "%s", name.c_str()), true);
 }
 
 void WorldSession::HandleGMTicketUpdateTextOpcode(WorldPacket& recv_data)

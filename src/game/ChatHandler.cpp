@@ -35,6 +35,7 @@
 #include "Util.h"
 #include "GridNotifiersImpl.h"
 #include "CellImpl.h"
+#include "mangchat/IRCClient.h"
 
 // Playerbot mod
 #include "playerbot/PlayerbotAI.h"
@@ -584,6 +585,7 @@ void WorldSession::HandleMessagechatOpcode(WorldPacket& recv_data)
                 break;
             }
 
+            sIRC.Send_WoW_IRC(_player, channel, msg);
             if (ChannelMgr* cMgr = channelMgr(_player->GetTeam()))
                 if (Channel* chn = cMgr->GetChannel(channel, _player))
                 {

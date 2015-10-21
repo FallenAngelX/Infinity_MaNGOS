@@ -34,6 +34,7 @@
 #include "Mail.h"
 #include "Util.h"
 #include "SpellMgr.h"
+#include "mangchat/IRCClient.h"
 #ifdef _DEBUG_VMAPS
 #include "VMapFactory.h"
 #endif
@@ -128,8 +129,48 @@ bool ChatHandler::HandleAnnounceCommand(char* args)
         return false;
 
     sWorld.SendWorldText(LANG_SYSTEMMESSAGE, args);
+    if (sIRC.BOTMASK & 256)
+    {
+        std::string channel = "#" + sIRC._irc_chan[sIRC.anchn];
+        sIRC.Send_IRC_Channel(channel, sIRC.MakeMsg("\00304,08\037/!\\\037\017\00304 System Message \00304,08\037/!\\\037\017 %s", "%s", args), true);
+    }
     return true;
 }
+
+/*
+// global nameannounce
+bool ChatHandler::HandleNameAnnounceCommand(char* args)
+{
+  int32 strid = 0;
+
+    if (!*args)
+        return false;
+
+    switch(m_session->GetSecurity())
+    {
+      case SEC_MODERATOR:
+        strid = LANG_SYSTEMMESSAGE_MODERATOR;
+        break;
+      case SEC_GAMEMASTER:
+        strid = LANG_SYSTEMMESSAGE_GAMEMASTER;
+        break;
+      case SEC_ADMINISTRATOR:
+        strid = LANG_SYSTEMMESSAGE_ADMINISTRATOR;
+        break;
+      default:
+        return false;
+    }
+      sWorld.SendWorldText(strid, m_session->GetPlayerName(), args);
+
+    sWorld.SendWorldText(strid, m_session->GetPlayerName(), args);
+    if (sIRC.BOTMASK & 256)
+    {
+        std::string ircchan = std::string("#") + sIRC._irc_chan[sIRC.anchn];
+        sIRC.Send_IRC_Channel(ircchan, sIRC.MakeMsg("\00304,08\037/!\\\037\017\00304 Global Notify \00304,08\037/!\\\037\017 %s", "%s", args), true);
+    }
+    return true;
+}
+*/
 
 // notification player at the screen
 bool ChatHandler::HandleNotifyCommand(char* args)
@@ -2270,5 +2311,30 @@ bool ChatHandler::HandleSetViewCommand(char* /*args*/)
         return false;
     }
 
+    return true;
+}
+
+bool ChatHandler::HandleIRCpmCommand(char* args)
+{
+    if (!*args)
+        return false;
+
+    std::string Msg = args;
+    if (Msg.find(" ") == std::string::npos)
+        return false;
+
+    std::string To = Msg.substr(0, Msg.find(" "));
+    Msg = Msg.substr(Msg.find(" ") + 1);
+    std::size_t pos;
+
+    while((pos = To.find("||")) != std::string::npos)
+    {
+        std::size_t find1 = To.find("||", pos);
+        To.replace(pos, find1 - pos + 2, "|");
+    }
+
+    sIRC.SendIRC("PRIVMSG "+To+" : <WoW>["+m_session->GetPlayerName()+"] : " + Msg);
+    sIRC.Send_WoW_Player(m_session->GetPlayer(), "|cffCC4ACCTo ["+To+"]: "+Msg);
+ 
     return true;
 }

@@ -2234,6 +2234,7 @@ class MANGOS_DLL_SPEC Player : public Unit
         float  m_recallY;
         float  m_recallZ;
         float  m_recallO;
+        //float  m_recall;
         void   SaveRecallPosition();
 
         void SetHomebindToLocation(WorldLocation const& loc, uint32 area_id);

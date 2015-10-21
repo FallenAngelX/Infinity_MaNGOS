@@ -43,6 +43,7 @@
 #include "MaNGOSsoap.h"
 #include "MassMailMgr.h"
 #include "DBCStores.h"
+#include "mangchat/IRCClient.h"
 
 #include <ace/OS_NS_signal.h>
 #include <ace/TP_Reactor.h>
@@ -197,6 +198,9 @@ int Master::Run()
         return 1;
     }
 
+    // Load Mangchat Config (MangChat needs DB for gm levels, AutoBroadcast uses world timers)
+    sIRC.LoadConfig();
+
     ///- Initialize the World
     sWorld.SetInitialWorldSettings();
 
@@ -296,6 +300,10 @@ int Master::Run()
         soap_thread = new MaNGOS::Thread(runnable);
     }
 
+    //Start up MangChat
+    MaNGOS::Thread irc(new IRCClient);
+	irc.setPriority(MaNGOS::Priority_High);
+
     ///- Start up freeze catcher thread
     MaNGOS::Thread* freeze_thread = nullptr;
     if (uint32 freeze_delay = sConfig.GetIntDefault("MaxCoreStuckTime", 0))
@@ -303,7 +311,7 @@ int Master::Run()
         FreezeDetectorRunnable* fdr = new FreezeDetectorRunnable();
         fdr->SetDelayTime(freeze_delay * 1000);
         freeze_thread = new MaNGOS::Thread(fdr);
-        freeze_thread->setPriority(MaNGOS::Priority_Highest);
+		freeze_thread->setPriority(MaNGOS::Priority_Highest);
     }
 
     ///- Launch the world listener socket

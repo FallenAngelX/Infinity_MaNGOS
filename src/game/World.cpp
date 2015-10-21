@@ -68,6 +68,7 @@
 #include "Calendar.h"
 #include "Weather.h"
 #include "Language.h"
+#include "mangchat/IRCClient.h"
 
 INSTANTIATE_SINGLETON_1(World);
 
@@ -1403,11 +1404,15 @@ void World::SetInitialWorldSettings()
     LoginDatabase.PExecute("INSERT INTO uptime (realmid, starttime, startstring, uptime) VALUES('%u', " UI64FMTD ", '%s', 0)",
                            realmID, uint64(m_startTime), isoDate);
 
+	static uint32 autoanc = 1;
+	autoanc = sIRC.autoanc;
+
     m_timers[WUPDATE_AUCTIONS].SetInterval(MINUTE * IN_MILLISECONDS);
     m_timers[WUPDATE_UPTIME].SetInterval(getConfig(CONFIG_UINT32_UPTIME_UPDATE)*MINUTE * IN_MILLISECONDS);
     // Update "uptime" table based on configuration entry in minutes.
     m_timers[WUPDATE_CORPSES].SetInterval(20 * MINUTE * IN_MILLISECONDS);
     m_timers[WUPDATE_DELETECHARS].SetInterval(DAY * IN_MILLISECONDS); // check for chars to delete every day
+    m_timers[WUPDATE_AUTOANC].SetInterval(autoanc*MINUTE*1000); //handles IRC autoannouncements
 
     // for AhBot
     m_timers[WUPDATE_AHBOT].SetInterval(20 * IN_MILLISECONDS); // every 20 sec
@@ -1628,6 +1633,12 @@ void World::Update(uint32 diff)
         uint32 nextGameEvent = sGameEventMgr.Update();
         m_timers[WUPDATE_EVENTS].SetInterval(nextGameEvent);
         m_timers[WUPDATE_EVENTS].Reset();
+    }
+
+    if (m_timers[WUPDATE_AUTOANC].Passed())
+    {
+        m_timers[WUPDATE_AUTOANC].Reset();
+        SendRNDBroadcast();
     }
 
     /// </ul>
@@ -2409,4 +2420,20 @@ void World::InvalidatePlayerDataToAllClient(ObjectGuid guid)
     WorldPacket data(SMSG_INVALIDATE_PLAYER, 8);
     data << guid;
     SendGlobalMessage(&data);
+}
+
+void World::SendRNDBroadcast()
+{
+    std::string msg;
+    QueryResult *result = WorldDatabase.PQuery("SELECT `message` FROM `IRC_AutoAnnounce` ORDER BY RAND() LIMIT 1");
+    if(!result)
+        return;
+    msg = result->Fetch()[0].GetString();
+    delete result;
+    std::string str = "|cffff0000[Automatic]:|r";
+    str += msg;
+    sWorld.SendWorldText(3000,msg.c_str()); //the number before msg.cstr() is a mangos string. So you can put in your own mangos string with unique id and make your announcement any color or show anyway you want in wow by altering the mangos_string table
+    std::string ircchan = "#";
+    ircchan += sIRC._irc_chan[sIRC.anchn].c_str();
+	sIRC.Send_IRC_Channel(ircchan, sIRC.MakeMsg("\00304,08\037/!\\\037\017\00304 Automatic System Message \00304,08\037/!\\\037\017 %s", "%s", msg.c_str()), true);
 }

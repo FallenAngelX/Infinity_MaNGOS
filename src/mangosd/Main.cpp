@@ -26,6 +26,8 @@
 #include "ProgressBar.h"
 #include "Log.h"
 #include "Master.h"
+#include "../game/mangchat/IRCConf.h"
+#include "../game/mangchat/IRCClient.h"
 #include "SystemConfig.h"
 #include "AuctionHouseBot/AuctionHouseBot.h"
 #include "revision.h"
@@ -63,6 +65,7 @@ void usage(const char* prog)
                    "    -v, --version            print version and exist\n\r"
                    "    -c config_file           use config_file as configuration file\n\r"
                    "    -a, --ahbot config_file  use config_file as ahbot configuration file\n\r"
+                   "    -m MangChat_config       use Mangchat_config as configuration file for MangChat\n\r"
 #ifdef WIN32
                    "    Running as service functions:\n\r"
                    "    -s run                   run as service\n\r"
@@ -81,8 +84,9 @@ extern int main(int argc, char** argv)
 {
     ///- Command line parsing
     char const* cfg_file = _MANGOSD_CONFIG;
+    char const* mc_cfg_file = _MANGCHAT_CONFIG;
 
-    char const* options = ":a:c:s:";
+    char const* options = ":a:c:m:s:";
 
     ACE_Get_Opt cmd_opts(argc, argv, options);
     cmd_opts.long_option("version", 'v', ACE_Get_Opt::NO_ARG);
@@ -100,6 +104,9 @@ extern int main(int argc, char** argv)
                 break;
             case 'c':
                 cfg_file = cmd_opts.opt_arg();
+                break;
+            case 'm':
+                mc_cfg_file = cmd_opts.opt_arg();
                 break;
             case 'v':
                 printf("%s\n", _FULLVERSION(REVISION_DATE, REVISION_TIME, REVISION_ID));
@@ -176,6 +183,8 @@ extern int main(int argc, char** argv)
             break;
     }
 #endif
+
+    sIRC.SetCfgFile(mc_cfg_file);
 
     sLog.outString("%s [world-daemon]", _FULLVERSION(REVISION_DATE, REVISION_TIME, REVISION_ID));
     sLog.outString("<Ctrl-C> to stop.");

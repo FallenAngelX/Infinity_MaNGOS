@@ -37,6 +37,9 @@
     <Filter Include="BattleGround">
       <UniqueIdentifier>{0af4d063-6d01-4546-a429-59bd828ab270}</UniqueIdentifier>
     </Filter>
+    <Filter Include="mangchat">
+      <UniqueIdentifier>{82c047c0-1ac3-471d-bb7a-1f60948eca58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\game\AccountMgr.cpp">
@@ -595,6 +598,30 @@
     <ClCompile Include="..\..\src\game\BattleGround\BattleGroundWS.cpp">
       <Filter>BattleGround</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\mangchat\IRCClient.cpp">
+      <Filter>mangchat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\mangchat\IRCCmd.cpp">
+      <Filter>mangchat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\mangchat\IRCCmde.cpp">
+      <Filter>mangchat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\mangchat\IRCConf.cpp">
+      <Filter>mangchat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\mangchat\IRCIO.cpp">
+      <Filter>mangchat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\mangchat\IRCLog.cpp">
+      <Filter>mangchat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\mangchat\IRCSock.cpp">
+      <Filter>mangchat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\mangchat\MCS_OnlinePlayers.cpp">
+      <Filter>mangchat</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -1135,5 +1162,28 @@
     <ClInclude Include="..\..\src\game\BattleGround\BattleGroundSA.h">
       <Filter>BattleGround</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\game\mangchat\IRCClient.h">
+      <Filter>mangchat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\mangchat\IRCCmd.h">
+      <Filter>mangchat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\mangchat\IRCConf.h">
+      <Filter>mangchat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\mangchat\IRCFunc.h">
+      <Filter>mangchat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\mangchat\IRCLog.h">
+      <Filter>mangchat</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\mangchat\MCS_OnlinePlayers.h">
+      <Filter>mangchat</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\game\mangchat\mangchat.conf.dist.in">
+      <Filter>mangchat</Filter>
+    </None>
   </ItemGroup>
 </Project>

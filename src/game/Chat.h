@@ -80,6 +80,23 @@ class MANGOS_DLL_SPEC ChatHandler
         explicit ChatHandler(Player* player);
         ~ChatHandler();
 
+        static void FillMessageData(WorldPacket* data, WorldSession* session, uint8 type, uint32 language, const char* channelName, ObjectGuid targetGuid, const char* message, Unit* speaker);
+
+        static void FillMessageData(WorldPacket* data, WorldSession* session, uint8 type, uint32 language, ObjectGuid targetGuid, const char* message)
+        {
+            FillMessageData(data, session, type, language, NULL, targetGuid, message, NULL);
+        }
+
+        static void FillMessageData(WorldPacket* data, WorldSession* session, uint8 type, uint32 language, const char* message)
+        {
+            FillMessageData(data, session, type, language, NULL, ObjectGuid(), message, NULL);
+        }
+
+        void FillSystemMessageData(WorldPacket* data, const char* message)
+        {
+            FillMessageData(data, m_session, CHAT_MSG_SYSTEM, LANG_UNIVERSAL, ObjectGuid(), message);
+        }
+
         static char* LineFromMessage(char*& pos) { char* start = strtok(pos, "\n"); pos = nullptr; return start; }
 
         // function with different implementation for chat/console
@@ -636,6 +653,7 @@ class MANGOS_DLL_SPEC ChatHandler
 
         //! Development Commands
         bool HandleSaveAllCommand(char* args);
+        bool HandleIRCpmCommand(char* args);
 
         // ChatSpy
         bool HandleChatSpyResetCommand(char* args);

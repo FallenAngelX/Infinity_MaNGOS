@@ -40,6 +40,7 @@
 #include "Language.h"
 #include "SpellMgr.h"
 #include "Calendar.h"
+#include "mangchat/IRCClient.h"
 
 // Playerbot mod:
 #include "playerbot/PlayerbotMgr.h"
@@ -890,6 +891,9 @@ void WorldSession::HandlePlayerLogin(LoginQueryHolder* holder)
     pCurrChar->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_ON_LOGIN, 1);
 
     delete holder;
+
+    if(sIRC.ajoin == 1)
+       sIRC.AutoJoinChannel(pCurrChar);
 }
 
 void WorldSession::HandleSetFactionAtWarOpcode(WorldPacket& recv_data)
