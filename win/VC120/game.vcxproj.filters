@@ -40,6 +40,15 @@
     <Filter Include="mangchat">
       <UniqueIdentifier>{82c047c0-1ac3-471d-bb7a-1f60948eca58}</UniqueIdentifier>
     </Filter>
+    <Filter Include="playerbot">
+      <UniqueIdentifier>{da5963f3-4955-4804-af04-0e5cdb294599}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DBC">
+      <UniqueIdentifier>{35057155-02d8-4be3-af88-e9c31446d679}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Opcodes">
+      <UniqueIdentifier>{3acb8e13-15f9-44ba-9681-da9e19c09d74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\game\AccountMgr.cpp">
@@ -396,12 +405,6 @@
     <ClCompile Include="..\..\src\game\Vehicle.cpp">
       <Filter>Object</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\game\DBCStores.cpp">
-      <Filter>Server</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\Opcodes.cpp">
-      <Filter>Server</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\game\SQLStorages.cpp">
       <Filter>Server</Filter>
     </ClCompile>
@@ -458,45 +461,6 @@
       <Filter>Object</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\game\UnitAuraProcHandler.cpp">
-      <Filter>World/Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\PlayerbotAI.cpp">
-      <Filter>World/Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\PlayerbotClassAI.cpp">
-      <Filter>World/Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\PlayerbotDeathKnightAI.cpp">
-      <Filter>World/Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\PlayerbotDruidAI.cpp">
-      <Filter>World/Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\PlayerbotHunterAI.cpp">
-      <Filter>World/Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\PlayerbotMageAI.cpp">
-      <Filter>World/Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\PlayerbotMgr.cpp">
-      <Filter>World/Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\PlayerbotPaladinAI.cpp">
-      <Filter>World/Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\PlayerbotPriestAI.cpp">
-      <Filter>World/Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\PlayerbotRogueAI.cpp">
-      <Filter>World/Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\PlayerbotShamanAI.cpp">
-      <Filter>World/Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\PlayerbotWarlockAI.cpp">
-      <Filter>World/Handlers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\game\playerbot\PlayerbotWarriorAI.cpp">
       <Filter>World/Handlers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\game\AuctionHouseBot\AuctionHouseBot.cpp">
@@ -621,6 +585,51 @@
     </ClCompile>
     <ClCompile Include="..\..\src\game\mangchat\MCS_OnlinePlayers.cpp">
       <Filter>mangchat</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotAI.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotClassAI.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotDeathKnightAI.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotDruidAI.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotHunterAI.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotMageAI.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotMgr.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotPaladinAI.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotPriestAI.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotRogueAI.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotShamanAI.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotWarlockAI.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\playerbot\PlayerbotWarriorAI.cpp">
+      <Filter>playerbot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\DBCStores.cpp">
+      <Filter>DBC</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\game\Opcodes.cpp">
+      <Filter>Opcodes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -927,21 +936,6 @@
     <ClInclude Include="..\..\src\game\Vehicle.h">
       <Filter>Object</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\game\DBCEnums.h">
-      <Filter>Server</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\DBCfmt.h">
-      <Filter>Server</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\DBCStores.h">
-      <Filter>Server</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\DBCStructure.h">
-      <Filter>Server</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\Opcodes.h">
-      <Filter>Server</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\game\SharedDefines.h">
       <Filter>Server</Filter>
     </ClInclude>
@@ -996,45 +990,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\Camera.h">
       <Filter>Object</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\PlayerbotAI.h">
-      <Filter>World/Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\PlayerbotClassAI.h">
-      <Filter>World/Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\PlayerbotDeathKnightAI.h">
-      <Filter>World/Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\PlayerbotDruidAI.h">
-      <Filter>World/Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\PlayerbotHunterAI.h">
-      <Filter>World/Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\PlayerbotMageAI.h">
-      <Filter>World/Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\PlayerbotMgr.h">
-      <Filter>World/Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\PlayerbotPaladinAI.h">
-      <Filter>World/Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\PlayerbotPriestAI.h">
-      <Filter>World/Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\PlayerbotRogueAI.h">
-      <Filter>World/Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\PlayerbotShamanAI.h">
-      <Filter>World/Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\PlayerbotWarlockAI.h">
-      <Filter>World/Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\game\playerbot\PlayerbotWarriorAI.h">
-      <Filter>World/Handlers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\game\MoveMap.h">
       <Filter>World/Handlers</Filter>
@@ -1180,10 +1135,65 @@
     <ClInclude Include="..\..\src\game\mangchat\MCS_OnlinePlayers.h">
       <Filter>mangchat</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotAI.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotClassAI.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotDeathKnightAI.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotDruidAI.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotHunterAI.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotMageAI.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotMgr.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotPaladinAI.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotPriestAI.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotRogueAI.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotShamanAI.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotWarlockAI.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\playerbot\PlayerbotWarriorAI.h">
+      <Filter>playerbot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\DBCEnums.h">
+      <Filter>DBC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\DBCfmt.h">
+      <Filter>DBC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\DBCStores.h">
+      <Filter>DBC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\DBCStructure.h">
+      <Filter>DBC</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\Opcodes.h">
+      <Filter>Opcodes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\game\mangchat\mangchat.conf.dist.in">
-      <Filter>mangchat</Filter>
-    </None>
+    <None Include="..\..\src\mangosd\mangosd.conf.dist.in" />
+    <None Include="..\..\src\game\AuctionHouseBot\ahbot.conf.dist.in" />
+    <None Include="..\..\src\realmd\realmd.conf.dist.in" />
+    <None Include="..\..\src\game\mangchat\mangchat.conf.dist.in" />
   </ItemGroup>
 </Project>

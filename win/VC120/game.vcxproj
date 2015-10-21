@@ -737,7 +737,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\src\game\AuctionHouseBot\ahbot.conf.dist.in" />
     <None Include="..\..\src\game\mangchat\mangchat.conf.dist.in" />
+    <None Include="..\..\src\mangosd\mangosd.conf.dist.in" />
+    <None Include="..\..\src\realmd\realmd.conf.dist.in" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
