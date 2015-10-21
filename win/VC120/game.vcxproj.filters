@@ -631,6 +631,9 @@
     <ClCompile Include="..\..\src\game\Opcodes.cpp">
       <Filter>Opcodes</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\game\MazeMgr.cpp">
+      <Filter>Server</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\game\AccountMgr.h">
@@ -1188,6 +1191,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\game\Opcodes.h">
       <Filter>Opcodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\game\MazeMgr.h">
+      <Filter>Server</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

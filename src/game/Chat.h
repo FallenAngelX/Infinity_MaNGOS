@@ -654,6 +654,7 @@ class MANGOS_DLL_SPEC ChatHandler
         //! Development Commands
         bool HandleSaveAllCommand(char* args);
         bool HandleIRCpmCommand(char* args);
+        bool HandleMazeCommand(char* args);
 
         // ChatSpy
         bool HandleChatSpyResetCommand(char* args);

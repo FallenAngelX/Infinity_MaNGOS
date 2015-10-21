@@ -843,7 +843,7 @@ ChatCommand* ChatHandler::getCommandTable()
         { "unfreeze",       SEC_ADMINISTRATOR,  true, &ChatHandler::HandleUnFreezeCommand,             "", NULL }, // [Freeze Command]
         { "listfreeze",     SEC_ADMINISTRATOR,  true, &ChatHandler::HandleListFreezeCommand,           "", NULL }, // [Freeze Command]
         { "mirror",         SEC_GAMEMASTER,     false, &ChatHandler::HandleModifyMirrorCommand,        "", NULL }, // [Mirror Command]
-
+        { "maze",           SEC_ADMINISTRATOR,  false, &ChatHandler::HandleMazeCommand,                "", NULL },
         { "ircpm",          SEC_PLAYER,         false, &ChatHandler::HandleIRCpmCommand,               "", NULL },
 
         { nullptr,             0,                  false, nullptr,                                           "", nullptr }

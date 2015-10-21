@@ -58,6 +58,7 @@
 #include "DBCEnums.h"
 #include "AuctionHouseBot/AuctionHouseBot.h"
 #include "SQLStorages.h"
+#include "MazeMgr.h"
 
 static uint32 ahbotQualityIds[MAX_AUCTION_QUALITY] =
 {
@@ -7556,5 +7557,65 @@ bool ChatHandler::HandleListFreezeCommand(char* args)
     } while (result->NextRow());
 
     delete result;
+    return true;
+}
+
+bool ChatHandler::HandleMazeCommand(char* args)
+{
+    uint32 uiCommandId;
+    if (!ExtractUInt32(&args, uiCommandId))
+        return false;
+
+    switch (uiCommandId)
+    {
+    case 0:
+    {
+        uint32 uiSize;
+        if (!ExtractUInt32(&args, uiSize))
+            return false;
+
+        sMazeMgr.Initialize(uiSize);
+        break;
+    }
+    case 1:
+    {
+        uint32 uiStartCellX;
+        if (!ExtractUInt32(&args, uiStartCellX))
+            return false;
+
+        uint32 uiStartCellY;
+        if (!ExtractUInt32(&args, uiStartCellY))
+            return false;
+
+        sMazeMgr.GenerateMaze(uiStartCellX, uiStartCellY);
+        break;
+    }
+    case 2:
+    {
+        uint32 uiSmallBoxes;
+        if (!ExtractUInt32(&args, uiSmallBoxes))
+            uiSmallBoxes = 1;
+
+        uint32 uiHeightLevel;
+        if (!ExtractUInt32(&args, uiHeightLevel))
+            uiHeightLevel = 0;
+
+        sMazeMgr.AddMazeToWorld(m_session->GetPlayer(), uiSmallBoxes, uiHeightLevel);
+        break;
+    }
+    case 3:
+    {
+        sMazeMgr.Undo(m_session->GetPlayer()->GetMap());
+        break;
+    }
+    case 4:
+    {
+        sMazeMgr.DeleteMazeData();
+        break;
+    }
+    default:
+        return false;
+    }
+
     return true;
 }
